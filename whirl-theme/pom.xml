@@ -193,6 +193,7 @@
             </activation>
             <properties>
                 <platform>linux-x86_64</platform>
+                <archive>.tar.bz2</archive>
             </properties>
         </profile>
     </profiles>
