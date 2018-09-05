@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<project
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.whirlplatform</groupId>
+        <artifactId>whirl-app</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>whirl-app-client</artifactId>
+    <name>whirl-app-client</name>
+    <packaging>gwt-app</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <gwt.module>org.whirlplatform.app.Application</gwt.module>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-app-shared</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-app-shared</artifactId>
+            <version>${project.version}</version>
+            <classifier>sources</classifier>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-theme</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sencha.gxt</groupId>
+            <artifactId>gxt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.timepedia.exporter</groupId>
+            <artifactId>gwtexporter</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.seanchenxi.gwt</groupId>
+            <artifactId>gwt-storage</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- REST -->
+        <dependency>
+            <groupId>org.fusesource.restygwt</groupId>
+            <artifactId>restygwt</artifactId>
+            <version>2.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.nmorel.gwtjackson</groupId>
+                    <artifactId>gwt-jackson</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.nmorel.gwtjackson</groupId>
+            <artifactId>gwt-jackson</artifactId>
+            <version>0.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-lgpl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-lgpl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!-- Test <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId>
+            <scope>test</scope> </dependency> <dependency> <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId> <scope>test</scope> </dependency> <dependency>
+            <groupId>org.mockito</groupId> <artifactId>mockito-core</artifactId> <scope>test</scope>
+            </dependency> <dependency> <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId> <version>2.25.1</version>
+            <scope>test</scope> </dependency> <dependency> <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId> <version>2.25.1</version>
+            <scope>test</scope> </dependency> <dependency> <groupId>org.glassfish.hk2</groupId>
+            <artifactId>guice-bridge</artifactId> <version>2.5.0-b32</version> <scope>test</scope>
+            </dependency> <dependency> <groupId>org.glassfish.hk2</groupId> <artifactId>guice-bridge</artifactId>
+            <version>2.5.0-b32</version> <scope>test</scope> </dependency> <dependency>
+            <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> <version>1.7.25</version>
+            <scope>test</scope> </dependency> <dependency> <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId> <version>1.7.25</version> <scope>test</scope>
+            </dependency> -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.ltgt.gwt.maven</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <moduleName>org.whirlplatform.app.Application</moduleName>
+                    <moduleShortName>application</moduleShortName>
+                    <skipModule>true</skipModule>
+                    <compilerArgs>
+                        <compileArg>-gen</compileArg>
+                        <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
+                    </compilerArgs>
+                    <codeserverArgs>
+                        <compileArg>-gen</compileArg>
+                        <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
+                    </codeserverArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>classes</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

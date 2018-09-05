@@ -1,0 +1,26 @@
+.trigger {
+  font: 12px arial, tahoma, helvetica, sans-serif;
+  position: absolute;
+  display: inline;
+  right: 0;
+  top: 0;
+  border: 1px solid #cacaca;
+  background-color: #dee7f8;
+  width: 18px;
+  height: 20px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.focus .trigger {
+}
+
+.over .trigger {
+}
+
+.click .trigger {
+}
+
+.noedit {
+}

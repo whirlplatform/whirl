@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.whirlplatform</groupId>
+        <artifactId>whirl</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>whirl-theme</artifactId>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>sencha-central</id>
+            <name>Sencha GPL Releases</name>
+            <url>https://maven.sencha.com/repo/gpl-release</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <phantomjs.version>1.9.8</phantomjs.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sencha.gxt</groupId>
+            <artifactId>gxt-themebuilder</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- First, download the PhantomJS bin that can run locally. See the profiles section for how the right version
+            is selected. If a local version is used instead, this isn't necessary, but each computer that runs this maven
+            script will need a copy of phantom to correctly generate the theme. -->
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>maven-download-plugin</artifactId>
+                <version>1.1.0</version>
+                <executions>
+                    <execution>
+                        <id>download-phantomjs</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>
+                                https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${phantomjs.version}-${platform}${archive}
+                            </url>
+                            <outputDirectory>${basedir}/target/phantomjs</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <unpack>true</unpack>
+                </configuration>
+            </plugin>
+            <!-- Run the themer with the PhantomJS bin downloaded above. Generate classes into target/class. This is done in
+             the prepare-package phase, so that it is ready when a jar is created -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-theme</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${java.home}/bin/java
+                            </executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>
+                                    -DphantomBin=${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}/phantomjs${phantomjs.bin.exec}
+                                </argument>
+                                <argument>com.sencha.gxt.themebuilder.ThemeBuilder</argument>
+                                <!-- Build all generated sources into the classes directory so they end up in the final jar -->
+                                <argument>-gen</argument>
+                                <argument>${basedir}/target/classes</argument>
+                                <!-- These next several arguments are optional, and are here to make it easier to debug issues in the theme -->
+                                <argument>-imageFile</argument>
+                                <argument>${basedir}/target/snapshot.png</argument>
+                                <argument>-manifestFile</argument>
+                                <argument>${basedir}/target/snapshot.json</argument>
+                                <argument>-out</argument>
+                                <argument>${basedir}/target/theme.jar</argument>
+                                <argument>-warDir</argument>
+                                <argument>${basedir}/target/war</argument>
+                                <!-- List theme config files here -->
+                                <argument>${basedir}/src/theme.theme</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- These profiles let us pick which version of PhantomJS to download and provide to the themer. This isn't
+     required if phantom is on the path already, or if each machine where this build will be run has some way of
+     specifying the phantomJS build to be used. -->
+    <profiles>
+        <profile>
+            <id>win32</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <platform>windows</platform>
+                <phantomjs.bin.exec>.exe</phantomjs.bin.exec>
+                <archive>.zip</archive>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+            <properties>
+                <platform>macosx</platform>
+                <archive>.zip</archive>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <properties>
+                <platform>linux-i686</platform>
+                <archive>.tar.bz2</archive>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>maven-download-plugin</artifactId>
+                        <configuration>
+                            <unpack>false</unpack>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-linux</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnError>true</failOnError>
+                                    <target>
+                                        <bunzip2
+                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar.bz2"/>
+                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar"
+                                               dest="${basedir}/target/phantomjs/"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>lin64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <arch>amd64</arch>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <properties>
+                <platform>linux-x86_64</platform>
+            </properties>
+        </profile>
+    </profiles>
+</project>

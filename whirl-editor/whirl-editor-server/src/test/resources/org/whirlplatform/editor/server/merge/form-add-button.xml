@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="-670034153833" name="Diff test" metaversion="1">
+    <properties>
+        <title replace="false">
+            <defaultLocale locale="ru"/>
+            <locales>
+                <value locale="ru" type="STRING"><![CDATA[Diff test]]></value>
+            </locales>
+        </title>
+        <code><![CDATA[diff-test]]></code>
+        <enabled>true</enabled>
+        <guest>false</guest>
+        <htmlHeader><![CDATA[]]></htmlHeader>
+    </properties>
+    <defaultLocale language="ru"/>
+    <locales/>
+    <references/>
+    <components>
+        <component id="-670034153853" name="BorderContainerBuilder" type="BorderContainerBuilder">
+            <properties>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:Width" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="Height" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="BOOLEAN">true</value>
+                    </locales>
+                </property>
+                <property name="Width" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:Height" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+            </properties>
+            <children>
+                <component id="-670034154963" name="FormBuilder" type="FormBuilder">
+                    <properties>
+                        <property name="LayoutData:Location" type="STRING" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="Rows" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="Columns" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:Width" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">1.0</value>
+                            </locales>
+                        </property>
+                        <property name="Height" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">1.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="Enabled" type="BOOLEAN" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="BOOLEAN">true</value>
+                            </locales>
+                        </property>
+                        <property name="Width" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">1.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:Height" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">1.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                    </properties>
+                    <rowsHeight>
+                        <height id="-670034155113" row="0">0.3333333333333333</height>
+                        <height id="-670034155123" row="1">0.3333333333333333</height>
+                        <height id="-670034155133" row="2">0.3333333333333333</height>
+                    </rowsHeight>
+                    <columnsWidth>
+                        <width id="-670034155083" column="0">0.3333333333333333</width>
+                        <width id="-670034155093" column="1">0.3333333333333333</width>
+                        <width id="-670034155103" column="2">0.3333333333333333</width>
+                    </columnsWidth>
+                    <cells>
+                        <item id="-670034154993" row="2" column="0" rowspan="1" colspan="1"/>
+                        <item id="-670034155003" row="2" column="1" rowspan="1" colspan="1"/>
+                        <item id="-670034155013" row="1" column="1" rowspan="1" colspan="1"/>
+                        <item id="-670034155023" row="0" column="2" rowspan="1" colspan="1"/>
+                        <item id="-670034155033" row="2" column="2" rowspan="1" colspan="1"/>
+                        <item id="-670034155043" row="1" column="0" rowspan="1" colspan="1"/>
+                        <item id="-670034155053" row="0" column="1" rowspan="1" colspan="1"/>
+                        <item id="-670034155063" row="0" column="0" rowspan="1" colspan="1"/>
+                        <item id="-670034155073" row="1" column="2" rowspan="1" colspan="1"/>
+                    </cells>
+                    <children>
+                        <component id="-670034154983" name="ButtonBuilder" type="ButtonBuilder">
+                            <properties>
+                                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">1.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">1.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Html" type="STRING" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Enabled" type="BOOLEAN" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="BOOLEAN">true</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                            </properties>
+                        </component>
+                        <component id="9EAE60D8-AD49-4EF9-AD58-453C2A0AFAE2" name="ButtonBuilder" type="ButtonBuilder">
+                            <properties>
+                                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">1.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">0.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Html" type="STRING" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Enabled" type="BOOLEAN" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="BOOLEAN">true</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                            </properties>
+                        </component>
+                        <component id="-670034154973" name="ButtonBuilder" type="ButtonBuilder">
+                            <properties>
+                                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">0.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">0.0</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Html" type="STRING" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="STRING"><![CDATA[New Button]]></value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                                <property name="Enabled" type="BOOLEAN" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="BOOLEAN">true</value>
+                                    </locales>
+                                </property>
+                                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                                    <defaultLocale locale="ru"/>
+                                    <locales>
+                                        <value locale="ru" type="NUMBER">3.0</value>
+                                    </locales>
+                                </property>
+                            </properties>
+                        </component>
+                    </children>
+                </component>
+            </children>
+        </component>
+    </components>
+    <freeComponents>
+        <component id="-670034155143" name="FormBuilder" type="FormBuilder">
+            <properties>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="Rows" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="Columns" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:Width" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="Height" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="BOOLEAN">true</value>
+                    </locales>
+                </property>
+                <property name="Width" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:Height" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                    </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                    </locales>
+                </property>
+            </properties>
+            <rowsHeight>
+                <height id="-670034155283" row="0">0.3333333333333333</height>
+                <height id="-670034155293" row="1">0.3333333333333333</height>
+                <height id="-670034155303" row="2">0.3333333333333333</height>
+            </rowsHeight>
+            <columnsWidth>
+                <width id="-670034155253" column="0">0.3333333333333333</width>
+                <width id="-670034155263" column="1">0.3333333333333333</width>
+                <width id="-670034155273" column="2">0.3333333333333333</width>
+            </columnsWidth>
+            <cells>
+                <item id="-670034155163" row="2" column="0" rowspan="1" colspan="1"/>
+                <item id="-670034155173" row="2" column="1" rowspan="1" colspan="1"/>
+                <item id="-670034155183" row="1" column="1" rowspan="1" colspan="1"/>
+                <item id="-670034155193" row="0" column="2" rowspan="1" colspan="1"/>
+                <item id="-670034155203" row="2" column="2" rowspan="1" colspan="1"/>
+                <item id="-670034155213" row="1" column="0" rowspan="1" colspan="1"/>
+                <item id="-670034155223" row="0" column="1" rowspan="1" colspan="1"/>
+                <item id="-670034155233" row="0" column="0" rowspan="1" colspan="1"/>
+                <item id="-670034155243" row="1" column="2" rowspan="1" colspan="1"/>
+            </cells>
+            <children>
+                <component id="-670034155153" name="ButtonBuilder" type="ButtonBuilder">
+                    <properties>
+                        <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">1.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">0.0</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="Html" type="STRING" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                        <property name="Enabled" type="BOOLEAN" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="BOOLEAN">true</value>
+                            </locales>
+                        </property>
+                        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                            <defaultLocale locale="ru"/>
+                            <locales>
+                                <value locale="ru" type="NUMBER">3.0</value>
+                            </locales>
+                        </property>
+                    </properties>
+                </component>
+            </children>
+        </component>
+    </freeComponents>
+    <datasources/>
+    <groups/>
+    <rights>
+        <tableRights/>
+        <tableColumnRights/>
+        <eventRights/>
+    </rights>
+</application>

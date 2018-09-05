@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+	<!-- Определяет реализацию хранилища метаданных по приложению -->
+	<Environment
+			name="Whirl/config/metadata/store"
+			value="${context.config.metadata.store}"
+			type="java.lang.String"
+			override="false"/>
+
+	<!-- Определяет реализацию авторизации пользователя -->
+	<Environment
+			name="Whirl/config/authenticator"
+			value="${context.config.authenticator}"
+			type="java.lang.String"
+			override="false"/>
+
+	<!--
+		Start Metadata
+	-->
+	<Resource
+			name="Whirl/ds/metadata/datasource"
+			auth="Container"
+			type="javax.sql.DataSource"
+			username="${context.db.metadata.username}"
+			password="${context.db.metadata.password}"
+			driverClassName="${context.db.metadata.driverClass}"
+			url="${context.db.metadata.connectionURL}"
+			initialSize="1"
+			maxActive="200"
+			maxIdle="20"
+			maxWait="60000"
+			testOnBorrow="true"
+			testOnReturn="true"
+			testWhileIdle="true"
+			minEvictableIdleTimeMillis="60000"
+			timeBetweenEvictionRunsMillis="30000"
+			numTestsPerEvictionRun="10"
+			validationQuery="${context.db.metadata.validationQuery}"
+			defaultAutoCommit="true"/>
+	<!-- Имя схемы расположения в БД. -->
+	<Environment
+			name="Whirl/ds/metadata/schema"
+			value="${context.db.metadata.schema}"
+			type="java.lang.String"
+			override="false"/>
+	<!--
+		Драйвер для подключения к БД.
+		Для Oracle: org.whirlplatform.server.driver.multibase.fetch.oracle.OracleConnectionWrapper
+	-->
+	<Environment
+			name="Whirl/ds/metadata/driver"
+			value="${context.db.metadata.conectionWrapperClass}"
+			type="java.lang.String"
+			override="false"/>
+	<!-- Создавать объекты в БД при первом запуске. -->
+	<Environment
+			name="Whirl/ds/metadata/create-dbobjects"
+			value="${context.db.metadata.creatDBObjects}"
+			type="java.lang.String"
+			override="false"/>
+	<!-- End Metadata -->
+	
+	<!--
+		Данные для выставления в сессии
+	    	name="Whirl/ds/metadata/session-key/${key}" - Ключ для установки в сессии БД. ${key} - изменяемый параметр
+			value="${value}" - Значение параметра в сессии
+	-->
+	<Environment
+			name="Whirl/ds/metadata/session-key/${key}"
+			value="${value}"
+			type="java.lang.String"
+			override="false"/>
+
+
+	<!--
+		Исползуемая реализация аутентификатора пользователей
+	-->
+
+	<Environment
+			name="Whirl/message/default/forbiddenApp"
+			value=""
+			type="java.lang.String"
+			override="false"/>
+
+
+	<Environment
+			name="Whirl/message/en/forbiddenApp"
+			value=""
+			type="java.lang.String"
+			override="false"/>
+	
+	
+	<!-- Коды доступных на сервере приложений. При указании конкретных кодов приложений будут доступны только они.
+	<Environment
+		name="Whirl/application/allowed"
+		value="test1, allowed"
+		type="java.lang.String"
+		override="false" />
+	-->
+	
+	
+	<!-- Коды доступных на сервере приложений. При указании конкретных кодов приложений будут доступны только они.
+	<Environment
+		name="Whirl/application/forbidden"
+		value="tmp7"
+		type="java.lang.String"
+		override="false" />
+	-->
+	
+	<!-- Каталог ресурсов необходимых для работы приложений -->
+	<Environment
+			name="Whirl/work-path"
+			value="/opt/tomcat/whirl"
+			type="java.lang.String"
+			override="false"/>
+
+	<!-- Время жизни метаданных приложения. С этим промежутком метаданные будут обновляться -->
+	<Environment
+			name="Whirl/cachetimeout"
+			value="${context.cache.timeout}"
+			type="java.lang.Integer"
+			override="false"/>
+										
+	<!-- Включение/отключение логирования в БД метаданных -->
+	<Environment
+			name="Whirl/extended-log"
+			value="true"
+			type="java.lang.String"
+			override="false"/>
+
+	<!-- DEFAULT locale messages -->
+	<!-- Заголовок окна браузера для локали по-умолчанию -->
+	<Environment
+			name="Whirl/message/default/index_title"
+			value="Whirl Platform"
+			type="java.lang.String"
+			override="false"/>
+	<!-- Заголовок шапки страницы логина для локали по-умолчанию -->
+	<Environment
+			name="Whirl/message/default/index_header"
+			value="${context.text.header}"
+			type="java.lang.String"
+			override="false"/>
+	<!-- Подпись нижней части страницы логина для локали по-умолчанию -->
+	<Environment
+			name="Whirl/message/default/index_footer"
+			value="Whirl Platform"
+			type="java.lang.String"
+			override="false"/>
+
+	<!-- ENGLISH loacle messages -->
+	<!-- Заголовок окна браузера для локали "EN" (Английской) -->
+	<Environment
+			name="Whirl/message/EN/index_title"
+			value="Whirl Platform"
+			type="java.lang.String"
+			override="false"/>
+	<!-- Заголовок шапки страницы логина для локали "EN" (Английской) -->
+	<Environment
+			name="Whirl/message/EN/index_header"
+			value="{header}"
+			type="java.lang.String"
+			override="false"/>
+	<!-- Подпись нижней части страницы логина для локали "EN" (Английской) -->
+	<Environment
+			name="Whirl/message/EN/index_footer"
+			value="Whirl Platform"
+			type="java.lang.String"
+			override="false"/>
+
+</Context>

@@ -1,0 +1,21 @@
+.bar {
+  position: absolute;
+  z-index: 99999;
+}
+
+.bar td {
+  line-height: 1px;
+  font-size: 1px;
+}
+
+.top {
+  gwt-sprite: "top";
+}
+
+.center {
+  gwt-sprite: "center";
+}
+
+.bottom {
+  gwt-sprite: "bottom";
+}

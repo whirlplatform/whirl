@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<arquillian
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://jboss.org/schema/arquillian"
+        xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <container
+            default="true"
+            qualifier="tomcat7-managed">
+        <configuration>
+            <!-- <property name="javaVmArguments">-Xmx1024m -XX:MaxPermSize=512m</property> -->
+            <property name="jmxPort">9090</property>
+            <property name="bindHttpPort">8080</property>
+            <property name="user">arquillian</property>
+            <property name="pass">12345</property>
+        </configuration>
+    </container>
+
+    <extension qualifier="webdriver">
+        <property name="browser">firefox</property>
+        <property name="firefox_binary">E:\FirefoxPortable\FirefoxPortable.exe</property>
+        <property name="firefox_profile">E:\FirefoxPortable\Data\profile</property>
+        <property name=""></property>
+    </extension>
+
+    <extension qualifier="graphene">
+        <property name="waitGuiInterval">15</property>
+        <property name="waitAjaxInterval">15</property>
+        <property name="waitModelInterval">15</property>
+        <property name="waitGuardInterval">15</property>
+    </extension>
+
+    <!--
+        <extension qualifier="webdriver">
+        <property name="browser">internetExplorer</property>
+        <property name="ieDriverBinary">e:\selenium\IEDriverServer.exe</property>
+        <property name="ieDriverArch">x64</property>
+        <property name="remote">false</property>
+    </extension>
+    -->
+</arquillian>

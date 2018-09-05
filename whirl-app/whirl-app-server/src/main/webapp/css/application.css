@@ -1,0 +1,88 @@
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+img, body, html {
+    border: 0 none;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+ol, ul {
+    list-style: none outside none;
+}
+caption, th {
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+q:before, q:after {
+    content: "";
+}
+
+
+/*
+ * Login panel styles
+*/
+
+.xs-header {
+	height: 40px;
+}
+
+.xs-header-img {
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.xs-header-text {
+	color: #15428B;
+	background: #F7F7F7;
+	font-size: 16px;
+	font-weight: bold;
+	height: 30px;
+}
+
+#uniapp-login-id {
+	padding-top:100px;
+}
+
+
+.xs-login-form table {
+	width: 100%;
+	
+}
+
+.xs-login-form td {
+	padding: 3px;
+}
+
+.xs-login-form td, .xs-login-form td input{
+	font-family: arial;
+	font-size: 12px;
+}
+
+.xs-login-form .xs-input {
+	height: 21px;
+	width: 100%;
+}
+
+.xs-login-form .xs-left {
+	width: 50px;
+}
+
+.xs-footer {
+	width: 100%;
+	background: #FAFAFA;
+	border-top: 1px solid #B5B8C8;
+	height: 25px;
+	padding-top: 3px;
+	font-size:12px;
+}
+
+.alt-hidden{
+	display: none !important;
+	width: 0 !important;
+	height: 0 !important;	
+}

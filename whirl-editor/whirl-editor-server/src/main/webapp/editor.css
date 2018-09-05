@@ -1,0 +1,43 @@
+/** Add css rules here for your application. */
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+img, body, html {
+    border: 0 none;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+ol, ul {
+    list-style: none outside none;
+}
+caption, th {
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+q:before, q:after {
+    content: "";
+}
+
+
+.hint-parent{
+	position: relative;
+}
+
+.hint-decoration{
+ 	background: none repeat scroll 0 0 lightgreen;
+    border: 2px dashed green;
+    bottom: 0;
+    cursor: help;
+    left: 0;
+    opacity: 0.27;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    
+}

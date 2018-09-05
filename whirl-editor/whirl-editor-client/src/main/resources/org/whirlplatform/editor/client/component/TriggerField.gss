@@ -1,0 +1,28 @@
+.trigger {
+  gwt-sprite: "triggerArrow";
+  height: 21px;
+  border-bottom: 1px solid;
+  border-bottom-color: #b5b8c8;
+}
+
+.focus .trigger {
+  gwt-sprite: "triggerArrowFocus";
+  height: 21px;
+  border-bottom-color: #7eadd9;
+}
+
+.over .trigger {
+  gwt-sprite: "triggerArrowOver";
+  height: 21px;
+  border-bottom-color: #7eadd9;
+}
+
+.click .trigger {
+  gwt-sprite: "triggerArrowClick";
+  height: 21px;
+  border-bottom-color: #7eadd9;
+}
+
+.noedit {
+  cursor: pointer;
+}

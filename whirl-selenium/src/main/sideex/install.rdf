@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+ xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+    <Description about="urn:mozilla:install-manifest">
+        <em:id>Sideex@nckuselab.org</em:id>
+        <em:name>SideeX (An Extended Version of Selenium IDE 2.9.1)</em:name>
+        <em:version>0.8.0</em:version>
+        <em:creator>SideeX Team</em:creator>
+        <em:developer>SideeX Team</em:developer>
+        <em:description>This is an extended version of Selenium IDE 2.9.1.
+
+Selenium IDE is a glorious state-of-the-art integrated development environment for developing Selenium test cases. We really appreciate the effort of the Selenium IDE contributors on developing the great and useful software. In this research project, referred to as SideeX, we attempt to modify and extend Selenium IDE in order to expand the existing Selenium IDE record-playback automation capabilities.
+
+In SideeX, the Selenium IDE is included from http://seleniumhq.org under Apache 2.0. The Selenium IDE licensing rule and related notices can be found in http://www.seleniumhq.org/about/license.jsp and https://github.com/SeleniumHQ/selenium/blob/master/NOTICE
+        </em:description>
+        <em:type>2</em:type>
+        <em:homepageURL>http://sideex.org</em:homepageURL>
+        <em:optionsURL>chrome://selenium-ide/content/optionsDialog.xul</em:optionsURL>
+        <em:iconURL>chrome://selenium-ide/content/images/sideex-logo.png</em:iconURL>
+
+        <em:targetApplication>
+          <Description>
+            <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- firefox -->
+            <em:minVersion>31.*</em:minVersion>
+            <em:maxVersion>50.*</em:maxVersion>
+          </Description>
+        </em:targetApplication>
+
+        <em:localized>
+          <Description>
+            <em:locale>en-US</em:locale>
+            <em:name>SideeX (An Extended Version of Selenium IDE 2.9.1)</em:name>
+            <em:description>This is an extended version of Selenium IDE 2.9.1.
+
+Selenium IDE is a glorious state-of-the-art integrated development environment for developing Selenium test cases. We really appreciate the effort of the Selenium IDE contributors on developing the great and useful software. In this research project, referred to as SideeX, we attempt to modify and extend Selenium IDE in order to expand the existing Selenium IDE record-playback automation capabilities.
+
+In SideeX, the Selenium IDE is included from http://seleniumhq.org under Apache 2.0. The Selenium IDE licensing rule and related notices can be found in http://www.seleniumhq.org/about/license.jsp and https://github.com/SeleniumHQ/selenium/blob/master/NOTICE
+        </em:description>
+          </Description>
+        </em:localized>
+    </Description>
+</RDF>

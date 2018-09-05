@@ -1,0 +1,6 @@
+.clear {
+  position: absolute;
+  top: 3px;
+  right: 2px;
+  opacity: 0.5;
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <properties>
+        <!-- provider name must match the property-section containing the connection
+            data -->
+        <!-- <databaseProvider>${context.db.metadata.databaseProvider}</databaseProvider> -->
+        <databaseProvider>${context.db.metadata.databaseProvider}</databaseProvider>
+    </properties>
+
+    <properties-oracle>
+        <jdbcClass>${context.db.metadata.driverClass}</jdbcClass>
+        <jdbcURL>${context.db.metadata.connectionURL}</jdbcURL>
+        <jdbcUser>${context.db.metadata.username}</jdbcUser>
+        <jdbcPwd>${context.db.metadata.password}</jdbcPwd>
+        <schemaName>${context.db.metadata.schema}</schemaName>
+        <empireDBDriverClass>${context.db.metadata.empireDBDriverClass}</empireDBDriverClass>
+        <empireDBDriverProperites>
+            <!-- no properties -->
+        </empireDBDriverProperites>
+    </properties-oracle>
+
+</config>

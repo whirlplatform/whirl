@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="-679311594164" name="Тест логина" metaversion="3">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[Тест логина]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[login-success]]></code>
+    <enabled>true</enabled>
+    <guest>false</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="BCDF9022-6821-46DD-A632-BA0BBC1B969C" name="BorderContainer" type="BorderContainerBuilder">
+      <properties>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="F081F802-CC11-49BF-BCA7-D279DC366688" name="login-success" type="LabelBuilder">
+          <properties>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="Html" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Login success]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Code" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[success]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+        </component>
+      </children>
+    </component>
+  </components>
+  <datasources/>
+  <groups/>
+  <rights>
+    <tableRights/>
+    <tableColumnRights/>
+    <eventRights/>
+  </rights>
+</application>

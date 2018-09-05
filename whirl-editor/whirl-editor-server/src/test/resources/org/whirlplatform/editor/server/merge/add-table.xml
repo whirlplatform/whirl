@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="-670034153833" name="Diff test" metaversion="1">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[Diff test]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[diff-test]]></code>
+    <enabled>true</enabled>
+    <guest>false</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="-670034153853" name="BorderContainerBuilder" type="BorderContainerBuilder">
+      <properties>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="-670034154963" name="FormBuilder" type="FormBuilder">
+          <properties>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Rows" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Columns" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+          <rowsHeight>
+            <height id="-670034155113" row="0">0.3333333333333333</height>
+            <height id="-670034155123" row="1">0.3333333333333333</height>
+            <height id="-670034155133" row="2">0.3333333333333333</height>
+          </rowsHeight>
+          <columnsWidth>
+            <width id="-670034155083" column="0">0.3333333333333333</width>
+            <width id="-670034155093" column="1">0.3333333333333333</width>
+            <width id="-670034155103" column="2">0.3333333333333333</width>
+          </columnsWidth>
+          <cells>
+            <item id="-670034154993" row="2" column="0" rowspan="1" colspan="1"/>
+            <item id="-670034155003" row="2" column="1" rowspan="1" colspan="1"/>
+            <item id="-670034155013" row="1" column="1" rowspan="1" colspan="1"/>
+            <item id="-670034155023" row="0" column="2" rowspan="1" colspan="1"/>
+            <item id="-670034155033" row="2" column="2" rowspan="1" colspan="1"/>
+            <item id="-670034155043" row="1" column="0" rowspan="1" colspan="1"/>
+            <item id="-670034155053" row="0" column="1" rowspan="1" colspan="1"/>
+            <item id="-670034155063" row="0" column="0" rowspan="1" colspan="1"/>
+            <item id="-670034155073" row="1" column="2" rowspan="1" colspan="1"/>
+          </cells>
+          <children>
+            <component id="-670034154983" name="ButtonBuilder" type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+            <component id="-670034154973" name="ButtonBuilder" type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[New Button]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </components>
+  <freeComponents>
+    <component id="-670034155143" name="FormBuilder" type="FormBuilder">
+      <properties>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Rows" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Columns" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <rowsHeight>
+        <height id="-670034155283" row="0">0.3333333333333333</height>
+        <height id="-670034155293" row="1">0.3333333333333333</height>
+        <height id="-670034155303" row="2">0.3333333333333333</height>
+      </rowsHeight>
+      <columnsWidth>
+        <width id="-670034155253" column="0">0.3333333333333333</width>
+        <width id="-670034155263" column="1">0.3333333333333333</width>
+        <width id="-670034155273" column="2">0.3333333333333333</width>
+      </columnsWidth>
+      <cells>
+        <item id="-670034155163" row="2" column="0" rowspan="1" colspan="1"/>
+        <item id="-670034155173" row="2" column="1" rowspan="1" colspan="1"/>
+        <item id="-670034155183" row="1" column="1" rowspan="1" colspan="1"/>
+        <item id="-670034155193" row="0" column="2" rowspan="1" colspan="1"/>
+        <item id="-670034155203" row="2" column="2" rowspan="1" colspan="1"/>
+        <item id="-670034155213" row="1" column="0" rowspan="1" colspan="1"/>
+        <item id="-670034155223" row="0" column="1" rowspan="1" colspan="1"/>
+        <item id="-670034155233" row="0" column="0" rowspan="1" colspan="1"/>
+        <item id="-670034155243" row="1" column="2" rowspan="1" colspan="1"/>
+      </cells>
+      <children>
+        <component id="-670034155153" name="ButtonBuilder" type="ButtonBuilder">
+          <properties>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">0.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Html" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+        </component>
+      </children>
+    </component>
+  </freeComponents>
+  <datasources>
+    <datasource id="421BE8FA-A6D4-4568-8B8E-B7D9369FB990" name="metadata">
+      <alias>metadata</alias>
+      <databaseName>DATABASE</databaseName>
+      <schemas>
+        <schema id="6E54CD9E-29C4-412D-AFDB-A910D5810F9C" name="UNICORE">
+          <schemaName>UNICORE</schemaName>
+          <tables>
+            <table id="4BD7BE98-1FD1-478D-A875-E0DDDD208044" name="TWHIRL_APPLICATION">
+              <title replace="false">
+                <defaultLocale locale="ru"/>
+                <locales>
+                  <value locale="ru" type="STRING"><![CDATA[TWHIRL_APPLICATION]]></value>
+                </locales>
+              </title>
+              <emptyRow>false</emptyRow>
+              <tableName>TWHIRL_APPLICATION</tableName>
+              <idColumnId>EBF940C3-BF57-449B-A1FF-55417A7A0290</idColumnId>
+              <deleteColumnId>D62918AA-3A8C-4506-9442-D459A59748C6</deleteColumnId>
+              <columns>
+                <column id="4562A2BA-E1A3-434A-A068-656042EFCDAA" name="DFTITLE - DFTITLE">
+                  <index>3</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFTITLE]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFTITLE</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>255</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="FEC83868-8E57-4AEC-9AC4-B1D71529A0C7" name="DFENABLED - DFENABLED">
+                  <index>6</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFENABLED]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFENABLED</columnName>
+                  <type><![CDATA[BOOLEAN]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="6F4F5659-CD3B-4E63-BAFC-DBF444351F2A" name="DFNAME - DFNAME">
+                  <index>2</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFNAME]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFNAME</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>255</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="D62918AA-3A8C-4506-9442-D459A59748C6" name="DFDELETE - DFDELETE">
+                  <index>1</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFDELETE]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFDELETE</columnName>
+                  <type><![CDATA[BOOLEAN]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="55471723-626C-4151-BBE4-C9921474917D" name="DFXML - DFXML">
+                  <index>8</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFXML]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFXML</columnName>
+                  <type><![CDATA[FILE]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="EBF940C3-BF57-449B-A1FF-55417A7A0290" name="DFOBJ - DFOBJ">
+                  <index>0</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFOBJ]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFOBJ</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>true</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="04E485AE-CAE1-4B25-9DB7-238F7A4B4D10" name="DFGUEST_URL - DFGUEST_URL">
+                  <index>5</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFGUEST_URL]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFGUEST_URL</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>255</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="37BE7766-BF45-4890-8388-BEC538DA0EC2" name="TWHIRL_COMP - TWHIRL_COMP">
+                  <index>7</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[TWHIRL_COMP]]></value>
+                    </locales>
+                  </title>
+                  <columnName>TWHIRL_COMP</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="E817B08F-8E0E-47AF-B8EA-35E332231361" name="DFCODE - DFCODE">
+                  <index>4</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DFCODE]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DFCODE</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>255</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat/>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+              </columns>
+            </table>
+          </tables>
+        </schema>
+      </schemas>
+    </datasource>
+  </datasources>
+  <groups/>
+  <rights>
+    <tableRights/>
+    <tableColumnRights/>
+    <eventRights/>
+  </rights>
+</application>

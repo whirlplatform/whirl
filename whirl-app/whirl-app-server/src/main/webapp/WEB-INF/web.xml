@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+        version="2.5">
+
+    <display-name>Whirlplatform</display-name>
+
+    <!-- Джобы -->
+
+    <!-- log4j -->
+    <listener>
+        <listener-class>org.whirlplatform.server.log.ContextPathInitializer</listener-class>
+    </listener>
+
+
+    <listener>
+        <listener-class>org.whirlplatform.server.session.SessionListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>InjectFilter</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>InjectFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <listener-class>org.whirlplatform.server.servlet.InjectServletConfig</listener-class>
+    </listener>
+
+    <session-config>
+        <session-timeout>240</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>CheckTokenServlet</servlet-name>
+        <servlet-class>org.whirlplatform.server.servlet.CheckTokenServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckTokenServlet</servlet-name>
+        <url-pattern>/checktoken</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VersionServlet</servlet-name>
+        <servlet-class>org.whirlplatform.server.servlet.VersionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>VersionServlet</servlet-name>
+        <url-pattern>/version</url-pattern>
+    </servlet-mapping>
+
+    <security-constraint>
+        <display-name>SecurityConstraint</display-name>
+        <web-resource-collection>
+            <web-resource-name>All</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+    </security-constraint>
+
+    <distributable/>
+
+</web-app>

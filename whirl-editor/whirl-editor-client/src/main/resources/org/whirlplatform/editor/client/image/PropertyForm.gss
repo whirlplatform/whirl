@@ -1,0 +1,7 @@
+.tableInsert {
+  background: transparent url(tableinsert.png) no-repeat 0 0;
+}
+
+.tableDelete {
+  background-image: url(tabledelete.png) !important;
+}

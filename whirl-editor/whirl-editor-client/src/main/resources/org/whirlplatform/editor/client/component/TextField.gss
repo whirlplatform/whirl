@@ -1,0 +1,35 @@
+.text,
+.area {
+  background-color: #fff;
+  border: 1px #b5b8c8 solid;
+  padding: 1px 3px;
+  resize: none;
+}
+
+.area {
+  overflow: visible;
+}
+
+@if (is("user.agent", "gecko1_8") || is("user.agent", "gecko")) {
+  .area {
+    padding: 0;
+  }
+}
+
+.text {
+  height: 18px;
+  line-height: 18px;
+  vertical-align: top;
+}
+
+@if (is("user.agent", "ie6") || is("user.agent", "ie8") || is("user.agent", "ie9")) {
+  .file {
+    height: 18px;
+    line-height: 18px;
+    vertical-align: top;
+  }
+}
+@else  {
+  .file {
+  }
+}

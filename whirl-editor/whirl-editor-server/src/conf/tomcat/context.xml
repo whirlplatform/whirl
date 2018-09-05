@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true">
+
+    <!-- For debug purposed only -->
+    <Resources className="org.apache.naming.resources.VirtualDirContext"
+               extraResourcePaths="${basedir}/../target/gwt/launcherDir/"/>
+
+    <!-- Start Metadata datasource configuration	-->
+    <Resource
+            name="Whirl/ds/metadata/datasource"
+            auth="Container"
+            factory="com.zaxxer.hikari.HikariJNDIFactory"
+            type="javax.sql.DataSource"
+            minimumIdle="5"
+            maximumPoolSize="10"
+            connectionTimeout="300000"
+            jdbcUrl="${context.db.metadata.connectionURL}"
+            dataSource.user="${context.db.metadata.username}"
+            dataSource.password="${context.db.metadata.password}"
+            dataSource.implicitCachingEnabled="true"
+    />
+    <!-- Whirl datasource driver -->
+    <Environment
+            name="Whirl/ds/metadata/driver"
+            value="${context.db.metadata.conectionWrapperClass}"
+            type="java.lang.String"
+            override="false"/>
+    <!-- End Metadata datasource configuration-->
+
+
+    <!-- Каталог ресурсов необходимых для работы приложений -->
+    <Environment
+            name="Whirl/work-path"
+            value="${config.work-path}"
+            type="java.lang.String"
+            override="false"/>
+
+    <!-- Время жизни метаданных приложения. С этим промежутком метаданные будут обновляться -->
+    <Environment
+            name="Whirl/cachetimeout"
+            value="${config.cache-timeout}"
+            type="java.lang.Integer"
+            override="false"/>
+
+    <!-- DEFAULT locale messages -->
+    <!-- Заголовок окна браузера для локали по-умолчанию -->
+    <Environment
+            name="Whirl/message/default/index_title"
+            value="Whirl Platform"
+            type="java.lang.String"
+            override="false"/>
+    <!-- Заголовок шапки страницы логина для локали по-умолчанию -->
+    <Environment
+            name="Whirl/message/default/index_header"
+            value="${context.text.header}"
+            type="java.lang.String"
+            override="false"/>
+    <!-- Подпись нижней части страницы логина для локали по-умолчанию -->
+    <Environment
+            name="Whirl/message/default/index_footer"
+            value="Whirl Platform"
+            type="java.lang.String"
+            override="false"/>
+
+    <!-- ENGLISH loacle messages -->
+    <!-- Заголовок окна браузера для локали "EN" (Английской) -->
+    <Environment
+            name="Whirl/message/EN/index_title"
+            value="Whirl Platform"
+            type="java.lang.String"
+            override="false"/>
+    <!-- Заголовок шапки страницы логина для локали "EN" (Английской) -->
+    <Environment
+            name="Whirl/message/EN/index_header"
+            value="{header}"
+            type="java.lang.String"
+            override="false"/>
+    <!-- Подпись нижней части страницы логина для локали "EN" (Английской) -->
+    <Environment
+            name="Whirl/message/EN/index_footer"
+            value="Whirl Platform"
+            type="java.lang.String"
+            override="false"/>
+
+</Context>

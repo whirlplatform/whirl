@@ -1,0 +1,11 @@
+.xs-link-text {
+  cursor: pointer;
+}
+
+.xs-link-text:hover {
+  color: #2b60de !important;
+}
+
+.xs-link {
+  cursor: pointer;
+}

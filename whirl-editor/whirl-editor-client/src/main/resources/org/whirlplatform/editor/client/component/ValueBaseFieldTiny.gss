@@ -1,0 +1,43 @@
+input.focus,
+textarea.focus {
+  border: 1px solid #7eadd9;
+}
+
+input.field,
+textarea.field {
+  height: 15px !important;
+}
+
+input.invalid,
+textarea.invalid {
+  background-color: #fff;
+  background-position: bottom;
+  border: 1px solid #c30;
+  line-height: 15px;
+}
+
+.wrap {
+  position: relative;
+  left: 0;
+  top: 0;
+  zoom: 1;
+  white-space: nowrap;
+  text-align: left;
+}
+
+@if (is("user.agent", "ie6")) {
+  .wrap {
+    position: static;
+  }
+}
+
+.field {
+  font: 12px tahoma, arial, helvetica, sans-serif;
+}
+
+.empty {
+  color: gray;
+}
+
+.readonly {
+}

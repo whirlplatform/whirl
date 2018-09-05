@@ -1,0 +1,51 @@
+#outer {
+  position: relative;
+  width: 240px;
+  height: 150px;
+  border: 1px dashed #99b9e9;
+}
+
+#inner {
+  position: relative;
+  width: 140px;
+  border: 1px solid #99b9e9;
+}
+
+#margin-label {
+  font-size: 8pt;
+  top: 0;
+  color: #686868;
+  position: absolute;
+}
+
+#layout-label {
+  font-size: 8pt;
+  top: 0;
+  color: #686868;
+}
+
+#component-label {
+  font-size: 8pt;
+  top: 0;
+  color: #686868;
+}
+
+#x-label {
+  font-size: 12pt;
+  top: 0;
+  color: #686868;
+}
+
+#l-width div,
+#l-height div,
+#c-width div,
+#c-height div {
+  display: inline;
+}
+
+#c-borders {
+  border: 1px solid #99bbe8;
+  font-size: 12pt;
+  top: 0;
+  color: #686868;
+}

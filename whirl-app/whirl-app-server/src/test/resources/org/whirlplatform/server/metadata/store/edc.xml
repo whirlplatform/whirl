@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="-677785830244" name="edc" metaversion="3">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[edc]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[edc]]></code>
+    <enabled>true</enabled>
+    <guest>false</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="2B60B2AF-4935-4CDB-909F-4ADEC124865D" name="BorderContainer 2" type="BorderContainerBuilder">
+      <properties>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="E59D3AC6-B0FF-4FA5-A9D8-9750CE3BBDA8" name="VerticalContainer 1" type="VerticalContainerBuilder">
+          <properties>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+          </properties>
+          <children>
+            <component id="88760223-DE0A-4253-960B-4E7230D840CB" name="EditGrid 1" type="EditGridBuilder">
+              <properties>
+                <property name="Width" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Height" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.75</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="ShowPagingToolbar" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Width" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.75</value>
+                  </locales>
+                </property>
+                <property name="DefaultRowsPerPage" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">20.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="ShowExportButtons" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="ShowDataButtons" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="Height" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="ShowMethodButtons" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="ShowFindButtons" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="DataSource" type="LIST" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="LIST">
+                      <id>6176103F-64FC-46B2-80C3-6845D9CA21A3</id>
+                      <label><![CDATA[GRID_TEST]]></label>
+                    </value>
+                  </locales>
+                </property>
+                <property name="ShowRefreshButtons" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </components>
+  <freeComponents>
+    <component id="6320DC79-D244-4810-B52B-564EFB9DBAA0" name="Window 2" type="WindowBuilder">
+      <properties>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="E86BDDDC-EFE2-4129-B9C3-3EEAA7CDADA1" name="Label 2" type="LabelBuilder">
+          <properties>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Html" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Label]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+        </component>
+      </children>
+    </component>
+    <component id="0FAB225A-3256-4C2E-9746-36390D9263BC" name="Window 1" type="WindowBuilder">
+      <properties>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="BBA1178E-313C-4513-90B4-DD30D0B239B9" name="Label 1" type="LabelBuilder">
+          <properties>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+        </component>
+      </children>
+    </component>
+    <component id="DA528BFA-04A9-4470-99E5-EBC8B27083B7" name="" type="BorderContainerBuilder">
+      <properties>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="80B6095B-7E0C-45F3-A64F-CDD67FDD59E2" name="Form 1" type="FormBuilder">
+          <properties>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Columns" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Rows" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+          <rowsHeight>
+            <height id="12F25ACE-D600-4145-963F-B5EB7AC5F79E" row="0">0.3333333333333333</height>
+            <height id="CCDAB997-63FF-4072-A40B-A5AD1FD58F9A" row="1">0.3333333333333333</height>
+            <height id="AE440922-2D8D-4631-9F3D-AD3EE18F3F1C" row="2">0.3333333333333333</height>
+          </rowsHeight>
+          <columnsWidth>
+            <width id="3A924EF2-0FF7-4F7F-B0E0-B50FD08B18BD" column="0">0.3333333333333333</width>
+            <width id="93D91AA5-2928-48FE-8FA7-0EB042C7083B" column="1">0.3333333333333333</width>
+            <width id="4124DFB8-DA89-4367-AC6C-8630CF288E56" column="2">0.3333333333333333</width>
+          </columnsWidth>
+          <cells>
+            <item id="BF6E291A-F701-442F-94E6-8DF810C355C0" row="2" column="0" rowspan="1" colspan="1"/>
+            <item id="01C05FA0-DC4A-4941-B4BE-6A784D154A92" row="2" column="1" rowspan="1" colspan="1"/>
+            <item id="083C7E25-8104-4582-8C6F-11B0B1648587" row="1" column="1" rowspan="1" colspan="1"/>
+            <item id="CE323DD7-FB3A-4AA2-9C70-4A161BF3926F" row="0" column="2" rowspan="1" colspan="1"/>
+            <item id="BD4B8D9F-663D-40F0-87C6-54CF1D363820" row="2" column="2" rowspan="1" colspan="1"/>
+            <item id="F2DCA6CD-71FC-433E-97AC-63FA14D8DBC5" row="1" column="0" rowspan="1" colspan="1"/>
+            <item id="C55D113C-28F2-423C-B023-562F85A15DE7" row="0" column="1" rowspan="1" colspan="1"/>
+            <item id="3C56062D-63DD-4054-B92C-F9319F093055" row="0" column="0" rowspan="1" colspan="1"/>
+            <item id="5CCD7F15-37F9-476A-8238-3949F0CD2C5C" row="1" column="2" rowspan="1" colspan="1"/>
+          </cells>
+          <children>
+            <component id="5D6E3A0C-3913-49CE-8071-E9C363F053D6" name="Button 1" type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button4wew4434]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+            <component id="2F965464-F493-4AE1-8BA1-9454DD1C2F8C" name="Button 2" type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormRow" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:FormColumn" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </freeComponents>
+  <datasources>
+    <datasource id="A6BE32AD-0CFE-448F-A84B-09C689546A32" name="Источник данных 0">
+      <alias>metadata</alias>
+      <databaseName>DATABASE</databaseName>
+      <schemas>
+        <schema id="5406E77E-6BA8-48A5-84D6-F6C46DE87C05" name="Новая схема UNI_NEW_0">
+          <schemaName>UNICORE</schemaName>
+          <tables>
+            <table id="6176103F-64FC-46B2-80C3-6845D9CA21A3" name="GRID_TEST">
+              <title replace="false">
+                <defaultLocale locale="ru"/>
+                <locales/>
+              </title>
+              <emptyRow>false</emptyRow>
+              <simple>false</simple>
+              <tableName>GRID_TEST</tableName>
+              <idColumnId>CF3113F0-D328-44DC-A283-9252A26890D2</idColumnId>
+              <columns>
+                <column id="0F0ED547-B7F7-40E7-B1C8-DA8C4B6CBA55" name="STRINGS - STRINGS">
+                  <index>1</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[STRINGS]]></value>
+                    </locales>
+                  </title>
+                  <columnName>STRINGS</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>200</width>
+                  <height>null</height>
+                  <size>250</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="A0CB7736-E130-4779-8A85-D32A9930AE54" name="FLOAT_NUMS - FLOAT_NUMS">
+                  <index>3</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[FLOAT_NUMS]]></value>
+                    </locales>
+                  </title>
+                  <columnName>FLOAT_NUMS</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>200</width>
+                  <height>null</height>
+                  <size>8</size>
+                  <scale>4</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat>#####.#####</dataFormat>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="E5F10A41-FCFB-4EB9-B22F-216785293E66" name="NUMBERS - NUMBERS">
+                  <index>2</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[NUMBERS]]></value>
+                    </locales>
+                  </title>
+                  <columnName>NUMBERS</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>200</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="CF3113F0-D328-44DC-A283-9252A26890D2" name="ID - ID">
+                  <index>0</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[ID]]></value>
+                    </locales>
+                  </title>
+                  <columnName>ID</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>200</width>
+                  <height>null</height>
+                  <size>20</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>true</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="C9EC3006-A7A2-4B4B-A858-50EB7D438241" name="DATES - DATES">
+                  <index>4</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[DATES]]></value>
+                    </locales>
+                  </title>
+                  <columnName>DATES</columnName>
+                  <type><![CDATA[DATE]]></type>
+                  <width>200</width>
+                  <height>null</height>
+                  <size>7</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+              </columns>
+              <view id="A1B7A5E2-3ED7-443C-BB80-128B272AEFF5" name="Сохранить - GRID_TEST">
+                <viewName>GRID_TEST</viewName>
+                <source><![CDATA[]]></source>
+              </view>
+              <list id="B785F724-9D65-4CA5-9249-C57DD3DEC144" name="Представление - GRID_TEST">
+                <viewName>GRID_TEST</viewName>
+                <source><![CDATA[]]></source>
+              </list>
+            </table>
+          </tables>
+        </schema>
+      </schemas>
+    </datasource>
+  </datasources>
+  <groups>
+    <group id="-677804514164" name="����� ������4444" groupName="new_group4444"/>
+    <group id="-677785830644" name="����� ������www2" groupName="new_groupwww"/>
+    <group id="-677785830364" name="����� ������qqq333" groupName="new_groupqqq2"/>
+    <group id="-677804556904" name="����� ������sfsf" groupName="new_groupsfsf2"/>
+  </groups>
+  <rights>
+    <tableRights>
+      <collection id="CF3B2488-C3B4-4F99-B170-4D4583AA0920" tableId="6176103F-64FC-46B2-80C3-6845D9CA21A3">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="DELETE">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="RESTRICT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="ADD">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="ADD">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="ADD">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="ADD">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="ADD">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+    </tableRights>
+    <tableColumnRights>
+      <collection id="0C3E76C7-C1E7-47DF-A99C-BCC0B3FEBBD3" tableColumnId="E5F10A41-FCFB-4EB9-B22F-216785293E66">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="DCA766D0-AB81-443A-A43B-D35487D27A6A" tableColumnId="0F0ED547-B7F7-40E7-B1C8-DA8C4B6CBA55">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="80A2D6D1-DD01-4B7A-89CC-A26AEA3CBEAD" tableColumnId="C9EC3006-A7A2-4B4B-A858-50EB7D438241">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="F73730C0-6072-4248-9A76-2CA0636A2E2A" tableColumnId="CF3113F0-D328-44DC-A283-9252A26890D2">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="BA4E5150-7481-4F7F-ADE7-21F19240FC83" tableColumnId="A0CB7736-E130-4779-8A85-D32A9930AE54">
+        <application>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="-677804514164">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830644">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677785830364">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+          <group id="-677804556904">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+    </tableColumnRights>
+    <eventRights/>
+  </rights>
+</application>

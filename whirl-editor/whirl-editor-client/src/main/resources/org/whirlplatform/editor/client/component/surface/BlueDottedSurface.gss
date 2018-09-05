@@ -1,0 +1,7 @@
+.surface {
+  border: 1px dotted #d6e3f2;
+  background-color: transparent;
+  z-index: 99999;
+  overflow: hidden;
+  position: absolute;
+}

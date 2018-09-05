@@ -1,0 +1,172 @@
+package org.whirlplatform.editor.client.view.toolbar;
+
+import com.google.gwt.core.client.GWT;
+import com.sencha.gxt.widget.core.client.Window;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import com.sencha.gxt.widget.core.client.event.SubmitCompleteEvent;
+import com.sencha.gxt.widget.core.client.event.SubmitCompleteEvent.SubmitCompleteHandler;
+import com.sencha.gxt.widget.core.client.form.FileUploadField;
+import com.sencha.gxt.widget.core.client.form.FormPanel;
+import com.sencha.gxt.widget.core.client.form.FormPanel.Encoding;
+import com.sencha.gxt.widget.core.client.form.FormPanel.Method;
+import com.sencha.gxt.widget.core.client.toolbar.FillToolItem;
+import com.sencha.gxt.widget.core.client.toolbar.LabelToolItem;
+import com.sencha.gxt.widget.core.client.toolbar.SeparatorToolItem;
+import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
+import org.whirlplatform.component.client.utils.InfoHelper;
+import org.whirlplatform.editor.client.image.ComponentBundle;
+import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
+import org.whirlplatform.editor.client.presenter.ToolBarPresenter.IToolBarView;
+import org.whirlplatform.editor.client.view.context.ContextTextButton;
+import org.whirlplatform.editor.client.view.widget.DisplayCurrentUserWidget;
+import org.whirlplatform.editor.shared.i18n.EditorMessage;
+
+/**
+ * Основная панель инструментов
+ */
+public class ToolBarView extends ToolBar implements IToolBarView {
+    private static final int SPACING = 5;
+    private static final int IMPORT_HEIGHT = 150;
+    private static final int IMPORT_WIDTH = 400;
+    private static final String IMPORT_BUTTON = EditorMessage.Util.MESSAGE.load();
+    private static final String IMPORT_TITLE = EditorMessage.Util.MESSAGE.toolbar_load_xml();
+    private static final String IMPORT_CLOSE = EditorMessage.Util.MESSAGE.close();
+
+    private static final String ERROR = EditorMessage.Util.MESSAGE.error();
+    private static final String ERROR_IMPORT = EditorMessage.Util.MESSAGE.error_import_application();
+    private static final String WARN = EditorMessage.Util.MESSAGE.warn();
+    private static final String WARN_NO_CURR_APP = "No applications loaded!";
+
+    private ToolBarPresenter presenter;
+    private ContextTextButton<ToolBarPresenter> newButton;
+    private ContextTextButton<ToolBarPresenter> openButton;
+    private ContextTextButton<ToolBarView> openXmlButton;
+    private ContextTextButton<ToolBarPresenter> saveButton;
+    private ContextTextButton<ToolBarPresenter> saveAsButton;
+    private ContextTextButton<ToolBarPresenter> saveXmlButton;
+    private ContextTextButton<ToolBarPresenter> runButton;
+    private ContextTextButton<ToolBarPresenter> packageButton;
+    private ContextTextButton<ToolBarPresenter> compareButton;
+    private Window importWindow;
+    private FormPanel importForm;
+
+    public void buildUi() {
+        setHorizontalSpacing(SPACING);
+        setLayoutData(new VerticalLayoutData(1, -1));
+        newButton = new ToolbarNewButton(getPresenter());
+        openButton = new ToolbarOpenButton(getPresenter());
+        openXmlButton = new ToolbarOpenXmlButton(this);
+        saveButton = new ToolbarSaveButton(getPresenter());
+        saveAsButton = new ToolbarSaveAsButton(getPresenter());
+        saveXmlButton = new ToolbarSaveXmlButton(getPresenter());
+        runButton = new ToolbarRunButton(getPresenter());
+        packageButton = new ToolbarPackageButton(getPresenter());
+        compareButton = new ToolbarCompareButton(getPresenter());
+        add(newButton.asTextButton());
+        add(new SeparatorToolItem());
+        add(openButton.asTextButton());
+        add(openXmlButton.asTextButton());
+        add(new SeparatorToolItem());
+        add(saveButton.asTextButton());
+        add(saveAsButton.asTextButton());
+        add(saveXmlButton.asTextButton());
+        add(new SeparatorToolItem());
+        add(packageButton.asTextButton());
+        add(compareButton.asTextButton());
+        add(runButton.asTextButton());
+        add(new SeparatorToolItem());
+        add(new FillToolItem());
+        add(new DisplayCurrentUserWidget());
+        add(new LabelToolItem("&nbsp;"));
+        updateButtonState();
+    }
+
+    private FormPanel createImportForm() {
+        if (importForm == null) {
+            importForm = new FormPanel();
+            importForm.setEncoding(Encoding.MULTIPART);
+            importForm.setMethod(Method.POST);
+            importForm.setAction(GWT.getHostPageBaseURL() + "import");
+            importForm.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+                @Override
+                public void onSubmitComplete(SubmitCompleteEvent event) {
+                    if (event.getResults().contains("OK")) {
+                        closeImportWindow();
+                        presenter.loadApplicationFromXML();
+                    } else {
+                        InfoHelper.error("toolbar-view-import-form", ERROR, ERROR_IMPORT);
+                    }
+                }
+            });
+        }
+        return importForm;
+    }
+
+    private void closeImportWindow() {
+        if (importWindow != null) {
+            importWindow.hide();
+        }
+    }
+
+    public void showImportWindow() {
+        final FormPanel form = createImportForm();
+        final FileUploadField field = new FileUploadField();
+        field.setName("file");
+        importWindow = new Window();
+        importWindow.getHeader().setText(IMPORT_TITLE);
+        importWindow.getHeader().setIcon(ComponentBundle.INSTANCE.openXml());
+        importWindow.setResizable(false);
+        importWindow.setHeight(IMPORT_HEIGHT);
+        importWindow.setWidth(IMPORT_WIDTH);
+        TextButton importButton = new TextButton(IMPORT_BUTTON);
+        importButton.addSelectHandler(new SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                if (field.getValue() != null && !"".equals(field.getValue())) {
+                    form.submit();
+                }
+            }
+        });
+        importButton.setIcon(ComponentBundle.INSTANCE.load());
+        TextButton closeButton = new TextButton(IMPORT_CLOSE);
+        closeButton.addSelectHandler(new SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                importWindow.hide();
+            }
+        });
+        closeButton.setIcon(ComponentBundle.INSTANCE.cancel());
+        importWindow.setWidget(form);
+        form.setWidget(field);
+        importWindow.addButton(importButton);
+        importWindow.addButton(closeButton);
+        importWindow.show();
+    }
+
+    @Override
+    public void setPresenter(ToolBarPresenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public ToolBarPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void updateButtonState() {
+        saveAsButton.updateState();
+        saveXmlButton.updateState();
+        saveButton.updateState();
+        packageButton.updateState();
+        runButton.updateState();
+    }
+
+    @Override
+    public void showNoAppLoadedWarning() {
+        InfoHelper.warning("toolbar-view-show-no-app-loaded", WARN, WARN_NO_CURR_APP);
+    }
+}
