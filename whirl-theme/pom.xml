@@ -118,8 +118,8 @@
             </activation>
             <properties>
                 <platform>windows</platform>
-                <phantomjs.bin.exec>.exe</phantomjs.bin.exec>
                 <archive>.zip</archive>
+                <phantomjs.bin.exec>.exe</phantomjs.bin.exec>
             </properties>
         </profile>
 
@@ -133,6 +133,7 @@
             <properties>
                 <platform>macosx</platform>
                 <archive>.zip</archive>
+                <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
         </profile>
         <profile>
@@ -146,6 +147,7 @@
             <properties>
                 <platform>linux-i686</platform>
                 <archive>.tar.bz2</archive>
+                <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
             <build>
                 <plugins>
@@ -194,6 +196,7 @@
             <properties>
                 <platform>linux-x86_64</platform>
                 <archive>.tar.bz2</archive>
+                <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
         </profile>
     </profiles>
