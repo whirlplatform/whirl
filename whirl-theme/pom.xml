@@ -80,7 +80,7 @@
                                 <argument>-classpath</argument>
                                 <classpath/>
                                 <argument>
-                                    -DphantomBin=${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}/phantomjs${phantomjs.bin.exec}
+                                    -DphantomBin=${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
                                 </argument>
                                 <argument>com.sencha.gxt.themebuilder.ThemeBuilder</argument>
                                 <!-- Build all generated sources into the classes directory so they end up in the final jar -->
@@ -119,6 +119,7 @@
             <properties>
                 <platform>windows</platform>
                 <archive>.zip</archive>
+                <phantomjs.bin.path></phantomjs.bin.path>
                 <phantomjs.bin.exec>.exe</phantomjs.bin.exec>
             </properties>
         </profile>
@@ -133,6 +134,7 @@
             <properties>
                 <platform>macosx</platform>
                 <archive>.zip</archive>
+                <phantomjs.bin.path>bin/</phantomjs.bin.path>
                 <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
         </profile>
@@ -147,6 +149,7 @@
             <properties>
                 <platform>linux-i686</platform>
                 <archive>.tar.bz2</archive>
+                <phantomjs.bin.path>bin/</phantomjs.bin.path>
                 <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
             <build>
@@ -196,6 +199,7 @@
             <properties>
                 <platform>linux-x86_64</platform>
                 <archive>.tar.bz2</archive>
+                <phantomjs.bin.path>bin/</phantomjs.bin.path>
                 <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
         </profile>
