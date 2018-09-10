@@ -15,7 +15,6 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  * Контейнер может содержать вложенные контейнеры, выровненные по его границам
  * (северный-NORTH, южный-SOUTH, западный-WEST, восточный-EAST)
  *
- * @author slusarenko_ig
  */
 @Export("BorderContainer")
 @ExportPackage("Whirl")

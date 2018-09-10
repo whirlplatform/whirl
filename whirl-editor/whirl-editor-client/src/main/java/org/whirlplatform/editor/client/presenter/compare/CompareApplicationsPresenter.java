@@ -28,7 +28,6 @@ import java.util.List;
 /**
  * Сравнение приложений
  *
- * @author bedritckiy_mr
  */
 @Presenter(view = CompareApplicationsView.class)
 public class CompareApplicationsPresenter

@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * Выполняет событие в базе данных
- *
- * @author bedritckiy_mr
  */
 public interface EventExecutor {
 

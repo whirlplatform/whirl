@@ -16,7 +16,6 @@ import javax.ws.rs.ext.Provider;
  * На клиент отправляется сериализованный {@link ExceptionData} из исключения.<br/>
  * Регистрируется в {@link RestApplication}.
  *
- * @author lebedev_sv
  */
 @Provider
 public class RestExceptionMapper implements ExceptionMapper<CustomException> {

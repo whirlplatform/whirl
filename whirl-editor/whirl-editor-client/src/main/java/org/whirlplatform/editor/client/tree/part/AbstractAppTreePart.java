@@ -6,9 +6,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
  * Base class for all application tree parts
- * 
- * @author bedritckiy_mr
- *
  */
 public abstract class AbstractAppTreePart<T extends AbstractElement> implements AppTreePart<T> {
 	protected AppTree appTree;

@@ -16,7 +16,6 @@ import java.util.Map.Entry;
 
 /**
  * @param <T>
- * @author semenov_pa
  */
 @NotThreadSafe
 public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyContext> {
@@ -24,7 +23,6 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
     /**
      * Контекст копирвоания
      *
-     * @author semenov_pa
      */
     static class CopyContext implements ElementVisitor.VisitContext {
 

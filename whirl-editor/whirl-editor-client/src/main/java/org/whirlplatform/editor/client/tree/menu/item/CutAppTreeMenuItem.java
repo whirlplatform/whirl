@@ -11,8 +11,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
  * Пункт меню дерева приложения - Вырезать
- * 
- * @author bedritckiy_mr
  */
 public class CutAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_cut();

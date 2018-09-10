@@ -10,8 +10,6 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * Пункт меню дерева приложения - Удалить
- * 
- * @author bedritckiy_mr
  */
 public class DeleteAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_remove();

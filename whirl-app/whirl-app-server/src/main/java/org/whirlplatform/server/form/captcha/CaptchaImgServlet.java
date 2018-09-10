@@ -14,9 +14,6 @@ import java.io.IOException;
 
 /**
  * генератор картинок капчи
- * 
- * @author Илья Слюсаренко
- * 
  */
 @Singleton
 public class CaptchaImgServlet extends HttpServlet {

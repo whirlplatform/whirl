@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.db.*;
 
 /**
  * Формирует отображаемые имена
- *
- * @author bedritckiy_mr
  */
 public class DisplayNameVisitor implements TreeElementVisitor<DisplayNameVisitContext> {
     // private EditorMessage message = EditorMessage.Util.MESSAGE;

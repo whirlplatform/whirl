@@ -16,7 +16,6 @@ import org.whirlplatform.meta.shared.version.VersionUtil;
 /**
  * Vsersion/branch input control
  *
- * @author bedritckiy_mr
  */
 public class VersionField extends HBoxLayoutContainer {
     private final String BRANCH_LABEL = EditorMessage.Util.MESSAGE.branch();

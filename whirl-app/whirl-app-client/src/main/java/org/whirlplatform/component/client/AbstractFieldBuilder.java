@@ -23,8 +23,6 @@ import java.util.Map;
 /**
  * Билдер-родитель для всех билдеров-полей.
  * 
- * @author semenov_pa
- * 
  */
 public abstract class AbstractFieldBuilder extends ComponentBuilder
         implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, KeyPressEvent.HasKeyPressHandlers {

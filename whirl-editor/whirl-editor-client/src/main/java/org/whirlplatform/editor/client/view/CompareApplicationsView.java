@@ -35,8 +35,7 @@ import java.util.List;
 
 /**
  * Сравнение приложений
- * 
- * @author bedritckiy_mr
+ *
  */
 public class CompareApplicationsView extends Window implements ICompareApplicationsView {
 

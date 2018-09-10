@@ -12,8 +12,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
 /**
- * 
- * @author bedritckiy_mr
  *
  */
 public interface AppTree extends AppTreeBase {

@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Источники данных
- *
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyAppDataSources extends AbstractDummyElement implements OrderedDummy {

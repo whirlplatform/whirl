@@ -12,8 +12,6 @@ import java.util.Date;
 
 /**
  * This widget represents the application tree
- *
- * @author bedritckiy_mr
  */
 public abstract class AppTreeWidget extends AbstractAppTree {
     private Timer clickTimer;

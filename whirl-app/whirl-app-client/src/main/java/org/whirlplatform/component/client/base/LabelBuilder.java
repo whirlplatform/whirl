@@ -20,8 +20,7 @@ import java.util.Map;
 
 /**
  * Текстовая строка вывода, надпись
- * 
- * @author lebedev_sv
+ *
  */
 public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 

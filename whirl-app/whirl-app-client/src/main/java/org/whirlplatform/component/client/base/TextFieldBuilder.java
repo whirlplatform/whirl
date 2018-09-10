@@ -11,8 +11,7 @@ import java.util.Map;
 
 /**
  * Поле ввода - текстовое
- * 
- * @author semenov_pa
+ *
  */
 public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativeParameter<String>, Parameter<DataValue> {
 

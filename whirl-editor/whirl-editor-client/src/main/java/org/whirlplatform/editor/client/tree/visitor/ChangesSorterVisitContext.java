@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author bedritckiy_mr
  */
 public class ChangesSorterVisitContext implements VisitContext {
     private TreeStore<AbstractElement> treeStore;

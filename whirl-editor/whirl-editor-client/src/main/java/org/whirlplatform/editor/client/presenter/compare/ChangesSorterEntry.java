@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public class ChangesSorterEntry {
     private final List<ChangeUnit> changeUnits;

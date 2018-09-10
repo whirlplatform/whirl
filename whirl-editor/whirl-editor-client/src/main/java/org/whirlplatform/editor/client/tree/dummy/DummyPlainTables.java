@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Таблицы
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyPlainTables extends AbstractDummyElement {

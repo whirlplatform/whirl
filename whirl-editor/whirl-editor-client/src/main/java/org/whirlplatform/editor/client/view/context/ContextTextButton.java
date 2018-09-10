@@ -11,7 +11,6 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
  * интерфейс.
  *
  * @param <C> - класс или интерфейс контекста
- * @author bedritckiy_mr
  * @see HasContext
  * @see HasUpdatableState
  */

@@ -17,8 +17,6 @@ import java.util.*;
 
 /**
  * Ввод данных приложения
- * 
- * @author bedritckiy_mr
  *
  */
 @Presenter(view = AppBasicInfoView.class)

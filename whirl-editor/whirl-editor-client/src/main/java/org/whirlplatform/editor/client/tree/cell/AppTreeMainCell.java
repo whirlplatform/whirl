@@ -8,8 +8,6 @@ import org.whirlplatform.editor.client.tree.dummy.AbstractDummyElement;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
- * 
- * @author bedritckiy_mr
  *
  */
 public class AppTreeMainCell extends AbstractCell<String> {

@@ -11,7 +11,7 @@ import org.whirlplatform.meta.shared.Version;
 import java.util.List;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public class VersionFieldValidator extends AbstractStringValidator {
     private final HasValue<Boolean> isBranch;

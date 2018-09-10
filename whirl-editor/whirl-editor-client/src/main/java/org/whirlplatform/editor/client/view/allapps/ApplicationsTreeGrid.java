@@ -22,8 +22,6 @@ import org.whirlplatform.meta.shared.Version;
 import java.util.*;
 
 /**
- * 
- * @author bedritckiy_mr
  *
  */
 public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {

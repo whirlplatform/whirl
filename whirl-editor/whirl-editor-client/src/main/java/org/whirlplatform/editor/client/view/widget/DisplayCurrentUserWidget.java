@@ -9,7 +9,6 @@ import org.whirlplatform.meta.shared.ClientUser;
 /**
  * Отображает имя текущего пользователя
  *
- * @author bedritckiy_mr
  */
 public class DisplayCurrentUserWidget extends Status {
 

@@ -8,7 +8,6 @@ import com.sencha.gxt.widget.core.client.form.validator.RegExValidator;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
- * @author bedritckiy_mr
  */
 public class ValidatorUtil {
     public static final String CODE_REGEX = "[^A-Za-z0-9_-]";

@@ -10,8 +10,6 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * Пункт меню дерева приложения - Копировать
- * 
- * @author bedritckiy_mr
  */
 public class CopyAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_copy();

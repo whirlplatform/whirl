@@ -18,8 +18,6 @@ import java.util.Map;
 /**
  * Сортирует полученные от diff изменения по соответствующим абстрактным
  * элементам приложения для отображения в дереве
- *
- * @author bedritckiy_mr
  */
 public class ChangesSorter {
     private ChangesSorterVisitContext ctx;

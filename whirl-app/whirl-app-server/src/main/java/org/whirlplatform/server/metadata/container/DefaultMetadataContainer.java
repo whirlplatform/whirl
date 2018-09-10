@@ -31,8 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * Контейнер хранит текущие рабочие экземпляры приложения, которые на данный
  * момент выполняются. При подгрузке приложения инициализирует зависимые
  * библиотеки.
- *
- * @author semenov_pa
  */
 @Singleton
 public class DefaultMetadataContainer implements MetadataContainer {

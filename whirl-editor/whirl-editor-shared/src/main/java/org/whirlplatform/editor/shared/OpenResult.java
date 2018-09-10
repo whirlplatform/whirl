@@ -6,7 +6,7 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import java.io.Serializable;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public class OpenResult implements Serializable {
     private static final long serialVersionUID = 4600942828011905184L;

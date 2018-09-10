@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Контекстное меню
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyMenuItems extends AbstractDummyElement {

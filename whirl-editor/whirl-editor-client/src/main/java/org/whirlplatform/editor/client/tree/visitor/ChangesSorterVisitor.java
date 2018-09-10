@@ -5,7 +5,7 @@ import org.whirlplatform.meta.shared.editor.*;
 import org.whirlplatform.meta.shared.editor.db.*;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public class ChangesSorterVisitor implements TreeElementVisitor<ChangesSorterVisitContext> {
 

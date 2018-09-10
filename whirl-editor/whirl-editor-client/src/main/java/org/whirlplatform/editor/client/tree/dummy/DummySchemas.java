@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Схемы
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummySchemas extends AbstractDummyElement {

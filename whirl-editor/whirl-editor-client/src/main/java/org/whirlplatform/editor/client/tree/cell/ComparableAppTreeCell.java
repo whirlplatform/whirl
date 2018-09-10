@@ -10,9 +10,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
  * Cell for highlighting differences
- * 
- * @author bedritckiy_mr
- *
  */
 public class ComparableAppTreeCell extends AbstractCell<String> {
 	final ComparableAppTree tree;

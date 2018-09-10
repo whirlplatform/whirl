@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Свободные компоненты
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyAppFreeComponents extends AbstractDummyElement {

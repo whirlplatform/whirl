@@ -5,9 +5,6 @@ import java.io.Serializable;
 /**
  * Сессионный токен. Обеспечивает идентификацию разделяемых сессий по вкладкам
  * браузера внутри одной веб-сессии.
- * 
- * @author semenov_pa
- *
  */
 public class SessionToken implements Serializable {
 

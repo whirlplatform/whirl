@@ -21,7 +21,6 @@ import java.util.*;
 /**
  * Простой контейнер для отображения изменений при сравнении приложений
  *
- * @author bedritckiy_mr
  */
 public class ChangeUnitsContainer extends SimpleContainer {
     private static final String ADDED = EditorMessage.Util.MESSAGE.compare_apps_added();

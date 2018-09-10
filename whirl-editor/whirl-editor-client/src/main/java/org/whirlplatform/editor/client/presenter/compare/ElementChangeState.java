@@ -3,7 +3,7 @@ package org.whirlplatform.editor.client.presenter.compare;
 import org.whirlplatform.editor.shared.merge.ChangeType;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public enum ElementChangeState {
     ADDED, INHERITED_ADDED, REMOVED, INHERITED_REMOVED, CHANGED, NONE;

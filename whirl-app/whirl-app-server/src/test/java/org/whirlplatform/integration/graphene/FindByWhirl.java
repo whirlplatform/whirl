@@ -10,8 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Анотация
- *
- * @author semenov_pa
  */
 @Retention(RUNTIME)
 @Target(FIELD)

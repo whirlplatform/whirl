@@ -26,7 +26,6 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 /**
  * Ввод данных приложения
  *
- * @author bedritckiy_mr
  */
 public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private static final String OK = "OK";

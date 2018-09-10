@@ -21,7 +21,6 @@ import java.util.List;
  * способом через вызов add или remove.
  * 
  * @see AppTreeMenuItem
- * @author bedritckiy_mr
  */
 public class AbstractAppTreeMenu<T extends AppTree> extends Menu implements AppTreeMenu<T> {
 	private T appTree;

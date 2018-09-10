@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author bedritckiy_mr
+ *
  */
 public abstract class AbstractStringValidator implements Validator<String> {
 

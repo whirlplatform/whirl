@@ -29,8 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Base class for the application tree implementations
- * 
- * @author bedritckiy_mr
  *
  */
 public abstract class AbstractAppTree extends Tree<AbstractElement, String> implements AppTree {

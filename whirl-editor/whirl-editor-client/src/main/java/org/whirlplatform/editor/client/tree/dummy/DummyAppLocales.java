@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Локали приложения
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyAppLocales extends AbstractDummyElement implements ChildrenlessDummy, OrderedDummy {

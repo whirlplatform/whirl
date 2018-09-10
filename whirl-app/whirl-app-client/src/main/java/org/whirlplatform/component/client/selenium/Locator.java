@@ -19,7 +19,6 @@ import java.util.Map;
  * <br>
  * Типы указываются в CamelCase, параметры в lowerCamelCase.
  *
- * @author semenov_pa
  */
 public class Locator {
 

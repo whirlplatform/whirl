@@ -10,8 +10,6 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * Пункт меню дерева приложения - Переименовать
- * 
- * @author bedritckiy_mr
  */
 public class RenameAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rename();

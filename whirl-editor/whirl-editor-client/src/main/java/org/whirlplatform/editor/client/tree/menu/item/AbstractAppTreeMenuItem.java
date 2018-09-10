@@ -9,8 +9,6 @@ import org.whirlplatform.editor.client.tree.AppTree;
 /**
  * Базовая реализация Пункта меню для Меню дерева приложения. Инкапсулирует
  * ссылку на дерево приложения.
- * 
- * @author bedritckiy_mr
  */
 public abstract class AbstractAppTreeMenuItem<T extends AppTree> extends MenuItem implements AppTreeMenuItem<T> {
 	private T appTree;

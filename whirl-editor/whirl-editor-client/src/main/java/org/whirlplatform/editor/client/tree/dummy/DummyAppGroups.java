@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Группы пользователей
- *
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyAppGroups extends AbstractDummyElement implements ChildrenlessDummy, OrderedDummy {

@@ -9,8 +9,6 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * Панель инструментов для сравниваемого дерева приложений
- *
- * @author bedritckiy_mr
  */
 public class ComparableAppTreeToolBar extends AbstractAppTreeToolBar<ComparableAppTree> {
     private final static String OPEN_BUTTON = EditorMessage.Util.MESSAGE.open();

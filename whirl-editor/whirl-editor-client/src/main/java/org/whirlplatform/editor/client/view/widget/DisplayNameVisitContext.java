@@ -5,7 +5,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 /**
  * Используется для создания отображаемого имени AbstractElement
  *
- * @author bedritckiy_mr
  */
 public class DisplayNameVisitContext implements VisitContext {
     private String displayName = "";

@@ -22,7 +22,6 @@ import org.whirlplatform.editor.client.tree.menu.AppTreeMenu;
  * Изменение форматирование производится в этом случае вызовом метода setChanged
  *
  * @param <T> - наследник AppTree
- * @author bedritckiy_mr
  */
 public abstract class AbstractAppTreeToolBar<T extends AppTree> extends ToolBar {
     private static final ImageResource CONTEXT_ICON = ComponentBundle.INSTANCE.context();

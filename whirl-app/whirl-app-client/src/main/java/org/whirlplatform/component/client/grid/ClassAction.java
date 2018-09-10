@@ -33,9 +33,7 @@ import java.util.Map;
  * Класс по работе с таблицей. Все изменения данных на таблицах должны
  * производиться через него. Все компоненты редактирующие данные должны делать
  * это через создание стора и использовать этот класс.
- * 
- * @author semenov_pa
- * 
+ *
  */
 //TODO перенести в component/client
 public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,

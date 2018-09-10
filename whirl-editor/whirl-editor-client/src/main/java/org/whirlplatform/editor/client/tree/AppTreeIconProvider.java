@@ -10,7 +10,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 /**
  * Provides the icon images for the application tree widget
  *
- * @author bedritckiy_mr
  */
 public class AppTreeIconProvider implements IconProvider<AbstractElement> {
     public static class AppTreeElementIconVisitContext implements VisitContext {

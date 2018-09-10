@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Зависимости приложения
- *
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyAppReferences extends AbstractDummyElement implements OrderedDummy {

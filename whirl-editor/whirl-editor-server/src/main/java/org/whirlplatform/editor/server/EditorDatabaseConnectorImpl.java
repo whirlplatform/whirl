@@ -16,8 +16,6 @@ import java.sql.SQLException;
 
 /**
  * Отвечает за соединение к базе данных, MetadataDatabase
- *
- * @author bedritckiy_mr
  */
 public class EditorDatabaseConnectorImpl implements EditorDatabaseConnector {
     private static Logger log = LoggerFactory.getLogger(EditorDatabaseConnectorImpl.class);

@@ -6,7 +6,6 @@ package org.whirlplatform.editor.client.view.context;
  * контекста в своих целях. В идеальном случае контекст - тоже интерфейс.
  *
  * @param <C> - класс контекста
- * @author bedritckiy_mr
  */
 public interface HasContext<C> {
 

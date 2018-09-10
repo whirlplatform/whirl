@@ -10,8 +10,7 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * Пункт меню дерева приложения - Вставить
- * 
- * @author bedritckiy_mr
+ *
  */
 public class PasteAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_paste();

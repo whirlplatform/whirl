@@ -8,7 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * @author semenov_pa
  * 
  */
 public class Sql {

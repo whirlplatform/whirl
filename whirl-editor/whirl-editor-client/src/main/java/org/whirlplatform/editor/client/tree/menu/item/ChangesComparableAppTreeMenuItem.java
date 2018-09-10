@@ -12,8 +12,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
  * Пункт меню сравниваемого дерева приложения - Изменения
- * 
- * @author bedritckiy_mr
  */
 public class ChangesComparableAppTreeMenuItem extends AbstractAppTreeMenuItem<ComparableAppTree> {
 	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_changes();

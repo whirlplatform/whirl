@@ -8,8 +8,6 @@ import java.util.Map;
 
 /**
  * Формирует метаданные таблицы базы данных
- *
- * @author bedritckiy_mr
  */
 public interface MetadataFetcher<T extends AbstractTableElement> {
 

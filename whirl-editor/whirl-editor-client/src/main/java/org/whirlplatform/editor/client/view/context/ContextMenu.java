@@ -17,7 +17,6 @@ import com.sencha.gxt.widget.core.client.menu.Menu;
  * создать переиспользуемый класс меню.
  *
  * @param <C> - контекст
- * @author bedritckiy_mr
  * @see HasContext
  * @see ContextMenuItem
  */

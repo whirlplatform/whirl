@@ -17,7 +17,6 @@ import java.util.List;
  * пунктов меню производится каждый раз при открытии меню.
  *
  * @param <C> - класс или интерфейс контекста, общий для меню и пунктов меню.
- * @author bedritckiy_mr
  * @see ContextMenu
  * @see ContextMenuItem
  * @see HasContext

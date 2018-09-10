@@ -21,8 +21,7 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import java.util.*;
 
 /**
- * 
- * @author bedritckiy_mr
+ *
  */
 public abstract class ComparableAppTreeWidget extends AbstractAppTree implements ComparableAppTree {
 	private final static String CLOSE = EditorMessage.Util.MESSAGE.close();

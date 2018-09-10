@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок раздела Параметры события
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyEventParameters extends AbstractDummyElement {

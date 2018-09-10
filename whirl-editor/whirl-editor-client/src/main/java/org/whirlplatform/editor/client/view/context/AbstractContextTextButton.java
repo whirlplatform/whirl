@@ -14,7 +14,6 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
  * <p/>
  *
  * @param <C> - класс или интерфейс контекста
- * @author bedritckiy_mr
  */
 public abstract class AbstractContextTextButton<C> extends TextButton implements ContextTextButton<C> {
     private C context;

@@ -28,8 +28,6 @@ import java.util.List;
 /**
  * Хранит приложения в ресурсной папке. Код приложения - имя файла без
  * расширения.
- *
- * @author bedritckiy_mr
  */
 @Singleton
 @Named("SimpleMetadataStore")

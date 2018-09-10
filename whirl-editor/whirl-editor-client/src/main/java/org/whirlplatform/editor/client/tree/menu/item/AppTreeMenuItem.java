@@ -6,7 +6,6 @@ import org.whirlplatform.editor.client.tree.AppTree;
  * Пункт меню для работы с деревом приложения
  *
  * @param <T>
- * @author bedritckiy_mr
  */
 public interface AppTreeMenuItem<T extends AppTree> {
 

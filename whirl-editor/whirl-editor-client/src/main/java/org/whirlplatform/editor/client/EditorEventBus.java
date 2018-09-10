@@ -25,9 +25,6 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author lebedev_sv
- */
 @Events(startPresenter = MainPresenter.class)
 public interface EditorEventBus extends EventBus, ApplicationDataProvider {
 

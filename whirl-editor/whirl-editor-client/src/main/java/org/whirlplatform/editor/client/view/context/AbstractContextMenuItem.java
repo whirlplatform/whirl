@@ -14,7 +14,6 @@ import com.sencha.gxt.widget.core.client.menu.MenuItem;
  * <p/>
  *
  * @param <C> - класс или интерфейс контекста
- * @author bedritckiy_mr
  */
 public abstract class AbstractContextMenuItem<C> extends MenuItem implements ContextMenuItem<C> {
     private C context;

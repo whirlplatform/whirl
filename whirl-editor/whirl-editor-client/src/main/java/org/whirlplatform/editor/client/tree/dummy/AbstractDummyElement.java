@@ -5,8 +5,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 /**
  * Базовый класс для отображения заголовков разделов в дереве приложения
- *
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public abstract class AbstractDummyElement extends AbstractElement implements VisitableTreeElement, TreeDummy {

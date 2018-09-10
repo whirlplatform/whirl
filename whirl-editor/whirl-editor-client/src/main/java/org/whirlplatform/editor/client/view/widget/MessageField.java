@@ -10,8 +10,7 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
  * The combination of the checkbox and textfield.
- * 
- * @author bedritckiy_mr
+ *
  *
  */
 public class MessageField extends HBoxLayoutContainer {

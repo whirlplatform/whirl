@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * @author lebedev_sv
+ *
  */
 @Singleton
 @Path("/")

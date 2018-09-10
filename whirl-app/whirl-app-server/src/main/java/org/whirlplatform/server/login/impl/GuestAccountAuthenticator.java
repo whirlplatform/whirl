@@ -8,7 +8,6 @@ import org.whirlplatform.server.login.LoginData;
  * Авторизация гостевых пользователей. Все пользователи изначально являются
  * гостевыми.
  *
- * @author semenov_pa
  */
 public class GuestAccountAuthenticator implements AccountAuthenticator {
 

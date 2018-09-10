@@ -34,8 +34,7 @@ import java.util.Map;
 
 /**
  * Компонент Форма логина. Берет контейнер с формой из ClientLoginUtil.
- * 
- * @author Vlad Prichinin
+ *
  */
 public class LoginPanelBuilder extends ComponentBuilder {
 

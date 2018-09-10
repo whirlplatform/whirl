@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Validate the test string if it does NOT contain the search pattern
  *
- * @author bedritckiy_mr
  */
 public class InvertedRegExValidator extends AbstractStringValidator {
     final String forbiddenExpression;

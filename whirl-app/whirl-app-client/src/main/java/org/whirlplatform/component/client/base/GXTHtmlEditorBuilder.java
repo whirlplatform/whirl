@@ -14,7 +14,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 import java.util.Map;
 
 /**
- * @author Vlad Компонент - редактор текста. Использует в себе CKEditor
+ *
  */
 public class GXTHtmlEditorBuilder extends AbstractFieldBuilder
 		implements NativeParameter<String>, Parameter<DataValue> {

@@ -5,8 +5,6 @@ import org.whirlplatform.editor.client.tree.menu.item.*;
 
 /**
  * Меню для основного дерева приложения
- * 
- * @author bedritckiy_mr
  */
 public class MainAppTreeMenu extends AbstractAppTreeMenu<AppTree> implements AppTreeMenu<AppTree> {
 	public MainAppTreeMenu(final AppTree appTree) {

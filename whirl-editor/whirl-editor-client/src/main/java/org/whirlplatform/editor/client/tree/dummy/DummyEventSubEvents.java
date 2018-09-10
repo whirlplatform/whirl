@@ -7,8 +7,6 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 /**
  * Заголовок для раздела Подчиненные события
- * 
- * @author bedritckiy_mr
  */
 @SuppressWarnings("serial")
 public class DummyEventSubEvents extends AbstractDummyElement {

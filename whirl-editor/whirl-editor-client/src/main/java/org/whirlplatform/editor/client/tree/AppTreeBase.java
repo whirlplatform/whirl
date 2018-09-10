@@ -5,8 +5,6 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 /**
  * 
  * Basic methods and propertries of the application tree components.
- * 
- * @author bedritckiy_mr
  *
  */
 public interface AppTreeBase {

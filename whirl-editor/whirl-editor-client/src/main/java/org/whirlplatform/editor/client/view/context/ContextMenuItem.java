@@ -11,7 +11,6 @@ import com.sencha.gxt.widget.core.client.menu.MenuItem;
  * контекста. В идеале контекст - это интерфейс.
  *
  * @param <C> - контекст
- * @author bedritckiy_mr
  * @see HasContext
  * @see HasUpdatableState
  * @see ContextMenu

@@ -34,8 +34,6 @@ import java.util.Map.Entry;
 
 /**
  * Построитель формы ввода параметров для отчёта.
- * 
- * @author Влад
  */
 public class ReportBuilder extends ComponentBuilder implements
 		HasCreateParameters {
