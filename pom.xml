@@ -23,7 +23,7 @@
         <gwt.version>2.8.2</gwt.version>
         <gwt.style>OBFUSCATED</gwt.style>
         <gwt.failOnError>true</gwt.failOnError>
-        <gwt.logLevel>ERROR</gwt.logLevel>
+        <gwt.logLevel>INFO</gwt.logLevel>
         <gwt.inplace>false</gwt.inplace>
         <gwt.xdisable>true</gwt.xdisable>
         <gwt.draft>false</gwt.draft>
