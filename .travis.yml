@@ -1,3 +1,0 @@
-language: java
-sudo: false
-install: mvn install -DskipTests=true -B -V
