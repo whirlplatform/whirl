@@ -167,18 +167,18 @@
                         <executions>
                             <execution>
                                 <id>unpack-linux</id>
-                                <phase>compile</phase>
+                                <phase>process-resources</phase>
                                 <goals>
                                     <goal>run</goal>
                                 </goals>
                                 <configuration>
                                     <failOnError>true</failOnError>
-                                    <target>
+                                    <tasks>
                                         <bunzip2
-                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar.bz2"/>
+                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}"/>
                                         <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar"
                                                dest="${basedir}/target/phantomjs/"/>
-                                    </target>
+                                    </tasks>
                                 </configuration>
                             </execution>
                         </executions>
@@ -202,6 +202,39 @@
                 <phantomjs.bin.path>bin/</phantomjs.bin.path>
                 <phantomjs.bin.exec></phantomjs.bin.exec>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.googlecode.maven-download-plugin</groupId>
+                        <artifactId>maven-download-plugin</artifactId>
+                        <configuration>
+                            <unpack>false</unpack>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-linux</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnError>true</failOnError>
+                                    <tasks>
+                                        <bunzip2
+                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}"/>
+                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar"
+                                               dest="${basedir}/target/phantomjs/"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
