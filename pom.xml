@@ -236,7 +236,7 @@
                 <version>2.7.8</version>
             </dependency>
 
-            <!-- Oracle JDBC -->
+            <!-- Oracle JDBC
             <dependency>
                 <groupId>com.oracle</groupId>
                 <artifactId>ojdbc7</artifactId>
@@ -247,6 +247,7 @@
                 <artifactId>orai18n</artifactId>
                 <version>12.2.0.1</version>
             </dependency>
+            -->
 
             <!-- Terradata -->
             <dependency>
