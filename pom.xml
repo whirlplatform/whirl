@@ -27,7 +27,7 @@
         <gwt.inplace>false</gwt.inplace>
         <gwt.xdisable>true</gwt.xdisable>
         <gwt.draft>false</gwt.draft>
-        <gwt.workers>4</gwt.workers>
+        <gwt.workers>2</gwt.workers>
         <gxt.version>4.0.0</gxt.version>
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>

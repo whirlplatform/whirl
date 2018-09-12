@@ -2,7 +2,7 @@ build:
   nodes:
     builder:
       resources:
-        cpus: 4
+        cpus: 2
       environment:
         java: java-8-oracle
         variables:
