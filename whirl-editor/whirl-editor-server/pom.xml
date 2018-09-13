@@ -48,6 +48,14 @@
             <groupId>org.apache.empire-db</groupId>
             <artifactId>empire-db</artifactId>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
 
         <!-- GWT -->
         <dependency>
