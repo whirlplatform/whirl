@@ -1,6 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import oracle.jdbc.internal.OracleTypes;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
@@ -38,10 +37,6 @@ public class OracleStatementHelper extends AbstractFetcher {
         if (!objectParams.isEmpty()) {
             for (int i = 2; i < objectParams.size() + 2; i++) {
                 Object v = objectParams.get(i - 2);
-                if ("data_count".equalsIgnoreCase(paramNames.get(i - 2))) {
-                    stmt.registerOutParameter(i, OracleTypes.NUMBER);
-                    continue;
-                }
                 try {
                     // Т.к. по умолчанию boolean передается 1/0
                     if (v instanceof DataValueImpl) {

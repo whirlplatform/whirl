@@ -1,6 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import oracle.jdbc.driver.OracleConnection;
 import org.whirlplatform.meta.shared.EventResult;
 import org.whirlplatform.meta.shared.JavaEventResult;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -66,12 +65,13 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                 eventElement.getFunction(), getUser().getLogin()) {
             @Override
             public void onStop() {
-                try {
-                    stoppedHolder[0] = true;
-                    getConnection().unwrap(OracleConnection.class).abort();
-                } catch (SQLException e) {
-                    _log.info("Stop event error", e);
-                }
+                //TODO abort
+//                try {
+//                    stoppedHolder[0] = true;
+//                    getConnection().abort();
+//                } catch (SQLException e) {
+//                    _log.info("Stop event error", e);
+//                }
             }
         };
         // Чтобы можно было дописать ошибку обернул в еще один try

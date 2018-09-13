@@ -1,6 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import oracle.jdbc.driver.OracleConnection;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
@@ -53,12 +52,13 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
                 getUser().getLogin()) {
             @Override
             public void onStop() {
-                try {
-                    stoppedHolder[0] = true;
-                    getConnection().unwrap(OracleConnection.class).abort();
-                } catch (SQLException e) {
-                    _log.info("Stop event error", e);
-                }
+                //TODO abort
+//                try {
+//                    stoppedHolder[0] = true;
+//                    getConnection().unwrap(OracleConnection.class).abort();
+//                } catch (SQLException e) {
+//                    _log.info("Stop event error", e);
+//                }
             }
         };
 
