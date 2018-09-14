@@ -4,6 +4,6 @@ build:
       environment:
         java: java-8-oracle
       dependencies:
-        before:
+        override:
           - command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 600
