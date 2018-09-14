@@ -139,34 +139,6 @@
             <artifactId>HikariCP</artifactId>
         </dependency>
 
-        <!-- Oracle JDBC -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>orai18n</artifactId>
-        </dependency>
-
-        <!-- Terradata -->
-        <dependency>
-            <groupId>com.teradata</groupId>
-            <artifactId>tdgssconfig</artifactId>
-        </dependency>
-
-        <!-- HSQLDB -->
-        <dependency>
-            <groupId>hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-        </dependency>
-
-        <!-- PostgreSQL -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
