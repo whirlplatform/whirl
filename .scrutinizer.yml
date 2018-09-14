@@ -7,5 +7,6 @@ build:
           _JAVA_OPTIONS: '-Xms512m -Xmx6144m'
       dependencies:
         override:
-          - command: mvn install -DskipTests=true -B -V
+          -
+            command: mvn install -DskipTests=true
             idle_timeout: 300
