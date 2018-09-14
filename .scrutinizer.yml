@@ -7,5 +7,5 @@ build:
           _JAVA_OPTIONS: '-Xms512m -Xmx6144m'
       commands:
         - checkout-code ~/
-        - command: mvn install -DskipTests=true -B -V
+        - mvn install -DskipTests=true -B -V
           idle_timeout: 300
