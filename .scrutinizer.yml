@@ -6,4 +6,4 @@ build:
       dependencies:
         override:
           - command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 600
+            idle_timeout: 700
