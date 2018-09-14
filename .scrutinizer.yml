@@ -2,5 +2,5 @@ build:
   nodes:
     builder:
       commands:
-        - checkout-code ~/
+        - checkout-code ~
         - mvn install -DskipTests=true -B -V
