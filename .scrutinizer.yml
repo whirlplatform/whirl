@@ -1,10 +1,6 @@
 build:
   nodes:
     builder:
-      environment:
-        java: java-8-oracle
-        variables:
-          _JAVA_OPTIONS: '-Xms512m -Xmx6144m'
       commands:
         - checkout-code ~/
         - mvn install -DskipTests=true -B -V
