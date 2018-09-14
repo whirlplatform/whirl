@@ -1,6 +1,9 @@
 build:
   nodes:
     builder:
-      commands:
-        - checkout-code ~
-        - mvn install -DskipTests=true -B -V
+      environment:
+        java: java-8-oracle
+      dependencies:
+        before:
+          - command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+            idle_timeout: 600
