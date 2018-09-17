@@ -2,6 +2,7 @@ package org.whirlplatform.editor.server.merge;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
 import org.whirlplatform.editor.shared.merge.Differ;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+@Ignore
 public class JaversDiffTest {
 
     private MetadataStore metadata = new AbstractMetadataStore() {
