@@ -1,9 +1,21 @@
 build:
   nodes:
     builder:
+
       environment:
         java: java-8-oracle
+
       dependencies:
         override:
           - command: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
+
+      deployment:
+        -
+          commands:
+            - cd whirl-app/whirl-app-server
+            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC.HOSTER_API} -Djelastic.login=o${JELASTIC.LOGIN} -Djelastic.password=${JELASTIC.PASSWORD} -Djelastic.environment=${JELASTIC.ENVIRONMENT}  -Djelastic.context=${JELASTIC.CONTEXT_APP}
+        -
+          commands:
+            - cd whirl-editor/whirl-editor-server
+            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC.HOSTER_API} -Djelastic.login=o${JELASTIC.LOGIN} -Djelastic.password=${JELASTIC.PASSWORD} -Djelastic.environment=${JELASTIC.ENVIRONMENT}  -Djelastic.context=${JELASTIC.CONTEXT_EDITOR}

@@ -414,5 +414,28 @@
             </dependencies>
         </profile>
         <!-- End Oracle configuration -->
+
+        <!-- Jelastic deployment profile -->
+        <profile>
+            <id>deploy-jelastic</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.jelastic</groupId>
+                        <artifactId>jelastic-maven-plugin</artifactId>
+                        <version>1.9</version>
+                        <configuration>
+                            <api_hoster>${jelastic.hoster_api}</api_hoster>
+                            <email>${jelastic.login}</email>
+                            <password>${jelastic.password}</password>
+                            <environment>${jelastic.environment}</environment>
+                            <context>${jelastic.context}</context>
+                            <comment>${jelastic.comment}</comment>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 </project>
