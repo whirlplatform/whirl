@@ -34,11 +34,13 @@ public class MainView extends Viewport implements IMainView {
     @Override
     public void initUi() {
         mainContainer = new BorderLayoutContainer();
-        mainContainer.getElement().getStyle().setBackgroundColor("white");
+        mainContainer.setBorders(true);
+//        mainContainer.getElement().getStyle().setBackgroundColor("white");
         root.add(mainContainer, new VerticalLayoutData(1, 1));
 
         leftPanel = new BorderLayoutContainer();
-        leftPanel.getElement().getStyle().setBackgroundColor("white");
+        leftPanel.setBorders(true);
+//        leftPanel.getElement().getStyle().setBackgroundColor("white");
         BorderLayoutData d = new BorderLayoutData(250);
         d.setMinSize(100);
         d.setMaxSize(600);
@@ -50,7 +52,8 @@ public class MainView extends Viewport implements IMainView {
         mainContainer.setWestWidget(p, d);
 
         rightPanel = new BorderLayoutContainer();
-        rightPanel.getElement().getStyle().setBackgroundColor("white");
+        rightPanel.setBorders(true);
+//        rightPanel.getElement().getStyle().setBackgroundColor("white");
         tabPanel = new PlainTabPanel();
         tabPanel.setBorders(false);
         rightPanel.setCenterWidget(tabPanel);
@@ -62,7 +65,6 @@ public class MainView extends Viewport implements IMainView {
         p = new ContentPanel();
         p.setHeaderVisible(false);
         p.setBorders(false);
-        rightPanel.setBorders(false);
         p.setWidget(rightPanel);
         mainContainer.setEastWidget(p, d);
 

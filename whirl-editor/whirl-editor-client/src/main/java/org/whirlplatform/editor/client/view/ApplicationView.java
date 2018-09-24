@@ -36,7 +36,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 	private FieldLabel labelCode;
 	private TextField fieldCode;
-	private FieldLabel labelUrl;
+//	private FieldLabel labelUrl;
 	private CheckBox guest;
 	private FieldLabel labelTitle;
 	private PropertyValueField fieldTitle;
@@ -79,14 +79,14 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 		container.add(labelCode,
 				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 		guest = new CheckBox();
-		labelUrl = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
-		container.add(labelUrl,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		labelUrl = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
+//		container.add(labelUrl,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
-		fieldTitle = new PropertyValueField();
-		labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
-		container.add(labelTitle,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		fieldTitle = new PropertyValueField();
+//		labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
+//		container.add(labelTitle,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
 		initJavaScriptFields();
 		initCssFields();
@@ -560,7 +560,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 	@Override
 	public void setEnableAll(boolean enable) {
 		labelCode.setEnabled(false);
-		labelUrl.setEnabled(enable);
+//		labelUrl.setEnabled(enable);
 		labelTitle.setEnabled(enable);
 		javaScriptLabel.setEnabled(enable);
 		javaLabel.setEnabled(enable);

@@ -200,7 +200,7 @@
                     <artifactId>tomcat7-maven-plugin</artifactId>
                     <configuration>
                         <addWarDependenciesInClassloader>false</addWarDependenciesInClassloader>
-                        <path>/</path>
+                        <path>/editor</path>
                         <uriEncoding>UTF-8</uriEncoding>
                         <contextFile>${basedir}/../target/conf/tomcat/context.xml</contextFile>
                     </configuration>

@@ -1,6 +1,7 @@
 package org.whirlplatform.editor.client.view.toolbar;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
@@ -80,7 +81,7 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         add(new SeparatorToolItem());
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
-        add(new LabelToolItem("&nbsp;"));
+        add(new LabelToolItem(SafeHtmlUtils.fromTrustedString("&nbsp;")));
         updateButtonState();
     }
 
