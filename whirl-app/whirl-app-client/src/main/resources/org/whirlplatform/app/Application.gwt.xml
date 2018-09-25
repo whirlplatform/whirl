@@ -21,7 +21,7 @@
 
     <inherits name='org.whirlplatform.theme.Theme'/>
 
-    <entry-point class="org.whirlplatform.app.client.UniappEntryPoint"/>
+    <entry-point class="org.whirlplatform.app.client.AppEntryPoint"/>
     <source path="client"/>
 
     <extend-property name="locale" values="ru"/>

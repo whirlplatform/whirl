@@ -25,7 +25,7 @@ public class ServerModule extends ServletModule {
         filter("/*").through(I18NFilter.class);
 
         // Основная страница
-        serve("/uniapp").with(MainController.class);
+        serve("/app").with(MainController.class);
         // Сервлет RPC
 //		serve("/application/data").with(DataServiceImpl.class);
         // Регистрация REST приложения

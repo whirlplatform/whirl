@@ -96,7 +96,7 @@ public class AppConstant {
     /**
      * Модули
      */
-    public static final String module_uniapp = "uniapp";
+    public static final String module_app = "app";
 
     public static final String REPORT_FORMAT_XLS = "xls";
     public static final String REPORT_FORMAT_XLSX = "xlsx";

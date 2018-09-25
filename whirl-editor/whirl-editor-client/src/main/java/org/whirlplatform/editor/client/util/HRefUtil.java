@@ -15,7 +15,7 @@ public class HRefUtil {
         int position = editorPath.indexOf("-editor");
         if (position > 0) {
             final String whirlPath = editorPath.substring(0, position);
-            builder.setPath(whirlPath + "/uniapp");
+            builder.setPath(whirlPath + "/app");
         }
         builder.setParameter("role", appcode);
         if (version != null) {

@@ -11,6 +11,7 @@
             auth="Container"
             factory="com.zaxxer.hikari.HikariJNDIFactory"
             type="javax.sql.DataSource"
+            driverClassName="${context.db.metadata.driverClass}"
             minimumIdle="5"
             maximumPoolSize="10"
             connectionTimeout="300000"

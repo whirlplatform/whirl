@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
 
-@Location("uniapp?role=login-success")
+@Location("app?role=login-success")
 public class LoginSuccessPage extends AbstractPage {
 
     @FindByWhirl("whirl:LabelBuilder(code=success)[Text]")

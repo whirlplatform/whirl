@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Location("uniapp?role=arquillian_event_test")
+@Location("app?role=arquillian_event_test")
 public class JSEventsTestPage extends AbstractPage {
 
     @FindByWhirl("whirl:TextFieldBuilder(code=tf_component)[Input]")

@@ -6,7 +6,7 @@ import org.jboss.arquillian.graphene.page.Location;
 import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
 
-@Location(value = "uniapp")
+@Location(value = "app")
 public class LoginPage extends AbstractPage {
 
     @FindByWhirl("whirl:LoginPanelBuilder[LoginField]")

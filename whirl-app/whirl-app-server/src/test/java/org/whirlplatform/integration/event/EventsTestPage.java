@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
 
-@Location("uniapp?role=events_test")
+@Location("app?role=events_test")
 public class EventsTestPage extends AbstractPage {
 
     @FindByWhirl("whirl:ButtonBuilder(code=btn_oracle_to_oracle)")

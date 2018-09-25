@@ -61,7 +61,7 @@ public class ClientLoginUtils {
 
 	public static void showLogin() {
 		if (LoginPanelBuilder.isLoginPanelExists()) {
-			Containable parent = UniappEntryPoint.getRootContainer();
+			Containable parent = AppEntryPoint.getRootContainer();
 			ComponentBuilder login = new FramedLoginPanelBuilder();
 			login.create();
 			parent.addChild(login);

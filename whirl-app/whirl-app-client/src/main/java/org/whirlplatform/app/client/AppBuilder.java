@@ -16,7 +16,7 @@ public class AppBuilder {
 
 	/** Создание приложения по конфиг файлу */
 	public static void buildApplication(ComponentModel componentTree) {
-		Containable parent = UniappEntryPoint.getRootContainer();
+		Containable parent = AppEntryPoint.getRootContainer();
 
 		// TODO Selenium
 		// SeleniumManager.init();

@@ -34,7 +34,7 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         req.setAttribute("configuration", configuration);
         req.setAttribute("connector", connector);
-        req.getRequestDispatcher("/WEB-INF/jsp/uniapp.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/app.jsp").forward(req, resp);
     }
 
 }

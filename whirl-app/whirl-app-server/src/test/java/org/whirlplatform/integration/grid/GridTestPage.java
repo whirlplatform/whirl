@@ -12,7 +12,7 @@ import org.whirlplatform.selenium.ByWhirl;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@Location("uniapp?role=edc")
+@Location("app?role=edc")
 public class GridTestPage extends AbstractPage {
 
     private final String gridLocator = "whirl:EditGridBuilder(id=88760223-DE0A-4253-960B-4E7230D840CB)";

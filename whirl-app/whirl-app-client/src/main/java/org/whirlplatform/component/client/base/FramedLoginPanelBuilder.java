@@ -44,7 +44,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		loginPanel.setButtonAlign(BoxLayoutPack.CENTER);
 		loginPanel.setWidth(400);
 		loginPanel.setWidget(comp);
-		htmlLayout.add(loginPanel, new HtmlData("div[id=uniapp-login-id]"));
+		htmlLayout.add(loginPanel, new HtmlData("div[id=whirl-login-id]"));
 		return htmlLayout;
 	}
 
@@ -71,7 +71,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		html.append("</tr>");
 		html.append("<tr>");
 		html.append("<td valign=\"top\" align=\"center\">");
-		html.append("<div id=\"uniapp-login-id\">");
+		html.append("<div id=\"app-login-id\">");
 		html.append("</div>");
 		html.append("</td>");
 		html.append("</tr>");

@@ -198,7 +198,7 @@
     </div>
 
     <div id="div_login_form" class="xs-login-form" style="display: none;">
-        <form id="login_form" name="login_form" method="post" action="uniapp"
+        <form id="login_form" name="login_form" method="post" action="app"
             onSubmit="login(); return false;">
             <table>
                 <tr>

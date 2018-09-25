@@ -50,7 +50,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
 import java.util.Map.Entry;
 
 /** Стартовый модуль универсального клиента */
-public class UniappEntryPoint implements EntryPoint {
+public class AppEntryPoint implements EntryPoint {
 
 	public interface DefaultStyle extends ClientBundle {
 		@NotStrict
@@ -71,8 +71,8 @@ public class UniappEntryPoint implements EntryPoint {
 		@Override
 		public void execute() {
 			// убираем логин на странице
-			UniappEntryPoint.getRootContainer().clearContainer();
-			UniappEntryPoint.startBuildApp();
+			AppEntryPoint.getRootContainer().clearContainer();
+			AppEntryPoint.startBuildApp();
 		}
 
 	};

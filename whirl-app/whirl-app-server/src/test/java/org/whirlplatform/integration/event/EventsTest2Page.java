@@ -9,7 +9,7 @@ import org.whirlplatform.integration.graphene.FindByWhirl;
 
 import java.util.Arrays;
 
-@Location("uniapp?role=events_test2")
+@Location("app?role=events_test2")
 public class EventsTest2Page extends AbstractPage {
 
     // Selected value labels
