@@ -11,17 +11,17 @@ build:
             idle_timeout: 700
           - command: mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -pl whirl-app,whirl-app-shared,whirl-app-client,whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -pl whirl-editor,whirl-editor-shared,whirl-editor-client,whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       deployment:
         -
           commands:
             - cd whirl-app/whirl-app-server
-            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC_HOSTER_API} -Djelastic.login=o${JELASTIC_LOGIN} -Djelastic.password=${JELASTIC_PASSWORD} -Djelastic.environment=${JELASTIC_ENVIRONMENT}  -Djelastic.context=${JELASTIC_CONTEXT_APP}
+            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC_HOSTER_API} -Djelastic.login=${JELASTIC_LOGIN} -Djelastic.password=${JELASTIC_PASSWORD} -Djelastic.environment=${JELASTIC_ENVIRONMENT}  -Djelastic.context=${JELASTIC_CONTEXT_APP}
         -
           commands:
             - cd whirl-editor/whirl-editor-server
-            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC_HOSTER_API} -Djelastic.login=o${JELASTIC_LOGIN} -Djelastic.password=${JELASTIC_PASSWORD} -Djelastic.environment=${JELASTIC_ENVIRONMENT}  -Djelastic.context=${JELASTIC_CONTEXT_EDITOR}
+            - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=${JELASTIC_HOSTER_API} -Djelastic.login=${JELASTIC_LOGIN} -Djelastic.password=${JELASTIC_PASSWORD} -Djelastic.environment=${JELASTIC_ENVIRONMENT}  -Djelastic.context=${JELASTIC_CONTEXT_EDITOR}
