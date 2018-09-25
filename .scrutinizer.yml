@@ -11,9 +11,9 @@ build:
             idle_timeout: 700
           - command: mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -pl whirl-app install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -pl whirl-app,whirl-app-shared,whirl-app-client,whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -pl whirl-editor install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -pl whirl-editor,whirl-editor-shared,whirl-editor-client,whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       deployment:
