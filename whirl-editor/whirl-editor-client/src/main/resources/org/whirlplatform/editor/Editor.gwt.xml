@@ -28,19 +28,20 @@
 	<set-configuration-property name="CssResource.conversionMode"
 		value="strict" />
 
-	<!-- Collapse properties for fewer permutations
-	<collapse-property name="gxt.device" values="phone, tablet" /> -->
-	<!-- group themes
-	<collapse-property name="gxt.theme" values="*" /> -->
+	<!-- Collapse properties for fewer permutations -->
+	<collapse-property name="gxt.device" values="phone, tablet, desktop" />
 
-	<!-- group modern browsers
+	<!-- group themes -->
+	<collapse-property name="gxt.theme" values="*" />
+
+	<!-- group modern browsers -->
 	<collapse-property name="gxt.user.agent"
 		values="air, safari*, chrome*, gecko*, ie11" />
-	<collapse-property name="user.agent" values="safari*, gecko*" /> -->
+	<collapse-property name="user.agent" values="safari*, gecko*" />
 
-	<!-- group ie
+	<!-- group ie -->
 	<collapse-property name="gxt.user.agent" values="ie8, ie9, ie10" />
-	<collapse-property name="user.agent" values="ie*" /> -->
+	<collapse-property name="user.agent" values="ie*" />
 
 	<!-- Specify the paths for translatable code -->
     <source path="client"/>

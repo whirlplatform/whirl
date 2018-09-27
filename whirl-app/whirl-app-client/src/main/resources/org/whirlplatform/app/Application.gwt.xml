@@ -33,16 +33,22 @@
     <set-configuration-property name="CssResource.enableGss"
                                 value="true"/>
 
-    <!-- Collapse properties for fewer permutations <collapse-property name="gxt.device"
-        values="phone, tablet" /> -->
-    <!-- group themes <collapse-property name="gxt.theme" values="*" /> -->
+    <!-- Collapse properties for fewer permutations  -->
+    <collapse-property name="gxt.device"
+                       values="phone, tablet, desktop"/>
+    <!-- group themes  -->
+    <collapse-property name="gxt.theme" values="*"/>
 
-    <!-- group modern browsers <collapse-property name="gxt.user.agent" values="air,
-        safari*, chrome*, gecko*, ie11" /> <collapse-property name="user.agent" values="safari*,
-        gecko*" /> -->
+    <!-- group modern browsers  -->
+    <collapse-property name="gxt.user.agent" values="air,
+        safari*, chrome*, gecko*, ie11"/>
+    <collapse-property name="user.agent" values="safari*,
+        gecko*"/>
 
-    <!-- group ie <collapse-property name="gxt.user.agent" values="ie8, ie9,
-        ie10" /> <collapse-property name="user.agent" values="ie*" /> -->
+    <!-- group ie -->
+    <collapse-property name="gxt.user.agent" values="ie8, ie9,
+        ie10"/>
+    <collapse-property name="user.agent" values="ie*"/>
 
     <!-- allow Super Dev Mode -->
     <add-linker name="xsiframe"/>
