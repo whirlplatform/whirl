@@ -12,9 +12,9 @@ build:
 
       project_setup:
         override:
-          - command: mvn -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -P postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - command: mvn -P postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       tests:
@@ -25,6 +25,6 @@ build:
         -
           commands:
             - cd ~/build/whirl-app/whirl-app-server
-            - mvn jelastic:deploy -P deploy-jelastic,postgresql -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_APP
+            - mvn jelastic:deploy -P deploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_APP
             - cd ~/build/whirl-editor/whirl-editor-server
-            - mvn jelastic:deploy -P deploy-jelastic,postgresql -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_EDITOR
+            - mvn jelastic:deploy -P deploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_EDITOR
