@@ -7,25 +7,24 @@ build:
 
       dependencies:
         override:
-          - command: mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
-          - command: mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
+          - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+        project_setup:
+          override:
           - command: mvn -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
+              idle_timeout: 700
           - command: mvn -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
+              idle_timeout: 700
 
       tests:
         override:
           - mvn test
 
       deployment:
-        -
-          commands:
+        - commands:
             - cd whirl-app/whirl-app-server
             - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_APP
-        -
-          commands:
+        - commands:
             - cd whirl-editor/whirl-editor-server
             - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_EDITOR
