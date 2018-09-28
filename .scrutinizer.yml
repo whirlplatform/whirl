@@ -16,6 +16,10 @@ build:
           - command: mvn -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
+      test:
+        override:
+          - mvn test
+
       deployment:
         -
           commands:
