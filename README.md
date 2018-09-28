@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.org/whirlplatform/whirl.svg?branch=master)](https://travis-ci.org/whirlplatform/whirl)
+[![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
 Whrlplatform

@@ -15,7 +15,8 @@
     <inherits name="org.whirlplatform.component.Component"/>
     <inherits name="org.whirlplatform.java.Java"/>
 
-    <inherits name='org.whirlplatform.theme.Theme'/>
+	<inherits name='com.sencha.gxt.theme.blue.Blue'/>
+	<!-- <inherits name='org.whirlplatform.theme.Theme'/> -->
 
     <inherits name="com.mvp4g.Mvp4gModule"/>
     <inherits name="org.geomajas.codemirror.CodeMirror"/>

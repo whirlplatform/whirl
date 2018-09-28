@@ -19,7 +19,8 @@
     <inherits name="org.whirlplatform.component.Component"/>
     <inherits name="org.whirlplatform.java.Java"/>
 
-    <inherits name='org.whirlplatform.theme.Theme'/>
+    <inherits name='com.sencha.gxt.theme.blue.Blue'/>
+    <!-- <inherits name='org.whirlplatform.theme.Theme'/> -->
 
     <entry-point class="org.whirlplatform.app.client.AppEntryPoint"/>
     <source path="client"/>
