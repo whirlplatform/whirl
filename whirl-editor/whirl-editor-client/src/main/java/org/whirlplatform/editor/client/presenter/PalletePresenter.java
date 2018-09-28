@@ -6,8 +6,13 @@ import com.mvp4g.client.presenter.BasePresenter;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Component;
 import org.whirlplatform.editor.client.EditorEventBus;
+import org.whirlplatform.editor.client.main.ComponentPreferences;
 import org.whirlplatform.editor.client.view.PalleteView;
 import org.whirlplatform.meta.shared.component.ComponentType;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Presenter(view = PalleteView.class)
 public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteView, EditorEventBus> {
@@ -24,7 +29,9 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
 
     @Override
     public void bind() {
-        for (ComponentType t : ComponentType.values()) {
+        List<ComponentType> types = Arrays.stream(ComponentType.values()).
+                filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v)).collect(Collectors.toList());
+        for (ComponentType t : types) {
             Component c = view.addComponentType(t);
             initDND(c, t);
         }

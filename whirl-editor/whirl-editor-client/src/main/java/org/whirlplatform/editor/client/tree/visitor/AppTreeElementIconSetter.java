@@ -320,6 +320,8 @@ public class AppTreeElementIconSetter implements TreeElementVisitor<AppTreeEleme
                 return icon.treeMenuItemSmall();
             case ContextMenuItemType:
                 return icon.contextMenuItem();
+            case PasswordFieldType:
+                return icon.passwordFieldSmall();
             default:
                 return icon.brick();
         }

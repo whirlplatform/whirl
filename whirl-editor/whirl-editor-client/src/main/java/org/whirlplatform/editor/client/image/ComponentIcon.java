@@ -106,6 +106,8 @@ public class ComponentIcon {
                     ComponentBundle.INSTANCE.hMenu());
             put(ComponentType.TreeMenuItemType.getType(),
                     ComponentBundle.INSTANCE.treeMenuItem());
+            put(ComponentType.PasswordFieldType.getType(),
+                    ComponentBundle.INSTANCE.passwordField());
         }
     };
 
