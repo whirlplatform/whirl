@@ -24,7 +24,7 @@ build:
       deployment:
         -
           commands:
-            - cd whirl-app/whirl-app-server
+            - cd ~/build/whirl-app/whirl-app-server
             - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_APP
-            - cd ../../whirl-editor/whirl-editor-server
+            - cd ~/build/whirl-editor/whirl-editor-server
             - mvn jelastic:deploy -Pdeploy-jelastic -Djelastic.hoster_api=$JELASTIC_HOSTER_API -Djelastic.login=$JELASTIC_LOGIN -Djelastic.password=$JELASTIC_PASSWORD -Djelastic.environment=$JELASTIC_ENVIRONMENT  -Djelastic.context=$JELASTIC_CONTEXT_EDITOR
