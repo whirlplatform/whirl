@@ -2,9 +2,7 @@
 
 # Whrl Platform
 
-The Whirl Platform is application builder software for database developers that simplyfying of creating web 
-applications. It provides WYSIWYG tools for building UI that thightly binds to database data. Building application 
-did'nt require to write application server logic.
+The Whirl Platform is application builder software for database developers that simplifying of creating web applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building application didn't require to write application server or client side logic, all logic can be done database side.
 
 ## Try
 
