@@ -12,7 +12,9 @@ You can try Whirl Application Editor on the demo server.
 
 
 **Server**: http://whirlplatform.cloudjiffy.net/editor/
+
 **Username**: admin
+
 **Password**: password
 
 
