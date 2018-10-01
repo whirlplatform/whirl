@@ -29,7 +29,7 @@
 <meta name="gwt:property" content="locale=<%=locale%>">
 <meta http-equiv="X-UA-Compatible" content="IE=9">
 <title><%=title%></title>
-<link type="text/css" rel="stylesheet" href="editor.css">
+<link type="text/css" rel="stylesheet" href="index.css">
 <script type="text/javascript" src="cke/ckeditor.js"></script>
 
 <script type="text/javascript" src="editor/codemirror/lib/codemirror.js"></script>

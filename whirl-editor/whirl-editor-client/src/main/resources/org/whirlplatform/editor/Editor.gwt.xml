@@ -48,6 +48,6 @@
     <source path="client"/>
     <source path="shared"/>
 
-	<extend-property name="locale" values="ru" />
 	<extend-property name="locale" values="en" />
+	<extend-property name="locale" values="ru"/>
 </module>

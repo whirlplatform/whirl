@@ -19,63 +19,63 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 
 public class TableComboBox extends ComboBox<AbstractTableElement> {
 
-	public TableComboBox(TableStore store) {
-		super(store, new ElementLabelProvider<AbstractTableElement>());
+    public TableComboBox(TableStore store) {
+        super(store, new ElementLabelProvider<AbstractTableElement>());
 
-		setTriggerAction(TriggerAction.ALL);
-		setForceSelection(true);
-		addTriggerClickHandler(new TriggerClickHandler() {
-			@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-				if (!isExpanded()) {
+        setTriggerAction(TriggerAction.ALL);
+        setForceSelection(true);
+        addTriggerClickHandler(new TriggerClickHandler() {
+            @Override
+            public void onTriggerClick(TriggerClickEvent event) {
+                if (!isExpanded()) {
 //					getStore().getLoader().load(getText());
-				}
-			}
-		});
-		addBeforeQueryHandler(new BeforeQueryHandler<AbstractTableElement>() {
-			@Override
-			public void onBeforeQuery(BeforeQueryEvent<AbstractTableElement> event) {
-				getStore().getLoader().load(event.getQuery());
-			}
-		});
-		DropTarget target = new DropTarget(this);
-		target.addDropHandler(new DndDropHandler() {
-			@Override
-			public void onDrop(DndDropEvent event) {
-				if (event.getData() instanceof AbstractTableElement) {
-					setValue((AbstractTableElement) event.getData());
-				}
-			}
-		});
-		target.addDragEnterHandler(new DndDragEnterHandler() {
-			@Override
-			public void onDragEnter(DndDragEnterEvent event) {
-				if (event.getDragSource().getData() instanceof AbstractTableElement) {
-					event.getStatusProxy().setStatus(true);
-				}
-			}
-		});
-		target.addDragLeaveHandler(new DndDragLeaveHandler() {
-			@Override
-			public void onDragLeave(DndDragLeaveEvent event) {
-				event.getStatusProxy().setStatus(false);
-			}
-		});
+                }
+            }
+        });
+        addBeforeQueryHandler(new BeforeQueryHandler<AbstractTableElement>() {
+            @Override
+            public void onBeforeQuery(BeforeQueryEvent<AbstractTableElement> event) {
+                getStore().getLoader().load(event.getQuery());
+            }
+        });
+        DropTarget target = new DropTarget(this);
+        target.addDropHandler(new DndDropHandler() {
+            @Override
+            public void onDrop(DndDropEvent event) {
+                if (event.getData() instanceof AbstractTableElement) {
+                    setValue((AbstractTableElement) event.getData());
+                }
+            }
+        });
+        target.addDragEnterHandler(new DndDragEnterHandler() {
+            @Override
+            public void onDragEnter(DndDragEnterEvent event) {
+                if (event.getDragSource().getData() instanceof AbstractTableElement) {
+                    event.getStatusProxy().setStatus(true);
+                }
+            }
+        });
+        target.addDragLeaveHandler(new DndDragLeaveHandler() {
+            @Override
+            public void onDragLeave(DndDragLeaveEvent event) {
+                event.getStatusProxy().setStatus(false);
+            }
+        });
 
-		addSelectionHandler(new SelectionHandler<AbstractTableElement>() {
-			
-			@Override
-			public void onSelection(SelectionEvent<AbstractTableElement> event) {
-				if (event.getSelectedItem().getId().isEmpty()) {
-					TableComboBox.this.setValue(null, false, true);
-					TableComboBox.this.setText("");
-				}
-			}
-		});
-	}
+        addSelectionHandler(new SelectionHandler<AbstractTableElement>() {
 
-	@Override
-	public TableStore getStore() {
-		return (TableStore) super.getStore();
-	}
+            @Override
+            public void onSelection(SelectionEvent<AbstractTableElement> event) {
+                if (event.getSelectedItem().getId().isEmpty()) {
+                    TableComboBox.this.setValue(null, false, true);
+                    TableComboBox.this.setText("");
+                }
+            }
+        });
+    }
+
+    @Override
+    public TableStore getStore() {
+        return (TableStore) super.getStore();
+    }
 }
