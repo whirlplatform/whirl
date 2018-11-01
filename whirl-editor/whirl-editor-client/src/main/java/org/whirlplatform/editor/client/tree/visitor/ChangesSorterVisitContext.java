@@ -3,8 +3,16 @@ package org.whirlplatform.editor.client.tree.visitor;
 import com.sencha.gxt.data.shared.TreeStore;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppGroups;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppLocales;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
 import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
@@ -16,8 +24,8 @@ import java.util.Map;
 /**
  */
 public class ChangesSorterVisitContext implements VisitContext {
-    private TreeStore<AbstractElement> treeStore;
     private final Map<String, String> parents;
+    private TreeStore<AbstractElement> treeStore;
     private ApplicationElement root;
     private String dummyLocalesId;
     private String dummyGroupsId;
@@ -79,7 +87,6 @@ public class ChangesSorterVisitContext implements VisitContext {
 
     private void collectPlainTableViews(final PlainTableElement table) {
         this.collectElementIdToMap(parents, table, table.getView());
-        this.collectElementIdToMap(parents, table, table.getList());
     }
 
     private void collectPlainTableColumns(final PlainTableElement table) {
@@ -156,11 +163,11 @@ public class ChangesSorterVisitContext implements VisitContext {
         return dummyGroupsId;
     }
 
-    public void setChangeOwnerId(final String id) {
-        this.changeOwnerId = id;
-    }
-
     public String getChangeOwnerId() {
         return changeOwnerId;
+    }
+
+    public void setChangeOwnerId(final String id) {
+        this.changeOwnerId = id;
     }
 }

@@ -7,38 +7,38 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 @SuppressWarnings("serial")
 public abstract class AbstractTableElement extends AbstractElement {
 
-	protected PropertyValue title = new PropertyValue(DataType.STRING);
+    protected PropertyValue title = new PropertyValue(DataType.STRING);
 
-	protected String code;
+    protected String code;
 
-	protected boolean emptyRow;
+    protected boolean emptyRow;
 
-	public AbstractTableElement() {
+    public AbstractTableElement() {
 
-	}
+    }
 
-	public PropertyValue getTitle() {
-		return title;
-	}
+    public PropertyValue getTitle() {
+        return title;
+    }
 
-	public void setTitle(PropertyValue title) {
-		this.title = title;
-	}
+    public void setTitle(PropertyValue title) {
+        this.title = title;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setEmptyRow(boolean emptyRow) {
-		this.emptyRow = emptyRow;
-	}
+    public boolean isEmptyRow() {
+        return emptyRow;
+    }
 
-	public boolean isEmptyRow() {
-		return emptyRow;
-	}
+    public void setEmptyRow(boolean emptyRow) {
+        this.emptyRow = emptyRow;
+    }
 
 }

@@ -24,7 +24,6 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 import org.whirlplatform.server.monitor.RunningEvent;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +34,16 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
         super(connectionWrapper, DataSourceDriver);
     }
 
-    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
-                                               ClassLoadConfig loadConfig) {
+    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+        return getTableData(metadata, table, loadConfig, temp);
+    }
+
+    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(ClassMetadata metadata,
+                                                                                      PlainTableElement table,
+                                                                                      ClassLoadConfig loadConfig,
+                                                                                      H temp) {
+
         temp.prepare(metadata, table, loadConfig);
 
         List<RowModelData> result = new ArrayList<RowModelData>();
@@ -53,12 +59,12 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
             @Override
             public void onStop() {
                 //TODO abort
-//                try {
-//                    stoppedHolder[0] = true;
-//                    getConnection().unwrap(OracleConnection.class).abort();
-//                } catch (SQLException e) {
-//                    _log.info("Stop event error", e);
-//                }
+                //                try {
+                //                    stoppedHolder[0] = true;
+                //                    getConnection().unwrap(OracleConnection.class).abort();
+                //                } catch (SQLException e) {
+                //                    _log.info("Stop event error", e);
+                //                }
             }
         };
 
@@ -97,8 +103,7 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
         } catch (QueryFailedException e) {
             // Обработка остановки выполнения запроса
             if (stoppedHolder[0]) {
-                throw new CustomException(
-                        I18NMessage.getMessage(I18NMessage.getRequestLocale()).alert_event_cancelled());
+                throw new CustomException(I18NMessage.getMessage(I18NMessage.getRequestLocale()).alert_event_cancelled());
             } else {
                 throw e;
             }

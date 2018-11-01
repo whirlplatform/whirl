@@ -37,7 +37,12 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.Clearable;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.ListParameter;
+import org.whirlplatform.component.client.ParameterHelper;
+import org.whirlplatform.component.client.Validatable;
 import org.whirlplatform.component.client.data.ClassKeyProvider;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
@@ -52,92 +57,85 @@ import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.RowModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TreeBuilder extends ComponentBuilder
         implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
-    private XTree<RowModelData, String> tree;
     protected TreeStore<RowModelData> store;
-
     /**
-     * Колонка наименования
+     * Колонка лейбла
      */
-    protected String nameExpression;
-    protected String nameExpressionColumn;
-
+    protected String labelColumn;
+    /**
+     * Выражение для вычисления наличия родителей
+     */
+    protected String isLeafColumn;
+    protected boolean restoreState;
+    protected StorageWrapper<RowListValue> stateStore;
+    protected StateStore<RowListValue> selectionStateStore;
+    protected HandlerRegistration checkChangedHandler;
+    private XTree<RowModelData, String> tree;
     /**
      * Идентификатор таблицы (DataSource)
      */
     private String dataSourceId;
-
-    /**
-     * Выражение для вычисления наличия родителей
-     */
-    protected String leafExpression;
-    protected String leafExpressionColumn;
-
     /**
      * Колонка родителя
      */
     private String parentColumn;
-
     /**
      * Колонка со значением для чекбокса (checked/unchecked)
      */
-    private String checkExpression;
-    private String checkExpressionColumn;
-
+    private String checkColumn;
     /**
      * Колонка хранящая состояние выбора
      */
-    private String selectExpression;
-    private String selectExpressionColumn;
-
+    private String selectColumn;
     /**
      * Колонка со значением для ветки (expand/collapse)
      */
-    private String stateExpression;
-    private String stateExpressionColumn;
-
+    private String stateColumn;
     /**
      * Колонка со ссылкой на картинку
      */
     private String imageColumn;
-
     /**
      * Флаг, указывающий, что элемент выбираемый
      */
     private Boolean checkable;
-
     /**
      * Флаг, указывающий нужно ли сохранять состояние дерева в БД
      */
     private boolean saveState;
-
-    protected boolean restoreState;
-
-    protected StorageWrapper<RowListValue> stateStore;
-    protected StateStore<RowListValue> selectionStateStore;
-
     /**
      * Флаг, указывающий является ли поле обязательным для заполнения
      */
     private boolean required = false;
     private String forceInvalidText;
-
     private Boolean singleSelection = false;
     private String whereSql;
     private DelayedTask saveCurrentTask;
     private SideErrorHandler errorHandler;
-    protected HandlerRegistration checkChangedHandler;
     private TreeSelectionModel<RowModelData> selModel;
     private ParameterHelper paramHelper;
     private List<DataValue> lastParameters;
@@ -165,12 +163,6 @@ public class TreeBuilder extends ComponentBuilder
 
     @Override
     protected Component init(Map<String, DataValue> builderProperties) {
-        nameExpressionColumn = "NAME_COLUMN";
-        leafExpressionColumn = "PROPERTY_HAS_CHILDREN";
-        checkExpressionColumn = "CHECK_COLUMN";
-        stateExpressionColumn = "STATE_COLUMN";
-        selectExpressionColumn = "SELECT_COLUMN";
-
         minChars = 2;
 
         checkable = true;
@@ -182,7 +174,7 @@ public class TreeBuilder extends ComponentBuilder
 
             @Override
             public String getValue(RowModelData object) {
-                return object.get(nameExpressionColumn);
+                return object.get(labelColumn);
             }
 
             @Override
@@ -230,26 +222,26 @@ public class TreeBuilder extends ComponentBuilder
                 setDataSourceId(value.getListModelData().getId());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.NameExpression.getCode()) && value != null) {
-            nameExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
+            labelColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.LeafExpression.getCode()) && value != null) {
-            leafExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
+            isLeafColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ParentColumn.getCode()) && value != null) {
             parentColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode()) && value != null) {
-            checkExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode()) && value != null) {
+            checkColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode()) && value != null) {
-            stateExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.StateColumn.getCode()) && value != null) {
+            stateColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ImageColumn.getCode()) && value != null) {
             imageColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.SelectExpression.getCode()) && value != null) {
-            selectExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.SelectColumn.getCode()) && value != null) {
+            selectColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Checkable.getCode()) && value != null) {
             checkable = Boolean.TRUE.equals(value.getBoolean());
@@ -314,7 +306,7 @@ public class TreeBuilder extends ComponentBuilder
         TreeLoader<RowModelData> loader = new TreeLoader<RowModelData>(proxy) {
             @Override
             public boolean hasChildren(RowModelData parent) {
-                return parent.<Boolean>get(leafExpressionColumn);
+                return parent.<Boolean>get(isLeafColumn);
             }
 
             @Override
@@ -437,7 +429,7 @@ public class TreeBuilder extends ComponentBuilder
             public void render(com.google.gwt.cell.client.Cell.Context context, String value, SafeHtmlBuilder sb) {
                 String q = tree.getSearchText();
                 RowModelData model = store.findModelWithKey((String) context.getKey());
-                String style = model.getStyle(nameExpressionColumn);
+                String style = model.getStyle(labelColumn);
 
                 String data = value == null ? "" : SafeHtmlUtils.htmlEscape(value);
                 StringBuilder result = new StringBuilder();
@@ -470,23 +462,23 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected void restoreState(List<RowModelData> list) {
-        if (checkExpression == null && stateExpression == null && selectExpression == null) {
+        if (checkColumn == null && stateColumn == null && selectColumn == null) {
             return;
         }
         RowModelData firstChecked = null;
         for (RowModelData m : list) {
             // Отмечаем чекбокс
-            if (m.<Boolean>get(checkExpressionColumn)) {
+            if (m.<Boolean>get(checkColumn)) {
                 if (firstChecked == null) {
                     firstChecked = m;
                 }
                 tree.setChecked(m, CheckState.CHECKED);
             }
             // Раскрываем ветку
-            if (m.<Boolean>get(stateExpressionColumn) && !tree.isLeaf(m)) {
+            if (m.<Boolean>get(stateColumn) && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
-            if (m.<Boolean>get(selectExpressionColumn)) {
+            if (m.<Boolean>get(selectColumn)) {
                 // tree.getSelectionModel().setSelection(Arrays.asList(m));
                 tree.getSelectionModel().select(m, true);
 
@@ -512,12 +504,12 @@ public class TreeBuilder extends ComponentBuilder
     protected TreeClassLoadConfig getLoadConfig(RowModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
-        config.setLeafExpression(leafExpression);
-        config.setStateExpression(stateExpression);
-        config.setCheckExpression(checkExpression);
-        config.setSelectExpression(selectExpression);
-        config.setNameExpression(nameExpression);
-        config.setParentField(parentColumn);
+        config.setIsLeafColumn(isLeafColumn);
+        config.setStateColumn(stateColumn);
+        config.setCheckColumn(checkColumn);
+        config.setSelectColumn(selectColumn);
+        config.setLabelColumn(labelColumn);
+        config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setAll(true);
@@ -654,14 +646,19 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @Override
+    public boolean isSaveState() {
+        return saveState;
+    }
+
+    @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
     @Override
-    public boolean isSaveState() {
-        return saveState;
+    public StateScope getStateScope() {
+        return getStateStore().getScope();
     }
 
     @Override
@@ -679,11 +676,6 @@ public class TreeBuilder extends ComponentBuilder
                     break;
             }
         }
-    }
-
-    @Override
-    public StateScope getStateScope() {
-        return getStateStore().getScope();
     }
 
     @Override
@@ -736,22 +728,6 @@ public class TreeBuilder extends ComponentBuilder
     @Override
     public HandlerRegistration addChangeHandler(ChangeEvent.ChangeHandler handler) {
         return addHandler(handler, ChangeEvent.getType());
-    }
-
-    private static class LocatorParams {
-
-        private static String TYPE_SEARCH_FIELD = "SearchField";
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_SEARCH_BUTTON = "SearchButton";
-
-        private static String TYPE_ITEM = "Item";
-        private static String TYPE_CHECK = "Check";
-        private static String TYPE_JOINT = "Joint";
-        private static String TYPE_LABEL = "Label";
-
-        private static String PARAMETER_ID = "id";
-        private static String PARAMETER_INDEX = "index";
-        private static String PARAMETER_LABEL = "label";
     }
 
     @Override
@@ -836,6 +812,22 @@ public class TreeBuilder extends ComponentBuilder
             }
         }
         return super.getElementByLocator(locator);
+    }
+
+    private static class LocatorParams {
+
+        private static String TYPE_SEARCH_FIELD = "SearchField";
+        private static String TYPE_INPUT = "Input";
+        private static String TYPE_SEARCH_BUTTON = "SearchButton";
+
+        private static String TYPE_ITEM = "Item";
+        private static String TYPE_CHECK = "Check";
+        private static String TYPE_JOINT = "Joint";
+        private static String TYPE_LABEL = "Label";
+
+        private static String PARAMETER_ID = "id";
+        private static String PARAMETER_INDEX = "index";
+        private static String PARAMETER_LABEL = "label";
     }
 
 }

@@ -13,7 +13,8 @@
         <module>whirl-theme</module>
         <module>whirl-selenium</module>
         <module>whirl-app</module>
-        <module>whirl-codemirror</module>
+        <module>whirl-codemirror
+        </module>
         <module>whirl-editor</module>
     </modules>
 
@@ -231,6 +232,36 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>1.2.1</version>
             </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+
+            <!-- Guice -->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>4.1.0</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>guava</artifactId>
+                        <groupId>com.google.guava</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>4.1.0</version>
+            </dependency>
+
+            <!-- Databases VCS -->
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>3.6.1</version>
+            </dependency>
 
             <!-- Test -->
             <dependency>
@@ -245,6 +276,18 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
                 <version>2.7.8</version>
+            </dependency>
+
+            <!-- Logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.25</version>
             </dependency>
 
             <!-- Testing -->

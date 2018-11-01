@@ -9,169 +9,175 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonSubTypes(@JsonSubTypes.Type(TreeClassLoadConfig.class))
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
+        isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ClassLoadConfig implements Serializable {
 
-	private PageConfig page = new PageConfig();
+    private PageConfig page = new PageConfig();
 
-	private String whereSql;
+    private String whereSql;
 
-	private String query;
+    private String query;
 
-	private boolean all = false;
+    private boolean all = false;
 
-	private List<FilterValue> filters = new ArrayList<FilterValue>();
+    private List<FilterValue> filters = new ArrayList<FilterValue>();
 
-	private List<SortValue> sorts = new ArrayList<SortValue>();
+    private List<SortValue> sorts = new ArrayList<SortValue>();
 
-	private Map<String, DataValue> parameters = new HashMap<String, DataValue>();
-	
-	@Deprecated
-	private boolean useSearchParameters = false;
-	
-	private boolean reloadMetadata;
-	
-	private FieldMetadata tableField;
+    private Map<String, DataValue> parameters = new HashMap<String, DataValue>();
 
-	public ClassLoadConfig() {
-	}
+    @Deprecated
+    private boolean useSearchParameters = false;
 
-	public void setPageNum(int page) {
-		this.page.setPage(page);
-	}
+    private boolean reloadMetadata;
 
-	public int getPageNum() {
-		return page.getPage();
-	}
+    private FieldMetadata tableField;
 
-	public int getRows() {
-		return this.page.getRows();
-	}
+    public ClassLoadConfig() {
+    }
 
-	public void setRows(int rows) {
-		this.page.setRows(rows);
-	}
+    public int getPageNum() {
+        return page.getPage();
+    }
 
-	public void setRowsPerPage(int rowsPerPage) {
-		this.page.setRowsPerPage(rowsPerPage);
-	}
+    public void setPageNum(int page) {
+        this.page.setPage(page);
+    }
 
-	public int getRowsPerPage() {
-		return this.page.getRowsPerPage();
-	}
+    public int getRows() {
+        return this.page.getRows();
+    }
 
-	public PageConfig getPageConfig() {
-		return page;
-	}
+    public void setRows(int rows) {
+        this.page.setRows(rows);
+    }
 
-	public String getQuery() {
-		return query;
-	}
+    public int getRowsPerPage() {
+        return this.page.getRowsPerPage();
+    }
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
+    public void setRowsPerPage(int rowsPerPage) {
+        this.page.setRowsPerPage(rowsPerPage);
+    }
 
-	public String getWhereSql() {
-		return whereSql;
-	}
+    public PageConfig getPageConfig() {
+        return page;
+    }
 
-	public void setWhereSql(String whereSql) {
-		this.whereSql = whereSql;
-	}
+    public String getQuery() {
+        return query;
+    }
 
-	public boolean isAll() {
-		return all;
-	}
+    public void setQuery(String query) {
+        this.query = query;
+    }
 
-	public void setAll(boolean all) {
-		this.all = all;
-	}
+    public String getWhereSql() {
+        return whereSql;
+    }
 
-	public void addFilter(FilterValue filter) {
-		filters.add(filter);
-	}
+    public void setWhereSql(String whereSql) {
+        this.whereSql = whereSql;
+    }
 
-	public void addFilterAll(Collection<FilterValue> values) {
-		filters.addAll(values);
-	}
+    public boolean isAll() {
+        return all;
+    }
 
-	public List<FilterValue> getFilters() {
-		return filters;
-	}
+    public void setAll(boolean all) {
+        this.all = all;
+    }
 
-	public void clearFilters() {
-		filters.clear();
-	}
+    public void addFilter(FilterValue filter) {
+        filters.add(filter);
+    }
 
-	public void addSort(SortValue sort) {
-		sorts.add(sort);
-	}
+    public void addFilterAll(Collection<FilterValue> values) {
+        filters.addAll(values);
+    }
 
-	public void addSortAll(Collection<SortValue> values) {
-		sorts.addAll(values);
-	}
+    public List<FilterValue> getFilters() {
+        return filters;
+    }
 
-	public List<SortValue> getSorts() {
-		return sorts;
-	}
+    public void clearFilters() {
+        filters.clear();
+    }
 
-	public void clearSort() {
-		sorts.clear();
-	}
+    public void addSort(SortValue sort) {
+        sorts.add(sort);
+    }
 
-	public FilterValue getFilterValue(FieldMetadata field) {
-		for (FilterValue f : filters) {
-			if (field.equals(f.getMetadata())) {
-				return f;
-			}
-		}
-		FilterValue value = new FilterValue(field);
-		filters.add(value);
-		return value;
-	}
+    public void addSortAll(Collection<SortValue> values) {
+        sorts.addAll(values);
+    }
 
-	public void addParameter(String code, DataValue value) {
-		parameters.put(code, value);
-	}
+    public List<SortValue> getSorts() {
+        return sorts;
+    }
 
-	public void setParameters(Map<String, DataValue> parameters) {
-		this.parameters = parameters;
-	}
+    public void clearSort() {
+        sorts.clear();
+    }
 
-	public Map<String, DataValue> getParameters() {
-		return Collections.unmodifiableMap(parameters);
-	}
-	
-	@Deprecated
-	public void setUseSearchParameters(boolean useSearchParameters) {
-		this.useSearchParameters = useSearchParameters;
-	}
-	
-	@Deprecated
-	public boolean isUseSearchParameters() {
-		return useSearchParameters;
-	}
-	
-	public void setReloadMetadata(boolean reloadMetadata) {
-		this.reloadMetadata = reloadMetadata;
-	}
-	
-	public boolean isReloadMetadata() {
-		return reloadMetadata;
-	}
-		
-	public FieldMetadata getTableField() {
-		return tableField;
-	}
-	
-	public void setTableField(FieldMetadata tableField) {
-		this.tableField = tableField;
-	}
+    public FilterValue getFilterValue(FieldMetadata field) {
+        for (FilterValue f : filters) {
+            if (field.equals(f.getMetadata())) {
+                return f;
+            }
+        }
+        FilterValue value = new FilterValue(field);
+        filters.add(value);
+        return value;
+    }
+
+    public void addParameter(String code, DataValue value) {
+        parameters.put(code, value);
+    }
+
+    public Map<String, DataValue> getParameters() {
+        return Collections.unmodifiableMap(parameters);
+    }
+
+    public void setParameters(Map<String, DataValue> parameters) {
+        this.parameters = parameters;
+    }
+
+    @Deprecated
+    public boolean isUseSearchParameters() {
+        return useSearchParameters;
+    }
+
+    @Deprecated
+    public void setUseSearchParameters(boolean useSearchParameters) {
+        this.useSearchParameters = useSearchParameters;
+    }
+
+    public boolean isReloadMetadata() {
+        return reloadMetadata;
+    }
+
+    public void setReloadMetadata(boolean reloadMetadata) {
+        this.reloadMetadata = reloadMetadata;
+    }
+
+    public FieldMetadata getTableField() {
+        return tableField;
+    }
+
+    public void setTableField(FieldMetadata tableField) {
+        this.tableField = tableField;
+    }
 }

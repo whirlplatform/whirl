@@ -1,14 +1,32 @@
 package org.whirlplatform.editor.server;
 
-import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public class ApplicationIdHelper {
 
@@ -17,10 +35,9 @@ public class ApplicationIdHelper {
      * {@link RandomUUID}
      *
      * @param application
-     * @throws RPCException
      */
     @Deprecated
-    public static void initIdsOf(ApplicationElement application) throws RPCException {
+    public static void initIdsOf(ApplicationElement application) {
         // Id приложения
         if (isTempId(application)) {
             application.setId(getNextId());
@@ -171,7 +188,6 @@ public class ApplicationIdHelper {
         if (table instanceof PlainTableElement) {
             PlainTableElement tableEl = (PlainTableElement) table;
             initViewId(tableEl.getView());
-            initViewId(tableEl.getList());
             for (TableColumnElement c : tableEl.getColumns()) {
                 initColumnId(c);
             }

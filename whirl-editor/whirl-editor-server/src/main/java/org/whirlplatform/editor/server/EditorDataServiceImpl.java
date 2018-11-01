@@ -4,7 +4,16 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.fileupload.FileItem;
-import org.whirlplatform.editor.client.meta.*;
+import org.whirlplatform.editor.client.meta.NewComponentElement;
+import org.whirlplatform.editor.client.meta.NewContextMenuItemElement;
+import org.whirlplatform.editor.client.meta.NewDataSourceElement;
+import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
+import org.whirlplatform.editor.client.meta.NewEventElement;
+import org.whirlplatform.editor.client.meta.NewEventParameterElement;
+import org.whirlplatform.editor.client.meta.NewGroupElement;
+import org.whirlplatform.editor.client.meta.NewSchemaElement;
+import org.whirlplatform.editor.client.meta.NewTableColumnElement;
+import org.whirlplatform.editor.client.meta.NewTableElement;
 import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
 import org.whirlplatform.editor.server.packager.Packager;
 import org.whirlplatform.editor.shared.EditorDataService;
@@ -24,9 +33,25 @@ import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.meta.shared.editor.FileElement.InputStreamProvider;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.AccountAuthenticator;
@@ -362,12 +387,6 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             view.setViewName("V_" + table.getTableName());
             table.setView(view);
 
-            ViewElement list = new ViewElement();
-            list.setId(RandomUUID.uuid());
-            list.setName(getMessage().new_element_view_l());
-            list.setViewName("L_" + table.getTableName());
-            table.setList(list);
-
             return table;
         } else if (parent instanceof SchemaElement && element instanceof NewDynamicTableElement) {
             SchemaElement schema = (SchemaElement) parent;
@@ -440,17 +459,6 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
                 ViewElement view = pTable.getView().clone();
                 view.setId(RandomUUID.uuid());
                 table.setView(view);
-            }
-
-            // ViewElement list = new ViewElement();
-            // list.setId(RandomUUID.uuid());
-            // list.setName("Представление L");
-            // list.setViewName("L_" + table.getTableName());
-            // table.setList(list);
-            if (pTable.getList() != null) {
-                ViewElement list = pTable.getList().clone();
-                list.setId(RandomUUID.uuid());
-                table.setList(list);
             }
 
             return table;

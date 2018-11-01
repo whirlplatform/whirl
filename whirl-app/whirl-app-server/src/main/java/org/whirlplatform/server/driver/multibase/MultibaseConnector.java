@@ -2,12 +2,37 @@ package org.whirlplatform.server.driver.multibase;
 
 import com.google.inject.Singleton;
 import org.apache.empire.db.DBReader;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ApplicationData;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.DataModifyConfig;
+import org.whirlplatform.meta.shared.EventMetadata;
+import org.whirlplatform.meta.shared.EventResult;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
+import org.whirlplatform.meta.shared.LoadData;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
 import org.whirlplatform.meta.shared.form.FormCellModel;
@@ -21,7 +46,11 @@ import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.AbstractConnector;
 import org.whirlplatform.server.expimp.CSVExporter;
 import org.whirlplatform.server.expimp.XLSExporter;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ClientFormWriter;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.global.SrvConstant;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
@@ -33,13 +62,17 @@ import org.whirlplatform.server.metadata.container.MetadataContainer;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.utils.ApplicationReference;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.inject.Inject;
 
 @Singleton
 public class MultibaseConnector extends AbstractConnector {
@@ -238,7 +271,7 @@ public class MultibaseConnector extends AbstractConnector {
     public LoadData<RowModelData> getTableClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
                                                     ApplicationUser user) {
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
-        assertTrue((table != null), "Table definition not found: " + metadata.getTitle());
+        assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {

@@ -14,8 +14,34 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.AbstractCondition;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.BooleanCondition;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RightElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
+import org.whirlplatform.meta.shared.editor.SQLCondition;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -759,9 +785,6 @@ public class XMLApplicationExporter {
         propertyEl = tableEl.addElement("emptyRow");
         setElementText(propertyEl, String.valueOf(table.isEmptyRow()));
 
-        propertyEl = tableEl.addElement("simple");
-        setElementText(propertyEl, String.valueOf(table.isSimple()));
-
         if (table.getTableName() != null && !table.getTableName().isEmpty()) {
             propertyEl = tableEl.addElement("tableName");
             setElementText(propertyEl, table.getTableName());
@@ -788,10 +811,6 @@ public class XMLApplicationExporter {
 
         if (table.getView() != null) {
             writeView(tableEl, table.getView(), "view");
-        }
-
-        if (table.getList() != null) {
-            writeView(tableEl, table.getList(), "list");
         }
 
         if (!table.isClone() && !table.getClones().isEmpty()) {

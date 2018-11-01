@@ -1,8 +1,16 @@
 package org.whirlplatform.server.driver.multibase.fetch.postgresql;
 
-import org.apache.empire.data.DataType;
-import org.apache.empire.db.*;
-import org.whirlplatform.meta.shared.*;
+import org.apache.empire.db.DBColumnExpr;
+import org.apache.empire.db.DBCommand;
+import org.apache.empire.db.DBReader;
+import org.whirlplatform.meta.shared.AppConstant;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
+import org.whirlplatform.meta.shared.SortType;
+import org.whirlplatform.meta.shared.SortValue;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.data.RowModelData;
@@ -12,7 +20,6 @@ import org.whirlplatform.server.driver.multibase.fetch.DataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.base.AbstractPlainDataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.base.PlainTableFetcherHelper;
-import org.whirlplatform.server.driver.multibase.fetch.base.PlainTreeFetcherHelper;
 import org.whirlplatform.server.global.SrvConstant;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
@@ -46,8 +53,8 @@ public class PostgrePlainDataFetcher extends AbstractPlainDataFetcher implements
                                             PlainTableFetcherHelper temp) {
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
-            if (((TreeClassLoadConfig) loadConfig).getParentField() != null
-                    && ((TreeClassLoadConfig) loadConfig).getParent() != null) {
+            if (((TreeClassLoadConfig) loadConfig).getParentColumn() != null &&
+                    ((TreeClassLoadConfig) loadConfig).getParent() != null) {
                 all = true;
             }
         }
@@ -83,27 +90,7 @@ public class PostgrePlainDataFetcher extends AbstractPlainDataFetcher implements
         }
 
         if (loadConfig instanceof TreeClassLoadConfig) {
-            String parentField = ((TreeClassLoadConfig) loadConfig).getParentField();
-            if (parentField != null) {
-                String leafExpression = ((TreeClassLoadConfig) loadConfig).getLeafExpression();
-                DBColumnExpr exprColumn;
-                if (leafExpression != null) {
-                    exprColumn = temp.dbDatabase.getValueExpr(leafExpression, DataType.UNKNOWN)
-                            .as("PROPERTY_HAS_CHILDREN");
-                } else {
-                    exprColumn = temp.dbDatabase.getValueExpr(true).as("PROPERTY_HAS_CHILDREN");
-                }
-                command.select(exprColumn);
-                ((PlainTreeFetcherHelper) temp).dbLeafExpression = exprColumn;
-
-                RowModelData parent = ((TreeClassLoadConfig) loadConfig).getParent();
-                DBColumn parentColumn = temp.dbTable.getColumn(parentField);
-                if (parent != null) {
-                    command.where(parentColumn.is(parent.getId()));
-                } else {
-                    command.where(parentColumn.cmp(DBCmpType.NULL, null));
-                }
-            }
+            addTreeCommandPart(command, command, (TreeClassLoadConfig) loadConfig, temp);
         }
         return command;
     }
@@ -159,16 +146,16 @@ public class PostgrePlainDataFetcher extends AbstractPlainDataFetcher implements
     }
 
     // TODO не используется
-    public int getTableRowsCount(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-        int result = 0;
-        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
-        temp.prepare(metadata, table, loadConfig);
-        DBCommand countCmd = createCountCommand(temp, loadConfig.isAll());
-        DBReader countReader = createAndOpenReader(countCmd);
-        if (countReader.moveNext()) {
-            result = countReader.getInt(temp.countColumn);
-        }
-        countReader.close();
-        return result;
-    }
+    //    public int getTableRowsCount(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
+    //        int result = 0;
+    //        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+    //        temp.prepare(metadata, table, loadConfig);
+    //        DBCommand countCmd = createCountCommand(temp, loadConfig.isAll());
+    //        DBReader countReader = createAndOpenReader(countCmd);
+    //        if (countReader.moveNext()) {
+    //            result = countReader.getInt(temp.countColumn);
+    //        }
+    //        countReader.close();
+    //        return result;
+    //    }
 }

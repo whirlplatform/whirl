@@ -1,25 +1,34 @@
 package org.whirlplatform.meta.shared.component;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ComponentProperties {
 
-    private static List<PropertyType> generalProperties = Arrays.asList(PropertyType.DomId, PropertyType.Code,
-            PropertyType.Enabled, PropertyType.Hidden, PropertyType.Width, PropertyType.Height, PropertyType.Border,
-            PropertyType.BorderColor, PropertyType.Title, PropertyType.ToolTip, PropertyType.Style,
-            PropertyType.Reloadable, PropertyType.TabIndex, /* PropertyType.ContextMenu, */PropertyType.LayoutDataSize,
-            PropertyType.LayoutDataWidth, PropertyType.LayoutDataHeight, PropertyType.LayoutDataSplit,
-            PropertyType.LayoutDataCollapsible, PropertyType.LayoutDataLocation, PropertyType.LayoutDataIndex,
-            PropertyType.LayoutDataHorizontalAlign, PropertyType.LayoutDataVerticalAlign,
-            PropertyType.LayoutDataMarginTop, PropertyType.LayoutDataMarginRight, PropertyType.LayoutDataMarginBottom,
-            PropertyType.LayoutDataMarginLeft, PropertyType.LayoutDataFormRow, PropertyType.LayoutDataFormColumn,
-            PropertyType.Closable, PropertyType.LayoutDataMinSize, PropertyType.LayoutDataMaxSize,
+    //@formatter:off
+    private static List<PropertyType> generalProperties = Arrays
+            .asList(PropertyType.DomId, PropertyType.Code, PropertyType.Enabled, PropertyType.Hidden,
+                    PropertyType.Width, PropertyType.Height, PropertyType.Border, PropertyType.BorderColor,
+                    PropertyType.Title, PropertyType.ToolTip, PropertyType.Style, PropertyType.Reloadable,
+                    PropertyType.TabIndex, PropertyType.LayoutDataSize, PropertyType.LayoutDataWidth,
+                    PropertyType.LayoutDataHeight, PropertyType.LayoutDataSplit, PropertyType.LayoutDataCollapsible,
+                    PropertyType.LayoutDataLocation, PropertyType.LayoutDataIndex,
+                    PropertyType.LayoutDataHorizontalAlign, PropertyType.LayoutDataVerticalAlign,
+                    PropertyType.LayoutDataMarginTop, PropertyType.LayoutDataMarginRight,
+                    PropertyType.LayoutDataMarginBottom, PropertyType.LayoutDataMarginLeft,
+                    PropertyType.LayoutDataFormRow, PropertyType.LayoutDataFormColumn, PropertyType.Closable,
+                    PropertyType.LayoutDataMinSize, PropertyType.LayoutDataMaxSize,
             PropertyType.LayoutDataFlex);
+    //@formatter:on
 
     @SuppressWarnings("serial")
     private static Map<String, Set<PropertyType>> binding = new HashMap<String, Set<PropertyType>>() {
         {
-            put(ComponentType.BorderContainerType.getType(), new HashSet<PropertyType>());
+            put(ComponentType.BorderContainerType.getType(), new HashSet<>());
             put(ComponentType.HorizontalContainerType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.ScrollMode);
@@ -54,8 +63,8 @@ public class ComponentProperties {
                     add(PropertyType.VBoxAlign);
                 }
             });
-            put(ComponentType.CenterContainerType.getType(), new HashSet<PropertyType>());
-            put(ComponentType.SimpleContainerType.getType(), new HashSet<PropertyType>());
+            put(ComponentType.CenterContainerType.getType(), new HashSet<>());
+            put(ComponentType.SimpleContainerType.getType(), new HashSet<>());
             put(ComponentType.ContentPanelType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.Title);
@@ -63,7 +72,7 @@ public class ComponentProperties {
                     add(PropertyType.BodyStyle);
                 }
             });
-            put(ComponentType.TabPanelType.getType(), new HashSet<PropertyType>());
+            put(ComponentType.TabPanelType.getType(), new HashSet<>());
             put(ComponentType.TabItemType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.Active);
@@ -114,7 +123,7 @@ public class ComponentProperties {
                     add(PropertyType.MaxLength);
                     add(PropertyType.ReadOnly);
                     add(PropertyType.Mask);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                     add(PropertyType.IncludeMask);
                 }
             });
@@ -125,7 +134,7 @@ public class ComponentProperties {
                     add(PropertyType.MinLength);
                     add(PropertyType.StringValue);
                     add(PropertyType.ReadOnly);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                 }
             });
             put(ComponentType.NumberFieldType.getType(), new HashSet<PropertyType>() {
@@ -142,7 +151,7 @@ public class ComponentProperties {
                     add(PropertyType.FontSize);
                     add(PropertyType.Color);
                     add(PropertyType.ReadOnly);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                     add(PropertyType.Format);
                 }
             });
@@ -192,7 +201,7 @@ public class ComponentProperties {
                     add(PropertyType.HideTrigger);
                     add(PropertyType.ReadOnly);
                     add(PropertyType.Mask);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                 }
             });
             put(ComponentType.LabelType.getType(), new HashSet<PropertyType>() {
@@ -212,7 +221,7 @@ public class ComponentProperties {
             put(ComponentType.RadioGroupType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.DataSource);
-                    add(PropertyType.NameExpression);
+                    add(PropertyType.LabelColumn);
                     add(PropertyType.WhereSql);
                     add(PropertyType.Orientation);
                     add(PropertyType.StringValue);
@@ -222,8 +231,8 @@ public class ComponentProperties {
             put(ComponentType.CheckGroupType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.DataSource);
-                    add(PropertyType.NameExpression);
-                    add(PropertyType.CheckExpression);
+                    add(PropertyType.LabelColumn);
+                    add(PropertyType.CheckColumn);
                     add(PropertyType.StringValue);
                     add(PropertyType.WhereSql);
                     add(PropertyType.StateScope);
@@ -235,6 +244,7 @@ public class ComponentProperties {
             put(ComponentType.HtmlEditorType.getType(), new HashSet<PropertyType>());
             put(ComponentType.ComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
+                    add(PropertyType.LabelColumn);
                     add(PropertyType.HideTrigger);
                     add(PropertyType.StringValue);
                     add(PropertyType.DisplayValue);
@@ -247,7 +257,7 @@ public class ComponentProperties {
                     add(PropertyType.SaveState);
                     add(PropertyType.RestoreState);
                     add(PropertyType.Parameters);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                     add(PropertyType.LoadAll);
                     add(PropertyType.UseSearchParameters);
                     add(PropertyType.MinChars);
@@ -256,6 +266,7 @@ public class ComponentProperties {
             });
             put(ComponentType.MultiComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
+                    add(PropertyType.LabelColumn);
                     add(PropertyType.HideTrigger);
                     add(PropertyType.DataSource);
                     add(PropertyType.Editable);
@@ -268,7 +279,7 @@ public class ComponentProperties {
                     add(PropertyType.StringValue);
                     add(PropertyType.DisplayValue);
                     add(PropertyType.Parameters);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                     add(PropertyType.LoadAll);
                     add(PropertyType.SingleSelection);
                     add(PropertyType.UseSearchParameters);
@@ -278,11 +289,12 @@ public class ComponentProperties {
             });
             put(ComponentType.TreeComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
+                    add(PropertyType.LabelColumn);
                     add(PropertyType.DataSource);
                     add(PropertyType.StringValue);
                     add(PropertyType.DisplayValue);
-                    add(PropertyType.LeafExpression);
-                    add(PropertyType.StateExpression);
+                    add(PropertyType.IsLeafColumn);
+                    add(PropertyType.StateColumn);
                     add(PropertyType.ParentColumn);
                     add(PropertyType.StateScope);
                     add(PropertyType.SaveState);
@@ -291,7 +303,7 @@ public class ComponentProperties {
                     add(PropertyType.CheckStyle);
                     add(PropertyType.Parameters);
                     add(PropertyType.Required);
-                    add(PropertyType.Clearable);
+                    add(PropertyType.Cleanable);
                     add(PropertyType.SingleSelection);
                     add(PropertyType.UseSearchParameters);
                     add(PropertyType.MinChars);
@@ -299,14 +311,13 @@ public class ComponentProperties {
             });
             put(ComponentType.TreePanelType.getType(), new HashSet<PropertyType>() {
                 {
-                    // Новое свойство
-                    add(PropertyType.SelectExpression);
+                    add(PropertyType.LabelColumn);
+                    add(PropertyType.SelectColumn);
                     add(PropertyType.DataSource);
-                    add(PropertyType.NameExpression);
-                    add(PropertyType.LeafExpression);
+                    add(PropertyType.IsLeafColumn);
                     add(PropertyType.ParentColumn);
-                    add(PropertyType.CheckExpression);
-                    add(PropertyType.StateExpression);
+                    add(PropertyType.CheckColumn);
+                    add(PropertyType.StateColumn);
                     add(PropertyType.Checkable);
                     add(PropertyType.StateScope);
                     add(PropertyType.SaveState);
@@ -321,8 +332,8 @@ public class ComponentProperties {
                     add(PropertyType.MinChars);
                 }
             });
-            put(ComponentType.LoginPanelType.getType(), new HashSet<PropertyType>());
-            put(ComponentType.FramedLoginPanelType.getType(), new HashSet<PropertyType>());
+            put(ComponentType.LoginPanelType.getType(), new HashSet<>());
+            put(ComponentType.FramedLoginPanelType.getType(), new HashSet<>());
             put(ComponentType.FrameType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.Template);

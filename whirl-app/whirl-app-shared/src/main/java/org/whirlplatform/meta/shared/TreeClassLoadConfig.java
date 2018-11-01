@@ -5,65 +5,65 @@ import org.whirlplatform.meta.shared.data.RowModelData;
 @SuppressWarnings("serial")
 public class TreeClassLoadConfig extends ClassLoadConfig {
 
-    private String leafExpression;
-    private String stateExpression;
-    private String checkExpression;
+    private String isLeafColumn;
+    private String stateColumn;
+    private String checkColumn;
     // New property
-    private String selectExpression;
-    private String NameExpression;
-    private String parentField;
+    private String selectColumn;
+    private String labelColumn;
+    private String parentColumn;
     private RowModelData parent;
 
     public TreeClassLoadConfig() {
         super();
     }
 
-    public void setSelectExpression(String selectExpression) {
-        this.selectExpression = selectExpression;
+    public String getSelectColumn() {
+        return selectColumn;
     }
 
-    public String getSelectExpression() {
-        return selectExpression;
+    public void setSelectColumn(String selectExpression) {
+        this.selectColumn = selectExpression;
     }
 
-    public void setLeafExpression(String leafExpression) {
-        this.leafExpression = leafExpression;
+    public String getIsLeafColumn() {
+        return isLeafColumn;
     }
 
-    public String getLeafExpression() {
-        return leafExpression;
+    public void setIsLeafColumn(String leafExpression) {
+        this.isLeafColumn = leafExpression;
     }
 
-    public void setStateExpression(String stateExpression) {
-        this.stateExpression = stateExpression;
+    public String getStateColumn() {
+        return stateColumn;
     }
 
-    public String getStateExpression() {
-        return stateExpression;
+    public void setStateColumn(String stateColumn) {
+        this.stateColumn = stateColumn;
     }
 
-    public void setCheckExpression(String checkExpression) {
-        this.checkExpression = checkExpression;
+    public String getCheckColumn() {
+        return checkColumn;
     }
 
-    public String getCheckExpression() {
-        return checkExpression;
+    public void setCheckColumn(String checkColumn) {
+        this.checkColumn = checkColumn;
     }
 
-    public void setNameExpression(String nameExpression) {
-        NameExpression = nameExpression;
+    public String getLabelColumn() {
+        return labelColumn;
     }
 
-    public String getNameExpression() {
-        return NameExpression;
+    public void setLabelColumn(String labelColumn) {
+        this.labelColumn = labelColumn;
     }
 
-    public void setParentField(String parentField) {
-        this.parentField = parentField;
+    public String getParentColumn() {
+        return parentColumn;
     }
 
-    public String getParentField() {
-        return parentField;
+    public void setParentColumn(String parentColumn) {
+        this.parentColumn = parentColumn;
     }
 
     public void setParent(RowModelData parent) {

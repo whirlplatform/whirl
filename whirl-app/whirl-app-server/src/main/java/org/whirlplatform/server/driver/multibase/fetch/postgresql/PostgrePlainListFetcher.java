@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PostgrePlainListFetcher extends PostgrePlainDataFetcher implements ListFetcher<PlainTableElement> {
+public class PostgrePlainListFetcher extends PostgrePlainTableFetcher implements ListFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(PostgrePlainListFetcher.class);
 
     public PostgrePlainListFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
@@ -71,7 +71,7 @@ public class PostgrePlainListFetcher extends PostgrePlainDataFetcher implements 
 
     protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig, PlainListFetcherHelper temp) {
         DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr valueColumn = temp.dbListName.coalesce("Пустое значение").as(temp.dbListName);
+        DBColumnExpr valueColumn = temp.listColumn.coalesce("Пустое значение").as(temp.listColumn);
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
@@ -79,7 +79,7 @@ public class PostgrePlainListFetcher extends PostgrePlainDataFetcher implements 
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
         }
-        subCommand.orderBy(temp.dbListName.lower().asc());
+        subCommand.orderBy(temp.listColumn.lower().asc());
 
         DBQuery subQuery = new DBQuery(subCommand);
         idColumn = subQuery.findQueryColumn(idColumn);

@@ -87,7 +87,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-gwt</artifactId>
             <version>22.0</version>
-            <!-- <scope>provided</scope> -->
         </dependency>
 
         <dependency>
@@ -101,6 +100,17 @@
             <groupId>com.googlecode.mvp4g</groupId>
             <artifactId>mvp4g</artifactId>
             <version>1.5.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.inject.extensions</groupId>
+                    <artifactId>guice-assistedinject</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-assistedinject</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <!-- REST -->

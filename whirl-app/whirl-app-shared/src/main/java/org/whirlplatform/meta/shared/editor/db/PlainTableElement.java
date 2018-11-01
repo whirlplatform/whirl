@@ -2,201 +2,197 @@ package org.whirlplatform.meta.shared.editor.db;
 
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 public class PlainTableElement extends DatabaseTableElement {
 
-	private String tableName;
-	private TableColumnElement idColumn;
-	private TableColumnElement deleteColumn;
-	private Set<TableColumnElement> columns = new HashSet<TableColumnElement>();
-	private ViewElement view;
-	private ViewElement list;
+    private String tableName;
+    private TableColumnElement idColumn;
+    private TableColumnElement deleteColumn;
+    private TableColumnElement labelColumn;
+    private Set<TableColumnElement> columns = new HashSet<TableColumnElement>();
+    private ViewElement view;
 
-	private PlainTableElement clonedTable;
-	private Set<PlainTableElement> clones = new HashSet<PlainTableElement>();
-	
-	private boolean simple;
+    private PlainTableElement clonedTable;
+    private Set<PlainTableElement> clones = new HashSet<PlainTableElement>();
 
-	public PlainTableElement() {
+    private boolean simple;
 
-	}
+    public PlainTableElement() {
 
-	public PlainTableElement(SchemaElement schema) {
-		setSchema(schema);
-	}
+    }
 
-	public String getTableName() {
-		return tableName;
-	}
+    public PlainTableElement(SchemaElement schema) {
+        setSchema(schema);
+    }
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public TableColumnElement getColumn(String column) {
-		if (column == null) {
-			return null;
-		}
-		for (TableColumnElement c : columns) {
-			if (column.equals(c.getColumnName())) {
-				return c;
-			}
-		}
-		return null;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public void addColumn(TableColumnElement column) {
-		columns.add(column);
-		column.setTable(this);
-	}
+    public TableColumnElement getColumn(String column) {
+        if (column == null) {
+            return null;
+        }
+        for (TableColumnElement c : columns) {
+            if (column.equals(c.getColumnName())) {
+                return c;
+            }
+        }
+        return null;
+    }
 
-	public void removeColumn(TableColumnElement column) {
-		columns.remove(column);
-		column.setTable(null);
-	}
+    public void addColumn(TableColumnElement column) {
+        columns.add(column);
+        column.setTable(this);
+    }
 
-	public Collection<TableColumnElement> getColumns() {
-		return Collections.unmodifiableSet(columns);
-	}
+    public void removeColumn(TableColumnElement column) {
+        columns.remove(column);
+        column.setTable(null);
+    }
 
-	public List<TableColumnElement> getSortedColumns() {
-		Comparator<TableColumnElement> comparator = new Comparator<TableColumnElement>() {
+    public Collection<TableColumnElement> getColumns() {
+        return Collections.unmodifiableSet(columns);
+    }
 
-			@Override
-			public int compare(TableColumnElement o1, TableColumnElement o2) {
-				return o1.getIndex() - o2.getIndex();
-			}
-		};
-		List<TableColumnElement> result = new ArrayList<TableColumnElement>(
-				columns);
-		Collections.sort(result, comparator);
-		return Collections.unmodifiableList(result);
-	}
+    public List<TableColumnElement> getSortedColumns() {
+        Comparator<TableColumnElement> comparator = new Comparator<TableColumnElement>() {
 
-	public void changeColumns(Collection<TableColumnElement> columns) {
-		// удаление
-		Iterator<TableColumnElement> iter = this.columns.iterator();
-		while (iter.hasNext()) {
-			TableColumnElement g = iter.next();
-			if (!columns.contains(g)) {
-				iter.remove();
-				g.setTable(null);
-			}
-		}
-		// добавление
-		for (TableColumnElement newColumn : columns) {
-			if (!this.columns.contains(newColumn)) {
-				addColumn(newColumn);
-			}
-		}
-	}
+            @Override
+            public int compare(TableColumnElement o1, TableColumnElement o2) {
+                return o1.getIndex() - o2.getIndex();
+            }
+        };
+        List<TableColumnElement> result = new ArrayList<TableColumnElement>(columns);
+        Collections.sort(result, comparator);
+        return Collections.unmodifiableList(result);
+    }
 
-	public void setView(ViewElement view) {
-		this.view = view;
-	}
+    public void changeColumns(Collection<TableColumnElement> columns) {
+        // удаление
+        Iterator<TableColumnElement> iter = this.columns.iterator();
+        while (iter.hasNext()) {
+            TableColumnElement g = iter.next();
+            if (!columns.contains(g)) {
+                iter.remove();
+                g.setTable(null);
+            }
+        }
+        // добавление
+        for (TableColumnElement newColumn : columns) {
+            if (!this.columns.contains(newColumn)) {
+                addColumn(newColumn);
+            }
+        }
+    }
 
-	public ViewElement getView() {
-		return view;
-	}
+    public ViewElement getView() {
+        return view;
+    }
 
-	public void setList(ViewElement list) {
-		this.list = list;
-	}
+    public void setView(ViewElement view) {
+        this.view = view;
+    }
 
-	public ViewElement getList() {
-		return list;
-	}
+    public void addClone(PlainTableElement clone) {
+        clones.add(clone);
+        clone.setClonedTable(this);
+        clone.setSchema(schema);
+    }
 
-	public void addClone(PlainTableElement clone) {
-		clones.add(clone);
-		clone.setClonedTable(this);
-		clone.setSchema(schema);
-	}
+    public PlainTableElement getClonedTable() {
+        return clonedTable;
+    }
 
-	public PlainTableElement getClonedTable() {
-		return clonedTable;
-	}
+    protected void setClonedTable(PlainTableElement clonedTable) {
+        this.clonedTable = clonedTable;
+    }
 
-	protected void setClonedTable(PlainTableElement clonedTable) {
-		this.clonedTable = clonedTable;
-	}
+    public boolean isClone() {
+        return clonedTable != null;
+    }
 
-	public boolean isClone() {
-		return clonedTable != null;
-	}
+    public void removeClone(PlainTableElement table) {
+        clones.remove(table);
+        table.setClonedTable(null);
+    }
 
-	public void removeClone(PlainTableElement table) {
-		clones.remove(table);
-		table.setClonedTable(null);
-	}
+    public Set<PlainTableElement> getClones() {
+        return clones;
+    }
 
-	public Set<PlainTableElement> getClones() {
-		return clones;
-	}
+    public boolean hasDeleteColumn() {
+        return deleteColumn != null;
+    }
 
-	public boolean hasDeleteColumn() {
-		return deleteColumn != null;
-	}
+    public TableColumnElement getIdColumn() {
+        return idColumn;
+    }
 
-	public void setIdColumn(TableColumnElement idColumn) {
-		if (idColumn != null) {
-			idColumn.setTable(null);
-			this.idColumn = idColumn;
-			this.idColumn.setTable(this);
-		} else {
-			this.idColumn = null;
-		}
-	}
+    public void setIdColumn(TableColumnElement idColumn) {
+        if (idColumn != null) {
+            idColumn.setTable(null);
+            this.idColumn = idColumn;
+            this.idColumn.setTable(this);
+        } else {
+            this.idColumn = null;
+        }
+    }
 
-	public TableColumnElement getIdColumn() {
-		return idColumn;
-	}
+    public TableColumnElement getDeleteColumn() {
+        return deleteColumn;
+    }
 
-	public void setDeleteColumn(TableColumnElement deleteColumn) {
-		if (deleteColumn != null) {
-			deleteColumn.setTable(null);
-			this.deleteColumn = deleteColumn;
-			this.deleteColumn.setTable(this);
-		} else {
-			this.deleteColumn = null;
-		}
-	}
+    public void setDeleteColumn(TableColumnElement deleteColumn) {
+        if (deleteColumn != null) {
+            deleteColumn.setTable(null);
+            this.deleteColumn = deleteColumn;
+            this.deleteColumn.setTable(this);
+        } else {
+            this.deleteColumn = null;
+        }
+    }
 
-	public TableColumnElement getDeleteColumn() {
-		return deleteColumn;
-	}
+    public TableColumnElement getLabelColumn() {
+        return labelColumn;
+    }
 
-	public void setSchema(SchemaElement schema) {
-		this.schema = schema;
-		if (view != null) {
-			view.setSchema(schema);
-		}
-		if (list != null) {
-			list.setSchema(schema);
-		}
-		for (PlainTableElement t : clones) {
-			t.setSchema(schema);
-		}
-	}
-	
-	@Override
+    public void setLabelColumn(TableColumnElement labelColumn) {
+        if (labelColumn != null) {
+            labelColumn.setTable(null);
+            this.labelColumn = labelColumn;
+            this.labelColumn.setTable(this);
+        } else {
+            this.labelColumn = null;
+        }
+    }
+
+    public void setSchema(SchemaElement schema) {
+        this.schema = schema;
+        if (view != null) {
+            view.setSchema(schema);
+        }
+        for (PlainTableElement t : clones) {
+            t.setSchema(schema);
+        }
+    }
+
+    @Override
     public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
-	
-	/**
-	 * Без подзапроса
-	 */
-	public void setSimple(boolean simple) {
-		this.simple = simple;
-	}
+        visitor.visit(ctx, this);
+    }
 
-	/**
-	 * Без подзапроса
-	 */
-	public boolean isSimple() {
-		return simple;
-	}
 }

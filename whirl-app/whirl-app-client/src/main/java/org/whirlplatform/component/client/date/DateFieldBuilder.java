@@ -121,7 +121,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
                 setHideTrigger(value.getBoolean());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.Clearable.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
             if (value != null && value.getBoolean() != null && value.getBoolean()) {
                 super.setProperty(name, value);
                 setClearCrossRightOffset(18);

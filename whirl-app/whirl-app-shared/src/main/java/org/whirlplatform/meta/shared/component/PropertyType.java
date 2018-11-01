@@ -8,6 +8,7 @@ import java.util.List;
 
 public enum PropertyType implements Serializable {
 
+    //@formatter:off
     Active("Active", DataType.BOOLEAN, false),
     DomId("DomId", DataType.STRING, false),
     Align("Align", DataType.STRING, true, true),
@@ -60,11 +61,8 @@ public enum PropertyType implements Serializable {
     AllowNegative("AllowNegative", DataType.BOOLEAN, false),
     Alt("Alt", DataType.BOOLEAN, false),
     BoxLabel("BoxLabel", DataType.STRING, true),
-    Checkable("Checkable", DataType.BOOLEAN, false),
-    CheckExpression("CheckExpression", DataType.STRING, false, true),
-    //Новый тип свойства
-    SelectExpression("SelectExpression", DataType.STRING, false),
-
+    Checkable("Checkable", DataType.BOOLEAN, false), CheckColumn("CheckColumn", DataType.STRING, false, true),
+    SelectColumn("SelectColumn", DataType.STRING, false),
     CheckStyle("CheckStyle", DataType.STRING, false, true),
     GroupName("GroupName", DataType.STRING, true, true),
     Ctrl("Ctrl", DataType.BOOLEAN, false),
@@ -85,16 +83,14 @@ public enum PropertyType implements Serializable {
             ComponentType.RadioType,
             ComponentType.CheckBoxType)),
     Delay("Delay", DataType.NUMBER, false),
-    Editable("Editable", DataType.BOOLEAN, false),
-    Clearable("Clearable", DataType.BOOLEAN, false),
+    Editable("Editable", DataType.BOOLEAN, false), Cleanable("Cleanable", DataType.BOOLEAN, false),
     FrameEditing("FrameEditing", DataType.BOOLEAN, false),
     Grid("Grid", DataType.BOOLEAN, false),
     HideButtonGroups("HideButtonGroups", DataType.BOOLEAN, false),
     HideColumnHeader("HideColumnHeader", DataType.BOOLEAN, false),
     HideTrigger("HideTrigger", DataType.BOOLEAN, false),
     Key("Key", DataType.STRING, false, true),
-    KeyValidate("KeyValidate", DataType.BOOLEAN, false),
-    LeafExpression("LeafExpression", DataType.STRING, false, true),
+    KeyValidate("KeyValidate", DataType.BOOLEAN, false), IsLeafColumn("IsLeafColumn", DataType.STRING, false, true),
     SkipInitialLoad("SkipInitialLoad", DataType.BOOLEAN, false, true),
     LoadAll("LoadAll", DataType.BOOLEAN, false),
     MaxLength("MaxLength", DataType.NUMBER, false),
@@ -105,8 +101,7 @@ public enum PropertyType implements Serializable {
     MinLength("MinLength", DataType.NUMBER, false),
     NumberMinValue("MinValue", DataType.NUMBER, false, false, Arrays.asList(ComponentType.NumberFieldType)),
     DateMinValue("MinValue", DataType.DATE, false, false, Arrays.asList(ComponentType.DateFieldType)),
-    Code("Code", DataType.STRING, false, true),
-    NameExpression("NameExpression", DataType.STRING, false, true),
+    Code("Code", DataType.STRING, false, true), LabelColumn("LabelColumn", DataType.STRING, false, true),
     ParentColumn("ParentColumn", DataType.STRING, false, true),
     Period("Period", DataType.NUMBER, false),
     ReadOnly("ReadOnly", DataType.BOOLEAN, false),
@@ -130,7 +125,7 @@ public enum PropertyType implements Serializable {
     ShowPagingToolbar("ShowPagingToolbar", DataType.BOOLEAN, false),
     ShowRefreshButtons("ShowRefreshButtons", DataType.BOOLEAN, false),
     SingleSelection("SingleSelection", DataType.BOOLEAN, false),
-    StateExpression("StateExpression", DataType.STRING, false, true),
+    StateColumn("StateColumn", DataType.STRING, false, true),
     Template("Template", DataType.STRING, false),
     Url("Url", DataType.STRING, true),
     WhereSql("WhereSql", DataType.STRING, false, true),
@@ -174,7 +169,7 @@ public enum PropertyType implements Serializable {
     LayoutDataMaxSize("LayoutData:MaxSize", DataType.NUMBER, true),
     LayoutDataMinSize("LayoutData:MinSize", DataType.NUMBER, true),
     LayoutDataFlex("LayoutData:Flex", DataType.NUMBER, true);
-
+    //@formatter:onØ
 
     /**
      * Код свойства компонента
@@ -223,6 +218,17 @@ public enum PropertyType implements Serializable {
         this.componentTypes = componentTypes;
     }
 
+    //TODO убрать упоминание по типам компонентов, свойства не должны содержать информацию по компонентам
+    public static PropertyType parse(String type, ComponentType componentType) {
+        for (PropertyType t : PropertyType.values()) {
+            if (t.getCode().equals(type) &&
+                    (t.getComponentTypes() == null || t.getComponentTypes().contains(componentType))) {
+                return t;
+            }
+        }
+        return null;
+    }
+
     public boolean isUI() {
         return isUI;
     }
@@ -246,18 +252,6 @@ public enum PropertyType implements Serializable {
     @Override
     public String toString() {
         return code;
-    }
-
-    //TODO убрать упоминание по типам компонентов, свойства не должны содержать информацию по компонентам
-    public static PropertyType parse(String type, ComponentType componentType) {
-        for (PropertyType t : PropertyType.values()) {
-            if (t.getCode().equals(type)
-                    && (t.getComponentTypes() == null || t.getComponentTypes()
-                    .contains(componentType))) {
-                return t;
-            }
-        }
-        return null;
     }
 
 }

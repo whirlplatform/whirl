@@ -18,6 +18,31 @@ You can try Whirl Application Editor on the demo server.
 
 ## License
 
-Since the Whirl Platform client side code mostly  based on the Sencha GXT library, it's deriving GPL v3 license.
+Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
 
 [License text](LICENSE)
+
+## Developing
+
+We are using tbroyer [Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
+
+Accordingly to this plugin Maven commands to start modules are:
+
+**whirl-app**
+- Server
+
+        mvn tomcat7:run -pl whirl-app-server -am
+    
+- Client
+
+        mvn gwt:codeserver -pl whirl-app-client -am
+
+**whirl-editor**
+
+- Server
+
+        mvn tomcat7:run -pl whirl-editor-server -am
+    
+- Client
+
+        gwt:codeserver -pl whirl-editor-client -am

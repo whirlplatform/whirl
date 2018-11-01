@@ -32,11 +32,16 @@ public class PostgrePlainTableFetcher extends PostgrePlainDataFetcher implements
     }
 
     @Override
-    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
-                                               ClassLoadConfig loadConfig) {
-        @SuppressWarnings("unused")
-        Date start = new Date();
+    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+        return getTableData(metadata, table, loadConfig, temp);
+    }
+
+    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(ClassMetadata metadata,
+                                                                                      PlainTableElement table,
+                                                                                      ClassLoadConfig loadConfig,
+                                                                                      H temp) {
+        Date start = new Date();
         temp.prepare(metadata, table, loadConfig);
 
         List<RowModelData> result = new ArrayList<RowModelData>();

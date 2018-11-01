@@ -3,7 +3,12 @@ package org.whirlplatform.component.client.combo;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.logical.shared.*;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.cell.core.client.form.TriggerFieldCell.TriggerFieldAppearance;
@@ -20,7 +25,11 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.AbstractFieldBuilder;
+import org.whirlplatform.component.client.Editable;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.ParameterHelper;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
@@ -36,7 +45,11 @@ import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
@@ -47,20 +60,15 @@ import java.util.Map;
 public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder implements Editable,
         NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
-    protected final String SEARCH_QUERY = "SEARCH_QUERY";
-
-    private ClassMetadata metadata;
+    protected static final String SEARCH_QUERY = "SEARCH_QUERY";
     protected int minChars = 2;
     protected int delayTimeMs;
     protected String classId;
     protected String whereSql;
-    // private boolean required = false;
-    private boolean editable;
     protected T comboBox;
     protected ClassStore<ListModelData, ClassLoadConfig> store;
     protected ParameterHelper paramHelper;
     protected LabelProvider<ListModelData> labelProvider;
-
     protected StorageWrapper<DataValue> stateStore;
     protected StateStore<DataValue> selectionStateStore;
     protected boolean saveState;
@@ -68,6 +76,10 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected boolean loadAll;
     protected boolean useSearchParameters;
     protected boolean reloadMetadata;
+    protected String labelColumn;
+    private ClassMetadata metadata;
+    // private boolean required = false;
+    private boolean editable;
 
     public ComboBoxBuilder(Map<String, DataValue> builderProperties) {
         super(builderProperties);
@@ -122,7 +134,10 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
 
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.HideTrigger.getCode())) {
+        if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
+            labelColumn = value.getString();
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.HideTrigger.getCode())) {
             if (value != null && value.getBoolean() != null) {
                 comboBox.setHideTrigger(value.getBoolean());
                 return true;
@@ -170,7 +185,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
                 paramHelper.addJsonParameters(value.getString());
                 return true;
             }
-        } else if (name.equalsIgnoreCase(PropertyType.Clearable.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
             if (value != null && value.getBoolean() != null && value.getBoolean()) {
                 super.setProperty(name, value);
                 setClearCrossRightOffset(18);
@@ -435,19 +450,24 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     @Override
+    public boolean isSaveState() {
+        return saveState;
+    }
+
+    @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
-    @Override
-    public boolean isSaveState() {
-        return saveState;
-    }
-
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
+    }
+
+    @Override
+    public StateScope getStateScope() {
+        return getStateStore().getScope();
     }
 
     @Override
@@ -465,11 +485,6 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
                     break;
             }
         }
-    }
-
-    @Override
-    public StateScope getStateScope() {
-        return getStateStore().getScope();
     }
 
     @Override
@@ -514,19 +529,6 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     // TODO Selenium
-
-    private static class LocatorParams {
-
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_TRIGGER = "Trigger";
-        private static String TYPE_CLEAR = "Clear";
-        private static String TYPE_ITEM = "Item";
-        // private static String TYPE_LABEL = "Label";
-
-        private static String PARAMETER_ID = "id";
-        private static String PARAMETER_INDEX = "index";
-        private static String PARAMETER_LABEL = "label";
-    }
 
     protected Locator getLocator(Element element) {
         return super.getLocatorByElement(element);
@@ -619,5 +621,18 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
         }
         return element;
+    }
+
+    private static class LocatorParams {
+
+        private static String TYPE_INPUT = "Input";
+        private static String TYPE_TRIGGER = "Trigger";
+        private static String TYPE_CLEAR = "Clear";
+        private static String TYPE_ITEM = "Item";
+        // private static String TYPE_LABEL = "Label";
+
+        private static String PARAMETER_ID = "id";
+        private static String PARAMETER_INDEX = "index";
+        private static String PARAMETER_LABEL = "label";
     }
 }

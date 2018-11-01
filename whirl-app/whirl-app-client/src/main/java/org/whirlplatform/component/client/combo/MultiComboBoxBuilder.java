@@ -39,11 +39,21 @@ import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T> implements
         ListParameter<RowListValue> {
@@ -374,7 +384,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.Clearable.getCode())) {
+        if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
             if (value.getBoolean()) {
                 super.setProperty(name, value);
                 setClearCrossRightOffset(35);

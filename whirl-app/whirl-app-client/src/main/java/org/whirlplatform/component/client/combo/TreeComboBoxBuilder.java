@@ -32,7 +32,16 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
@@ -44,32 +53,13 @@ import java.util.Map;
 
 public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
-    private class ListKeyProvider implements ModelKeyProvider<ListModelData> {
-
-        @Override
-        public String getKey(ListModelData item) {
-            return item.getId();
-        }
-    }
-
     protected TreeLoader<ListModelData> loader;
-
-    /**
-     * Колонка наименования.
-     */
-//	protected String nameField;
-
     /**
      * Колонка указывающая на родителя.
      */
-    protected String parentField;
-
-    protected String leafExpression;
-    protected String leafExprColumn;
-
-    private String stateExpression;
-    private String stateExpressionColumn;
-
+    protected String parentColumn;
+    protected String isLeafColumn;
+    private String stateColumn;
     private TreeStore<ListModelData> store;
 
     public TreeComboBoxBuilder(Map<String, DataValue> builderProperties) {
@@ -84,9 +74,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     protected Component init(Map<String, DataValue> builderProperties) {
 
         required = false;
-
-        leafExprColumn = "PROPERTY_HAS_CHILDREN";
-        stateExpressionColumn = "STATE_COLUMN";
         singleSelection = false;
 
         minChars = 2;
@@ -117,10 +104,10 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     protected TreeLoader<ListModelData> initLoader(final TreeStore<ListModelData> store) {
         RpcProxy<ListModelData, List<ListModelData>> proxy = createProxy();
 
-        TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
+        TreeLoader<ListModelData> ldr = new TreeLoader<ListModelData>(proxy) {
             @Override
             public boolean hasChildren(ListModelData parent) {
-                return parent.<Boolean>get(leafExprColumn);
+                return parent.<Boolean>get(isLeafColumn);
             }
 
             @Override
@@ -130,7 +117,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                 restoreState(result);
             }
         };
-        loader.addLoadHandler(new ChildTreeStoreBinding<ListModelData>(store) {
+        ldr.addLoadHandler(new ChildTreeStoreBinding<ListModelData>(store) {
             @Override
             public void onLoad(LoadEvent<ListModelData, List<ListModelData>> event) {
                 if (event.getLoadConfig() != null || !isQuery()) {
@@ -143,7 +130,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                 }
             }
         });
-        return loader;
+        return ldr;
     }
 
     private void loadQueryResult(TreeStore<ListModelData> store, List<ListModelData> models) {
@@ -153,7 +140,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             hasChanged = false;
             for (ListModelData m : models) {
 
-                String parentId = m.get(parentField);
+                String parentId = m.get(parentColumn);
                 if (added.containsKey(m.getId())) {
                     continue;
                 }
@@ -179,18 +166,17 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.LeafExpression.getCode())) {
-            leafExpression = value.getString();
+        if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode())) {
+            isLeafColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ParentColumn.getCode())) {
-            parentField = value.getString();
+            parentColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.WhereSql.getCode())) {
             whereSql = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.CheckStyle.getCode())) {
-            comboBox
-                    .setCheckStyle(CheckStyleHelper.parseTreePanelCheckStyle(value.getString()));
+            comboBox.setCheckStyle(CheckStyleHelper.parseTreePanelCheckStyle(value.getString()));
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.SingleSelection.getCode())) {
             singleSelection = value.getBoolean();
@@ -199,8 +185,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                 comboBox.setSingleSelectionCheckMode();
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode())) {
-            stateExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.StateColumn.getCode())) {
+            stateColumn = value.getString();
             return true;
         }
         return super.setProperty(name, value);
@@ -242,8 +228,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         RpcProxy proxy = new RpcProxy<ListModelData, List<ListModelData>>() {
 
             @Override
-            public void load(ListModelData loadConfig,
-                             final AsyncCallback<List<ListModelData>> callback) {
+            public void load(ListModelData loadConfig, final AsyncCallback<List<ListModelData>> callback) {
                 AsyncCallback<LoadData<ListModelData>> proxyCallback = new AsyncCallback<LoadData<ListModelData>>() {
                     @Override
                     public void onSuccess(LoadData<ListModelData> result) {
@@ -255,8 +240,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                         callback.onFailure(caught);
                     }
                 };
-                DataServiceAsync.Util.getDataService(proxyCallback).getListClassData(SessionToken.get(), getClassMetadata(),
-                        getLoadConfig(loadConfig));
+                DataServiceAsync.Util.getDataService(proxyCallback)
+                        .getListClassData(SessionToken.get(), getClassMetadata(), getLoadConfig(loadConfig));
             }
         };
         return proxy;
@@ -264,14 +249,14 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     protected ClassMetadata getClassMetadata() {
         ClassMetadata metadata = new ClassMetadata(classId);
-//		metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
+        //		metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
         return metadata;
     }
 
     protected ClassLoadConfig getLoadConfig(RowModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
-        Map<String, DataValue> params = paramHelper == null ? new HashMap<String, DataValue>()
-                : paramHelper.getValues();
+        Map<String, DataValue> params =
+                paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
 
         if (useSearchParameters) {
             DataValue v = new DataValueImpl(DataType.STRING, comboBox.getText());
@@ -282,9 +267,9 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         }
 
         config.setParameters(params);
-        config.setLeafExpression(leafExpression);
-        config.setStateExpression(stateExpression);
-        config.setParentField(parentField);
+        config.setIsLeafColumn(isLeafColumn);
+        config.setStateColumn(stateColumn);
+        config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setAll(true);
@@ -315,7 +300,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                 if (isQuery() && !(!Util.isEmptyString(object) && object.toLowerCase().contains(q.toLowerCase()))) {
                     builder.append(
                             SafeHtmlUtils.fromTrustedString("<span style=\"color: darkgray;\">" + object + "</span>"));
-
                 } else {
                     builder.append(SafeHtmlUtils.fromTrustedString(object));
                 }
@@ -340,6 +324,17 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     }
 
     @Override
+    public RowListValue getFieldValue() {
+        RowListValue list = new RowListValueImpl();
+        for (ListModelData model : comboBox.getSelection()) {
+            RowValue row = new RowValueImpl(model.getId());
+            row.setChecked(true);
+            list.addRowValue(row);
+        }
+        return list;
+    }
+
+    @Override
     public void setFieldValue(RowListValue value) {
         List<ListModelData> selection = new ArrayList<ListModelData>();
         if (value != null) {
@@ -350,17 +345,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             }
         }
         comboBox.setSelection(selection);
-    }
-
-    @Override
-    public RowListValue getFieldValue() {
-        RowListValue list = new RowListValueImpl();
-        for (ListModelData model : comboBox.getSelection()) {
-            RowValue row = new RowValueImpl(model.getId());
-            row.setChecked(true);
-            list.addRowValue(row);
-        }
-        return list;
     }
 
     @Override
@@ -384,14 +368,22 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     }
 
     private void restoreState(List<ListModelData> models) {
-        if (stateExpression == null) {
+        if (stateColumn == null) {
             return;
         }
         Tree<ListModelData, String> tree = comboBox.getTree();
         for (ListModelData m : models) {
-            if (m.<Boolean>get(stateExpressionColumn) && tree.findNode(m) != null && !tree.isLeaf(m)) {
+            if (m.<Boolean>get(stateColumn) && tree.findNode(m) != null && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
+        }
+    }
+
+    private class ListKeyProvider implements ModelKeyProvider<ListModelData> {
+
+        @Override
+        public String getKey(ListModelData item) {
+            return item.getId();
         }
     }
 

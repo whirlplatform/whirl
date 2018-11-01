@@ -15,7 +15,11 @@ import org.whirlplatform.editor.client.meta.NewTableColumnElement;
 import org.whirlplatform.editor.client.view.TableView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.component.RandomUUID;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
@@ -28,69 +32,7 @@ import java.util.Collections;
 public class TablePresenter extends BasePresenter<TablePresenter.ITableView, EditorEventBus>
         implements ElementPresenter {
 
-    public interface ITableView extends ReverseViewInterface<TablePresenter>, IsWidget {
-
-        void setHeaderText(String text);
-
-        void setTableTitle(PropertyValue title);
-
-        PropertyValue getTableTitle();
-
-        void setTableName(String tableName);
-
-        String getTableName();
-
-        void setIdColumn(TableColumnElement idColumn);
-
-        TableColumnElement getIdColumn();
-
-        void setDeleteColumn(TableColumnElement deleteColumn);
-
-        TableColumnElement getDeleteColumn();
-
-        void addColumn(TableColumnElement column);
-
-        Collection<TableColumnElement> getColumns();
-
-        void setViewName(String viewName);
-
-        String getViewName();
-
-        void setViewSource(String viewSource);
-
-        String getViewSource();
-
-        void setListName(String listName);
-
-        String getListName();
-
-        void setListSource(String listSource);
-
-        String getListSource();
-
-        void clearUI();
-
-        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
-
-        void setClone(boolean clone);
-
-        void setCode(String code);
-
-        String getCode();
-
-        void setEmptyRow(boolean emptyRow);
-
-        boolean isEmptyRow();
-
-        void setEnableAll(boolean enable);
-
-        void setSimple(boolean simple);
-
-        boolean isSimple();
-    }
-
     private PlainTableElement table;
-
     private TextButton saveButton;
     private TextButton closeButton;
 
@@ -117,7 +59,6 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
                 table.changeColumns(view.getColumns());
                 table.setCode(view.getCode());
                 table.setEmptyRow(view.isEmptyRow());
-                table.setSimple(view.isSimple());
                 if (view.getViewName() == null || view.getViewName().isEmpty()) {
                     table.setView(null);
                 } else {
@@ -131,21 +72,6 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
                     viewElement.setName(EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
                     viewElement.setViewName(view.getViewName());
                     viewElement.setSource(view.getViewSource());
-                }
-
-                if (view.getListName() == null || view.getListName().isEmpty()) {
-                    table.setList(null);
-                } else {
-                    // TODO представления надо тоже создавать отдельно
-                    ViewElement listElement = table.getList();
-                    if (listElement == null) {
-                        listElement = new ViewElement();
-                        listElement.setId(RandomUUID.uuid());
-                        table.setList(listElement);
-                    }
-                    listElement.setName(EditorMessage.Util.MESSAGE.editing_table_view() + " - " + view.getListName());
-                    listElement.setViewName(view.getListName());
-                    listElement.setSource(view.getListSource());
                 }
 
                 eventBus.syncServerApplication();
@@ -189,19 +115,19 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
     }
 
     public void onSynchronizeCloneFields() {
-        PlainTableElement pTable = table.getClonedTable();
+        PlainTableElement clonedTable = table.getClonedTable();
         boolean exists;
-        for (TableColumnElement pColumn : pTable.getColumns()) {
+        for (TableColumnElement clonedColumn : clonedTable.getColumns()) {
             exists = false;
             for (TableColumnElement column : view.getColumns()) {
-                if (pColumn.getName().equalsIgnoreCase(column.getName())) {
+                if (clonedColumn.getName().equalsIgnoreCase(column.getName())) {
                     exists = true;
                 }
             }
             if (exists) {
                 continue;
             }
-            TableColumnElement newColumn = pColumn.clone();
+            TableColumnElement newColumn = clonedColumn.clone();
             newColumn.setId(RandomUUID.uuid());
             view.addColumn(newColumn);
         }
@@ -231,7 +157,6 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
         view.setTableTitle(table.getTitle());
         view.setCode(table.getCode());
         view.setEmptyRow(table.isEmptyRow());
-        view.setSimple(table.isSimple());
         if (table.isClone()) {
             view.setClone(true);
             // view.setTableName(table.getClonedTable().getTableName());
@@ -241,10 +166,6 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
             view.setViewName(table.getView().getViewName());
             view.setViewSource(table.getView().getSource());
         }
-        if (table.getList() != null) {
-            view.setListName(table.getList().getViewName());
-            view.setListSource(table.getList().getSource());
-        }
         view.setIdColumn(table.getIdColumn());
         view.setDeleteColumn(table.getDeleteColumn());
         for (TableColumnElement c : table.getColumns()) {
@@ -253,5 +174,55 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
         eventBus.openElementView(view);
         view.setEnableAll(!readOnly);
         saveButton.setEnabled(!readOnly);
+    }
+
+    public interface ITableView extends ReverseViewInterface<TablePresenter>, IsWidget {
+
+        void setHeaderText(String text);
+
+        PropertyValue getTableTitle();
+
+        void setTableTitle(PropertyValue title);
+
+        String getTableName();
+
+        void setTableName(String tableName);
+
+        TableColumnElement getIdColumn();
+
+        void setIdColumn(TableColumnElement idColumn);
+
+        TableColumnElement getDeleteColumn();
+
+        void setDeleteColumn(TableColumnElement deleteColumn);
+
+        void addColumn(TableColumnElement column);
+
+        Collection<TableColumnElement> getColumns();
+
+        String getViewName();
+
+        void setViewName(String viewName);
+
+        String getViewSource();
+
+        void setViewSource(String viewSource);
+
+        void clearUI();
+
+        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
+
+        void setClone(boolean clone);
+
+        String getCode();
+
+        void setCode(String code);
+
+        boolean isEmptyRow();
+
+        void setEmptyRow(boolean emptyRow);
+
+        void setEnableAll(boolean enable);
+
     }
 }

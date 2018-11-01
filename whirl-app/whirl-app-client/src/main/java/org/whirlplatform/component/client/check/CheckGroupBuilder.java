@@ -22,7 +22,14 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.RowModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
@@ -143,11 +150,10 @@ public class CheckGroupBuilder extends ComponentBuilder implements
                 setDataSourceId(value.getListModelData().getId());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.NameExpression.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode())) {
             nameColumn = value.getString();
             return true;
-        } else if (name
-                .equalsIgnoreCase(PropertyType.CheckExpression.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode())) {
             checkColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.StringValue.getCode())) {
