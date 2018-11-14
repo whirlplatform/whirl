@@ -98,6 +98,13 @@
             </exclusions>
         </dependency>
 
+        <!-- Database -->
+        <!-- Connection pool -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
         <!-- Databases VCS -->
         <dependency>
             <groupId>org.liquibase</groupId>
