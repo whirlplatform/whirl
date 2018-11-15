@@ -367,6 +367,8 @@ public interface AppMessage extends Messages {
 
 
     String errorWrongApplication();
+    
+    String errorWrongApplicationList();
 
     String deploy_deploy_failed();
 

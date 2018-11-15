@@ -129,13 +129,13 @@ public class MultibaseConnector extends AbstractConnector {
         try {
 
             String appCode = applicationCode;
-            if (applicationCode == null && !user.isGuest()) {
+            if (applicationCode == null) { // && !user.isGuest()
                 // TODO message about empty application code
-                new CustomException(ExceptionType.WRONGAPP,
-                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                throw new CustomException(ExceptionType.WRONGAPP,
+                                          I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
             }
             AtomicReference<ApplicationReference> appRef = metadataContainer.getApplication(appCode, version);
-
+    
             checkApplicationAllowed(appRef.get().getApplication(), user);
 
             ApplicationData data = getApplication(appCode, version);
