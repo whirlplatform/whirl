@@ -105,12 +105,8 @@
                         <compileArg>-gen</compileArg>
                         <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
                     </compilerArgs>
-                    <codeserverArgs>
-                        <compileArg>-gen</compileArg>
-                        <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
-                    </codeserverArgs>
                     <jvmArgs>
-                        <jvmArg>-Djava.io.tmpdir=${project.build.directory}</jvmArg>
+                        <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
                     </jvmArgs>
                 </configuration>
             </plugin>

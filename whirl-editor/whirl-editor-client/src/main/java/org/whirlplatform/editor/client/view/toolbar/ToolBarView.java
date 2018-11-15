@@ -26,7 +26,7 @@ import org.whirlplatform.editor.client.view.widget.DisplayCurrentUserWidget;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
- * Основная панель инструментов
+ * Основная панель инструментов.
  */
 public class ToolBarView extends ToolBar implements IToolBarView {
     private static final int SPACING = 5;
@@ -48,7 +48,6 @@ public class ToolBarView extends ToolBar implements IToolBarView {
     private ContextTextButton<ToolBarPresenter> saveButton;
     private ContextTextButton<ToolBarPresenter> saveAsButton;
     private ContextTextButton<ToolBarPresenter> saveXmlButton;
-    private ContextTextButton<ToolBarPresenter> runButton;
     private ContextTextButton<ToolBarPresenter> packageButton;
     private ContextTextButton<ToolBarPresenter> compareButton;
     private Window importWindow;
@@ -63,7 +62,6 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         saveButton = new ToolbarSaveButton(getPresenter());
         saveAsButton = new ToolbarSaveAsButton(getPresenter());
         saveXmlButton = new ToolbarSaveXmlButton(getPresenter());
-        runButton = new ToolbarRunButton(getPresenter());
         packageButton = new ToolbarPackageButton(getPresenter());
         compareButton = new ToolbarCompareButton(getPresenter());
         add(newButton.asTextButton());
@@ -77,7 +75,6 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         add(new SeparatorToolItem());
         add(packageButton.asTextButton());
         add(compareButton.asTextButton());
-        add(runButton.asTextButton());
         add(new SeparatorToolItem());
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
@@ -163,7 +160,6 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         saveXmlButton.updateState();
         saveButton.updateState();
         packageButton.updateState();
-        runButton.updateState();
     }
 
     @Override
