@@ -23,7 +23,7 @@ public class PostgreSQLConnectionWrapper extends ConnectionWrapper {
 
     @Override
     public DataSourceDriver getDataSourceDriver() {
-        return null;
+        return new PostgreDataSourceDriver(this);
     }
 
 }

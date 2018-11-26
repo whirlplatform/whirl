@@ -11,9 +11,15 @@ import org.whirlplatform.server.login.ApplicationUser;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
-import java.util.*;
-import java.util.Date;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class OracleStatementHelper extends AbstractFetcher {
@@ -43,8 +49,8 @@ public class OracleStatementHelper extends AbstractFetcher {
                         DataValueImpl dataValue = (DataValueImpl) v;
                         if (dataValue.getType() == DataType.DATE) {
                             Timestamp time = null;
-                            if (dataValue.getValue() != null) {
-                                time = new Timestamp(((Date) dataValue.getValue()).getTime());
+                            if (dataValue.getDate() != null) {
+                                time = new Timestamp(dataValue.getDate().getTime());
                             }
                             stmt.setTimestamp(i, time);
                         }

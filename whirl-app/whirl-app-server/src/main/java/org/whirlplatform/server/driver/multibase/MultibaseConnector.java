@@ -127,21 +127,20 @@ public class MultibaseConnector extends AbstractConnector {
     @Override
     public ApplicationData getApplication(String applicationCode, Version version, ApplicationUser user) {
         try {
-
-            String appCode = applicationCode;
             if (applicationCode == null) { // && !user.isGuest()
                 // TODO message about empty application code
                 throw new CustomException(ExceptionType.WRONGAPP,
                                           I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
             }
-            AtomicReference<ApplicationReference> appRef = metadataContainer.getApplication(appCode, version);
     
-            checkApplicationAllowed(appRef.get().getApplication(), user);
-
-            ApplicationData data = getApplication(appCode, version);
+            ApplicationData data = getApplication(applicationCode, version);
             if (user.isGuest() && !data.isGuest()) {
                 return null;
             }
+    
+            AtomicReference<ApplicationReference> appRef = metadataContainer.getApplication(applicationCode, version);
+    
+            checkApplicationAllowed(appRef.get().getApplication(), user);
 
             user.setApplication(appRef);
 

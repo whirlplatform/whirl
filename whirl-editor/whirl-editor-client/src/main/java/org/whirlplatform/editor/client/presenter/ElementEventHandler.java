@@ -20,9 +20,24 @@ import com.sencha.gxt.widget.core.client.info.Info;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.component.client.utils.ProgressHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
-import org.whirlplatform.editor.client.meta.*;
+import org.whirlplatform.editor.client.meta.NewComponentElement;
+import org.whirlplatform.editor.client.meta.NewContextMenuItemElement;
+import org.whirlplatform.editor.client.meta.NewDataSourceElement;
+import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
+import org.whirlplatform.editor.client.meta.NewEventElement;
+import org.whirlplatform.editor.client.meta.NewEventParameterElement;
+import org.whirlplatform.editor.client.meta.NewPropertyElement;
+import org.whirlplatform.editor.client.meta.NewSchemaElement;
+import org.whirlplatform.editor.client.meta.NewTableElement;
+import org.whirlplatform.editor.client.meta.NullFreeComponentElement;
+import org.whirlplatform.editor.client.meta.NullRootComponentElement;
 import org.whirlplatform.editor.client.util.EditorHelper;
-import org.whirlplatform.editor.shared.*;
+import org.whirlplatform.editor.shared.EditorDataService;
+import org.whirlplatform.editor.shared.EditorDataServiceAsync;
+import org.whirlplatform.editor.shared.RPCException;
+import org.whirlplatform.editor.shared.SaveData;
+import org.whirlplatform.editor.shared.SaveResult;
+import org.whirlplatform.editor.shared.TreeState;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
 import org.whirlplatform.meta.shared.Version;
@@ -31,12 +46,34 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.meta.shared.version.VersionUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @EventHandler
 public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
@@ -150,7 +187,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             if (propValue != null) {
                 String val = null;
                 DataValue dataValue = propValue.getValue(l);
-                if (dataValue != null && (val = dataValue.getValue()) != null) {
+                if (dataValue != null && (val = dataValue.getString()) != null) {
                     val = val + " " + count;
                 }
                 added.setProperty(propertyType, new PropertyValue(DataType.STRING, l, val));
@@ -328,9 +365,9 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 property.setValue(l, v);
 
                 if (PropertyType.Rows.equals(prop.getType())) {
-                    eventBus.syncRowsNumber(property.getValue(l).<Double>getValue().intValue());
+                    eventBus.syncRowsNumber(property.getValue(l).getDouble().intValue());
                 } else if (PropertyType.Columns.equals(prop.getType())) {
-                    eventBus.syncColumnsNumber(property.getValue(l).<Double>getValue().intValue());
+                    eventBus.syncColumnsNumber(property.getValue(l).getInteger());
                 }
                 component.setProperty(prop.getType(), property);
 
@@ -638,7 +675,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 || parent.getType() == ComponentType.TabPanelType) {
 
             Double tmpIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                    .getValue(currentApplication.getDefaultLocale()).getValue();
+                .getValue(currentApplication.getDefaultLocale()).getDouble();
 
             // если индекс нулевой, то просто выходим
             if (tmpIndex == null || tmpIndex < 0) {
@@ -685,9 +722,9 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 while (iter.hasNext()) {
                     ComponentElement e = iter.next();
                     String location = e.getProperty(PropertyType.LayoutDataLocation)
-                            .getValue(currentApplication.getDefaultLocale()).getValue();
+                        .getValue(currentApplication.getDefaultLocale()).getString();
                     if (location == null || location.equals(child.getProperty(PropertyType.LayoutDataLocation)
-                            .getValue(currentApplication.getDefaultLocale()).<String>getValue())) {
+                                                                .getValue(currentApplication.getDefaultLocale()).getString())) {
 
                         eventBus.removeElementUI(parent, e);
                         parent.removeChild(e);
@@ -705,7 +742,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 Iterator<ComponentElement> iter = parent.getChildren().iterator();
 
                 Double tmpIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                        .getValue(currentApplication.getDefaultLocale()).<Double>getValue();
+                    .getValue(currentApplication.getDefaultLocale()).getDouble();
 
                 int childIndex;
                 if (tmpIndex == null) {
@@ -739,15 +776,15 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             } else if (parent.getType() == ComponentType.FormBuilderType) {
                 Iterator<ComponentElement> iter = parent.getChildren().iterator();
                 long childRow = Math.round(child.getProperty(PropertyType.LayoutDataFormRow)
-                        .getValue(currentApplication.getDefaultLocale()).<Double>getValue());
+                                               .getValue(currentApplication.getDefaultLocale()).getDouble());
                 long childCol = Math.round(child.getProperty(PropertyType.LayoutDataFormColumn)
-                        .getValue(currentApplication.getDefaultLocale()).<Double>getValue());
+                                               .getValue(currentApplication.getDefaultLocale()).getDouble());
                 while (iter.hasNext()) {
                     ComponentElement e = iter.next();
                     boolean rowEq = childRow == Math.round(e.getProperty(PropertyType.LayoutDataFormRow)
-                            .getValue(currentApplication.getDefaultLocale()).<Double>getValue());
+                                                               .getValue(currentApplication.getDefaultLocale()).getDouble());
                     boolean colEq = childCol == Math.round(e.getProperty(PropertyType.LayoutDataFormColumn)
-                            .getValue(currentApplication.getDefaultLocale()).<Double>getValue());
+                                                               .getValue(currentApplication.getDefaultLocale()).getDouble());
                     if (rowEq && colEq) {
 
                         eventBus.removeElement(parent, e, false);
@@ -892,10 +929,10 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             if (parent.getType() == ComponentType.HorizontalContainerType
                     || parent.getType() == ComponentType.VerticalContainerType) {
                 int index = component.getProperty(PropertyType.LayoutDataIndex)
-                        .getValue(currentApplication.getDefaultLocale()).<Double>getValue().intValue();
+                    .getValue(currentApplication.getDefaultLocale()).getInteger();
                 for (ComponentElement child : component.getParent().getChildren()) {
                     int childIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                            .getValue(currentApplication.getDefaultLocale()).<Double>getValue().intValue();
+                        .getValue(currentApplication.getDefaultLocale()).getInteger();
                     if (childIndex > index) {
                         eventBus.addElement(child, new NewPropertyElement(PropertyType.LayoutDataIndex,
                                 currentApplication.getDefaultLocale(), --childIndex));

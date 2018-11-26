@@ -117,8 +117,8 @@ public class AppConstant {
     public static final String SAVE_FILE_NAME = "savefilename";
 
     public static final String CAPTCHA_SESSION_KEY = "captcha.code";
-
-    public static final String ROLE_URL = "role";
+    
+    public static final String APPLICATION_URL = "application";
     public static final String EVENT_URL = "event";
     public static final String BRANCH_URL = "branch";
     public static final String VERSION_URL = "version";

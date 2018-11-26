@@ -20,10 +20,9 @@ public interface DataValue extends Serializable, Cloneable {
     void setType(DataType type);
 
     DataType getType();
-
+    
+    @Deprecated
     <X> void setValue(X value);
-
-    <X> X getValue();
 
     Object getObject();
 

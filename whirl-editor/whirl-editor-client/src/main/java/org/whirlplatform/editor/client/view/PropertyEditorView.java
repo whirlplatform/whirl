@@ -124,7 +124,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             public void onValueChange(ValueChangeEvent<PropertyType> event) {
                 PropertyValue value = layoutPanel.getProperty(event.getValue());
                 presenter.onChangeComponentProperty(event.getValue(), defaultLocale, false,
-                        value.getValue(null).getValue());
+                                                    value.getValue(defaultLocale).getObject());
             }
         });
     }

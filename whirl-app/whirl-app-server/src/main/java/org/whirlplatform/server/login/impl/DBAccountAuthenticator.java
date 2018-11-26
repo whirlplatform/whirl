@@ -20,10 +20,10 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.login.LoginData;
 import org.whirlplatform.server.login.LoginException;
 
-import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import javax.inject.Inject;
 
 public class DBAccountAuthenticator implements AccountAuthenticator {
 
@@ -73,7 +73,7 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
 			reader.close();
 
 			if (user == null) {
-				new LoginException(I18NMessage.getMessage(I18NMessage.getRequestLocale()).login_error());
+				throw new LoginException(I18NMessage.getMessage(I18NMessage.getRequestLocale()).login_error());
 			}
 
 			return user;

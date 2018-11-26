@@ -104,22 +104,22 @@ public class DataValueImpl implements DataValue {
 
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public <X> X getValue() {
-        if (DataType.STRING == type) {
-            return (X) stringValue;
-        } else if (DataType.NUMBER == type) {
-            return (X) numberValue;
-        } else if (DataType.DATE == type) {
-            return (X) dateValue;
-        } else if (DataType.BOOLEAN == type) {
-            return (X) booleanValue;
-        } else if (DataType.LIST == type) {
-            return (X) listValue;
-        } else if (DataType.FILE == type) {
-            return (X) fileValue;
-        }
-        return null;
-    }
+//    public <X> X getValue() {
+//        if (DataType.STRING == type) {
+//            return (X) stringValue;
+//        } else if (DataType.NUMBER == type) {
+//            return (X) numberValue;
+//        } else if (DataType.DATE == type) {
+//            return (X) dateValue;
+//        } else if (DataType.BOOLEAN == type) {
+//            return (X) booleanValue;
+//        } else if (DataType.LIST == type) {
+//            return (X) listValue;
+//        } else if (DataType.FILE == type) {
+//            return (X) fileValue;
+//        }
+//        return null;
+//    }
 
     @Override
     public String getCode() {

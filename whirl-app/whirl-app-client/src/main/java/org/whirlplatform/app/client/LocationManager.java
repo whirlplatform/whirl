@@ -52,7 +52,7 @@ public class LocationManager {
 	private String getURL() {
 		UrlBuilder builder = Location.createUrlBuilder();
 		if (!Util.isEmptyString(role)) {
-			builder.setParameter(AppConstant.ROLE_URL, role);
+            builder.setParameter(AppConstant.APPLICATION_URL, role);
 		}
 		if (!Util.isEmptyString(token)) {
 			builder.setParameter(AppConstant.TOKEN, token);

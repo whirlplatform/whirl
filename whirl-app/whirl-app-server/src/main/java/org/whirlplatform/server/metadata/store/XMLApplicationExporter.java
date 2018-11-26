@@ -363,7 +363,7 @@ public class XMLApplicationExporter {
         defaultLocaleEl.addAttribute("locale", stubLocale.asString());
         Element localesEl = propertyEl.addElement("locales");
         DataValue v = value.getValue(stubLocale);
-        if (v.getValue() != null) {
+        if (v.getObject() != null) {
             Element valueEl = localesEl.addElement("value");
             valueEl.addAttribute("locale", stubLocale.asString());
             writeDataValue(valueEl, v);
@@ -385,7 +385,7 @@ public class XMLApplicationExporter {
         for (LocaleElement locale : value.getLocales()) {
             DataValue v = value.getValue(locale);
             if (application.hasLocale(locale)) {
-                if (v.getValue() == null) {
+                if (v.getObject() == null) {
                     continue;
                 }
                 Element valueEl = localesEl.addElement("value");
@@ -406,7 +406,7 @@ public class XMLApplicationExporter {
             idEl.setText(model.getId());
             labelEl.addCDATA(model.getLabel());
         } else {
-            String valueStr = valueAsString(value.getValue());
+            String valueStr = valueAsString(value.getObject());
             if (valueStr != null) {
                 dataValueEl.setText(valueStr);
             }
@@ -609,7 +609,7 @@ public class XMLApplicationExporter {
                 Object value = null;
                 if (param.getValue() != null) {
                     type = param.getValue().getType();
-                    value = param.getValue().getValue();
+                    value = param.getValue().getObject();
                 }
 
                 Element parameter = parametersEl.addElement("parameter");

@@ -30,7 +30,6 @@ import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
-import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.event.ColumnWidthChangeEvent;
@@ -120,8 +119,8 @@ public class TableView extends ContentPanel implements ITableView {
 
     private TextButton synchronizeButton;
     private TextButton rightsButton;
-    private TextButton viewEditButton;
-    private TextButton listEditButton;
+    //    private TextButton viewEditButton;
+//    private TextButton listEditButton;
     private TextButton addButton;
     private TextButton deleteButton;
 
@@ -231,7 +230,7 @@ public class TableView extends ContentPanel implements ITableView {
 
         initViewEditField();
 
-        initListEditField();
+//        initListEditField();
 
         initColumns();
     }
@@ -288,50 +287,50 @@ public class TableView extends ContentPanel implements ITableView {
         });
         labelViewName = new FieldLabel(fieldViewName, EditorMessage.Util.MESSAGE.table_view_name());
         HorizontalLayoutContainer vContainer = new HorizontalLayoutContainer();
-        viewEditButton = new TextButton(EditorMessage.Util.MESSAGE.table_edit());
-        viewEditButton.addSelectHandler(new SelectHandler() {
-
-            @Override
-            public void onSelect(SelectEvent event) {
-                showViewEditWindow(fieldViewSource, false);
-            }
-        });
+//        viewEditButton = new TextButton(EditorMessage.Util.MESSAGE.table_edit());
+//        viewEditButton.addSelectHandler(new SelectHandler() {
+//
+//            @Override
+//            public void onSelect(SelectEvent event) {
+//                showViewEditWindow(fieldViewSource, false);
+//            }
+//        });
         vContainer.add(labelViewName, new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0)));
-        vContainer.add(viewEditButton);
+//        vContainer.add(viewEditButton);
         container.add(vContainer, new VerticalLayoutData(1, 40, new Margins(10, 10, 0, 10)));
 
         fieldViewSource = new CodeMirrorPanel();
     }
 
-    private void initListEditField() {
-        fieldListName = new TextField();
-        fieldListName.addValueChangeHandler(new ValueChangeHandler<String>() {
-
-            @Override
-            public void onValueChange(ValueChangeEvent<String> event) {
-                changed = true;
-            }
-        });
-        SimpleContainer s = new SimpleContainer();
-        s.add(fieldListName);
-        labelListName = new FieldLabel(s, EditorMessage.Util.MESSAGE.table_list_name());
-
-        HorizontalLayoutContainer lContainer = new HorizontalLayoutContainer();
-        listEditButton = new TextButton(EditorMessage.Util.MESSAGE.table_edit());
-        listEditButton.addSelectHandler(new SelectHandler() {
-
-            @Override
-            public void onSelect(SelectEvent event) {
-                showViewEditWindow(fieldListSource, true);
-            }
-        });
-        lContainer.add(labelListName, new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0)));
-        lContainer.add(listEditButton);
-
-        container.add(lContainer, new VerticalLayoutData(1, 40, new Margins(10, 10, 0, 10)));
-
-        fieldListSource = new CodeMirrorPanel();
-    }
+//    private void initListEditField() {
+//        fieldListName = new TextField();
+//        fieldListName.addValueChangeHandler(new ValueChangeHandler<String>() {
+//
+//            @Override
+//            public void onValueChange(ValueChangeEvent<String> event) {
+//                changed = true;
+//            }
+//        });
+//        SimpleContainer s = new SimpleContainer();
+//        s.add(fieldListName);
+//        labelListName = new FieldLabel(s, EditorMessage.Util.MESSAGE.table_list_name());
+//
+//        HorizontalLayoutContainer lContainer = new HorizontalLayoutContainer();
+//        listEditButton = new TextButton(EditorMessage.Util.MESSAGE.table_edit());
+//        listEditButton.addSelectHandler(new SelectHandler() {
+//
+//            @Override
+//            public void onSelect(SelectEvent event) {
+//                showViewEditWindow(fieldListSource, true);
+//            }
+//        });
+//        lContainer.add(labelListName, new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0)));
+//        lContainer.add(listEditButton);
+//
+//        container.add(lContainer, new VerticalLayoutData(1, 40, new Margins(10, 10, 0, 10)));
+//
+//        fieldListSource = new CodeMirrorPanel();
+//    }
 
     private void initColumns() {
         TableColumnProperties properties = GWT.create(TableColumnProperties.class);
@@ -416,9 +415,9 @@ public class TableView extends ContentPanel implements ITableView {
                 properties.listTable(), 100, EditorMessage.Util.MESSAGE.table_column_list_table());
         list.add(configListTable);
 
-        ColumnConfig<TableColumnElement, String> configFunction = new ColumnConfig<TableColumnElement, String>(
-                properties.function(), 100, EditorMessage.Util.MESSAGE.table_column_function());
-        list.add(configFunction);
+//        ColumnConfig<TableColumnElement, String> configFunction = new ColumnConfig<TableColumnElement, String>(
+//                properties.function(), 100, EditorMessage.Util.MESSAGE.table_column_function());
+//        list.add(configFunction);
 
         ColumnConfig<TableColumnElement, Integer> configSize = new ColumnConfig<TableColumnElement, Integer>(
                 properties.size(), 60, EditorMessage.Util.MESSAGE.table_column_size());
@@ -436,9 +435,9 @@ public class TableView extends ContentPanel implements ITableView {
                 properties.height(), 60, EditorMessage.Util.MESSAGE.table_column_height());
         list.add(configHeight);
 
-        ColumnConfig<TableColumnElement, String> configDefaultValue = new ColumnConfig<TableColumnElement, String>(
-                properties.defaultValue(), 60, EditorMessage.Util.MESSAGE.table_column_value());
-        list.add(configDefaultValue);
+//        ColumnConfig<TableColumnElement, String> configDefaultValue = new ColumnConfig<TableColumnElement, String>(
+//                properties.defaultValue(), 60, EditorMessage.Util.MESSAGE.table_column_value());
+//        list.add(configDefaultValue);
 
         ColumnConfig<TableColumnElement, Boolean> configNotNull = new ColumnConfig<TableColumnElement, Boolean>(
                 properties.notNull(), 70, EditorMessage.Util.MESSAGE.table_column_not_null());
@@ -468,9 +467,9 @@ public class TableView extends ContentPanel implements ITableView {
         checkBoxCols.add(configListTitle);
         list.add(configListTitle);
 
-        ColumnConfig<TableColumnElement, String> configDataFormat = new ColumnConfig<TableColumnElement, String>(
-                properties.dataFormat(), 70, EditorMessage.Util.MESSAGE.table_column_data_format());
-        list.add(configDataFormat);
+//        ColumnConfig<TableColumnElement, String> configDataFormat = new ColumnConfig<TableColumnElement, String>(
+//                properties.dataFormat(), 70, EditorMessage.Util.MESSAGE.table_column_data_format());
+//        list.add(configDataFormat);
 
         ColumnConfig<TableColumnElement, String> configRegex = new ColumnConfig<TableColumnElement, String>(
                 properties.regex(), 100, EditorMessage.Util.MESSAGE.table_column_regex());
@@ -491,17 +490,17 @@ public class TableView extends ContentPanel implements ITableView {
                 130, EditorMessage.Util.MESSAGE.table_column_order());
         list.add(order);
 
-        ColumnConfig<TableColumnElement, ViewFormat> configViewFormat = new ColumnConfig<TableColumnElement, ViewFormat>(
-                properties.viewFormat(), 130, EditorMessage.Util.MESSAGE.table_column_view_format());
-        list.add(configViewFormat);
+//        ColumnConfig<TableColumnElement, ViewFormat> configViewFormat = new ColumnConfig<TableColumnElement, ViewFormat>(
+//                properties.viewFormat(), 130, EditorMessage.Util.MESSAGE.table_column_view_format());
+//        list.add(configViewFormat);
 
-        ColumnConfig<TableColumnElement, String> configColumn = new ColumnConfig<TableColumnElement, String>(
-                properties.configColumn(), 130, EditorMessage.Util.MESSAGE.table_column_config_column());
-        list.add(configColumn);
-
-        ColumnConfig<TableColumnElement, String> colorConfig = new ColumnConfig<>(properties.color(), 100,
-                EditorMessage.Util.MESSAGE.design_background_color());
-        list.add(colorConfig);
+//        ColumnConfig<TableColumnElement, String> configColumn = new ColumnConfig<TableColumnElement, String>(
+//                properties.configColumn(), 130, EditorMessage.Util.MESSAGE.table_column_config_column());
+//        list.add(configColumn);
+//
+//        ColumnConfig<TableColumnElement, String> colorConfig = new ColumnConfig<>(properties.color(), 100,
+//                EditorMessage.Util.MESSAGE.design_background_color());
+//        list.add(colorConfig);
 
         ColumnModel<TableColumnElement> model = new ColumnModel<TableColumnElement>(list);
 
@@ -535,13 +534,13 @@ public class TableView extends ContentPanel implements ITableView {
         editingColumns.addEditor(configColumnName, new TextField());
         editingColumns.addEditor(configType, initDataTypeField());
         editingColumns.addEditor(configListTable, initListTableField());
-        editingColumns.addEditor(configFunction, new TextField());
+//        editingColumns.addEditor(configFunction, new TextField());
         editingColumns.addEditor(configSize, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configScale, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configWidth, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configHeight, new NumberField<Integer>(new IntegerPropertyEditor()));
-        editingColumns.addEditor(configDefaultValue, new TextField());
-        editingColumns.addEditor(configDataFormat, new TextField());
+//        editingColumns.addEditor(configDefaultValue, new TextField());
+//        editingColumns.addEditor(configDataFormat, new TextField());
         editingColumns.addEditor(configRegex, new TextField());
         editingColumns.addEditor(order, initOrderField());
         columnRegexMessageField = new PropertyValueField();
@@ -558,9 +557,9 @@ public class TableView extends ContentPanel implements ITableView {
                 return object;
             }
         };
-        editingColumns.addEditor(configViewFormat, converter, initViewFormatField());
-        editingColumns.addEditor(configColumn, new TextField());
-        editingColumns.addEditor(colorConfig, new TextField());
+//        editingColumns.addEditor(configViewFormat, converter, initViewFormatField());
+//        editingColumns.addEditor(configColumn, new TextField());
+//        editingColumns.addEditor(colorConfig, new TextField());
     }
 
     private ComboBox<DataType> initDataTypeField() {
@@ -715,15 +714,15 @@ public class TableView extends ContentPanel implements ITableView {
         fieldViewName.setValue(viewName);
     }
 
-    @Override
-    public String getViewSource() {
-        return fieldViewSource.getValue();
-    }
-
-    @Override
-    public void setViewSource(String viewSource) {
-        fieldViewSource.setValue(viewSource);
-    }
+//    @Override
+//    public String getViewSource() {
+//        return fieldViewSource.getValue();
+//    }
+//
+//    @Override
+//    public void setViewSource(String viewSource) {
+//        fieldViewSource.setValue(viewSource);
+//    }
 
     @Override
     public void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale) {
@@ -825,8 +824,8 @@ public class TableView extends ContentPanel implements ITableView {
         } else {
             gridColumns.getView().getBody().mask(null);
         }
-        viewEditButton.setEnabled(enable);
-        listEditButton.setEnabled(enable);
+//        viewEditButton.setEnabled(enable);
+//        listEditButton.setEnabled(enable);
         addButton.setEnabled(enable);
         deleteButton.setEnabled(enable);
         synchronizeButton.setEnabled(enable);

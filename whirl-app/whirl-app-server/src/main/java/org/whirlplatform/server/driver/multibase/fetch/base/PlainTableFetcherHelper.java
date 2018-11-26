@@ -60,7 +60,11 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
     protected void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
-        this.dbTable = new DBTable(table.getView().getViewName(), this.dbDatabase);
+    
+        String viewName = table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName()) ? table.getView().getViewName() :
+            table.getTableName();
+    
+        this.dbTable = new DBTable(viewName, this.dbDatabase);
         // this.dbTable.setAlias("a");
 
         if (table.getIdColumn() != null) {
@@ -88,7 +92,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             TableColumnElement c = table.getColumn(f.getName());
 
             if ((c.isHidden() && c == table.getDeleteColumn())
-                    || c.getColumnName().equalsIgnoreCase(this.dbPrimaryKey.getName())) {
+                || (c.isHidden() && c == table.getIdColumn())) {
                 continue;
             }
 

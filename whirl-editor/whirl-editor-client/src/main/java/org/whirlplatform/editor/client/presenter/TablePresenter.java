@@ -71,7 +71,7 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
                     }
                     viewElement.setName(EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
                     viewElement.setViewName(view.getViewName());
-                    viewElement.setSource(view.getViewSource());
+//                    viewElement.setSource(view.getViewSource());
                 }
 
                 eventBus.syncServerApplication();
@@ -164,7 +164,7 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
         view.setTableName(table.getTableName());
         if (table.getView() != null) {
             view.setViewName(table.getView().getViewName());
-            view.setViewSource(table.getView().getSource());
+//            view.setViewSource(table.getView().getSource());
         }
         view.setIdColumn(table.getIdColumn());
         view.setDeleteColumn(table.getDeleteColumn());
@@ -204,9 +204,9 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
 
         void setViewName(String viewName);
 
-        String getViewSource();
+//        String getViewSource();
 
-        void setViewSource(String viewSource);
+//        void setViewSource(String viewSource);
 
         void clearUI();
 

@@ -4,7 +4,11 @@ import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
-import org.timepedia.exporter.client.*;
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.ExportPackage;
+import org.timepedia.exporter.client.ExportStaticMethod;
+import org.timepedia.exporter.client.Exportable;
+import org.timepedia.exporter.client.NoExport;
 import org.whirlplatform.app.client.ClientLoginUtils;
 import org.whirlplatform.app.client.LocationManager;
 import org.whirlplatform.meta.shared.AppConstant;
@@ -37,7 +41,7 @@ public class Helper implements Exportable {
     public static void openApplication(String appCode) {
         UrlBuilder url = Location.createUrlBuilder();
         url.setParameter(AppConstant.NEW_SESSION, String.valueOf(true));
-        url.setParameter(AppConstant.ROLE_URL, appCode);
+        url.setParameter(AppConstant.APPLICATION_URL, appCode);
         Window.open(url.buildString(), "_blank", "");
     }
 

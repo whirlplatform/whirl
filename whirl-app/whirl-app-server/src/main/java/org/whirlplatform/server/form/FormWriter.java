@@ -8,11 +8,19 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-import org.whirlplatform.server.db.*;
+import org.whirlplatform.server.db.ConnectException;
+import org.whirlplatform.server.db.ConnectionProvider;
+import org.whirlplatform.server.db.ConnectionWrapper;
+import org.whirlplatform.server.db.DBConnection;
+import org.whirlplatform.server.db.NamedParamResolver;
 import org.whirlplatform.server.driver.Connector;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
@@ -32,8 +40,14 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public abstract class FormWriter implements Closeable {
     Logger _log = LoggerFactory.getLogger(FormWriter.class);
@@ -113,10 +127,10 @@ public abstract class FormWriter implements Closeable {
         if (data != null) {
             for (Entry<String, DataValue> e : data.entrySet()) {
                 if (DataType.DATE == e.getValue().getType()) {
-                    if (e.getValue().getValue() == null) {
+                    if (e.getValue().getDate() == null) {
                         result.put(e.getKey(), null);
                     } else {
-                        result.put(e.getKey(), sdf.format(e.getValue().getValue()));
+                        result.put(e.getKey(), sdf.format(e.getValue().getDate()));
                     }
                 } else if (DataType.NUMBER == e.getValue().getType()) {
                     // Чтобы числа записывались в нормальном формате, а не в
@@ -124,12 +138,12 @@ public abstract class FormWriter implements Closeable {
 //					DecimalFormat formatter = new DecimalFormat("#");
 //					formatter.setMaximumFractionDigits(17);
                     try {
-                        result.put(e.getKey(), decimalFmt.format(e.getValue().getValue()));
+                        result.put(e.getKey(), decimalFmt.format(e.getValue().getDouble()));
                     } catch (IllegalArgumentException | NullPointerException ex) {
-                        result.put(e.getKey(), StringUtils.toString(e.getValue().getValue(), ""));
+                        result.put(e.getKey(), StringUtils.toString(e.getValue().getDouble(), ""));
                     }
                 } else {
-                    result.put(e.getKey(), StringUtils.toString(e.getValue().getValue(), ""));
+                    result.put(e.getKey(), StringUtils.toString(e.getValue().getObject(), ""));
                 }
             }
         }
@@ -179,7 +193,7 @@ public abstract class FormWriter implements Closeable {
             if (!component.containsValue(p) || !component.isReplaceableProperty(p)) {
                 continue;
             }
-            String original = component.getValue(p).getValue();
+            String original = component.getValue(p).getString();
             String result = changeParameter(p, original, params);
 
             if (PropertyType.parse(p, component.getType()).getType() == DataType.BOOLEAN) {

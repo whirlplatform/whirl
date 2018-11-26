@@ -28,8 +28,13 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.RowListValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAware {
 
@@ -162,8 +167,8 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
             // ((Field) field).getElement().focus();
             // ((Field) field).getElement().blur();
         }
-
-        field.setValue(value.getValue());
+    
+        field.setValue(value.getObject());
     }
 
     @SuppressWarnings("rawtypes")

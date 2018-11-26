@@ -71,7 +71,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		html.append("</tr>");
 		html.append("<tr>");
 		html.append("<td valign=\"top\" align=\"center\">");
-		html.append("<div id=\"app-login-id\">");
+        html.append("<div id=\"whirl-login-id\">");
 		html.append("</div>");
 		html.append("</td>");
 		html.append("</tr>");
