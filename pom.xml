@@ -395,7 +395,7 @@
                 <!-- Main configurations -->
 
                 <!-- Filesystem path to store platform information including applications metadata -->
-                <config.work-path>/whirl</config.work-path>
+                <config.work-path>${basedir}/../../.whirl-work</config.work-path>
 
                 <config.cache-timeout>10</config.cache-timeout>
             </properties>

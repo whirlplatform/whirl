@@ -2,4 +2,7 @@
 /.project
 /target/
 /.idea/
+/.whirl-work/
 *.iml
+.project
+.classpath
