@@ -85,7 +85,7 @@
         }
 
         Connector connector = (Connector) request.getAttribute("connector");
-        String applicationCode = request.getParameter(AppConstant.ROLE_URL);
+        String applicationCode = request.getParameter("application");
         String branchParam = request.getParameter("branch");
         String versionParam = request.getParameter("version");
         if (applicationCode != null && !"".equals(applicationCode)) {

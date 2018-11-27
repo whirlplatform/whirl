@@ -344,7 +344,7 @@
                                 <outputDirectory>${basedir}/../target/conf</outputDirectory>
                                 <resources>
                                     <resource>
-                                        <directory>/src/conf</directory>
+                                        <directory>src/conf</directory>
                                         <filtering>true</filtering>
                                     </resource>
                                 </resources>
