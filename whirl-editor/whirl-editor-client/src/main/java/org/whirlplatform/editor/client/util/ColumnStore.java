@@ -64,14 +64,14 @@ public class ColumnStore extends ListStore<TableColumnElement> {
 		ValueProvider<TableColumnElement, String> defaultValue();
 
 		ValueProvider<TableColumnElement, Boolean> notNull();
-
-		ValueProvider<TableColumnElement, Boolean> listTitle();
-
+	
 		ValueProvider<TableColumnElement, Boolean> hidden();
 		
 		ValueProvider<TableColumnElement, Boolean> filter();
 		
 		ValueProvider<TableColumnElement, AbstractTableElement> listTable();
+	
+		ValueProvider<TableColumnElement, String> labelColumn();
 		
 		ValueProvider<TableColumnElement, String> function();
 		

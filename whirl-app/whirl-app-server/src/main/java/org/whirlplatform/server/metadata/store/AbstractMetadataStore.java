@@ -14,18 +14,21 @@ import org.xml.sax.XMLFilter;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import javax.xml.transform.Result;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public abstract class AbstractMetadataStore implements MetadataStore {
 
@@ -65,7 +68,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
         try {
             XMLApplicationImporter importer = new XMLApplicationImporter(ignoreReferences);
             return importer.buildApplicationFromString(finalData, this);
-        } catch (UnsupportedEncodingException | DocumentException e) {
+        } catch (DocumentException e) {
             throw new MetadataStoreException(e);
         }
     }

@@ -373,8 +373,8 @@ public class TableView extends ContentPanel implements ITableView {
                 properties.listTable(), 100, EditorMessage.Util.MESSAGE.table_column_list_table());
         list.add(configListTable);
     
-        ColumnConfig<TableColumnElement, AbstractTableElement> configLabelColumn = new ColumnConfig<TableColumnElement, AbstractTableElement>(
-            properties.listTable(), 100, EditorMessage.Util.MESSAGE.table_column_label());
+        ColumnConfig<TableColumnElement, String> configLabelColumn = new ColumnConfig<TableColumnElement, String>(
+            properties.labelColumn(), 100, EditorMessage.Util.MESSAGE.table_column_label());
         list.add(configLabelColumn);
 
 //        ColumnConfig<TableColumnElement, String> configFunction = new ColumnConfig<TableColumnElement, String>(
@@ -421,10 +421,10 @@ public class TableView extends ContentPanel implements ITableView {
         setCheckBoxColCenterAlign(configFilter);
         checkBoxCols.add(configFilter);
         list.add(configFilter);
-
-//        ColumnConfig<TableColumnElement, String> configDataFormat = new ColumnConfig<TableColumnElement, String>(
-//                properties.dataFormat(), 70, EditorMessage.Util.MESSAGE.table_column_data_format());
-//        list.add(configDataFormat);
+    
+        ColumnConfig<TableColumnElement, String> configDataFormat = new ColumnConfig<TableColumnElement, String>(
+            properties.dataFormat(), 70, EditorMessage.Util.MESSAGE.table_column_data_format());
+        list.add(configDataFormat);
 
         ColumnConfig<TableColumnElement, String> configRegex = new ColumnConfig<TableColumnElement, String>(
                 properties.regex(), 100, EditorMessage.Util.MESSAGE.table_column_regex());
@@ -481,19 +481,21 @@ public class TableView extends ContentPanel implements ITableView {
         editingColumns.addEditor(configColumnName, new TextField());
         editingColumns.addEditor(configType, initDataTypeField());
         editingColumns.addEditor(configListTable, initListTableField());
+        editingColumns.addEditor(configLabelColumn, new TextField());
 //        editingColumns.addEditor(configFunction, new TextField());
         editingColumns.addEditor(configSize, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configScale, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configWidth, new NumberField<Integer>(new IntegerPropertyEditor()));
         editingColumns.addEditor(configHeight, new NumberField<Integer>(new IntegerPropertyEditor()));
 //        editingColumns.addEditor(configDefaultValue, new TextField());
-//        editingColumns.addEditor(configDataFormat, new TextField());
+        editingColumns.addEditor(configDataFormat, new TextField());
         editingColumns.addEditor(configRegex, new TextField());
         editingColumns.addEditor(order, initOrderField());
         columnRegexMessageField = new PropertyValueField();
         editingColumns.addEditor(configRegexMessage, new PropertyValueFieldConverter(columnRegexMessageField),
                 columnRegexMessageField);
         editingColumns.addEditor(configColumn, new TextField());
+    
     }
 
     private ComboBox<DataType> initDataTypeField() {
