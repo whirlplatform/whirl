@@ -620,8 +620,6 @@ public interface EditorMessage extends Messages {
 
     String table_column_order();
 
-    String table_column_view_format();
-
     String table_column_config_column();
 
     String table_db_table();
