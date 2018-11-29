@@ -1,7 +1,14 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.*;
+import org.apache.empire.db.DBBlobData;
+import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.DBCommand;
+import org.apache.empire.db.DBDatabase;
+import org.apache.empire.db.DBReader;
+import org.apache.empire.db.DBRecord;
+import org.apache.empire.db.DBTable;
+import org.apache.empire.db.DBTableColumn;
 import org.apache.empire.db.expr.compare.DBCompareExpr;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.DataModifyConfig;
@@ -15,7 +22,6 @@ import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataChanger;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import org.whirlplatform.server.global.SrvConstant;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.utils.TypesUtil;
@@ -49,8 +55,8 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
         for (TableColumnElement c : table.getColumns()) {
             if (c.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 dbTable.addColumn(c.getColumnName(), DataType.BLOB, 0, c.isNotNull());
-                dbTable.addColumn(c.getColumnName() + SrvConstant.COLUMN_FILE_POSTFIX, DataType.TEXT,
-                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                dbTable.addColumn(c.getLabelColumn(), DataType.TEXT,
+                                  c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             } else {
                 org.whirlplatform.meta.shared.data.DataType dataType = (c.getListTable()) == null ? null
                         : getDataSourceDriver().createDataFetcher(c.getListTable())
@@ -78,8 +84,8 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
 
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(), (int) fileValue.getSize());
                 record.setValue(dbTable.getColumn(f), blob);
-                record.setValue(dbTable.getColumn(f + SrvConstant.COLUMN_FILE_POSTFIX),
-                        ((FileValue) model.get(f)).getName());
+                record.setValue(dbTable.getColumn(c.getLabelColumn()),
+                                ((FileValue) model.get(f)).getName());
             } else if (c.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
                 record.setValue(dbTable.getColumn(f),
                         model.get(f) == null ? null : ((ListModelData) model.get(f)).getId());
@@ -123,8 +129,8 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
                 DBTableColumn dbColumn = dbTable.addColumn(f, DataType.BLOB, 0, c.isNotNull());
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(), (int) fileValue.getSize());
                 updateCmd.set(dbColumn.to(blob));
-                DBTableColumn fileNameColumn = dbTable.addColumn(f + SrvConstant.COLUMN_FILE_POSTFIX, DataType.TEXT,
-                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                DBTableColumn fileNameColumn = dbTable.addColumn(c.getLabelColumn(), DataType.TEXT,
+                                                                 c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
                 selectCmd.select(fileNameColumn);
                 updateCmd.set(fileNameColumn.to(((FileValue) model.get(f)).getName()));
             } else {

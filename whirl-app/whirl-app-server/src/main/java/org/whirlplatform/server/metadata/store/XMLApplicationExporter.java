@@ -895,14 +895,14 @@ public class XMLApplicationExporter {
             parameterEl.addCDATA(column.getListTable().getId());
         }
 
-        if (column.getViewFormat() != null) {
-            parameterEl = columnEl.addElement("viewFormat");
-            setElementText(parameterEl, column.getViewFormat().name());
-        }
-
         if (column.getConfigColumn() != null) {
             parameterEl = columnEl.addElement("configColumn");
             setElementText(parameterEl, column.getConfigColumn());
+        }
+    
+        if (column.getLabelColumn() != null) {
+            parameterEl = columnEl.addElement("labelColumn");
+            setElementText(parameterEl, column.getLabelColumn());
         }
     }
 

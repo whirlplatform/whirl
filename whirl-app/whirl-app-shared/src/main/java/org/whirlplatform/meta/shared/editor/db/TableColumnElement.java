@@ -28,7 +28,6 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     private boolean filter = true;
     private boolean defaultOrder;
     private Order order;
-    private ViewFormat viewFormat;
     private EventMetadata event;
     private String dataFormat;
     private AbstractTableElement listTable;
@@ -36,6 +35,7 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     private String regex;
     private PropertyValue regexMessage = new PropertyValue(DataType.STRING);
     private String configColumn;
+    private String labelColumn;
     private String color;
 
     public TableColumnElement() {
@@ -169,14 +169,6 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
         this.order = order;
     }
 
-    public ViewFormat getViewFormat() {
-        return viewFormat;
-    }
-
-    public void setViewFormat(ViewFormat viewFormat) {
-        this.viewFormat = viewFormat;
-    }
-
     public EventMetadata getEvent() {
         return event;
     }
@@ -232,7 +224,15 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     public void setConfigColumn(String configColumn) {
         this.configColumn = configColumn;
     }
-
+    
+    public String getLabelColumn() {
+        return labelColumn;
+    }
+    
+    public void setLabelColumn(String labelColumn) {
+        this.labelColumn = labelColumn;
+    }
+    
     @Deprecated
     public TableColumnElement clone() {
         TableColumnElement clone = new TableColumnElement();
@@ -251,7 +251,6 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
         clone.hidden = this.hidden;
         clone.filter = this.filter;
         clone.order = this.order;
-        clone.viewFormat = this.viewFormat;
         clone.dataFormat = this.dataFormat;
         clone.function = this.function;
         clone.regex = this.regex;
@@ -285,12 +284,6 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     public enum Order implements Serializable, IsSerializable {
 
         ASC, DESC
-
-    }
-
-    public enum ViewFormat implements Serializable, IsSerializable {
-
-        NONE, CSS
 
     }
 

@@ -52,13 +52,11 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -584,14 +582,14 @@ public class XMLApplicationImporter {
             result.setOrder(Order.valueOf(columnEl.elementText("order")));
         }
 
-        Element viewFormatEl = columnEl.element("viewFormat");
-        if (viewFormatEl != null) {
-            result.setViewFormat(ViewFormat.valueOf(viewFormatEl.getText()));
-        }
-
         Element configColumnEl = columnEl.element("configColumn");
         if (configColumnEl != null) {
             result.setConfigColumn(configColumnEl.getText());
+        }
+    
+        Element labelColumnEl = columnEl.element("labelColumn");
+        if (labelColumnEl != null) {
+            result.setLabelColumn(labelColumnEl.getText());
         }
 
         putMap(result);
@@ -1019,7 +1017,7 @@ public class XMLApplicationImporter {
     }
 
     public ApplicationElement buildApplicationFromString(String xml, MetadataStore loader)
-            throws UnsupportedEncodingException, DocumentException {
+        throws DocumentException {
         InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
         return buildApplication(stream, loader);
     }

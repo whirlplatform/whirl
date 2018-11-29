@@ -1,8 +1,12 @@
 package org.whirlplatform.meta.shared;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
@@ -105,13 +109,15 @@ public class FieldMetadata implements Serializable, Cloneable {
      */
     private boolean password;
 
-    private String viewFormat;
-
     private ListViewType listViewType;
 
     private String dataFormat;
 
     private String color;
+    
+    private String labelColumn;
+    
+    private String configColumn;
 
     public FieldMetadata() {
     }
@@ -297,14 +303,6 @@ public class FieldMetadata implements Serializable, Cloneable {
         return event != null && !event.isEmpty();
     }
 
-    public void setViewFormat(String format) {
-        this.viewFormat = format;
-    }
-
-    public String getViewFormat() {
-        return viewFormat;
-    }
-
     public ListViewType getListViewType() {
         return listViewType;
     }
@@ -328,7 +326,23 @@ public class FieldMetadata implements Serializable, Cloneable {
     public void setColor(String color) {
         this.color = color;
     }
-
+    
+    public String getLabelColumn() {
+        return labelColumn;
+    }
+    
+    public void setLabelColumn(String labelColumn) {
+        this.labelColumn = labelColumn;
+    }
+    
+    public String getConfigColumn() {
+        return configColumn;
+    }
+    
+    public void setConfigColumn(String configColumn) {
+        this.configColumn = configColumn;
+    }
+    
     @Override
     public String toString() {
         return name;
@@ -381,7 +395,6 @@ public class FieldMetadata implements Serializable, Cloneable {
         clone.filter = filter;
         clone.event = event;
         clone.password = password;
-        clone.viewFormat = viewFormat;
         clone.listViewType = listViewType;
         clone.dataFormat = dataFormat;
         clone.color = color;

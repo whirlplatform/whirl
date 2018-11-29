@@ -1,6 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.apache.empire.db.exceptions.QueryFailedException;
@@ -29,9 +28,9 @@ import java.util.List;
 
 public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements TableFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainTableFetcher.class);
-
-    public OraclePlainTableFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver DataSourceDriver) {
-        super(connectionWrapper, DataSourceDriver);
+    
+    public OraclePlainTableFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver dataSourceDriver) {
+        super(connectionWrapper, dataSourceDriver);
     }
 
     public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
@@ -80,11 +79,7 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
                     if (f.isHidden()) {
                         continue;
                     }
-                    if (!StringUtils.isEmpty(f.getViewFormat())) {
-                        setModelStyledValue(f, table.getColumn(f.getName()), selectReader, model);
-                    } else {
-                        setModelValue(model, f, selectReader);
-                    }
+                    setModelValue(model, f, selectReader);
                 }
                 result.add(model);
             }

@@ -15,7 +15,10 @@ import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.data.shared.*;
+import com.sencha.gxt.data.shared.LabelProvider;
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.data.shared.SortDir;
 import com.sencha.gxt.data.shared.Store.StoreSortInfo;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent.StoreDataChangeHandler;
@@ -34,8 +37,12 @@ import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
-import com.sencha.gxt.widget.core.client.form.*;
+import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.ComboBox;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.IntegerPropertyEditor;
+import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -60,9 +67,12 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class TableView extends ContentPanel implements ITableView {
 
@@ -92,11 +102,6 @@ public class TableView extends ContentPanel implements ITableView {
 
     private FieldLabel labelViewName;
     private TextField fieldViewName;
-    private CodeMirrorPanel fieldViewSource;
-
-//    private FieldLabel labelListName;
-//    private TextField fieldListName;
-//    private CodeMirrorPanel fieldListSource;
 
     private FieldLabel labelSimple;
     private CheckBox fieldSimple;
@@ -107,8 +112,7 @@ public class TableView extends ContentPanel implements ITableView {
 
     private TextButton synchronizeButton;
     private TextButton rightsButton;
-    //    private TextButton viewEditButton;
-//    private TextButton listEditButton;
+
     private TextButton addButton;
     private TextButton deleteButton;
 
@@ -140,7 +144,6 @@ public class TableView extends ContentPanel implements ITableView {
         container.setAdjustForScroll(true);
         container.setScrollMode(ScrollMode.AUTO);
         setWidget(container);
-        initStore();
         initFields();
     }
 
@@ -218,8 +221,6 @@ public class TableView extends ContentPanel implements ITableView {
 
         initViewEditField();
 
-//        initListEditField();
-
         initColumns();
     }
 
@@ -286,39 +287,8 @@ public class TableView extends ContentPanel implements ITableView {
         vContainer.add(labelViewName, new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0)));
 //        vContainer.add(viewEditButton);
         container.add(vContainer, new VerticalLayoutData(1, 40, new Margins(10, 10, 0, 10)));
-
-        fieldViewSource = new CodeMirrorPanel();
+    
     }
-
-//    private void initListEditField() {
-//        fieldListName = new TextField();
-//        fieldListName.addValueChangeHandler(new ValueChangeHandler<String>() {
-//
-//            @Override
-//            public void onValueChange(ValueChangeEvent<String> event) {
-//                changed = true;
-//            }
-//        });
-//        SimpleContainer s = new SimpleContainer();
-//        s.add(fieldListName);
-//        labelListName = new FieldLabel(s, EditorMessage.Util.MESSAGE.table_list_name());
-//
-//        HorizontalLayoutContainer lContainer = new HorizontalLayoutContainer();
-//        listEditButton = new TextButton(EditorMessage.Util.MESSAGE.table_edit());
-//        listEditButton.addSelectHandler(new SelectHandler() {
-//
-//            @Override
-//            public void onSelect(SelectEvent event) {
-//                showViewEditWindow(fieldListSource, true);
-//            }
-//        });
-//        lContainer.add(labelListName, new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0)));
-//        lContainer.add(listEditButton);
-//
-//        container.add(lContainer, new VerticalLayoutData(1, 40, new Margins(10, 10, 0, 10)));
-//
-//        fieldListSource = new CodeMirrorPanel();
-//    }
 
     private void initColumns() {
         TableColumnProperties properties = GWT.create(TableColumnProperties.class);
@@ -402,6 +372,10 @@ public class TableView extends ContentPanel implements ITableView {
         ColumnConfig<TableColumnElement, AbstractTableElement> configListTable = new ColumnConfig<TableColumnElement, AbstractTableElement>(
                 properties.listTable(), 100, EditorMessage.Util.MESSAGE.table_column_list_table());
         list.add(configListTable);
+    
+        ColumnConfig<TableColumnElement, AbstractTableElement> configLabelColumn = new ColumnConfig<TableColumnElement, AbstractTableElement>(
+            properties.listTable(), 100, EditorMessage.Util.MESSAGE.table_column_label());
+        list.add(configLabelColumn);
 
 //        ColumnConfig<TableColumnElement, String> configFunction = new ColumnConfig<TableColumnElement, String>(
 //                properties.function(), 100, EditorMessage.Util.MESSAGE.table_column_function());
@@ -448,13 +422,6 @@ public class TableView extends ContentPanel implements ITableView {
         checkBoxCols.add(configFilter);
         list.add(configFilter);
 
-        ColumnConfig<TableColumnElement, Boolean> configListTitle = new ColumnConfig<TableColumnElement, Boolean>(
-                properties.listTitle(), 70, EditorMessage.Util.MESSAGE.table_column_list_title());
-        configListTitle.setCell(new CheckBoxCell());
-        setCheckBoxColCenterAlign(configListTitle);
-        checkBoxCols.add(configListTitle);
-        list.add(configListTitle);
-
 //        ColumnConfig<TableColumnElement, String> configDataFormat = new ColumnConfig<TableColumnElement, String>(
 //                properties.dataFormat(), 70, EditorMessage.Util.MESSAGE.table_column_data_format());
 //        list.add(configDataFormat);
@@ -477,18 +444,10 @@ public class TableView extends ContentPanel implements ITableView {
         ColumnConfig<TableColumnElement, Order> order = new ColumnConfig<TableColumnElement, Order>(properties.order(),
                 130, EditorMessage.Util.MESSAGE.table_column_order());
         list.add(order);
-
-//        ColumnConfig<TableColumnElement, ViewFormat> configViewFormat = new ColumnConfig<TableColumnElement, ViewFormat>(
-//                properties.viewFormat(), 130, EditorMessage.Util.MESSAGE.table_column_view_format());
-//        list.add(configViewFormat);
-
-//        ColumnConfig<TableColumnElement, String> configColumn = new ColumnConfig<TableColumnElement, String>(
-//                properties.configColumn(), 130, EditorMessage.Util.MESSAGE.table_column_config_column());
-//        list.add(configColumn);
-//
-//        ColumnConfig<TableColumnElement, String> colorConfig = new ColumnConfig<>(properties.color(), 100,
-//                EditorMessage.Util.MESSAGE.design_background_color());
-//        list.add(colorConfig);
+    
+        ColumnConfig<TableColumnElement, String> configColumn = new ColumnConfig<TableColumnElement, String>(
+            properties.configColumn(), 130, EditorMessage.Util.MESSAGE.table_column_config_column());
+        list.add(configColumn);
 
         ColumnModel<TableColumnElement> model = new ColumnModel<TableColumnElement>(list);
 
@@ -534,20 +493,7 @@ public class TableView extends ContentPanel implements ITableView {
         columnRegexMessageField = new PropertyValueField();
         editingColumns.addEditor(configRegexMessage, new PropertyValueFieldConverter(columnRegexMessageField),
                 columnRegexMessageField);
-        Converter<ViewFormat, ViewFormat> converter = new Converter<ViewFormat, ViewFormat>() {
-            @Override
-            public ViewFormat convertFieldValue(ViewFormat object) {
-                return object == ViewFormat.NONE ? null : object;
-            }
-
-            @Override
-            public ViewFormat convertModelValue(ViewFormat object) {
-                return object;
-            }
-        };
-//        editingColumns.addEditor(configViewFormat, converter, initViewFormatField());
-//        editingColumns.addEditor(configColumn, new TextField());
-//        editingColumns.addEditor(colorConfig, new TextField());
+        editingColumns.addEditor(configColumn, new TextField());
     }
 
     private ComboBox<DataType> initDataTypeField() {
@@ -604,29 +550,6 @@ public class TableView extends ContentPanel implements ITableView {
         result.setTriggerAction(TriggerAction.ALL);
         result.setEditable(false);
         result.setValue(Order.ASC);
-        return result;
-    }
-
-    private ComboBox<ViewFormat> initViewFormatField() {
-        ListStore<ViewFormat> store = new ListStore<ViewFormat>(new ModelKeyProvider<ViewFormat>() {
-
-            @Override
-            public String getKey(ViewFormat item) {
-                return item.name();
-            }
-        });
-        store.add(ViewFormat.NONE);
-        store.add(ViewFormat.CSS);
-        ComboBox<ViewFormat> result = new ComboBox<ViewFormat>(store, new LabelProvider<ViewFormat>() {
-
-            @Override
-            public String getLabel(ViewFormat item) {
-                return item.name();
-            }
-        });
-
-        result.setTriggerAction(TriggerAction.ALL);
-        result.setEditable(false);
         return result;
     }
 

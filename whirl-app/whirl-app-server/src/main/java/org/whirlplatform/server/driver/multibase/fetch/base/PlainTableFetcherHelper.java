@@ -3,21 +3,31 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataMode;
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.*;
+import org.apache.empire.db.DBCmpType;
+import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.DBColumnExpr;
+import org.apache.empire.db.DBDatabase;
+import org.apache.empire.db.DBTable;
 import org.apache.empire.db.expr.compare.DBCompareColExpr;
 import org.apache.empire.db.expr.compare.DBCompareExpr;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FilterValue;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RightElement;
+import org.whirlplatform.meta.shared.editor.RightType;
+import org.whirlplatform.meta.shared.editor.SQLCondition;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import org.whirlplatform.server.global.SrvConstant;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
@@ -70,8 +80,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         // Добавление стилизованных колонок в дереве по новому алгоритму
         if (tree) {
             TableColumnElement nameColumn = table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelColumn());
-            if (nameColumn != null && nameColumn.getViewFormat() != ViewFormat.NONE
-                    && nameColumn.getConfigColumn() != null) {
+            if (nameColumn.getConfigColumn() != null) {
                 addConfigColumn(this.dbTable, nameColumn);
             }
         }
@@ -88,31 +97,22 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                     : getDataSourceDriver().createDataFetcher(c.getListTable()).getIdColumnType(table));
             // TODO: Dynamic DataSource Получение нужного fetcher'а, и из него
             // получение metadata?
-
-            if (!StringUtils.isEmpty(f.getViewFormat())) {
-                if (c.getConfigColumn() != null) {
-                    // Новый алгоритм
-                    addConfigColumn(dbTable, c);
-                } else {
-                    // Старый
-                    type = DataType.TEXT;
-                }
+    
+            if (!StringUtils.isEmpty(c.getConfigColumn())) {
+                // Новый алгоритм
+                addConfigColumn(dbTable, c);
             }
 
             // Если поле - функция, добавляем её на этапе формирования запроса
             if (StringUtils.isEmpty(c.getFunction())) {
                 this.dbTable.addColumn(c.getColumnName(), type, c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
-
-            // для списков
-            if (org.whirlplatform.meta.shared.data.DataType.LIST == f.getType()) {
-                this.dbTable.addColumn(f.getName() + SrvConstant.COLUMN_LIST_POSTFIX, DataType.TEXT, 0,
-                        DataMode.NotNull);
-
-                // для файлов
-            } else if (org.whirlplatform.meta.shared.data.DataType.FILE == f.getType()) {
-                this.dbTable.addColumn(f.getName() + SrvConstant.COLUMN_FILE_POSTFIX, DataType.TEXT, 0,
-                        DataMode.NotNull);
+    
+            // для списков и для файлов
+            if (org.whirlplatform.meta.shared.data.DataType.LIST == f.getType() ||
+                org.whirlplatform.meta.shared.data.DataType.FILE == f.getType()) {
+                this.dbTable.addColumn(f.getLabelColumn(), DataType.TEXT, 0,
+                                       DataMode.NotNull);
             }
         }
 
@@ -130,7 +130,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         for (FilterValue filter : loadConfig.getFilters()) {
             DBColumnExpr col;
             if (filter.getMetadata().getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
-                col = this.dbTable.getColumn(filter.getMetadata().getName() + SrvConstant.COLUMN_FILE_POSTFIX);
+                col = this.dbTable.getColumn(filter.getMetadata().getLabelColumn());
             } else {
                 col = this.dbTable.getColumn(filter.getMetadata().getName());
             }

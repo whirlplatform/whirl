@@ -589,6 +589,8 @@ public interface EditorMessage extends Messages {
     String table_column_datatype();
 
     String table_column_list_table();
+    
+    String table_column_label();
 
     String table_column_function();
 
@@ -607,8 +609,6 @@ public interface EditorMessage extends Messages {
     String table_column_hidden();
 
     String table_column_filter();
-
-    String table_column_list_title();
 
     String table_column_data_format();
 

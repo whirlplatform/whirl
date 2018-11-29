@@ -18,7 +18,6 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -83,8 +82,6 @@ public class ColumnStore extends ListStore<TableColumnElement> {
 		ValueProvider<TableColumnElement, Boolean> defaultOrder();
 		
 		ValueProvider<TableColumnElement, Order> order();
-		
-		ValueProvider<TableColumnElement, ViewFormat> viewFormat();
 		
 		ValueProvider<TableColumnElement, String> dataFormat();
 		

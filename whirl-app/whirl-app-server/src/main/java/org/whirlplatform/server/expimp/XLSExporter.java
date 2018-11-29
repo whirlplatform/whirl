@@ -5,14 +5,19 @@ import org.apache.empire.db.DBReader;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.server.driver.multibase.fetch.DataFetcherUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,8 +25,6 @@ import java.io.OutputStream;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,30 +145,6 @@ public class XLSExporter extends Exporter {
                 Object value = getColumnValue(f, reader);
 
                 // Если ячейка стилизованная, приводим строку к нужному виду
-                if (value instanceof String
-                        && !StringUtils.isEmpty(f.getViewFormat())) {
-                    String str = (String) value;
-                    Map<String, String> map = DataFetcherUtil
-                            .fromURLEncoded(str);
-                    String tmpValue = map.get(AppConstant.VALUE);
-                    if (StringUtils.isEmpty(tmpValue)) {
-                        value = null;
-                    } else if (f.getType() == DataType.NUMBER) {
-                        value = Double.valueOf(tmpValue);
-                    } else if (f.getType() == DataType.DATE) {
-                        try {
-                            value = new Timestamp(new SimpleDateFormat(
-                                    AppConstant.DATE_FORMAT_LONG).parse(
-                                    tmpValue).getTime());
-                        } catch (ParseException e) {
-                        }
-                    } else if (f.getType() == DataType.BOOLEAN) {
-                        value = "T".equalsIgnoreCase(tmpValue);
-                    } else {
-                        value = tmpValue;
-                    }
-                }
-
                 Cell cell = row.createCell(currentCell);
                 cell.setCellStyle(resultStyle);
                 if (value != null) {

@@ -167,10 +167,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
             StringBuilder orderString = new StringBuilder();
             for (SortValue s : loadConfig.getSorts()) {
                 // Если тип поля - список, сортировать по строке
-                if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType()) {
-                    orderString.append(s.getField().getName() + SrvConstant.COLUMN_LIST_POSTFIX);
-                } else if (org.whirlplatform.meta.shared.data.DataType.FILE == s.getField().getType()) {
-                    orderString.append(s.getField().getName() + SrvConstant.COLUMN_FILE_POSTFIX);
+                if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType() ||
+                    org.whirlplatform.meta.shared.data.DataType.FILE == s.getField().getType()) {
+                    orderString.append(s.getField().getLabelColumn());
                 } else {
                     orderString.append(s.getField().getName());
                 }
@@ -185,10 +184,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
             StringBuilder orderString = new StringBuilder();
             for (TableColumnElement column : table.getSortedColumns()) {
                 if (column.isDefaultOrder() && column != table.getDeleteColumn()) {
-                    if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType()) {
-                        orderString.append(column.getColumnName() + SrvConstant.COLUMN_LIST_POSTFIX);
-                    } else if (org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
-                        orderString.append(column.getColumnName() + SrvConstant.COLUMN_FILE_POSTFIX);
+                    if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType() ||
+                        org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
+                        orderString.append(column.getLabelColumn());
                     } else {
                         orderString.append(column.getColumnName());
                     }
@@ -220,7 +218,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
 
         // Для списков стиль задается в поле ..dfname
         if (field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
-            int labelInd = reader.getFieldIndex(field.getName() + SrvConstant.COLUMN_LIST_POSTFIX);
+            int labelInd = reader.getFieldIndex(field.getLabelColumn());
             formattedMap = fromUrlEncoded(reader.getString(labelInd));
             value = formattedMap.get(SrvConstant.VALUE);
             objValue = reader.getString(colInd);
@@ -256,14 +254,14 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
                     model.set(field.getName(), reader.isNull(colInd) ? null : reader.getBoolean(colInd));
                     break;
                 case LIST:
-                    int labelInd = reader.getFieldIndex(field.getName() + SrvConstant.COLUMN_LIST_POSTFIX);
+                    int labelInd = reader.getFieldIndex(field.getLabelColumn());
                     ListModelData listValue = new ListModelDataImpl();
                     listValue.setLabel(reader.getString(labelInd));
                     listValue.setId(reader.getString(colInd));
                     model.set(field.getName(), listValue);
                     break;
                 case FILE:
-                    int fileInd = reader.getFieldIndex(field.getName() + SrvConstant.COLUMN_FILE_POSTFIX);
+                    int fileInd = reader.getFieldIndex(field.getLabelColumn());
                     FileValue fileValue = new FileValue();
                     fileValue.setName(reader.getString(fileInd));
                     model.set(field.getName(), fileValue);

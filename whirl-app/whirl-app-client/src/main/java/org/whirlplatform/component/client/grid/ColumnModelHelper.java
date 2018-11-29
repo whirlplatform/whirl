@@ -10,7 +10,6 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.safecss.shared.SafeStylesBuilder;
-import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.SimpleSafeHtmlRenderer;
@@ -38,7 +37,13 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ColumnModelHelper implements LocatorAware {
 
@@ -94,8 +99,8 @@ public class ColumnModelHelper implements LocatorAware {
 					SafeHtmlUtils.fromTrustedString(field.getLabel()));
 
 			columnConfig.setHidden(field.isHidden());
-
-			if (!field.isEdit() && field.getViewFormat() == null) {
+			
+			if (!field.isEdit()) {
 				SafeStylesBuilder style = new SafeStylesBuilder();
 				style.trustedBackgroundColor("#F0F0F0");
 				columnConfig.setColumnStyle(style.toSafeStyles());
@@ -103,22 +108,7 @@ public class ColumnModelHelper implements LocatorAware {
 
 			// TODO вообще нужна своя реализация Cell
 			if (DataType.BOOLEAN == field.getType()) {
-				CheckBoxCell cell;
-				if (field.getViewFormat() != null) {
-					cell = new CheckBoxCell() {
-
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Boolean value,
-								SafeHtmlBuilder sb) {
-							SafeStylesBuilder style = new SafeStylesBuilder();
-							style.appendTrustedString(getStyle((String) context.getKey(), field.getName()));
-							columnConfig.setColumnTextStyle(style.toSafeStyles());
-							super.render(context, value, sb);
-						}
-					};
-				} else {
-					cell = new CheckBoxCell();
-				}
+				CheckBoxCell cell = new CheckBoxCell();
 				if (!field.isEdit()) {
 					cell.disable(null);
 				}
@@ -129,11 +119,6 @@ public class ColumnModelHelper implements LocatorAware {
 					@Override
 					public void render(com.google.gwt.cell.client.Cell.Context context, FileValue value,
 							SafeHtmlBuilder sb) {
-						if (field.getViewFormat() != null) {
-							columnConfig.setColumnTextStyle(SafeStylesUtils
-									.fromTrustedString(getStyle((String) context.getKey(), field.getName())));
-
-						}
 						if (value == null || Util.isEmptyString(value.getName())) {
 							return;
 						}
@@ -163,31 +148,13 @@ public class ColumnModelHelper implements LocatorAware {
 				};
 				columnConfig.setCell((Cell) cell);
 			} else if (DataType.DATE == field.getType()) {
-				DateCell cell;
 				final DateTimeFormat format;
 				if (field.getDataFormat() == null || field.getDataFormat().isEmpty()) {
 					format = AppConstant.getDateFormatLong();
 				} else {
 					format = DateTimeFormat.getFormat(field.getDataFormat());
 				}
-				if (!Util.isEmptyString(field.getViewFormat())) {
-					cell = new DateCell(format) {
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Date value,
-								SafeHtmlBuilder sb) {
-							columnConfig.setColumnTextStyle(SafeStylesUtils
-									.fromTrustedString(getStyle((String) context.getKey(), field.getName())));
-
-							if (value == null) {
-								sb.appendHtmlConstant("&nbsp");
-							} else {
-								sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-										.render(format.format(value, null)).asString()));
-							}
-						}
-					};
-				} else {
-					cell = new DateCell(format) {
+				DateCell cell = new DateCell(format) {
 						@Override
 						public void render(com.google.gwt.cell.client.Cell.Context context, Date value,
 								SafeHtmlBuilder sb) {
@@ -197,7 +164,6 @@ public class ColumnModelHelper implements LocatorAware {
 							}
 						}
 					};
-				}
 				columnConfig.setCell((Cell) cell);
 			} else {
 				// Можно просто ListModelData наследовать от Comparable
@@ -233,28 +199,14 @@ public class ColumnModelHelper implements LocatorAware {
 					};
 					columnConfig.setCell(cell);
 				} else if (DataType.NUMBER == field.getType()) {
-					NumberCell cell;
 					final NumberFormat format;
 					if (field.getDataFormat() != null && !field.getDataFormat().isEmpty()) {
 						format = NumberFormat.getFormat(field.getDataFormat());
 					} else {
 						format = NumberFormat.getFormat("#0.#");
 					}
-					if (!Util.isEmptyString(field.getViewFormat())) {
-						cell = new NumberCell<Number>(format) {
-							@Override
-							public void render(Cell.Context context, Number value, SafeHtmlBuilder sb) {
-								columnConfig.setColumnTextStyle(SafeStylesUtils
-										.fromTrustedString(getStyle((String) context.getKey(), field.getName())));
-
-								if (value != null) {
-									sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-											.render(format.format(value)).asString()));
-								}
-							}
-						};
-					} else {
-						cell = new NumberCell<Number>(format) {
+					
+					NumberCell cell = new NumberCell<Number>(format) {
 							@Override
 							public void render(Cell.Context context, Number value, SafeHtmlBuilder sb) {
 								if (value != null) {
@@ -263,29 +215,11 @@ public class ColumnModelHelper implements LocatorAware {
 								}
                             }
                         };
-					}
+					
 					columnConfig.setCell(cell);
 				}
-
-				if (!Util.isEmptyString(field.getViewFormat())) {
-					AbstractCell<Object> cell = new AbstractCell<Object>() {
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Object value,
-								SafeHtmlBuilder sb) {
-
-							columnConfig.setColumnTextStyle(SafeStylesUtils
-									.fromTrustedString(getStyle((String) context.getKey(), field.getName())));
-
-							String displayValue;
-							if (value == null || Util.isEmptyString((displayValue = value.toString()))) {
-								sb.appendHtmlConstant("&nbsp");
-							} else {
-								sb.appendHtmlConstant(addQTip(SafeHtmlUtils.htmlEscape(displayValue)));
-							}
-						}
-					};
-                    columnConfig.setCell(cell);
-				} else if (DataType.STRING == field.getType()) {
+				
+				if (DataType.STRING == field.getType()) {
 
 					AbstractCell<Object> cell = new AbstractCell<Object>() {
 
@@ -372,17 +306,6 @@ public class ColumnModelHelper implements LocatorAware {
 				editing.addEditor((ColumnConfig) config, (IsField<?>) component);
 			}
 		}
-	}
-
-	private String getStyle(String key, String fieldName) {
-		RowModelData model = store.findModelWithKey(key);
-		String style = model.getStyle(fieldName);
-		if (style == null) {
-			style = "";
-		} else if (!Util.isEmptyString(style) && !style.endsWith(";")) {
-			style = style + ";";
-		}
-		return style;
 	}
 
 	private String addQTip(String value) {
