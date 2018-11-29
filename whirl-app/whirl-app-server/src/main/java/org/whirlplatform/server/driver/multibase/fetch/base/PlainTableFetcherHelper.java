@@ -3,26 +3,14 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataMode;
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.DBCmpType;
-import org.apache.empire.db.DBColumn;
-import org.apache.empire.db.DBColumnExpr;
-import org.apache.empire.db.DBDatabase;
-import org.apache.empire.db.DBTable;
+import org.apache.empire.db.*;
 import org.apache.empire.db.expr.compare.DBCompareColExpr;
 import org.apache.empire.db.expr.compare.DBCompareExpr;
-import org.whirlplatform.meta.shared.ClassLoadConfig;
-import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
-import org.whirlplatform.meta.shared.FilterValue;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.*;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.editor.GroupElement;
-import org.whirlplatform.meta.shared.editor.RightCollectionElement;
-import org.whirlplatform.meta.shared.editor.RightElement;
-import org.whirlplatform.meta.shared.editor.RightType;
-import org.whirlplatform.meta.shared.editor.SQLCondition;
+import org.whirlplatform.meta.shared.editor.*;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
@@ -91,8 +79,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         for (FieldMetadata f : metadata.getFields()) {
             TableColumnElement c = table.getColumn(f.getName());
 
-            if ((c.isHidden() && c == table.getDeleteColumn())
-                || (c.isHidden() && c == table.getIdColumn())) {
+            if (c == table.getIdColumn() || (c.isHidden() && c == table.getDeleteColumn())) {
                 continue;
             }
 

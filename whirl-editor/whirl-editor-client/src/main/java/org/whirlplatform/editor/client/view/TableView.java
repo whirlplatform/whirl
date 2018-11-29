@@ -15,11 +15,7 @@ import com.sencha.gxt.core.client.Style.SelectionMode;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.data.shared.Converter;
-import com.sencha.gxt.data.shared.LabelProvider;
-import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.data.shared.ModelKeyProvider;
-import com.sencha.gxt.data.shared.SortDir;
+import com.sencha.gxt.data.shared.*;
 import com.sencha.gxt.data.shared.Store.StoreSortInfo;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent.StoreDataChangeHandler;
@@ -38,12 +34,8 @@ import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
-import com.sencha.gxt.widget.core.client.form.CheckBox;
-import com.sencha.gxt.widget.core.client.form.ComboBox;
-import com.sencha.gxt.widget.core.client.form.FieldLabel;
-import com.sencha.gxt.widget.core.client.form.NumberField;
+import com.sencha.gxt.widget.core.client.form.*;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.IntegerPropertyEditor;
-import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -70,11 +62,7 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.ViewFormat;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class TableView extends ContentPanel implements ITableView {
 
@@ -106,9 +94,9 @@ public class TableView extends ContentPanel implements ITableView {
     private TextField fieldViewName;
     private CodeMirrorPanel fieldViewSource;
 
-    private FieldLabel labelListName;
-    private TextField fieldListName;
-    private CodeMirrorPanel fieldListSource;
+//    private FieldLabel labelListName;
+//    private TextField fieldListName;
+//    private CodeMirrorPanel fieldListSource;
 
     private FieldLabel labelSimple;
     private CheckBox fieldSimple;
@@ -817,7 +805,7 @@ public class TableView extends ContentPanel implements ITableView {
         labelIdColumn.setEnabled(enable);
         labelDeleteColumn.setEnabled(enable);
         labelViewName.setEnabled(enable);
-        labelListName.setEnabled(enable);
+//        labelListName.setEnabled(enable);
         labelSimple.setEnabled(enable);
         if (enable) {
             gridColumns.getView().getBody().unmask();
