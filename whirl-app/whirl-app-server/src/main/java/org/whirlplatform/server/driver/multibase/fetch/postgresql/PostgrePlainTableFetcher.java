@@ -58,7 +58,10 @@ public class PostgrePlainTableFetcher extends PostgrePlainDataFetcher implements
                 model.setId(selectReader.getString(temp.dbPrimaryKey));
 
                 for (FieldMetadata f : metadata.getFields()) {
-                    setModelValue(model, f, selectReader, temp);
+                    if (!f.isView()) {
+                        continue;
+                    }
+                    setModelValue(model, f, selectReader);
                 }
                 result.add(model);
             }

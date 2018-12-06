@@ -4,8 +4,13 @@ import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBCmpType;
 import org.apache.empire.db.DBColumn;
 import org.apache.empire.db.DBCommand;
+import org.apache.empire.db.DBReader;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -42,6 +47,42 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
                 whereCmd.where(parentColumn.is(parent.getId()));
             } else {
                 whereCmd.where(parentColumn.cmp(DBCmpType.NULL, null));
+            }
+        }
+    }
+
+    protected void setModelValue(RowModelData model, FieldMetadata field, DBReader reader) {
+        int colInd = reader.getFieldIndex(field.getName());
+        org.whirlplatform.meta.shared.data.DataType colDataType = field.getType();
+        if (colDataType != null) {
+            switch (colDataType) {
+                case STRING:
+                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getString(colInd));
+                    break;
+                case NUMBER:
+                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getDouble(colInd));
+                    break;
+                case DATE:
+                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getDateTime(colInd));
+                    break;
+                case BOOLEAN:
+                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getBoolean(colInd));
+                    break;
+                case LIST:
+                    int labelInd = reader.getFieldIndex(field.getLabelColumn());
+                    ListModelData listValue = new ListModelDataImpl();
+                    listValue.setLabel(reader.getString(labelInd));
+                    listValue.setId(reader.getString(colInd));
+                    model.set(field.getName(), listValue);
+                    break;
+                case FILE:
+                    int fileInd = reader.getFieldIndex(field.getLabelColumn());
+                    FileValue fileValue = new FileValue();
+                    fileValue.setName(reader.getString(fileInd));
+                    model.set(field.getName(), fileValue);
+                    break;
+                default:
+                    break;
             }
         }
     }

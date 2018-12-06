@@ -1,9 +1,9 @@
 package org.whirlplatform.server.utils;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.*;
@@ -36,7 +36,7 @@ public class ServerJSONConverter {
 
     public static Map<String, Object> decode(JsonNode jso, boolean extended) {
         Map<String, Object> map = new HashMap<String, Object>();
-        Iterator<String> iterator = jso.getFieldNames();
+        Iterator<String> iterator = jso.fieldNames();
         while (iterator.hasNext()) {
             String key = iterator.next();
             JsonNode j = jso.get(key);

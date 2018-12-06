@@ -12,6 +12,7 @@ import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.selenium.LocatorAware;
+import org.whirlplatform.component.client.utils.DataUtils;
 import org.whirlplatform.component.client.utils.Pair;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class DialogManager {
     }
 
     public static MessageBox createMessage(String dialogId, String title, String message) {
-        AlertMessageBox window = new AlertMessageBox(title, message);
+        AlertMessageBox window = new AlertMessageBox(DataUtils.notNull(title, ""), DataUtils.notNull(message, ""));
         window.setWidth(500);
         window.setPredefinedButtons(PredefinedButton.OK);
         addHandler(dialogId, window);

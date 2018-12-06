@@ -224,8 +224,7 @@
     <div id="login-header-template" style="display: none;"><%=header%></div>
     <div id="login-footer-template" style="display: none;"><%=footer%></div>
     <script type="text/javascript">
-        document.getElementById('loading-msg').innerHTML = '<%=I18NMessage.getMessage(l).page_loadingInnerHTML()%>
-        ';
+        document.getElementById('loading-msg').innerHTML = '<%=I18NMessage.getMessage(l).page_loadingInnerHTML()%>';
     </script>
     <script type="text/javascript" src="application/application.nocache.js"></script>
 </body>

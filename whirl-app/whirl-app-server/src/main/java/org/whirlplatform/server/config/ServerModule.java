@@ -2,9 +2,11 @@ package org.whirlplatform.server.config;
 
 import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.whirlplatform.rpc.server.DataServiceImpl;
 import org.whirlplatform.rpc.server.JsonParamConverterProvider;
+import org.whirlplatform.rpc.server.ObjectMapperContextResolver;
 import org.whirlplatform.rpc.server.RestExceptionMapper;
 import org.whirlplatform.server.cache.CacheFilter;
 import org.whirlplatform.server.form.captcha.CaptchaImgServlet;
@@ -36,10 +38,11 @@ public class ServerModule extends ServletModule {
 
 //		serve("/application").with(HttpServletDispatcher.class, servletParams);
 //		bind(HttpServletDispatcher.class).in(Scopes.SINGLETON);
-////		bind(JacksonJsonProvider.class);
+        bind(JacksonJsonProvider.class);
         bind(DataServiceImpl.class);
         bind(JsonParamConverterProvider.class);
         bind(RestExceptionMapper.class);
+        bind(ObjectMapperContextResolver.class);
 
         // Сервлет экспорта
         serve("/export").with(ExportServlet.class);

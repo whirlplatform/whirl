@@ -76,7 +76,7 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
                 model.setId(selectReader.getString(temp.topDbPrimaryKey));
 
                 for (FieldMetadata f : metadata.getFields()) {
-                    if (f.isHidden()) {
+                    if (!f.isView()) {
                         continue;
                     }
                     setModelValue(model, f, selectReader);
