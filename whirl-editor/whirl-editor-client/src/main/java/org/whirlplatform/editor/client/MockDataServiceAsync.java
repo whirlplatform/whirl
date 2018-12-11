@@ -32,7 +32,7 @@ public class MockDataServiceAsync implements DataService {
 	}
 
 	@Override
-	public String logout(SessionToken token) {
+	public Boolean logout(SessionToken token) {
 		// TODO Auto-generated method stub
 		return null;
 	}

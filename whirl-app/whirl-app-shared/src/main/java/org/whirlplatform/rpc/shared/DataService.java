@@ -36,7 +36,7 @@ public interface DataService {
      */
     @POST
     @Path("/logout")
-    String logout(@FormParam("token") SessionToken token);
+    Boolean logout(@FormParam("token") SessionToken token);
 
     @POST
     @Path("/getApplication")
