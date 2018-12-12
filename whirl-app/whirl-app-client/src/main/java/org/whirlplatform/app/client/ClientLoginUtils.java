@@ -30,9 +30,9 @@ public class ClientLoginUtils {
 	public static void logout() {
 		WindowManager.get().hideAll();
 
-		DataServiceAsync.Util.getDataService(new AsyncCallback<String>() {
+        DataServiceAsync.Util.getDataService(new AsyncCallback<Boolean>() {
 			@Override
-			public void onSuccess(String result) {
+            public void onSuccess(Boolean result) {
 				loginRedirect();
 			}
 
