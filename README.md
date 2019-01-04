@@ -1,4 +1,5 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl?ref=badge_shield)
 
 # Whrl Platform
 
@@ -21,6 +22,9 @@ You can try Whirl Application Editor on the demo server.
 Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
 
 [License text](LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl?ref=badge_large)
 
 ## Developing
 
