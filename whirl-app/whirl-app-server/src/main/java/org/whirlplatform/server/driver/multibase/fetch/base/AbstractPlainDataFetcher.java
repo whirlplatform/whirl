@@ -69,21 +69,28 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
                     model.set(field.getName(), reader.isNull(colInd) ? null : reader.getBoolean(colInd));
                     break;
                 case LIST:
-                    int labelInd = reader.getFieldIndex(field.getLabelColumn());
                     ListModelData listValue = new ListModelDataImpl();
-                    listValue.setLabel(reader.getString(labelInd));
+                    listValue.setLabel(getLabelValue(field, reader, colInd));
                     listValue.setId(reader.getString(colInd));
                     model.set(field.getName(), listValue);
                     break;
                 case FILE:
-                    int fileInd = reader.getFieldIndex(field.getLabelColumn());
                     FileValue fileValue = new FileValue();
-                    fileValue.setName(reader.getString(fileInd));
+                    fileValue.setName(getLabelValue(field, reader, colInd));
                     model.set(field.getName(), fileValue);
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    private String getLabelValue(FieldMetadata field, DBReader reader, int colInd) {
+        if (!StringUtils.isEmpty(field.getLabelColumn())) {
+            int labelInd = reader.getFieldIndex(field.getLabelColumn());
+            return reader.getString(labelInd);
+        } else {
+            return reader.getString(colInd);
         }
     }
 }
