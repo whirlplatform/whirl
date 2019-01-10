@@ -83,10 +83,10 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 //		container.add(labelUrl,
 //				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
-//		fieldTitle = new PropertyValueField();
-//		labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
-//		container.add(labelTitle,
-//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+		fieldTitle = new PropertyValueField();
+		labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
+		container.add(labelTitle,
+				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
 		initJavaScriptFields();
 		initCssFields();
@@ -125,8 +125,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 				return null;
 			}
 		}, EditorMessage.Util.MESSAGE.application_javascript());
-		container.add(javaScriptLabel,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		container.add(javaScriptLabel,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 	}
 
 	private void initCssFields() {
@@ -147,8 +147,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 				return null;
 			}
 		}, EditorMessage.Util.MESSAGE.application_css());
-		container.add(cssLabel,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		container.add(cssLabel,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 	}
 
 	private void initJavaFields() {
@@ -169,8 +169,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 				return null;
 			}
 		}, EditorMessage.Util.MESSAGE.application_java());
-		container.add(javaLabel,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		container.add(javaLabel,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 	}
 
 	private void initImgFields() {
@@ -191,8 +191,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 				return null;
 			}
 		}, EditorMessage.Util.MESSAGE.application_images());
-		container.add(imageLabel,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		container.add(imageLabel,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 	}
 
 	private void initStaticFields() {
@@ -213,8 +213,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 				return null;
 			}
 		}, EditorMessage.Util.MESSAGE.application_static());
-		container.add(staticLabel,
-				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+//		container.add(staticLabel,
+//				new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 	}
 
 	@Override
@@ -249,7 +249,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 	@Override
 	public void setHeaderText(String text) {
-		setHeaderText(text);
+		setHeading(text);
 	}
 
 	@Override

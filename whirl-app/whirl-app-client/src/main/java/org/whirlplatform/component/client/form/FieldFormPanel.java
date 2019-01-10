@@ -1,6 +1,7 @@
 package org.whirlplatform.component.client.form;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Command;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.core.client.util.Margins;
@@ -28,13 +29,8 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.RowListValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAware {
 
@@ -102,7 +98,7 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
             initChangeHandler(m, builder);
 
             FieldLabel label = new FieldLabel(comp);
-            label.setHTML(m.getLabel());
+            label.setHTML(SafeHtmlUtils.fromTrustedString(m.getLabel()));
             if (m.getHeight() != 0) {
                 label.setHeight(m.getHeight());
             }
