@@ -43,6 +43,7 @@ public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFet
         tableCondition = new TableConditionSolver(table, user.getApplication(), params, user, getConnection());
         tableCondition.allowed();
 
+        result.setViewable(tableCondition.isViewable());
         result.setInsertable(tableCondition.isInsertable());
         result.setUpdatable(tableCondition.isUpdateable());
         result.setDeletable(tableCondition.isDeletable());

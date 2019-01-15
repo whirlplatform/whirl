@@ -149,9 +149,9 @@
 				name="DELETED"
 				type="boolean" />
 			<column
-				name="LOGIN"
-				type="varchar(4000)"
-				value="admin" />
+					name="LOGIN"
+					type="varchar(4000)"
+					value="whirl-admin"/>
 			<column
 				name="PASSWORD_HASH"
 				type="varchar(4000)"

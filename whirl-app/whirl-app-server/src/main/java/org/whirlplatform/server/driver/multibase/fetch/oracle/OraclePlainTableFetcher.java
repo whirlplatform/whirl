@@ -43,9 +43,8 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
                                                                                       ClassLoadConfig loadConfig,
                                                                                       H temp) {
 
-        temp.prepare(metadata, table, loadConfig);
-
         List<RowModelData> result = new ArrayList<RowModelData>();
+        temp.prepare(metadata, table, loadConfig);
 
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
 

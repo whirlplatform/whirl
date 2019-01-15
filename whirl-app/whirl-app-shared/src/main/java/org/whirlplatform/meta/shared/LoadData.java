@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
@@ -17,7 +14,7 @@ public class LoadData<T extends RowModelData> {
 
     private PageConfig page = new PageConfig();
 
-    private List<T> data;
+    private List<T> data = new ArrayList<>();
 
     public LoadData() {
     }

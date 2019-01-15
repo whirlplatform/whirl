@@ -20,7 +20,6 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PostgrePlainTableFetcher extends PostgrePlainDataFetcher implements TableFetcher<PlainTableElement> {
@@ -41,10 +40,8 @@ public class PostgrePlainTableFetcher extends PostgrePlainDataFetcher implements
                                                                                       PlainTableElement table,
                                                                                       ClassLoadConfig loadConfig,
                                                                                       H temp) {
-        Date start = new Date();
-        temp.prepare(metadata, table, loadConfig);
-
         List<RowModelData> result = new ArrayList<RowModelData>();
+        temp.prepare(metadata, table, loadConfig);
 
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
 

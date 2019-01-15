@@ -18,9 +18,9 @@ public class ClassMetadata implements Serializable {
 
 	private Map<String, FieldMetadata> map = new HashMap<>();
 
-	private FieldMetadata idField; 
+	private FieldMetadata idField;
 
-	private boolean viewable = true;
+	private boolean viewable = false;
 	private boolean insertable = false;
 	private boolean updatable = false;
 	private boolean deletable = false;
