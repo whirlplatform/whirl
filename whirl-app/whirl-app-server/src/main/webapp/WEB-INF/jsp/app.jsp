@@ -96,7 +96,7 @@
                 } else if (versionParam != null && !"".equals(versionParam)) {
                     version = Version.parseVersion(versionParam);
                 }
-                ApplicationData app = connector.getApplication(applicationCode, version);
+                ApplicationData app = connector.getApplication(applicationCode, version, user);
                 // приложение существует и не заблокировано и (гостевое или не гостевое и пользователь авторизован
                 if (app != null && !app.isBlocked() && (app.isGuest() || (!app.isGuest() && !user.isGuest()))) {
                     // javascript

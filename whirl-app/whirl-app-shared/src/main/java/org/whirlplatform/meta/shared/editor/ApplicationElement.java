@@ -378,7 +378,10 @@ public class ApplicationElement extends AbstractElement {
     }
 
     public boolean hasGroup(String group) {
-        return group.contains(group);
+        if (group == null || group.isEmpty()) {
+            return false;
+        }
+        return groups.stream().anyMatch(g -> group.equals(g.getGroupName()));
     }
 
     public void changeGroups(Collection<GroupElement> groups) {
