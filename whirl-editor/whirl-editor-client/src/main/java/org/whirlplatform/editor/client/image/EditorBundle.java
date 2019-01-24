@@ -218,8 +218,8 @@ public interface EditorBundle extends ClientBundleWithLookup {
     @Source("html-small.png")
     ImageResource htmlSmall();
 
-    @Source("gxthtmleditor-small.png")
-    ImageResource gxtHtmlEditorSmall();
+    @Source("simplehtmleditor-small.png")
+    ImageResource simpleHtmlEditorSmall();
 
     @Source("text-field.png")
     ImageResource textFieldSmall();

@@ -22,7 +22,7 @@ public enum ComponentType implements Serializable {
     FormBuilderType("FormBuilder", true),
     ButtonType("ButtonBuilder"),
     HtmlType("HTMLBuilder"),
-    GXTHtmlEditorType("GXTHtmlEditorBuilder"),
+    SimpleHtmlEditorType("SimpleHtmlEditorBuilder"),
     TextFieldType("TextFieldBuilder"),
     TextAreaType("TextAreaBuilder"),
     PasswordFieldType("PasswordFieldBuilder"),

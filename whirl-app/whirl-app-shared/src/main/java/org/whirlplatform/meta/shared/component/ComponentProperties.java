@@ -1,11 +1,6 @@
 package org.whirlplatform.meta.shared.component;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ComponentProperties {
 
@@ -106,7 +101,7 @@ public class ComponentProperties {
                     add(PropertyType.ReportDataFormat);
                 }
             });
-            put(ComponentType.GXTHtmlEditorType.getType(), new HashSet<PropertyType>() {
+            put(ComponentType.SimpleHtmlEditorType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.StringValue);
                     add(PropertyType.Required);

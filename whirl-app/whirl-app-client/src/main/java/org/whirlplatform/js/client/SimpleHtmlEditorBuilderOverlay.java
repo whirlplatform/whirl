@@ -5,16 +5,16 @@ import org.timepedia.exporter.client.ExportInstanceMethod;
 import org.timepedia.exporter.client.ExportOverlay;
 import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
-import org.whirlplatform.component.client.base.GXTHtmlEditorBuilder;
+import org.whirlplatform.component.client.base.SimpleHtmlEditorBuilder;
 
 
 @Export("HtmlEditor")
 @ExportPackage("Whirl")
-public abstract class GXTHtmlEditorBuilderOverlay implements
-        ExportOverlay<GXTHtmlEditorBuilder> {
+public abstract class SimpleHtmlEditorBuilderOverlay implements
+        ExportOverlay<SimpleHtmlEditorBuilder> {
 
     @ExportInstanceMethod
-    public static GXTHtmlEditorBuilder create(GXTHtmlEditorBuilder instance) {
+    public static SimpleHtmlEditorBuilder create(SimpleHtmlEditorBuilder instance) {
         instance.create();
         return instance;
     }
@@ -55,7 +55,7 @@ public abstract class GXTHtmlEditorBuilderOverlay implements
     public abstract void setStyleName(String styleName);
 
     @ExportInstanceMethod
-    public static boolean isEmpty(GXTHtmlEditorBuilder instance) {
+    public static boolean isEmpty(SimpleHtmlEditorBuilder instance) {
         return instance.getValue() == null;
     }
 
@@ -66,18 +66,18 @@ public abstract class GXTHtmlEditorBuilderOverlay implements
     public abstract String getValue();
 
 //    @ExportInstanceMethod
-//    public static DataValue getDataValue(GXTHtmlEditorBuilder instance) {
+//    public static DataValue getDataValue(SimpleHtmlEditorBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 
 //    @ExportInstanceMethod
-//    public static void setDataValue(GXTHtmlEditorBuilder instance,
+//    public static void setDataValue(SimpleHtmlEditorBuilder instance,
 //                                    DataValue value) {
 //        instance.setFieldValue(value);
 //    }
 
     @ExportInstanceMethod
-    public static ComponentBuilder getParent(GXTHtmlEditorBuilder instance) {
+    public static ComponentBuilder getParent(SimpleHtmlEditorBuilder instance) {
         return instance.getParentBuilder();
     }
 

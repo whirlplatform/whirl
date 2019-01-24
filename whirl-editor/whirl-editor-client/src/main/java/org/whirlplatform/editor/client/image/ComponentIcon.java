@@ -66,8 +66,8 @@ public class ComponentIcon {
                     ComponentBundle.INSTANCE.numberField());
             put(ComponentType.TextAreaType.getType(),
                     ComponentBundle.INSTANCE.textArea());
-            put(ComponentType.GXTHtmlEditorType.getType(),
-                    ComponentBundle.INSTANCE.gxtHtmlEditor());
+            put(ComponentType.SimpleHtmlEditorType.getType(),
+                    ComponentBundle.INSTANCE.simpleHtmlEditor());
             put(ComponentType.TabItemType.getType(),
                     ComponentBundle.INSTANCE.tabItem());
             put(ComponentType.TabPanelType.getType(),

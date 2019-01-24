@@ -254,8 +254,8 @@ public class AppTreeElementIconSetter implements TreeElementVisitor<AppTreeEleme
                 return icon.buttonSmall();
             case HtmlType:
                 return icon.htmlSmall();
-            case GXTHtmlEditorType:
-                return icon.gxtHtmlEditorSmall();
+            case SimpleHtmlEditorType:
+                return icon.simpleHtmlEditorSmall();
             case TextFieldType:
                 return icon.textFieldSmall();
             case TextAreaType:

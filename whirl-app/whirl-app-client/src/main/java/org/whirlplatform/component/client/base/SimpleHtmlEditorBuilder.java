@@ -16,22 +16,22 @@ import java.util.Map;
 /**
  *
  */
-public class GXTHtmlEditorBuilder extends AbstractFieldBuilder
+public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
 		implements NativeParameter<String>, Parameter<DataValue> {
 
 	protected HtmlEditor field;
 
-	public GXTHtmlEditorBuilder(Map<String, DataValue> builderProperties) {
+	public SimpleHtmlEditorBuilder(Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	public GXTHtmlEditorBuilder() {
+	public SimpleHtmlEditorBuilder() {
 		super();
 	}
 
 	@Override
 	public ComponentType getType() {
-		return ComponentType.GXTHtmlEditorType;
+		return ComponentType.SimpleHtmlEditorType;
 	}
 
 	@Override

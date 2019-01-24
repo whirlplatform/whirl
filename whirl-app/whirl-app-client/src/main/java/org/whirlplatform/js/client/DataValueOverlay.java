@@ -43,7 +43,7 @@ public abstract class DataValueOverlay implements ExportOverlay<DataValueImpl> {
     public static String getStringValue(DataValueImpl instance) throws JavaScriptException {
         /*
          * добавил тип TEXT, иначе ..getDataValue().getStringValue() не
-         * сработает, например, для компонента GXTHtmlEditorBuilder который
+         * сработает, например, для компонента SimpleHtmlEditorBuilder который
          * устанавливает stringValue, но тип TEXT
          */
         if (instance.getType() == DataType.STRING) {

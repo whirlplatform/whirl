@@ -86,8 +86,8 @@ public interface ComponentBundle extends ClientBundle {
     @Source("textarea.png")
     ImageResource textArea();
 
-    @Source("gxthtmleditor.png")
-    ImageResource gxtHtmlEditor();
+    @Source("simplehtmleditor.png")
+    ImageResource simpleHtmlEditor();
 
     @Source("tabitem.png")
     ImageResource tabItem();

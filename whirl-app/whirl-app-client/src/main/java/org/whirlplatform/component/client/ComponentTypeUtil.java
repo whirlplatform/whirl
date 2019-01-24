@@ -65,8 +65,8 @@ public class ComponentTypeUtil {
                 builder = new ButtonBuilder(builderProperties);
             } else if (ComponentType.HtmlType == type) {
                 builder = new HtmlBuilder(builderProperties);
-            } else if (ComponentType.GXTHtmlEditorType == type) {
-                builder = new GXTHtmlEditorBuilder(builderProperties);
+            } else if (ComponentType.SimpleHtmlEditorType == type) {
+                builder = new SimpleHtmlEditorBuilder(builderProperties);
             } else if (ComponentType.TextFieldType == type) {
                 builder = new TextFieldBuilder(builderProperties);
             } else if (ComponentType.TextAreaType == type) {
