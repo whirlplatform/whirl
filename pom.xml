@@ -13,8 +13,7 @@
         <module>whirl-theme</module>
         <module>whirl-selenium</module>
         <module>whirl-app</module>
-        <module>whirl-codemirror
-        </module>
+        <module>whirl-codemirror</module>
         <module>whirl-editor</module>
     </modules>
 
@@ -22,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <gwt.version>2.8.2</gwt.version>
-        <gwt.style>PRETTY</gwt.style>
+        <gwt.style>OBF</gwt.style>
         <gwt.failOnError>true</gwt.failOnError>
         <gwt.logLevel>INFO</gwt.logLevel>
         <gwt.inplace>false</gwt.inplace>

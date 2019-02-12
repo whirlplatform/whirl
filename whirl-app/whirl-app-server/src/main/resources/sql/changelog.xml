@@ -186,8 +186,534 @@
 				value="whirl-editor-access-group" />
 		</insert>
 
-		<rollback>
-			<dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
+        <!-- PostgreSQL -->
+        <sql dbms="postgresql">
+            CREATE TYPE function_result AS
+            (
+            title varchar(32767),
+            message varchar(32767),
+            message_type varchar(32767),
+            next_event varchar(32767),
+            parameter_value hstore,
+            parameter_list_title hstore,
+            parameter_type hstore,
+            parameter_component hstore,
+            parameter_index hstore
+            )
+        </sql>
+
+        <sql dbms="postgresql">
+            CREATE TYPE function_input AS
+            (
+            parameter_value hstore,
+            parameter_list_title hstore,
+            parameter_row_list hstore,
+            parameter_type hstore,
+            parameter_component hstore,
+            parameter_index hstore,
+            parameter_name hstore
+            )
+        </sql>
+
+        <sql dbms="postgresql">
+            CREATE TYPE row_value AS
+            (
+            fid varchar(32767),
+            selected boolean,
+            checked boolean,
+            expanded boolean
+            )
+        </sql>
+
+        <createProcedure dbms="postgresql" procedureName="internal_next_index">
+            CREATE OR REPLACE FUNCTION internal_next_index (
+            p_result function_result)
+            RETURNS integer
+            AS
+            $$
+            DECLARE
+            v_result integer;
+            BEGIN
+            SELECT count (*) INTO v_result FROM skeys (p_result.parameter_index);
+
+            RETURN v_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_varchar">
+            CREATE OR REPLACE FUNCTION add_parameter_varchar (
+            p_result function_result,
+            p_code varchar,
+            p_value varchar)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_value)) > 0
+            THEN
+            p_result.parameter_value :=
+            p_result.parameter_value::hstore || hstore (p_code, p_value);
+            ELSE
+            p_result.parameter_value := hstore (p_code, p_value);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_type)) > 0
+            THEN
+            p_result.parameter_type :=
+            p_result.parameter_type::hstore || hstore (p_code, 'STRING');
+            ELSE
+            p_result.parameter_type := hstore (p_code, 'STRING');
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_boolean">
+            CREATE OR REPLACE FUNCTION add_parameter_boolean (
+            p_result function_result,
+            p_code varchar,
+            p_value boolean)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            v_value varchar;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF p_value IS NOT NULL
+            THEN
+            v_value := p_value::varchar;
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_value)) > 0
+            THEN
+            p_result.parameter_value :=
+            p_result.parameter_value::hstore || hstore (p_code, v_value);
+            ELSE
+            p_result.parameter_value := hstore (p_code, v_value);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_type)) > 0
+            THEN
+            p_result.parameter_type :=
+            p_result.parameter_type::hstore || hstore (p_code, 'BOOLEAN');
+            ELSE
+            p_result.parameter_type := hstore (p_code, 'BOOLEAN');
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_number">
+            CREATE OR REPLACE FUNCTION add_parameter_number (
+            p_result function_result,
+            p_code varchar,
+            p_value numeric)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            v_value varchar;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF p_value IS NOT NULL
+            THEN
+            v_value := p_value::varchar;
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_value)) > 0
+            THEN
+            p_result.parameter_value :=
+            p_result.parameter_value::hstore || hstore (p_code, v_value);
+            ELSE
+            p_result.parameter_value := hstore (p_code, v_value);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_type)) > 0
+            THEN
+            p_result.parameter_type :=
+            p_result.parameter_type::hstore || hstore (p_code, 'NUMBER');
+            ELSE
+            p_result.parameter_type := hstore (p_code, 'NUMBER');
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_date">
+            CREATE OR REPLACE FUNCTION add_parameter_date (
+            p_result function_result,
+            p_code varchar,
+            p_value timestamp)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            v_value varchar;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF p_value IS NOT NULL
+            THEN
+            v_value := to_char (p_value, 'DD.MM.YYYY HH24:MI:SS');
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_value)) > 0
+            THEN
+            p_result.parameter_value :=
+            p_result.parameter_value::hstore || hstore (p_code, v_value);
+            ELSE
+            p_result.parameter_value := hstore (p_code, v_value);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_type)) > 0
+            THEN
+            p_result.parameter_type :=
+            p_result.parameter_type::hstore || hstore (p_code, 'DATE');
+            ELSE
+            p_result.parameter_type := hstore (p_code, 'DATE');
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_list">
+            CREATE OR REPLACE FUNCTION add_parameter_list (
+            p_result function_result,
+            p_code varchar,
+            p_list_title varchar,
+            p_list_value varchar)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_list_title)) > 0
+            THEN
+            p_result.parameter_list_title :=
+            p_result.parameter_list_title::hstore
+            || hstore (p_code, p_list_title);
+            ELSE
+            p_result.parameter_list_title := hstore (p_code, p_list_title);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_value)) > 0
+            THEN
+            p_result.parameter_value :=
+            p_result.parameter_value::hstore || hstore (p_code, p_list_value);
+            ELSE
+            p_result.parameter_value := hstore (p_code, p_list_value);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_type)) > 0
+            THEN
+            p_result.parameter_type :=
+            p_result.parameter_type::hstore || hstore (p_code, 'LIST');
+            ELSE
+            p_result.parameter_type := hstore (p_code, 'LIST');
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="add_parameter_component">
+            CREATE OR REPLACE FUNCTION add_parameter_component (
+            p_result function_result,
+            p_code varchar,
+            p_component_code varchar)
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            BEGIN
+            v_index := internal_next_index (p_result);
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_index)) > 0
+            THEN
+            p_result.parameter_index :=
+            p_result.parameter_index::hstore
+            || hstore (v_index::varchar, p_code);
+            ELSE
+            p_result.parameter_index := hstore (v_index::varchar, p_code);
+            END IF;
+
+            IF (SELECT count (*)
+            FROM skeys (p_result.parameter_component)) > 0
+            THEN
+            p_result.parameter_component :=
+            p_result.parameter_component::hstore
+            || hstore (p_code, p_component_code);
+            ELSE
+            p_result.parameter_component := hstore (p_code, p_component_code);
+            END IF;
+
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="set_message">
+            CREATE OR REPLACE FUNCTION set_message (
+            p_result function_result,
+            p_title varchar,
+            p_message varchar,
+            p_message_type varchar DEFAULT 'INFO')
+            RETURNS function_result
+            AS
+            $$
+            DECLARE
+            v_index integer;
+            BEGIN
+            p_result.title := p_title;
+            p_result.message := p_message;
+            p_result.message_type := p_message_type;
+            RETURN p_result;
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+        <createProcedure dbms="postgresql" procedureName="return">
+            CREATE OR REPLACE FUNCTION return (p_result function_result)
+            RETURNS varchar
+            AS
+            $$
+            DECLARE
+            v_result hstore;
+
+            v_parameter_array hstore [];
+            v_parameter hstore;
+
+            v_parameter_rec record;
+            v_parameter_index integer;
+            v_parameter_code varchar (4000);
+            v_parameter_type varchar (4000);
+            BEGIN
+            v_result := ''::hstore;
+
+            IF p_result.message IS NOT NULL
+            THEN
+            v_result := v_result || hstore ('message', p_result.message);
+            v_result := v_result || hstore ('title', p_result.title);
+            v_result := v_result || hstore ('messageType', p_result.message_type);
+            END IF;
+
+            IF p_result.next_event IS NOT NULL
+            THEN
+            v_result := v_result || hstore ('nextEvent', p_result.next_event);
+            END IF;
+
+            v_parameter_array := '{}';
+            v_parameter_index := 0;
+
+            FOR v_parameter_rec IN (SELECT *
+            FROM each (p_result.parameter_index))
+            LOOP
+            v_parameter_index := v_parameter_index + 1;
+
+            v_parameter := ''::hstore;
+
+            v_parameter :=
+            v_parameter || hstore ('index', v_parameter_index::varchar);
+
+            v_parameter_code := p_result.parameter_index -> v_parameter_rec.key;
+            v_parameter := v_parameter || hstore ('code', v_parameter_code);
+
+            IF exist (p_result.parameter_component, v_parameter_code)
+            THEN
+            v_parameter := v_parameter || hstore('component', p_result.parameter_component -> v_parameter_code);
+            ELSE
+            v_parameter_type := p_result.parameter_type -> v_parameter_code;
+            v_parameter := v_parameter || hstore ('type', v_parameter_type);
+
+            IF v_parameter_type = 'LIST'
+            THEN
+            v_parameter := v_parameter || hstore('title', p_result.parameter_list_title -> v_parameter_code);
+            END IF;
+
+            v_parameter := v_parameter || hstore('value', p_result.parameter_value -> v_parameter_code);
+            END IF;
+
+            v_parameter_array[v_parameter_index] := v_parameter;
+            END LOOP;
+
+            RETURN rtrim (to_json (v_result)::varchar, '}')
+            || ', "parameters": '
+            || to_json (v_parameter_array)
+            || '}';
+            END;
+            $$
+            LANGUAGE plpgsql
+        </createProcedure>
+
+
+        <!-- Oracle -->
+
+
+        <rollback>
+
+            <!-- PostgreSQL -->
+            <sql dbms="postgresql">
+                DROP TYPE function_result
+            </sql>
+            <sql dbms="postgresql">
+                DROP TYPE function_input
+            </sql>
+            <sql dbms="postgresql">
+                DROP TYPE function_input
+            </sql>
+            <sql dbms="postgresql">
+                DROP TYPE row_value
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION internal_next_index (
+                p_result function_result)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_varchar (
+                p_result function_result,
+                p_code varchar,
+                p_value varchar)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_boolean (
+                p_result function_result,
+                p_code varchar,
+                p_value boolean)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_number (
+                p_result function_result,
+                p_code varchar,
+                p_value numeric)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_date (
+                p_result function_result,
+                p_code varchar,
+                p_value timestamp)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_list (
+                p_result function_result,
+                p_code varchar,
+                p_list_title varchar,
+                p_list_value varchar)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION add_parameter_component (
+                p_result function_result,
+                p_code varchar,
+                p_component_code varchar)
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION set_message (
+                p_result function_result,
+                p_title varchar,
+                p_message varchar,
+                p_message_type varchar DEFAULT 'INFO')
+            </sql>
+            <sql dbms="postgresql">
+                DROP FUNCTION return (
+                p_result function_result)
+            </sql>
+
+            <!-- Oracle -->
+
+            <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
 			<dropIndex tableName="WHIRL_USER_GROUPS" indexName="IDX_WHIRL_USER_GROUPS_RWU"/>
 			<dropTable tableName="WHIRL_USER_GROUPS"/>
 

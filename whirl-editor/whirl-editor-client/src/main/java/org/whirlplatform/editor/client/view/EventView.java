@@ -32,6 +32,7 @@ import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class EventView extends ContentPanel implements IEventView {
 
@@ -92,7 +93,8 @@ public class EventView extends ContentPanel implements IEventView {
                         return item.name();
                     }
                 });
-        store.addAll(Arrays.asList(EventType.values()));
+        store.addAll(Arrays.stream(EventType.values())
+                .filter(eventType -> !EventType.Java.equals(eventType)).collect(Collectors.toList()));
 
         ComboBox<EventType> result = new ComboBox<EventType>(store,
                 new LabelProvider<EventType>() {
@@ -293,7 +295,7 @@ public class EventView extends ContentPanel implements IEventView {
                 source.setVisible(true);
                 source.setValue("-- database function");
                 source.showEditor(Config.forSql());
-                sourceLabel.setVisible(true);
+                sourceLabel.setVisible(false);
                 break;
             case Java:
                 source.setVisible(true);
