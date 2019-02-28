@@ -8,8 +8,9 @@ AS
 $$
 DECLARE
     v_index integer;
-    v_index := internal_next_index (p_result);
 BEGIN
+    v_index := internal_next_index (p_result);
+
     IF (SELECT count (*)
           FROM skeys (p_result.parameter_index)) > 0
     THEN
