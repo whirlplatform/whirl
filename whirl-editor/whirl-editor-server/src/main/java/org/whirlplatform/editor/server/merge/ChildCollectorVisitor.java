@@ -173,5 +173,4 @@ public class ChildCollectorVisitor extends GraphVisitor<ChildCollectorVisitor.Ch
         super.visit(ctx, element);
     }
 
-
 }

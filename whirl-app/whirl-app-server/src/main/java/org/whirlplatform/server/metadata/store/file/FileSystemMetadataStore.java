@@ -6,7 +6,9 @@ import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.Version.VersionFormatException;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.DatabaseEvolution;
 import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 import org.whirlplatform.meta.shared.version.VersionUtil;
 import org.whirlplatform.server.config.Configuration;
 import org.whirlplatform.server.log.Logger;
@@ -31,6 +33,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
     protected static final String TAG_PATH = "tag";
     protected static final String BRANCH_PATH = "branch";
     protected static final String APPLICATION_FILE = "application.wrl";
+    protected static final String EVOLUTION_PATH = "evolutions";
+    protected static final String EVOLUTION_ROOT = "root.xml";
 
     protected FileSystem fileSystem;
     private String workPath;
@@ -59,22 +63,25 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         }
     }
 
-    @Override
-    public ApplicationElement loadApplication(String code, Version version, boolean ignoreReferences)
-            throws MetadataStoreException {
-        final String stringVersion = (version != null) ? version.toString() : "null";
-        try {
-            _log.info(String.format("Loading the application %s[%s]", code, stringVersion));
-            Path applicationPath = resolveApplicationPath(code, version);
-            // загружаем xml
-            ApplicationElement application = loadApplicationFromPath(applicationPath, ignoreReferences);
-            // загружаем файлы
-            ApplicationFilesUtil.loadApplicationFiles(applicationPath, application);
-            return application;
-        } catch (IOException e) {
-            final String message = String.format("Error loading the application %s[%s]", code, stringVersion);
-            _log.error(message, e);
-            throw new MetadataStoreException(message, e);
+    public static void loadDatabaseEvolutions(final Path applicationPath, final ApplicationElement application) {
+        for (DataSourceElement dataSource : application.getDataSources()) {
+            Path path = applicationPath.resolve(EVOLUTION_PATH).resolve(dataSource.getAlias());
+            Path root = path.resolve(EVOLUTION_ROOT);
+            if (Files.notExists(path) || !Files.isDirectory(path) || Files.notExists(root)) {
+                continue;
+            }
+            dataSource.setEvolution(new DatabaseEvolution(new FileElement.InputStreamProvider() {
+
+                @Override
+                public Object get() throws IOException {
+                    return Files.newInputStream(root);
+                }
+
+                @Override
+                public String path() {
+                    return root.toAbsolutePath().toString();
+                }
+            }));
         }
     }
 
@@ -154,17 +161,24 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
     }
 
     @Override
-    public Version getLastVersion(final String appCode) {
-        Path applicationPath;
+    public ApplicationElement loadApplication(String code, Version version, boolean ignoreReferences)
+            throws MetadataStoreException {
+        final String stringVersion = (version != null) ? version.toString() : "null";
         try {
-            applicationPath = resolveApplicationPath(appCode, null);
-            if (!Files.exists(applicationPath) || !Files.isDirectory(applicationPath)) {
-                return null;
-            }
-            Version result = Version.parseVersion(applicationPath.getFileName().toString());
-            return result;
-        } catch (IOException | MetadataStoreException e) {
-            return null;
+            _log.info(String.format("Loading the application %s[%s]", code, stringVersion));
+            Path applicationPath = resolveApplicationPath(code, version);
+            // загружаем xml
+            ApplicationElement application = loadApplicationFromPath(applicationPath, ignoreReferences);
+            // загружаем файлы
+            ApplicationFilesUtil.loadApplicationFiles(applicationPath, application);
+
+            loadDatabaseEvolutions(applicationPath, application);
+
+            return application;
+        } catch (IOException e) {
+            final String message = String.format("Error loading the application %s[%s]", code, stringVersion);
+            _log.error(message, e);
+            throw new MetadataStoreException(message, e);
         }
     }
 
@@ -403,4 +417,20 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         data.setModified(timestamp);
         return data;
     }
+
+    @Override
+    public Version getLastVersion(final String appCode) {
+        Path applicationPath;
+        try {
+            applicationPath = resolveApplicationPath(appCode, null);
+            if (applicationPath == null || Files.notExists(applicationPath) || !Files.isDirectory(applicationPath)) {
+                return null;
+            }
+            Version result = Version.parseVersion(applicationPath.getFileName().toString());
+            return result;
+        } catch (IOException | MetadataStoreException e) {
+            return null;
+        }
+    }
+
 }

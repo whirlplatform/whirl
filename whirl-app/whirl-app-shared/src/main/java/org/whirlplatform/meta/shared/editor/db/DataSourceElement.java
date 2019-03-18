@@ -2,6 +2,7 @@ package org.whirlplatform.meta.shared.editor.db;
 
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.DatabaseEvolution;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 import java.util.Collection;
@@ -18,6 +19,8 @@ public class DataSourceElement extends AbstractElement {
 	private String databaseName;
 
 	private Set<SchemaElement> schemas = new HashSet<SchemaElement>();
+
+	private transient DatabaseEvolution evolution;
 
 	protected DataSourceElement() {
 	}
@@ -86,6 +89,14 @@ public class DataSourceElement extends AbstractElement {
 			}
 		}
 		return null;
+	}
+
+	public DatabaseEvolution getEvolution() {
+		return evolution;
+	}
+
+	public void setEvolution(DatabaseEvolution evolution) {
+		this.evolution = evolution;
 	}
 
 	@Override

@@ -1,21 +1,16 @@
 package org.whirlplatform.server.metadata;
 
-import liquibase.Contexts;
-import liquibase.LabelExpression;
-import liquibase.Liquibase;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.LiquibaseException;
-import liquibase.resource.ClassLoaderResourceAccessor;
 import org.apache.empire.db.DBCmpType;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.rpc.shared.CustomException;
+import org.whirlplatform.server.config.Configuration;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.db.MetadataDatabase;
+import org.whirlplatform.server.evolution.EvolutionException;
+import org.whirlplatform.server.evolution.EvolutionManager;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
@@ -29,22 +24,29 @@ public class MetadataProviderImpl implements MetadataProvider {
 
     private static Logger _log = LoggerFactory.getLogger(MetadataProviderImpl.class);
 
-    private MetadataConfig config;
+    private MetadataConfig metadataConfig;
 
     private MetadataDatabase database;
 
     private ConnectionProvider connectionProvider;
 
+    private Configuration configuration;
+
+    private EvolutionManager evolutionManager;
+
     @Inject
-    public MetadataProviderImpl(MetadataConfig config, ConnectionProvider connectionProvider) {
-        this.config = config;
+    public MetadataProviderImpl(MetadataConfig metadataConfig, ConnectionProvider connectionProvider,
+                                Configuration configuration, EvolutionManager evolutionManager) {
+        this.metadataConfig = metadataConfig;
         this.connectionProvider = connectionProvider;
+        this.configuration = configuration;
+        this.evolutionManager = evolutionManager;
         database = MetadataDatabase.get();
     }
 
     protected ConnectionWrapper metadataConnection(ApplicationUser user) {
         try {
-            return connectionProvider.getConnection(config.getMetadataAlias(), user);
+            return connectionProvider.getConnection(metadataConfig.getMetadataAlias(), user);
         } catch (ConnectException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -116,7 +118,7 @@ public class MetadataProviderImpl implements MetadataProvider {
 
     // @Override
     // public void createDatabaseStructure() {
-    // String locationBase = "sql/";
+    // String locationBase = "org.whirlplatform.sql/";
     // List<String> locations = new ArrayList<>();
     // locations.add(locationBase + "common");
     // try(ConnectionWrapper conn = metadataConnection()) {
@@ -132,7 +134,7 @@ public class MetadataProviderImpl implements MetadataProvider {
     //
     // try {
     // Flyway flyway = new Flyway();
-    // flyway.setDataSource(connectionProvider.getDataSource(config.getMetadataAlias()));
+    // flyway.setDataSource(connectionProvider.getDataSource(metadataConfig.getMetadataAlias()));
     // flyway.setLocations(locations.toArray(new String[0]));
     // flyway.migrate();
     // } catch (ConnectException e) {
@@ -157,18 +159,13 @@ public class MetadataProviderImpl implements MetadataProvider {
 
     @Override
     public void createDatabaseStructure() {
-        try (ConnectionWrapper connection = metadataConnection()) {
-            Database database = DatabaseFactory.getInstance()
-                    .findCorrectDatabaseImplementation(new JdbcConnection(connection));
-
-            Liquibase liquibase = new liquibase.Liquibase("sql/changelog.xml", new ClassLoaderResourceAccessor(),
-                    database);
-
-            liquibase.update(new Contexts(), new LabelExpression());
-        } catch (LiquibaseException | SQLException e) {
+        try {
+            evolutionManager.applyMetadataEvolution(metadataConfig.getMetadataAlias(), "org/whirlplatform/sql/changelog.xml");
+        } catch (EvolutionException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
         }
-
     }
+
+
 }

@@ -107,8 +107,8 @@
 
         <!-- Databases VCS -->
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>io.github.gitbucket</groupId>
+            <artifactId>solidbase</artifactId>
         </dependency>
 
         <!-- SVN -->

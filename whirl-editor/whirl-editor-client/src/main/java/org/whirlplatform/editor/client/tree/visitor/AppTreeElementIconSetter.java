@@ -225,6 +225,7 @@ public class AppTreeElementIconSetter implements TreeElementVisitor<AppTreeEleme
         ctx.setIcon(icon.folder());
     }
 
+
     private ImageResource getComponentElementIcon(final ComponentElement model) {
         ComponentType modelType = model.getType();
         switch (modelType) {

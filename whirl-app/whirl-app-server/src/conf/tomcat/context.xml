@@ -26,6 +26,12 @@
             value="${context.db.metadata.conectionWrapperClass}"
             type="java.lang.String"
             override="false"/>
+    <!-- Whirl apply evolutions -->
+    <Environment
+            name="Whirl/ds/metadata/evolutions/enabled"
+            value="true"
+            type="java.lang.Boolean"
+            override="false"/>
     <!-- End Metadata datasource configuration-->
 
 

@@ -6,6 +6,8 @@ import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.TomcatConnectionProvider;
 import org.whirlplatform.server.driver.Connector;
 import org.whirlplatform.server.driver.multibase.MultibaseConnector;
+import org.whirlplatform.server.evolution.EvolutionManager;
+import org.whirlplatform.server.evolution.LiquibaseEvolutionManager;
 import org.whirlplatform.server.login.AccountAuthenticator;
 import org.whirlplatform.server.login.impl.DBAccountAuthenticator;
 import org.whirlplatform.server.metadata.MetadataConfig;
@@ -43,6 +45,8 @@ public class CoreModule extends AbstractModule {
 		bind(MetadataContainer.class).to(DefaultMetadataContainer.class);
 
         bind(AccountAuthenticator.class).to(DBAccountAuthenticator.class); //TODO configuration.<String>lookup("Whirl/config/authenticator")
+
+        bind(EvolutionManager.class).to(LiquibaseEvolutionManager.class);
 
 		bind(Connector.class).to(MultibaseConnector.class);
 	}

@@ -19,10 +19,10 @@
 		dbms="postgresql" />
 
 	<changeSet
-            id="0.1"
-            author="otlichnosti@gmail.com"
-            failOnError="true"
-            dbms="oracle, postgresql">
+			id="whirl_0.1"
+			author="otlichnosti@gmail.com"
+			failOnError="true"
+			dbms="oracle, postgresql">
 
 		<createTable
 			tableName="WHIRL_USERS"
@@ -189,101 +189,101 @@
 
         <!-- PostgreSQL -->
         <sqlFile dbms="postgresql"
-                 path="postgresql/0.1/function_result.sql"
-                 relativeToChangelogFile="true"/>
+				 path="postgresql/function_result.sql"
+				 relativeToChangelogFile="true"/>
 
         <sqlFile dbms="postgresql"
-                 path="postgresql/0.1/function_input.sql"
-                 relativeToChangelogFile="true"/>
+				 path="postgresql/function_input.sql"
+				 relativeToChangelogFile="true"/>
 
         <sqlFile dbms="postgresql"
-                 path="postgresql/0.1/row_value.sql"
-                 relativeToChangelogFile="true"/>
+				 path="postgresql/row_value.sql"
+				 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="internal_next_index"
-                         path="postgresql/0.1/internal_next_index.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="internal_next_index"
+						 path="postgresql/internal_next_index.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_varchar"
-                         path="postgresql/0.1/add_parameter_varchar.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_varchar"
+						 path="postgresql/add_parameter_varchar.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_boolean"
-                         path="postgresql/0.1/add_parameter_boolean.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_boolean"
+						 path="postgresql/add_parameter_boolean.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_number"
-                         path="postgresql/0.1/add_parameter_number.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_number"
+						 path="postgresql/add_parameter_number.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_date"
-                         path="postgresql/0.1/add_parameter_date.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_date"
+						 path="postgresql/add_parameter_date.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_list"
-                         path="postgresql/0.1/add_parameter_list.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_list"
+						 path="postgresql/add_parameter_list.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_component"
-                         path="postgresql/0.1/add_parameter_component.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="add_parameter_component"
+						 path="postgresql/add_parameter_component.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="set_message"
-                         path="postgresql/0.1/set_message.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="set_message"
+						 path="postgresql/set_message.sql"
+						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-                         procedureName="return"
-                         path="postgresql/0.1/return.sql"
-                         relativeToChangelogFile="true"/>
+						 procedureName="return"
+						 path="postgresql/return.sql"
+						 relativeToChangelogFile="true"/>
         <!-- Oracle -->
         <rollback>
 
             <!-- PostgreSQL -->
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/function_result.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/function_result.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/function_input.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/function_input.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/row_value.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/row_value.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/internal_next_index.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/internal_next_index.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_varchar.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_varchar.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_boolean.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_boolean.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_number.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_number.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_date.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_date.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_list.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_list.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/add_parameter_component.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/add_parameter_component.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/set_message.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/set_message.sql"
+					 relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-                     path="postgresql/0.1/rollback/return.sql"
-                     relativeToChangelogFile="true"/>
+					 path="postgresql/rollback/return.sql"
+					 relativeToChangelogFile="true"/>
 
             <!-- Oracle -->
             <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
