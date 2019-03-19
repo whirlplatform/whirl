@@ -11,12 +11,12 @@ You can try Whirl Platform on the our demo server.
 
 #### Application
 
-Server: http://whirlplatform.cloudjiffy.net/
+Server: http://demo.whirlplatform.org/
 
 
 #### Editor
 
-Server: http://whirlplatform.cloudjiffy.net/editor/
+Server: http://demo.whirlplatform.org/editor/
 
 Username: whirl-admin
 
@@ -29,8 +29,6 @@ Since the Whirl Platform client side code mostly based on the Sencha GXT library
 
 [License text](LICENSE)
 
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl?ref=badge_large)
 
 ## Developing
 
