@@ -1,5 +1,4 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwhirlplatform%2Fwhirl?ref=badge_shield)
 
 # Whrl Platform
 
