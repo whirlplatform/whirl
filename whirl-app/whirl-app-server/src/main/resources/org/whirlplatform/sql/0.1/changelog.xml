@@ -19,7 +19,7 @@
 		dbms="postgresql" />
 
 	<changeSet
-			id="whirl_0.1"
+			id="whirl_1.0"
 			author="otlichnosti@gmail.com"
 			failOnError="true"
 			dbms="oracle, postgresql">
