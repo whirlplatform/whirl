@@ -21,7 +21,7 @@ public class ServerModule extends ServletModule {
     @Override
     protected void configureServlets() {
         // фильтр кеширования запросов
-        filter("/application") //no-cahe disabled for "/application/application.nocache.js"
+        filter("/application", "/application/application.nocache.js")
                 .through(CacheFilter.class);
         // фильтр для локалей
         filter("/*").through(I18NFilter.class);
