@@ -60,6 +60,10 @@
 				type="datetime"
 				remarks="Record creation time" />
 		</createTable>
+		<addAutoIncrement tableName="WHIRL_USERS"
+						  columnName="ID"
+						  columnDataType="number"
+						  startWith="1"/>
 		<createIndex
 			indexName="IDX_WHIRL_USERS_L"
 			tableName="WHIRL_USERS">
@@ -92,6 +96,10 @@
 				type="varchar(4000)"
 				remarks="Application code" />
 		</createTable>
+		<addAutoIncrement tableName="WHIRL_USER_APPS"
+						  columnName="ID"
+						  columnDataType="number"
+						  startWith="1"/>
 		<createIndex
 			indexName="IDX_WHIRL_USER_APPS_RWU"
 			tableName="WHIRL_USER_APPS">
@@ -129,6 +137,10 @@
 				type="varchar(4000)"
 				remarks="Group code" />
 		</createTable>
+		<addAutoIncrement tableName="WHIRL_USER_GROUPS"
+						  columnName="ID"
+						  columnDataType="number"
+						  startWith="1"/>
 		<createIndex
 			indexName="IDX_WHIRL_USER_GROUPS_RWU"
 			tableName="WHIRL_USER_GROUPS">

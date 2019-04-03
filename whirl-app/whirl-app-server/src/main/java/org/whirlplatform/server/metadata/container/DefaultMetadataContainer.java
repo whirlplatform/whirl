@@ -229,7 +229,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
                 synchronized (cache) {
                     result = getCache(code, version);
                     if (result == null) {
-                        initialLoadApplication(code, version);
+                        result = initialLoadApplication(code, version);
                         initApplicationReloadHandler(code, version);
                     }
                 }

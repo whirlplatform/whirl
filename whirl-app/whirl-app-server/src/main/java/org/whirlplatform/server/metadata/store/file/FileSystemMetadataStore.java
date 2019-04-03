@@ -167,6 +167,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         try {
             _log.info(String.format("Loading the application %s[%s]", code, stringVersion));
             Path applicationPath = resolveApplicationPath(code, version);
+
             // загружаем xml
             ApplicationElement application = loadApplicationFromPath(applicationPath, ignoreReferences);
             // загружаем файлы
@@ -188,6 +189,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         try {
             final String appCode = application.getCode();
             if (version == null) {
+                //TODO сделать нормальное сообщение о том что приложение не доступно
                 throw new MetadataStoreException(String.format("The version of '%s' should be provided", appCode));
             }
             final Path applicationPath = createApplicatonPath(appCode, version);
