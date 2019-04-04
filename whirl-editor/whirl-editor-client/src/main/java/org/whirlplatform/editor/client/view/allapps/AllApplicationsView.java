@@ -180,7 +180,7 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
         VerticalLayoutContainer container = new VerticalLayoutContainer();
         container.add(tree, new VerticalLayoutData(1, 1));
         setWidget(container);
-        addButton(packageButton);
+//        addButton(packageButton);
         addButton(loadButton);
         addButton(new FillToolItem());
         addButton(closeButton);
