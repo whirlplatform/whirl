@@ -25,6 +25,6 @@ build:
         -
           commands:
             - command: bash ~/build/scripts/whirl/deploy-bintray.sh
-              only_if: [[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]
+              only_if: '[[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
             - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
-              only_if: $JELASTIC_ENABLED && [[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]
+              only_if: '$JELASTIC_ENABLED && [[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
