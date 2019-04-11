@@ -6,7 +6,7 @@
     <parent>
         <artifactId>whirl</artifactId>
         <groupId>org.whirlplatform</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
 
     <artifactId>whirl-app</artifactId>
