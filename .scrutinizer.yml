@@ -7,7 +7,7 @@ build:
 
       dependencies:
         override:
-          - cd ~/build && git submodule update --init --recursive && cd ~
+          - git submodule update --init --recursive
           - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
           - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
