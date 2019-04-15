@@ -14,9 +14,7 @@ build:
       project_setup:
         override:
           - command: mvn -P postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
           - command: mvn -P postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-            idle_timeout: 700
 
       tests:
         override:
@@ -29,3 +27,4 @@ build:
               only_if: '[[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
             - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
               only_if: '$JELASTIC_ENABLED && [[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
+              idle_timeout: 700
