@@ -36,7 +36,7 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void initUi();
 
     @Event(handlers = {ApplicationTreePresenter.class, ToolBarPresenter.class, PalletePresenter.class,
-            ApplicationPresenter.class, DesignPresenter.class})
+            ApplicationPresenter.class, DesignPresenter.class, EventTemplatesPresenter.class})
     void buildApp();
 
     @Event(handlers = LoginPresenter.class)

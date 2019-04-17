@@ -7,10 +7,12 @@ import org.apache.empire.exceptions.InvalidArgumentException;
 import org.whirlplatform.editor.server.db.retrive.DBDatabaseRetriver;
 import org.whirlplatform.editor.server.db.retrive.DBRetriverConfig;
 import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
+import org.whirlplatform.editor.server.templates.TemplateStore;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.merge.*;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.editor.shared.util.EditorHelper;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
@@ -47,14 +49,16 @@ public class MultibaseEditorConnector implements EditorConnector {
     private EditorDatabaseConnector editorDbConnector;
     private Differ differ;
     private Merger merger;
+    private TemplateStore templateStore;
 
     @Inject
     public MultibaseEditorConnector(EditorDatabaseConnector editorDbConnector, MetadataStore metadataStore,
-                                    Differ differ, Merger merger) {
+                                    Differ differ, Merger merger, TemplateStore templateStore) {
         this.editorDbConnector = editorDbConnector;
         this.metadataStore = metadataStore;
         this.differ = differ;
         this.merger = merger;
+        this.templateStore = templateStore;
     }
 
     @Override
@@ -461,4 +465,23 @@ public class MultibaseEditorConnector implements EditorConnector {
         return EditorI18NMessage.getMessage(EditorI18NMessage.getRequestLocale());
     }
 
+    @Override
+    public String saveTemplate(BaseTemplate template) throws RPCException {
+        return templateStore.saveTemplate(template);
+    }
+
+    @Override
+    public List<BaseTemplate> loadEventTemplates() throws RPCException {
+        return templateStore.loadEventTemplates();
+    }
+
+    @Override
+    public List<BaseTemplate> loadComponentTemplates() throws RPCException {
+        return templateStore.loadComponentTemplates();
+    }
+
+    @Override
+    public void deleteTemplate(BaseTemplate template) throws RPCException {
+        templateStore.deleteTemplate(template);
+    }
 }

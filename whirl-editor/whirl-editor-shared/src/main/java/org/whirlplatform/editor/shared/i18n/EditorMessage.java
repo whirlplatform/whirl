@@ -769,6 +769,12 @@ public interface EditorMessage extends Messages {
 
     String chart_series_datasources();
 
+    String design_panel_pallete();
+
+    String design_panel_components();
+
+    String design_panel_events();
+
     // <<< диаграммы
 
     String templ_save();

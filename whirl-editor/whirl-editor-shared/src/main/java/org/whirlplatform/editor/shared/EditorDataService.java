@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.ClientUser;
 import org.whirlplatform.meta.shared.Version;
@@ -16,6 +17,7 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
 import java.util.Collection;
+import java.util.List;
 
 @RemoteServiceRelativePath("data")
 public interface EditorDataService extends RemoteService {
@@ -63,5 +65,13 @@ public interface EditorDataService extends RemoteService {
     ApplicationsDiff diff(ApplicationElement left, ApplicationElement right) throws RPCException;
 
     ApplicationElement merge(ApplicationsDiff diff) throws RPCException;
+
+    String saveTemplate(BaseTemplate template) throws RPCException;
+
+    List<BaseTemplate> loadEventTemplates() throws RPCException;
+
+    List<BaseTemplate> loadComponentTemplates() throws RPCException;
+
+    void deleteTemplate(BaseTemplate template) throws RPCException;
 
 }

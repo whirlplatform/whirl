@@ -14,6 +14,7 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.Verti
 import com.sencha.gxt.widget.core.client.container.Viewport;
 import org.whirlplatform.editor.client.image.EditorBundle;
 import org.whirlplatform.editor.client.presenter.MainPresenter.IMainView;
+import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 public class MainView extends Viewport implements IMainView {
 
@@ -137,7 +138,7 @@ public class MainView extends Viewport implements IMainView {
 
     @Override
     public void addFirstRightComponent(IsWidget component) {
-        TabItemConfig config = new TabItemConfig("Палитра");
+        TabItemConfig config = new TabItemConfig(EditorMessage.Util.MESSAGE.design_panel_pallete());
         config.setIcon(EditorBundle.INSTANCE.palette());
         tabPanel.add(component, config);
         tabPanel.forceLayout();
@@ -147,7 +148,7 @@ public class MainView extends Viewport implements IMainView {
 
     @Override
     public void addSecondRightComponent(IsWidget component) {
-        TabItemConfig config = new TabItemConfig("Шаблоны");
+        TabItemConfig config = new TabItemConfig(EditorMessage.Util.MESSAGE.design_panel_components());
         config.setIcon(EditorBundle.INSTANCE.templates());
         tabPanel.add(component, config);
         tabPanel.forceLayout();
@@ -157,7 +158,7 @@ public class MainView extends Viewport implements IMainView {
 
     @Override
     public void addThirdRightComponent(IsWidget component) {
-        TabItemConfig config = new TabItemConfig("События");
+        TabItemConfig config = new TabItemConfig(EditorMessage.Util.MESSAGE.design_panel_events());
         config.setIcon(EditorBundle.INSTANCE.events());
         tabPanel.add(component, config);
         tabPanel.forceLayout();

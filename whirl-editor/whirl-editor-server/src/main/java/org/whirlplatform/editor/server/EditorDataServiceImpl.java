@@ -4,16 +4,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.fileupload.FileItem;
-import org.whirlplatform.editor.client.meta.NewComponentElement;
-import org.whirlplatform.editor.client.meta.NewContextMenuItemElement;
-import org.whirlplatform.editor.client.meta.NewDataSourceElement;
-import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
-import org.whirlplatform.editor.client.meta.NewEventElement;
-import org.whirlplatform.editor.client.meta.NewEventParameterElement;
-import org.whirlplatform.editor.client.meta.NewGroupElement;
-import org.whirlplatform.editor.client.meta.NewSchemaElement;
-import org.whirlplatform.editor.client.meta.NewTableColumnElement;
-import org.whirlplatform.editor.client.meta.NewTableElement;
+import org.whirlplatform.editor.client.meta.*;
 import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
 import org.whirlplatform.editor.server.packager.Packager;
 import org.whirlplatform.editor.shared.EditorDataService;
@@ -23,6 +14,7 @@ import org.whirlplatform.editor.shared.SaveResult;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.editor.shared.util.EditorHelper;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.ClientUser;
@@ -33,25 +25,9 @@ import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-import org.whirlplatform.meta.shared.editor.ApplicationElement;
-import org.whirlplatform.meta.shared.editor.ComponentElement;
-import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
-import org.whirlplatform.meta.shared.editor.EventElement;
-import org.whirlplatform.meta.shared.editor.EventParameterElement;
-import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.*;
 import org.whirlplatform.meta.shared.editor.FileElement.InputStreamProvider;
-import org.whirlplatform.meta.shared.editor.GroupElement;
-import org.whirlplatform.meta.shared.editor.LocaleElement;
-import org.whirlplatform.meta.shared.editor.PropertyValue;
-import org.whirlplatform.meta.shared.editor.ReportElement;
-import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
-import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
-import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
-import org.whirlplatform.meta.shared.editor.db.SchemaElement;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
-import org.whirlplatform.meta.shared.editor.db.ViewElement;
+import org.whirlplatform.meta.shared.editor.db.*;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.AccountAuthenticator;
@@ -63,6 +39,7 @@ import org.whirlplatform.server.servlet.ExportServlet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
@@ -553,6 +530,26 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
 
     private EditorMessage getMessage() {
         return EditorI18NMessage.getMessage(EditorI18NMessage.getRequestLocale());
+    }
+
+    @Override
+    public String saveTemplate(BaseTemplate template) throws RPCException {
+        return connector().saveTemplate(template);
+    }
+
+    @Override
+    public List<BaseTemplate> loadEventTemplates() throws RPCException {
+        return connector().loadEventTemplates();
+    }
+
+    @Override
+    public List<BaseTemplate> loadComponentTemplates() throws RPCException {
+        return connector().loadComponentTemplates();
+    }
+
+    @Override
+    public void deleteTemplate(BaseTemplate template) throws RPCException {
+        connector().deleteTemplate(template);
     }
 
 }

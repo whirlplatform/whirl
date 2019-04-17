@@ -11,24 +11,24 @@ public class BaseTemplate implements Serializable {
 
     private Type type;
     private AbstractElement element;
+    private boolean removable;
 
     @SuppressWarnings("unused")
     private BaseTemplate() {
     }
 
-    public BaseTemplate(AbstractElement element) {
+    public BaseTemplate(AbstractElement element, boolean removable) {
         this.element = element;
         if (element instanceof EventElement) {
             this.type = Type.EVENT_TEMPLATE;
         } else {
             this.type = Type.COMPONENT_TEMPLATE;
         }
-
+        this.removable = removable;
     }
 
-    public enum Type {
-        COMPONENT_TEMPLATE,
-        EVENT_TEMPLATE
+    public boolean isRemovable() {
+        return removable;
     }
 
     public AbstractElement getElement() {
@@ -48,5 +48,20 @@ public class BaseTemplate implements Serializable {
      */
     public Type getType() {
         return type;
+    }
+
+    public enum Type {
+        COMPONENT_TEMPLATE("component"),
+        EVENT_TEMPLATE("event");
+
+        String path;
+
+        Type(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
     }
 }

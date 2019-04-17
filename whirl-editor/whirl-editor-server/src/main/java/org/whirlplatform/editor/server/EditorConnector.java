@@ -3,6 +3,7 @@ package org.whirlplatform.editor.server;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.data.RowModelData;
@@ -13,6 +14,7 @@ import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 import org.whirlplatform.server.login.ApplicationUser;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface EditorConnector {
 
@@ -43,4 +45,11 @@ public interface EditorConnector {
 
     String getNextId();
 
+    String saveTemplate(BaseTemplate template) throws RPCException;
+
+    List<BaseTemplate> loadEventTemplates() throws RPCException;
+
+    List<BaseTemplate> loadComponentTemplates() throws RPCException;
+
+    void deleteTemplate(BaseTemplate template) throws RPCException;
 }

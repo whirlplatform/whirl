@@ -3,6 +3,7 @@ package org.whirlplatform.editor.shared;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.ClientUser;
 import org.whirlplatform.meta.shared.Version;
@@ -14,6 +15,7 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface EditorDataServiceAsync {
 
@@ -50,5 +52,13 @@ public interface EditorDataServiceAsync {
     void diff(ApplicationElement left, ApplicationElement right, AsyncCallback<ApplicationsDiff> callback);
 
     void merge(ApplicationsDiff diff, AsyncCallback<ApplicationElement> callback);
+
+    void saveTemplate(BaseTemplate template, AsyncCallback<String> callback);
+
+    void loadEventTemplates(AsyncCallback<List<BaseTemplate>> callback);
+
+    void loadComponentTemplates(AsyncCallback<List<BaseTemplate>> callback);
+
+    void deleteTemplate(BaseTemplate template, AsyncCallback<Void> callback);
 
 }

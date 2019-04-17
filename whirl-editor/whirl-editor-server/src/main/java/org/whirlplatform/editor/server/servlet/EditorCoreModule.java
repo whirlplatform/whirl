@@ -10,6 +10,8 @@ import org.whirlplatform.editor.server.merge.ReflectionJaversDiffer;
 import org.whirlplatform.editor.server.merge.ReflectionMerger;
 import org.whirlplatform.editor.server.packager.Packager;
 import org.whirlplatform.editor.server.packager.ZipPackager;
+import org.whirlplatform.editor.server.templates.MixedTemplateStore;
+import org.whirlplatform.editor.server.templates.TemplateStore;
 import org.whirlplatform.editor.shared.merge.Differ;
 import org.whirlplatform.editor.shared.merge.Merger;
 import org.whirlplatform.server.config.Configuration;
@@ -50,6 +52,7 @@ public class EditorCoreModule extends AbstractModule {
 
         bind(Differ.class).to(ReflectionJaversDiffer.class);
         bind(Merger.class).to(ReflectionMerger.class);
+        bind(TemplateStore.class).to(MixedTemplateStore.class);
 
         bind(EditorDatabaseConnector.class).to(EditorDatabaseConnectorImpl.class);
         bind(EditorConnector.class).to(MultibaseEditorConnector.class);
