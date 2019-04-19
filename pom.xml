@@ -15,15 +15,8 @@
         <module>whirl-app</module>
         <module>whirl-codemirror</module>
         <module>whirl-editor</module>
+        <module>whirl-jsdoc</module>
     </modules>
-
-    <distributionManagement>
-        <repository>
-            <id>bintray-whirlplatform-maven</id>
-            <name>whirlplatform-maven</name>
-            <url>https://api.bintray.com/maven/whirlplatform/maven/[PACKAGE_NAME]/;publish=1</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,6 +44,14 @@
             <id>sencha-central</id>
             <name>Sencha GPL Releases</name>
             <url>https://maven.sencha.com/repo/gpl-release</url>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jboss-central</id>
+            <name>JBoss public</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
         </repository>
     </repositories>
 

@@ -6,6 +6,8 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -16,8 +18,9 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Map;
 
 /**
- * Кнопка
+ * Button.
  */
+@JsType(namespace = "Whirl", name = "Button")
 public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers {
 
 	private TextButton button;
@@ -35,6 +38,7 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 * 
 	 * @return ComponentType
 	 */
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.ButtonType;
@@ -76,6 +80,7 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *            - String, значение атрибута
 	 * @return boolean
 	 */
+	@JsIgnore
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
 			if (value != null) {
@@ -103,30 +108,31 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *            - ClickHandler
 	 * @return HandlerRegistration
 	 */
+	@JsIgnore
 	@Override
-    public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
+	public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
 		return ensureHandler().addHandler(ClickEvent.getType(), handler);
 	}
 
 	/**
-	 * Установить надпись на кнопку
-	 * 
-	 * @param html
-	 *            - String, надпись
-	 */
-	public void setHTML(String html) {
-		button.setHTML(html == null ? "" : html);
-	}
-
-	/**
-	 * Получить надпись кнопки
-	 * 
-	 * @return String
+	 * Returns html button title.
+	 *
+	 * @return title
 	 */
 	public String getHTML() {
 		return button.getHTML();
 	}
 
+	/**
+	 * Sets html button title.
+	 *
+	 * @param html title
+	 */
+	public void setHTML(String html) {
+		button.setHTML(html == null ? "" : html);
+	}
+
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		if (locator.getType().equals(getType().getType()) && fitsLocator(locator)) {
