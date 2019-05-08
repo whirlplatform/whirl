@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.ImageBuilder;
 
 /**
  * Простая картинка
  */
-@Export("Image")
-@ExportPackage("Whirl")
-public abstract class ImageBuilderOverlay implements
-        ExportOverlay<ImageBuilder> {
+public abstract class ImageBuilderOverlay {
 
     /**
      * Инициализация картинки
@@ -21,7 +14,6 @@ public abstract class ImageBuilderOverlay implements
      * @param instance - ImageBuilder, картинка
      * @return ImageBuilder, картинка
      */
-    @ExportInstanceMethod
     public static ImageBuilder create(ImageBuilder instance) {
         instance.create();
         return instance;
@@ -32,7 +24,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -40,7 +31,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -48,7 +38,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -56,7 +45,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -64,7 +52,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -72,7 +59,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -80,7 +66,6 @@ public abstract class ImageBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -89,7 +74,6 @@ public abstract class ImageBuilderOverlay implements
      * @param instance - ImageBuilder, картинка
      * @return ComponentBuilder, компонент
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(ImageBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -97,11 +81,9 @@ public abstract class ImageBuilderOverlay implements
     /**
      * Установить фокус на картинку
      */
-    @Export
     public abstract void focus();
 
-//    @ExportInstanceMethod
-//    public static HandlerRegistrationWrapper addClickHandler(
+////    public static HandlerRegistrationWrapper addClickHandler(
 //            final ImageBuilder instance, final Events.EventClosure callback) {
 //        return new HandlerRegistrationWrapper(
 //                instance.addClickHandler(new ClickEvent.ClickHandler() {

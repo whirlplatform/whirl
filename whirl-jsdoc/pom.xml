@@ -37,11 +37,6 @@
             <artifactId>gxt</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.timepedia.exporter</groupId>
-            <artifactId>gwtexporter</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.seanchenxi.gwt</groupId>
             <artifactId>gwt-storage</artifactId>
             <version>1.4.0</version>
@@ -69,6 +64,35 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>io.wcm.maven.plugins</groupId>
+                <artifactId>nodejs-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-esdoc</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <tasks>
+                        <nodeJsTask>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <moduleName>npm</moduleName>
+                            <executableName>npm-cli</executableName>
+                            <arguments>
+                                <argument>install</argument>
+                                <argument>--save-dev</argument>
+                                <argument>esdoc</argument>
+                                <argument>esdoc-standard-plugin</argument>
+                            </arguments>
+                        </nodeJsTask>
+                    </tasks>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
@@ -81,7 +105,7 @@
                         <goals>
                             <goal>process</goal>
                         </goals>
-                        <phase>prepare-package</phase>
+                        <phase>process-classes</phase>
                         <configuration>
                             <sourceDirectory>../whirl-app/whirl-app-client/src/main/java</sourceDirectory>
                             <additionalSourceDirectories>
@@ -91,13 +115,27 @@
                             <processors>
                                 <processor>org.whirlplatform.jsdoc.EsDocProcessor</processor>
                             </processors>
+                            <outputDirectory>${project.build.directory}/generated-sources/jsdoc</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-jsdoc</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${project.basedir}/node_modules/.bin/esdoc</executable>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

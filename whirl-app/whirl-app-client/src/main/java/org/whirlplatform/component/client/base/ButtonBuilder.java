@@ -7,6 +7,7 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
@@ -20,7 +21,7 @@ import java.util.Map;
 /**
  * Button.
  */
-@JsType(namespace = "Whirl", name = "Button")
+@JsType(name = "Button")
 public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers {
 
 	private TextButton button;
@@ -119,7 +120,8 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *
 	 * @return title
 	 */
-	public String getHTML() {
+    @JsProperty(name = "html")
+    public String getHTML() {
 		return button.getHTML();
 	}
 
@@ -128,7 +130,8 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *
 	 * @param html title
 	 */
-	public void setHTML(String html) {
+    @JsProperty(name = "html")
+    public void setHTML(String html) {
 		button.setHTML(html == null ? "" : html);
 	}
 

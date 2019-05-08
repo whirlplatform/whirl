@@ -1,9 +1,5 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.check.RadioBuilder;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -11,10 +7,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 /**
  * Радиокнопка
  */
-@Export("Radio")
-@ExportPackage("Whirl")
-public abstract class RadioBuilderOverlay implements
-        ExportOverlay<RadioBuilder> {
+public abstract class RadioBuilderOverlay {
 
     /**
      * Инициализация радиокнопки
@@ -22,7 +15,6 @@ public abstract class RadioBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return RadioBuilder
      */
-    @ExportInstanceMethod
     @Deprecated
     public static RadioBuilder create(RadioBuilder instance) {
         instance.create();
@@ -34,14 +26,12 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -49,7 +39,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -57,7 +46,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -65,7 +53,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -73,7 +60,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -81,7 +67,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -89,7 +74,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -97,7 +81,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -105,7 +88,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param label - String
      */
-    @Export
     public abstract void setBoxLabel(String label);
 
     /**
@@ -113,7 +95,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getBoxLabel();
 
     /**
@@ -121,7 +102,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param groupName - String
      */
-    @Export
     public abstract void setGroupName(String groupName);
 
     /**
@@ -129,7 +109,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getGroupName();
 
     /**
@@ -138,7 +117,6 @@ public abstract class RadioBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean isEmpty(RadioBuilder instance) {
         return instance.getValue() == null;
     }
@@ -149,7 +127,6 @@ public abstract class RadioBuilderOverlay implements
      * @param instance - RadioBuilder
      * @param value    - boolean
      */
-    @ExportInstanceMethod
     public static void setValue(RadioBuilder instance, boolean value) {
         instance.setValue(value);
     }
@@ -160,7 +137,6 @@ public abstract class RadioBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean getValue(RadioBuilder instance) {
         if (instance.getValue() == null) {
             return false;
@@ -168,12 +144,10 @@ public abstract class RadioBuilderOverlay implements
         return instance.getValue().booleanValue();
     }
 
-    @ExportInstanceMethod
     public static DataValue getDataValue(RadioBuilder instance) {
         return instance.getFieldValue();
     }
 
-    @ExportInstanceMethod
     public static void setDataValue(RadioBuilder instance, DataValue value) {
         instance.setFieldValue(value);
     }
@@ -183,7 +157,6 @@ public abstract class RadioBuilderOverlay implements
      *
      * @param required - boolean
      */
-    @Export
     public abstract void setRequired(boolean required);
 
     /**
@@ -191,13 +164,11 @@ public abstract class RadioBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isRequired();
 
     /**
      * Очистка значения радиокнопки
      */
-    @Export
     public abstract void clear();
 
     /**
@@ -206,7 +177,6 @@ public abstract class RadioBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(RadioBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -214,7 +184,6 @@ public abstract class RadioBuilderOverlay implements
     /**
      * Установить фокус на радиокнопку
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -223,12 +192,9 @@ public abstract class RadioBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
-    @Export
     public abstract void markInvalid(String msg);
 
-    @Export
     public abstract void clearInvalid();
 }

@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.check.CheckBoxBuilder;
 
 /**
  * Чек-бокс
  */
-@Export("CheckBox")
-@ExportPackage("Whirl")
-public abstract class CheckBoxBuilderOverlay implements
-        ExportOverlay<CheckBoxBuilder> {
+public abstract class CheckBoxBuilderOverlay {
 
     /**
      * Инициализация CheckBox
@@ -21,7 +14,6 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param instance - CheckBoxBuilder
      * @return CheckBoxBuilder
      */
-    @ExportInstanceMethod
     @Deprecated
     public static CheckBoxBuilder create(CheckBoxBuilder instance) {
         instance.create();
@@ -33,14 +25,12 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -48,7 +38,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -56,7 +45,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -64,7 +52,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -72,7 +59,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -80,7 +66,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -88,7 +73,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -96,7 +80,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -104,7 +87,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param label - String, отображаемый текст
      */
-    @Export
     public abstract void setBoxLabel(String label);
 
     /**
@@ -112,7 +94,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getBoxLabel();
 
     /**
@@ -121,7 +102,6 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean isEmpty(CheckBoxBuilder instance) {
         return instance.getValue() == null;
     }
@@ -132,7 +112,6 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param instance - RadioBuilder
      * @param value    - boolean
      */
-    @ExportInstanceMethod
     public static void setValue(CheckBoxBuilder instance, boolean value) {
         instance.setValue(value);
     }
@@ -143,7 +122,6 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param instance - RadioBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean getValue(CheckBoxBuilder instance) {
         return instance.getValue().booleanValue();
     }
@@ -153,7 +131,6 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @param required - boolean
      */
-    @Export
     public abstract void setRequired(boolean required);
 
     /**
@@ -161,13 +138,11 @@ public abstract class CheckBoxBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isRequired();
 
     /**
      * Очистка значения CheckBox
      */
-    @Export
     public abstract void clear();
 
     /**
@@ -176,7 +151,6 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param instance - CheckBoxBuilder
      * @return ComponentBuilder, компонент
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(CheckBoxBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -184,7 +158,6 @@ public abstract class CheckBoxBuilderOverlay implements
     /**
      * Установить фокус на CheckBox
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -193,12 +166,9 @@ public abstract class CheckBoxBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
-    @Export
     public abstract void markInvalid(String msg);
 
-    @Export
     public abstract void clearInvalid();
 }

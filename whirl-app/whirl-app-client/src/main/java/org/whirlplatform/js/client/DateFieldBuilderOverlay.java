@@ -2,22 +2,14 @@ package org.whirlplatform.js.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsDate;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.date.DateFieldBuilder;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 import java.util.Date;
 
-@Export("DateField")
-@ExportPackage("Whirl")
-public abstract class DateFieldBuilderOverlay implements
-        ExportOverlay<DateFieldBuilder> {
+public abstract class DateFieldBuilderOverlay {
 
-    @ExportInstanceMethod
     @Deprecated
     public static DateFieldBuilder create(DateFieldBuilder instance) {
         instance.create();
@@ -29,14 +21,12 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -44,7 +34,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -52,7 +41,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -60,7 +48,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -68,7 +55,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -76,7 +62,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -84,7 +69,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -92,7 +76,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -101,7 +84,6 @@ public abstract class DateFieldBuilderOverlay implements
      * @param instance - DateFieldBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean isEmpty(DateFieldBuilder instance) {
         return instance.getValue() == null;
     }
@@ -111,7 +93,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param value - javascript: Date
      */
-    @ExportInstanceMethod
     public static void setValue(DateFieldBuilder instance,
                                 JavaScriptObject value) {
         JsDate jsDate = ((JavaScriptObject) value).cast();
@@ -124,7 +105,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return javascript: Date
      */
-    @ExportInstanceMethod
     public static JavaScriptObject getValue(DateFieldBuilder instance) {
         Date date = instance.getValue();
         JsDate jsDate = null;
@@ -142,7 +122,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getText();
 
 
@@ -150,16 +129,14 @@ public abstract class DateFieldBuilderOverlay implements
      * Получить значение обёрточного типа {@link DataValueOverlay DataValue}, хранящегося в билдере.
      * А из него уже можно получить javascript Date : dataValue.{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()}
      */
-//    @ExportInstanceMethod
-//    public static DataValue getDataValue(DateFieldBuilder instance) {
+////    public static DataValue getDataValue(DateFieldBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 
     /**
      * Установить значение компонента, используя обёрточный тип {@link DataValueOverlay DataValue}
      */
-//    @ExportInstanceMethod
-//    public static void setDataValue(DateFieldBuilder instance, DataValue value) {
+////    public static void setDataValue(DateFieldBuilder instance, DataValue value) {
 //        instance.setFieldValue(value);
 //    }
 
@@ -168,7 +145,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param required - boolean
      */
-    @Export
     public abstract void setRequired(boolean required);
 
     /**
@@ -176,7 +152,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isRequired();
 
     /**
@@ -185,7 +160,6 @@ public abstract class DateFieldBuilderOverlay implements
      * @param instance - DateFieldBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(DateFieldBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -193,7 +167,6 @@ public abstract class DateFieldBuilderOverlay implements
     /**
      * Очистить поле даты
      */
-    @Export
     public abstract void clear();
 
     /**
@@ -201,19 +174,16 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param
      */
-    @Export
     public abstract void markInvalid(String message);
 
     /**
      * Очистить сообщения невалидности поля даты
      */
-    @Export
     public abstract void clearInvalid();
 
     /**
      * Установить фокус на поле даты
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -222,7 +192,6 @@ public abstract class DateFieldBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
     /**
@@ -230,7 +199,6 @@ public abstract class DateFieldBuilderOverlay implements
      *
      * @param toolTip
      */
-    @ExportInstanceMethod
     public static void setToolTip(DateFieldBuilder instance, String toolTip) {
         instance.getComponent().setToolTip(toolTip);
     }

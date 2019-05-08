@@ -2,10 +2,6 @@ package org.whirlplatform.component.client.selenium;
 
 import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.core.client.util.Util;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportPackage;
-import org.timepedia.exporter.client.ExportStaticMethod;
-import org.timepedia.exporter.client.Exportable;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
@@ -14,9 +10,7 @@ import org.whirlplatform.component.client.window.WindowBuilder;
 import org.whirlplatform.component.client.window.WindowManager;
 import org.whirlplatform.component.client.window.dialog.DialogManager;
 
-@Export("Selenium")
-@ExportPackage("__Whirl")
-public class SeleniumJSExport implements Exportable {
+public class SeleniumJSExport {
 
     private static Locator find(Containable containable, Element element) {
 
@@ -100,7 +94,6 @@ public class SeleniumJSExport implements Exportable {
      * @param element
      * @return
      */
-    @ExportStaticMethod
     public static String getLocatorByElement(Element element) {
         Locator locator = null;
         if (BuilderManager.getRoot() != null) {
@@ -151,7 +144,6 @@ public class SeleniumJSExport implements Exportable {
      * @param strLocator
      * @return
      */
-    @ExportStaticMethod
     public static Element getElementByLocator(String strLocator) {
 
         if (Util.isEmptyString(strLocator) || !strLocator.startsWith("whirl:")) {

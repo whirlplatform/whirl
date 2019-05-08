@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.window.WindowBuilder;
 
 /**
  * Окно вывода
  */
-@Export("Window")
-@ExportPackage("Whirl")
-public abstract class WindowBuilderOverlay implements
-        ExportOverlay<WindowBuilder> {
+public abstract class WindowBuilderOverlay {
 
     /**
      * Инициализация окна
@@ -21,7 +14,6 @@ public abstract class WindowBuilderOverlay implements
      * @param instance - WindowBuilder
      * @return WindowBuilder
      */
-    @ExportInstanceMethod
     public static WindowBuilder create(WindowBuilder instance) {
         instance.create();
         return instance;
@@ -32,14 +24,12 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -47,7 +37,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -55,7 +44,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -63,7 +51,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -71,7 +58,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -79,7 +65,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -87,7 +72,6 @@ public abstract class WindowBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -95,34 +79,28 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
      * Скрыть окно
      */
-    @Export
     public abstract void hide();
 
     /**
      * Отобразить окно
      */
-    @Export
     public abstract void show();
 
     /**
      * Максимизировать окно
      */
-    @Export
     public abstract void maximize();
 
     /**
      * Минимизировать окно
      */
-    @Export
     public abstract void minimize();
 
-    @Export
     public abstract void center();
 
     /**
@@ -131,7 +109,6 @@ public abstract class WindowBuilderOverlay implements
      * @param left - int
      * @param top  - int
      */
-    @Export
     public abstract void setPosition(int left, int top);
 
     /**
@@ -140,7 +117,6 @@ public abstract class WindowBuilderOverlay implements
      * @param x - int
      * @param y - int
      */
-    @Export
     public abstract void setPagePosition(int x, int y);
 
     /**
@@ -149,7 +125,6 @@ public abstract class WindowBuilderOverlay implements
      * @param instance - WindowBuilder
      * @param builder  - ComponentBuilder
      */
-    @ExportInstanceMethod
     public static void setChild(WindowBuilder instance, ComponentBuilder builder) {
         instance.addChild(builder);
     }
@@ -160,7 +135,6 @@ public abstract class WindowBuilderOverlay implements
      * @param instance - WindowBuilder
      * @param builder  - ComponentBuilder
      */
-    @ExportInstanceMethod
     public static void remove(WindowBuilder instance, ComponentBuilder builder) {
         instance.removeChild(builder);
     }
@@ -170,13 +144,11 @@ public abstract class WindowBuilderOverlay implements
      *
      * @return ComponentBuilder[]
      */
-    @Export
     public abstract ComponentBuilder[] getChildren();
 
     /**
      * Перерисовка окна вывода
      */
-    @Export
     public abstract void forceLayout();
 
     /**
@@ -185,7 +157,6 @@ public abstract class WindowBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(WindowBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -195,20 +166,17 @@ public abstract class WindowBuilderOverlay implements
      *
      * @return int
      */
-    @Export
     public abstract int getChildrenCount();
 
     /**
      * Установить фокус на окно
      */
-    @Export
     public abstract void focus();
 
     /**
      * Блокирует содержимое(компоненты) окна (визуально - покрывает серым оверлеем).
      *
      */
-    @Export
     public abstract void mask();
 
     /**
@@ -216,19 +184,16 @@ public abstract class WindowBuilderOverlay implements
      *
      * @param message
      */
-    @Export
     public abstract void mask(String message);
 
     /**
      * Разблокировывает содержимое окна и скрывает служебное сообщение, установленное командой mask
      */
-    @Export
     public abstract void unmask();
 
     /**
      * Устанавливает заголовок окна
      */
-    @Export
     public abstract void setTitle(String title);
 
 }

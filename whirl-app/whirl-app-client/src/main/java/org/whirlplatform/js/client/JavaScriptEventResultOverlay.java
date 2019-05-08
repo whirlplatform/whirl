@@ -1,15 +1,10 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.EventParameter;
 
-//@Export("EventResult")
-//@ExportPackage("Whirl")
-public abstract class JavaScriptEventResultOverlay implements
-        ExportOverlay<JavaScriptEventResult> {
+public abstract class JavaScriptEventResultOverlay {
 
     public abstract boolean isReady();
 
@@ -42,7 +37,6 @@ public abstract class JavaScriptEventResultOverlay implements
      * @param index
      * @param parameter
      */
-    @ExportInstanceMethod
     public static void setParameter(JavaScriptEventResult instance, int index, EventParameter parameter) {
         instance.setParameter(Integer.valueOf(index), parameter);
     }

@@ -2,20 +2,13 @@ package org.whirlplatform.js.client;
 
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportConstructor;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 
 
 /**
  * Экземпляры класса BoxLayoutData используются для определения размерностей и отступов компонентов  
  */
-@Export("BoxLayoutData")
-@ExportPackage("Whirl")
-public class BoxLayoutDataOverlay implements ExportOverlay<BoxLayoutData> {
+public class BoxLayoutDataOverlay {
 
-	@ExportConstructor
 	public static BoxLayoutData constructor(int minSize, int maxSize) {
 		return constructor(minSize, maxSize, 0, 0, 0, 0, 0);
 	}
@@ -25,7 +18,6 @@ public class BoxLayoutDataOverlay implements ExportOverlay<BoxLayoutData> {
 	 * 
 	 * @param margins представляет значение для marginTop, marginRight, marginBottom, marginLeft 
 	 */
-	@ExportConstructor
 	public static BoxLayoutData constructor(int minSize, int maxSize,
 			double flex, int margins) {
 		return constructor(minSize, maxSize, flex, margins, margins, margins,
@@ -44,7 +36,6 @@ public class BoxLayoutDataOverlay implements ExportOverlay<BoxLayoutData> {
 	 * @param marginBottom отступ внутренних компонентов от нижней границы контейнера
 	 * @param marginLeft отступ внутренних компонентов от левой границы контейнера
 	 */
-	@ExportConstructor
 	public static BoxLayoutData constructor(int minSize, int maxSize,
 			double flex, int marginTop, int marginRight, int marginBottom,
 			int marginLeft) {

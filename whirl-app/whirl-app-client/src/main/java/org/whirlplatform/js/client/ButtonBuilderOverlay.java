@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.ButtonBuilder;
 
 /**
  * Кнопка
  */
-@Export("Button")
-@ExportPackage("Whirl")
-public abstract class ButtonBuilderOverlay implements
-        ExportOverlay<ButtonBuilder> {
+public abstract class ButtonBuilderOverlay {
 
     /**
      * Инициализация кнопки
@@ -21,7 +14,6 @@ public abstract class ButtonBuilderOverlay implements
      * @param instance - ButtonBuilder, кнопка
      * @return ButtonBuilder, кнопка
      */
-    @ExportInstanceMethod
     public static ButtonBuilder create(ButtonBuilder instance) {
         instance.create();
         return instance;
@@ -32,14 +24,12 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -47,7 +37,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -55,7 +44,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -63,7 +51,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -71,7 +58,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -79,7 +65,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -87,7 +72,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -95,7 +79,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -103,7 +86,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @param html - String, надпись
      */
-    @Export
     public abstract void setHTML(String html);
 
     /**
@@ -111,7 +93,6 @@ public abstract class ButtonBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getHTML();
 
     /**
@@ -120,7 +101,6 @@ public abstract class ButtonBuilderOverlay implements
      * @param instance - ButtonBuilder, кнопка
      * @return ComponentBuilder, компонент
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(ButtonBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -128,11 +108,9 @@ public abstract class ButtonBuilderOverlay implements
     /**
      * Установить фокус на кнопку
      */
-    @Export
     public abstract void focus();
 
-//    @ExportInstanceMethod
-//    public static HandlerRegistrationWrapper addClickHandler(
+////    public static HandlerRegistrationWrapper addClickHandler(
 //            final ButtonBuilder instance, final Events.EventClosure callback) {
 //        return new HandlerRegistrationWrapper(
 //                instance.addClickHandler(new ClickEvent.ClickHandler() {

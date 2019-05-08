@@ -1,19 +1,10 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.ContentPanelBuilder;
 
+public abstract class ContentPanelBuilderOverlay {
 
-@Export("ContentPanel")
-@ExportPackage("Whirl")
-public abstract class ContentPanelBuilderOverlay implements
-        ExportOverlay<ContentPanelBuilder> {
-
-    @ExportInstanceMethod
     public static ContentPanelBuilder create(ContentPanelBuilder instance) {
         instance.create();
         return instance;
@@ -24,32 +15,24 @@ public abstract class ContentPanelBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
-    @Export
     public abstract void setCode(String name);
 
-    @Export
     public abstract String getCode();
 
-    @Export
     public abstract void setEnabled(boolean enabled);
 
-    @Export
     public abstract boolean isEnabled();
 
-    @Export
     public abstract void setHidden(boolean hidden);
 
-    @Export
     public abstract void isHidden();
 
     /**
@@ -58,7 +41,6 @@ public abstract class ContentPanelBuilderOverlay implements
      *
      * @param styleName
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -66,7 +48,6 @@ public abstract class ContentPanelBuilderOverlay implements
      *
      * @param builder билдер компонента
      */
-    @ExportInstanceMethod
     public static void setChild(ContentPanelBuilder instance,
                                 ComponentBuilder builder) {
         instance.addChild(builder);
@@ -75,7 +56,6 @@ public abstract class ContentPanelBuilderOverlay implements
     /**
      * Удаляет компонент, находящийся в контейнере
      */
-    @ExportInstanceMethod
     public static void clear(ContentPanelBuilder instance) {
         instance.clearContainer();
     }
@@ -85,19 +65,15 @@ public abstract class ContentPanelBuilderOverlay implements
      *
      * @param builder
      */
-    @ExportInstanceMethod
     public static void remove(ContentPanelBuilder instance,
                               ComponentBuilder builder) {
         instance.removeChild(builder);
     }
 
-    @Export
     public abstract ComponentBuilder[] getChildren();
 
-    @Export
     public abstract void forceLayout();
 
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(ContentPanelBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -107,10 +83,8 @@ public abstract class ContentPanelBuilderOverlay implements
      *
      * @return
      */
-    @Export
     public abstract int getChildrenCount();
 
-    @Export
     public abstract void focus();
 
 }

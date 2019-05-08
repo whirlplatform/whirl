@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.NumberFieldBuilder;
 
 /**
  * Числовое поле ввода
  */
-@Export("NumberField")
-@ExportPackage("Whirl")
-public abstract class NumberFieldBuilderOverlay implements
-        ExportOverlay<NumberFieldBuilder> {
+public abstract class NumberFieldBuilderOverlay {
 
     /**
      * Инициализация числового поля
@@ -21,7 +14,6 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @return NumberFieldBuilder
      */
-    @ExportInstanceMethod
     @Deprecated
     public static NumberFieldBuilder create(NumberFieldBuilder instance) {
         instance.create();
@@ -33,14 +25,12 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -48,7 +38,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -56,7 +45,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -64,7 +52,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -72,7 +59,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -80,7 +66,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -88,7 +73,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -96,7 +80,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -105,7 +88,6 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean isEmpty(NumberFieldBuilder instance) {
         return instance.getValue() == null;
     }
@@ -116,7 +98,6 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @param value    - double
      */
-    @ExportInstanceMethod
     public static void setValue(NumberFieldBuilder instance, double value) {
         instance.setValue(value);
     }
@@ -127,7 +108,6 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @return double
      */
-    @ExportInstanceMethod
     public static double getValue(NumberFieldBuilder instance) {
         if (instance.getValue() == null) {
             return 0;
@@ -135,23 +115,19 @@ public abstract class NumberFieldBuilderOverlay implements
         return instance.getValue();
     }
 
-//    @ExportInstanceMethod
-//    public static DataValue getDataValue(NumberFieldBuilder instance) {
+////    public static DataValue getDataValue(NumberFieldBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 //
-//    @ExportInstanceMethod
-//    public static void setDataValue(NumberFieldBuilder instance, DataValue value) {
+////    public static void setDataValue(NumberFieldBuilder instance, DataValue value) {
 //        instance.setFieldValue(value);
 //    }
 
-    @Export
     public abstract String getText();
 
     /**
      * Очистка значения числового поля
      */
-    @Export
     public abstract void clear();
 
     /**
@@ -159,7 +135,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param required - boolean
      */
-    @Export
     public abstract void setRequired(boolean required);
 
     /**
@@ -168,7 +143,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isRequired();
 
     /**
@@ -176,7 +150,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param format - String
      */
-    @Export
     public abstract void setFormat(String format);
 
     /**
@@ -184,7 +157,6 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param mask - String
      */
-    @Export
     public abstract void setMask(String mask);
 
     /**
@@ -192,13 +164,11 @@ public abstract class NumberFieldBuilderOverlay implements
      *
      * @param message - String
      */
-    @Export
     public abstract void markInvalid(String message);
 
     /**
      * Очистка валидности числового поля
      */
-    @Export
     public abstract void clearInvalid();
 
     /**
@@ -207,7 +177,6 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param instance - NumberFieldBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(NumberFieldBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -215,7 +184,6 @@ public abstract class NumberFieldBuilderOverlay implements
     /**
      * Установить фокус на числовое поле
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -224,10 +192,8 @@ public abstract class NumberFieldBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
-    @ExportInstanceMethod
     public static void setToolTip(NumberFieldBuilder instance, String toolTip) {
         instance.getComponent().setToolTip(toolTip);
     }

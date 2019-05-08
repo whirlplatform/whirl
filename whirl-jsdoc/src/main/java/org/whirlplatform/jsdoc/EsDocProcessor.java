@@ -102,10 +102,17 @@ public class EsDocProcessor extends AbstractProcessor {
                                 new Property(propertyName(e), comment(e, PADDING), true, setter, _static(e)));
                     });
 
-            // Properties - Methods (only getters are supported)
+            // Properties - Methods Setters
             ElementFilter.methodsIn(elements)
                     .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null))
+                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null).and(e -> isSetter(e)))
+                    .forEach(e -> type.addProperty(
+                            new Property(propertyName(e), comment(e, PADDING), false, true, _static(e))));
+
+            // Properties - Methods Getters
+            ElementFilter.methodsIn(elements)
+                    .stream()
+                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null).and(e -> isGetter(e)))
                     .forEach(e -> type.addProperty(
                             new Property(propertyName(e), comment(e, PADDING), true, false, _static(e))));
 
@@ -276,6 +283,16 @@ public class EsDocProcessor extends AbstractProcessor {
             simpleName = UPPER_CAMEL.to(LOWER_CAMEL, simpleName.substring(2));
         }
         return simpleName;
+    }
+
+    private boolean isSetter(Element method) {
+        String simpleName = method.getSimpleName().toString();
+        return simpleName.startsWith("set");
+    }
+
+    private boolean isGetter(Element method) {
+        String simpleName = method.getSimpleName().toString();
+        return simpleName.startsWith("get") || simpleName.startsWith("is");
     }
 
     private String methodName(Element element) {

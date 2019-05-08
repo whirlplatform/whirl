@@ -1,7 +1,6 @@
 package org.whirlplatform.event.client;
 
 import com.google.gwt.core.client.Callback;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
@@ -13,7 +12,6 @@ import com.sencha.gxt.core.client.GXT;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.container.ResizeContainer;
-import org.timepedia.exporter.client.ExporterUtil;
 import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.event.*;
 import org.whirlplatform.component.client.report.ReportBuilder;
@@ -275,7 +273,7 @@ public class EventHelperImpl implements EventHelper {
         } else if (metadata.getType() == EventType.JavaScript) {
             String script = metadata.getSource();
             String functionName = "function_" + metadata.getId().replace("-", "");
-            script = "function " + script.replaceFirst("\\$\\{function\\}", functionName);
+            script = functionName + "(wctx) {\n" + script + "\n}";
             attachScript(metadata.getId(), script);
             onResult(source, javaScriptExecute(functionName, source, parameters));
         }
@@ -372,9 +370,7 @@ public class EventHelperImpl implements EventHelper {
                                                     List<DataValue> parameters) {
         try {
             JavaScriptContext context = new JavaScriptContext(source, parameters);
-            // TODO постараться избавится от зависимости gwt-exporter
-            JavaScriptEventResult result = (JavaScriptEventResult) ExporterUtil
-                    .gwtInstance(javaScriptExecute(function, context.asObject()));
+            JavaScriptEventResult result = javaScriptExecute(function, context);
             return result;
         } catch (Exception e) {
             InfoHelper.throwInfo(metadata.getId(), e);
@@ -383,7 +379,7 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
-    private native JavaScriptObject javaScriptExecute(String func, JavaScriptObject context) /*-{
+    private native JavaScriptEventResult javaScriptExecute(String func, JavaScriptContext context) /*-{
 		return $wnd[func](context);
 	}-*/;
 

@@ -1,15 +1,11 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.ExportStaticMethod;
-import org.timepedia.exporter.client.Exportable;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.storage.client.StorageHelper;
 
-//@Export("Storage")
-//@ExportPackage("Whirl")
-public class Storage implements Exportable {
+public class Storage {
 
-    private static final String DATAVALUE = "DATAVALUE";
+    private static final String DATA_VALUE = "DATAVALUE";
 
     /**
      * Инициализировать локальное хранилище данных.
@@ -17,9 +13,8 @@ public class Storage implements Exportable {
      * @param type Следует указать DATAVALUE.
      * @return {@link StorageWrapperOverlay StorageManager}
      */
-    @ExportStaticMethod
     public static StorageHelper.StorageWrapper<DataValue> local(String type) {
-        if (DATAVALUE.equalsIgnoreCase(type)) {
+        if (DATA_VALUE.equalsIgnoreCase(type)) {
             return StorageHelper.local();
         }
         return null;
@@ -31,9 +26,8 @@ public class Storage implements Exportable {
      * @param type Следует указать DATAVALUE.
      * @return {@link StorageWrapperOverlay StorageManager}
      */
-    @ExportStaticMethod
     public static StorageHelper.StorageWrapper<DataValue> session(String type) {
-        if (DATAVALUE.equalsIgnoreCase(type)) {
+        if (DATA_VALUE.equalsIgnoreCase(type)) {
             return StorageHelper.session();
         }
         return null;
@@ -45,9 +39,8 @@ public class Storage implements Exportable {
      * @param type Следует указать DATAVALUE.
      * @return {@link StorageWrapperOverlay StorageManager}
      */
-    @ExportStaticMethod
     public static StorageHelper.StorageWrapper<DataValue> memory(String type) {
-        if (DATAVALUE.equalsIgnoreCase(type)) {
+        if (DATA_VALUE.equalsIgnoreCase(type)) {
             return StorageHelper.memory();
         }
         return null;

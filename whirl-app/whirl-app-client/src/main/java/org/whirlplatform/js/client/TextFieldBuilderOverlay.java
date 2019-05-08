@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.TextFieldBuilder;
 
 /**
  * Поле ввода - текстовое
  */
-@Export("TextField")
-@ExportPackage("Whirl")
-public abstract class TextFieldBuilderOverlay implements
-        ExportOverlay<TextFieldBuilder> {
+public abstract class TextFieldBuilderOverlay {
 
     /**
      * Инициализация текстового поля
@@ -21,7 +14,6 @@ public abstract class TextFieldBuilderOverlay implements
      * @param instance - TextFieldBuilder
      * @return TextFieldBuilder
      */
-    @ExportInstanceMethod
     @Deprecated
     public static TextFieldBuilder create(TextFieldBuilder instance) {
         instance.create();
@@ -33,14 +25,12 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -48,7 +38,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param name - String, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -56,7 +45,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -64,7 +52,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -72,7 +59,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -80,7 +66,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -88,7 +73,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -96,7 +80,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param styleName - String, название стиля
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -105,7 +88,6 @@ public abstract class TextFieldBuilderOverlay implements
      * @param instance - TextFieldBuilder
      * @return boolean
      */
-    @ExportInstanceMethod
     public static boolean isEmpty(TextFieldBuilder instance) {
         return instance.getValue() == null || instance.getValue().isEmpty();
     }
@@ -115,7 +97,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param value - String
      */
-    @Export
     public abstract void setValue(String value);
 
     /**
@@ -123,20 +104,16 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getValue();
 
-//    @ExportInstanceMethod
-//    public static DataValue getDataValue(TextFieldBuilder instance) {
+////    public static DataValue getDataValue(TextFieldBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 //
-//    @ExportInstanceMethod
-//    public static void setDataValue(TextFieldBuilder instance, DataValue value) {
+////    public static void setDataValue(TextFieldBuilder instance, DataValue value) {
 //        instance.setFieldValue(value);
 //    }
 
-    @Export
     public abstract String getText();
 
     /**
@@ -144,7 +121,6 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param required - boolean
      */
-    @Export
     public abstract void setRequired(boolean required);
 
     /**
@@ -153,13 +129,11 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isRequired();
 
     /**
      * Очистка значения текстового поля
      */
-    @Export
     public abstract void clear();
 
     /**
@@ -168,7 +142,6 @@ public abstract class TextFieldBuilderOverlay implements
      * @param instance - TextFieldBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(TextFieldBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -176,7 +149,6 @@ public abstract class TextFieldBuilderOverlay implements
     /**
      * Установить фокус на текстовое поле
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -184,13 +156,11 @@ public abstract class TextFieldBuilderOverlay implements
      *
      * @param message - текст сообщения
      */
-    @Export
     public abstract void markInvalid(String message);
 
     /**
      * Убрать невалидность поля
      */
-    @Export
     public abstract void clearInvalid();
 
     /**
@@ -199,10 +169,8 @@ public abstract class TextFieldBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
-    @ExportInstanceMethod
     public static void setToolTip(TextFieldBuilder instance, String toolTip) {
         instance.getComponent().setToolTip(toolTip);
     }

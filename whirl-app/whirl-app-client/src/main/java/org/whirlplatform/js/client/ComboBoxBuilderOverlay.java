@@ -1,20 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.combo.ComboBoxBuilder;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
-@Export("ComboBox")
-@ExportPackage("Whirl")
-public abstract class ComboBoxBuilderOverlay implements
-        ExportOverlay<ComboBoxBuilder> {
+public abstract class ComboBoxBuilderOverlay {
 
-    @ExportInstanceMethod
     @Deprecated
     public static ComboBoxBuilder create(ComboBoxBuilder instance) {
         instance.create();
@@ -26,45 +18,34 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
-    @Export
     public abstract void setCode(String name);
 
-    @Export
     public abstract String getCode();
 
-    @Export
     public abstract void setEnabled(boolean enabled);
 
-    @Export
     public abstract boolean isEnabled();
 
-    @Export
     public abstract void setHidden(boolean hidden);
 
-    @Export
     public abstract void isHidden();
 
-    @Export
     public abstract void setStyleName(String styleName);
 
 
     /**
      * Очистить текущее значение комбобокса. Значения, отображаемые в выпадающем списке остаются доступными для выбора.
      */
-    @Export
     public abstract void clear();
 
-    @ExportInstanceMethod
     public static boolean isEmpty(ComboBoxBuilder instance) {
         return instance.getValue() == null;
     }
@@ -75,7 +56,6 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @return {@link ListModelDataOverlay ListModelData}
      */
-    @Export
     public abstract ListModelData getValue();
 
     /**
@@ -83,7 +63,6 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @param {@link ListModelDataOverlay model}
      */
-    @Export
     public abstract void setValue(ListModelData model);
 
     /**
@@ -91,8 +70,7 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @return {@link DataValueOverlay DataValue}
      */
-//    @ExportInstanceMethod
-//    public static DataValue getDataValue(ComboBoxBuilder instance) {
+////    public static DataValue getDataValue(ComboBoxBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 
@@ -102,8 +80,7 @@ public abstract class ComboBoxBuilderOverlay implements
      * @param value {@link DataValueOverlay DataValue}
      * @return RowListValue
      */
-//    @ExportInstanceMethod
-//    public static void setDataValue(ComboBoxBuilder instance, DataValue value) {
+////    public static void setDataValue(ComboBoxBuilder instance, DataValue value) {
 //        instance.setFieldValue(value);
 //    }
 
@@ -112,19 +89,15 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @return
      */
-    @Export
     public abstract String getText();
 
     /**
      * Сделать компонент обязательным для заполнения
      */
-    @Export
     public abstract void setRequired(boolean required);
 
-    @Export
     public abstract boolean isRequired();
 
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(ComboBoxBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -134,19 +107,16 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @param message - текст подсказки, появляющийся при наведении на восклицательный знак маркера
      */
-    @Export
     public abstract void markInvalid(String message);
 
     /**
      * Очистить информацию о невалидности компонента. Убрать все светящиеся красные подсказки об ошибках с компонента.
      */
-    @Export
     public abstract void clearInvalid();
 
     /**
      * Установить фокус пользовательского ввода на комбобокс.
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -155,7 +125,6 @@ public abstract class ComboBoxBuilderOverlay implements
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
     /**
@@ -163,7 +132,6 @@ public abstract class ComboBoxBuilderOverlay implements
      *
      * @param toolTip
      */
-    @ExportInstanceMethod
     public static void setToolTip(ComboBoxBuilder instance, String toolTip) {
         instance.getComponent().setToolTip(toolTip);
     }

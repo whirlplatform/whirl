@@ -1,21 +1,13 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportStaticMethod;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.JavaScriptContext;
 import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-
-//@Export("JavaScriptContext")
-//@ExportPackage("Whirl")
-public abstract class JavaScriptContextOverlay implements
-        ExportOverlay<JavaScriptContext> {
+public abstract class JavaScriptContextOverlay {
 
 
-    @ExportInstanceMethod
     public static ComponentBuilder getSource(JavaScriptContext instance) {
         return instance.getSource();
     }
@@ -25,7 +17,6 @@ public abstract class JavaScriptContextOverlay implements
      *
      * @return
      */
-    @ExportInstanceMethod
     public static DataValue[] getParameters(JavaScriptContext instance) {
         return instance.getParameters();
     }
@@ -36,21 +27,8 @@ public abstract class JavaScriptContextOverlay implements
      *
      * @return JavaScriptEventResult
      */
-    @ExportInstanceMethod
     public static JavaScriptEventResult newResult(JavaScriptContext instance) {
         return instance.newResult();
-    }
-
-    /**
-     * Некоторым образом обработать context. Фактически этот метод просто возвращает входной параметр и на данный момент бесполезен.
-     * Возможно, сохранён для совместимости с ранними версиями кода.
-     *
-     * @param context
-     * @return
-     */
-    @ExportStaticMethod
-    public static Object init(Object context) {
-        return JavaScriptContext.init(context);
     }
 
 
@@ -60,7 +38,6 @@ public abstract class JavaScriptContextOverlay implements
      * @param index
      * @return
      */
-    @ExportInstanceMethod
     public static DataValue getParameter(JavaScriptContext instance, int index) {
         return instance.getParameter(index);
     }
@@ -71,7 +48,6 @@ public abstract class JavaScriptContextOverlay implements
      * @param code
      * @return
      */
-    @ExportInstanceMethod
     public static DataValue getParameterByCode(JavaScriptContext instance,
                                                String code) {
         return instance.getParameter(code);

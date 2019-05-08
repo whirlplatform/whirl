@@ -4,7 +4,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.ClosingEvent;
 import com.google.gwt.user.client.Window.ClosingHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import org.timepedia.exporter.client.ExporterUtil;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
@@ -64,10 +63,6 @@ public class Whirl {
 
 	public static void setRemoveToken(boolean remove) {
 		removeToken = remove;
-	}
-
-	public static void exportJavaScript() {
-		ExporterUtil.exportAll();
 	}
 
 }

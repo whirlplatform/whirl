@@ -1,15 +1,9 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.grid.EditGridBuilder;
 
-@Export("EditGrid")
-@ExportPackage("Whirl")
-public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBuilder> {
+public abstract class EditGridBuilderOverlay {
 
     /**
      * Инициализация грида
@@ -18,7 +12,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @return EditGridBuilder
      * @deprecated new EditGridBuilder()
      */
-    @ExportInstanceMethod
     @Deprecated
     public static EditGridBuilder create(EditGridBuilder instance) {
         instance.create();
@@ -30,14 +23,12 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -45,7 +36,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @param name - Strinng, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -53,7 +43,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -61,7 +50,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -69,7 +57,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -77,7 +64,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -85,7 +71,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -93,13 +78,11 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @param styleName - String
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
      * Перечитать данные для грида и обновить компонент
      */
-    @Export
     public abstract void load();
 
     /**
@@ -107,14 +90,12 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @deprecated loadWithParameters
      */
 //    @Deprecated
-//    @ExportInstanceMethod
-//    public static void loadParameters(EditGridBuilder instance, DataValue[] parameters) {
+////    public static void loadParameters(EditGridBuilder instance, DataValue[] parameters) {
 //        instance.load(Arrays.asList(parameters));
 //    }
 
 
-//    @ExportInstanceMethod
-//    public static void loadWithParameters(EditGridBuilder instance, DataValue[] parameters) {
+////    public static void loadWithParameters(EditGridBuilder instance, DataValue[] parameters) {
 //        instance.load(Arrays.asList(parameters));
 //    }
 
@@ -124,7 +105,6 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @param instance - EditGridBuilder
      * @return ComponentBuilder
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(EditGridBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -136,8 +116,7 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * {@link RowModelDataOverlay
      * RowModelData}[]
      */
-//    @ExportInstanceMethod
-//    public static RowModelData[] getAllItems(EditGridBuilder instance) {
+////    public static RowModelData[] getAllItems(EditGridBuilder instance) {
 //        return instance.getAllItems().toArray(new RowModelData[0]);
 //    }
 
@@ -148,8 +127,7 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @return Значение {@link RowModelDataOverlay
      * RowModelData}
      */
-//    @ExportInstanceMethod
-//    public abstract RowModelData getItemById(String id);
+////    public abstract RowModelData getItemById(String id);
 
     /**
      * Получить информацию о строках грида: идентификатор, selected, checked,
@@ -160,8 +138,7 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @return {@link RowListValueOverlay
      * RowListValue}
      */
-//    @ExportInstanceMethod
-//    public static RowListValue getDataValue(EditGridBuilder instance) {
+////    public static RowListValue getDataValue(EditGridBuilder instance) {
 //        return instance.getFieldValue();
 //    }
 
@@ -172,8 +149,7 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * RowListValue}
      * @deprecated EditGridBuilder.setDataValue
      */
-//    @ExportInstanceMethod
-//    @Deprecated
+////    @Deprecated
 //    public static void setValue(EditGridBuilder instance, RowListValue value) {
 //        instance.setFieldValue(value);
 //    }
@@ -184,15 +160,13 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      *
      * @return RowListValue
      */
-//    @ExportInstanceMethod
-//    public static void setDataValue(EditGridBuilder instance, RowListValue value) {
+////    public static void setDataValue(EditGridBuilder instance, RowListValue value) {
 //        instance.setFieldValue(value);
 //    }
 
     /**
      * Установить фокус на грид
      */
-    @Export
     public abstract void focus();
 
     /**
@@ -201,13 +175,11 @@ public abstract class EditGridBuilderOverlay implements ExportOverlay<EditGridBu
      * @param invalidate - отображать информацию о невалидном значении
      * @return boolean
      */
-    @Export
     public abstract boolean isValid(boolean invalidate);
 
     /**
      * Очищает фильтр грида.
      */
-//    @Export
-//    public abstract void clearFilter();
+////    public abstract void clearFilter();
 
 }

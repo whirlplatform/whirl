@@ -312,7 +312,7 @@ public class EventView extends ContentPanel implements IEventView {
                 break;
             case JavaScript:
                 source.setVisible(true);
-                source.setValue("//function\n${function}(ctx){\n\t\n}");
+                source.setValue("//Available variables: wctx - event context");
                 source.showEditor(Config.forJavaScript());
                 source.getEditor().setAutoCompletionHandler(
                         new JavaScriptAutoCompletionHandler());

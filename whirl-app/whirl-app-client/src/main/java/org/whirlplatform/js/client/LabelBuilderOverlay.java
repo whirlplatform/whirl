@@ -1,19 +1,12 @@
 package org.whirlplatform.js.client;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportInstanceMethod;
-import org.timepedia.exporter.client.ExportOverlay;
-import org.timepedia.exporter.client.ExportPackage;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.LabelBuilder;
 
 /**
  * Текстовая строка вывода, надпись
  */
-@Export("Label")
-@ExportPackage("Whirl")
-public abstract class LabelBuilderOverlay implements
-        ExportOverlay<LabelBuilder> {
+public abstract class LabelBuilderOverlay {
 
     /**
      * Инициализация LabelBuilder
@@ -21,7 +14,6 @@ public abstract class LabelBuilderOverlay implements
      * @param instance - LabelBuilder
      * @return LabelBuilder
      */
-    @ExportInstanceMethod
     public static LabelBuilder create(LabelBuilder instance) {
         instance.create();
         return instance;
@@ -32,14 +24,12 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param domId
      */
-    @Export
     public abstract void setDomId(String domId);
 
     /**
      * Возвращает идентификатор элемента в DOM документа.
      *
      */
-    @Export
     public abstract String getDomId();
 
     /**
@@ -47,7 +37,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param name - Strinng, код
      */
-    @Export
     public abstract void setCode(String name);
 
     /**
@@ -55,7 +44,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getCode();
 
     /**
@@ -63,7 +51,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param enabled - boolean
      */
-    @Export
     public abstract void setEnabled(boolean enabled);
 
     /**
@@ -71,7 +58,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isEnabled();
 
     /**
@@ -79,7 +65,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param hidden - boolean
      */
-    @Export
     public abstract void setHidden(boolean hidden);
 
     /**
@@ -87,7 +72,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @return boolean
      */
-    @Export
     public abstract boolean isHidden();
 
     /**
@@ -95,7 +79,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param styleName - String
      */
-    @Export
     public abstract void setStyleName(String styleName);
 
     /**
@@ -103,7 +86,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @param value - Stirng, текст
      */
-    @Export
     public abstract void setHtml(String value);
 
     /**
@@ -111,7 +93,6 @@ public abstract class LabelBuilderOverlay implements
      *
      * @return String
      */
-    @Export
     public abstract String getHtml();
 
     /**
@@ -120,7 +101,6 @@ public abstract class LabelBuilderOverlay implements
      * @param instance - LabelBuilder
      * @return ComponentBuilder, компонент
      */
-    @ExportInstanceMethod
     public static ComponentBuilder getParent(LabelBuilder instance) {
         return instance.getParentBuilder();
     }
@@ -128,7 +108,6 @@ public abstract class LabelBuilderOverlay implements
     /**
      * Установить фокус на надпись
      */
-    @Export
     public abstract void focus();
 
 }

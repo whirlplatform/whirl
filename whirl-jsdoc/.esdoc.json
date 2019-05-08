@@ -1,0 +1,27 @@
+{
+  "source": "./target/generated-sources/jsdoc",
+  "destination": "./target/docs",
+  "includes": [
+    "\\.es6$"
+  ],
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "undocumentIdentifier": {
+          "enable": true
+        },
+        "unexportedIdentifier": {
+          "enable": true
+        },
+        "typeInference": {
+          "enable": true
+        },
+        "brand": {
+          "title": "Whirl Platform JavaScript API"
+        }
+      }
+    }
+  ]
+}
+

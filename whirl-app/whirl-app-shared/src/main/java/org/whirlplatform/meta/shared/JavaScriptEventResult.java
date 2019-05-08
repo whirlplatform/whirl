@@ -1,7 +1,6 @@
 package org.whirlplatform.meta.shared;
 
 import com.google.gwt.user.client.Command;
-import org.timepedia.exporter.client.NoExport;
 import org.whirlplatform.meta.shared.data.EventParameter;
 
 import java.util.Map;
@@ -30,7 +29,6 @@ public class JavaScriptEventResult implements EventResult {
         this.nextEvent = event;
     }
 
-    @NoExport
     @Override
     public EventMetadata getNextEvent() {
         return nextEvent;

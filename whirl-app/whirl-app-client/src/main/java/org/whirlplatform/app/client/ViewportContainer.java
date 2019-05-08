@@ -1,7 +1,6 @@
 package org.whirlplatform.app.client;
 
 import com.sencha.gxt.widget.core.client.container.Viewport;
-import org.timepedia.exporter.client.Export;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 
@@ -49,7 +48,6 @@ public class ViewportContainer implements Containable {
 		}
 	}
 
-	@Export
 	public int getChildrenCount() {
 		if (topComponent == null) {
 			return 0;

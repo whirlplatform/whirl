@@ -1,9 +1,6 @@
 package org.whirlplatform.js.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.ExportClosure;
-import org.timepedia.exporter.client.Exportable;
 import org.whirlplatform.component.client.event.EventCallbackResult;
 import org.whirlplatform.component.client.event.EventHelper;
 import org.whirlplatform.component.client.event.EventManager;
@@ -12,13 +9,9 @@ import org.whirlplatform.meta.shared.data.EventParameterImpl;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
+public class Events {
 
-//@Export("Events")
-//@ExportPackage("Whirl")
-public class Events implements Exportable {
-
-    @ExportClosure
-    public interface EventClosure extends Exportable {
+    public interface EventClosure {
 
         void success(EventCallbackResult result);
 
@@ -26,7 +19,6 @@ public class Events implements Exportable {
 
     }
 
-    @Export
     public static void execute(final String eventCode,
                                final EventParameterImpl[] params, final EventClosure successFunction,
                                final EventClosure failFunction) {

@@ -50,11 +50,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.timepedia.exporter</groupId>
-            <artifactId>gwtexporter</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.seanchenxi.gwt</groupId>
             <artifactId>gwt-storage</artifactId>
             <version>1.4.0</version>
