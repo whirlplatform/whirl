@@ -25,7 +25,6 @@
 
     <extend-property name="locale" values="en"/>
     <extend-property name="locale" values="ru"/>
-    <set-property name="export" value="yes"/>
 
     <set-configuration-property name="CssResource.conversionMode"
                                 value="strict"/>
