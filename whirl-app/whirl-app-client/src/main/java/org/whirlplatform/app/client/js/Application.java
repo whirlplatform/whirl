@@ -1,4 +1,4 @@
-package org.whirlplatform.component.client.js;
+package org.whirlplatform.app.client.js;
 
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.user.client.Window;
