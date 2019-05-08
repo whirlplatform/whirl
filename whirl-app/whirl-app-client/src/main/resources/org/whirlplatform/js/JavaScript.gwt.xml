@@ -5,8 +5,6 @@
         "http://gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
     <inherits name="com.google.gwt.user.User"/>
-    <!-- 	<inherits name="org.whirlplatform.app.Application" /> -->
-    <inherits name="org.timepedia.exporter.Exporter"/>
     <inherits name="org.whirlplatform.component.Component"/>
     <set-configuration-property name="CssResource.enableGss"
                                 value="true"/>

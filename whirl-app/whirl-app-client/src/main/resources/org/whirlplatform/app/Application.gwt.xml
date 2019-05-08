@@ -13,8 +13,6 @@
     <inherits name="com.google.gwt.http.HTTP"/>
     <inherits name="com.google.gwt.user.Debug"/>
 
-    <inherits name="org.timepedia.exporter.Exporter"/>
-
     <inherits name="org.whirlplatform.event.Event"/>
     <inherits name="org.whirlplatform.component.Component"/>
     <inherits name="org.whirlplatform.java.Java"/>
