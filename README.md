@@ -52,4 +52,4 @@ Accordingly to this plugin Maven commands to start modules are:
     
 - Client
 
-        gwt:codeserver -pl whirl-editor-client -am
+        mvn gwt:codeserver -pl whirl-editor-client -am
