@@ -14,6 +14,9 @@ You can try Whirl Platform on the our demo server.
 
 Server: http://whirlplatform.cloudjiffy.net/app=whirl-showcase
 
+Username: whirl-showcase-user
+
+Password: password
 
 #### Editor
 
