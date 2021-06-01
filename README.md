@@ -4,13 +4,15 @@
 
 The Whirl Platform is application builder software for database developers that simplifying of creating web applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building application didn't require to write application server or client side logic, all logic can be done database side.
 
+Platform is on production-ready state and used in more than twenty closed source commercial applications.
+
 ## Demo
 
 You can try Whirl Platform on the our demo server.
 
 #### Application
 
-Server: http://demo.whirlplatform.org/
+Server: http://whirlplatform.cloudjiffy.net/app=whirl-showcase
 
 
 #### Editor
