@@ -41,9 +41,9 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>sencha-central</id>
+            <id>scijava-public</id>
             <name>Sencha GPL Releases</name>
-            <url>https://maven.sencha.com/repo/gpl-release</url>
+            <url>http://maven.imagej.net/content/repositories/public</url>
         </repository>
         <repository>
             <snapshots>
