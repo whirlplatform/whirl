@@ -104,8 +104,6 @@ public interface EditorMessage extends Messages {
 
     String toolbar_creating_application();
 
-    String toolbar_import();
-
     String toolbar_package();
 
     String toolbar_compare();
@@ -132,33 +130,11 @@ public interface EditorMessage extends Messages {
 
     String compare_apps_target();
 
-    String svn_address();
-
-    String base_url();
-
     String all_applications_header();
 
     String all_applications_close();
 
-    String all_applications_apply();
-
-    String all_applications_branch();
-
-    String all_applications_password();
-
-    String all_applications_updating();
-
-    String all_applications_commiting();
-
-    String all_applications_checking_out();
-
-    String all_applications_removing();
-
     String all_applications_retrieving_apps();
-
-    String all_applications_confirm_local_remove();
-
-    String all_applications_confirm_remove();
 
     String new_application_name();
 
@@ -166,17 +142,9 @@ public interface EditorMessage extends Messages {
 
     String new_application_title();
 
-    String new_application_guest();
-
     String new_application_locale();
 
-    String new_application_language();
-
-    String new_application_country();
-
     String new_application_version();
-
-    String new_application_branch();
 
     String new_application_exists();
 
@@ -196,21 +164,9 @@ public interface EditorMessage extends Messages {
 
     String context_menu_changes();
 
-    String application_open();
-
-    String application_name();
-
     String application_code();
 
-    String application_date();
-
-    String application_user();
-
-    String application_active();
-
     String application_title();
-
-    String application_guest();
 
     String application_css();
 
@@ -366,15 +322,9 @@ public interface EditorMessage extends Messages {
 
     String property_form_sql_by_row();
 
-    String property_form_sql_by_column();
-
     String property_form_sql_top_index();
 
     String property_form_sql_bottom_index();
-
-    String property_form_sql_left_index();
-
-    String property_form_sql_right_index();
 
     String property_form_sql_no_data();
 
@@ -390,24 +340,6 @@ public interface EditorMessage extends Messages {
 
     String property_form_sql_editing();
 
-    String property_form_group();
-
-    String property_form_group_already_exists();
-
-    String property_form_group_title();
-
-    String property_form_group_top();
-
-    String property_form_group_right();
-
-    String property_form_group_bottom();
-
-    String property_form_group_left();
-
-    String property_form_group_add();
-
-    String property_form_group_remove();
-
     String editing_application();
 
     String editing_datasource();
@@ -419,8 +351,6 @@ public interface EditorMessage extends Messages {
     String editing_schema();
 
     String editing_table();
-
-    String editing_table_view();
 
     String editing_group();
 
@@ -446,14 +376,6 @@ public interface EditorMessage extends Messages {
 
     String error_dynamic_table_delete();
 
-    String error_editor_not_found();
-
-    String error_project_not_found();
-
-    String error_version_not_found();
-
-    String error_sequence_generation();
-
     String error_import_application();
 
     String error_version_format();
@@ -462,19 +384,9 @@ public interface EditorMessage extends Messages {
 
     String error_name_format();
 
-    String error_svn_comment_format();
-
     String error_language_format();
 
     String error_country_format();
-
-    String error_format_empty();
-
-    String error_format_special();
-
-    String error_format_spaces();
-
-    String error_svn_url_format();
 
     String warn();
 
@@ -554,8 +466,6 @@ public interface EditorMessage extends Messages {
 
     String table_view_name();
 
-    String table_list_name();
-
     String table_edit();
 
     String table_synchronize();
@@ -563,10 +473,6 @@ public interface EditorMessage extends Messages {
     String table_index();
 
     String table_view_edit();
-
-    String table_generate();
-
-    String table_changed_message();
 
     String table_clear();
 
@@ -582,8 +488,6 @@ public interface EditorMessage extends Messages {
 
     String table_no_subrequest();
 
-    String table_column_index();
-
     String table_column_name();
 
     String table_column_datatype();
@@ -591,8 +495,6 @@ public interface EditorMessage extends Messages {
     String table_column_list_table();
     
     String table_column_label();
-
-    String table_column_function();
 
     String table_column_size();
 
@@ -624,19 +526,11 @@ public interface EditorMessage extends Messages {
 
     String table_db_table();
 
-    String table_primary_key_param();
-
-    String table_delete_attribute_param();
-
     String session_expired();
 
     String session_expired_on_save();
 
-    String alert_appcode_exists();
-
     String alert_editor_not_allowed();
-
-    String alert_application_not_selected();
 
     String dummy_application_locales();
 
@@ -732,50 +626,12 @@ public interface EditorMessage extends Messages {
 
     String sort_display_desc();
 
-    // >>> диаграммы
-    String chart_axis_name();
-
-    String chart_axis_title();
-
-    String chart_axis_type();
-
-    String chart_axis_position();
-
-    String chart_axis_minimum();
-
-    String chart_axis_maximum();
-
-    String chart_axis_color();
-
-    String chart_axis_show_gridlines();
-
-    String chart_axis_label_rotation_angle();
-
-    String chart_series_name();
-
-    String chart_series_type();
-
-    String chart_series_orientation();
-
-    String chart_series_primitive();
-
-    String chart_series_label_y_offset();
-
-    String chart_series_show_labels();
-
-    String chart_series_show_markers();
-
-    String chart_series_number_format();
-
-    String chart_series_datasources();
-
     String design_panel_pallete();
 
     String design_panel_components();
 
     String design_panel_events();
 
-    // <<< диаграммы
 
     String templ_save();
 
@@ -784,8 +640,6 @@ public interface EditorMessage extends Messages {
     String templ_name_message();
 
     String templ_save_cancel();
-
-    String templ_components();
 
     String templ_events();
 

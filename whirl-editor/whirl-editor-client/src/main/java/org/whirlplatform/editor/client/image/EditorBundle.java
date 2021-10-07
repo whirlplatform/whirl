@@ -317,14 +317,9 @@ public interface EditorBundle extends ClientBundleWithLookup {
     @Source("palette.png")
     ImageResource palette();
 
-    @Source("gear_blue.png")
-    ImageResource gear_blue();
 
     @Source("events.png")
     ImageResource events();
-
-    @Source("chart-small.png")
-    ImageResource chartSmall();
 
     @Source("password-field-small.png")
     ImageResource passwordFieldSmall();

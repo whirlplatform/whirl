@@ -182,17 +182,11 @@ public interface ComponentBundle extends ClientBundle {
     @Source("load.png")
     ImageResource load();
 
-    @Source("chart.png")
-    ImageResource chart();
-
     @Source("run.png")
     ImageResource run();
 
     @Source("merge.png")
     ImageResource merge();
-
-    @Source("checkout.png")
-    ImageResource checkout();
 
     @Source("commit.png")
     ImageResource commit();
