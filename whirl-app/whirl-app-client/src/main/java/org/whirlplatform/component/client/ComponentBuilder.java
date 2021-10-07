@@ -2,7 +2,11 @@ package org.whirlplatform.component.client;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
-import com.google.gwt.event.shared.*;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.util.Format;
 import com.sencha.gxt.core.client.util.Util;
@@ -14,7 +18,13 @@ import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.Hor
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
-import org.whirlplatform.component.client.event.*;
+import org.whirlplatform.component.client.event.AttachEvent;
+import org.whirlplatform.component.client.event.BlurEvent;
+import org.whirlplatform.component.client.event.CreateEvent;
+import org.whirlplatform.component.client.event.DetachEvent;
+import org.whirlplatform.component.client.event.FocusEvent;
+import org.whirlplatform.component.client.event.HideEvent;
+import org.whirlplatform.component.client.event.ShowEvent;
 import org.whirlplatform.component.client.form.GridLayoutData;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.selenium.LocatorAware;
@@ -23,7 +33,13 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Абстрактный класс - построитель компонента
@@ -115,7 +131,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     /**
      * Получение всех атрибутов
      *
-     * @return Map<        String       ,               String        >, Название и значение атрибута
+     * @return название и значение атрибута
      */
     public Map<String, DataValue> getProperties() {
         return Collections.unmodifiableMap(builderProperties);

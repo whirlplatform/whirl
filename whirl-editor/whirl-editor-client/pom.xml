@@ -99,7 +99,7 @@
         <dependency>
             <groupId>com.googlecode.mvp4g</groupId>
             <artifactId>mvp4g</artifactId>
-            <version>1.5.3</version>
+            <version>1.6.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.inject.extensions</groupId>

@@ -30,7 +30,13 @@
                     <codeserverArgs>
                         <arg>-port</arg>
                         <arg>9877</arg>
+                        <arg>-generateJsInteropExports</arg>
                     </codeserverArgs>
+                    <compilerArgs>
+                        <arg>-gen</arg>
+                        <arg>${project.build.directory}/gwt/gen</arg>
+                        <arg>-generateJsInteropExports</arg>
+                    </compilerArgs>
                     <jvmArgs>
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
                     </jvmArgs>

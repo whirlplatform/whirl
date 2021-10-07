@@ -6,8 +6,9 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
@@ -21,22 +22,19 @@ import java.util.Map;
 /**
  * Button.
  */
-@JsType(name = "Button")
+@JsType(name = "Button", namespace = "Whirl")
 public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers {
 
 	private TextButton button;
 
-	public ButtonBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public ButtonBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
-	}
-
-	public ButtonBuilder() {
-		super();
 	}
 
 	/**
 	 * Получить тип кнопки
-	 * 
+	 *
 	 * @return ComponentType
 	 */
 	@JsIgnore
@@ -85,7 +83,7 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
 			if (value != null) {
-				setHTML(value.getString());
+				setHtml(value.getString());
 				return true;
 			}
 		}
@@ -120,8 +118,7 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *
 	 * @return title
 	 */
-    @JsProperty(name = "html")
-    public String getHTML() {
+	public String getHtml() {
 		return button.getHTML();
 	}
 
@@ -130,8 +127,7 @@ public class ButtonBuilder extends ComponentBuilder implements ClickEvent.HasCli
 	 *
 	 * @param html title
 	 */
-    @JsProperty(name = "html")
-    public void setHTML(String html) {
+	public void setHtml(String html) {
 		button.setHTML(html == null ? "" : html);
 	}
 

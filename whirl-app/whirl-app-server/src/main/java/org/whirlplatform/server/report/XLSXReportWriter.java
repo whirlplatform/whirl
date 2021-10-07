@@ -1,7 +1,13 @@
 
 package org.whirlplatform.server.report;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -19,11 +25,15 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.driver.Connector;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.FormWriter;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.XPoint;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
@@ -109,7 +119,7 @@ public class XLSXReportWriter extends FormWriter {
             RowElementWrapper row = form.getRow(i);
             for (CellElementWrapper c : row.getCells()) {
                 XSSFCellStyle s = (XSSFCellStyle) workbook.createCellStyle();
-                s.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                s.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
                 if (c.getBackgroundColor() != null) {
                     String tmpColor = c.getBackgroundColor();

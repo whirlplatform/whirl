@@ -96,13 +96,6 @@
                     <moduleName>org.whirlplatform.app.Application</moduleName>
                     <moduleShortName>application</moduleShortName>
                     <skipModule>true</skipModule>
-                    <compilerArgs>
-                        <compileArg>-gen</compileArg>
-                        <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
-                    </compilerArgs>
-                    <jvmArgs>
-                        <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
-                    </jvmArgs>
                 </configuration>
             </plugin>
             <plugin>

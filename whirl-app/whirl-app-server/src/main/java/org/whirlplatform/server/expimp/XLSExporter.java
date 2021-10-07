@@ -5,8 +5,11 @@ import org.apache.empire.db.DBReader;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
@@ -70,20 +73,20 @@ public class XLSExporter extends Exporter {
         Row row = sheet.createRow(currentRow);
         int currentCell = 0;
         CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-        headerStyle.setBorderTop(CellStyle.BORDER_HAIR);
-        headerStyle.setBorderBottom(CellStyle.BORDER_HAIR);
-        headerStyle.setBorderLeft(CellStyle.BORDER_HAIR);
-        headerStyle.setBorderRight(CellStyle.BORDER_HAIR);
+        headerStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerStyle.setBorderTop(BorderStyle.HAIR);
+        headerStyle.setBorderBottom(BorderStyle.HAIR);
+        headerStyle.setBorderLeft(BorderStyle.HAIR);
+        headerStyle.setBorderRight(BorderStyle.HAIR);
         headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT
                 .getIndex());
-        headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         CellStyle resultStyle = workbook.createCellStyle();
-        resultStyle.setBorderTop(CellStyle.BORDER_HAIR);
-        resultStyle.setBorderBottom(CellStyle.BORDER_HAIR);
-        resultStyle.setBorderLeft(CellStyle.BORDER_HAIR);
-        resultStyle.setBorderRight(CellStyle.BORDER_HAIR);
+        resultStyle.setBorderTop(BorderStyle.HAIR);
+        resultStyle.setBorderBottom(BorderStyle.HAIR);
+        resultStyle.setBorderLeft(BorderStyle.HAIR);
+        resultStyle.setBorderRight(BorderStyle.HAIR);
 
         Map<FieldMetadata, CellStyle> dateStyles = new HashMap<FieldMetadata, CellStyle>();
 

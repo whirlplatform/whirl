@@ -77,7 +77,7 @@ public class HtmlBuilder extends ComponentBuilder implements ClickEvent.HasClick
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
 			if (value != null && !Util.isEmptyString(value.getString())) {
-				setHTML(value.getString());
+				setHtml(value.getString());
 			}
 			return true;
 		} else if (name.equalsIgnoreCase(PropertyType.TextDecoration.getCode())) {
@@ -116,37 +116,41 @@ public class HtmlBuilder extends ComponentBuilder implements ClickEvent.HasClick
 	}
 
 	/**
-	 * Установка необходимого контента в HtmlBuilder
-	 * @param content - String, контент
-	 */
-	public void setHTML(String content) {
-		html.setHTML(content);
-	}
-	
-	/**
 	 * Получение контента из HtmlBuilder
+	 *
 	 * @return String
 	 */
-	public String getHTML() {
+	public String getHtml() {
 		return html.getHTML();
 	}
 
 	/**
+	 * Установка необходимого контента в HtmlBuilder
+	 *
+	 * @param content - String, контент
+	 */
+	public void setHtml(String content) {
+		html.setHTML(content);
+	}
+
+	/**
 	 * Получение сущности HtmlBuilder
+	 *
 	 * @return (С) wrapper
 	 */
 	@Override
 	protected <C> C getRealComponent() {
 		return (C) wrapper;
 	}
-	
+
 	/**
 	 * Добавить обработчик нажатия на HtmlBuilder
+	 *
 	 * @param handler - ClickHandler
 	 * @return HandlerRegistration
 	 */
 	@Override
-    public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
+	public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
 		html.addStyleName("xs-link-text");
 		return ensureHandler().addHandler(ClickEvent.getType(), handler);
 	}

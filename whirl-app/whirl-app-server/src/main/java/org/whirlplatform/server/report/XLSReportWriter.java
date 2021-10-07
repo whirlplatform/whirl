@@ -5,7 +5,14 @@ import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentModel;
@@ -20,18 +27,26 @@ import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.driver.Connector;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.FormWriter;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.XPoint;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 // TODO подумать как выстроить нормальную иерархию классов для форм
 public class XLSReportWriter extends FormWriter {
@@ -119,7 +134,7 @@ public class XLSReportWriter extends FormWriter {
             RowElementWrapper row = form.getRow(i);
             for (CellElementWrapper c : row.getCells()) {
                 CellStyle s = workbook.createCellStyle();
-                s.setFillPattern(CellStyle.SOLID_FOREGROUND);
+                s.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
                 if (c.getBackgroundColor() != null) {
                     String tmpColor = c.getBackgroundColor();
@@ -133,28 +148,28 @@ public class XLSReportWriter extends FormWriter {
                 }
 
                 if (c.getBorderBottom() > 0) {
-                    s.setBorderBottom(CellStyle.BORDER_THIN);
+                    s.setBorderBottom(BorderStyle.THIN);
                     if (grid != null) {
                         s.setBottomBorderColor(getHSSFColor(grid).getIndex());
                     }
 
                 }
                 if (c.getBorderTop() > 0) {
-                    s.setBorderTop(CellStyle.BORDER_THIN);
+                    s.setBorderTop(BorderStyle.THIN);
                     if (grid != null) {
                         s.setTopBorderColor(getHSSFColor(grid).getIndex());
                     }
 
                 }
                 if (c.getBorderLeft() > 0) {
-                    s.setBorderLeft(CellStyle.BORDER_THIN);
+                    s.setBorderLeft(BorderStyle.THIN);
                     if (grid != null) {
                         s.setLeftBorderColor(getHSSFColor(grid).getIndex());
                     }
 
                 }
                 if (c.getBorderRight() > 0) {
-                    s.setBorderRight(CellStyle.BORDER_THIN);
+                    s.setBorderRight(BorderStyle.THIN);
                     if (grid != null) {
                         s.setRightBorderColor(getHSSFColor(grid).getIndex());
                     }
@@ -179,7 +194,7 @@ public class XLSReportWriter extends FormWriter {
                                 : component.getValue(PropertyType.FontWeight.getCode()).getString();
                         if (weight != null) {
                             if ("bold".equalsIgnoreCase(weight) || "bolder".equalsIgnoreCase(weight)) {
-                                font.setBoldweight((short) 25);
+                                font.setBold(true);
                             }
                         }
 

@@ -26,35 +26,55 @@ Username: whirl-admin
 
 Password: password
 
-
 ## License
 
 Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
 
 [License text](LICENSE)
 
-
 ## Developing
 
-We are using tbroyer [Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
+First we should create database to store platform data.
 
-Accordingly to this plugin Maven commands to start modules are:
+For PostgreSQL you should have local configured RDBMS on 5432 port. SQL script for creating metadata database is:
 
-**whirl-app**
-- Server
+```sql
+CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
+CREATE DATABASE whirl OWNER whirl;
+GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
+-- connect to whirl database as superuser and run next commands
+CREATE SCHEMA whirl AUTHORIZATION whirl;
+CREATE EXTENSION IF NOT EXISTS hstore;
+```
 
-        mvn tomcat7:run -pl whirl-app-server -am
-    
-- Client
+We are using GWT for developing frontend side
+with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
-        mvn gwt:codeserver -pl whirl-app-client -am
+### Main platform - whirl-app
+
+#### Server
+
+Command to start backend server is:
+
+    cd whirl-app
+    mvn tomcat7:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql
+
+#### Client
+
+Command to start frontend in dev mode is:
+
+    cd whirl-app
+    mvn gwt:codeserver -pl whirl-app-client -am
+
+After command execution application will be accessible at http://localhost:8090/app. Frontend part will be compiled on
+demand.
 
 **whirl-editor**
 
 - Server
 
         mvn tomcat7:run -pl whirl-editor-server -am
-    
+
 - Client
 
         mvn gwt:codeserver -pl whirl-editor-client -am
