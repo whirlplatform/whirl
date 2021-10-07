@@ -10,17 +10,6 @@
     </parent>
     <artifactId>whirl-theme</artifactId>
 
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>sencha-central</id>
-            <name>Sencha GPL Releases</name>
-            <url>https://maven.sencha.com/repo/gpl-release</url>
-        </repository>
-    </repositories>
-
     <properties>
         <phantomjs.version>1.9.8</phantomjs.version>
     </properties>
