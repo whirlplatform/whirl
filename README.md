@@ -12,7 +12,7 @@ You can try Whirl Platform on the our demo server.
 
 #### Application
 
-Server: http://whirlplatform.cloudjiffy.net/app=whirl-showcase
+Server: http://whirlplatform.cloudjiffy.net/app?application=whirl-showcase
 
 Username: whirl-showcase-user
 
