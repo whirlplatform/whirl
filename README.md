@@ -20,7 +20,7 @@ Password: password
 
 #### Editor
 
-Server: http://demo.whirlplatform.org/editor/
+Server: http://whirlplatform.cloudjiffy.net/editor/
 
 Username: whirl-admin
 
