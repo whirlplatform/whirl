@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-<!--        <module>whirl-theme</module>-->
+        <module>whirl-theme</module>
         <module>whirl-selenium</module>
         <module>whirl-app</module>
         <module>whirl-codemirror</module>
