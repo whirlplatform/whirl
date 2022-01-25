@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>whirl-theme</module>
+<!--        <module>whirl-theme</module>-->
         <module>whirl-selenium</module>
         <module>whirl-app</module>
         <module>whirl-codemirror</module>
@@ -41,9 +41,9 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>scijava-public</id>
-            <name>Sencha GPL Releases</name>
-            <url>http://maven.imagej.net/content/repositories/public</url>
+            <id>imagej-repository</id>
+            <name>Sencha GPL Releases is here</name>
+            <url>https://maven.imagej.net/content/repositories/public</url>
         </repository>
         <repository>
             <snapshots>
@@ -51,7 +51,7 @@
             </snapshots>
             <id>jboss-central</id>
             <name>JBoss public</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public-jboss</url>
         </repository>
         <repository>
             <snapshots>

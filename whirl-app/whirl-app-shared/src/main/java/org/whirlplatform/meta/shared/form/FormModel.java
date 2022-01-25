@@ -79,7 +79,7 @@ public class FormModel implements Serializable, IsSerializable {
 	}
 
 	@JsonProperty
-	public void setRows(Collection<FormRowModel> rows) {
+	void setRows(Collection<FormRowModel> rows) {
 		rowMap.clear();
 		for (FormRowModel row : rows) {
 			addRow(row);
@@ -91,7 +91,7 @@ public class FormModel implements Serializable, IsSerializable {
 	}
 
 	@JsonProperty
-	public void setColumns(Collection<FormColumnModel> columns) {
+	void setColumns(Collection<FormColumnModel> columns) {
 		colMap.clear();
 		for (FormColumnModel col : columns) {
 			addColumn(col);

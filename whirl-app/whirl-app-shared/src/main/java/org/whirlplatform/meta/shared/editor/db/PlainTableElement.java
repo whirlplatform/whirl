@@ -1,5 +1,6 @@
 package org.whirlplatform.meta.shared.editor.db;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ public class PlainTableElement extends DatabaseTableElement {
 
     private PlainTableElement clonedTable;
     private Set<PlainTableElement> clones = new HashSet<PlainTableElement>();
-
-    private boolean simple;
 
     public PlainTableElement() {
 
@@ -66,6 +65,11 @@ public class PlainTableElement extends DatabaseTableElement {
 
     public Collection<TableColumnElement> getColumns() {
         return Collections.unmodifiableSet(columns);
+    }
+
+    @JsonProperty
+    void setColumns(Set<TableColumnElement> columns) {
+        this.columns = columns;
     }
 
     public List<TableColumnElement> getSortedColumns() {
@@ -134,8 +138,9 @@ public class PlainTableElement extends DatabaseTableElement {
         return clones;
     }
 
-    public boolean hasDeleteColumn() {
-        return deleteColumn != null;
+    @JsonProperty
+    void setClones(Set<PlainTableElement> clones) {
+        this.clones = clones;
     }
 
     public TableColumnElement getIdColumn() {

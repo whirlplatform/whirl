@@ -1,5 +1,6 @@
 package org.whirlplatform.meta.shared.editor.db;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
@@ -60,11 +61,16 @@ public class SchemaElement extends AbstractElement {
 	}
 
 	public Collection<DatabaseTableElement> getTables() {
-        return Collections.unmodifiableSet(tables);
+		return Collections.unmodifiableSet(tables);
+	}
+
+	@JsonProperty
+	void setTables(Set<DatabaseTableElement> tables) {
+		this.tables = tables;
 	}
 
 	@Override
-    public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+	public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
 		visitor.visit(ctx, this);
 	}
 

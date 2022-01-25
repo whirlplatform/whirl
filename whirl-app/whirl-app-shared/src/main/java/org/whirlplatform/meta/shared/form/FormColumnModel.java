@@ -17,10 +17,6 @@ public class FormColumnModel implements Serializable, IsSerializable, Cloneable 
 
     private double width = -1;
 
-//	@JsonManagedReference
-//	@JsonIdentityReference
-//	private Set<FormCellModel> cells = new HashSet<FormCellModel>();
-
     protected FormColumnModel() {
     }
 
@@ -43,10 +39,6 @@ public class FormColumnModel implements Serializable, IsSerializable, Cloneable 
     public void setWidth(double width) {
         this.width = width;
     }
-
-//	public void addCell(FormCellModel cell) {
-//		cells.add(cell);
-//	}
 
     @Override
     public int hashCode() {

@@ -1,5 +1,6 @@
 package org.whirlplatform.meta.shared.editor.db;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.DatabaseEvolution;
@@ -77,6 +78,11 @@ public class DataSourceElement extends AbstractElement {
 
 	public Collection<SchemaElement> getSchemas() {
 		return Collections.unmodifiableSet(schemas);
+	}
+
+	@JsonProperty
+	void setSchemas(Set<SchemaElement> schemas) {
+		this.schemas = schemas;
 	}
 
 	public SchemaElement getSchema(String schemaName) {

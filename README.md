@@ -1,8 +1,14 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
+<p align="center">
+  <img src="logo.png" />
+</p>
+
 # Whrl Platform
 
-The Whirl Platform is application builder software for database developers that simplifying of creating web applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building application didn't require to write application server or client side logic, all logic can be done database side.
+The Whirl Platform is application builder software for database developers that simplifying of creating web
+applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building
+application didn't require to write application server or client side logic, all logic can be done database side.
 
 Platform is on production-ready state and used in more than twenty closed source commercial applications.
 
@@ -69,12 +75,38 @@ Command to start frontend in dev mode is:
 After command execution application will be accessible at http://localhost:8090/app. Frontend part will be compiled on
 demand.
 
-**whirl-editor**
+### Application editor - whirl-editor
 
-- Server
+#### Server
 
         mvn tomcat7:run -pl whirl-editor-server -am
 
-- Client
+#### Client
 
         mvn gwt:codeserver -pl whirl-editor-client -am
+
+### Troubleshooting
+
+If you experience the following issue while initializing maven project:
+
+    Blocked mirror for repositories: [jboss-central (http://repository.jboss.org/nexus/content/groups/public-jboss, default, releases...
+
+Add following to your maven settings.xml:
+
+```xml
+
+<mirrors>
+    <mirror>
+        <id>imagej-repository-mirror</id>
+        <name>ImageJ repository mirror</name>
+        <url>https://maven.imagej.net/content/repositories/public</url>
+        <mirrorOf>imagej-repository</mirrorOf>
+    </mirror>
+    <mirror>
+        <id>jboss-repository-mirror</id>
+        <name>JBoss Public Nexus Repository</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <mirrorOf>jboss-central</mirrorOf>
+    </mirror>
+</mirrors>
+```

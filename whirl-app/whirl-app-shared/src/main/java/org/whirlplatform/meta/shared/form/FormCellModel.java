@@ -80,9 +80,17 @@ public class FormCellModel implements Serializable, Cloneable {
 	public int getBorderTop() {
 		return borderTop;
 	}
-	
+
+	void setBorderTop(int borderTop) {
+		this.borderTop = borderTop;
+	}
+
 	public String getBorderTopColor() {
 		return borderTopColor;
+	}
+
+	void setBorderTopColor(String borderTopColor) {
+		this.borderTopColor = borderTopColor;
 	}
 
 	public void setBorderTop(int borderTop, String borderTopColor) {
@@ -93,9 +101,17 @@ public class FormCellModel implements Serializable, Cloneable {
 	public int getBorderRight() {
 		return borderRight;
 	}
-	
+
+	void setBorderRight(int borderRight) {
+		this.borderRight = borderRight;
+	}
+
 	public String getBorderRightColor() {
 		return borderRightColor;
+	}
+
+	void setBorderRightColor(String borderRightColor) {
+		this.borderRightColor = borderRightColor;
 	}
 
 	public void setBorderRight(int borderRight, String borderRightColor) {
@@ -106,9 +122,17 @@ public class FormCellModel implements Serializable, Cloneable {
 	public int getBorderBottom() {
 		return borderBottom;
 	}
-	
+
+	void setBorderBottom(int borderBottom) {
+		this.borderBottom = borderBottom;
+	}
+
 	public String getBorderBottomColor() {
 		return borderBottomColor;
+	}
+
+	void setBorderBottomColor(String borderBottomColor) {
+		this.borderBottomColor = borderBottomColor;
 	}
 
 	public void setBorderBottom(int borderBottom, String borderBottomColor) {
@@ -119,9 +143,17 @@ public class FormCellModel implements Serializable, Cloneable {
 	public int getBorderLeft() {
 		return borderLeft;
 	}
-	
+
+	void setBorderLeft(int borderLeft) {
+		this.borderLeft = borderLeft;
+	}
+
 	public String getBorderLeftColor() {
 		return borderLeftColor;
+	}
+
+	void setBorderLeftColor(String borderLeftColor) {
+		this.borderLeftColor = borderLeftColor;
 	}
 
 	public void setBorderLeft(int borderLeft, String borderLeftColor) {
@@ -163,4 +195,5 @@ public class FormCellModel implements Serializable, Cloneable {
 		other.component = newComponent;
 		return other;
 	}
+
 }

@@ -3,6 +3,7 @@ package org.whirlplatform.meta.shared.form;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -49,6 +50,11 @@ public class FormRowModel implements Serializable, IsSerializable, Cloneable {
 
     public Set<FormCellModel> getCells() {
         return cells;
+    }
+
+    @JsonProperty
+    void setCells(Set<FormCellModel> cells) {
+        this.cells = cells;
     }
 
     @Override
