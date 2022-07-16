@@ -379,51 +379,51 @@ public class DataServiceImpl implements DataService, DirectRestService {
             file.delete();
         }
 
-		// Дочернее событие добавляется в EventHelper.onResult
-		// выполняем подсобытие если оно серверное и не содержит параметров
-		// которые надо забирать с клиента
-		// TODO на данный момент если событие содержит выходные параметры как
-		// файл, то файлы не возвращаются обратно на сервер
-		if (result.getNextEventCode() != null) {
-			EventMetadata nextEvent = connector().getNextEvent(event, result.getNextEventCode(),
-					getApplicationUser(token));
-			result.setNextEvent(nextEvent);
-			if (nextEvent != null) {
-				// проверяем, что есть праметры которые надо достать с клиента
-				boolean hasClientParameter = false;
-				ArrayList<EventParameter> allParams = new ArrayList<>(result.getParametersMap().values());
-				allParams.addAll(nextEvent.getParametersList());
+        // Дочернее событие добавляется в EventHelper.onResult
+        // выполняем подсобытие если оно серверное и не содержит параметров
+        // которые надо забирать с клиента
+        // TODO на данный момент если событие содержит выходные параметры как
+        // файл, то файлы не возвращаются обратно на сервер
+        if (result.getNextEventCode() != null) {
+            EventMetadata nextEvent = connector().getNextEvent(event, result.getNextEventCode(),
+                    getApplicationUser(token));
+            result.setNextEvent(nextEvent);
+            if (nextEvent != null) {
+                // проверяем, что есть праметры которые надо достать с клиента
+                boolean hasClientParameter = false;
+                ArrayList<EventParameter> allParams = new ArrayList<>(result.getParametersMap().values());
+                allParams.addAll(nextEvent.getParametersList());
 
-				for (EventParameter p : allParams) {
-					ParameterType t = p.getType();
-					hasClientParameter = t == ParameterType.COMPONENT || t == ParameterType.COMPONENTCODE
-							|| t == ParameterType.STORAGE;
-					if (hasClientParameter) {
-						break;
-					}
-				}
+                for (EventParameter p : allParams) {
+                    ParameterType t = p.getType();
+                    hasClientParameter = t == ParameterType.COMPONENT || t == ParameterType.COMPONENTCODE
+                            || t == ParameterType.STORAGE;
+                    if (hasClientParameter) {
+                        break;
+                    }
+                }
                 boolean isNextServerEvent = nextEvent.getType() == EventType.DatabaseFunction
                         || nextEvent.getType() == EventType.Java;
-				// если событие серверное и нет параметров с клиента, то можем
-				// выполнить сразу
-				if (nextEvent != null && isNextServerEvent && !hasClientParameter) {
-					result = executeServer(token, nextEvent, new ListHolder<DataValue>(extractValues(result)));
-					// если след.событие серверное, но есть параметры с клиента.
-				} else if (nextEvent != null && isNextServerEvent && hasClientParameter) {
-					Map<String, DataValue> nonSerializableParams = new HashMap<>();
-					for (EventParameter eventParameter : result.getParametersMap().values()) {
-						DataValue dataValue = eventParameter.getData();
-						if (dataValue != null && dataValue.getType() == DataType.FILE) {
-							FileValue fileValue = dataValue.getFileValue();
-							if (fileValue != null) {
-								nonSerializableParams.put(fileValue.getTempId(), dataValue);
-							}
-						}
-					}
-					// если есть несериализуемые параметры, сохранить их в
-					// сессии.
-					if (!nonSerializableParams.isEmpty()) {
-						session.setAttribute(DEFINED_NEXT_EVENT, nextEvent.getId());
+                // если событие серверное и нет параметров с клиента, то можем
+                // выполнить сразу
+                if (nextEvent != null && isNextServerEvent && !hasClientParameter) {
+                    result = executeServer(token, nextEvent, new ListHolder<DataValue>(extractValues(result)));
+                    // если след.событие серверное, но есть параметры с клиента.
+                } else if (nextEvent != null && isNextServerEvent && hasClientParameter) {
+                    Map<String, DataValue> nonSerializableParams = new HashMap<>();
+                    for (EventParameter eventParameter : result.getParametersMap().values()) {
+                        DataValue dataValue = eventParameter.getData();
+                        if (dataValue != null && dataValue.getType() == DataType.FILE) {
+                            FileValue fileValue = dataValue.getFileValue();
+                            if (fileValue != null) {
+                                nonSerializableParams.put(fileValue.getTempId(), dataValue);
+                            }
+                        }
+                    }
+                    // если есть несериализуемые параметры, сохранить их в
+                    // сессии.
+                    if (!nonSerializableParams.isEmpty()) {
+                        session.setAttribute(DEFINED_NEXT_EVENT, nextEvent.getId());
 						session.setAttribute(NON_SERIALAZABLE_PARAMS, nonSerializableParams);
 					}
 

@@ -39,35 +39,35 @@ public class FormCellModel implements Serializable, Cloneable {
     }
 
     public FormCellModel(String id) {
-		this.id = id;
-	}
+        this.id = id;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public FormRowModel getRow() {
+    public FormRowModel getRow() {
 		return row;
-	}
+    }
 
-	public void setRow(FormRowModel row) {
-		this.row = row;
-	}
+    public void setRow(FormRowModel row) {
+        this.row = row;
+    }
 
-	public FormColumnModel getColumn() {
-		return col;
-	}
+    public FormColumnModel getColumn() {
+        return col;
+    }
 
-	public void setColumn(FormColumnModel col) {
-		this.col = col;
-	}
+    public void setColumn(FormColumnModel col) {
+        this.col = col;
+    }
 
-	public Integer getRowSpan() {
-		return rowSpan == null ? 1 : rowSpan;
+    public Integer getRowSpan() {
+        return rowSpan == null ? 1 : rowSpan;
     }
 
     public void setRowSpan(Integer rowSpan) {
@@ -179,24 +179,24 @@ public class FormCellModel implements Serializable, Cloneable {
     }
 
     public void setComponent(ComponentModel component) {
-		this.component = component;
-	}
+        this.component = component;
+    }
 
-	protected FormCellModel clone() {
-		FormCellModel other = new FormCellModel();
-		other.id = id;
-		other.rowSpan = rowSpan;
-		other.colSpan = colSpan;
-		other.borderTop = borderTop;
-		other.borderBottom = borderBottom;
-		other.borderRight = borderRight;
-		other.borderLeft = borderLeft;
-		other.borderTopColor = borderTopColor;
-		other.borderRightColor = borderRightColor;
-		other.borderBottomColor = borderBottomColor;
-		other.borderLeftColor = borderLeftColor;
-		other.color = color;
-		ComponentModel newComponent = component.clone();
+    protected FormCellModel clone() {
+        FormCellModel other = new FormCellModel();
+        other.id = id;
+        other.rowSpan = rowSpan;
+        other.colSpan = colSpan;
+        other.borderTop = borderTop;
+        other.borderBottom = borderBottom;
+        other.borderRight = borderRight;
+        other.borderLeft = borderLeft;
+        other.borderTopColor = borderTopColor;
+        other.borderRightColor = borderRightColor;
+        other.borderBottomColor = borderBottomColor;
+        other.borderLeftColor = borderLeftColor;
+        other.color = color;
+        ComponentModel newComponent = component.clone();
 		other.component = newComponent;
 		return other;
 	}

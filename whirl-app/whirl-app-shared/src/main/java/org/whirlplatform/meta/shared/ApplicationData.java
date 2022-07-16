@@ -30,18 +30,18 @@ public class ApplicationData implements Serializable {
 
 	private String headerHtml;
 
-	private boolean blocked = false;
+    private boolean blocked = false;
 
-	private Map<String, List<String>> preferences = new HashMap<>();
+    private Map<String, List<String>> preferences = new HashMap<>();
 
-	private List<String> scripts = new ArrayList<String>();
+    private List<String> scripts = new ArrayList<String>();
 
-	private List<String> cssList = new ArrayList<String>();
+    private List<String> cssList = new ArrayList<String>();
 
-	private Map<String, List<EventMetadata>> events = new HashMap<String, List<EventMetadata>>();
+    private Map<String, List<EventMetadata>> events = new HashMap<String, List<EventMetadata>>();
 
-	public ApplicationData() {
-	}
+    public ApplicationData() {
+    }
 
     public ApplicationData(String rootComponentId, String name, String logoutPageUrl) {
         this.rootComponentId = rootComponentId;

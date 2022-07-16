@@ -52,26 +52,26 @@ public class SchemaElement extends AbstractElement {
         if (!tables.contains(table)) {
             return;
         }
-		// удаление прав
-		if (getDataSource() != null
-				&& getDataSource().getApplication() != null) {
+        // удаление прав
+        if (getDataSource() != null
+                && getDataSource().getApplication() != null) {
             ApplicationElement application = dataSource.getApplication();
-			application.removeTableColumnRights(table);
-			application.removeTableRights(table);
-		}
-		tables.remove(table);
-		table.setSchema(null);
-	}
+            application.removeTableColumnRights(table);
+            application.removeTableRights(table);
+        }
+        tables.remove(table);
+        table.setSchema(null);
+    }
 
-	public Collection<DatabaseTableElement> getTables() {
-		return Collections.unmodifiableSet(tables);
-	}
+    public Collection<DatabaseTableElement> getTables() {
+        return Collections.unmodifiableSet(tables);
+    }
 
-	void setTables(Set<DatabaseTableElement> tables) {
-		this.tables = tables;
-	}
+    void setTables(Set<DatabaseTableElement> tables) {
+        this.tables = tables;
+    }
 
-	@Override
+    @Override
 	public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
 		visitor.visit(ctx, this);
 	}
