@@ -109,13 +109,13 @@ public class ReportManager {
     private FormWriter createWriter(String format, Report report, FormElementWrapper form,
                                     Collection<DataValue> params) {
         if (AppConstant.REPORT_FORMAT_XLSX.equalsIgnoreCase(format)) {
-            return new XLSXReportWriter(connector, connectionProvider, report, form, params, user);
+            return new XLSXReportWriter(connectionProvider, report, form, params, user);
         } else if (AppConstant.REPORT_FORMAT_XLS.equalsIgnoreCase(format)) {
-            return new XLSReportWriter(connector, connectionProvider, report, form, params, user);
+            return new XLSReportWriter(connectionProvider, report, form, params, user);
         } else if (AppConstant.REPORT_FORMAT_HTML.equalsIgnoreCase(format)) {
-            return new HTMLReportWriter(connector, connectionProvider, form, params, user);
+            return new HTMLReportWriter(connectionProvider, form, params, user);
         } else if (AppConstant.REPORT_FORMAT_CSV.equalsIgnoreCase(format)) {
-            return new CSVReportWriter(connector, connectionProvider, form, params, user);
+            return new CSVReportWriter(connectionProvider, form, params, user);
         }
         throw new UnsupportedOperationException("Roport format not supported: " + format);
     }

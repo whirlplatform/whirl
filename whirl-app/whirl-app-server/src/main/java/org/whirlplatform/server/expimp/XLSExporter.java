@@ -153,17 +153,13 @@ public class XLSExporter extends Exporter {
                 if (value != null) {
                     if (value instanceof String) {
                         cell.setCellValue((String) value);
-                        cell.setCellType(Cell.CELL_TYPE_STRING);
                     } else if (value instanceof Timestamp) {
                         Timestamp time = (Timestamp) value;
-                        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                         cell.setCellStyle(dateStyles.get(f));
                         cell.setCellValue(new Date(time.getTime()));
                     } else if (value instanceof Integer) {
-                        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                         cell.setCellValue((Integer) value);
                     } else if (value instanceof Double) {
-                        cell.setCellType(Cell.CELL_TYPE_NUMERIC);
                         cell.setCellValue((Double) value);
                     } else if (value instanceof Boolean) {
                         cell.setCellValue((Boolean) value);
@@ -175,10 +171,8 @@ public class XLSExporter extends Exporter {
                         while ((str = re.readLine()) != null) {
                             content += (content.equals("") ? "" : "\n") + str;
                         }
-                        cell.setCellType(Cell.CELL_TYPE_STRING);
                         cell.setCellValue(content);
                     } else {
-                        cell.setCellType(Cell.CELL_TYPE_STRING);
                         cell.setCellValue(String.valueOf(value));
                     }
                 }

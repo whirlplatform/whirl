@@ -31,6 +31,8 @@ public interface EventParameter extends Serializable {
 
     void setData(DataValue data);
 
+    void setDataWithCode(DataValue data);
+
     DataValue getData();
 
     void setCode(String code);

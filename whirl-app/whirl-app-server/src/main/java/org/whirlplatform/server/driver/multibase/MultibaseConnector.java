@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
 
 @Singleton
 public class MultibaseConnector extends AbstractConnector {
@@ -329,7 +330,7 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     public FormModel getForm(String formId, List<DataValue> params, ApplicationUser user) throws CustomException {
-        try (ClientFormWriter writer = new ClientFormWriter(this, connectionProvider,
+        try (ClientFormWriter writer = new ClientFormWriter(connectionProvider,
                 getFormRepresent(formId, params, user), params, user)) {
             writer.write(null);
             FormModel model = writer.getFormModel();
@@ -555,16 +556,30 @@ public class MultibaseConnector extends AbstractConnector {
     // }
 
     @Override
-    public EventResult executeDatabase(EventMetadata event, List<DataValue> params, ApplicationUser user) {
+    public EventResult executeDBFunction(EventMetadata event, List<DataValue> params, ApplicationUser user) {
+        return executeDB(event, params, user,
+                (eventConnection, holder) ->
+                        eventConnection.getDataSourceDriver().createEventExecutor()
+                                .executeFunction(holder.getKey(), holder.getValue()));
+    }
+
+    @Override
+    public EventResult executeSQL(EventMetadata event, List<DataValue> params, ApplicationUser user) {
+        return executeDB(event, params, user,
+                (eventConnection, holder) ->
+                        eventConnection.getDataSourceDriver().createEventExecutor()
+                                .executeQuery(holder.getKey(), holder.getValue()));
+    }
+
+    private EventResult executeDB(EventMetadata event, List<DataValue> params, ApplicationUser user,
+                                  BiFunction<ConnectionWrapper, Entry<EventElement, List<DataValue>>, EventResult> func) {
         EventElement eventElement = user.getApplication().findEventElementById(event.getId());
         if (eventElement != null) {
             List<DataValue> splittedParameters = splitParameters(params);
             String alias = eventElement.getDataSource() != null ? eventElement.getDataSource().getAlias()
                     : SrvConstant.DEFAULT_CONNECTION;
             try (ConnectionWrapper eventConnection = aliasConnection(alias, user)) {
-
-                return eventConnection.getDataSourceDriver().createEventExecutor().executeFunction(eventElement,
-                        splittedParameters);
+                return func.apply(eventConnection, new AbstractMap.SimpleEntry<>(eventElement, splittedParameters));
             } catch (SQLException e) {
                 _log.error("Error while loading event data: " + eventElement.getName(), e);
                 throw new CustomException("Error while loading event data: " + eventElement.getName());

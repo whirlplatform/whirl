@@ -21,8 +21,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <gwt.version>2.9.0</gwt.version>
-        <gwt.style>OBF</gwt.style>
+        <gwt.version>2.8.2</gwt.version>
+        <gwt.style>PRETTY</gwt.style>
         <gwt.failOnError>true</gwt.failOnError>
         <gwt.logLevel>INFO</gwt.logLevel>
         <gwt.inplace>false</gwt.inplace>
@@ -33,7 +33,7 @@
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>
         <java.client.version>1.8</java.client.version>
-        <gwt.maven.plugin.version>1.0-rc-8</gwt.maven.plugin.version>
+        <gwt.maven.plugin.version>1.0.1</gwt.maven.plugin.version>
     </properties>
 
     <repositories>
@@ -69,7 +69,7 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <!-- Do not upgrade past 3.1 to avoid triggering https://issues.apache.org/jira/browse/MSOURCES-95 -->
-                    <version>3.1</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <source>${java.source.version}</source>
                         <target>${java.target.version}</target>
@@ -87,7 +87,7 @@
                 <plugin>
                     <groupId>net.ltgt.gwt.maven</groupId>
                     <artifactId>gwt-maven-plugin</artifactId>
-                    <version>1.0-rc-9</version>
+                    <version>${gwt.maven.plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
                         <sourceLevel>${java.source.version}</sourceLevel>
@@ -256,17 +256,22 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.9.8</version>
+                <version>2.13.3</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.9.10.8</version>
+                <version>2.13.3</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.9.8</version>
+                <version>2.13.3</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>2.1.1</version>
             </dependency>
 
             <!-- Guice -->
@@ -291,7 +296,7 @@
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
-                <version>3.6.3</version>
+                <version>4.12.0</version>
             </dependency>
 
             <!-- Test -->
@@ -418,6 +423,19 @@
             </dependencies>
         </profile>
 
+        <!-- MySQL -->
+        <profile>
+            <id>jdbc-mysql</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>8.0.29</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
         <!-- Configuration examples -->
         <!-- Start main configuration -->
         <profile>
@@ -497,6 +515,40 @@
             </properties>
         </profile>
         <!-- End Oracle configuration -->
+
+        <!-- Start MySQL configuration -->
+        <profile>
+            <!-- Configuration example for MySQL Database -->
+            <id>config-mysql</id>
+            <properties>
+                <!-- Metadata datasource parameters -->
+
+                <!-- Whirl datasource driver -->
+                <context.db.metadata.conectionWrapperClass>
+                    org.whirlplatform.server.driver.multibase.fetch.mysql.MySQLConnectionWrapper
+                </context.db.metadata.conectionWrapperClass>
+
+                <!-- Database JDBC driver class -->
+                <context.db.metadata.driverClass>com.mysql.cj.jdbc.Driver</context.db.metadata.driverClass>
+
+                <!-- JDBC connection URL -->
+                <context.db.metadata.connectionURL>jdbc:mysql://localhost:3306/whirl
+                </context.db.metadata.connectionURL>
+
+                <!-- Database username -->
+                <context.db.metadata.username>whirl</context.db.metadata.username>
+
+                <!-- Database passowrd -->
+                <context.db.metadata.password>password</context.db.metadata.password>
+
+                <!-- Database schema to work to -->
+                <context.db.metadata.schema>whirl</context.db.metadata.schema>
+
+                <!-- Defines that database objects will be created on startup -->
+                <context.db.metadata.creatDBObjects>true</context.db.metadata.creatDBObjects>
+            </properties>
+        </profile>
+        <!-- End MySQL configuration -->
 
         <!-- Jelastic deployment profile -->
         <profile>

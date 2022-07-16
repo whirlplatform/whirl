@@ -305,7 +305,6 @@ public class EventElement extends AbstractElement {
 		meta.setCreateNew(event.isCreateNew());
 		for (EventParameterElement param : event.getParameters()) {
 			EventParameterImpl metaParam = new EventParameterImpl(param.getType());
-			metaParam.setCode(param.getCode());
 			metaParam.setComponentId(param.getComponentId());
 			metaParam.setComponentCode(param.getComponentCode());
 			metaParam.setStorageCode(param.getStorageCode());
@@ -315,7 +314,7 @@ public class EventElement extends AbstractElement {
 			// value.setCode(param.getCode());
 			// metaParam.setData(value);
 			// }
-			metaParam.setData(param.getValue());
+			metaParam.setDataWithCode(param.getValue());
 
 			meta.addParameter(metaParam);
 		}

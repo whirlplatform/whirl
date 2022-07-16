@@ -285,7 +285,7 @@ public class EventView extends ContentPanel implements IEventView {
         hideAll();
 
         switch (type) {
-            case Database:
+            case DatabaseFunction:
                 schema.setVisible(true);
                 schemaLabel.setVisible(true);
                 function.setVisible(true);
@@ -316,6 +316,11 @@ public class EventView extends ContentPanel implements IEventView {
                 source.showEditor(Config.forJavaScript());
                 source.getEditor().setAutoCompletionHandler(
                         new JavaScriptAutoCompletionHandler());
+                sourceLabel.setVisible(true);
+                break;
+            case DatabaseSQL:
+                source.setVisible(true);
+                source.showEditor(Config.forSql());
                 sourceLabel.setVisible(true);
                 break;
         }

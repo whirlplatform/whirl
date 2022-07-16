@@ -1,4 +1,4 @@
-package org.whirlplatform.server.driver.multibase.fetch.postgresql;
+package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
@@ -7,16 +7,14 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import org.whirlplatform.server.driver.multibase.fetch.base.AbstractPlainDataFetcher;
-import org.whirlplatform.server.driver.multibase.fetch.base.PlainTableFetcherHelper;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-public class PostgrePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
+public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
-    private static Logger _log = LoggerFactory.getLogger(PostgrePlainDataFetcher.class);
+    private static Logger _log = LoggerFactory.getLogger(BasePlainDataFetcher.class);
 
-    public PostgrePlainDataFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
+    public BasePlainDataFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
         super(connection, fetcher);
     }
 
@@ -90,17 +88,4 @@ public class PostgrePlainDataFetcher extends AbstractPlainDataFetcher implements
         return reader;
     }
 
-    // TODO не используется
-    //    public int getTableRowsCount(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-    //        int result = 0;
-    //        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
-    //        temp.prepare(metadata, table, loadConfig);
-    //        DBCommand countCmd = createCountCommand(temp, loadConfig.isAll());
-    //        DBReader countReader = createAndOpenReader(countCmd);
-    //        if (countReader.moveNext()) {
-    //            result = countReader.getInt(temp.countColumn);
-    //        }
-    //        countReader.close();
-    //        return result;
-    //    }
 }

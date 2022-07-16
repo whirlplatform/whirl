@@ -12,7 +12,6 @@ import org.whirlplatform.meta.shared.form.FormModel;
 import org.whirlplatform.meta.shared.form.FormRowModel;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.driver.Connector;
 import org.whirlplatform.server.login.ApplicationUser;
 
 import java.io.IOException;
@@ -25,9 +24,9 @@ public class ClientFormWriter extends FormWriter {
 
     private FormModel finalForm;
 
-    public ClientFormWriter(Connector connector, ConnectionProvider connectionProvider, FormElementWrapper form,
-            Collection<DataValue> startParams, ApplicationUser user) {
-        super(connector, connectionProvider, form, startParams, user);
+    public ClientFormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
+                            Collection<DataValue> startParams, ApplicationUser user) {
+        super(connectionProvider, form, startParams, user);
         finalForm = new FormModel(form.getId());
     }
 

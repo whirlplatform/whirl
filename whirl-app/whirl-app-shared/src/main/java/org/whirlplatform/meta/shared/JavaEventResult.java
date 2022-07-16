@@ -21,7 +21,7 @@ public class JavaEventResult implements EventResult, Serializable {
 
 	private transient Command command;
 
-	private TreeMap<Integer, EventParameter> parameters = new TreeMap<Integer, EventParameter>();
+	private TreeMap<Integer, EventParameter> parameters = new TreeMap<>();
 
 	public JavaEventResult() {
 	}
@@ -139,13 +139,12 @@ public class JavaEventResult implements EventResult, Serializable {
 			if (paramType == ParameterType.COMPONENTCODE) {
 				parameter.setComponentCode(component);
 			} else {
-				DataValue fieldValue = new DataValueImpl(type);
-				fieldValue.setCode(code);
-				fieldValue.setValue(DataValueImpl.convertValueFromString(value,
-						title, type));
-				parameter.setData(fieldValue);
-				parameter.setCode(code);
-			}
+                DataValue fieldValue = new DataValueImpl(type);
+                fieldValue.setCode(code);
+                fieldValue.setValue(DataValueImpl.convertValueFromString(value,
+                        title, type));
+                parameter.setDataWithCode(fieldValue);
+            }
 
 			eventResult.setParameter(index, parameter);
 		}

@@ -1,0 +1,1 @@
+DROP FUNCTION wrl_as_result

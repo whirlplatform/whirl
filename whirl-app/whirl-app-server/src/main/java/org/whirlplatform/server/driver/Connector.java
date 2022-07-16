@@ -19,28 +19,6 @@ import java.util.Map;
 
 public interface Connector {
 
-    enum ModifyType {
-        UPDATE("17667", "Редактирование записи  в таблице"), INSERT("17664",
-                "Добавление записи в таблицу"), DELETE("17669", "Удаление записи из таблицы");
-
-        String id;
-        String name;
-
-        ModifyType(String id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-    }
-
     ApplicationData getApplication(String applicationCode, Version version);
 
     ApplicationData getApplication(String applicationCode, Version version, ApplicationUser user);
@@ -102,7 +80,12 @@ public interface Connector {
     /**
      * Выполняет заданную в событии процедуру в базе данных
      */
-    EventResult executeDatabase(EventMetadata event, List<DataValue> params, ApplicationUser user);
+    EventResult executeDBFunction(EventMetadata event, List<DataValue> params, ApplicationUser user);
+
+    /**
+     * Выполняет заданный в собитии запрос в БД.
+     */
+    EventResult executeSQL(EventMetadata event, List<DataValue> params, ApplicationUser user);
 
     /**
      * Ищет событие в приложении пользователя по коду или id
@@ -130,8 +113,4 @@ public interface Connector {
      */
     AbstractTableElement findTableElement(String tableId, ApplicationUser user);
 
-//	/**
-//	 * Находит тип данных ключевого поля по ID таблицы
-//	 */
-//	DataType getIdColumnType(AbstractTableElement tableElement, ApplicationUser user);
 }

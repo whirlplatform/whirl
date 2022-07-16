@@ -1,7 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
 import org.whirlplatform.meta.shared.EventResult;
-import org.whirlplatform.meta.shared.JavaEventResult;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
@@ -10,6 +9,7 @@ import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.db.DBConnection;
 import org.whirlplatform.server.driver.multibase.fetch.ParamsUtil;
+import org.whirlplatform.server.driver.multibase.fetch.QueryExecutor;
 import org.whirlplatform.server.driver.multibase.fetch.base.AbstractEventExecutor;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
@@ -18,37 +18,29 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.DBFunctionMessage;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.monitor.RunningEvent;
-import org.whirlplatform.server.utils.ServerJSONConverter;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.InputStream;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.ArrayList;
+import java.sql.*;
 import java.util.List;
-import java.util.Map;
 
 public class OracleEventExecutor extends AbstractEventExecutor {
     private static Logger _log = LoggerFactory.getLogger(OracleEventExecutor.class);
 
-    public OracleEventExecutor(ConnectionWrapper connection) {
-        super(connection);
+    public OracleEventExecutor(ConnectionWrapper connection, QueryExecutor queryExecutor) {
+        super(connection, queryExecutor);
     }
 
     @Override
     public EventResult executeFunction(EventElement eventElement, List<DataValue> paramsDataValue) {
-        String error = null;
         String schema = eventElement.getSchema();
         String function = eventElement.getFunction();
 
         if (schema != null && !schema.isEmpty()) {
             function = schema + "." + function;
         }
-        List<Object> params = new ArrayList<Object>();
+        List<Object> params;
         if (eventElement.isNamed()) {
             params = ParamsUtil.namedFunctionParams(paramsDataValue, getUser());
         } else {
@@ -57,7 +49,6 @@ public class OracleEventExecutor extends AbstractEventExecutor {
 
         _log.debug("Execute function:/nFUNCTION = " + function + "	params = " + params);
         CallableStatement stmt = null;
-        String sql = null;
 
         DBFunctionMessage m = new DBFunctionMessage(getUser(), eventElement, paramsDataValue);
 
@@ -78,21 +69,9 @@ public class OracleEventExecutor extends AbstractEventExecutor {
             }
         };
         // Чтобы можно было дописать ошибку обернул в еще один try
+        String sql = makeCallQuery(function, params);
         try (Profile p = new ProfileImpl(m, ev)) {
             try {
-                sql = "{? = call " + function;
-                if (function.indexOf("?") == -1) {
-                    sql += "(";
-                    for (int i = 0; i < params.size(); i++) {
-                        sql += "?,";
-                    }
-
-                    sql = sql.substring(0, sql.length() - 1);
-                    if (params.size() != 0)
-                        sql += ")";
-                }
-                sql += " }";
-
                 stmt = getConnection().prepareCall(sql);
                 stmt.setQueryTimeout(DBConnection.STMT_TIMEOUT);
                 stmt.registerOutParameter(1, Types.CLOB);
@@ -125,7 +104,7 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                         } catch (SQLException e) {
                             // если не выйдет, и передаваемый объект - строка,
                             // попробуем передать через ридер
-                            // на случай, если параметр - клоб, а длина строки >
+                            // на случай, если параметр - clob, а длина строки >
                             // 32768
                             if (v instanceof String) {
                                 Clob c = createTemporaryClob();
@@ -153,15 +132,7 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                     re.close();
                 }
 
-                EventResult result;
-                if (content.startsWith("{\"result\": {")) {
-                    result = parseEventResult(eventElement, content);
-                } else {
-                    result = new JavaEventResult();
-                    result.setRawValue(content);
-                }
-
-                return result;
+                return parseEventResult(content);
             } catch (Exception e) {
                 if (stoppedHolder[0]) {
                     throw new CustomException(
@@ -169,16 +140,24 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                 }
                 String err = function + " params =" + params + '\t' + e + ", sql: " + sql;
                 _log.error(err, e);
-                error = e.getMessage();
-                m.setError(error);
+                m.setError(e.getMessage());
                 throw new CustomException(e.getMessage());
             }
         }
     }
 
-    private JavaEventResult parseEventResult(EventElement event, String result) {
-        Map<String, Object> root = ServerJSONConverter.decodeSimple(result);
-        JavaEventResult eventResult = parseResult(root);
-        return eventResult;
+    protected Clob createTemporaryClob() throws SQLException {
+        CallableStatement cst = null;
+        try {
+            cst = getConnection().prepareCall("{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
+            cst.registerOutParameter(1, Types.CLOB);
+            cst.execute();
+            return cst.getClob(1);
+        } finally {
+            if (cst != null) {
+                cst.close();
+            }
+        }
     }
+
 }

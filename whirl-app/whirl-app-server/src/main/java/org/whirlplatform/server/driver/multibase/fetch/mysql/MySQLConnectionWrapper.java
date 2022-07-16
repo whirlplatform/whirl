@@ -1,7 +1,7 @@
-package org.whirlplatform.server.driver.multibase.fetch.postgresql;
+package org.whirlplatform.server.driver.multibase.fetch.mysql;
 
 import org.apache.empire.db.DBDatabaseDriver;
-import org.apache.empire.db.postgresql.DBDatabaseDriverPostgreSQL;
+import org.apache.empire.db.mysql.DBDatabaseDriverMySQL;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.base.BaseDataSourceDriver;
@@ -9,11 +9,11 @@ import org.whirlplatform.server.login.ApplicationUser;
 
 import java.sql.Connection;
 
-public class PostgreSQLConnectionWrapper extends ConnectionWrapper {
+public class MySQLConnectionWrapper extends ConnectionWrapper {
 
-    private static final DBDatabaseDriverPostgreSQL DATABASE_DRIVER = new DBDatabaseDriverPostgreSQL();
+    private static final DBDatabaseDriverMySQL DATABASE_DRIVER = new DBDatabaseDriverMySQL();
 
-    public PostgreSQLConnectionWrapper(String alias, Connection connection, ApplicationUser user) {
+    public MySQLConnectionWrapper(String alias, Connection connection, ApplicationUser user) {
         super(alias, connection, user);
     }
 

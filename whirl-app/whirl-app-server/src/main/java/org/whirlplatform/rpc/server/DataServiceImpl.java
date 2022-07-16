@@ -356,26 +356,28 @@ public class DataServiceImpl implements DataService, DirectRestService {
 							files.add(upload.getFile());
 							value.setInputStream(upload.getFile().getInputStream());
 							value.setSaveName(upload.isSaveName());
-						} catch (IOException e) {
-							throw new CustomException(e.getMessage());
-						}
-					}
-					map.remove(value.getTempId());
-				}
+                        } catch (IOException e) {
+                            throw new CustomException(e.getMessage());
+                        }
+                    }
+                    map.remove(value.getTempId());
+                }
 
-			}
-		}
-		EventResult result;
-		if (event.getType() == EventType.Database) {
-			result = connector().executeDatabase(event, paramList, getApplicationUser(token));
-		} else if (event.getType() == EventType.Java) {
-			result = executeJava(event, paramList, getApplicationUser(token));
-		} else {
-			throw new UnsupportedOperationException("Event type: " + event.getType());
-		}
-		for (FileItem file : files) {
-			file.delete();
-		}
+            }
+        }
+        EventResult result;
+        if (event.getType() == EventType.DatabaseFunction) {
+            result = connector().executeDBFunction(event, paramList, getApplicationUser(token));
+        } else if (event.getType() == EventType.Java) {
+            result = executeJava(event, paramList, getApplicationUser(token));
+        } else if (event.getType() == EventType.DatabaseSQL) {
+            result = connector().executeSQL(event, paramList, getApplicationUser(token));
+        } else {
+            throw new UnsupportedOperationException("Event type: " + event.getType());
+        }
+        for (FileItem file : files) {
+            file.delete();
+        }
 
 		// Дочернее событие добавляется в EventHelper.onResult
 		// выполняем подсобытие если оно серверное и не содержит параметров
@@ -400,8 +402,8 @@ public class DataServiceImpl implements DataService, DirectRestService {
 						break;
 					}
 				}
-				boolean isNextServerEvent = nextEvent.getType() == EventType.Database
-						|| nextEvent.getType() == EventType.Java;
+                boolean isNextServerEvent = nextEvent.getType() == EventType.DatabaseFunction
+                        || nextEvent.getType() == EventType.Java;
 				// если событие серверное и нет параметров с клиента, то можем
 				// выполнить сразу
 				if (nextEvent != null && isNextServerEvent && !hasClientParameter) {

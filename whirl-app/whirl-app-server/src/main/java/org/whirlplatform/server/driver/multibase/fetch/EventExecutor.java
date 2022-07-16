@@ -12,11 +12,20 @@ import java.util.List;
 public interface EventExecutor {
 
     /**
-     * Выполняет описанную в событии процедуру базы данных
+     * Выполняет описанную в событии процедуру базы данных.
      *
      * @param eventElement - элемент Событие
      * @param params       - входные параметры
      * @return Результат выполнения процедуры
      */
     EventResult executeFunction(EventElement eventElement, List<DataValue> params);
+
+    /**
+     * Выполняет описанный в событии запрос к базе данных.
+     *
+     * @param eventElement - элемент Событие
+     * @param params       - входные параметры
+     * @return Результат выполнения запроса
+     */
+    EventResult executeQuery(EventElement eventElement, List<DataValue> params);
 }

@@ -47,8 +47,6 @@ public class Sql {
 
 	private String textNoData;
 
-	private String parentObj;
-
 	private Sql parent;
 
 	private RowElementWrapper top;
@@ -87,14 +85,6 @@ public class Sql {
 
 	public void setTextNoData(String textNoData) {
 		this.textNoData = textNoData;
-	}
-
-	public String getParentObj() {
-		return parentObj;
-	}
-
-	public void setParentObj(String parentObj) {
-		this.parentObj = parentObj;
 	}
 
 	public RowElementWrapper getTop() {

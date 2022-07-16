@@ -49,10 +49,6 @@ public class SqlManager {
 		allRow.add(sql);
 	}
 
-	public boolean isRowRoot(Sql sql) {
-		return sql.getParentObj() == null;
-	}
-
 	public Sql getBeforeSql() {
 		return beforeSql;
 	}

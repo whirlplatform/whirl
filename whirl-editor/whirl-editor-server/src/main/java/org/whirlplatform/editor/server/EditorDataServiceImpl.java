@@ -271,7 +271,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             ComponentElement component = (ComponentElement) parent;
             EventElement event = new EventElement();
             event.setId(RandomUUID.uuid());
-            event.setType(EventType.Database);
+            event.setType(EventType.DatabaseFunction);
             // Новое событие
             event.setName(getMessage().new_element_event() + component.getEvents().size());
             event.setHandlerType("AttachHandler");
@@ -281,7 +281,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             ApplicationElement app = (ApplicationElement) parent;
             EventElement event = new EventElement();
             event.setId(RandomUUID.uuid());
-            event.setType(EventType.Database);
+            event.setType(EventType.DatabaseFunction);
             event.setName(getMessage().new_element_event() + app.getFreeEvents().size());
             event.setHandlerType("AttachHandler");
             return event;
@@ -289,7 +289,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
                 && element instanceof NewEventElement) {
             EventElement parentEvent = (EventElement) parent;
             EventElement event = new EventElement();
-            event.setType(EventType.Database);
+            event.setType(EventType.DatabaseFunction);
             event.setId(RandomUUID.uuid());
             event.setName(getMessage().new_element_event() + parentEvent.getSubEvents().size());
             event.setHandlerType("AttachHandler");
@@ -449,7 +449,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
             EventElement event = new EventElement();
             event.setId(RandomUUID.uuid());
-            event.setType(EventType.Database);
+            event.setType(EventType.DatabaseFunction);
             event.setName(getMessage().new_element_event() + item.getEvents().size());
             event.setHandlerType("AttachHandler");
             return event;

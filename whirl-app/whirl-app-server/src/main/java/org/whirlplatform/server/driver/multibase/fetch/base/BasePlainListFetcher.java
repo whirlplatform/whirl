@@ -1,4 +1,4 @@
-package org.whirlplatform.server.driver.multibase.fetch.postgresql;
+package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
@@ -14,7 +14,6 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.ListFetcher;
-import org.whirlplatform.server.driver.multibase.fetch.base.PlainListFetcherHelper;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
@@ -26,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PostgrePlainListFetcher extends PostgrePlainTableFetcher implements ListFetcher<PlainTableElement> {
-    private static Logger _log = LoggerFactory.getLogger(PostgrePlainListFetcher.class);
+public class BasePlainListFetcher extends BasePlainTableFetcher implements ListFetcher<PlainTableElement> {
+    private static Logger _log = LoggerFactory.getLogger(BasePlainListFetcher.class);
 
-    public PostgrePlainListFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
+    public BasePlainListFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
         super(connection, fetcher);
     }
 

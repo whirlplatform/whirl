@@ -17,7 +17,7 @@ public class HRefUtil {
             final String whirlPath = editorPath.substring(0, position);
             builder.setPath(whirlPath + "/app");
         }
-        builder.setParameter("role", appcode);
+        builder.setParameter("application", appcode);
         if (version != null) {
             final String versionType = (version.isBranch()) ? "branch" : "version";
             builder.setParameter(versionType, version.toString());

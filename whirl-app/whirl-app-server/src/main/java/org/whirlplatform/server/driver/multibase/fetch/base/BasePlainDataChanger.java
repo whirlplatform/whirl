@@ -1,13 +1,12 @@
-package org.whirlplatform.server.driver.multibase.fetch.postgresql;
+package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import org.whirlplatform.server.driver.multibase.fetch.base.AbstractPlainDataChanger;
 
-public class PostgrePlainDataChanger extends AbstractPlainDataChanger {
+public class BasePlainDataChanger extends AbstractPlainDataChanger {
 
 
-    public PostgrePlainDataChanger(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
+    public BasePlainDataChanger(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
     }
 

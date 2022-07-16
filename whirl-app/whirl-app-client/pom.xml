@@ -96,6 +96,11 @@
                     <moduleName>org.whirlplatform.app.Application</moduleName>
                     <moduleShortName>application</moduleShortName>
                     <skipModule>true</skipModule>
+                    <compilerArgs>
+                        <arg>-gen</arg>
+                        <arg>${project.build.directory}/gwt/gen</arg>
+                        <arg>-generateJsInteropExports</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

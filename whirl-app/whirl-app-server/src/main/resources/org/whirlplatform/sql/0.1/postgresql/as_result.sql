@@ -1,25 +1,23 @@
-CREATE OR REPLACE FUNCTION return (p_result function_result)
-RETURNS varchar
+CREATE OR REPLACE FUNCTION as_result(p_result function_result)
+    RETURNS varchar
 AS
 $$
 DECLARE
-    v_result hstore;
-
-    v_parameter_array hstore [];
-    v_parameter hstore;
-
-    v_parameter_rec record;
+    v_result          hstore;
+    v_parameter_array hstore[];
+    v_parameter       hstore;
+    v_parameter_rec   record;
     v_parameter_index integer;
-    v_parameter_code varchar (4000);
-    v_parameter_type varchar (4000);
+    v_parameter_code  varchar(4000);
+    v_parameter_type  varchar(4000);
 BEGIN
     v_result := ''::hstore;
 
     IF p_result.message IS NOT NULL
     THEN
-        v_result := v_result || hstore ('message', p_result.message);
-        v_result := v_result || hstore ('title', p_result.title);
-        v_result := v_result || hstore ('messageType', p_result.message_type);
+        v_result := v_result || hstore('message', p_result.message);
+        v_result := v_result || hstore('title', p_result.title);
+        v_result := v_result || hstore('messageType', p_result.message_type);
     END IF;
 
     IF p_result.next_event IS NOT NULL

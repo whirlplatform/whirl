@@ -1,6 +1,5 @@
 package org.whirlplatform.meta.shared.editor.db;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
@@ -13,46 +12,50 @@ import java.util.Set;
 @SuppressWarnings("serial")
 public class SchemaElement extends AbstractElement {
 
-	private DataSourceElement datasource;
-	private String schemaName;
-	private Set<DatabaseTableElement> tables = new HashSet<DatabaseTableElement>();
+    private DataSourceElement dataSource;
+    private String schemaName;
+    private Set<DatabaseTableElement> tables = new HashSet<DatabaseTableElement>();
 
-	public SchemaElement() {
-	}
+    public SchemaElement() {
+    }
 
-	public SchemaElement(DataSourceElement datasource) {
-		this.datasource = datasource;
-	}
+    public SchemaElement(DataSourceElement dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	protected void setDataSource(DataSourceElement database) {
-		this.datasource = database;
-	}
+    public DataSourceElement getDataSource() {
+        return dataSource;
+    }
 
-	public DataSourceElement getDataSource() {
-		return datasource;
-	}
+    protected void setDataSource(DataSourceElement dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	public String getSchemaName() {
-		return schemaName;
-	}
+    public void setDatasource(DataSourceElement dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	public void setSchemaName(String schemaName) {
-		this.schemaName = schemaName;
-	}
+    public String getSchemaName() {
+        return schemaName;
+    }
 
-	public void addTable(DatabaseTableElement table) {
-		tables.add(table);
-		table.setSchema(this);
-	}
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
+    }
 
-	public void removeTable(DatabaseTableElement table) {
-		if (!tables.contains(table)) {
-			return;
-		}
+    public void addTable(DatabaseTableElement table) {
+        tables.add(table);
+        table.setSchema(this);
+    }
+
+    public void removeTable(DatabaseTableElement table) {
+        if (!tables.contains(table)) {
+            return;
+        }
 		// удаление прав
 		if (getDataSource() != null
 				&& getDataSource().getApplication() != null) {
-			ApplicationElement application = datasource.getApplication();
+            ApplicationElement application = dataSource.getApplication();
 			application.removeTableColumnRights(table);
 			application.removeTableRights(table);
 		}
@@ -64,7 +67,6 @@ public class SchemaElement extends AbstractElement {
 		return Collections.unmodifiableSet(tables);
 	}
 
-	@JsonProperty
 	void setTables(Set<DatabaseTableElement> tables) {
 		this.tables = tables;
 	}

@@ -13,18 +13,33 @@ public class AppConstant {
     public static final String OLD_TOKEN = "ot";
 
     /**
-     * Текущий пользователь
+     * Текущий пользователь.
      */
-    public static final String PFUSER = "PFUSER";
+    public static final String WHIRL_USER = "WHIRL_USER";
     /**
-     * Текущее приложение
+     * Текущее приложение.
      */
-    public static final String PFROLE = "PFROLE";
+    public static final String WHIRL_APPLICATION = "WHIRL_APPLICATION";
 
     /**
-     * Текущий IP пользователя
+     * Текущий IP пользователя.
      */
-    public static final String PFIP = "PFIP";
+    public static final String WHIRL_IP = "WHIRL_IP";
+
+    /**
+     * Группы пользователя.
+     */
+    public static final String WHIRL_USER_GROUPS = "WHIRL_USER_GROUPS";
+
+    /**
+     * Признак перезагрузки формы.
+     */
+    public static final String WHIRL_FORM_RELOAD = "WHIRL_FORM_RELOAD";
+
+    /**
+     * Результат выполнения для события.
+     */
+    public static final String WHIRL_RESULT = "WHIRL_RESULT";
 
     /**
      * формат даты

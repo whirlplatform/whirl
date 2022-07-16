@@ -1,5 +1,6 @@
 package org.whirlplatform.meta.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 
 import java.io.Serializable;
@@ -7,33 +8,37 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class FormCellModel implements Serializable, Cloneable {
 
-	private String id;
+    private String id;
 
-	private FormRowModel row;
-	private FormColumnModel col;
+    private FormRowModel row;
+    private FormColumnModel col;
 
-	private Integer rowSpan = 1;
-	private Integer colSpan = 1;
+    private Integer rowSpan = 1;
+    private Integer colSpan = 1;
 
-	private int borderTop = 0;
-	private int borderRight = 0;
-	private int borderBottom = 0;
-	private int borderLeft = 0;
-	
-	private String borderTopColor;
-	private String borderRightColor;
-	private String borderBottomColor;
-	private String borderLeftColor;
+    @JsonProperty
+    private int borderTop = 0;
+    @JsonProperty
+    private int borderRight = 0;
+    @JsonProperty
+    private int borderBottom = 0;
+    @JsonProperty
+    private int borderLeft = 0;
 
-	private String color;
+    private String borderTopColor;
+    private String borderRightColor;
+    private String borderBottomColor;
+    private String borderLeftColor;
 
-	private ComponentModel component;
+    private String color;
 
-	private FormCellModel() {
+    private ComponentModel component;
 
-	}
+    private FormCellModel() {
 
-	public FormCellModel(String id) {
+    }
+
+    public FormCellModel(String id) {
 		this.id = id;
 	}
 
@@ -63,117 +68,117 @@ public class FormCellModel implements Serializable, Cloneable {
 
 	public Integer getRowSpan() {
 		return rowSpan == null ? 1 : rowSpan;
-	}
+    }
 
-	public void setRowSpan(Integer rowSpan) {
-		this.rowSpan = rowSpan;
-	}
+    public void setRowSpan(Integer rowSpan) {
+        this.rowSpan = rowSpan;
+    }
 
-	public Integer getColSpan() {
-		return colSpan == null ? 1 : colSpan;
-	}
+    public Integer getColSpan() {
+        return colSpan == null ? 1 : colSpan;
+    }
 
-	public void setColSpan(Integer colSpan) {
-		this.colSpan = colSpan;
-	}
+    public void setColSpan(Integer colSpan) {
+        this.colSpan = colSpan;
+    }
 
-	public int getBorderTop() {
-		return borderTop;
-	}
+    public int getBorderTop() {
+        return borderTop;
+    }
 
-	void setBorderTop(int borderTop) {
-		this.borderTop = borderTop;
-	}
+    public void setBorderTop(int borderTop) {
+        this.borderTop = borderTop;
+    }
 
-	public String getBorderTopColor() {
-		return borderTopColor;
-	}
+    public String getBorderTopColor() {
+        return borderTopColor;
+    }
 
-	void setBorderTopColor(String borderTopColor) {
-		this.borderTopColor = borderTopColor;
-	}
+    public void setBorderTopColor(String borderTopColor) {
+        this.borderTopColor = borderTopColor;
+    }
 
-	public void setBorderTop(int borderTop, String borderTopColor) {
-		this.borderTop = borderTop;
-		this.borderTopColor = borderTopColor;
-	}
+    public void setBorderTop(int borderTop, String borderTopColor) {
+        this.borderTop = borderTop;
+        this.borderTopColor = borderTopColor;
+    }
 
-	public int getBorderRight() {
-		return borderRight;
-	}
+    public int getBorderRight() {
+        return borderRight;
+    }
 
-	void setBorderRight(int borderRight) {
-		this.borderRight = borderRight;
-	}
+    public void setBorderRight(int borderRight) {
+        this.borderRight = borderRight;
+    }
 
-	public String getBorderRightColor() {
-		return borderRightColor;
-	}
+    public String getBorderRightColor() {
+        return borderRightColor;
+    }
 
-	void setBorderRightColor(String borderRightColor) {
-		this.borderRightColor = borderRightColor;
-	}
+    public void setBorderRightColor(String borderRightColor) {
+        this.borderRightColor = borderRightColor;
+    }
 
-	public void setBorderRight(int borderRight, String borderRightColor) {
-		this.borderRight = borderRight;
-		this.borderRightColor = borderRightColor;
-	}
+    public void setBorderRight(int borderRight, String borderRightColor) {
+        this.borderRight = borderRight;
+        this.borderRightColor = borderRightColor;
+    }
 
-	public int getBorderBottom() {
-		return borderBottom;
-	}
+    public int getBorderBottom() {
+        return borderBottom;
+    }
 
-	void setBorderBottom(int borderBottom) {
-		this.borderBottom = borderBottom;
-	}
+    public void setBorderBottom(int borderBottom) {
+        this.borderBottom = borderBottom;
+    }
 
-	public String getBorderBottomColor() {
-		return borderBottomColor;
-	}
+    public String getBorderBottomColor() {
+        return borderBottomColor;
+    }
 
-	void setBorderBottomColor(String borderBottomColor) {
-		this.borderBottomColor = borderBottomColor;
-	}
+    public void setBorderBottomColor(String borderBottomColor) {
+        this.borderBottomColor = borderBottomColor;
+    }
 
-	public void setBorderBottom(int borderBottom, String borderBottomColor) {
-		this.borderBottom = borderBottom;
-		this.borderBottomColor = borderBottomColor;
-	}
+    public void setBorderBottom(int borderBottom, String borderBottomColor) {
+        this.borderBottom = borderBottom;
+        this.borderBottomColor = borderBottomColor;
+    }
 
-	public int getBorderLeft() {
-		return borderLeft;
-	}
+    public int getBorderLeft() {
+        return borderLeft;
+    }
 
-	void setBorderLeft(int borderLeft) {
-		this.borderLeft = borderLeft;
-	}
+    public void setBorderLeft(int borderLeft) {
+        this.borderLeft = borderLeft;
+    }
 
-	public String getBorderLeftColor() {
-		return borderLeftColor;
-	}
+    public String getBorderLeftColor() {
+        return borderLeftColor;
+    }
 
-	void setBorderLeftColor(String borderLeftColor) {
-		this.borderLeftColor = borderLeftColor;
-	}
+    public void setBorderLeftColor(String borderLeftColor) {
+        this.borderLeftColor = borderLeftColor;
+    }
 
-	public void setBorderLeft(int borderLeft, String borderLeftColor) {
-		this.borderLeft = borderLeft;
-		this.borderLeftColor = borderLeftColor;
-	}
+    public void setBorderLeft(int borderLeft, String borderLeftColor) {
+        this.borderLeft = borderLeft;
+        this.borderLeftColor = borderLeftColor;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public String getColor() {
+        return color;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-	public ComponentModel getComponent() {
-		return component;
-	}
+    public ComponentModel getComponent() {
+        return component;
+    }
 
-	public void setComponent(ComponentModel component) {
+    public void setComponent(ComponentModel component) {
 		this.component = component;
 	}
 

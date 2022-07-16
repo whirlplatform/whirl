@@ -1,11 +1,10 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.*;
-import org.whirlplatform.server.driver.multibase.fetch.base.PlainMetadataFetcher;
+import org.whirlplatform.server.driver.multibase.fetch.base.BaseQueryExecutor;
 
 public class OracleDataSourceDriver extends AbstractDataSourceDriver {
 
@@ -22,16 +21,8 @@ public class OracleDataSourceDriver extends AbstractDataSourceDriver {
 	}
 
 	@Override
-	public <T extends AbstractTableElement> MetadataFetcher<T> createMetadataFetcher(T table) {
-		if (table instanceof PlainTableElement) {
-			return (MetadataFetcher<T>) new PlainMetadataFetcher(connection);
-		}
-		throw createException("MetadataFetcher", table, connection);
-	}
-
-	@Override
 	public EventExecutor createEventExecutor() {
-		return new OracleEventExecutor(connection);
+        return new OracleEventExecutor(connection, new BaseQueryExecutor(connection));
 	}
 
 	@Override

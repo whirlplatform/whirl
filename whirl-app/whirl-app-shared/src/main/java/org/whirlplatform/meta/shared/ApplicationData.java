@@ -2,6 +2,7 @@ package org.whirlplatform.meta.shared;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,130 +43,147 @@ public class ApplicationData implements Serializable {
 	public ApplicationData() {
 	}
 
-	public ApplicationData(String rootComponentId, String name, String logoutPageUrl) {
-		this.rootComponentId = rootComponentId;
-		this.name = name;
-		this.logoutPageUrl = logoutPageUrl;
-	}
+    public ApplicationData(String rootComponentId, String name, String logoutPageUrl) {
+        this.rootComponentId = rootComponentId;
+        this.name = name;
+        this.logoutPageUrl = logoutPageUrl;
+    }
 
-	public String getRootComponentId() {
-		return rootComponentId;
-	}
+    public String getRootComponentId() {
+        return rootComponentId;
+    }
 
-	public void setRootComponentId(String componentId) {
-		this.rootComponentId = componentId;
-	}
+    public void setRootComponentId(String componentId) {
+        this.rootComponentId = componentId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getLogoutPage() {
-		return logoutPageUrl;
-	}
+    public String getLogoutPage() {
+        return logoutPageUrl;
+    }
 
-	public void setLogoutPage(String dflogoutpage) {
-		this.logoutPageUrl = dflogoutpage;
-	}
+    @JsonProperty
+    void setLogoutPage(String dflogoutpage) {
+        this.logoutPageUrl = dflogoutpage;
+    }
 
-	public String getStartMessage() {
-		return startMessage;
-	}
+    public String getStartMessage() {
+        return startMessage;
+    }
 
-	public void setStartMessage(String startMessage) {
-		this.startMessage = startMessage;
-	}
+    @JsonProperty
+    void setStartMessage(String startMessage) {
+        this.startMessage = startMessage;
+    }
 
-	public boolean isBlocked() {
-		return blocked;
-	}
+    public boolean isBlocked() {
+        return blocked;
+    }
 
-	public void setBlocked(boolean blocked) {
-		this.blocked = blocked;
-	}
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
 
-	public Map<String, List<String>> getPreferences() {
-		return preferences;
-	}
+    public Map<String, List<String>> getPreferences() {
+        return preferences;
+    }
 
-	public void addPreference(String name, String value) {
-		List<String> l = preferences.get(name);
-		if (l == null) {
-			l = new ArrayList<String>();
-			preferences.put(name, l);
-		}
-		l.add(value);
-	}
+    @JsonProperty
+    void setPreferences(Map<String, List<String>> preferences) {
+        this.preferences = preferences;
+    }
 
-	public boolean isGuest() {
-		return guest;
-	}
+    public void addPreference(String name, String value) {
+        List<String> l = preferences.get(name);
+        if (l == null) {
+            l = new ArrayList<String>();
+            preferences.put(name, l);
+        }
+        l.add(value);
+    }
 
-	public void setGuest(boolean guest) {
-		this.guest = guest;
-	}
+    public boolean isGuest() {
+        return guest;
+    }
 
-	public String getApplicationCode() {
-		return applicationCode;
-	}
+    public void setGuest(boolean guest) {
+        this.guest = guest;
+    }
 
-	public void setApplicationCode(String applicationCode) {
-		this.applicationCode = applicationCode;
-	}
+    public String getApplicationCode() {
+        return applicationCode;
+    }
 
-	public String getHeaderHtml() {
-		return headerHtml;
-	}
+    public void setApplicationCode(String applicationCode) {
+        this.applicationCode = applicationCode;
+    }
 
-	public void setHeaderHtml(String headerHtml) {
-		this.headerHtml = headerHtml;
-	}
+    public String getHeaderHtml() {
+        return headerHtml;
+    }
 
-	public void addScript(String url) {
-		scripts.add(url);
-	}
+    public void setHeaderHtml(String headerHtml) {
+        this.headerHtml = headerHtml;
+    }
 
-	public List<String> getScripts() {
-		return scripts;
-	}
+    public void addScript(String url) {
+        scripts.add(url);
+    }
 
-	public void addCss(String css) {
-		cssList.add(css);
-	}
+    public List<String> getScripts() {
+        return scripts;
+    }
 
-	public List<String> getCss() {
-		return cssList;
-	}
+    @JsonProperty
+    void setScripts(List<String> scripts) {
+        this.scripts = scripts;
+    }
 
-	public void addEvent(String handlerType, EventMetadata metadata) {
-		List<EventMetadata> l = events.get(handlerType);
-		if (l == null) {
-			l = new ArrayList<EventMetadata>();
-			events.put(handlerType, l);
-		}
-		l.add(metadata);
-	}
+    public void addCss(String css) {
+        cssList.add(css);
+    }
 
-	public List<EventMetadata> getCreateEvents() {
-		List<EventMetadata> result = events.get("CreateEvent");
-		if (result == null) {
-			result = new ArrayList<EventMetadata>();
-		}
-		return result;
-	}
+    public List<String> getCss() {
+        return cssList;
+    }
 
-	public List<EventMetadata> getNonCreateEvents() {
-		List<EventMetadata> result = new ArrayList<EventMetadata>();
-		for (Entry<String, List<EventMetadata>> e : events.entrySet()) {
-			if (!"CreateEvent".equals(e.getKey())) {
-				result.addAll(e.getValue());
-			}
-		}
-		return result;
-	}
+    @JsonProperty
+    void setCss(List<String> cssList) {
+        this.cssList = cssList;
+    }
+
+    public void addEvent(String handlerType, EventMetadata metadata) {
+        List<EventMetadata> l = events.get(handlerType);
+        if (l == null) {
+            l = new ArrayList<EventMetadata>();
+            events.put(handlerType, l);
+        }
+        l.add(metadata);
+    }
+
+    public List<EventMetadata> getCreateEvents() {
+        List<EventMetadata> result = events.get("CreateEvent");
+        if (result == null) {
+            result = new ArrayList<EventMetadata>();
+        }
+        return result;
+    }
+
+    public List<EventMetadata> getNonCreateEvents() {
+        List<EventMetadata> result = new ArrayList<EventMetadata>();
+        for (Entry<String, List<EventMetadata>> e : events.entrySet()) {
+            if (!"CreateEvent".equals(e.getKey())) {
+                result.addAll(e.getValue());
+            }
+        }
+        return result;
+    }
 
 }

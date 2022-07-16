@@ -4,6 +4,19 @@ import java.io.Serializable;
 
 public enum EventType implements Serializable {
 
-    Component, Database, JavaScript, Java
+    Component(false),
+    DatabaseFunction(true),
+    DatabaseSQL(true),
+    JavaScript(false),
+    Java(true);
 
+    private boolean server;
+
+    private EventType(boolean server) {
+        this.server = server;
+    }
+
+    public boolean isServer() {
+        return server;
+    }
 }

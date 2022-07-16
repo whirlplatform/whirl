@@ -1,13 +1,7 @@
 
 package org.whirlplatform.server.report;
 
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -24,16 +18,11 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.driver.Connector;
-import org.whirlplatform.server.form.CellElementWrapper;
-import org.whirlplatform.server.form.ColumnElementWrapper;
-import org.whirlplatform.server.form.FormElementWrapper;
-import org.whirlplatform.server.form.FormWriter;
-import org.whirlplatform.server.form.RowElementWrapper;
+import org.whirlplatform.server.form.*;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.XPoint;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
@@ -63,9 +52,9 @@ public class XLSXReportWriter extends FormWriter {
 
     private CreationHelper helper;
 
-    public XLSXReportWriter(Connector connector, ConnectionProvider connectionProvider, Report report,
+    public XLSXReportWriter(ConnectionProvider connectionProvider, Report report,
                             FormElementWrapper form, Collection<DataValue> startParams, ApplicationUser user) {
-        super(connector, connectionProvider, form, startParams, user);
+        super(connectionProvider, form, startParams, user);
         this.report = report;
 
     }
@@ -329,7 +318,7 @@ public class XLSXReportWriter extends FormWriter {
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null
                     : component.getValue(PropertyType.ReportDataType.getCode()).getString();
             if (ReportDataType.NUMBER.name().equals(type)) {
-                currentCell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                currentCell.setCellType(CellType.NUMERIC);
                 if (valueStr == null || valueStr.isEmpty()) {
                     currentCell.setCellValue("");
                     return;
@@ -337,11 +326,11 @@ public class XLSXReportWriter extends FormWriter {
                 try {
                     currentCell.setCellValue(Double.parseDouble(valueStr.replace(",", ".")));
                 } catch (NumberFormatException e) {
-                    currentCell.setCellType(Cell.CELL_TYPE_ERROR);
+                    currentCell.setCellType(CellType.ERROR);
                     currentCell.setCellValue("");
                 }
             } else if (ReportDataType.DATE.name().equals(type)) {
-                currentCell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                currentCell.setCellType(CellType.ERROR);
                 if (valueStr == null || valueStr.isEmpty()) {
                     currentCell.setCellValue("");
                     return;
@@ -350,11 +339,11 @@ public class XLSXReportWriter extends FormWriter {
                 try {
                     currentCell.setCellValue(df.parse(valueStr));
                 } catch (ParseException e) {
-                    currentCell.setCellType(Cell.CELL_TYPE_ERROR);
+                    currentCell.setCellType(CellType.ERROR);
                     currentCell.setCellValue("");
                 }
             } else {
-                currentCell.setCellType(Cell.CELL_TYPE_STRING);
+                currentCell.setCellType(CellType.ERROR);
                 currentCell.setCellValue(valueStr);
             }
             // currentCell.setCellType(Cell.CELL_TYPE_STRING);

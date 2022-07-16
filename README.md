@@ -42,16 +42,25 @@ Since the Whirl Platform client side code mostly based on the Sencha GXT library
 
 First we should create database to store platform data.
 
-For PostgreSQL you should have local configured RDBMS on 5432 port. SQL script for creating metadata database is:
+For PostgreSQL you should have local configured RDBMS on 5432 port. SQL scripts for creating metadata database are:
 
-```sql
-CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
-CREATE DATABASE whirl OWNER whirl;
-GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
--- connect to whirl database as superuser and run next commands
-CREATE SCHEMA whirl AUTHORIZATION whirl;
-CREATE EXTENSION IF NOT EXISTS hstore;
-```
+- PostgreSQL:
+
+    ```sql
+    CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
+    CREATE DATABASE whirl OWNER whirl;
+    GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
+    -- connect to whirl database as superuser and run next commands
+    CREATE SCHEMA whirl AUTHORIZATION whirl;
+    CREATE EXTENSION IF NOT EXISTS hstore;
+    ```
+
+- MySQL:
+    ```sql
+    CREATE USER whirl IDENTIFIED BY 'password';
+    CREATE DATABASE whirl;
+    GRANT ALL ON whirl.* TO whirl;
+    ```
 
 We are using GWT for developing frontend side
 with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.

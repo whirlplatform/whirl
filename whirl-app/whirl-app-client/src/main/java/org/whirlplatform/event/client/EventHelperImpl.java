@@ -105,7 +105,7 @@ public class EventHelperImpl implements EventHelper {
 
     private void eventExecute(final ComponentBuilder source) {
         Callback<List<DataValue>, Throwable> callback = null;
-        if (metadata.getType() == EventType.Database || metadata.getType() == EventType.Java) {
+        if (metadata.getType().isServer()) {
             callback = new Callback<List<DataValue>, Throwable>() {
 
                 @Override
@@ -119,7 +119,7 @@ public class EventHelperImpl implements EventHelper {
                 }
             };
 
-        } else if (metadata.getType() == EventType.Component || metadata.getType() == EventType.JavaScript) {
+        } else {
             callback = new Callback<List<DataValue>, Throwable>() {
 
                 @Override

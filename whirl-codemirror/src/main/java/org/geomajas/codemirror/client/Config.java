@@ -333,7 +333,7 @@ public class Config {
 	 */
 	public static Config forSql() {
 		Config config = getDefault();
-		config.setOption(MODE, "text/x-org.whirlplatform.sql");
+		config.setOption(MODE, "text/x-sql");
 		return config;
 	}
 

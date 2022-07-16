@@ -1,5 +1,6 @@
 package org.whirlplatform.server.form;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.empire.commons.ObjectUtils;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBDatabaseDriver;
@@ -8,11 +9,7 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -20,8 +17,7 @@ import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.db.DBConnection;
-import org.whirlplatform.server.db.NamedParamResolver;
-import org.whirlplatform.server.driver.Connector;
+import org.whirlplatform.server.driver.multibase.fetch.AbstractQueryExecutor;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.log.Profile;
@@ -29,27 +25,18 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.QueryMessage;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.monitor.RunningEvent;
-import org.whirlplatform.server.utils.TypesUtil;
 
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
-public abstract class FormWriter implements Closeable {
+public abstract class FormWriter extends AbstractQueryExecutor {
     Logger _log = LoggerFactory.getLogger(FormWriter.class);
 
     private SimpleDateFormat sdf = new SimpleDateFormat(AppConstant.DATE_FORMAT_LONGEST);
@@ -57,8 +44,6 @@ public abstract class FormWriter implements Closeable {
     private DecimalFormat decimalFmt = new DecimalFormat("#");
 
     protected ConnectionProvider connectionProvider;
-
-    private Connector connector;
 
     protected FormElementWrapper form;
 
@@ -70,12 +55,11 @@ public abstract class FormWriter implements Closeable {
 
     private boolean maxRowsReached = false;
 
-    protected FormWriter(Connector connector, ConnectionProvider connectionProvider, FormElementWrapper form,
+    protected FormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
                          Collection<DataValue> startParams, ApplicationUser user) {
-        this.connector = connector;
         this.connectionProvider = connectionProvider;
         this.form = form;
-        this.startParams = new HashMap<String, DataValue>();
+        this.startParams = new HashMap<>();
         for (DataValue v : startParams) {
             if (v.getCode() != null && !v.getCode().trim().isEmpty()) {
                 this.startParams.put(v.getCode(), v);
@@ -85,10 +69,7 @@ public abstract class FormWriter implements Closeable {
         decimalFmt.setMaximumFractionDigits(17);
     }
 
-    protected String prepareSql(DBDatabaseDriver driver, Sql sql, Map<String, DataValue> params) {
-        NamedParamResolver changer = new NamedParamResolver(driver, sql.getSql(), params);
-        return changer.getResultSql();
-    }
+
 
     /**
      * Выполняет предзапрос на форме. Предзапрос должен лежать в диапазоне
@@ -105,7 +86,7 @@ public abstract class FormWriter implements Closeable {
                 Map<String, DataValue> params = new HashMap<String, DataValue>();
                 addParams(params, startParams);
 
-                String query = prepareSql(connection.getDatabaseDriver(), sql, startParams);
+                String query = prepareSql(connection.getDatabaseDriver(), sql.getSql(), startParams);
 
                 ResultSet resultSet = connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 if (resultSet.next()) {
@@ -273,28 +254,28 @@ public abstract class FormWriter implements Closeable {
         Map<String, DataValue> result = new HashMap<String, DataValue>();
 
         DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode("PFUSER");
+        data.setCode(AppConstant.WHIRL_USER);
         data.setValue(user.getId());
         result.put(data.getCode(), data);
 
         data = new DataValueImpl(DataType.STRING);
-        data.setCode("PFIP");
+        data.setCode(AppConstant.WHIRL_IP);
         data.setValue(user.getIp());
         result.put(data.getCode(), data);
 
         data = new DataValueImpl(DataType.STRING);
-        data.setCode("PFROLE");
-        data.setValue(user.getApplication().getId());
+        data.setCode(AppConstant.WHIRL_APPLICATION);
+        data.setValue(user.getApplication().getCode());
         result.put(data.getCode(), data);
 
         data = new DataValueImpl(DataType.STRING);
-        data.setCode("PFFORM_RELOAD");
-        data.setValue(String.valueOf(refresh));
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode("PFAD_GROUPS");
+        data.setCode(AppConstant.WHIRL_USER_GROUPS);
         data.setValue(StringUtils.arrayToString(user.getGroups().toArray(), ";"));
+        result.put(data.getCode(), data);
+
+        data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_FORM_RELOAD);
+        data.setValue(String.valueOf(refresh));
         result.put(data.getCode(), data);
 
         for (Entry<String, DataValue> entry : paramMap.entrySet()) {
@@ -303,37 +284,6 @@ public abstract class FormWriter implements Closeable {
         }
 
         return result;
-    }
-
-    protected Map<String, DataValue> collectResultSetValue(DBDatabaseDriver driver, ResultSet resultSet)
-            throws SQLException {
-        Map<String, DataValue> resultValues = new HashMap<String, DataValue>();
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        for (int i = 1; i <= metaData.getColumnCount(); i++) {
-            String column = metaData.getColumnLabel(i);
-            DataValue value = getResultSetValue(driver, resultSet, i);
-            resultValues.put(column, value);
-        }
-        return resultValues;
-    }
-
-    protected DataValue getResultSetValue(DBDatabaseDriver driver, ResultSet resultSet, int column) throws SQLException {
-        int sqlType = resultSet.getMetaData().getColumnType(column);
-        org.apache.empire.data.DataType empType = TypesUtil.toEmpireType(sqlType);
-        DataType type = TypesUtil.fromEimpireType(empType);
-
-        Object value = getResultValue(driver, resultSet, column, empType);
-        DataValue data = new DataValueImpl(type);
-        data.setValue(value);
-        return data;
-    }
-
-    private Object getResultValue(DBDatabaseDriver driver, ResultSet resultSet, int column,
-                                  org.apache.empire.data.DataType empType) throws SQLException {
-        if (empType == org.apache.empire.data.DataType.DATETIME) {
-            return resultSet.getTimestamp(column);
-        }
-        return driver.getResultValue(resultSet, column, empType);
     }
 
     private void writeTopNonSql() throws IOException {
@@ -411,7 +361,7 @@ public abstract class FormWriter implements Closeable {
                 connection = connectionProvider.getConnection(sql.getDataSourceAlias(), user);
                 connMap.put(sql.getDataSourceAlias(), connection);
             }
-            String query = prepareSql(connection.getDatabaseDriver(), sql, params);
+            String query = prepareSql(connection.getDatabaseDriver(), sql.getSql(), params);
 
             QueryMessage msg = new QueryMessage(user, query);
 
@@ -548,6 +498,11 @@ public abstract class FormWriter implements Closeable {
         return empty;
     }
 
+    @Override
+    public Map<String, DataValue> executeQuery(String sql, Map<String, DataValue> params) {
+        throw new NotImplementedException("executeQuery not implemented for " + getClass());
+    }
+
     protected boolean isMaxRowsReached() {
         return maxRowsReached;
     }
@@ -563,9 +518,5 @@ public abstract class FormWriter implements Closeable {
     public abstract void write(OutputStream stream) throws IOException, SQLException, ConnectException;
 
     public abstract void close() throws IOException;
-
-    protected Connector getConnector() {
-        return connector;
-    }
 
 }

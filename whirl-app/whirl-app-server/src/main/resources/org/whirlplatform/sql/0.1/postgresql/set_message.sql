@@ -6,8 +6,6 @@ CREATE OR REPLACE FUNCTION set_message (
 RETURNS function_result
 AS
 $$
-DECLARE
-    v_index integer;
 BEGIN
     p_result.title := p_title;
     p_result.message := p_message;

@@ -8,7 +8,6 @@ import org.whirlplatform.meta.shared.component.ReportDataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.driver.Connector;
 import org.whirlplatform.server.form.*;
 import org.whirlplatform.server.login.ApplicationUser;
 
@@ -33,9 +32,9 @@ public class HTMLReportWriter extends FormWriter {
 
     private boolean print = false;
 
-    public HTMLReportWriter(Connector connector, ConnectionProvider connectionProvider, FormElementWrapper form,
+    public HTMLReportWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
                             Collection<DataValue> startParams, ApplicationUser user) {
-        super(connector, connectionProvider, form, startParams, user);
+        super(connectionProvider, form, startParams, user);
     }
 
     @Override

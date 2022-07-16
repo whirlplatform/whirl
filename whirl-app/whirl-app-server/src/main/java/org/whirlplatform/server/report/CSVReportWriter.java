@@ -10,7 +10,6 @@ import org.whirlplatform.meta.shared.component.ReportDataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.driver.Connector;
 import org.whirlplatform.server.form.CellElementWrapper;
 import org.whirlplatform.server.form.FormElementWrapper;
 import org.whirlplatform.server.form.FormWriter;
@@ -47,9 +46,9 @@ public class CSVReportWriter extends FormWriter {
 
     private Set<Integer> rowSpanBaseToDelete = new HashSet<Integer>();
 
-    public CSVReportWriter(Connector connector, ConnectionProvider connectionProvider, FormElementWrapper form,
+    public CSVReportWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
                            Collection<DataValue> startParams, ApplicationUser user) {
-        super(connector, connectionProvider, form, startParams, user);
+        super(connectionProvider, form, startParams, user);
     }
 
     @Override

@@ -129,7 +129,7 @@ public class ReportServlet extends HttpServlet {
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             FormWriter writer = new XLSXReportWriter(connector(), connectionProvider, report, form, params, user)) {
+             FormWriter writer = new XLSXReportWriter(connectionProvider, report, form, params, user)) {
             writer.write(response.getOutputStream());
         }
     }
@@ -143,7 +143,7 @@ public class ReportServlet extends HttpServlet {
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             FormWriter writer = new XLSReportWriter(connector(), connectionProvider, report, form, params, user)) {
+             FormWriter writer = new XLSReportWriter(connectionProvider, report, form, params, user)) {
             writer.write(response.getOutputStream());
         }
     }
@@ -156,7 +156,7 @@ public class ReportServlet extends HttpServlet {
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             HTMLReportWriter writer = new HTMLReportWriter(connector(), connectionProvider, form, params, user)) {
+             HTMLReportWriter writer = new HTMLReportWriter(connectionProvider, form, params, user)) {
             writer.setPrint(report.isPrint());
             writer.write(response.getOutputStream());
         }
@@ -171,7 +171,7 @@ public class ReportServlet extends HttpServlet {
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             CSVReportWriter writer = new CSVReportWriter(connector(), connectionProvider, form, params, user)) {
+             CSVReportWriter writer = new CSVReportWriter(connectionProvider, form, params, user)) {
             writer.write(response.getOutputStream());
         }
     }
@@ -223,12 +223,12 @@ public class ReportServlet extends HttpServlet {
          */
 
         DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.PFUSER);
+        data.setCode(AppConstant.WHIRL_USER);
         data.setValue(user.getId());
         result.add(data);
 
         data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.PFIP);
+        data.setCode(AppConstant.WHIRL_IP);
         data.setValue(user.getIp());
         result.add(data);
 

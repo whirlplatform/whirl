@@ -47,8 +47,17 @@ public class EventParameterImpl implements EventParameter {
         this.storageCode = storageCode;
     }
 
+    @Override
     public void setData(DataValue data) {
         this.data = data;
+    }
+
+    @Override
+    public void setDataWithCode(DataValue data) {
+        setData(data);
+        if (data != null) {
+            setCode(data.getCode());
+        }
     }
 
     public DataValue getData() {
