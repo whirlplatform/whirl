@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
@@ -164,7 +164,7 @@
                 baseTableName="WHIRL_USER_GROUPS"
                 baseColumnNames="R_WHIRL_USERS"
                 referencedTableName="WHIRL_USERS"
-			referencedColumnNames="ID" />
+                referencedColumnNames="ID"/>
 
         <insert tableName="WHIRL_USERS">
             <column
@@ -218,12 +218,12 @@
 
         <!-- PostgreSQL -->
         <sqlFile dbms="postgresql"
-				 path="postgresql/function_result.sql"
-				 relativeToChangelogFile="true"/>
+                 path="postgresql/function_result.sql"
+                 relativeToChangelogFile="true"/>
 
         <sqlFile dbms="postgresql"
-				 path="postgresql/function_input.sql"
-				 relativeToChangelogFile="true"/>
+                 path="postgresql/function_input.sql"
+                 relativeToChangelogFile="true"/>
 
         <sqlFile dbms="postgresql"
 				 path="postgresql/row_value.sql"
@@ -250,14 +250,14 @@
 						 relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-						 procedureName="add_parameter_date"
-						 path="postgresql/add_parameter_date.sql"
-						 relativeToChangelogFile="true"/>
+                         procedureName="add_parameter_date"
+                         path="postgresql/add_parameter_date.sql"
+                         relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
-						 procedureName="add_parameter_list"
-						 path="postgresql/add_parameter_list.sql"
-						 relativeToChangelogFile="true"/>
+                         procedureName="add_parameter_list"
+                         path="postgresql/add_parameter_list.sql"
+                         relativeToChangelogFile="true"/>
 
         <createProcedure dbms="postgresql"
                          procedureName="add_parameter_component"
@@ -308,14 +308,14 @@
                      path="postgresql/rollback/internal_next_index.sql"
                      relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-					 path="postgresql/rollback/add_parameter_varchar.sql"
-					 relativeToChangelogFile="true"/>
+                     path="postgresql/rollback/add_parameter_varchar.sql"
+                     relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-					 path="postgresql/rollback/add_parameter_boolean.sql"
-					 relativeToChangelogFile="true"/>
+                     path="postgresql/rollback/add_parameter_boolean.sql"
+                     relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
-					 path="postgresql/rollback/add_parameter_number.sql"
-					 relativeToChangelogFile="true"/>
+                     path="postgresql/rollback/add_parameter_number.sql"
+                     relativeToChangelogFile="true"/>
             <sqlFile dbms="postgresql"
                      path="postgresql/rollback/add_parameter_date.sql"
                      relativeToChangelogFile="true"/>

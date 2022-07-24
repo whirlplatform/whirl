@@ -356,12 +356,12 @@ public class DataServiceImpl implements DataService, DirectRestService {
 							files.add(upload.getFile());
 							value.setInputStream(upload.getFile().getInputStream());
 							value.setSaveName(upload.isSaveName());
-                        } catch (IOException e) {
-                            throw new CustomException(e.getMessage());
-                        }
-                    }
-                    map.remove(value.getTempId());
-                }
+						} catch (IOException e) {
+							throw new CustomException(e.getMessage());
+						}
+					}
+					map.remove(value.getTempId());
+				}
 
             }
         }
@@ -410,20 +410,20 @@ public class DataServiceImpl implements DataService, DirectRestService {
                     result = executeServer(token, nextEvent, new ListHolder<DataValue>(extractValues(result)));
                     // если след.событие серверное, но есть параметры с клиента.
                 } else if (nextEvent != null && isNextServerEvent && hasClientParameter) {
-                    Map<String, DataValue> nonSerializableParams = new HashMap<>();
-                    for (EventParameter eventParameter : result.getParametersMap().values()) {
-                        DataValue dataValue = eventParameter.getData();
-                        if (dataValue != null && dataValue.getType() == DataType.FILE) {
-                            FileValue fileValue = dataValue.getFileValue();
-                            if (fileValue != null) {
-                                nonSerializableParams.put(fileValue.getTempId(), dataValue);
-                            }
-                        }
-                    }
-                    // если есть несериализуемые параметры, сохранить их в
-                    // сессии.
-                    if (!nonSerializableParams.isEmpty()) {
-                        session.setAttribute(DEFINED_NEXT_EVENT, nextEvent.getId());
+					Map<String, DataValue> nonSerializableParams = new HashMap<>();
+					for (EventParameter eventParameter : result.getParametersMap().values()) {
+						DataValue dataValue = eventParameter.getData();
+						if (dataValue != null && dataValue.getType() == DataType.FILE) {
+							FileValue fileValue = dataValue.getFileValue();
+							if (fileValue != null) {
+								nonSerializableParams.put(fileValue.getTempId(), dataValue);
+							}
+						}
+					}
+					// если есть несериализуемые параметры, сохранить их в
+					// сессии.
+					if (!nonSerializableParams.isEmpty()) {
+						session.setAttribute(DEFINED_NEXT_EVENT, nextEvent.getId());
 						session.setAttribute(NON_SERIALAZABLE_PARAMS, nonSerializableParams);
 					}
 

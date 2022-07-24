@@ -67,6 +67,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <!-- Do not upgrade past 3.1 to avoid triggering https://issues.apache.org/jira/browse/MSOURCES-95 -->
                     <version>3.8.0</version>
@@ -120,19 +125,51 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.2</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.4.11.v20180605</version>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven3-plugin</artifactId>
+                    <version>1.9.11</version>
+                    <configuration>
+                        <container>
+                            <containerId>tomcat9x</containerId>
+                            <type>embedded</type>
+                            <zipUrlInstaller>
+                                <url>
+                                    https://repo1.maven.org/maven2/org/apache/tomcat/tomcat/9.0.65/tomcat-9.0.65.tar.gz
+                                </url>
+                            </zipUrlInstaller>
+                        </container>
+                        <configuration>
+                            <configfiles>
+                                <configfile>
+                                    <file>${project.build.directory}/conf/tomcat/context.xml</file>
+                                    <todir>conf</todir>
+                                </configfile>
+                            </configfiles>
+                        </configuration>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-conf</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/conf</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>src/conf</directory>
+                                        <filtering>true</filtering>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -444,7 +481,7 @@
                 <!-- Main configurations -->
 
                 <!-- Filesystem path to store platform information including applications metadata -->
-                <config.work-path>${basedir}/../../.whirl-work</config.work-path><!-- Project folder -->
+                <config.work-path>${project.basedir}/../../.whirl-work</config.work-path><!-- Project folder -->
 
                 <config.cache-timeout>10</config.cache-timeout>
             </properties>

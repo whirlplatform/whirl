@@ -72,8 +72,8 @@ public class SchemaElement extends AbstractElement {
     }
 
     @Override
-	public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
 }

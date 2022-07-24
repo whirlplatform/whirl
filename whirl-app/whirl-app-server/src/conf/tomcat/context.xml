@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Context reloadable="true">
 
-    <!-- For debug purposed only -->
-    <Resources className="org.apache.naming.resources.VirtualDirContext"
-               extraResourcePaths="${basedir}/../target/gwt/launcherDir/"/>
+    <!-- For debugging purposes only -->
+    <Resources>
+        <PreResources
+                base="${project.basedir}/../target/gwt/launcherDir/"
+                className="org.apache.catalina.webresources.DirResourceSet"
+                webAppMount="/"
+                cachingAllowed="false"/>
+    </Resources>
 
     <!-- Start Metadata datasource configuration	-->
     <Resource

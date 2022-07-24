@@ -20,7 +20,6 @@ import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.TomcatConnectionProvider;
 import org.whirlplatform.server.driver.db.MetadataDatabase;
 import org.whirlplatform.server.evolution.EvolutionManager;
-import org.whirlplatform.server.evolution.LiquibaseEvolutionManager;
 import org.whirlplatform.server.login.AccountAuthenticator;
 import org.whirlplatform.server.login.impl.DBAccountAuthenticator;
 import org.whirlplatform.server.metadata.MetadataConfig;
@@ -57,7 +56,7 @@ public class EditorCoreModule extends AbstractModule {
         bind(EditorDatabaseConnector.class).to(EditorDatabaseConnectorImpl.class);
         bind(EditorConnector.class).to(MultibaseEditorConnector.class);
 
-        bind(EvolutionManager.class).to(LiquibaseEvolutionManager.class);
+        bind(EvolutionManager.class).to(DummyEvolutionManager.class);
 
         bind(Packager.class).to(ZipPackager.class);
     }

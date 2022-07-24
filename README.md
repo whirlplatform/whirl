@@ -42,9 +42,10 @@ Since the Whirl Platform client side code mostly based on the Sencha GXT library
 
 First we should create database to store platform data.
 
-For PostgreSQL you should have local configured RDBMS on 5432 port. SQL scripts for creating metadata database are:
+- **PostgreSQL**
 
-- PostgreSQL:
+  For PostgreSQL you should have configured local RDBMS on 5432 port.
+  SQL scripts for creating metadata database are:
 
     ```sql
     CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
@@ -56,25 +57,26 @@ For PostgreSQL you should have local configured RDBMS on 5432 port. SQL scripts 
     ```
 
 - MySQL:
+  For MySQL configure it on port 3306.
     ```sql
     CREATE USER whirl IDENTIFIED BY 'password';
     CREATE DATABASE whirl;
     GRANT ALL ON whirl.* TO whirl;
     ```
 
-We are using GWT for developing frontend side
-with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
-
 ### Main platform - whirl-app
 
 #### Server
 
-Command to start backend server is:
+Command to start backend on Tomcat server is:
 
-    cd whirl-app
-    mvn tomcat7:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql
+    cd whirl-app/whirl-app-server
+    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql
 
 #### Client
+
+We are using GWT for developing frontend side
+with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
 Command to start frontend in dev mode is:
 
@@ -88,10 +90,16 @@ demand.
 
 #### Server
 
-        mvn tomcat7:run -pl whirl-editor-server -am
+Commands to start:
+
+        cd whirl-editor/whirl-editor-server
+        mvn compile war:exploded cargo:run -pl whirl-editor-server -am
 
 #### Client
 
+Commands to start:
+
+        cd whirl-editor
         mvn gwt:codeserver -pl whirl-editor-client -am
 
 ### Troubleshooting

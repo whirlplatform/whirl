@@ -1,6 +1,5 @@
 package org.whirlplatform.server.evolution;
 
-import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -57,7 +56,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
             Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
                     database);
 
-            liquibase.update(new Contexts(), new LabelExpression());
+            liquibase.update(null, new LabelExpression());
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);

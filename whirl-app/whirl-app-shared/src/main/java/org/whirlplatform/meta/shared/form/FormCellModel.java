@@ -51,7 +51,7 @@ public class FormCellModel implements Serializable, Cloneable {
     }
 
     public FormRowModel getRow() {
-		return row;
+        return row;
     }
 
     public void setRow(FormRowModel row) {
@@ -197,8 +197,8 @@ public class FormCellModel implements Serializable, Cloneable {
         other.borderLeftColor = borderLeftColor;
         other.color = color;
         ComponentModel newComponent = component.clone();
-		other.component = newComponent;
-		return other;
-	}
+        other.component = newComponent;
+        return other;
+    }
 
 }
