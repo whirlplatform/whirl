@@ -7,7 +7,7 @@ build:
           - java@8.0.302-open
           - maven
         variables:
-          _JAVA_OPTIONS: '-Xmx2048m'
+          _JAVA_OPTIONS: '-Xmx2048m' # Fixes error reproducible only in CI: [ERROR] Failed to execute goal net.ltgt.gwt.maven:gwt-maven-plugin:1.0.1:compile (default-compile) on project whirl-app-client: GWT exited with status 137 -> [Help 1]
 
       dependencies:
         override:
