@@ -33,7 +33,6 @@
                     </codeserverArgs>
                     <jvmArgs>
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
-                        <jvmArg>-Xmx2048m</jvmArg>
                     </jvmArgs>
                 </configuration>
             </plugin>
