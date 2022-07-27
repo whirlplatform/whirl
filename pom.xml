@@ -99,9 +99,6 @@
                         <failOnError>${gwt.failOnError}</failOnError>
                         <localWorkers>${gwt.workers}</localWorkers>
                         <style>${gwt.style}</style>
-                        <jvmArgs>
-                            <jvmArg>-Xmx2048m</jvmArg>
-                        </jvmArgs>
                     </configuration>
                 </plugin>
                 <plugin>
