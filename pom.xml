@@ -28,7 +28,7 @@
         <gwt.inplace>false</gwt.inplace>
         <gwt.xdisable>true</gwt.xdisable>
         <gwt.draft>false</gwt.draft>
-        <gwt.workers>4</gwt.workers>
+        <gwt.workers>0.25C</gwt.workers>
         <gxt.version>4.0.0</gxt.version>
         <java.source.version>1.8</java.source.version>
         <java.target.version>1.8</java.target.version>
@@ -99,6 +99,9 @@
                         <failOnError>${gwt.failOnError}</failOnError>
                         <localWorkers>${gwt.workers}</localWorkers>
                         <style>${gwt.style}</style>
+                        <jvmArgs>
+                            <jvmArg>-Xmx2048m</jvmArg>
+                        </jvmArgs>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -433,7 +436,7 @@
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
-                    <version>42.2.4</version>
+                    <version>42.4.0</version>
                     <scope>runtime</scope>
                 </dependency>
             </dependencies>
