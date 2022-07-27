@@ -6,6 +6,8 @@ build:
         sdkman:
           - java@8.0.302-open
           - maven
+        variables:
+          _JAVA_OPTIONS: '-Xms512m -Xmx2048m'
 
       dependencies:
         override:
@@ -15,9 +17,9 @@ build:
 
       project_setup:
         override:
-          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -Dgwt.localWorkers=1 -B -V
+          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -Dgwt.localWorkers=1 -B -V
+          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       tests:
