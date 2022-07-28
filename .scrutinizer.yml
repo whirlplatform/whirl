@@ -11,12 +11,13 @@ build:
 
       dependencies:
         override:
+          -
           - git submodule update --init --recursive
-          - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-          - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
       project_setup:
         override:
+          - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+          - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
           - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
           - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -27,10 +28,13 @@ build:
           - mvn test
 
       deployment:
-        -
-          commands:
-            #            - command: bash ~/build/scripts/whirl/deploy-github.sh
-            #              only_if: '[[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
-            - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
-              only_if: '$JELASTIC_ENABLED && [[ "$SCRUTINIZER_BRANCH" -eq "master" ]] && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
-              idle_timeout: 700
+        requires:
+          - node: builder
+          - is_pull_request: false
+        commands:
+          - branch: /^v\d+\.\d+\.\d+$/
+            command: bash ~/build/scripts/whirl/release-gitlab.sh
+          - branch: /^v\d+\.\d+\.\d+$/
+            command: bash ~/build/scripts/whirl/deploy-jelastic.sh
+            only_if: $JELASTIC_ENABLED
+            idle_timeout: 700
