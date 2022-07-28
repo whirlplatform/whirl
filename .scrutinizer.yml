@@ -28,9 +28,6 @@ build:
           - mvn test
 
       deployment:
-        requires:
-          - node: builder
-          - is_pull_request: false
         commands:
           - branch: /^v\d+\.\d+\.\d+$/
             command: bash ~/build/scripts/whirl/release-gitlab.sh
