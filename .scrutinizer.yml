@@ -28,10 +28,9 @@ build:
           - mvn test
 
       deployment:
+        branch: /^v\d+\.\d+\.\d+$/
         commands:
-          - branch: /^v\d+\.\d+\.\d+$/
-            command: bash ~/build/scripts/whirl/release-gitlab.sh
-          - branch: /^v\d+\.\d+\.\d+$/
-            command: bash ~/build/scripts/whirl/deploy-jelastic.sh
+          - bash ~/build/scripts/whirl/release-gitlab.sh
+          - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
             only_if: $JELASTIC_ENABLED
             idle_timeout: 700
