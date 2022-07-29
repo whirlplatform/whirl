@@ -113,12 +113,12 @@ Add following to your maven settings.xml:
 ```xml
 
 <mirrors>
-    <mirror>
-        <id>imagej-repository-mirror</id>
-        <name>ImageJ repository mirror</name>
-        <url>https://maven.imagej.net/content/repositories/public</url>
-        <mirrorOf>imagej-repository</mirrorOf>
-    </mirror>
+  <mirror>
+    <id>imagej-repository-mirror</id>
+    <name>ImageJ repository mirror</name>
+    <url>https://maven.imagej.net/content/repositories/public</url>
+    <mirrorOf>imagej-repository</mirrorOf>
+  </mirror>
   <mirror>
     <id>jboss-repository-mirror</id>
     <name>JBoss Public Nexus Repository</name>
