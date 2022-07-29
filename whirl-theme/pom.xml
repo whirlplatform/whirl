@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.whirlplatform</groupId>
         <artifactId>whirl</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>whirl-theme</artifactId>
 
@@ -67,7 +65,7 @@
                             </executable>
                             <arguments>
                                 <argument>-classpath</argument>
-                                <classpath/>
+                                <classpath />
                                 <argument>
                                     -DphantomBin=${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
                                 </argument>
@@ -108,7 +106,7 @@
             <properties>
                 <platform>windows</platform>
                 <archive>.zip</archive>
-                <phantomjs.bin.path></phantomjs.bin.path>
+                <phantomjs.bin.path />
                 <phantomjs.bin.exec>.exe</phantomjs.bin.exec>
             </properties>
         </profile>
@@ -124,7 +122,7 @@
                 <platform>macosx</platform>
                 <archive>.zip</archive>
                 <phantomjs.bin.path>bin/</phantomjs.bin.path>
-                <phantomjs.bin.exec></phantomjs.bin.exec>
+                <phantomjs.bin.exec />
             </properties>
         </profile>
         <profile>
@@ -139,7 +137,7 @@
                 <platform>linux-i686</platform>
                 <archive>.tar.bz2</archive>
                 <phantomjs.bin.path>bin/</phantomjs.bin.path>
-                <phantomjs.bin.exec></phantomjs.bin.exec>
+                <phantomjs.bin.exec />
             </properties>
             <build>
                 <plugins>
@@ -163,10 +161,8 @@
                                 <configuration>
                                     <failOnError>true</failOnError>
                                     <tasks>
-                                        <bunzip2
-                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}"/>
-                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar"
-                                               dest="${basedir}/target/phantomjs/"/>
+                                        <bunzip2 src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}" />
+                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar" dest="${basedir}/target/phantomjs/" />
                                     </tasks>
                                 </configuration>
                             </execution>
@@ -189,7 +185,7 @@
                 <platform>linux-x86_64</platform>
                 <archive>.tar.bz2</archive>
                 <phantomjs.bin.path>bin/</phantomjs.bin.path>
-                <phantomjs.bin.exec></phantomjs.bin.exec>
+                <phantomjs.bin.exec />
             </properties>
             <build>
                 <plugins>
@@ -213,10 +209,8 @@
                                 <configuration>
                                     <failOnError>true</failOnError>
                                     <tasks>
-                                        <bunzip2
-                                                src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}"/>
-                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar"
-                                               dest="${basedir}/target/phantomjs/"/>
+                                        <bunzip2 src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}${archive}" />
+                                        <untar src="${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}.tar" dest="${basedir}/target/phantomjs/" />
                                     </tasks>
                                 </configuration>
                             </execution>
