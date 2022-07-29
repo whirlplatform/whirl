@@ -92,15 +92,15 @@ demand.
 
 Commands to start:
 
-        cd whirl-editor/whirl-editor-server
-        mvn compile war:exploded cargo:run -pl whirl-editor-server -am
+    cd whirl-editor/whirl-editor-server
+    mvn compile war:exploded cargo:run -pl whirl-editor-server -am
 
 #### Client
 
 Commands to start:
 
-        cd whirl-editor
-        mvn gwt:codeserver -pl whirl-editor-client -am
+    cd whirl-editor
+    mvn gwt:codeserver -pl whirl-editor-client -am
 
 ### Troubleshooting
 
@@ -127,3 +127,9 @@ Add following to your maven settings.xml:
     </mirror>
 </mirrors>
 ```
+
+### Release preparation
+
+Command to set new version in all pom.xml files is:
+
+    mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
