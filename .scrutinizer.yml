@@ -28,10 +28,10 @@ build:
           - mvn test
 
       deployment:
-        - branch: /^v\d+\.\d+\.\d+$/
+        - branch: master
           commands:
             - command: bash ~/build/scripts/whirl/release-gitlab.sh
-        - branch: /^v\d+\.\d+\.\d+$/
+        - branch: master
           commands:
             - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
               only_if: $JELASTIC_ENABLED
