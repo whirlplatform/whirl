@@ -30,7 +30,7 @@ build:
       deployment:
         - branch: master
           commands:
-            - command: bash ~/build/scripts/whirl/release-gitlab.sh
+            - command: bash ~/build/scripts/whirl/release-github.sh
         - branch: master
           commands:
             - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
