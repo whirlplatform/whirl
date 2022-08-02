@@ -19,9 +19,9 @@ build:
         override:
           - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
           - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -Dgwt.skipCompilation=true -B -V
+          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -Dgwt.skipCompilation=true -B -V
+          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       tests:
