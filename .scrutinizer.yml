@@ -16,6 +16,8 @@ build:
           - git submodule update --init --recursive
 
       project_setup:
+        before:
+          - TAG="v$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" # get project version
         override:
           - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
           - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -34,6 +36,6 @@ build:
             - command: bash ~/build/scripts/whirl/release-github.sh
         - branch: master
           commands:
-            - command: bash ~/build/scripts/whirl/deploy-jelastic.sh
+            - command: bash ~/build/scripts/whirl/deploy-jelastic-cli.sh
               only_if: $JELASTIC_ENABLED
               idle_timeout: 700
