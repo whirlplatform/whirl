@@ -1,0 +1,25 @@
+services:
+  all:
+    build:
+      context: ..
+      dockerfile: docker/Build.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      target: all
+      args:
+        TAG: v0.1.0 # For prebuilded only.
+    ports:
+      - 8080:8080
+    volumes:
+      - ./volumes/tomcat/context:/usr/local/tomcat/conf/Catalina/localhost # Tomcats global context configuration location.
+      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+    links:
+      - postgresql:postgresql
+    depends_on:
+      - postgresql
+  postgresql:
+    image: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db/postgresql/:/docker-entrypoint-initdb.d/ # Database initialisation script.
