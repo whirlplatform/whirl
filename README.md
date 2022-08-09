@@ -71,7 +71,7 @@ First we should create database to store platform data.
 Command to start backend on Tomcat server is:
 
     cd whirl-app/whirl-app-server
-    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql
+    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql,local-store
 
 #### Client
 
@@ -93,7 +93,7 @@ demand.
 Commands to start:
 
     cd whirl-editor/whirl-editor-server
-    mvn compile war:exploded cargo:run -pl whirl-editor-server -am
+    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql,local-store
 
 #### Client
 
