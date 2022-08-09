@@ -2,13 +2,13 @@ FROM maven:3.8.6-openjdk-8-slim AS builder
 
 WORKDIR /home/app/
 
-ADD ./pom.xml ./
-ADD ./whirl* ./
+ADD . ./
 
 RUN apt-get update
 RUN apt-get install -y libfreetype6 libfontconfig1 nodejs
 
 RUN mvn clean package -DskipTests -Dmaven.artifact.threads=5
+
 
 FROM tomcat:9-jdk8-openjdk AS app
 
