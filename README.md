@@ -111,6 +111,9 @@ Commands to start:
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
 ```
+
+Editor will be accessible at http://localhost:8091/editor/.
+
 ### Troubleshooting
 
 If you experience the following issue while initializing maven project:
