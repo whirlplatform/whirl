@@ -1,6 +1,6 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
-<p align="center">
+<p style="text-align:center;">
   <img src="logo.png" />
 </p>
 
@@ -64,14 +64,22 @@ First we should create database to store platform data.
     GRANT ALL ON whirl.* TO whirl;
     ```
 
+To prepare dependencies for running platform in development mode you should build prerequisites with command:
+
+```bash
+mvn clean install -Dgwt.skipCompilation=true
+```
+
 ### Main platform - whirl-app
 
 #### Server
 
 Command to start backend on Tomcat server is:
 
-    cd whirl-app/whirl-app-server
-    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql,local-store
+```bash
+cd whirl-app/whirl-app-server
+mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql,local-store
+```
 
 #### Client
 
@@ -79,9 +87,10 @@ We are using GWT for developing frontend side
 with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
 Command to start frontend in dev mode is:
-
-    cd whirl-app
-    mvn gwt:codeserver -pl whirl-app-client -am
+```bash
+cd whirl-app
+mvn gwt:codeserver -pl whirl-app-client -am
+```
 
 After command execution application will be accessible at http://localhost:8090/app. Frontend part will be compiled on
 demand.
@@ -91,17 +100,17 @@ demand.
 #### Server
 
 Commands to start:
-
-    cd whirl-editor/whirl-editor-server
-    mvn compile war:exploded cargo:run -P jdbc-postgresql,config-postgresql,local-store
-
+```bash
+cd whirl-editor/whirl-editor-server
+mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
+```
 #### Client
 
 Commands to start:
-
-    cd whirl-editor
-    mvn gwt:codeserver -pl whirl-editor-client -am
-
+```bash
+cd whirl-editor
+mvn gwt:codeserver -pl whirl-editor-client -am
+```
 ### Troubleshooting
 
 If you experience the following issue while initializing maven project:
@@ -111,7 +120,6 @@ If you experience the following issue while initializing maven project:
 Add following to your maven settings.xml:
 
 ```xml
-
 <mirrors>
   <mirror>
     <id>imagej-repository-mirror</id>
@@ -131,5 +139,6 @@ Add following to your maven settings.xml:
 ### Release preparation
 
 Command to set new version in all pom.xml files is:
-
-    mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
+```bash
+mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
+```
