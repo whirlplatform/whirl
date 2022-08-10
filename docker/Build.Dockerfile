@@ -1,3 +1,5 @@
+# This dockerfile builds image by compiling current project from source.
+
 FROM maven:3.8.6-openjdk-8-slim AS builder
 
 WORKDIR /home/app/
