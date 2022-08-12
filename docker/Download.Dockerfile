@@ -17,6 +17,11 @@ FROM tomcat:9-jdk8-openjdk AS app
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=builder /home/app/whirl-application.war /usr/local/tomcat/webapps/ROOT.war
 
+FROM tomcat:9-jdk8-openjdk AS editor
+
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+COPY --from=builder /home/app/whirl-editor.war /usr/local/tomcat/webapps/ROOT
+
 FROM tomcat:9-jdk8-openjdk AS all
 
 RUN rm -rf /usr/local/tomcat/webapps/ROOT

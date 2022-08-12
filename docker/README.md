@@ -3,8 +3,11 @@
 This folder contains docker configurations.
 Entire application stack can be run it with docker compose by command
 
-    docker-compose up --build --project-name whirl prebuild
+```bash
+docker-compose up --build image --project-name whirl
+```
 
 Thera are two profiles:
 - `source` - runs application stack by building from source code of current project.
-- `prebuilt` - runs from prebuilt binaries located at GitHub's releases page.
+- `prebuilt` - runs from prebuilt web archive located at GitHub's releases page.
+- `image` - runs from docker image.

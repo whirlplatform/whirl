@@ -40,7 +40,7 @@ Since the Whirl Platform client side code mostly based on the Sencha GXT library
 
 ## Developing
 
-First we should create database to store platform data.
+First the database to store platform data should be created.
 
 - **PostgreSQL**
 
@@ -64,13 +64,14 @@ First we should create database to store platform data.
     GRANT ALL ON whirl.* TO whirl;
     ```
 
-To prepare dependencies for running platform in development mode you should build prerequisites with command:
+To prepare dependencies for running platform in development mode you should build prerequisites:
 
 ```bash
 mvn clean install -Dgwt.skipCompilation=true
 ```
 
 ### Main platform - whirl-app
+
 
 #### Server
 
