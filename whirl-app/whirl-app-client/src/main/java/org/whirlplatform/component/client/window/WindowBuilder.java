@@ -8,6 +8,10 @@ import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -15,11 +19,13 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Построитель окон
  */
+@JsType(name = "Window", namespace = "Whirl")
 public class WindowBuilder extends ComponentBuilder implements Containable {
 
 	private ComponentBuilder topComponent;
@@ -31,12 +37,14 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 
 	private boolean modal;
 
-	public WindowBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public WindowBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public WindowBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	/**
@@ -44,6 +52,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 * 
 	 * @return ComponentType
 	 */
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.WindowType;
@@ -63,7 +72,11 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 		window.setMinWidth(WINDOW_MIN_WIDTH);
 		window.setMinHeight(WINDOW_MIN_HEIGHT);
 		window.setOnEsc(false);
-		window.setHeading(getTitle());
+
+		DataValue title = builderProperties.get(PropertyType.Title.getCode());
+		if (title != null && !Util.isEmptyString(title.getString())) {
+			window.setHeading(title.getString());
+		}
 
 		WindowManager.get().add(this);
 		return window;
@@ -78,6 +91,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 *            - String, значение атрибута
 	 * @return boolean
 	 */
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (PropertyType.Closable.getCode().equalsIgnoreCase(name) && value != null) {
@@ -321,6 +335,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 		public static String TYPE_TOOL_RESTORE = "Restore";
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		String s = "WindowBuilder__getLocatorByElement(Element element)";
@@ -340,6 +355,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 		return locator;
 	}
 
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		if (!fitsLocator(locator) || !locator.typeEquals(getType().getType())) {
@@ -420,22 +436,27 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 			return null;
 		}
 
+		@JsIgnore
 		public Widget getCloseWidget() {
 			return findWidgetByClassName(ToolButton.CLOSE.getStyle());
 		}
 
+		@JsIgnore
 		public Widget getRestoreWidget() {
 			return findWidgetByClassName(ToolButton.RESTORE.getStyle());
 		}
 
+		@JsIgnore
 		public Widget getMaximizeWidget() {
 			return findWidgetByClassName(ToolButton.MAXIMIZE.getStyle());
 		}
 
+		@JsIgnore
 		public Widget getMinimizeWidget() {
 			return findWidgetByClassName(ToolButton.MINIMIZE.getStyle());
 		}
 
+		@JsIgnore
 		private Widget findWidgetByClassName(String className) {
 			for (Widget toolWidget : header.getTools()) {
 				if (toolWidget instanceof ToolButton) {

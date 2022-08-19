@@ -53,7 +53,6 @@ First the database to store platform data should be created.
     GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
     -- connect to whirl database as superuser and run next commands
     CREATE SCHEMA whirl AUTHORIZATION whirl;
-    CREATE EXTENSION IF NOT EXISTS hstore;
     ```
 
 - MySQL:
@@ -89,7 +88,7 @@ with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index
 
 Command to start frontend in dev mode is:
 ```bash
-cd whirl-app
+cd whirl-app/whirl-app-server
 mvn gwt:codeserver -pl whirl-app-client -am
 ```
 

@@ -4,9 +4,10 @@
 	version="2.5">
 
 	<!-- log4j -->
-	<listener>
-        <listener-class>org.whirlplatform.editor.server.servlet.ContextPathInitializer</listener-class>
-	</listener>
+	<context-param>
+		<param-name>log4jContextName</param-name>
+		<param-value>whirl-editor</param-value>
+	</context-param>
 
 	<!-- Servlets -->
 	<filter>
@@ -20,10 +21,6 @@
 	<listener>
         <listener-class>org.whirlplatform.editor.server.servlet.EditorInjectServletConfig</listener-class>
 	</listener>
-	<listener>
-        <listener-class>org.whirlplatform.editor.server.servlet.ContextPathInitializer</listener-class>
-	</listener>
-  
 
 	<session-config>
 		<session-timeout>480</session-timeout>
