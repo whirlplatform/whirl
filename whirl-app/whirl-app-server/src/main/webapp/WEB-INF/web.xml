@@ -10,9 +10,10 @@
     <!-- Джобы -->
 
     <!-- log4j -->
-    <listener>
-        <listener-class>org.whirlplatform.server.log.ContextPathInitializer</listener-class>
-    </listener>
+    <context-param>
+        <param-name>log4jContextName</param-name>
+        <param-value>whirl-app</param-value>
+    </context-param>
 
 
     <listener>

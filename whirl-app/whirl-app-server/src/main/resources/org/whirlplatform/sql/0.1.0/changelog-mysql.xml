@@ -7,31 +7,14 @@
 
     <property
             name="date_now"
-            value="sysdate"
-            dbms="oracle"/>
-    <property
-            name="date_now"
             value="now()"
-            dbms="mysql"/>
-    <property
-            name="date_now"
-            value="now()"
-            dbms="postgresql"/>
-
-    <property
-            name="varchar_type"
-            value="varchar(4000)"
-            dbms="oracle, postgresql"/>
-    <property
-            name="varchar_type"
-            value="varchar(3072)"
             dbms="mysql"/>
 
     <changeSet
-            id="whirl_0.1"
+            id="whirl_0.1.0-mysql"
             author="otlichnosti@gmail.com"
             failOnError="true"
-            dbms="oracle, postgresql, mysql">
+            dbms="mysql">
 
         <createTable
                 tableName="WHIRL_USERS"
@@ -50,19 +33,19 @@
                     remarks="Deletion mark"/>
             <column
                     name="LOGIN"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="User login"/>
             <column
                     name="PASSWORD_HASH"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="BCRYPT hash of user's password"/>
             <column
                     name="NAME"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="Readable name of user. E.g. first name and last name."/>
             <column
                     name="EMAIL"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="Email"/>
             <column
                     name="CREATION_DATE"
@@ -72,7 +55,7 @@
         <addAutoIncrement tableName="WHIRL_USERS"
                           columnName="ID"
                           columnDataType="bigint"
-                          startWith="2"/>
+                          startWith="1"/>
         <createIndex
                 indexName="IDX_WHIRL_USERS_L"
                 tableName="WHIRL_USERS">
@@ -102,13 +85,13 @@
             </column>
             <column
                     name="APPLICATION_CODE"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="Application code"/>
         </createTable>
         <addAutoIncrement tableName="WHIRL_USER_APPS"
                           columnName="ID"
                           columnDataType="bigint"
-                          startWith="2"/>
+                          startWith="1"/>
         <createIndex
                 indexName="IDX_WHIRL_USER_APPS_RWU"
                 tableName="WHIRL_USER_APPS">
@@ -143,17 +126,13 @@
             </column>
             <column
                     name="GROUP_CODE"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     remarks="Group code"/>
-            <column
-                    name="NAME"
-                    type="${varchar_type}"
-                    remarks="Description"/>
         </createTable>
         <addAutoIncrement tableName="WHIRL_USER_GROUPS"
                           columnName="ID"
                           columnDataType="bigint"
-                          startWith="2"/>
+                          startWith="1"/>
         <createIndex
                 indexName="IDX_WHIRL_USER_GROUPS_RWU"
                 tableName="WHIRL_USER_GROUPS">
@@ -170,25 +149,25 @@
             <column
                     name="ID"
                     type="bigint"
-                    valueNumeric="1"/>
+                    valueNumeric="0"/>
             <column
                     name="DELETED"
                     type="boolean"/>
             <column
                     name="LOGIN"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     value="whirl-admin"/>
             <column
                     name="PASSWORD_HASH"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     value="$2a$10$nKGxjGAypl/a5NxBqi80HuTcDnDSA36teTopj5wRfx22i9Sk1ttXW"/>
             <column
                     name="NAME"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     value="Administrator"/>
             <column
                     name="EMAIL"
-                    type="${varchar_type}"/>
+                    type="varchar(4000)"/>
             <column
                     name="CREATION_DATE"
                     type="datetime"
@@ -198,152 +177,33 @@
             <column
                     name="ID"
                     type="bigint"
-                    valueNumeric="1"/>
+                    valueNumeric="0"/>
             <column
                     name="DELETED"
                     type="boolean"/>
             <column
                     name="R_WHIRL_USERS"
                     type="bigint"
-                    valueNumeric="1"/>
+                    valueNumeric="0"/>
             <column
                     name="GROUP_CODE"
-                    type="${varchar_type}"
+                    type="varchar(4000)"
                     value="whirl-editor-access-group"/>
-            <column
-                    name="NAME"
-                    type="${varchar_type}"
-                    value="Whirl Editor access group"/>
         </insert>
 
-        <!-- PostgreSQL -->
-        <sqlFile dbms="postgresql"
-                 path="postgresql/function_result.sql"
-                 relativeToChangelogFile="true"/>
-
-        <sqlFile dbms="postgresql"
-                 path="postgresql/function_input.sql"
-                 relativeToChangelogFile="true"/>
-
-        <sqlFile dbms="postgresql"
-				 path="postgresql/row_value.sql"
-				 relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-						 procedureName="internal_next_index"
-						 path="postgresql/internal_next_index.sql"
-						 relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-						 procedureName="add_parameter_varchar"
-						 path="postgresql/add_parameter_varchar.sql"
-						 relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-						 procedureName="add_parameter_boolean"
-						 path="postgresql/add_parameter_boolean.sql"
-						 relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-						 procedureName="add_parameter_number"
-						 path="postgresql/add_parameter_number.sql"
-						 relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_date"
-                         path="postgresql/add_parameter_date.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_list"
-                         path="postgresql/add_parameter_list.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="add_parameter_component"
-                         path="postgresql/add_parameter_component.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="set_message"
-                         path="postgresql/set_message.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="set_next_event"
-                         path="postgresql/set_next_event.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure dbms="postgresql"
-                         procedureName="as_result"
-                         path="postgresql/as_result.sql"
-                         relativeToChangelogFile="true"/>
-        <!-- PostgreSQL -->
-
-        <!-- MySQL -->
-        <createProcedure dbms="mysql"
-                         procedureName="set_next_event"
+        <createProcedure procedureName="set_next_event"
                          path="mysql/wrl_set_next_event.sql"
                          relativeToChangelogFile="true"/>
 
-        <createProcedure dbms="mysql"
-                         procedureName="as_result"
+        <createProcedure procedureName="as_result"
                          path="mysql/wrl_as_result.sql"
                          relativeToChangelogFile="true"/>
-        <!-- END MySQL -->
 
         <rollback>
-
-            <!-- PostgreSQL -->
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/function_result.sql"
+            <sqlFile path="mysql/rollback/wrl_set_next_event.sql"
                      relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/function_input.sql"
+            <sqlFile path="mysql/rollback/wrl_as_result.sql"
                      relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/row_value.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/internal_next_index.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_varchar.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_boolean.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_number.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_date.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_list.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/add_parameter_component.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/set_message.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/set_next_event.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="postgresql"
-                     path="postgresql/rollback/as_result.sql"
-                     relativeToChangelogFile="true"/>
-            <!-- END PostgreSQL -->
-
-            <!-- MySQL -->
-            <sqlFile dbms="mysql"
-                     path="mysql/rollback/wrl_set_next_event.sql"
-                     relativeToChangelogFile="true"/>
-            <sqlFile dbms="mysql"
-                     path="mysql/rollback/wrl_as_result.sql"
-                     relativeToChangelogFile="true"/>
-            <!-- END MySQL -->
 
             <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
             <dropIndex tableName="WHIRL_USER_GROUPS" indexName="IDX_WHIRL_USER_GROUPS_RWU"/>
@@ -356,6 +216,6 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
         </rollback>
-	</changeSet>
+    </changeSet>
 
 </databaseChangeLog>

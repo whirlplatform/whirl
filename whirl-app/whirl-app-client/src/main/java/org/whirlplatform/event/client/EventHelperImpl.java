@@ -2,9 +2,12 @@ package org.whirlplatform.event.client;
 
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -33,8 +36,11 @@ import org.whirlplatform.storage.client.StorageHelper;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 public class EventHelperImpl implements EventHelper {
+
+    private static final Logger LOGGER = Logger.getLogger(EventHelperImpl.class.getName());
 
     private EventMetadata metadata;
 
@@ -273,8 +279,8 @@ public class EventHelperImpl implements EventHelper {
         } else if (metadata.getType() == EventType.JavaScript) {
             String script = metadata.getSource();
             String functionName = "function_" + metadata.getId().replace("-", "");
-            script = functionName + "(wctx) {\n" + script + "\n}";
-            attachScript(metadata.getId(), script);
+            script = "window." + functionName + " = function (wctx) {\n" + script + "\n}";
+            attachScript(functionName, script);
             onResult(source, javaScriptExecute(functionName, source, parameters));
         }
     }
@@ -326,7 +332,6 @@ public class EventHelperImpl implements EventHelper {
         }
 
         ComponentBuilder targetComponent = BuilderManager.findBuilder(metadata.getTargetComponentId(), false);
-
         if (targetComponent instanceof Containable) {
             ((Containable) targetComponent).addChild(component);
         } else if (component.getType() == ComponentType.WindowType) {
@@ -334,6 +339,7 @@ public class EventHelperImpl implements EventHelper {
             ((WindowBuilder) component).show();
             return;
         }
+
 //
 //            // строим новое окно
 //            WindowBuilder window = new WindowBuilder();
@@ -360,8 +366,10 @@ public class EventHelperImpl implements EventHelper {
 //
 //            targetComponent = window;
 //        }
-
-        if (targetComponent.getComponent() instanceof ResizeContainer) {
+        if (targetComponent == null) {
+            LOGGER.warning("Target component not found: " + metadata.getTargetComponentId());
+            return;
+        } else if (targetComponent.getComponent() instanceof ResizeContainer) {
             ((ResizeContainer) targetComponent.getComponent()).forceLayout();
         }
     }
@@ -383,23 +391,15 @@ public class EventHelperImpl implements EventHelper {
 		return $wnd[func](context);
 	}-*/;
 
-    private void attachScript(String id, String script) {
-        if (DOM.getElementById(id) == null) {
-            Element e = DOM.createElement("script");
-            e.setAttribute("language", "JavaScript");
-            e.setAttribute("id", id);
-            if (GXT.isIE()) {
-                setElementTextIE(e, script);
-            } else {
-                e.setInnerText(script);
-            }
-            RootPanel.get().getElement().appendChild(e);
+    private native boolean checkFunctionExists(String func) /*-{
+        return $wnd[func] != undefined;
+    }-*/;
+
+    private void attachScript(String functionName, String script) {
+        if (!checkFunctionExists(functionName)) {
+            ScriptInjector.fromString(script).setWindow(ScriptInjector.TOP_WINDOW).setRemoveTag(false).inject();
         }
     }
-
-    private static native void setElementTextIE(Element e, String text) /*-{
-		e.text = text;
-	}-*/;
 
     private void findComponents(List<EventParameter> parameters, Map<EventParameter, ComponentBuilder> components,
                                 Map<EventParameter, Parameter<?>> componentParameters,

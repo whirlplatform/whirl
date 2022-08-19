@@ -9,12 +9,6 @@
 
     <!-- Джобы -->
 
-    <!-- log4j -->
-    <listener>
-        <listener-class>org.whirlplatform.server.log.ContextPathInitializer</listener-class>
-    </listener>
-
-
     <listener>
         <listener-class>org.whirlplatform.server.session.SessionListener</listener-class>
     </listener>

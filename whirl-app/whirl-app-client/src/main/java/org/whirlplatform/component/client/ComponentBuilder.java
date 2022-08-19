@@ -17,6 +17,8 @@ import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutD
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.menu.Menu;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
 import org.whirlplatform.component.client.event.AttachEvent;
 import org.whirlplatform.component.client.event.BlurEvent;
@@ -47,11 +49,15 @@ import java.util.Set;
  * Базовый класс всех построителей компонентов, все компоненты должны его
  * расширять.
  */
+@JsType(name = "Component", namespace = "Whirl")
 public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers, DetachEvent.HasDetachHandlers,
         FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers, ShowEvent.HasShowHandlers, HideEvent.HasHideHandlers, HasLayoutData,
         CloseProvider, TitleProvider, HasCode {
 
+    @JsIgnore
     public static final String CBUILDER = "CBUILDER";
+
+    @JsIgnore
     public static final String DEFAULT_CODE = "code";
     private String id;
 
@@ -63,7 +69,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     protected Map<String, DataValue> builderProperties = new FastMap<DataValue>();
     protected Set<String> replaceableProperties = new HashSet<String>();
 
-    public boolean hidden = false;
+    private boolean hidden = false;
 
     private String code = DEFAULT_CODE;
 
@@ -78,11 +84,13 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
 
     protected List<ContextMenuItemBuilder> contextMenuItems = new ArrayList<ContextMenuItemBuilder>();
 
+    @JsIgnore
     public ComponentBuilder(Map<String, DataValue> builderProperties) {
         super();
         createClear(builderProperties);
     }
 
+    @JsIgnore
     public ComponentBuilder() {
         super();
         createClear();
@@ -93,6 +101,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param id
      */
+    @JsIgnore
     public void setId(String id) {
         this.id = id;
     }
@@ -102,6 +111,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return String
      */
+    @JsIgnore
     public String getId() {
         return id;
     }
@@ -111,6 +121,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return ComponentType
      */
+    @JsIgnore
     public abstract ComponentType getType();
 
     /**
@@ -119,6 +130,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      * @param properties   - Map< String, String >, Название и значение атрибута
      * @param forComponent - boolean
      */
+    @JsIgnore
     public void setProperties(Map<String, DataValue> properties, boolean forComponent) {
         builderProperties.putAll(properties);
         if (forComponent) {
@@ -133,6 +145,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return название и значение атрибута
      */
+    @JsIgnore
     public Map<String, DataValue> getProperties() {
         return Collections.unmodifiableMap(builderProperties);
     }
@@ -169,6 +182,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return Созданный компонент
      */
+    @JsIgnore
     public Component create() {
         // инициализация
         setInitProperties(builderProperties);
@@ -212,6 +226,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     public boolean setProperty(String name, DataValue value) {
         builderProperties.put(name, value);
 
@@ -290,18 +305,22 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return false;
     }
 
+    @JsIgnore
     public void setDomId(String domId) {
         componentInstance.setId(domId);
     }
 
+    @JsIgnore
     public String getDomId() {
         return componentInstance != null ? componentInstance.getElement().getId() : null;
     }
 
+    @JsIgnore
     public void setWidth(int value) {
         componentInstance.setWidth(String.valueOf(value));
     }
 
+    @JsIgnore
     public void setHeight(int value) {
         componentInstance.setHeight(String.valueOf(value));
     }
@@ -361,6 +380,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return boolean
      */
+    @JsIgnore
     public boolean isCreated() {
         return created;
     }
@@ -370,6 +390,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean isClosable() {
         return closable;
@@ -380,6 +401,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param closable - boolean
      */
+    @JsIgnore
     @Override
     public void setClosable(boolean closable) {
         this.closable = closable;
@@ -388,6 +410,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     /**
      * Установка заголовка
      */
+    @JsIgnore
     @Override
     public void setTitle(String title) {
         this.title = title;
@@ -398,6 +421,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return String
      */
+    @JsIgnore
     @Override
     public String getTitle() {
         return title;
@@ -408,6 +432,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return Component
      */
+    @JsIgnore
     public Component getComponent() {
         return componentInstance;
     }
@@ -417,6 +442,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return String
      */
+    @JsIgnore
     @Override
     public String getCode() {
         return code;
@@ -425,6 +451,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     /**
      * Установка кода компонента
      */
+    @JsIgnore
     @Override
     public void setCode(String code) {
         this.code = code;
@@ -435,6 +462,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return boolean
      */
+    @JsIgnore
     public boolean isHidden() {
         return hidden;
     }
@@ -444,6 +472,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param hidden - boolean
      */
+    @JsIgnore
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
         if (componentInstance != null) {
@@ -460,6 +489,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return ComponentBuilder, компонент
      */
+    @JsIgnore
     public ComponentBuilder getParentBuilder() {
         return parentBuilder;
     }
@@ -469,6 +499,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param parentBuilder - ComponentBuilder, компонент
      */
+    @JsIgnore
     public void setParentBuilder(ComponentBuilder parentBuilder) {
         this.parentBuilder = parentBuilder;
     }
@@ -476,6 +507,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     /**
      * Отделиться от родительского контейнера
      */
+    @JsIgnore
     public void removeFromParent() {
         if (parentBuilder != null && parentBuilder instanceof Containable) {
             ((Containable) parentBuilder).removeChild(this);
@@ -487,6 +519,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return boolean
      */
+    @JsIgnore
     public boolean isReloadable() {
         return refreshable;
     }
@@ -496,6 +529,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param name - String
      */
+    @JsIgnore
     public void addStyleName(String name) {
         componentInstance.addStyleName(name);
     }
@@ -505,6 +539,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param name - String
      */
+    @JsIgnore
     public void removeStyleName(String name) {
         componentInstance.removeStyleName(name);
     }
@@ -512,6 +547,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     /**
      * Устанавливает фокус на компоненте.
      */
+    @JsIgnore
     public void focus() {
         if (componentInstance == null) {
             return;
@@ -524,6 +560,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param enabled - boolean
      */
+    @JsIgnore
     public void setEnabled(boolean enabled) {
         ComponentBuilder parent = parentBuilder;
         while (parent != null) {
@@ -540,6 +577,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @return boolean
      */
+    @JsIgnore
     public boolean isEnabled() {
         return componentInstance.isEnabled();
     }
@@ -563,70 +601,84 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      * @param type    - GwtEvent.Type < H >
      * @return < H extends EventHandler >
      */
+    @JsIgnore
     public final <H extends EventHandler> HandlerRegistration addHandler(final H handler, GwtEvent.Type<H> type) {
         return ensureHandler().addHandler(type, handler);
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addAttachHandler(AttachEvent.AttachHandler handler) {
         return addHandler(handler, AttachEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addCreateHandler(CreateEvent.CreateHandler handler) {
         return addHandler(handler, CreateEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addDetachHandler(DetachEvent.DetachHandler handler) {
         return addHandler(handler, DetachEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addFocusHandler(FocusEvent.FocusHandler handler) {
         return addHandler(handler, FocusEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addBlurHandler(BlurEvent.BlurHandler handler) {
         return addHandler(handler, BlurEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addShowHandler(ShowEvent.ShowHandler handler) {
         return addHandler(handler, ShowEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addHideHandler(HideEvent.HideHandler handler) {
         return addHandler(handler, HideEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public void fireEvent(GwtEvent<?> event) {
         ensureHandler().fireEvent(event);
     }
 
+    @JsIgnore
     @Override
     public BorderLayoutData getBorderLayoutData() {
         return ContainerHelper.getBorderLayoutData(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public HorizontalLayoutData getHorizontalLayoutData() {
         return ContainerHelper.getHorizontalLayoutData(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public VerticalLayoutData getVerticalLayoutData() {
         return ContainerHelper.getVerticalLayoutData(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public BoxLayoutData getBoxLayoutData() {
         return ContainerHelper.getBoxLayoutData(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public boolean isNorth() {
         DataValue northData = builderProperties.get(PropertyType.LayoutDataLocation.getCode());
@@ -637,6 +689,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return "North".equalsIgnoreCase(north);
     }
 
+    @JsIgnore
     @Override
     public boolean isWest() {
         DataValue westData = builderProperties.get(PropertyType.LayoutDataLocation.getCode());
@@ -647,6 +700,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return "West".equalsIgnoreCase(west);
     }
 
+    @JsIgnore
     @Override
     public boolean isSouth() {
         DataValue southData = builderProperties.get(PropertyType.LayoutDataLocation.getCode());
@@ -657,6 +711,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return "South".equalsIgnoreCase(south);
     }
 
+    @JsIgnore
     @Override
     public boolean isEast() {
         DataValue eastData = builderProperties.get(PropertyType.LayoutDataLocation.getCode());
@@ -667,6 +722,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return "East".equalsIgnoreCase(east);
     }
 
+    @JsIgnore
     @Override
     public boolean isCenter() {
         DataValue centerData = builderProperties.get(PropertyType.LayoutDataLocation.getCode());
@@ -677,11 +733,13 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return "Center".equalsIgnoreCase(center);
     }
 
+    @JsIgnore
     @Override
     public GridLayoutData getGridLayoutData() {
         return ContainerHelper.getGridLayoutData(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public int getRowPosition() {
         int res = 0;
@@ -692,6 +750,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return res;
     }
 
+    @JsIgnore
     @Override
     public int getColumnPosition() {
         int res = 0;
@@ -702,6 +761,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return res;
     }
 
+    @JsIgnore
     @Override
     public int getIndexPosition() {
         int res = 0;
@@ -717,43 +777,53 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      *
      * @param styleName - String, название стиля
      */
+    @JsIgnore
     public void setStyleName(String styleName) {
         componentInstance.setStyleName(styleName);
     }
 
+    @JsIgnore
     public void setReplaceableProperties(Collection<String> properties) {
         replaceableProperties.clear();
         replaceableProperties.addAll(properties);
     }
 
+    @JsIgnore
     public Collection<String> getReplaceableProperties() {
         return Collections.unmodifiableSet(replaceableProperties);
     }
 
+    @JsIgnore
     public void mask() {
         componentInstance.mask();
     }
 
+    @JsIgnore
     public void mask(String message) {
         componentInstance.mask(message);
     }
 
+    @JsIgnore
     public void unmask() {
         componentInstance.unmask();
     }
 
+    @JsIgnore
     public void addContextMenuItem(ContextMenuItemBuilder item) {
         contextMenuItems.add(item);
     }
 
+    @JsIgnore
     public void removeContextMenuItem(ContextMenuItemBuilder item) {
         contextMenuItems.remove(item);
     }
 
+    @JsIgnore
     public List<ContextMenuItemBuilder> getContextMenuItems() {
         return Collections.unmodifiableList(contextMenuItems);
     }
 
+    @JsIgnore
     @Override
     public Widget getWrapper() {
         return getRealComponent();
@@ -764,6 +834,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         public static String PARAMETER_CODE = "code";
     }
 
+    @JsIgnore
     @Override
     public void fillLocatorDefaults(Locator locator, Element element) {
         if (!Util.isEmptyString(id)) {
@@ -773,6 +844,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         }
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         if (getWrapper().getElement().isOrHasChild(element)) {
@@ -788,6 +860,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      * говоря, если этот метод вызван, то локатор уже содержит идентификатор
      * билдера. Иначе сюда не попадём.
      */
+    @JsIgnore
     public Element getElementByLocator(Locator locator) {
         if (locator.getType().equals(getType().getType())) {
             if (fitsLocator(locator)) {
@@ -797,6 +870,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return null;
     }
 
+    @JsIgnore
     protected boolean fitsLocator(Locator locator) {
         if (checkLocatorParameter(LocatorParams.PARAMETER_ID, locator)) {
             return true;
@@ -804,6 +878,7 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return checkLocatorParameter(LocatorParams.PARAMETER_CODE, locator);
     }
 
+    @JsIgnore
     private boolean checkLocatorParameter(String parameter, Locator locator) {
         if (locator.hasParameter(LocatorParams.PARAMETER_ID)) {
             final String value = locator.getParameter(parameter);
