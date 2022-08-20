@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ROOT type="EVENT_TEMPLATE" name="Window hide by code">
+  <event id="83C0C89E-DECA-41F4-9EF3-5EC900F5F257" name="Window close by code" type="JavaScript">
+    <properties>
+      <schema/>
+      <function/>
+      <source><![CDATA[//Available variables: wctx - event context
+var window = Whirl.Components.findByCode("${Window code:::WindowBuilder}"); // Find window component by it's code
+if (window) {
+  window.hide();
+}]]></source>
+      <isNamed>false</isNamed>
+      <isConfirm>false</isConfirm>
+      <confirmText replace="false">
+        <defaultLocale locale="RU_TMPL_TEMPLATE"/>
+        <locales/>
+      </confirmText>
+      <isWait>false</isWait>
+      <waitText replace="false">
+        <defaultLocale locale="RU_TMPL_TEMPLATE"/>
+        <locales/>
+      </waitText>
+      <handlerType>ClickHandler</handlerType>
+      <createNew>false</createNew>
+    </properties>
+  </event>
+</ROOT>
