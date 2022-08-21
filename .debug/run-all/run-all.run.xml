@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run-all" type="CompoundRunConfigurationType">
+    <toRun name="whirl-app-client" type="MavenRunConfiguration" />
+    <toRun name="whirl-app-server" type="MavenRunConfiguration" />
+    <toRun name="whirl-editor-client" type="MavenRunConfiguration" />
+    <toRun name="whirl-editor-server" type="MavenRunConfiguration" />
+    <method v="2" />
+  </configuration>
+</component>

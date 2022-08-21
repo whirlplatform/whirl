@@ -11,24 +11,24 @@ public class BaseTemplate implements Serializable {
 
     private Type type;
     private AbstractElement element;
-    private boolean removable;
+    private boolean editable;
 
     @SuppressWarnings("unused")
     private BaseTemplate() {
     }
 
-    public BaseTemplate(AbstractElement element, boolean removable) {
+    public BaseTemplate(AbstractElement element, boolean editable) {
         this.element = element;
         if (element instanceof EventElement) {
             this.type = Type.EVENT_TEMPLATE;
         } else {
             this.type = Type.COMPONENT_TEMPLATE;
         }
-        this.removable = removable;
+        this.editable = editable;
     }
 
-    public boolean isRemovable() {
-        return removable;
+    public boolean isEditable() {
+        return editable;
     }
 
     public AbstractElement getElement() {

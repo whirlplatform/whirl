@@ -19,14 +19,8 @@ import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.event.CancelEditEvent;
-import com.sencha.gxt.widget.core.client.event.CancelEditEvent.CancelEditHandler;
-import com.sencha.gxt.widget.core.client.event.CompleteEditEvent;
-import com.sencha.gxt.widget.core.client.event.CompleteEditEvent.CompleteEditHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
-import com.sencha.gxt.widget.core.client.event.StartEditEvent;
-import com.sencha.gxt.widget.core.client.event.StartEditEvent.StartEditHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
@@ -102,7 +96,7 @@ public abstract class AbstractTemplatesView extends ContentPanel
         getGrid().getView().setAutoExpandColumn(config);
         getGrid().getView().setStripeRows(true);
         getGrid().getSelectionModel().addSelectionHandler(event -> {
-            if (event.getSelectedItem() != null && event.getSelectedItem().isRemovable()) {
+            if (event.getSelectedItem() != null && event.getSelectedItem().isEditable()) {
                 delete.setEnabled(true);
                 rename.setEnabled(true);
             } else {
@@ -123,35 +117,26 @@ public abstract class AbstractTemplatesView extends ContentPanel
         editing = new GridInlineEditing<>(getGrid());
         editing.setClicksToEdit(ClicksToEdit.TWO);
         editing.addEditor(config, new TextField());
-        editing.addCompleteEditHandler(new CompleteEditHandler<BaseTemplate>() {
-
-            @Override
-            public void onCompleteEdit(CompleteEditEvent<BaseTemplate> event) {
-                int ind = event.getEditCell().getRow();
-                BaseTemplate template = store.get(ind);
-                AbstractElement copy = copy(template.getElement());
-                store.commitChanges();
-                store.remove(template);
-                presenter.renameTemplate(new BaseTemplate(copy, true), template);
-                dragSource.enable();
+        editing.addCompleteEditHandler(event -> {
+            int ind = event.getEditCell().getRow();
+            BaseTemplate template = store.get(ind);
+            AbstractElement copy = copy(template.getElement());
+            store.commitChanges();
+            store.remove(template);
+            presenter.renameTemplate(new BaseTemplate(copy, true), template);
+            dragSource.enable();
+        });
+        editing.addBeforeStartEditHandler(event -> {
+            int ind = event.getEditCell().getRow();
+            BaseTemplate template = store.get(ind);
+            if (!template.isEditable()) {
+                event.setCancelled(true);
             }
         });
-
-        editing.addStartEditHandler(new StartEditHandler<BaseTemplate>() {
-
-            @Override
-            public void onStartEdit(StartEditEvent<BaseTemplate> event) {
-                dragSource.disable();
-            }
+        editing.addStartEditHandler(event -> {
+            dragSource.disable();
         });
-
-        editing.addCancelEditHandler(new CancelEditHandler<BaseTemplate>() {
-
-            @Override
-            public void onCancelEdit(CancelEditEvent<BaseTemplate> event) {
-                dragSource.enable();
-            }
-        });
+        editing.addCancelEditHandler(event -> dragSource.enable());
     }
 
     private void initDragSource() {
@@ -207,8 +192,10 @@ public abstract class AbstractTemplatesView extends ContentPanel
             @Override
             public void onSelect(SelectEvent event) {
                 BaseTemplate currentEl = getGrid().getSelectionModel().getSelectedItem();
-                int ind = store.indexOf(currentEl);
-                editing.startEditing(new GridCell(ind, 1));
+                if (currentEl.isEditable()) {
+                    int ind = store.indexOf(currentEl);
+                    editing.startEditing(new GridCell(ind, 1));
+                }
             }
         });
         toolBar.add(rename);

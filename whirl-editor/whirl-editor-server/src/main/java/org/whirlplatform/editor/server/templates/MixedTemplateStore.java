@@ -7,6 +7,7 @@ import org.whirlplatform.server.config.Configuration;
 import javax.inject.Inject;
 import java.nio.file.FileSystem;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MixedTemplateStore implements TemplateStore {
 
@@ -27,6 +28,9 @@ public class MixedTemplateStore implements TemplateStore {
     public List<BaseTemplate> loadEventTemplates() throws RPCException {
         List<BaseTemplate> result = classPathStore.loadEventTemplates();
         result.addAll(fileSystemTemplateStore.loadEventTemplates());
+        // remove duplicates from result by event id with stream api
+        result.stream().distinct().collect(Collectors.toList());
+
         return result;
     }
 

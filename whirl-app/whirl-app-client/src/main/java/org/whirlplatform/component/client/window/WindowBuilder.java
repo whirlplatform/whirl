@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Построитель окон
+ * Window component.
  */
 @JsType(name = "Window", namespace = "Whirl")
 public class WindowBuilder extends ComponentBuilder implements Containable {
@@ -116,72 +116,110 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 		return super.setProperty(name, value);
 	}
 
+	/**
+	 * Sets window title.
+	 * @param title title
+	 */
 	@Override
 	public void setTitle(String title) {
 		super.setTitle(title);
 		window.setHeading(title);
 	}
 
+	/**
+	 * Is window modal.
+	 * @return is modal
+	 */
+	public boolean isModal() {
+		return window.isModal();
+	}
+
+	/**
+	 * Sets window modality.
+	 * @param modal
+	 */
 	public void setModal(boolean modal) {
 		this.modal = modal;
 		window.setModal(modal);
 	}
 
-	public boolean isModal() {
-		return window.isModal();
-	}
-
-	public void setResizable(boolean resizable) {
-		window.setResizable(resizable);
-	}
-
+	/**
+	 * Is window resizable.
+	 * @return is resizable
+	 */
 	public boolean isResizable() {
 		return window.isResizable();
 	}
 
-	public void setMinimizable(boolean minimizable) {
-		window.setMinimizable(minimizable);
+	/**
+	 * Sets if window is resizable.
+	 * @param resizable
+	 */
+	public void setResizable(boolean resizable) {
+		window.setResizable(resizable);
 	}
 
+	/**
+	 * Is window minimizable.
+	 * @return is minimizable
+	 */
 	public boolean isMinimizable() {
 		return window.isMinimizable();
 	}
 
-	public void setMaximizable(boolean maximizable) {
-		window.setMaximizable(maximizable);
+	/**
+	 * Sets if window can be minimized.
+	 * @param minimizable
+	 */
+	public void setMinimizable(boolean minimizable) {
+		window.setMinimizable(minimizable);
 	}
 
+	/**
+	 * Is window maximizable.
+	 * @return is maximizable
+	 */
 	public boolean isMaximizable() {
 		return window.isMaximizable();
 	}
 
-	public void setClosable(boolean closable) {
-		window.setClosable(closable);
+	/**
+	 * Sets if window can be maximized.
+	 * @param maximizable
+	 */
+	public void setMaximizable(boolean maximizable) {
+		window.setMaximizable(maximizable);
 	}
 
+	/**
+	 * Is window can be closed.
+	 * @return is closable
+	 */
 	public boolean isClosable() {
 		return window.isClosable();
 	}
 
 	/**
-	 * Установить позицию окна в страннице
-	 * 
-	 * @param left
-	 *            - int
-	 * @param top
-	 *            - int
+	 * Sets if window can be closed.
+	 * @param closable
+	 */
+	public void setClosable(boolean closable) {
+		window.setClosable(closable);
+	}
+
+	/**
+	 * Sets window position.
+	 * @param left position from the left
+	 * @param top position from the top
 	 */
 	public void setPosition(int left, int top) {
 		window.setPosition(left, top);
 	}
 
 	/**
-	 * Установить позицию страницы
-	 * 
+	 * Sets window page position.
 	 * @param x
-	 *            - int
 	 * @param y
-	 *            - int
 	 */
 	public void setPagePosition(int x, int y) {
 		window.setPagePosition(x, y);
@@ -193,6 +231,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 * @param child
 	 *            - ComponentBuilder
 	 */
+	@JsIgnore
 	@Override
 	public void addChild(ComponentBuilder child) {
 		window.setWidget(child.getComponent());
@@ -206,6 +245,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 * @param child
 	 *            - ComponentBuilder
 	 */
+	@JsIgnore
 	@Override
 	public void removeChild(ComponentBuilder child) {
 		if (window.remove(child.getComponent())) {
@@ -217,6 +257,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	/**
 	 * Очистка окна
 	 */
+	@JsIgnore
 	@Override
 	public void clearContainer() {
 		if (topComponent != null) {
@@ -227,6 +268,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	/**
 	 * Перерисовка окна вывода
 	 */
+	@JsIgnore
 	@Override
 	public void forceLayout() {
 		Window win = (Window) componentInstance;
@@ -249,6 +291,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 * 
 	 * @return ComponentBuilder[]
 	 */
+	@JsIgnore
 	@Override
 	public ComponentBuilder[] getChildren() {
 		if (topComponent != null) {
@@ -264,6 +307,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	 * 
 	 * @return int
 	 */
+	@JsIgnore
 	@Override
 	public int getChildrenCount() {
 		if (topComponent == null) {
@@ -273,14 +317,14 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	}
 
 	/**
-	 * Скрыть окно
+	 * Hide window.
 	 */
 	public void hide() {
 		window.hide();
 	}
 
 	/**
-	 * Отобразить окно
+	 * Show window.
 	 */
 	public void show() {
 		// Нужно ли делать окно модальным
@@ -304,23 +348,27 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
 	}
 
 	/**
-	 * Максимизировать окно
+	 * Maximize window.
 	 */
 	public void maximize() {
 		window.maximize();
 	}
 
 	/**
-	 * Минимизировать окно
+	 * Miniimize window.
 	 */
 	public void minimize() {
 		window.minimize();
 	}
 
+	/**
+	 * Center window. Should be called after window is shown.
+	 */
 	public void center() {
 		window.center();
 	}
 
+	@JsIgnore
 	@Override
 	public void setParentBuilder(ComponentBuilder parentBuilder) {
 		super.setParentBuilder(parentBuilder);

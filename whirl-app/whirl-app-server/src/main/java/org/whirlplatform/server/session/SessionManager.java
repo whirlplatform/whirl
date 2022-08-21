@@ -13,11 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionManager implements Serializable {
 
+    private static final String PROPERTY_WHIRL_TOKEN_SESSION_TIME = "whirlTokenSessionTime";
+
     private static final long serialVersionUID = -7276165947238646337L;
 
     private static final String TOKEN_MANAGER = "TOKEN_MANAGER";
 
-    private static final long SESSION_TIME = 120000;
+    private static final long SESSION_TIME = Long.parseLong(System.getProperty(PROPERTY_WHIRL_TOKEN_SESSION_TIME, "120000"));
 
     private static final long UNREGISTER_TIME = 6000;
 
@@ -205,12 +207,12 @@ public class SessionManager implements Serializable {
                 while (iter.hasNext()) {
                     SessionToken t = iter.next();
                     // если в списке токенов нет нашего токена, то удаляем его
-                    // удаляем если токен не был активен в течении 60 секунд
+                    // удаляем если токен не был активен в течении SESSION_TIME секунд
                     Date date = touch.get(t);
-                    Date now = new Date(
+                    Date timeToKillBefore = new Date(
                             System.currentTimeMillis() - SESSION_TIME);
                     if (!userToken.containsKey(t)
-                            || (date == null || date.before(now))) {
+                            || (date == null || date.before(timeToKillBefore))) {
                         unregisterToken(token);
                         setChanged();
                     } else if (!t.getSessionId().equals(token.getSessionId())
