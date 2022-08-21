@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="whirl-app-client-js" type="JavascriptDebugType" uri="http://localhost:8090/app" useFirstLineBreakpoints="true">
+    <method v="2" />
+  </configuration>
+</component>

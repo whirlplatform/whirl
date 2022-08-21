@@ -65,7 +65,7 @@
             <plugin>
                 <groupId>io.wcm.maven.plugins</groupId>
                 <artifactId>nodejs-maven-plugin</artifactId>
-                <version>3.0.4</version>
+                <version>3.0.6</version>
                 <executions>
                     <execution>
                         <id>generate-esdoc</id>
@@ -76,9 +76,10 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <nodeJsVersion>10.24.1</nodeJsVersion>
                     <tasks>
                         <nodeJsTask>
-                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
                             <moduleName>npm</moduleName>
                             <executableName>npm-cli</executableName>
                             <arguments>
@@ -132,7 +133,12 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${project.basedir}/node_modules/.bin/esdoc</executable>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <executable>./node_modules/.bin/esdoc</executable>
+                            <arguments>
+                                <argument>-c</argument>
+                                <argument>${project.basedir}/esdoc.json</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>

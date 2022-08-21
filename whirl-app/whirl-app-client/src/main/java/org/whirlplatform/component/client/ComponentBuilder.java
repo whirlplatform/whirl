@@ -2,11 +2,7 @@ package org.whirlplatform.component.client;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
-import com.google.gwt.event.shared.EventHandler;
-import com.google.gwt.event.shared.GwtEvent;
-import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.event.shared.*;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.util.Format;
 import com.sencha.gxt.core.client.util.Util;
@@ -20,13 +16,7 @@ import com.sencha.gxt.widget.core.client.menu.Menu;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
-import org.whirlplatform.component.client.event.AttachEvent;
-import org.whirlplatform.component.client.event.BlurEvent;
-import org.whirlplatform.component.client.event.CreateEvent;
-import org.whirlplatform.component.client.event.DetachEvent;
-import org.whirlplatform.component.client.event.FocusEvent;
-import org.whirlplatform.component.client.event.HideEvent;
-import org.whirlplatform.component.client.event.ShowEvent;
+import org.whirlplatform.component.client.event.*;
 import org.whirlplatform.component.client.form.GridLayoutData;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.selenium.LocatorAware;
@@ -35,13 +25,7 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Абстрактный класс - построитель компонента
@@ -97,16 +81,6 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Установка ID компонета
-     *
-     * @param id
-     */
-    @JsIgnore
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
      * Получение ID компонента
      *
      * @return String
@@ -114,6 +88,16 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     @JsIgnore
     public String getId() {
         return id;
+    }
+
+    /**
+     * Установка ID компонета
+     *
+     * @param id
+     */
+    @JsIgnore
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -306,13 +290,13 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     @JsIgnore
-    public void setDomId(String domId) {
-        componentInstance.setId(domId);
+    public String getDomId() {
+        return componentInstance != null ? componentInstance.getElement().getId() : null;
     }
 
     @JsIgnore
-    public String getDomId() {
-        return componentInstance != null ? componentInstance.getElement().getId() : null;
+    public void setDomId(String domId) {
+        componentInstance.setId(domId);
     }
 
     @JsIgnore
@@ -408,15 +392,6 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Установка заголовка
-     */
-    @JsIgnore
-    @Override
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
      * Получение заголовка
      *
      * @return String
@@ -425,6 +400,15 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     @Override
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Установка заголовка
+     */
+    @JsIgnore
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -556,6 +540,16 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
+     * Получение информации об активности компонента
+     *
+     * @return boolean
+     */
+    @JsIgnore
+    public boolean isEnabled() {
+        return componentInstance.isEnabled();
+    }
+
+    /**
      * Установка активности компонента
      *
      * @param enabled - boolean
@@ -570,16 +564,6 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
             parent = parent.getParentBuilder();
         }
         componentInstance.setEnabled(enabled);
-    }
-
-    /**
-     * Получение информации об активности компонента
-     *
-     * @return boolean
-     */
-    @JsIgnore
-    public boolean isEnabled() {
-        return componentInstance.isEnabled();
     }
 
     /**
@@ -783,14 +767,14 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     @JsIgnore
-    public void setReplaceableProperties(Collection<String> properties) {
-        replaceableProperties.clear();
-        replaceableProperties.addAll(properties);
+    public Collection<String> getReplaceableProperties() {
+        return Collections.unmodifiableSet(replaceableProperties);
     }
 
     @JsIgnore
-    public Collection<String> getReplaceableProperties() {
-        return Collections.unmodifiableSet(replaceableProperties);
+    public void setReplaceableProperties(Collection<String> properties) {
+        replaceableProperties.clear();
+        replaceableProperties.addAll(properties);
     }
 
     @JsIgnore

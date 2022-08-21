@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="types" type="java.util.Collection<org.jboss.hal.processor.EsDocProcessor.Type>" -->
+<#-- @ftlvariable name="types" type="java.util.Collection<org.whirlplatform.jsdoc.EsDocProcessor.Type>" -->
 <#list types as type>
 <#if type.comment??>${type.comment}</#if>
 class ${type.name} {

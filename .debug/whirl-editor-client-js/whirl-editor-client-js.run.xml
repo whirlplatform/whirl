@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="whirl-editor-client-js" type="JavascriptDebugType" uri="http://localhost:8091/editor/" useFirstLineBreakpoints="true">
+    <method v="2" />
+  </configuration>
+</component>
