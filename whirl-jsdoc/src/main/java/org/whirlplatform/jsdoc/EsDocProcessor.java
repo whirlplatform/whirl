@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,10 +20,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import jsinterop.annotations.*;
-import org.jboss.auto.AbstractProcessor;
-import org.jboss.hal.resources.Strings;
-import org.jboss.hal.spi.EsParam;
-import org.jboss.hal.spi.EsReturn;
+import org.apache.commons.lang.StringUtils;
+import org.whirlplatform.component.client.annotation.EsParam;
+import org.whirlplatform.component.client.annotation.EsReturn;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -37,23 +36,25 @@ import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
-import static org.jboss.hal.processor.TemplateNames.TEMPLATES;
 
-// Do not export this processor using @AutoService(Processor.class)
-// It's executed explicitly in hal-app to process all exported js types in all maven modules.
 @SupportedAnnotationTypes("jsinterop.annotations.JsType")
 @SuppressWarnings({"HardCodedStringLiteral", "Guava", "ResultOfMethodCallIgnored", "SpellCheckingInspection",
         "DuplicateStringLiteralInspection"})
 public class EsDocProcessor extends AbstractProcessor {
 
+    private static final String PACKAGE_TO_SCAN = "";
+
+    private static final String TEMPLATES = "templates";
+
     private static final String AUTO = "<auto>";
+    private static final String PACKAGE = "esdoc";
     private static final String PADDING = "    ";
     private static final String PARAM_TAG = "@param";
     private static final String RETURN_TAG = "@return";
     private static final String TEMPLATE = "EsDoc.ftl";
     private static final String TYPES = "types";
 
-    private final Multimap<String, Type> types;
+    private final Multimap<String, EsDocProcessor.Type> types;
 
     public EsDocProcessor() {
         super(EsDocProcessor.class, TEMPLATES);
@@ -70,11 +71,11 @@ public class EsDocProcessor extends AbstractProcessor {
 
             TypeElement typeElement = (TypeElement) element;
             PackageElement packageElement = elementUtils.getPackageOf(typeElement);
-            if (!packageElement.getQualifiedName().toString().startsWith("org.whirlplatform")) {
+            if (!packageElement.getQualifiedName().toString().startsWith(PACKAGE_TO_SCAN)) {
                 continue;
             }
 
-            Type type = new Type(namespace(packageElement, typeElement), typeName(typeElement),
+            EsDocProcessor.Type type = new EsDocProcessor.Type(namespace(packageElement, typeElement), typeName(typeElement),
                     comment(typeElement, ""));
             types.put(type.getNamespace(), type);
             debug("Discovered JsType [%s]", type);
@@ -90,7 +91,7 @@ public class EsDocProcessor extends AbstractProcessor {
                     .filter(jsRelevant.and(e -> e.getAnnotation(JsConstructor.class) != null))
                     .findFirst()
                     .ifPresent(e -> type.setConstructor(
-                            new Constructor(parameters(e), comment(e, PADDING))));
+                            new EsDocProcessor.Constructor(parameters(e), comment(e, PADDING))));
 
             // Properties - Fields
             ElementFilter.fieldsIn(elements)
@@ -99,20 +100,13 @@ public class EsDocProcessor extends AbstractProcessor {
                     .forEach(e -> {
                         boolean setter = !e.getModifiers().contains(Modifier.FINAL);
                         type.addProperty(
-                                new Property(propertyName(e), comment(e, PADDING), true, setter, _static(e)));
+                                new EsDocProcessor.Property(propertyName(e), comment(e, PADDING), true, setter, _static(e)));
                     });
 
-            // Properties - Methods Setters
+            // Properties - Methods (only getters are supported)
             ElementFilter.methodsIn(elements)
                     .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null).and(e -> isSetter(e)))
-                    .forEach(e -> type.addProperty(
-                            new Property(propertyName(e), comment(e, PADDING), false, true, _static(e))));
-
-            // Properties - Methods Getters
-            ElementFilter.methodsIn(elements)
-                    .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null).and(e -> isGetter(e)))
+                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null))
                     .forEach(e -> type.addProperty(
                             new Property(propertyName(e), comment(e, PADDING), true, false, _static(e))));
 
@@ -121,13 +115,13 @@ public class EsDocProcessor extends AbstractProcessor {
                     .stream()
                     .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) == null))
                     .forEach(e -> type.addMethod(
-                            new Method(methodName(e), parameters(e), comment(e, PADDING), _static(e))));
+                            new EsDocProcessor.Method(methodName(e), parameters(e), comment(e, PADDING), _static(e))));
         }
 
         if (!types.isEmpty()) {
             types.asMap().forEach((namespace, nsTypes) -> {
                 debug("Generating documentation for %s.es6", namespace);
-                resource(TEMPLATE, "", namespace + ".es6",
+                resource(TEMPLATE, PACKAGE + "." + namespace, namespace + ".es6",
                         () -> {
                             Map<String, Object> context = new HashMap<>();
                             context.put(TYPES, nsTypes);
@@ -234,7 +228,7 @@ public class EsDocProcessor extends AbstractProcessor {
     }
 
     private String simpleName(String type) {
-        String simple = type.contains(".") ? Strings.substringAfterLast(type, ".") : type;
+        String simple = type.contains(".") ? StringUtils.substringAfterLast(type, ".") : type;
         switch (simple) {
             case "double":
             case "Double":
@@ -285,16 +279,6 @@ public class EsDocProcessor extends AbstractProcessor {
         return simpleName;
     }
 
-    private boolean isSetter(Element method) {
-        String simpleName = method.getSimpleName().toString();
-        return simpleName.startsWith("set");
-    }
-
-    private boolean isGetter(Element method) {
-        String simpleName = method.getSimpleName().toString();
-        return simpleName.startsWith("get") || simpleName.startsWith("is");
-    }
-
     private String methodName(Element element) {
         JsMethod annotation = element.getAnnotation(JsMethod.class);
         if (annotation != null) {
@@ -322,9 +306,9 @@ public class EsDocProcessor extends AbstractProcessor {
         private final String namespace;
         private final String name;
         private final String comment;
-        private final List<Property> properties;
-        private final List<Method> methods;
-        private Constructor constructor;
+        private final List<EsDocProcessor.Property> properties;
+        private final List<EsDocProcessor.Method> methods;
+        private EsDocProcessor.Constructor constructor;
 
         Type(String namespace, String name, String comment) {
             this.namespace = namespace;
@@ -339,11 +323,11 @@ public class EsDocProcessor extends AbstractProcessor {
             return String.format("%s.%s", namespace, name);
         }
 
-        void addProperty(Property property) {
+        void addProperty(EsDocProcessor.Property property) {
             properties.add(property);
         }
 
-        void addMethod(Method method) {
+        void addMethod(EsDocProcessor.Method method) {
             methods.add(method);
         }
 
@@ -359,19 +343,19 @@ public class EsDocProcessor extends AbstractProcessor {
             return comment;
         }
 
-        public Constructor getConstructor() {
+        public EsDocProcessor.Constructor getConstructor() {
             return constructor;
         }
 
-        public void setConstructor(Constructor constructor) {
+        public void setConstructor(EsDocProcessor.Constructor constructor) {
             this.constructor = constructor;
         }
 
-        public List<Property> getProperties() {
+        public List<EsDocProcessor.Property> getProperties() {
             return properties;
         }
 
-        public List<Method> getMethods() {
+        public List<EsDocProcessor.Method> getMethods() {
             return methods;
         }
     }
@@ -482,4 +466,3 @@ public class EsDocProcessor extends AbstractProcessor {
         }
     }
 }
-

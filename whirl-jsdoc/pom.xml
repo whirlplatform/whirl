@@ -16,47 +16,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jboss.hal</groupId>
-            <artifactId>hal-processors</artifactId>
-            <version>3.3.8.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.hal</groupId>
-            <artifactId>hal-resources</artifactId>
-            <version>3.3.8.Final</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-app-client</artifactId>
+            <version>${project.version}</version>
+            <classifier>classes</classifier>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>29.0-jre</version>
         </dependency>
-
         <dependency>
-            <groupId>com.sencha.gxt</groupId>
-            <artifactId>gxt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.seanchenxi.gwt</groupId>
-            <artifactId>gwt-storage</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.fusesource.restygwt</groupId>
-            <artifactId>restygwt</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1.1</version>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
         </dependency>
     </dependencies>
 
