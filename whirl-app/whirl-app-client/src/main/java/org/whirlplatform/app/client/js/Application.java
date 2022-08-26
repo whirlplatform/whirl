@@ -11,7 +11,7 @@ import org.whirlplatform.meta.shared.AppConstant;
 /**
  * Application level helper methods.
  */
-@JsType
+@JsType(namespace = "Whirl")
 public class Application {
 
     /**
