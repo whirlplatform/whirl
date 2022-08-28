@@ -52,7 +52,7 @@ public class CodeMirrorWrapper {
 
 	/**
 	 * Convenience method creating a new GWT object wrapping the given TextAreaElement.
-	 * @param id
+	 * @param tae
 	 * @param config
 	 * @return CodeMirrorWrapper
 	 */
@@ -62,7 +62,7 @@ public class CodeMirrorWrapper {
 
 	/**
 	 * Convenience method creating a new GWT object wrapping the given TextArea.
-	 * @param id
+	 * @param ta
 	 * @param config
 	 * @return CodeMirrorWrapper
 	 */
@@ -155,7 +155,6 @@ public class CodeMirrorWrapper {
 	 * Take a look at the {@link Config} objects static strings for possible values.
 	 * 
 	 * @param key
-	 * @param value
 	 */
 	public Object getOption(String key) {
 		return callFunction(codeMirrorJs, "getOption", key);
@@ -249,7 +248,7 @@ public class CodeMirrorWrapper {
     }
     
     /**
-     * Sets the {@link edu.stanford.bmir.gwtcodemirror.client.AutoCompletionHandler}.
+     * Sets the {@link AutoCompletionHandler}.
      * @param autoCompletionHandler The handler.  Not {@code null}.
      *
      * @throws java.lang.NullPointerException if {@code autoCompletionHandler} is {@code null}.
@@ -259,7 +258,7 @@ public class CodeMirrorWrapper {
     }
 
     /**
-     * Clears the previously set {@link edu.stanford.bmir.gwtcodemirror.client.AutoCompletionHandler}.
+     * Clears the previously set {@link AutoCompletionHandler}.
      */
     public void clearAutoCompletionHandler() {
         setAutoCompletionHandler(NULL_AUTO_COMPLETION_HANDLER);
@@ -284,9 +283,9 @@ public class CodeMirrorWrapper {
     /**
      * Creates a JavaScriptObject that has the appropriate properties to describe the auto-completion result.
      *
-     * @param text        The text to insert.
-     * @param displayText The text to display.
-     * @param className   The CSS class name of the item in the list.
+     * @param completeText        The text to insert.
+     * @param completeDisplayText The text to display.
+     * @param completeClassName   The CSS class name of the item in the list.
      * @return The JavaScriptObject that specified the given properties.
      */
     private native JavaScriptObject createAutoCompletionResult(String completeText, String completeDisplayText, String completeClassName, JavaScriptObject completeFrom, JavaScriptObject completeTo)/*-{
@@ -304,8 +303,8 @@ public class CodeMirrorWrapper {
      *
      * @param callbackFunction The actual function to call.
      * @param argument         The argument to pass to the function.
-     * @param line             The line of the completion (zero based index).
-     * @param ch               The character index on the line of the completion (zero based index).
+     * @param completeLine     The line of the completion (zero based index).
+     * @param completeCh       The character index on the line of the completion (zero based index).
      */
     private native void doAutoCompleteCallback(JavaScriptObject callbackFunction, JavaScriptObject argument, int completeLine, int completeCh)/*-{
         callbackFunction({

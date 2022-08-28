@@ -130,8 +130,9 @@
                     <moduleShortName>editor</moduleShortName>
                     <skipModule>true</skipModule>
                     <compilerArgs>
-                        <compileArg>-gen</compileArg>
-                        <compilerArg>${project.build.directory}/gwt/gen</compilerArg>
+                        <arg>-gen</arg>
+                        <arg>${project.build.directory}/gwt/gen</arg>
+                        <arg>-generateJsInteropExports</arg>
                     </compilerArgs>
                     <jvmArgs>
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
