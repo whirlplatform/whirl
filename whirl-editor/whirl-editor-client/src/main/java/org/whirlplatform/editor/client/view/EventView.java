@@ -15,7 +15,6 @@ import com.sencha.gxt.widget.core.client.form.*;
 import org.geomajas.codemirror.client.Config;
 import org.geomajas.codemirror.client.widget.CodeMirrorPanel;
 import org.whirlplatform.component.client.event.*;
-import org.whirlplatform.editor.client.code.JavaScriptAutoCompletionHandler;
 import org.whirlplatform.editor.client.component.PropertyValueField;
 import org.whirlplatform.editor.client.presenter.EventPresenter;
 import org.whirlplatform.editor.client.presenter.EventPresenter.IEventView;
@@ -314,8 +313,6 @@ public class EventView extends ContentPanel implements IEventView {
                 source.setVisible(true);
                 source.setValue("//Available variables: wctx - event context");
                 source.showEditor(Config.forJavaScript());
-                source.getEditor().setAutoCompletionHandler(
-                        new JavaScriptAutoCompletionHandler());
                 sourceLabel.setVisible(true);
                 break;
             case DatabaseSQL:

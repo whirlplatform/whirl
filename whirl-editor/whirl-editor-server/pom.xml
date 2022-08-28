@@ -157,6 +157,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/../../whirl-jsdoc/target/docs/</directory>
+                            <targetPath>/api/js/jsdoc</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/../../whirl-jsdoc/target/generated-sources/jsdoc/Whirl/</directory>
+                            <targetPath>/api/js/code</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -164,11 +176,38 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>create-launchDir</id>
                         <phase>initialize</phase>
                         <configuration>
                             <target>
                                 <echo message="Creating GWT launchDir directory"/>
                                 <mkdir dir="${project.basedir}/../target/gwt/launcherDir/"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>create-js-api-docs</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <target>
+                                <echo message="Creating JS API docs directory"/>
+                                <mkdir dir="${project.basedir}/../../whirl-jsdoc/target/docs/"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>create-js-api-code</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <target>
+                                <echo message="Creating JS API code directory"/>
+                                <mkdir dir="${project.basedir}/../../whirl-jsdoc/target/generated-sources/jsdoc/Whirl/"/>
                             </target>
                         </configuration>
                         <goals>

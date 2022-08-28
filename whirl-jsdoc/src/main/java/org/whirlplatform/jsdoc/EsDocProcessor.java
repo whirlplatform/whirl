@@ -47,7 +47,6 @@ public class EsDocProcessor extends AbstractProcessor {
     private static final String TEMPLATES = "templates";
 
     private static final String AUTO = "<auto>";
-    private static final String PACKAGE = "esdoc";
     private static final String PADDING = "    ";
     private static final String PARAM_TAG = "@param";
     private static final String RETURN_TAG = "@return";
@@ -121,7 +120,7 @@ public class EsDocProcessor extends AbstractProcessor {
         if (!types.isEmpty()) {
             types.asMap().forEach((namespace, nsTypes) -> {
                 debug("Generating documentation for %s.es6", namespace);
-                resource(TEMPLATE, PACKAGE + "." + namespace, namespace + ".es6",
+                resource(TEMPLATE, namespace, namespace + ".es6",
                         () -> {
                             Map<String, Object> context = new HashMap<>();
                             context.put(TYPES, nsTypes);
