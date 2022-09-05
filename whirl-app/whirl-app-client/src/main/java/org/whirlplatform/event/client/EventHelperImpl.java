@@ -78,13 +78,7 @@ public class EventHelperImpl implements EventHelper {
             dialog.setHideOnButtonClick(true);
             dialog.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO);
             dialog.getButton(PredefinedButton.YES)
-                    .addSelectHandler(new com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler() {
-
-                        @Override
-                        public void onSelect(com.sencha.gxt.widget.core.client.event.SelectEvent event) {
-                            scheduleEventExecute(source);
-                        }
-                    });
+                    .addSelectHandler(event -> scheduleEventExecute(source));
             dialog.show();
         } else {
             scheduleEventExecute(source);

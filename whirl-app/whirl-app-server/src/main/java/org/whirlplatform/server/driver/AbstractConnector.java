@@ -23,6 +23,7 @@ import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
@@ -30,6 +31,14 @@ import java.util.Map.Entry;
 public abstract class AbstractConnector implements Connector {
 
     private static Logger _log = LoggerFactory.getLogger(AbstractConnector.class);
+
+    private static final List<ComponentType> COMPONENTS_TO_DISABLE = Arrays.asList(
+            ComponentType.ButtonType,
+            ComponentType.HtmlType,
+            ComponentType.LabelType,
+            ComponentType.ImageType,
+            ComponentType.ContextMenuItemType
+    );
 
     protected ConnectionProvider connectionProvider;
 
@@ -46,72 +55,13 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
-    @Override
-    public void addCheckedEvents(ComponentElement element, ComponentModel model, List<DataValue> params,
-                                 ApplicationUser user) {
-        // проверяем доступность событий
-        for (EventElement event : element.getEvents()) {
-            ApplicationElement application = user.getApplication();
-            if (application.hasGroups()) {
-                // вычисляем право
-                boolean allowed = false;
-                try (ConnectionWrapper connection = aliasConnection(
-                        event.getDataSource() != null ? event.getDataSource().getAlias()
-                                : SrvConstant.DEFAULT_CONNECTION,
-                        user)) {
-                    ConditionSolver solver = new EventConditionSolver(event, application, params, user, connection);
-                    allowed = solver.allowed();
-                } catch (SQLException e) {
-                    _log.error(e);
-                }
-
-                if (allowed) {
-                    model.addEvent(event.getHandlerType(),
-                            EventElement.eventElementToMetadata(event, user.getLocaleElement()));
-                } else if (element.getType() == ComponentType.ButtonType
-                        && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                    model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                } else if (element.getType() == ComponentType.HtmlType
-                        && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                    model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                } else if (element.getType() == ComponentType.LabelType
-                        && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                    model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                } else if (element.getType() == ComponentType.ImageType
-                        && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                    model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                }
-
-            } else {
-                model.addEvent(event.getHandlerType(),
-                        EventElement.eventElementToMetadata(event, user.getLocaleElement()));
-            }
-        }
-    }
-
     public void addCheckedEvents(Collection<EventElement> events, ComponentModel model, List<DataValue> params,
                                  ApplicationUser user) {
         for (EventElement event : events) {
             if (isEventAvailable(event, params, user)) {
                 model.addEvent(event.getHandlerType(),
                         EventElement.eventElementToMetadata(event, user.getLocaleElement()));
-            } else if (model.getType() == ComponentType.ButtonType
-                    && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                model.removeReplaceableProperty(PropertyType.Enabled.name());
-            } else if (model.getType() == ComponentType.HtmlType
-                    && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                model.removeReplaceableProperty(PropertyType.Enabled.name());
-            } else if (model.getType() == ComponentType.LabelType
-                    && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                model.removeReplaceableProperty(PropertyType.Enabled.name());
-            } else if (model.getType() == ComponentType.ImageType
-                    && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
-                model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
-                model.removeReplaceableProperty(PropertyType.Enabled.name());
-            } else if (model.getType() == ComponentType.ContextMenuItemType
+            } else if (COMPONENTS_TO_DISABLE.contains(model.getType())
                     && event.getHandlerType().equalsIgnoreCase(ClickEvent.getType().toString())) {
                 model.setValue(PropertyType.Enabled.name(), new DataValueImpl(DataType.BOOLEAN, Boolean.FALSE));
                 model.removeReplaceableProperty(PropertyType.Enabled.name());

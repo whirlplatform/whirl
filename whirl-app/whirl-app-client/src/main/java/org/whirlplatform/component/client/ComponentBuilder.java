@@ -422,11 +422,10 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Получение кода компонента
+     * Returns component's code.
      *
-     * @return String
+     * @return component's code
      */
-    @JsIgnore
     @Override
     public String getCode() {
         return code;
@@ -442,21 +441,19 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Получение свойства скрытости компонента
+     * Checks if component is in hidden state.
      *
-     * @return boolean
+     * @return true if component is hidden
      */
-    @JsIgnore
     public boolean isHidden() {
         return hidden;
     }
 
     /**
-     * Установка свойства скрытости компонента
+     * Sets component's hidden state.
      *
-     * @param hidden - boolean
+     * @param hidden true - to hide component, false - to show component
      */
-    @JsIgnore
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
         if (componentInstance != null) {
@@ -529,9 +526,8 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Устанавливает фокус на компоненте.
+     * Focuses component.
      */
-    @JsIgnore
     public void focus() {
         if (componentInstance == null) {
             return;
@@ -540,21 +536,19 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * Получение информации об активности компонента
+     * Checks if component is enabled.
      *
-     * @return boolean
+     * @return true if component is enabled
      */
-    @JsIgnore
     public boolean isEnabled() {
         return componentInstance.isEnabled();
     }
 
     /**
-     * Установка активности компонента
+     * Sets component's enabled state.
      *
-     * @param enabled - boolean
+     * @param enabled true - to enable component, false - to disable component
      */
-    @JsIgnore
     public void setEnabled(boolean enabled) {
         ComponentBuilder parent = parentBuilder;
         while (parent != null) {

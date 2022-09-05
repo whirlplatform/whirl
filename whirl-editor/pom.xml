@@ -29,6 +29,7 @@
                     <codeserverArgs>
                         <arg>-port</arg>
                         <arg>9877</arg>
+                        <arg>-generateJsInteropExports</arg>
                     </codeserverArgs>
                     <jvmArgs>
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>

@@ -305,17 +305,15 @@ public class EventElement extends AbstractElement {
 		meta.setCreateNew(event.isCreateNew());
 		for (EventParameterElement param : event.getParameters()) {
 			EventParameterImpl metaParam = new EventParameterImpl(param.getType());
+			metaParam.setCode(param.getCode());
 			metaParam.setComponentId(param.getComponentId());
 			metaParam.setComponentCode(param.getComponentCode());
 			metaParam.setStorageCode(param.getStorageCode());
-
-			// DataValue value = param.getValue();
-			// if (value != null) {
-			// value.setCode(param.getCode());
-			// metaParam.setData(value);
-			// }
-			metaParam.setDataWithCode(param.getValue());
-
+			if (metaParam.getCode() == null || metaParam.getCode().isEmpty()) {
+				metaParam.setDataWithCode(param.getValue());
+			} else {
+				metaParam.setData(param.getValue());
+			}
 			meta.addParameter(metaParam);
 		}
 		return meta;
