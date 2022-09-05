@@ -102,8 +102,8 @@ public class DataValueImpl implements DataValue {
         return fileValue;
     }
 
-    @SuppressWarnings("unchecked")
-    @JsonIgnore
+//    @SuppressWarnings("unchecked")
+//    @JsonIgnore
 //    public <X> X getValue() {
 //        if (DataType.STRING == type) {
 //            return (X) stringValue;

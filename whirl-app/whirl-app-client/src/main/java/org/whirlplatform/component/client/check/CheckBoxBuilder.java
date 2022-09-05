@@ -9,6 +9,10 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
 import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.Parameter;
@@ -27,24 +31,28 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Чек-бокс
+ * Check box field.
  */
+@JsType(namespace = "Whirl", name = "CheckBox")
 public class CheckBoxBuilder extends AbstractFieldBuilder
         implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, NativeParameter<Boolean>, Parameter<DataValue> {
 
     private CheckBox checkBox;
 
-    public CheckBoxBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public CheckBoxBuilder(@JsOptional  Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public CheckBoxBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип CheckBox
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.CheckBoxType;
@@ -81,6 +89,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.BoxLabel.getCode())) {
@@ -98,27 +107,27 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Установка подписи CheckBox
+     * Gets field label.
      *
-     * @param label - String
-     */
-    public void setBoxLabel(String label) {
-        checkBox.setBoxLabel(label);
-    }
-
-    /**
-     * Получение подписи CheckBox
-     *
-     * @return String
+     * @return label text
      */
     public String getBoxLabel() {
         return checkBox.getBoxLabel().asString();
     }
 
     /**
-     * Получение значения CheckBox
+     * Set label for the field.
      *
-     * @return boolean
+     * @param label text
+     */
+    public void setBoxLabel(String label) {
+        checkBox.setBoxLabel(label);
+    }
+
+    /**
+     * Get field's value.
+     *
+     * @return field's value
      */
     @Override
     public Boolean getValue() {
@@ -126,9 +135,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Установка значения CheckBox
+     * Set field's value.
      *
-     * @param value - boolean
+     * @param value field's value
      */
     @Override
     public void setValue(Boolean value) {
@@ -136,11 +145,12 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Проверка на валидность CheckBox
+     * Check if field is valid.
      *
-     * @param invalidate - boolean
-     * @return boolean
+     * @param invalidate true to invalidate field
+     * @return true if field is valid
      */
+    @JsIgnore
     @Override
     public boolean isValid(boolean invalidate) {
         if (!super.isValid(invalidate)) {
@@ -156,20 +166,28 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
         return true;
     }
 
+    /**
+     * Sets the invalid status for the field with given text.
+     *
+     * @param msg message
+     */
     public void markInvalid(String msg) {
         checkBox.getErrorSupport().markInvalid(
                 Collections.singletonList(new DefaultEditorError(checkBox, msg, checkBox.getValue())));
     }
 
+    /**
+     * Clears the invalid status for the field.
+     */
     @Override
     public void clearInvalid() {
         checkBox.getErrorSupport().clearInvalid();
     }
 
     /**
-     * Проверка на валидность CheckBox
+     * Checks if is in valid state.
      *
-     * @return boolean
+     * @return true, if is in valid state
      */
     @Override
     public boolean isValid() {
@@ -177,9 +195,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Установка параметра "Только для чтения" для CheckBox
+     * Sets the read only.
      *
-     * @param readOnly - boolean
+     * @param readOnly true, if the field is read only
      */
     public void setReadOnly(boolean readOnly) {
         Field<?> field = getRealComponent();
@@ -202,6 +220,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      *
      * @return DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.BOOLEAN);
@@ -215,6 +234,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      *
      * @param value - DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (DataType.BOOLEAN.equals(value.getType())) {
@@ -228,6 +248,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      * @param handler - ChangeHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addChangeHandler(ChangeEvent.ChangeHandler handler) {
         return addHandler(handler, ChangeEvent.getType());
@@ -246,6 +267,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
 
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator result = super.getLocatorByElement(element);
@@ -256,6 +278,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
         return null;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator) && locator.getPart() != null

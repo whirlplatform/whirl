@@ -8,6 +8,7 @@ import com.sencha.gxt.widget.core.client.form.validator.MaxLengthValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MinLengthValidator;
 import com.sencha.gxt.widget.core.client.form.validator.RegExValidator;
 import com.sencha.gxt.widget.core.client.form.validator.RegExValidator.RegExMessages;
+import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -29,10 +30,12 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 	private int minLength;
 	private int maxLength;
 
+	@JsIgnore
 	public ValueBaseFieldBuilder() {
 		super();
 	}
 
+	@JsIgnore
 	public ValueBaseFieldBuilder(Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
@@ -56,6 +59,7 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 	 *            - String, значение атрибута
 	 * @return boolean
 	 */
+	@JsIgnore
 	public boolean setProperty(String name, final DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.RegEx.getCode())) {
 			if (value != null && !Util.isEmptyString(value.getString())) {
@@ -127,28 +131,30 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 		field.setValue(value, true);
 	}
 
+	@JsIgnore
 	public String getText() {
 		return field.getText();
 	}
 
 	/**
-	 * Получить минимальную длину ввода текстового поля
+	 * Returns the field's required minimum length.
 	 * 
-	 * @return
+	 * @return field's required minimum length
 	 */
-	public int getMinLenth() {
+	public int getMinLength() {
 		return minLength;
 	}
 
 	/**
-	 * Получить максимальную длину ввода текстового поля
+	 * Returns the field's maximum length.
 	 * 
-	 * @return
+	 * @return field's maximum length
 	 */
 	public int getMaxLength() {
 		return maxLength;
 	}
 
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		if (!super.fitsLocator(locator)) {
@@ -179,6 +185,7 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 	 * 
 	 * @return DataValue(Type, Value, Code)
 	 */
+	@JsIgnore
 	@Override
 	public DataValue getFieldValue() {
 		DataValue result = new DataValueImpl(DataType.STRING);
@@ -193,6 +200,7 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 	 * @param value
 	 *            - DataValue(Type, Value, Code)
 	 */
+	@JsIgnore
 	@Override
 	public void setFieldValue(DataValue value) {
 		if (DataType.STRING.equals(value.getType())) {

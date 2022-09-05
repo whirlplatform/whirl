@@ -6,7 +6,6 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.form.FormModel;
@@ -24,9 +23,6 @@ public interface Connector {
     ApplicationData getApplication(String applicationCode, Version version, ApplicationUser user);
 
     ComponentModel getComponents(String componentId, List<DataValue> params, ApplicationUser user);
-
-    void addCheckedEvents(ComponentElement element, ComponentModel model, List<DataValue> params,
-                          ApplicationUser user);
 
     /**
      * Формирует метаданные таблицы базы данных
