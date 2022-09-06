@@ -1,14 +1,12 @@
 package org.whirlplatform.editor.client.view;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.PlainTabPanel;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
-import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.container.Viewport;
@@ -24,7 +22,8 @@ public class MainView extends Viewport implements IMainView {
     private BorderLayoutContainer leftPanel;
     private BorderLayoutContainer rightPanel;
     private TabPanel tabPanel;
-    private SimpleContainer dummy;
+
+    private ContentPanel secondLeftPanel;
 
     public MainView() {
         super();
@@ -40,6 +39,7 @@ public class MainView extends Viewport implements IMainView {
 
         leftPanel = new BorderLayoutContainer();
         leftPanel.getElement().getStyle().setBackgroundColor("white");
+        leftPanel.setBorders(true);
         BorderLayoutData d = new BorderLayoutData(250);
         d.setMinSize(100);
         d.setMaxSize(600);
@@ -53,7 +53,6 @@ public class MainView extends Viewport implements IMainView {
         rightPanel = new BorderLayoutContainer();
         rightPanel.getElement().getStyle().setBackgroundColor("white");
         tabPanel = new PlainTabPanel();
-        tabPanel.setBorders(false);
         rightPanel.setCenterWidget(tabPanel);
         d = new BorderLayoutData(260);
         d.setMinSize(100);
@@ -67,8 +66,17 @@ public class MainView extends Viewport implements IMainView {
         p.setWidget(rightPanel);
         mainContainer.setEastWidget(p, d);
 
-        dummy = new SimpleContainer();
-        setSecondLeftComponent(dummy);
+        d = new BorderLayoutData();
+        d.setMinSize(5);
+        d.setMaxSize(1000);
+        d.setSplit(true);
+        d.setSize(0.5);
+        secondLeftPanel = new ContentPanel();
+
+        secondLeftPanel.setHeaderVisible(false);
+        secondLeftPanel.setBorders(false);
+        secondLeftPanel.setBodyBorder(false);
+        leftPanel.setSouthWidget(secondLeftPanel, d);
     }
 
     @Override
@@ -83,35 +91,17 @@ public class MainView extends Viewport implements IMainView {
     }
 
     @Override
-    public void setFirstLeftWidget(IsWidget component) {
+    public void setFirstLeftComponent(IsWidget component) {
         leftPanel.setCenterWidget(component);
         leftPanel.forceLayout();
     }
 
     @Override
     public void setSecondLeftComponent(IsWidget component) {
-        if (component != null && !component.equals(dummy)) {
-            BorderLayoutData d = new BorderLayoutData();
-            d.setMinSize(5);
-            d.setMaxSize(1000);
-            d.setSplit(true);
-            double size = 0.5;
-            // Если текущий элемент не "заглушка" возьмем его размер.
-            Widget oldWidget = leftPanel.getSouthWidget();
-            if (!oldWidget.equals(dummy)) {
-                BorderLayoutData oldSize = (BorderLayoutData) oldWidget.getLayoutData();
-                if (oldSize != null) {
-                    size = oldSize.getSize();
-                }
-            }
-            d.setSize(size);
-            ContentPanel panel = new ContentPanel();
-            panel.setHeaderVisible(false);
-            panel.setBorders(false);
-            panel.add(component);
-            leftPanel.setSouthWidget(panel, d);
+        if (component != null) {
+            secondLeftPanel.setWidget(component);
         } else {
-            leftPanel.setSouthWidget(dummy, new BorderLayoutData(0));
+            secondLeftPanel.clear();
         }
         leftPanel.syncSize();
         leftPanel.forceLayout();

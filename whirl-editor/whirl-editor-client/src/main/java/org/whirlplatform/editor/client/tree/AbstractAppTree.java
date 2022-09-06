@@ -45,7 +45,7 @@ public abstract class AbstractAppTree extends Tree<AbstractElement, String> impl
 		this.setIconProvider(new AppTreeIconProvider());
 		this.getElement().getStyle().setBackgroundColor("#FFFFFF");
 		this.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		partHandlers = new ConcurrentHashMap<AbstractElement, AppTreePart<? extends AbstractElement>>();
+		partHandlers = new ConcurrentHashMap<>();
 	}
 
 	public abstract void doOpenElement(AbstractElement element);

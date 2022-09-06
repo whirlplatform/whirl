@@ -89,12 +89,7 @@ public class ApplicationTreePresenter extends
                 externalSelection = false;
             }
         } else {
-            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-                @Override
-                public void execute() {
-                    eventBus.changeSecondLeftComponent(null);
-                }
-            });
+            Scheduler.get().scheduleDeferred(() -> eventBus.changeSecondLeftComponent(null));
         }
     }
 
