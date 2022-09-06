@@ -97,12 +97,9 @@ public class ApplicationTreeView extends VBoxLayoutContainer implements HasSelec
     @SuppressWarnings("unchecked")
     private void initListeners() {
         ((Tree<AbstractElement, String>) tree).getSelectionModel()
-                .addSelectionHandler(new SelectionHandler<AbstractElement>() {
-                    @Override
-                    public void onSelection(SelectionEvent<AbstractElement> event) {
-                        AbstractElement element = event.getSelectedItem();
-                        presenter.onSelectElement(element);
-                    }
+                .addSelectionHandler(event -> {
+                    AbstractElement element = event.getSelectedItem();
+                    presenter.onSelectElement(element);
                 });
     }
 
