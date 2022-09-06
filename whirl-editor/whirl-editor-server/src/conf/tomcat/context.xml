@@ -20,6 +20,7 @@
             minimumIdle="5"
             maximumPoolSize="10"
             connectionTimeout="300000"
+            initializationFailTimeout="60000"
             jdbcUrl="${context.db.metadata.connectionURL}"
             dataSource.user="${context.db.metadata.username}"
             dataSource.password="${context.db.metadata.password}"
