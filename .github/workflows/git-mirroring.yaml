@@ -1,4 +1,4 @@
-name: GitlabSync
+name: git-mirroring
 
 on:
   - push
