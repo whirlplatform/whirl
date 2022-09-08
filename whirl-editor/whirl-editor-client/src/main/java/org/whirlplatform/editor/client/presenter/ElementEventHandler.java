@@ -20,60 +20,22 @@ import com.sencha.gxt.widget.core.client.info.Info;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.component.client.utils.ProgressHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
-import org.whirlplatform.editor.client.meta.NewComponentElement;
-import org.whirlplatform.editor.client.meta.NewContextMenuItemElement;
-import org.whirlplatform.editor.client.meta.NewDataSourceElement;
-import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
-import org.whirlplatform.editor.client.meta.NewEventElement;
-import org.whirlplatform.editor.client.meta.NewEventParameterElement;
-import org.whirlplatform.editor.client.meta.NewPropertyElement;
-import org.whirlplatform.editor.client.meta.NewSchemaElement;
-import org.whirlplatform.editor.client.meta.NewTableElement;
-import org.whirlplatform.editor.client.meta.NullFreeComponentElement;
-import org.whirlplatform.editor.client.meta.NullRootComponentElement;
+import org.whirlplatform.editor.client.meta.*;
 import org.whirlplatform.editor.client.util.EditorHelper;
-import org.whirlplatform.editor.shared.EditorDataService;
-import org.whirlplatform.editor.shared.EditorDataServiceAsync;
-import org.whirlplatform.editor.shared.RPCException;
-import org.whirlplatform.editor.shared.SaveData;
-import org.whirlplatform.editor.shared.SaveResult;
-import org.whirlplatform.editor.shared.TreeState;
+import org.whirlplatform.editor.shared.*;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-import org.whirlplatform.meta.shared.editor.ApplicationElement;
-import org.whirlplatform.meta.shared.editor.ComponentElement;
-import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
-import org.whirlplatform.meta.shared.editor.EventElement;
-import org.whirlplatform.meta.shared.editor.EventParameterElement;
-import org.whirlplatform.meta.shared.editor.FileElement;
-import org.whirlplatform.meta.shared.editor.GroupElement;
-import org.whirlplatform.meta.shared.editor.LocaleElement;
-import org.whirlplatform.meta.shared.editor.PropertyValue;
-import org.whirlplatform.meta.shared.editor.ReportElement;
-import org.whirlplatform.meta.shared.editor.RightCollectionElement;
-import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
-import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
-import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
-import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
-import org.whirlplatform.meta.shared.editor.db.SchemaElement;
-import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.db.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.meta.shared.version.VersionUtil;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @EventHandler
 public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
@@ -170,28 +132,28 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             if (!currentApplication.getApplicationComponents().contains(element)) {
                 added.setName(added.getName() + " " + count);
             }
-            PropertyValue propValue = null;
-            PropertyType propertyType = null;
-            switch (added.getType()) {
-                case ButtonType:
-                case LabelType:
-                case HtmlType:
-                    propertyType = PropertyType.Html;
-                    propValue = added.getProperty(propertyType);
-                    break;
-                case TabItemType:
-                    propertyType = PropertyType.Title;
-                    propValue = added.getProperty(propertyType);
-                    break;
-            }
-            if (propValue != null) {
-                String val = null;
-                DataValue dataValue = propValue.getValue(l);
-                if (dataValue != null && (val = dataValue.getString()) != null) {
-                    val = val + " " + count;
-                }
-                added.setProperty(propertyType, new PropertyValue(DataType.STRING, l, val));
-            }
+//            PropertyValue propValue = null;
+//            PropertyType propertyType = null;
+//            switch (added.getType()) {
+//                case ButtonType:
+//                case LabelType:
+//                case HtmlType:
+//                    propertyType = PropertyType.Html;
+//                    propValue = added.getProperty(propertyType);
+//                    break;
+//                case TabItemType:
+//                    propertyType = PropertyType.Title;
+//                    propValue = added.getProperty(propertyType);
+//                    break;
+//            }
+//            if (propValue != null) {
+//                String val = null;
+//                DataValue dataValue = propValue.getValue(l);
+//                if (dataValue != null && (val = dataValue.getString()) != null) {
+//                    val = val + " " + count;
+//                }
+//                added.setProperty(propertyType, new PropertyValue(DataType.STRING, l, val));
+//            }
             PropertyValue hAlign = added.getProperty(PropertyType.LayoutDataHorizontalAlign);
             if (hAlign.getValue(l) == null
                     || (hAlign.getValue(l).getType() == DataType.STRING && hAlign.getValue(l).toString().isEmpty())) {
