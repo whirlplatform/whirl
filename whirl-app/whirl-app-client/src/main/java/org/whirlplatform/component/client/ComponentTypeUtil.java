@@ -69,6 +69,8 @@ public class ComponentTypeUtil {
                 builder = new SimpleHtmlEditorBuilder(builderProperties);
             } else if (ComponentType.TextFieldType == type) {
                 builder = new TextFieldBuilder(builderProperties);
+            } else if (ComponentType.PasswordFieldType == type) {
+                builder = new PasswordFieldBuilder(builderProperties);
             } else if (ComponentType.TextAreaType == type) {
                 builder = new TextAreaBuilder(builderProperties);
             } else if (ComponentType.NumberFieldType == type) {
