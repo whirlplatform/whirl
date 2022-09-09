@@ -21,9 +21,9 @@ build:
         override:
           - mvn -pl . install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
           - mvn -pl whirl-theme,whirl-selenium,whirl-codemirror install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgwt.skipCompilation=true
+          - command: mvn -P jdbc-postgresql -pl whirl-app,whirl-app/whirl-app-shared,whirl-app/whirl-app-client,whirl-app/whirl-app-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
-          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgwt.skipCompilation=true
+          - command: mvn -P jdbc-postgresql -pl whirl-editor,whirl-editor/whirl-editor-shared,whirl-editor/whirl-editor-client,whirl-editor/whirl-editor-server install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
             idle_timeout: 700
 
       tests:
@@ -33,10 +33,10 @@ build:
       deployment:
         - branch: master
           commands:
-            - echo "$TAG"
-#            - bash ~/build/scripts/whirl/release-github.sh
+            - 'echo "Version: $TAG"'
+            - 'bash ~/build/scripts/whirl/release-github.sh'
         - branch: master
           commands:
-            - command: bash ~/build/scripts/whirl/deploy-jelastic-cli.sh
+            - command: 'bash ~/build/scripts/whirl/deploy-jelastic-cli.sh'
               only_if: $JELASTIC_ENABLED
               idle_timeout: 700
