@@ -31,10 +31,11 @@ build:
           - mvn test
 
       deployment:
-        - branch: '/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/'
+        - branch: master
           commands:
-            - command: bash ~/build/scripts/whirl/release-github.sh
-        - branch: '/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/'
+            - echo "$TAG"
+#            - bash ~/build/scripts/whirl/release-github.sh
+        - branch: master
           commands:
             - command: bash ~/build/scripts/whirl/deploy-jelastic-cli.sh
               only_if: $JELASTIC_ENABLED
