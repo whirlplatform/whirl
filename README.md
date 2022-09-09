@@ -18,7 +18,7 @@ You can try Whirl Platform on the our demo server.
 
 #### Application
 
-Server: http://whirl-demo.jelastic.regruhosting.ru/app?application=whirl-showcase
+Server: [Showcase application](http://whirl-demo.jelastic.regruhosting.ru/app?application=whirl-showcase)
 
 Username: whirl-showcase-user
 
@@ -26,7 +26,7 @@ Password: password
 
 #### Editor
 
-Server: http://whirl-demo.jelastic.regruhosting.ru/editor/
+Server: [Editor](http://whirl-demo.jelastic.regruhosting.ru/editor/)
 
 Username: whirl-admin
 
