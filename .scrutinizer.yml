@@ -35,7 +35,7 @@ build:
           commands:
             - command: 'echo "Version: $TAG"'
               only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
-            - command: 'bash ~/build/scripts/whirl/release-github.sh'
+            - command: 'TAG=${TAG} bash ~/build/scripts/whirl/release-github.sh'
               only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
         - branch: master
           commands:
