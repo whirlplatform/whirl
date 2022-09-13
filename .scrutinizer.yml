@@ -37,8 +37,8 @@ build:
               only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
             - command: 'TAG=${TAG} bash ~/build/scripts/whirl/release-github.sh'
               only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
-        - branch: master
-          commands:
-            - command: 'bash ~/build/scripts/whirl/deploy-jelastic-cli.sh'
+            - command: 'TAG=${TAG} bash ~/build/scripts/whirl/release-docker.sh'
+              only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
+            - command: 'TAG=${TAG} bash ~/build/scripts/whirl/deploy-jelastic-cli.sh'
               only_if: '$JELASTIC_ENABLED && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
               idle_timeout: 700

@@ -1,8 +1,7 @@
 # This dockerfile builds image by downloading prepackaged release from github.com releases by `TAG` environment variable.
-
 FROM maven:3.8.6-openjdk-8-slim AS builder
 
-ENV TAG="v0.1.0"
+ARG TAG
 
 WORKDIR /home/app/
 
