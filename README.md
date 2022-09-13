@@ -32,12 +32,6 @@ Username: whirl-admin
 
 Password: password
 
-## License
-
-Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
-
-[License text](LICENSE)
-
 ## Developing
 
 First the database to store platform data should be created.
@@ -145,3 +139,9 @@ Command to set new version in all pom.xml files is:
 ```bash
 mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 ```
+
+## License
+
+Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
+
+[License text](LICENSE)
