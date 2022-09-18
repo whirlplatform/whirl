@@ -9,13 +9,13 @@
             type="javax.sql.DataSource"
             driverClassName="org.postgresql.Driver"
             minimumIdle="5"
-            maximumPoolSize="10"
+            maximumPoolSize="30"
             connectionTimeout="30000"
             initializationFailTimeout="60000"
             jdbcUrl="jdbc:postgresql://postgresql:5432/whirl"
-            dataSource.user="whirl"
-            dataSource.password="password"
-            dataSource.implicitCachingEnabled="true"
+            schema="whirl"
+            username="whirl"
+            password="password"
     />
     <!-- Whirl datasource driver -->
     <Environment

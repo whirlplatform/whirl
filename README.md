@@ -34,6 +34,8 @@ Password: password
 
 ## Developing
 
+### Database preparation
+
 First the database to store platform data should be created.
 
 - **PostgreSQL**
@@ -57,32 +59,31 @@ First the database to store platform data should be created.
     GRANT ALL ON whirl.* TO whirl;
     ```
 
+### Building and running
+
+**Project requires Java 8, upper versions are not supported yet.**
+
 To prepare dependencies for running platform in development mode you should build prerequisites:
 
 ```bash
 mvn clean install -Dgwt.skipCompilation=true
 ```
 
-### Main platform - whirl-app
-
-
-#### Server
+#### Main platform - whirl-app
 
 Command to start backend on Tomcat server is:
 
 ```bash
-cd whirl-app/whirl-app-server
+cd whirl-app
 mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
-
-#### Client
 
 We are using GWT for developing frontend side
 with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
 Command to start frontend in dev mode is:
 ```bash
-cd whirl-app/whirl-app-server
+cd whirl-app
 mvn gwt:codeserver -pl whirl-app-client -am
 ```
 
@@ -91,47 +92,19 @@ demand.
 
 ### Application editor - whirl-editor
 
-#### Server
-
-Commands to start:
+Commands to start backend:
 ```bash
-cd whirl-editor/whirl-editor-server
+cd whirl-editor
 mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
-#### Client
 
-Commands to start:
+Commands to start frontend:
 ```bash
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
 ```
 
 Editor will be accessible at http://localhost:8091/editor/.
-
-### Troubleshooting
-
-If you experience the following issue while initializing maven project:
-
-    Blocked mirror for repositories: [jboss-central (http://repository.jboss.org/nexus/content/groups/public-jboss, default, releases...
-
-Add following to your maven settings.xml:
-
-```xml
-<mirrors>
-  <mirror>
-    <id>imagej-repository-mirror</id>
-    <name>ImageJ repository mirror</name>
-    <url>https://maven.imagej.net/content/repositories/public</url>
-    <mirrorOf>imagej-repository</mirrorOf>
-  </mirror>
-  <mirror>
-    <id>jboss-repository-mirror</id>
-    <name>JBoss Public Nexus Repository</name>
-    <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-    <mirrorOf>jboss-central</mirrorOf>
-  </mirror>
-</mirrors>
-```
 
 ### Release preparation
 
@@ -142,6 +115,6 @@ mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 
 ## License
 
-Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving GPL v3 license.
+Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving [GPL v3](LICENSE) license.
 
-[License text](LICENSE)
+[GPL v3 license text](LICENSE)

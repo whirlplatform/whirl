@@ -18,13 +18,13 @@
             type="javax.sql.DataSource"
             driverClassName="${context.db.metadata.driverClass}"
             minimumIdle="5"
-            maximumPoolSize="10"
+            maximumPoolSize="30"
             connectionTimeout="300000"
             initializationFailTimeout="60000"
             jdbcUrl="${context.db.metadata.connectionURL}"
-            dataSource.user="${context.db.metadata.username}"
-            dataSource.password="${context.db.metadata.password}"
-            dataSource.implicitCachingEnabled="true"
+            schema="${context.db.metadata.schema}"
+            username="${context.db.metadata.username}"
+            password="${context.db.metadata.password}"
     />
     <!-- Whirl datasource driver -->
     <Environment
