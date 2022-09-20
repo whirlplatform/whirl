@@ -9,7 +9,7 @@ ADD . ./
 RUN apt-get update
 RUN apt-get install -y libfreetype6 libfontconfig1 nodejs
 
-RUN mvn clean package -DskipTests -Dmaven.artifact.threads=5
+RUN mvn clean package -DskipTests -Dmaven.artifact.threads=5 -P jdbc-postgresql,jdbc-oracle,jdbc-mysql
 
 
 FROM tomcat:9-jdk8-openjdk AS app

@@ -4,7 +4,7 @@ This folder contains docker configurations.
 Entire application stack can be run with docker compose by command:
 
 ```bash
-docker-compose up --build image --project-name whirl
+docker-compose up --build image
 ```
 
 Thera are two profiles:
