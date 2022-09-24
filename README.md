@@ -4,7 +4,7 @@
   <img src="logo.png" />
 </p>
 
-# Whrl Platform
+# Whirl Platform
 
 The Whirl Platform is application builder software for database developers that simplifying of creating web
 applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building
@@ -14,7 +14,7 @@ Platform is on production-ready state and used in more than twenty closed source
 
 ## Demo
 
-You can try Whirl Platform on the our demo server.
+You can try Whirl Platform on our demo server.
 
 #### Application
 
