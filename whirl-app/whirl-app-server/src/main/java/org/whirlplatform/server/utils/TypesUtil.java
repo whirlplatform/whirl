@@ -81,6 +81,8 @@ public class TypesUtil {
 			result = org.apache.empire.data.DataType.CLOB;
 		} else if (sqlType == Types.VARCHAR) {
 			result = org.apache.empire.data.DataType.TEXT;
+		} else if (sqlType == Types.BIT || sqlType == Types.BOOLEAN) {
+			result = org.apache.empire.data.DataType.BOOL;
 		} else {
 			result = org.apache.empire.data.DataType.UNKNOWN;
 		}

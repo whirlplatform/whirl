@@ -15,10 +15,12 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.DBFunctionMessage;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Calendar;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class BaseEventExecutor extends AbstractEventExecutor {
         String sql = makeCallQuery(function, params);
         try (Profile p = new ProfileImpl(m)) {
             stmt = getConnection().prepareCall(sql);
-            stmt.registerOutParameter(1, Types.CLOB);
+            stmt.registerOutParameter(1, Types.VARCHAR);
 
             // установка параметров
             if (params != null) {
@@ -86,16 +88,16 @@ public class BaseEventExecutor extends AbstractEventExecutor {
             }
             stmt.execute();
 
-            Clob clob = (Clob) stmt.getObject(1);
-            String str, content = "";
-            if (clob != null) {
-                BufferedReader re = new BufferedReader(clob.getCharacterStream());
-                while ((str = re.readLine()) != null) {
-                    content += (content.equals("") ? "" : "\n") + str;
-                }
-                re.close();
-            }
-
+//            Clob clob = (Clob) stmt.getObject(1);
+//            String str, content = "";
+//            if (clob != null) {
+//                BufferedReader re = new BufferedReader(clob.getCharacterStream());
+//                while ((str = re.readLine()) != null) {
+//                    content += (content.equals("") ? "" : "\n") + str;
+//                }
+//                re.close();
+//            }
+            String content = stmt.getString(1);
             return parseEventResult(content);
         } catch (Exception e) {
             String err = function + " params =" + params + '\t' + e + ", sql: " + sql;
