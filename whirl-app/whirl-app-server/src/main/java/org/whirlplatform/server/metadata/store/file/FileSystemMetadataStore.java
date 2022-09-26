@@ -373,6 +373,16 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         List<ApplicationStoreData> result = new ArrayList<>();
         Path base = basePath();
         Path applications = base.resolve(APPLICATIONS_PATH);
+
+        // проверка наличия директории
+        if (Files.notExists(applications)){
+            try {
+                Files.createDirectories(applications);
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to create the \"applications\" directory");
+            }
+        }
+
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(applications)) {
             for (Path code : stream) {
                 Path tags = code.resolve(TAG_PATH);
