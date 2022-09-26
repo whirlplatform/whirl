@@ -42,6 +42,7 @@ import org.whirlplatform.component.client.base.*;
 import org.whirlplatform.component.client.form.FormBuilder;
 import org.whirlplatform.component.client.form.GridLayoutContainer;
 import org.whirlplatform.component.client.form.GridLayoutContainer.Cell;
+import org.whirlplatform.component.client.grid.EditGridBuilder;
 import org.whirlplatform.component.client.hotkey.HotKeyBuilder;
 import org.whirlplatform.component.client.tree.HorizontalMenuBuilder;
 import org.whirlplatform.component.client.tree.TreeMenuBuilder;
@@ -61,6 +62,9 @@ import org.whirlplatform.editor.client.meta.NullFreeComponentElement;
 import org.whirlplatform.editor.client.util.EditorHelper;
 import org.whirlplatform.editor.client.view.DesignView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.TableConfig;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -68,8 +72,8 @@ import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.editor.*;
 import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.*;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -933,6 +937,49 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         } else if (ComponentType.HotKeyType.equals(element.getType())) {
             ((HotKeyBuilder) builder).setIcon(EditorBundle.INSTANCE.hotKeySmall());
         }
+//        TODO else if (ComponentType.EditGridType.equals(element.getType())) {
+//            Scheduler.get().scheduleDeferred(() -> {
+//                TableConfig config = new TableConfig();
+//                ClassMetadata metadata = new ClassMetadata("fake");
+//                metadata.setTitle("Prototype table");
+//                metadata.setViewable(true);
+//                metadata.setInsertable(true);
+//                metadata.setUpdatable(true);
+//                metadata.setDeletable(true);
+//                List<DataType> types = Arrays.asList(DataType.STRING, DataType.BOOLEAN, DataType.DATE, DataType.NUMBER);
+//                for (int i = 0; i < 15; i++) {
+//                    FieldMetadata field = new FieldMetadata("COLUMN_" + i, types.get(com.google.gwt.user.client.Random.nextInt(types.size())),
+//                            "Column " + i);
+//                    field.setWidth(150);
+//                    field.setView(true);
+//                    field.setEdit(com.google.gwt.user.client.Random.nextBoolean());
+//                    metadata.addField(field);
+//                }
+//                config.setMetadata(metadata);
+//                ((EditGridBuilder) builder).reconfigure(config, true);
+//            });
+//          }
+
+        // удаляем реакцию на ввод в текстовые поля
+        if (ComponentType.TextFieldType.equals(element.getType())
+                || ComponentType.TextAreaType.equals(element.getType())
+                || ComponentType.NumberFieldType.equals(element.getType())
+                || ComponentType.DateFieldType.equals(element.getType())
+                || ComponentType.RadioGroupType.equals(element.getType())
+                || ComponentType.CheckGroupType.equals(element.getType())
+                || ComponentType.ComboBoxType.equals(element.getType())
+                || ComponentType.TreeComboBoxType.equals(element.getType())
+                || ComponentType.CheckBoxType.equals(element.getType())
+                || ComponentType.RadioType.equals(element.getType())
+                || ComponentType.UploadFieldType.equals(element.getType())
+                || ComponentType.PasswordFieldType.equals(element.getType())
+        ) {
+            NodeList<Element> list = builder.getComponent().getElement().select("input");
+            for (int i = 0; i < list.getLength(); i++) {
+                list.getItem(i).getStyle().setProperty("pointerEvents", "none");
+            }
+        }
+
         if (createChildren && builder instanceof Containable) {
             for (ComponentElement child : element.getChildren()) {
                 ComponentBuilder childBuilder = createComponent(child, true);
@@ -1030,7 +1077,6 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
      * Выделение группы ячеек и находящихся на них компонентов
      *
      * @param model    Модель данных
-     * @param selected Установить или снять выделение
      */
     public void onSelectGroupCell(AbstractElement model) {
         clearSelection();

@@ -513,7 +513,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param config   - TableConfig
      * @param skipLoad - boolean
      */
-    private void reconfigure(TableConfig config, boolean skipLoad) {
+    public void reconfigure(TableConfig config, boolean skipLoad) {
         this.metadata = config.getMetadata();
 
         if (columnConfigStore == null && saveState) {

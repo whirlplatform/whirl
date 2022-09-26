@@ -1,5 +1,7 @@
 package org.whirlplatform.editor.client.view.design;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
 import com.sencha.gxt.core.client.dom.XElement;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.base.ImageBuilder;
@@ -42,6 +44,25 @@ public class DesignerHelper {
 			builder.getComponent().setHeight(30);
 			builder.getComponent().setWidth(-1);
 			childEl.applyStyles("border: 1px dotted red; position: relative;");
+		}
+		// удаляем реакцию на ввод в текстовые поля
+		if (ComponentType.TextFieldType.equals(element.getType())
+				|| ComponentType.TextAreaType.equals(element.getType())
+				|| ComponentType.NumberFieldType.equals(element.getType())
+				|| ComponentType.DateFieldType.equals(element.getType())
+				|| ComponentType.RadioGroupType.equals(element.getType())
+				|| ComponentType.CheckGroupType.equals(element.getType())
+				|| ComponentType.ComboBoxType.equals(element.getType())
+				|| ComponentType.TreeComboBoxType.equals(element.getType())
+				|| ComponentType.CheckBoxType.equals(element.getType())
+				|| ComponentType.RadioType.equals(element.getType())
+				|| ComponentType.UploadFieldType.equals(element.getType())
+				|| ComponentType.PasswordFieldType.equals(element.getType())
+		) {
+			NodeList<Element> list = builder.getComponent().getElement().select("input");
+			for (int i = 0; i < list.getLength(); i++) {
+				list.getItem(i).getStyle().setProperty("pointerEvents", "none");
+			}
 		}
 	}
 
