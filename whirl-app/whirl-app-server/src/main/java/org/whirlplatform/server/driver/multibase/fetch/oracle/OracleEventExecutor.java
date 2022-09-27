@@ -82,7 +82,6 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                     for (int i = 2; i < paramsCount + 2; i++) {
                         Object v = params.get(i - 2);
                         try {
-                            // Т.к. по умолчанию boolean передается 1/0
                             if (v instanceof DataValueImpl) {
                                 DataValueImpl dataValue = (DataValueImpl) v;
                                 if (dataValue.getType() == DataType.DATE) {
@@ -93,6 +92,7 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                                     stmt.setTimestamp(i, time);
                                 }
                             } else if (v instanceof Boolean) {
+                                // Т.к. по умолчанию boolean передается 1/0
                                 Boolean bv = (Boolean) v;
                                 stmt.setObject(i, bv ? "T" : "F");
                             } else if (v instanceof Number) {

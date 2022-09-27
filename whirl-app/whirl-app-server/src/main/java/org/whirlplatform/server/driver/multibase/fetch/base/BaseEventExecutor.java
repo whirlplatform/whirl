@@ -7,6 +7,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.editor.EventElement;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
+import org.whirlplatform.server.db.DBConnection;
 import org.whirlplatform.server.driver.multibase.fetch.ParamsUtil;
 import org.whirlplatform.server.driver.multibase.fetch.QueryExecutor;
 import org.whirlplatform.server.log.Logger;
@@ -53,6 +54,7 @@ public class BaseEventExecutor extends AbstractEventExecutor {
         String sql = makeCallQuery(function, params);
         try (Profile p = new ProfileImpl(m)) {
             stmt = getConnection().prepareCall(sql);
+            stmt.setQueryTimeout(DBConnection.STMT_TIMEOUT);
             stmt.registerOutParameter(1, Types.VARCHAR);
 
             // установка параметров
@@ -61,7 +63,6 @@ public class BaseEventExecutor extends AbstractEventExecutor {
                 for (int i = 2; i < paramsCount + 2; i++) {
                     Object v = params.get(i - 2);
                     try {
-                        // Т.к. по умолчанию boolean передается 1/0
                         if (v instanceof DataValueImpl) {
                             DataValueImpl dataValue = (DataValueImpl) v;
                             if (dataValue.getType() == DataType.DATE) {
@@ -88,15 +89,6 @@ public class BaseEventExecutor extends AbstractEventExecutor {
             }
             stmt.execute();
 
-//            Clob clob = (Clob) stmt.getObject(1);
-//            String str, content = "";
-//            if (clob != null) {
-//                BufferedReader re = new BufferedReader(clob.getCharacterStream());
-//                while ((str = re.readLine()) != null) {
-//                    content += (content.equals("") ? "" : "\n") + str;
-//                }
-//                re.close();
-//            }
             String content = stmt.getString(1);
             return parseEventResult(content);
         } catch (Exception e) {
