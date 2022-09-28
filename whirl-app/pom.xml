@@ -30,6 +30,8 @@
                         <arg>-port</arg>
                         <arg>9876</arg>
                         <arg>-generateJsInteropExports</arg>
+                        <arg>-logLevel</arg>
+                        <arg>DEBUG</arg>
                     </codeserverArgs>
                     <jvmArgs>
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
