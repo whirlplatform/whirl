@@ -54,7 +54,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
     private void initWatchService(FileSystem fileSystem) {
         try {
             this.watchService = fileSystem.newWatchService();
-            Thread watchThread = new Thread(this);
+            Thread watchThread = new Thread(this, "FileWatchService");
             watchThread.start();
         } catch (UnsupportedOperationException e) {
             _log.error("WatchService: is not supporeted by this FileSystem", e);

@@ -9,8 +9,10 @@ import org.whirlplatform.meta.shared.editor.FileElementCategory;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.channels.NonWritableChannelException;
 import java.nio.file.*;
 import java.util.*;
+
 
 public class ApplicationFilesUtil {
 
@@ -76,16 +78,18 @@ public class ApplicationFilesUtil {
         FileLock result = null;
         try {
             int seconds = waitForAvailabilityInSeconds;
-            result = (shared) ? channel.tryLock(0L, Long.MAX_VALUE, true) : channel.tryLock();
+            result = channel.tryLock(0L, Long.MAX_VALUE, shared);
             while (result == null && seconds > 0) {
                 Thread.sleep(1000);
-                result = channel.tryLock();
+                result = channel.tryLock(0L, Long.MAX_VALUE, shared);
                 seconds--;
             }
         } catch (IOException e) {
             throw new IOException("The attempt to lock of the file was unsuccessful", e);
         } catch (InterruptedException e) {
             throw new IOException("The thread sleep was interrupted", e);
+        } catch (NonWritableChannelException e) {
+            throw new IOException("The file channel is not writable", e);
         }
         return result;
     }

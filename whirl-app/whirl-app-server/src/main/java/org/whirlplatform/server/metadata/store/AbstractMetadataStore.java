@@ -14,6 +14,12 @@ import org.xml.sax.XMLFilter;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.transform.Result;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -23,19 +29,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.xml.transform.Result;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
 
 public abstract class AbstractMetadataStore implements MetadataStore {
 
     private static final List<Class<? extends XMLFilter>> CONVERTERS = new ArrayList<>();
 
     static {
-
+        // порядок фильтров-конверторов имеет значение - применяются в порядке
+        // добавления
+        // класс фильтра должен иметь конструктор с одним аргументом String -
+        // исходный текст
+//        CONVERTERS.add(CustomConverter.class);
     }
 
     @Override
