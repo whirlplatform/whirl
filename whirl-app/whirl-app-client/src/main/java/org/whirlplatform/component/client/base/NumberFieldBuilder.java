@@ -8,6 +8,10 @@ import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
 import com.sencha.gxt.widget.core.client.form.validator.MaxNumberValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MinNumberValidator;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -18,23 +22,26 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Числовое поле ввода
  */
+@JsType(name = "NumberField", namespace = "Whirl")
 public class NumberFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Double>, Parameter<DataValue> {
 
 	public NumberField<Double> field;
 	// private MaxLengthValidator maxLengthValidator;
 	// private MinLengthValidator minLengthValidator;
 
-	public NumberFieldBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public NumberFieldBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
-
+	@JsIgnore
 	public NumberFieldBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	/**
@@ -42,6 +49,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 	 * 
 	 * @return ComponentType
 	 */
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.NumberFieldType;
@@ -70,6 +78,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 	 *            - String, значение атрибута
 	 * @return boolean
 	 */
+	@JsIgnore
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.NumberMaxValue.getCode())) {
 			if (value != null && value.getDouble() != null) {
@@ -244,6 +253,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 	 * 
 	 * @return DataValue(Type, Value, Code)
 	 */
+	@JsIgnore
 	@Override
 	public DataValue getFieldValue() {
 		DataValue result = new DataValueImpl(DataType.NUMBER);
@@ -258,6 +268,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 	 * @param value
 	 *            - DataValue(Type, Value, Code)
 	 */
+	@JsIgnore
 	@Override
 	public void setFieldValue(DataValue value) {
 		if (DataType.NUMBER.equals(value.getType())) {
@@ -280,6 +291,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 		return result;
 	}
 
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		if (!super.fitsLocator(locator)) {
@@ -292,5 +304,103 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 			} 
 		}
 		return  super.getElementByLocator(locator); 
+	}
+
+	/**
+	 * Gets the field mask.
+	 *
+	 * @return the field mask
+	 */
+	@Override
+	public String getFieldMask() {
+		return super.getFieldMask();
+	}
+
+	/**
+	 * Sets the field mask.
+	 *
+	 * @param mask the new field mask
+	 */
+	@Override
+	public void setFieldMask(String mask) {
+		super.setFieldMask(mask);
+	}
+
+	/**
+	 * Sets the invalid status for the field with given text.
+	 *
+	 * @param msg message
+	 */
+	@Override
+	public void markInvalid(String msg) {
+		super.markInvalid(msg);
+	}
+
+	/**
+	 * Clears the invalid status for the field.
+	 */
+	@Override
+	public void clearInvalid() {
+		super.clearInvalid();
+	}
+
+	/**
+	 * Clears the field value.
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public void clear() {super.clear();
+	}
+
+	/**
+	 * Checks if is in valid state.
+	 *
+	 * @return true, if is in valid state
+	 */
+	@JsIgnore
+	@Override
+	public boolean isValid() {
+		return super.isValid();
+	}
+
+	/**
+	 * Check if field is valid.
+	 *
+	 * @param invalidate true to invalidate field
+	 * @return true if field is valid
+	 */
+	@Override
+	public boolean isValid(boolean invalidate) {
+		return super.isValid(invalidate);
+	}
+
+	/**
+	 * Checks if is required.
+	 *
+	 * @return true, if is required
+	 */
+	@Override
+	public boolean isRequired() {
+		return super.isRequired();
+	}
+
+	/**
+	 * Sets the required to fill.
+	 *
+	 * @param required true, if the field is required to be filled
+	 */
+	@Override
+	public void setRequired(boolean required) {
+		super.setRequired(required);
+	}
+
+	/**
+	 * Sets the read only.
+	 *
+	 * @param readOnly true, if the field is read only
+	 */
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		super.setReadOnly(readOnly);
 	}
 }

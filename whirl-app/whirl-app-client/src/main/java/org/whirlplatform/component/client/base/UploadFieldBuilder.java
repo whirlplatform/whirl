@@ -13,6 +13,10 @@ import com.sencha.gxt.widget.core.client.event.SubmitCompleteEvent.SubmitComplet
 import com.sencha.gxt.widget.core.client.form.AdapterField;
 import com.sencha.gxt.widget.core.client.form.FileUploadField;
 import com.sencha.gxt.widget.core.client.form.FormPanel;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
 import org.whirlplatform.component.client.Prepareable;
@@ -28,8 +32,10 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.shared.SessionToken;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "UploadField", namespace = "Whirl")
 public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		Prepareable, NativeParameter<String>, Parameter<DataValue> {
 
@@ -49,12 +55,14 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 
 	private AdapterField<String> adapter;
 
-	public UploadFieldBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public UploadFieldBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public UploadFieldBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 	
 	
@@ -126,6 +134,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return comp;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.SaveFileName.getCode())) {
@@ -146,6 +155,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return fileId + "&" + Boolean.valueOf(saveFilename);
 	}
 
+	@JsIgnore
 	public FileValue getFileValue() {
 		FileValue file = new FileValue();
 		file.setName(adapter.getValue());
@@ -153,6 +163,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return file;
 	}
 
+	@JsIgnore
 	public void setFileValue(FileValue value) {
 		adapter.setValue(value.getName());
 		isValid(true);
@@ -217,6 +228,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return true;
 	}
 
+	@JsIgnore
 	@Override
 	public DataValue getFieldValue() {
 		DataValue result = new DataValueImpl(DataType.FILE);
@@ -225,6 +237,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return result;
 	}
 
+	@JsIgnore
 	@Override
 	public void setFieldValue(DataValue value) {
 		// do nothing
@@ -251,4 +264,68 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		super.setEnabled(enabled);
 		upload.setEnabled(enabled);
 	}
+
+	/**
+	 * Gets the field mask.
+	 *
+	 * @return the field mask
+	 */
+	@Override
+	public String getFieldMask() {
+		return super.getFieldMask();
+	}
+
+	/**
+	 * Sets the field mask.
+	 *
+	 * @param mask the new field mask
+	 */
+	@Override
+	public void setFieldMask(String mask) {
+		super.setFieldMask(mask);
+	}
+
+	/**
+	 * Sets the invalid status for the field with given text.
+	 *
+	 * @param msg message
+	 */
+	@Override
+	public void markInvalid(String msg) {
+		super.markInvalid(msg);
+	}
+
+	/**
+	 * Checks if is in valid state.
+	 *
+	 * @return true, if is in valid state
+	 */
+	@JsIgnore
+	@Override
+	public boolean isValid() {
+		return super.isValid();
+	}
+
+
+	/**
+	 * Checks if is required.
+	 *
+	 * @return true, if is required
+	 */
+	@Override
+	public boolean isRequired() {
+		return super.isRequired();
+	}
+
+	/**
+	 * Sets the required to fill.
+	 *
+	 * @param required true, if the field is required to be filled
+	 */
+	@Override
+	public void setRequired(boolean required) {
+		super.setRequired(required);
+	}
+
+
 }

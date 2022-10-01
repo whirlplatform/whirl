@@ -3,22 +3,30 @@ package org.whirlplatform.component.client.base;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer.VBoxLayoutAlign;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
+import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
-
+@JsType(name = "VBoxContainer", namespace = "Whirl")
 public class VBoxContainerBuilder extends BoxContainerBuilder {
 
-	public VBoxContainerBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public VBoxContainerBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public VBoxContainerBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
-	
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.VBoxContainerType;
@@ -31,6 +39,7 @@ public class VBoxContainerBuilder extends BoxContainerBuilder {
 		return container;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.VBoxAlign.getCode())) {
@@ -43,5 +52,10 @@ public class VBoxContainerBuilder extends BoxContainerBuilder {
 			}
 		}
 		return super.setProperty(name, value);
+	}
+
+	@Override
+	public void addChild(ComponentBuilder child) {
+		super.addChild(child);
 	}
 }

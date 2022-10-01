@@ -18,6 +18,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.utils.InfoHelper;
@@ -30,12 +34,14 @@ import org.whirlplatform.rpc.shared.ClientRestException;
 import org.whirlplatform.rpc.shared.ExceptionData;
 import org.whirlplatform.rpc.shared.SessionToken;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Компонент Форма логина. Берет контейнер с формой из ClientLoginUtil.
  *
  */
+@JsType(name = "LoginPanel", namespace = "Whirl")
 public class LoginPanelBuilder extends ComponentBuilder {
 
 	private HTML html;
@@ -81,12 +87,14 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		}
 	}
 
-	public LoginPanelBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public LoginPanelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public LoginPanelBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	// предполагается срабатывание только в редакторе форм
@@ -109,6 +117,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		// так что нужно будет пересоздавать этот элемент в редакторе форм.
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.LoginPanelType;
@@ -202,6 +211,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		return locatorByElement(element);
 	}
 
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		return elementByLocator(locator);
@@ -242,6 +252,64 @@ public class LoginPanelBuilder extends ComponentBuilder {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 
 }

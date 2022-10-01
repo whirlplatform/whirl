@@ -7,14 +7,20 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.TimeEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "Timer", namespace = "Whirl")
 public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeHandlers {
 
 	private int delay;
@@ -22,14 +28,17 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 
 	private SimpleContainer container;
 
-	public TimerBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public TimerBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public TimerBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.TimerType;
@@ -65,6 +74,7 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 		return component;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Delay.getCode())) {
@@ -86,6 +96,7 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 		return (C) container;
 	}
 
+	@JsIgnore
 	@Override
     public HandlerRegistration addTimeHandler(TimeEvent.TimeHandler handler) {
 		return addHandler(handler, TimeEvent.getType());
@@ -94,5 +105,63 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 	public void setIcon(ImageResource icon) {
 		Image image = new Image(icon);
 		container.add(image);
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

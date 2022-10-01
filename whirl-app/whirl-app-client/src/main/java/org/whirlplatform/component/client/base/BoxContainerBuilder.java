@@ -3,6 +3,7 @@ package org.whirlplatform.component.client.base;
 import com.sencha.gxt.core.client.util.Padding;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -25,6 +26,7 @@ public abstract class BoxContainerBuilder extends InsertContainerBuilder {
 		super.addChild(child);
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.BoxLayoutPack.getCode())) {
