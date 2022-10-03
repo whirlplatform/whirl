@@ -13,6 +13,10 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasCreateParameters;
 import org.whirlplatform.component.client.form.FieldFormPanel;
@@ -35,6 +39,7 @@ import java.util.Map.Entry;
 /**
  * Построитель формы ввода параметров для отчёта.
  */
+@JsType(name = "Report", namespace = "Whirl")
 public class ReportBuilder extends ComponentBuilder implements
 		HasCreateParameters {
 	
@@ -52,15 +57,17 @@ public class ReportBuilder extends ComponentBuilder implements
 
 	private String reportFormat;
 
-	
-	public ReportBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public ReportBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public ReportBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
-	
+
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.ReportType;
@@ -78,6 +85,7 @@ public class ReportBuilder extends ComponentBuilder implements
         return create(Collections.emptyList());
 	}
 
+	@JsIgnore
 	@Override
 	public Component create(List<DataValue> parameters) {
 		Component result = super.create();
@@ -254,6 +262,7 @@ public class ReportBuilder extends ComponentBuilder implements
 		}
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.ShowReportParams.getCode())
@@ -276,5 +285,51 @@ public class ReportBuilder extends ComponentBuilder implements
 	@Override
 	protected <C> C getRealComponent() {
 		return (C) panel;
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	public void focus() {
+		if (componentInstance == null) {
+			return;
+		}
+		componentInstance.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

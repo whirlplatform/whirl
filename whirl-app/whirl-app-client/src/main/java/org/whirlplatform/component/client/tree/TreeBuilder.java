@@ -37,6 +37,10 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
@@ -78,6 +82,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@JsType(name = "Tree", namespace = "Whirl")
 public class TreeBuilder extends ComponentBuilder
         implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
@@ -149,14 +154,17 @@ public class TreeBuilder extends ComponentBuilder
     private boolean useSearchField;
     private int minChars;
 
-    public TreeBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     public ComponentType getType() {
         return ComponentType.TreePanelType;
     }
@@ -214,6 +222,7 @@ public class TreeBuilder extends ComponentBuilder
         return container;
     }
 
+    @JsIgnore
     @SuppressWarnings("rawtypes")
     @Override
     public boolean setProperty(String name, DataValue value) {
@@ -530,6 +539,7 @@ public class TreeBuilder extends ComponentBuilder
         selModel.deselectAll();
     }
 
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
@@ -564,6 +574,7 @@ public class TreeBuilder extends ComponentBuilder
         this.required = required;
     }
 
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         boolean containSelected = false;
@@ -591,6 +602,7 @@ public class TreeBuilder extends ComponentBuilder
         return result;
     }
 
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         if (value == null || value.getRowList().isEmpty()) {
@@ -631,6 +643,7 @@ public class TreeBuilder extends ComponentBuilder
         forceInvalidText = null;
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         return addHandler(handler, SelectEvent.getType());
@@ -640,6 +653,7 @@ public class TreeBuilder extends ComponentBuilder
         load(Collections.emptyList());
     }
 
+    @JsIgnore
     public void load(List<DataValue> parameters) {
         lastParameters = parameters;
         loader.load();
@@ -725,11 +739,13 @@ public class TreeBuilder extends ComponentBuilder
         }
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addChangeHandler(ChangeEvent.ChangeHandler handler) {
         return addHandler(handler, ChangeEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator locator = super.getLocatorByElement(element);
@@ -768,6 +784,7 @@ public class TreeBuilder extends ComponentBuilder
         return locator;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!fitsLocator(locator)) {
@@ -812,6 +829,52 @@ public class TreeBuilder extends ComponentBuilder
             }
         }
         return super.getElementByLocator(locator);
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 
     private static class LocatorParams {

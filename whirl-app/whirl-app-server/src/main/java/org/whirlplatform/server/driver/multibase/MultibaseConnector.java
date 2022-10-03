@@ -219,9 +219,9 @@ public class MultibaseConnector extends AbstractConnector {
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 
-        if (!metadata.isViewable()) {
-            return new LoadData<>();
-        }
+//        if (!metadata.isViewable()) {
+//            return new LoadData<>();
+//        }
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
