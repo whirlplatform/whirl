@@ -275,6 +275,7 @@ public abstract class AbstractFieldBuilder extends ComponentBuilder
         return addHandler(handler, KeyPressEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator) && locator.getPart() != null &&
