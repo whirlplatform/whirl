@@ -8,12 +8,20 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.sencha.gxt.cell.core.client.form.RadioCell;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
+import com.sencha.gxt.widget.core.client.form.Field;
+import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.form.Radio;
+import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
@@ -29,21 +37,25 @@ import java.util.Map;
 /**
  * Радиокнопка
  */
+@JsType(name = "Radio", namespace = "Whirl")
 public class RadioBuilder extends AbstractFieldBuilder implements NativeParameter<Boolean>, Parameter<DataValue> {
 
     private Radio radio;
 
-    public RadioBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public RadioBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public RadioBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип радиокнопки
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.RadioType;
@@ -97,6 +109,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.BoxLabel.getCode())) {
             setBoxLabel(value.getString());
@@ -183,6 +196,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
      *
      * @return DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.BOOLEAN);
@@ -196,6 +210,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
      *
      * @param value - DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (DataType.BOOLEAN.equals(value.getType())) {
@@ -246,6 +261,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
         private static String TYPE_INPUT = "Input";
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator result = super.getLocatorByElement(element);
@@ -256,6 +272,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
         return null;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator) && locator.getPart() != null
@@ -263,5 +280,110 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
             return radio.getCell().getInputElement(getWrapper().getElement());
         }
         return null;
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    /**
+     * Sets the read only.
+     *
+     * @param readOnly true, if the field is read only
+     */
+    public void setReadOnly(boolean readOnly) {
+      super.setReadOnly(readOnly);
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Clears the field value.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void clear() {
+        if (getRealComponent() instanceof IsField) {
+            IsField field = getRealComponent();
+            field.clear();
+            ValueChangeEvent.fire(field, emptyValue());
+        }
     }
 }

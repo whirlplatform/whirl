@@ -19,6 +19,10 @@ import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.Radio;
 import com.sencha.gxt.widget.core.client.form.error.SideErrorHandler;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
@@ -51,12 +55,14 @@ import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
  * Радиогруппа
  */
+@JsType(name = "RadioGroup", namespace = "Whirl")
 public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
         Validatable, ListParameter<RowListValue>, SelectEvent.HasSelectHandlers, HasState {
 
@@ -84,17 +90,20 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
         }
     };
 
-    public RadioGroupBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public RadioGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public RadioGroupBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип радиогруппы
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.RadioGroupType;
@@ -157,6 +166,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DataSource.getCode())) {
@@ -291,6 +301,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      *
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
@@ -320,6 +331,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      *
      * @return RowListValue
      */
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         Radio radio = (Radio) group.getValue();
@@ -342,6 +354,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      *
      * @param value - RowListValue
      */
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         // Не в цикле, т.к. должно быть одно значение
@@ -449,6 +462,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      * @param handler - SelectHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         return addHandler(handler,
@@ -457,7 +471,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
 
 
     // Arquillian
-
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator locator = super.getLocatorByElement(element);
@@ -479,6 +493,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
         return locator;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         Element element = null;
@@ -509,6 +524,53 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
 
         return element;
     }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
 
     private static class LocatorParams {
 

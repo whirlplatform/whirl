@@ -8,6 +8,10 @@ import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.KeyPressEvent;
 import org.whirlplatform.component.client.event.KeyPressEvent.HasKeyPressHandlers;
@@ -17,8 +21,10 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "HotKey", namespace = "Whirl")
 public class HotKeyBuilder extends ComponentBuilder implements
 		HasKeyPressHandlers {
 
@@ -32,12 +38,14 @@ public class HotKeyBuilder extends ComponentBuilder implements
 
 	private FlowLayoutContainer container;
 
-	public HotKeyBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public HotKeyBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public HotKeyBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	@Override
@@ -74,6 +82,7 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		return component;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Alt.getCode())) {
@@ -108,6 +117,7 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		return (C) container;
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.HotKeyType;
@@ -118,8 +128,55 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		container.add(image);
 	}
 
+	@JsIgnore
 	@Override
 	public HandlerRegistration addKeyPressHandler(KeyPressHandler handler) {
 		return ensureHandler().addHandler(KeyPressEvent.getType(), handler);
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	public void focus() {
+		if (componentInstance == null) {
+			return;
+		}
+		componentInstance.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

@@ -350,4 +350,67 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
         super.setReadOnly(readOnly);
     }
 
+    /**
+     * Returns component's code.
+     *
+     * @return component's code
+     */
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    @Override
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    @Override
+    public void setHidden(boolean hidden) {
+     super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    @Override
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+
+
 }

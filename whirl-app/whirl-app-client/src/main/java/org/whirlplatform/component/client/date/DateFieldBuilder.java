@@ -10,8 +10,15 @@ import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.DateTimePropertyEditor;
+import com.sencha.gxt.widget.core.client.form.Field;
+import com.sencha.gxt.widget.core.client.form.ValueBaseField;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentType;
@@ -21,12 +28,14 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
 /**
  * Поле ввода даты
  */
+@JsType(name = "DateField", namespace = "Whirl")
 public class DateFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Date>, Parameter<DataValue> {
 
     private DateField field;
@@ -34,17 +43,20 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     private DateTimeFormat dateFormat;
     // private DateTimeFormat dateInFormat;
 
-    public DateFieldBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public DateFieldBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public DateFieldBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип поля даты
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.DateFieldType;
@@ -89,6 +101,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DateMinValue.getCode())) {
@@ -264,6 +277,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
      *
      * @return DataValue(Type, Code, Value)
      */
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.DATE);
@@ -277,6 +291,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
      *
      * @param value - DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (DataType.DATE.equals(value.getType())) {
@@ -302,6 +317,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         return result;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!super.fitsLocator(locator)) {
@@ -324,4 +340,134 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         return element;
     }
 
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    /**
+     * Checks if is in valid state.
+     *
+     * @return true, if is in valid state
+     */
+    @JsIgnore
+    @Override
+    public boolean isValid() {
+        return super.isValid();
+    }
+
+    /**
+     * Check if field is valid.
+     *
+     * @param invalidate true to invalidate field
+     * @return true if field is valid
+     */
+    public boolean isValid(boolean invalidate) {
+        return super.isValid(invalidate);
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Sets the invalid status for the field with given text.
+     *
+     * @param msg message
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Clears the invalid status for the field.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Clears the field value.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void clear() {
+        super.clear();
+    }
 }
