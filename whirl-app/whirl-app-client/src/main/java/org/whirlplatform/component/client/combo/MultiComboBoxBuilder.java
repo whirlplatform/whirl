@@ -216,6 +216,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         ce.setCount(0);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component c = super.create();
@@ -717,9 +718,4 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         super.setRequired(required);
     }
 
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
 }

@@ -242,6 +242,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 		private static String TYPE_TEXT = "Text";
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		Locator result = super.getLocatorByElement(element);

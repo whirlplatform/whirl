@@ -7,10 +7,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.TimeEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
@@ -20,7 +16,6 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
-@JsType(name = "Timer", namespace = "Whirl")
 public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeHandlers {
 
 	private int delay;
@@ -28,17 +23,14 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 
 	private SimpleContainer container;
 
-	@JsConstructor
-	public TimerBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+	public TimerBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	@JsIgnore
 	public TimerBuilder() {
 		this(Collections.emptyMap());
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.TimerType;
@@ -74,7 +66,6 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 		return component;
 	}
 
-	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Delay.getCode())) {
@@ -96,7 +87,6 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 		return (C) container;
 	}
 
-	@JsIgnore
 	@Override
     public HandlerRegistration addTimeHandler(TimeEvent.TimeHandler handler) {
 		return addHandler(handler, TimeEvent.getType());

@@ -86,6 +86,7 @@ public class PasswordFieldBuilder extends ValueBaseFieldBuilder {
 		return super.getMaxLength();
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		return super.getLocatorByElement(element);

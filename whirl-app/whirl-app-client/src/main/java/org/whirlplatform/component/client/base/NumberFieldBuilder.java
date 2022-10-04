@@ -31,7 +31,7 @@ import java.util.Map;
 @JsType(name = "NumberField", namespace = "Whirl")
 public class NumberFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Double>, Parameter<DataValue> {
 
-	public NumberField<Double> field;
+	private NumberField<Double> field;
 	// private MaxLengthValidator maxLengthValidator;
 	// private MinLengthValidator minLengthValidator;
 
@@ -280,6 +280,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 		private static String TYPE_INPUT = "Input";
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		Locator result = super.getLocatorByElement(element);
@@ -350,17 +351,6 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void clear() {super.clear();
-	}
-
-	/**
-	 * Checks if is in valid state.
-	 *
-	 * @return true, if is in valid state
-	 */
-	@JsIgnore
-	@Override
-	public boolean isValid() {
-		return super.isValid();
 	}
 
 	/**

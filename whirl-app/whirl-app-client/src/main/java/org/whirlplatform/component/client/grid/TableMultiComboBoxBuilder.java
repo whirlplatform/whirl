@@ -1,29 +1,24 @@
 package org.whirlplatform.component.client.grid;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.combo.MultiComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.i18n.AppMessage;
+
 
 import java.util.Map;
 
-@JsType(name = "TableMultiComboBox", namespace = "Whirl")
+
 class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelData>> {
 
     private FieldMetadata tableField;
 
-    @JsConstructor
-    public TableMultiComboBoxBuilder(FieldMetadata tableField,@JsOptional Map<String, DataValue> builderProperties) {
+
+    public TableMultiComboBoxBuilder(FieldMetadata tableField, Map<String, DataValue> builderProperties) {
         super(builderProperties);
         this.tableField = tableField;
     }
@@ -200,9 +195,4 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
         super.setRequired(required);
     }
 
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
 }

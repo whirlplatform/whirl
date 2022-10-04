@@ -136,6 +136,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      *
      * @return Component
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();

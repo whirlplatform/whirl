@@ -304,6 +304,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         private static String TYPE_TRIGGER = "Trigger";
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator result = super.getLocatorByElement(element);
@@ -404,17 +405,6 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
-    }
-
-    /**
-     * Checks if is in valid state.
-     *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
     }
 
     /**

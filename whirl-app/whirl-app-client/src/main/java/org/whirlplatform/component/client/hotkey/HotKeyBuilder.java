@@ -8,10 +8,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.KeyPressEvent;
 import org.whirlplatform.component.client.event.KeyPressEvent.HasKeyPressHandlers;
@@ -24,7 +20,6 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
-@JsType(name = "HotKey", namespace = "Whirl")
 public class HotKeyBuilder extends ComponentBuilder implements
 		HasKeyPressHandlers {
 
@@ -38,12 +33,10 @@ public class HotKeyBuilder extends ComponentBuilder implements
 
 	private FlowLayoutContainer container;
 
-	@JsConstructor
-	public HotKeyBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+	public HotKeyBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	@JsIgnore
 	public HotKeyBuilder() {
 		this(Collections.emptyMap());
 	}
@@ -82,7 +75,6 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		return component;
 	}
 
-	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Alt.getCode())) {
@@ -117,7 +109,6 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		return (C) container;
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.HotKeyType;
@@ -128,7 +119,6 @@ public class HotKeyBuilder extends ComponentBuilder implements
 		container.add(image);
 	}
 
-	@JsIgnore
 	@Override
 	public HandlerRegistration addKeyPressHandler(KeyPressHandler handler) {
 		return ensureHandler().addHandler(KeyPressEvent.getType(), handler);

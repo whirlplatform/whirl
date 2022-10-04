@@ -122,6 +122,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return adapter;
 	}
 
+	@JsIgnore
 	@Override
 	public Component create() {
 		Component comp = super.create();
@@ -294,18 +295,6 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	public void markInvalid(String msg) {
 		super.markInvalid(msg);
 	}
-
-	/**
-	 * Checks if is in valid state.
-	 *
-	 * @return true, if is in valid state
-	 */
-	@JsIgnore
-	@Override
-	public boolean isValid() {
-		return super.isValid();
-	}
-
 
 	/**
 	 * Checks if is required.

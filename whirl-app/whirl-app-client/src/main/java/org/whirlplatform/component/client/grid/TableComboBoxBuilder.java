@@ -2,10 +2,6 @@ package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
-import net.sourceforge.htmlunit.corejs.javascript.annotations.JSConstructor;
 import org.whirlplatform.component.client.combo.ComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -15,13 +11,11 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 
 import java.util.Map;
 
-@JsType(name = "TableComboBox", namespace = "Whirl")
 class TableComboBoxBuilder extends ComboBoxBuilder<ComboBox<ListModelData>> {
 
     private FieldMetadata tableField;
 
-    @JSConstructor
-    public TableComboBoxBuilder(FieldMetadata tableField, @JsOptional Map<String, DataValue> builderProperties) {
+    public TableComboBoxBuilder(FieldMetadata tableField, Map<String, DataValue> builderProperties) {
         super(builderProperties);
         this.tableField = tableField;
     }
@@ -130,21 +124,9 @@ class TableComboBoxBuilder extends ComboBoxBuilder<ComboBox<ListModelData>> {
      *
      * @return true, if is in valid state
      */
-    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
-    }
-
-    /**
-     * Check if field is valid.
-     *
-     * @param invalidate true to invalidate field
-     * @return true if field is valid
-     */
-    @Override
-    public boolean isValid(boolean invalidate) {
-        return super.isValid(invalidate);
     }
 
     /**

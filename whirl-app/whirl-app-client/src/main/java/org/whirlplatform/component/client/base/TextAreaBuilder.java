@@ -225,17 +225,6 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Checks if is in valid state.
-     *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
-
-    /**
      * Check if field is valid.
      *
      * @param invalidate true to invalidate field

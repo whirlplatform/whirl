@@ -96,6 +96,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return comboBox;
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component c = super.create();
@@ -526,12 +527,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
-    }
-
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
     }
 
     @Override

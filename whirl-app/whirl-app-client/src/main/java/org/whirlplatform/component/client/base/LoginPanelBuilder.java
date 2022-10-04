@@ -41,7 +41,6 @@ import java.util.Map;
  * Компонент Форма логина. Берет контейнер с формой из ClientLoginUtil.
  *
  */
-@JsType(name = "LoginPanel", namespace = "Whirl")
 public class LoginPanelBuilder extends ComponentBuilder {
 
 	private HTML html;
@@ -87,12 +86,10 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		}
 	}
 
-	@JsConstructor
-	public LoginPanelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+	public LoginPanelBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	@JsIgnore
 	public LoginPanelBuilder() {
 		this(Collections.emptyMap());
 	}
@@ -117,7 +114,6 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		// так что нужно будет пересоздавать этот элемент в редакторе форм.
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.LoginPanelType;
@@ -211,7 +207,6 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		return locatorByElement(element);
 	}
 
-	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		return elementByLocator(locator);

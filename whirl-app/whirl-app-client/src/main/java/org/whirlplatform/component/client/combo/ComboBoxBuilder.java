@@ -245,6 +245,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return super.setProperty(name, value);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -731,17 +732,6 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
         super.clear();
-    }
-
-    /**
-     * Checks if is in valid state.
-     *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
     }
 
     /**

@@ -137,6 +137,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     /**
      * Создание и загрузка списка CheckGroup
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();

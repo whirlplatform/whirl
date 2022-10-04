@@ -23,23 +23,19 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
-@JsType(name = "FramedLogin", namespace = "Whirl")
 public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 
 	private HtmlLayoutContainer htmlLayout;
 	private FramedPanel loginPanel;
 
-	@JsConstructor
-	public FramedLoginPanelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+	public FramedLoginPanelBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	@JsIgnore
 	public FramedLoginPanelBuilder() {
 		this(Collections.emptyMap());
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FramedLoginPanelType;

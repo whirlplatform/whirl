@@ -97,6 +97,7 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
 		return super.getMaxLength();
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		return super.getLocatorByElement(element);

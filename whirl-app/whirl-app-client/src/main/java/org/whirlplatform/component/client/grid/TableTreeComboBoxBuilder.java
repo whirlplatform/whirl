@@ -1,27 +1,22 @@
 package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
-import jsinterop.annotations.JsConstructor;
-import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.combo.TreeComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 import java.util.Map;
 
-@JsType(name = "TableTreeComboBox", namespace = "Whirl")
+
 class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
 
     private FieldMetadata tableField;
 
-    @JsConstructor
-    public TableTreeComboBoxBuilder(FieldMetadata tableField, @JsOptional Map<String, DataValue> builderProperties) {
+
+    public TableTreeComboBoxBuilder(FieldMetadata tableField, Map<String, DataValue> builderProperties) {
         super(builderProperties);
         this.tableField = tableField;
     }

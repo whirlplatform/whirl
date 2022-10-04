@@ -459,6 +459,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Создание и загрузка редактируемого грида
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
