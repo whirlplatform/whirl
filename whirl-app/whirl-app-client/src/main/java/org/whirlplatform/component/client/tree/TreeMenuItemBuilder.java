@@ -3,6 +3,10 @@ package org.whirlplatform.component.client.tree;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.component.client.event.ClickEvent;
@@ -11,9 +15,11 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@JsType(name = "TreeMenuItem", namespace = "Whirl")
 public class TreeMenuItemBuilder extends ComponentBuilder implements
         ClickEvent.HasClickHandlers, Containable {
 
@@ -30,12 +36,14 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
 
     private List<ComponentBuilder> children;
 
-    public TreeMenuItemBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeMenuItemBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeMenuItemBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     @Override
@@ -53,6 +61,7 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         children = new ArrayList<ComponentBuilder>();
     }
 
+    @JsIgnore
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.ImageUrl.getCode())) {
             if (value != null) {
@@ -105,11 +114,13 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         return children.size();
     }
 
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.HorizontalMenuItemType;
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
         return addHandler(handler, ClickEvent.getType());
@@ -133,5 +144,51 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         // }
         // }
         // }, com.google.gwt.event.dom.client.ClickEvent.getType());
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 }

@@ -25,7 +25,12 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ext.TreeComboBox;
+import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.tree.CheckStyleHelper;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
@@ -46,11 +51,9 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@JsType(name = "TreeComboBox", namespace = "Whirl")
 public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     protected TreeLoader<ListModelData> loader;
@@ -62,12 +65,14 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     private String stateColumn;
     private TreeStore<ListModelData> store;
 
-    public TreeComboBoxBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeComboBoxBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeComboBoxBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     @Override
@@ -91,6 +96,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return comboBox;
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component c = super.create();
@@ -164,6 +170,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     }
 
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode())) {
@@ -323,6 +330,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return comboBox;
     }
 
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         RowListValue list = new RowListValueImpl();
@@ -334,6 +342,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return list;
     }
 
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         List<ListModelData> selection = new ArrayList<ListModelData>();
@@ -378,6 +387,167 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             }
         }
     }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public boolean isEditable() {
+        return super.isEditable();
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        super.setEditable(editable);
+    }
+
+    @Override
+    public boolean isSaveState() {
+        return super.isSaveState();
+    }
+
+    @Override
+    public void setSaveState(boolean save) {
+        super.setSaveState(save);
+    }
+
+    public void setRestoreState(boolean restore) {
+        super.setRestoreState(restore);
+    }
+
+    @Override
+    public StateScope getStateScope() {
+        return super.getStateScope();
+    }
+
+    @Override
+    public void setStateScope(StateScope scope) {
+        super.setStateScope(scope);
+    }
+
+    @Override
+    public void saveState() {
+        super.saveState();
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Sets the invalid status for the field with given text.
+     *
+     * @param msg message
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Clears the invalid status for the field.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        super.setReadOnly(readOnly);
+    }
+
+    @Override
+    public void setValue(ListModelData value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ListModelData getValue() {
+        throw new UnsupportedOperationException();
+    }
+
+    public String getText() {
+        return comboBox.getText();
+    }
+
 
     private class ListKeyProvider implements ModelKeyProvider<ListModelData> {
 

@@ -4,6 +4,7 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeUri;
@@ -28,6 +29,10 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
@@ -35,26 +40,24 @@ import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.EventManager;
 import org.whirlplatform.component.client.event.SelectEvent;
 import org.whirlplatform.component.client.ext.XTree;
+import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.InfoHelper;
+import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.data.RowModelDataImpl;
+import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
+import org.whirlplatform.storage.client.StorageHelper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
+@JsType(name = "TreeMenu", namespace = "Whirl")
 public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickHandlers, Containable {
 
     // TODO переписать, выкинуть наследование от TreeBuilder
@@ -66,14 +69,17 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     private Map<ComponentBuilder, RowModelData> builderMap;
     private IconProvider<RowModelData> iconProvider;
 
-    public TreeMenuBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeMenuBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeMenuBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     public ComponentType getType() {
         return ComponentType.TreeMenuType;
     }
@@ -102,6 +108,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return super.init(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         boolean result = super.setProperty(name, value);
@@ -153,11 +160,13 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return children.size();
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
         return addHandler(handler, ClickEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         registration = addHandler(handler, SelectEvent.getType());
@@ -402,5 +411,120 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
 
     public Tree<RowModelData, String> getTree() {
         return tree;
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+    }
+
+    @Override
+    public boolean isValid(boolean invalidate) {
+        return super.isValid(invalidate);
+    }
+
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    @Override
+    public TreeStore<RowModelData> getStore() {
+        return super.getStore();
+    }
+
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    public void load() {
+        super.load();
+    }
+
+    @Override
+    public boolean isSaveState() {
+        return super.isSaveState();
+    }
+
+    @Override
+    public void setSaveState(boolean save) {
+        super.setSaveState(save);
+    }
+
+    @Override
+    public StateScope getStateScope() {
+        return super.getStateScope();
+    }
+
+    @Override
+    public void setStateScope(StateScope scope) {
+        super.setStateScope(scope);
+    }
+
+    @Override
+    public void saveState() {
+        super.saveState();
+    }
+
+    @Override
+    public void clearLabelFilter() {
+        super.clearLabelFilter();
     }
 }

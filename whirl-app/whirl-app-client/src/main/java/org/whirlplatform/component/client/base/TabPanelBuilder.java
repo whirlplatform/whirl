@@ -10,6 +10,8 @@ import com.sencha.gxt.widget.core.client.TabPanel.TabPanelMessages;
 import com.sencha.gxt.widget.core.client.container.ResizeContainer;
 import com.sencha.gxt.widget.core.client.event.CloseEvent;
 import com.sencha.gxt.widget.core.client.event.CloseEvent.CloseHandler;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.CloseProvider;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
@@ -21,15 +23,13 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 /**
  * Панель вкладок
  */
+@JsType(namespace = "Whirl", name = "TabPane")
 public class TabPanelBuilder extends ComponentBuilder implements Containable {
 
 	private TabPanel panel;
@@ -42,10 +42,12 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public TabPanelBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.TabPanelType;
@@ -227,6 +229,64 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
 	@Override
 	public int getChildrenCount() {
 		return children.size();
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 
 }

@@ -7,6 +7,10 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.messages.client.DefaultMessages;
 import com.sencha.gxt.widget.core.client.Component;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.event.LoadEvent;
 import org.whirlplatform.component.client.event.RefreshEvent;
@@ -26,6 +30,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
 import java.util.*;
 import java.util.Map.Entry;
 
+@JsType(name = "Form", namespace = "Whirl")
 public class FormBuilder extends ComponentBuilder implements Containable,
         HasCreateParameters, LoadEvent.HasLoadHandlers, RefreshEvent.HasRefreshHandlers {
 
@@ -39,15 +44,17 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 
 	private AsyncCallback<FormModel> refreshCallback;
 
-	public FormBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public FormBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public FormBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 	
-	
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FormBuilderType;
@@ -89,6 +96,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 		return container;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Grid.getCode())) {
@@ -120,7 +128,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 		}
 		return allParams;
 	}
-
+	@JsIgnore
 	@Override
 	public Component create(List<DataValue> parameters) {
 		Component component = super.create();
@@ -137,6 +145,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
         load(defaultParameters(Collections.emptyList()));
 	}
 
+	@JsIgnore
 	public void load(final List<DataValue> parameters) {
 		container.mask(DefaultMessages.getMessages().loadMask_msg());
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -152,6 +161,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
         refresh(defaultParameters(Collections.emptyList()));
 	}
 
+	@JsIgnore
 	public void refresh(final List<DataValue> parameters) {
 		Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
 			@Override
@@ -404,13 +414,61 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 		super.setParentBuilder(parentBuilder);
 	}
 
+	@JsIgnore
 	@Override
     public HandlerRegistration addLoadHandler(LoadEvent.LoadHandler handler) {
 		return addHandler(handler, LoadEvent.getType());
 	}
 
+	@JsIgnore
 	@Override
     public HandlerRegistration addRefreshHandler(RefreshEvent.RefreshHandler handler) {
 		return addHandler(handler, RefreshEvent.getType());
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	public void focus() {
+		if (componentInstance == null) {
+			return;
+		}
+		componentInstance.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

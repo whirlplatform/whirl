@@ -5,13 +5,19 @@ import com.google.gwt.dom.client.FrameElement;
 import com.google.gwt.user.client.ui.Frame;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "Frame", namespace = "Whirl")
 public class FrameBuilder extends ComponentBuilder {
 
 	private Frame frame;
@@ -20,15 +26,17 @@ public class FrameBuilder extends ComponentBuilder {
 
 	private String template;
 
-	public FrameBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public FrameBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public FrameBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 	
-	
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FrameType;
@@ -41,6 +49,7 @@ public class FrameBuilder extends ComponentBuilder {
 		return wrapper;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Template.getCode())) {
@@ -69,6 +78,64 @@ public class FrameBuilder extends ComponentBuilder {
 	@Override
 	protected <C> C getRealComponent() {
 		return (C) frame;
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 
 }

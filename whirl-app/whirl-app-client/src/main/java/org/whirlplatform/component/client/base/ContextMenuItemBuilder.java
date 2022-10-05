@@ -9,24 +9,33 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "ContextMenuItem", namespace = "Whirl")
 public class ContextMenuItemBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers {
 
+	@JsIgnore
 	public ContextMenuItemBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
-	public ContextMenuItemBuilder(Map<String, DataValue> params) {
+	@JsConstructor
+	public ContextMenuItemBuilder(@JsOptional Map<String, DataValue> params) {
 		super(params);
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.ContextMenuItemType;
@@ -48,6 +57,7 @@ public class ContextMenuItemBuilder extends ComponentBuilder implements ClickEve
 		});
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Title.getCode())) {
@@ -88,8 +98,67 @@ public class ContextMenuItemBuilder extends ComponentBuilder implements ClickEve
 		return (C) componentInstance;
 	}
 
+	@JsIgnore
 	@Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
 		return ensureHandler().addHandler(ClickEvent.getType(), handler);
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }
