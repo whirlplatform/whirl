@@ -45,6 +45,16 @@ public class ClassLoadConfig implements Serializable {
 
     private FieldMetadata tableField;
 
+    private String labelColumn;
+
+    public String getLabelColumn() {
+        return this.labelColumn;
+    }
+
+    public void setLabelColumn(String newLabelColumn) {
+        this.labelColumn = newLabelColumn;
+    }
+
     public ClassLoadConfig() {
     }
 

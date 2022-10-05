@@ -475,7 +475,7 @@
                 <context.db.metadata.driverClass>org.postgresql.Driver</context.db.metadata.driverClass>
 
                 <!-- JDBC connection URL -->
-                <context.db.metadata.connectionURL>jdbc:postgresql://localhost:5433/whirl
+                <context.db.metadata.connectionURL>jdbc:postgresql://localhost:5432/whirl
                 </context.db.metadata.connectionURL>
 
                 <!-- Database username -->
