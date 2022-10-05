@@ -8,6 +8,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.DoubleClickEvent;
@@ -16,12 +20,14 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Текстовая строка вывода, надпись
  *
  */
+@JsType(name = "Label", namespace = "Whirl")
 public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
 	private String bgColor;
@@ -30,17 +36,20 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 	private Label field;
 	private WidgetComponent wrapper;
 
-	public LabelBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public LabelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public LabelBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	/**
 	 * Получить тип текста
 	 */
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.LabelType;
@@ -120,6 +129,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 	 *            - String, значение атрибута
 	 * @return boolean
 	 */
+	@JsIgnore
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
 			if (value != null && !Util.isEmptyString(value.getString())) {
@@ -206,6 +216,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 	 *            - DoubleClickHandler
 	 * @return HandlerRegistration
 	 */
+	@JsIgnore
 	@Override
     public HandlerRegistration addDoubleClickHandler(DoubleClickEvent.DoubleClickHandler handler) {
 		return addHandler(handler, DoubleClickEvent.getType());
@@ -218,6 +229,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 	 *            - ClickHandler
 	 * @return HandlerRegistration
 	 */
+	@JsIgnore
 	@Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
 		field.addStyleName("xs-link-text");
@@ -230,6 +242,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 		private static String TYPE_TEXT = "Text";
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		Locator result = super.getLocatorByElement(element);
@@ -241,6 +254,7 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 		return result;
 	}
 
+	@JsIgnore
 	@Override
 	public Element getElementByLocator(Locator locator) {
 		if (!super.fitsLocator(locator)) {
@@ -254,5 +268,63 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
 			}
 		}
 		return element;
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

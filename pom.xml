@@ -571,11 +571,17 @@
                         <artifactId>jelastic-maven-plugin</artifactId>
                         <version>1.9</version>
                         <configuration>
+                            <!--suppress UnresolvedMavenProperty -->
                             <api_hoster>${jelastic.hoster_api}</api_hoster>
+                            <!--suppress UnresolvedMavenProperty -->
                             <email>${jelastic.login}</email>
+                            <!--suppress UnresolvedMavenProperty -->
                             <password>${jelastic.password}</password>
+                            <!--suppress UnresolvedMavenProperty -->
                             <environment>${jelastic.environment}</environment>
+                            <!--suppress UnresolvedMavenProperty -->
                             <context>${jelastic.context}</context>
+                            <!--suppress UnresolvedMavenProperty -->
                             <comment>${jelastic.comment}</comment>
                         </configuration>
                     </plugin>

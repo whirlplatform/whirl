@@ -13,6 +13,7 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeHandlers {
@@ -22,12 +23,12 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 
 	private SimpleContainer container;
 
-	public TimerBuilder(Map<String, DataValue> builderProperties) {
+	public TimerBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
 	public TimerBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	@Override
@@ -94,5 +95,63 @@ public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeH
 	public void setIcon(ImageResource icon) {
 		Image image = new Image(icon);
 		container.add(image);
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

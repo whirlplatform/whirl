@@ -6,6 +6,10 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.validator.MaxLengthValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MinLengthValidator;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
 import org.whirlplatform.component.client.ext.XTextArea;
@@ -17,27 +21,32 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Текстовая область ввода
  */
+@JsType(namespace = "Whirl", name = "TextArea")
 public class TextAreaBuilder extends AbstractFieldBuilder implements
         NativeParameter<String>, Parameter<DataValue> {
 
     private XTextArea field;
 
-    public TextAreaBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TextAreaBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TextAreaBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип текстовой области
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.TextAreaType;
@@ -133,6 +142,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
      *
      * @return DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.STRING);
@@ -146,6 +156,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
      *
      * @param value - DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (DataType.STRING.equals(value.getType())) {
@@ -153,7 +164,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
         }
     }
 
-
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator)) {
@@ -164,6 +175,94 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
             }
         }
         return super.getElementByLocator(locator);
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    @Override
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    @Override
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Sets the invalid status for the field with given text.
+     *
+     * @param msg message
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Clears the invalid status for the field.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Clears the field value.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public void clear() {
+        super.clear();
+    }
+
+    /**
+     * Check if field is valid.
+     *
+     * @param invalidate true to invalidate field
+     * @return true if field is valid
+     */
+    @Override
+    public boolean isValid(boolean invalidate) {
+        return super.isValid(invalidate);
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    /**
+     * Sets the read only.
+     *
+     * @param readOnly true, if the field is read only
+     */
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        super.setReadOnly(readOnly);
     }
 
 }

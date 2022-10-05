@@ -4,16 +4,22 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.container.AbstractHtmlLayoutContainer.HtmlData;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
 import com.sencha.gxt.widget.core.client.container.HtmlLayoutContainer;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
+import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -22,12 +28,12 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	private HtmlLayoutContainer htmlLayout;
 	private FramedPanel loginPanel;
 
-	public FramedLoginPanelBuilder(Map<String, DataValue> builderProperties) {
+	public FramedLoginPanelBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
 	public FramedLoginPanelBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	@Override
@@ -95,4 +101,68 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		return SafeHtmlUtils.fromTrustedString(html.toString());
 	}
 
-}
+	@Override
+	public Locator getLocatorByElement(Element element) {
+		return super.getLocatorByElement(element);
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+	}
+
+
+	}

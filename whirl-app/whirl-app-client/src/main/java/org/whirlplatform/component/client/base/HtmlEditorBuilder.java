@@ -5,6 +5,10 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Parameter;
@@ -15,11 +19,13 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  *
  */
+@JsType(name = "HtmlEditor", namespace = "Whirl")
 public class HtmlEditorBuilder extends ComponentBuilder
 		implements NativeParameter<String>, Parameter<DataValue>, Clearable {
 
@@ -27,14 +33,17 @@ public class HtmlEditorBuilder extends ComponentBuilder
 	private SimpleContainer container;
 	private String plugins;
 
-	public HtmlEditorBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public HtmlEditorBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public HtmlEditorBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.HtmlEditorType;
@@ -97,6 +106,7 @@ public class HtmlEditorBuilder extends ComponentBuilder
 		setEditorData(editor, "");
 	}
 
+	@JsIgnore
 	@Override
 	public DataValue getFieldValue() {
 		DataValue result = new DataValueImpl(DataType.STRING);
@@ -105,10 +115,69 @@ public class HtmlEditorBuilder extends ComponentBuilder
 		return result;
 	}
 
+	@JsIgnore
 	@Override
 	public void setFieldValue(DataValue value) {
 		if (value != null && value.isTypeOf(DataType.STRING)) {
 			setValue(value.getString());
 		}
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

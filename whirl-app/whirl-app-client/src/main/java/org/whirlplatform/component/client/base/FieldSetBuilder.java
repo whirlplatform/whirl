@@ -9,24 +9,34 @@ import com.sencha.gxt.widget.core.client.event.CollapseEvent.CollapseHandler;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent.ExpandHandler;
 import com.sencha.gxt.widget.core.client.form.FieldSet;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
+import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
+@JsType(name = "FieldSet", namespace = "Whirl")
 public class FieldSetBuilder extends SimpleContainerBuilder implements
 		Containable {
 
-	public FieldSetBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public FieldSetBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public FieldSetBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FieldSetType;
@@ -70,6 +80,7 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
 		return container;
 	}
 
+	@JsIgnore
 	@Override
 	public boolean setProperty(String name, DataValue value) {
 		if (name.equalsIgnoreCase(PropertyType.Title.getCode())) {
@@ -98,6 +109,94 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
 	
 	public boolean isExpanded() {
 		return ((FieldSet)container).isExpanded();
+	}
+
+	@Override
+	public void addChild(ComponentBuilder child) {
+	super.addChild(child);
+	}
+
+	@Override
+	public void removeChild(ComponentBuilder child) {
+	super.removeChild(child);
+	}
+
+	@Override
+	public void clearContainer() {
+	super.clearContainer();
+	}
+
+	@Override
+	public void forceLayout() {
+		super.forceLayout();
+	}
+
+	@Override
+	public ComponentBuilder[] getChildren() {
+		return super.getChildren();
+	}
+
+	@Override
+	public int getChildrenCount() {
+		return super.getChildrenCount();
+	}
+
+	/**
+	 * Returns component's code.
+	 *
+	 * @return component's code
+	 */
+	@Override
+	public String getCode() {
+		return super.getCode();
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	@Override
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	@Override
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	@Override
+	public void focus() {
+		super.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 
 }

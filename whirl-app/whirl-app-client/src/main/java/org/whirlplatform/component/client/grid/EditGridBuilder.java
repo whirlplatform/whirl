@@ -48,6 +48,10 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
@@ -116,6 +120,7 @@ import java.util.Set;
 /**
  * Редактируемый грид
  */
+@JsType(name = "EditGrid", namespace = "Whirl")
 public class EditGridBuilder extends ComponentBuilder implements Clearable, Validatable, TitleProvider,
         ListParameter<RowListValue>, org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers, org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers, InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
         DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState, RowDoubleClickEvent.HasRowDoubleClickHandlers {
@@ -196,17 +201,20 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     // private boolean refreshHeader = true;
     private HandlerRegistration headerRefreshRegistration;
 
-    public EditGridBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public EditGridBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public EditGridBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип редактируемого грида
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.EditGridType;
@@ -285,6 +293,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DataSource.getCode())) {
@@ -450,6 +459,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Создание и загрузка редактируемого грида
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -623,6 +633,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Загрузка грида
      */
+    @JsIgnore
     public void load() {
         load(reloadMetadata);
     }
@@ -632,6 +643,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      *
      * @param parameters - List< DataValue >
      */
+    @JsIgnore
     public void load(List<DataValue> parameters) {
         load(reloadMetadata, parameters);
     }
@@ -641,7 +653,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      *
      * @param reconfigure - boolean
      */
-    public void load(boolean reconfigure) {
+    public void load(@JsOptional Boolean reconfigure) {
         load(reconfigure, Collections.emptyList());
     }
 
@@ -651,6 +663,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param reconfigure - boolean
      * @param parameters  - List< DataValue >
      */
+    @JsIgnore
     public void load(boolean reconfigure, final List<DataValue> parameters) {
         loading = true;
         if (showLoadMask) {
@@ -1126,6 +1139,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Проверка на валидность грида
      */
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
@@ -1187,6 +1201,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      *
      * @return RowListValue
      */
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         RowListValue result = new RowListValueImpl();
@@ -1215,6 +1230,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      *
      * @param value - RowListValue
      */
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         if (value == null) {
@@ -1258,6 +1274,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Инициализация обработчика выбора в гриде
      */
+    @JsIgnore
     private void initSelectHandler() {
         grid.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
             @Override
@@ -1383,6 +1400,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - LoadHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addLoadHandler(org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
         return addHandler(handler, org.whirlplatform.component.client.event.LoadEvent.getType());
@@ -1394,6 +1412,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - SelectHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(
             org.whirlplatform.component.client.event.SelectEvent.SelectHandler handler) {
@@ -1406,6 +1425,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - InsertHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addInsertHandler(InsertEvent.InsertHandler handler) {
         return addHandler(handler, InsertEvent.getType());
@@ -1417,6 +1437,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - UpdateHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addUpdateHandler(UpdateEvent.UpdateHandler handler) {
         return addHandler(handler, UpdateEvent.getType());
@@ -1428,11 +1449,13 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - DeleteHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addDeleteHandler(DeleteEvent.DeleteHandler handler) {
         return addHandler(handler, DeleteEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addRowDoubleClickHandler(RowDoubleClickEvent.RowDoubleClickHandler handler) {
         return addHandler(handler, RowDoubleClickEvent.getType());
@@ -1598,6 +1621,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * return cell.getFirstChildElement() != null ? cell.getFirstChildElement()
      * : cell; } } return null; }
      */
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!fitsLocator(locator) || !locator.typeEquals(getType().getType())) {
@@ -1648,6 +1672,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         return grid.getColumnModel().getColumn(colInd).getPath();
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator locator = super.getLocatorByElement(element);
@@ -1799,4 +1824,49 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         }
     }
 
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 }

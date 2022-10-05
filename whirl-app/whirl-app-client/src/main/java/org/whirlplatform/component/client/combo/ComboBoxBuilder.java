@@ -20,11 +20,26 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+<<<<<<< HEAD
 import org.whirlplatform.component.client.*;
+=======
+import com.sencha.gxt.widget.core.client.form.Field;
+import com.sencha.gxt.widget.core.client.form.ValueBaseField;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
+import org.whirlplatform.component.client.AbstractFieldBuilder;
+import org.whirlplatform.component.client.Editable;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.ParameterHelper;
+>>>>>>> 3ab405b7dbc115e3b484423d089f437f96894c3d
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
+import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;
@@ -41,9 +56,11 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@JsType(name = "ComboBox", namespace = "Whirl")
 public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder implements Editable,
         NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
@@ -68,14 +85,17 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     // private boolean required = false;
     private boolean editable;
 
-    public ComboBoxBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public ComboBoxBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public ComboBoxBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.ComboBoxType;
@@ -104,6 +124,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return comboBox;
     }
 
+    @JsIgnore
     protected void initParamHelper() {
         paramHelper = new ParameterHelper();
     }
@@ -119,6 +140,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         };
     }
 
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
@@ -218,6 +240,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return super.setProperty(name, value);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -420,6 +443,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return comboBox;
     }
 
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.LIST);
@@ -428,6 +452,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return result;
     }
 
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (value != null && DataType.LIST.equals(value.getType())) {
@@ -506,11 +531,13 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         }
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         return ensureHandler().addHandler(SelectEvent.getType(), handler);
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addChangeHandler(ChangeEvent.ChangeHandler handler) {
         return ensureHandler().addHandler(ChangeEvent.getType(), handler);
@@ -522,6 +549,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return super.getLocatorByElement(element);
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator part = null;
@@ -561,6 +589,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return locator;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         Element element = null;
@@ -609,6 +638,125 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
         }
         return element;
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Sets the invalid status for the field with given text.
+     *
+     * @param msg message
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Clears the invalid status for the field.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Clears the field value.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void clear() {
+        super.clear();
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    /**
+     * Sets the read only.
+     *
+     * @param readOnly true, if the field is read only
+     */
+    public void setReadOnly(boolean readOnly) {
+        super.setReadOnly(readOnly);
     }
 
     private static class LocatorParams {
