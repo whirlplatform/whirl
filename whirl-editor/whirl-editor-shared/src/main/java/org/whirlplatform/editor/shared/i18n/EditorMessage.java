@@ -10,6 +10,8 @@ public interface EditorMessage extends Messages {
         public static EditorMessage MESSAGE = GWT.create(EditorMessage.class);
     }
 
+    String select_icon();
+
     String login_submit();
 
     String login_fill_login_password();
