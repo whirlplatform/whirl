@@ -76,7 +76,7 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         add(new SeparatorToolItem());
         add(new ToolbarJsDocButton(getPresenter()));
 
-        add(new ToolBarShowIconsButton());
+        add(new ToolBarShowIconsButton(getPresenter()));
 
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
