@@ -20,26 +20,15 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-<<<<<<< HEAD
-import org.whirlplatform.component.client.*;
-=======
-import com.sencha.gxt.widget.core.client.form.Field;
-import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.AbstractFieldBuilder;
-import org.whirlplatform.component.client.Editable;
-import org.whirlplatform.component.client.HasState;
-import org.whirlplatform.component.client.Parameter;
-import org.whirlplatform.component.client.ParameterHelper;
->>>>>>> 3ab405b7dbc115e3b484423d089f437f96894c3d
+import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
-import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;

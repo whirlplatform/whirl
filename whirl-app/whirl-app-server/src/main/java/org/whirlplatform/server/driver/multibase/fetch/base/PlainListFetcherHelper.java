@@ -1,8 +1,8 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.commons.StringUtils;
-import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.expr.column.DBValueExpr;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
@@ -15,7 +15,7 @@ import org.whirlplatform.server.utils.TypesUtil;
 
 public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
-    public DBColumn listColumn;
+    public DBValueExpr listColumn;
 
     public PlainListFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
@@ -25,7 +25,9 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.listColumn = this.dbTable.addColumn(config.getLabelColumn(), DataType.CHAR, 255, false);
+        // Previous example which worked with a single column
+        //this.listColumn = this.dbTable.addColumn("", DataType.CHAR, 255, false);
+        this.listColumn = this.dbDatabase.getValueExpr(config.getLabelColumn());
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {

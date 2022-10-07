@@ -70,7 +70,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher implements ListF
 
     protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig, PlainListFetcherHelper temp) {
         DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr valueColumn = temp.listColumn.coalesce("Пустое значение").as(temp.listColumn);
+        DBColumnExpr valueColumn = temp.listColumn.coalesce("Пустое значение").as("asd");
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
