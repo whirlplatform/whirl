@@ -35,6 +35,7 @@ public class AppShowIconsView extends Window {
         choose.add(con);
         choose.show();
 
+
     }
 
 

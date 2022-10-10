@@ -18,6 +18,8 @@ import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
+import java.util.List;
+
 /**
  * Основная панель инструментов
  */
@@ -125,5 +127,19 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
     public void runApplication() {
         ApplicationStoreData data = new ApplicationStoreData(currentApplication, currentVersion);
         HRefUtil.openNewApplicationTab(data);
+    }
+
+    public void getIcons() {
+        EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+
+            @Override
+            public void onSuccess(List<String> result) {
+
+            }
+        });
     }
 }

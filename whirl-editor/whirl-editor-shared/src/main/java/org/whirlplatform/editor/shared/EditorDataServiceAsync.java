@@ -61,4 +61,6 @@ public interface EditorDataServiceAsync {
 
     void deleteTemplate(BaseTemplate template, AsyncCallback<Void> callback);
 
+    void getIcons(AsyncCallback<List<String>> callback);
+
 }
