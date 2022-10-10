@@ -212,6 +212,7 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
 		private static String TYPE_INPUT = "Input";
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		Locator result = super.getLocatorByElement(element);
