@@ -9,6 +9,8 @@ import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 public class AppShowIconsView extends Window {
 
     private Dialog choose;
+    protected static final int MIN_HEIGHT = 200;
+    protected static final int MIN_WIDTH = 200;
 
     public AppShowIconsView() {
         BorderLayoutContainer.BorderLayoutData centerData = new BorderLayoutContainer.BorderLayoutData();
@@ -21,6 +23,8 @@ public class AppShowIconsView extends Window {
         choose = new Dialog();
         choose.setPixelSize(640, 480);
         choose.setResizable(false);
+        choose.setMinHeight(MIN_HEIGHT);
+        choose.setMinWidth(MIN_WIDTH);
 //        choose.setId("img-chooser-dlg");
         choose.setHeading("Chooser icon");
         choose.setModal(true);
