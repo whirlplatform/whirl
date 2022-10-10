@@ -216,7 +216,7 @@ public class ComponentProperties {
             put(ComponentType.RadioGroupType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.DataSource);
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.WhereSql);
                     add(PropertyType.Orientation);
                     add(PropertyType.StringValue);
@@ -226,7 +226,7 @@ public class ComponentProperties {
             put(ComponentType.CheckGroupType.getType(), new HashSet<PropertyType>() {
                 {
                     add(PropertyType.DataSource);
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.CheckColumn);
                     add(PropertyType.StringValue);
                     add(PropertyType.WhereSql);
@@ -239,7 +239,7 @@ public class ComponentProperties {
             put(ComponentType.HtmlEditorType.getType(), new HashSet<PropertyType>());
             put(ComponentType.ComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.HideTrigger);
                     add(PropertyType.StringValue);
                     add(PropertyType.DisplayValue);
@@ -261,7 +261,7 @@ public class ComponentProperties {
             });
             put(ComponentType.MultiComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.HideTrigger);
                     add(PropertyType.DataSource);
                     add(PropertyType.Editable);
@@ -284,7 +284,7 @@ public class ComponentProperties {
             });
             put(ComponentType.TreeComboBoxType.getType(), new HashSet<PropertyType>() {
                 {
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.DataSource);
                     add(PropertyType.StringValue);
                     add(PropertyType.DisplayValue);
@@ -306,7 +306,7 @@ public class ComponentProperties {
             });
             put(ComponentType.TreePanelType.getType(), new HashSet<PropertyType>() {
                 {
-                    add(PropertyType.LabelColumn);
+                    add(PropertyType.LabelExpression);
                     add(PropertyType.SelectColumn);
                     add(PropertyType.DataSource);
                     add(PropertyType.IsLeafColumn);

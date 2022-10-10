@@ -101,7 +101,9 @@ public enum PropertyType implements Serializable {
     MinLength("MinLength", DataType.NUMBER, false),
     NumberMinValue("MinValue", DataType.NUMBER, false, false, Arrays.asList(ComponentType.NumberFieldType)),
     DateMinValue("MinValue", DataType.DATE, false, false, Arrays.asList(ComponentType.DateFieldType)),
-    Code("Code", DataType.STRING, false, true), LabelColumn("LabelExpression", DataType.STRING, false, true),
+    Code("Code", DataType.STRING, false, true),
+
+    LabelExpression("LabelExpression", DataType.STRING, false, true),
     ParentColumn("ParentColumn", DataType.STRING, false, true),
     Period("Period", DataType.NUMBER, false),
     ReadOnly("ReadOnly", DataType.BOOLEAN, false),

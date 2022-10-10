@@ -132,7 +132,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
+        if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
             labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.HideTrigger.getCode())) {
