@@ -69,7 +69,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected boolean loadAll;
     protected boolean useSearchParameters;
     protected boolean reloadMetadata;
-    protected String labelColumn;
+    protected String labelExpression;
     private ClassMetadata metadata;
     // private boolean required = false;
     private boolean editable;
@@ -133,7 +133,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
-            labelColumn = value.getString();
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.HideTrigger.getCode())) {
             if (value != null && value.getBoolean() != null) {
@@ -370,7 +370,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         config.setAll(loadAll);
         config.setUseSearchParameters(useSearchParameters);
         config.setReloadMetadata(reloadMetadata);
-        config.setLabelColumn(labelColumn);
+        config.setLabelColumn(labelExpression);
 
         return config;
     }
