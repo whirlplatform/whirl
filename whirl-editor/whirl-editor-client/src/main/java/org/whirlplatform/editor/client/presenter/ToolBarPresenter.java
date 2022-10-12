@@ -138,6 +138,8 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
 
             @Override
             public void onSuccess(List<String> result) {
+                System.out.println(result.toString());
+                System.out.println("Result OK");
 
             }
         });
