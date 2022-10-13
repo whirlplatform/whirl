@@ -276,26 +276,6 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
         super.setHeight(value);
     }
 
-    /**
-     * Получение информации о закрываемости компонента
-     *
-     * @return boolean
-     */
-    @Override
-    public boolean isClosable() {
-        return super.isClosable();
-    }
-
-    /**
-     * Установка свойства закрываемости компонента
-     *
-     * @param closable - boolean
-     */
-    @Override
-    public void setClosable(boolean closable) {
-        super.setClosable(closable);
-    }
-
     public String getDomId() {
         return super.getDomId();
     }
