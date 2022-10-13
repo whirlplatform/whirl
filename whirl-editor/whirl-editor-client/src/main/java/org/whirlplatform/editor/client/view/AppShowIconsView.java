@@ -1,33 +1,30 @@
 package org.whirlplatform.editor.client.view;
 
-import com.google.gwt.aria.client.State;
-import com.google.gwt.core.client.GWT;
+
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Frame;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.data.shared.loader.ListLoader;
 import com.sencha.gxt.data.shared.loader.ListStoreBinding;
 import com.sencha.gxt.data.shared.loader.Loader;
-import com.sencha.gxt.theme.base.client.listview.ListViewCustomAppearance;
-import com.sencha.gxt.theme.base.client.listview.ListViewDefaultAppearance;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import org.whirlplatform.editor.shared.EditorDataService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AppShowIconsView extends Window {
+
+  private final static Logger logger = Logger.getLogger(AppShowIconsView.class.getName());
     protected static final int MIN_HEIGHT = 200;
     protected static final int MIN_WIDTH = 200;
 
@@ -96,8 +93,8 @@ public class AppShowIconsView extends Window {
 
             @Override
             public void onSuccess(List<String> result) {
-                System.out.println(result.toString());
-                System.out.println("Result OK");
+               logger.info(result.toString());
+               logger.info("Result OK");
 
             }
         });
