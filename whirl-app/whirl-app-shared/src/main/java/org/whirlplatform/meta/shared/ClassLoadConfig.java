@@ -51,7 +51,7 @@ public class ClassLoadConfig implements Serializable {
         return this.labelExpression;
     }
 
-    public void setLabelColumn(String newLabelExpression) {
+    public void setLabelExpression(String newLabelExpression) {
         this.labelExpression = newLabelExpression;
     }
 

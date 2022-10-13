@@ -370,7 +370,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         config.setAll(loadAll);
         config.setUseSearchParameters(useSearchParameters);
         config.setReloadMetadata(reloadMetadata);
-        config.setLabelColumn(labelExpression);
+        config.setLabelExpression(labelExpression);
 
         return config;
     }
