@@ -521,6 +521,7 @@ public class TreeBuilder extends ComponentBuilder
         config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
+        config.setLabelExpression(labelColumn);
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());

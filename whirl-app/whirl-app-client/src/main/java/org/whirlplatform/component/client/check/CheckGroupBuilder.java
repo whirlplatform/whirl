@@ -249,6 +249,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             config.setParameters(paramHelper.getValues());
         }
         config.setWhereSql(whereSql);
+        config.setLabelExpression(nameColumn);
         return config;
     }
 

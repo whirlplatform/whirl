@@ -256,8 +256,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
         if (paramHelper != null) {
             config.setParameters(paramHelper.getValues());
         }
-
         config.setWhereSql(whereSql);
+        config.setLabelExpression(column);
         return config;
     }
 
