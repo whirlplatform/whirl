@@ -4,7 +4,6 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeUri;
@@ -42,17 +41,17 @@ import org.whirlplatform.component.client.event.SelectEvent;
 import org.whirlplatform.component.client.ext.XTree;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.InfoHelper;
-import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
-import org.whirlplatform.meta.shared.i18n.AppMessage;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.RowModelDataImpl;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
-import org.whirlplatform.storage.client.StorageHelper;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -371,7 +370,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         // if (nameExpression == null) {
         // nameExpression = "labelColumn";
         // }
-        model.set(labelColumn, cb.getTitle());
+        model.set(labelExpression, cb.getTitle());
         model.set("image", cb.getImage());
         model.set(PropertyType.LayoutDataIndex.getCode(), cb.getIndexPosition());
         return model;
