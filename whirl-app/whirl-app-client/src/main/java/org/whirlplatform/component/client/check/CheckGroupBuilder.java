@@ -47,12 +47,11 @@ import java.util.Map;
 public class CheckGroupBuilder extends ComponentBuilder implements
         ListParameter<RowListValue>, HasState {
 
-    private String nameColumn;
+    private String labelExpression;
     private String checkColumn;
     private String checkedIds;
     private HandlerRegistration checkedRegistration;
     private String whereSql;
-
     private ClassMetadata metadata;
     private StorageWrapper<RowListValue> stateStore;
     private StateStore<RowListValue> selectionStateStore;
@@ -98,7 +97,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
 
             @Override
             public String getLabel(RowModelData item) {
-                return item.get(nameColumn);
+                return item.get(labelExpression);
             }
 
         };
@@ -163,7 +162,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
-            nameColumn = value.getString();
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode())) {
             checkColumn = value.getString();
@@ -202,8 +201,8 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      * Инициализация списка CheckGroup
      */
     private void initStore() {
-        if (nameColumn != null) {
-            metadata.addField(new FieldMetadata(nameColumn, DataType.STRING,
+        if (labelExpression != null) {
+            metadata.addField(new FieldMetadata(labelExpression, DataType.STRING,
                     null));
         }
         if (checkColumn != null) {
@@ -249,7 +248,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             config.setParameters(paramHelper.getValues());
         }
         config.setWhereSql(whereSql);
-        config.setLabelExpression(nameColumn);
+        config.setLabelExpression(labelExpression);
         return config;
     }
 
