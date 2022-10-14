@@ -197,7 +197,8 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Проверяет готовность.
+	 * Проверяет готовность компонента к выполнению события.
+	 *
 	 * @return true, если готов
 	 */
 	@Override
@@ -293,6 +294,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 
 	/**
 	 * Получает имя файла.
+	 *
 	 * @return String - имя файла
 	 */
 	public String getFileName() {

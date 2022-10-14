@@ -339,7 +339,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     }
 
     /**
-     * Принудительное расположение
+     * Пересчитывает расположение компонентов в данном контейнере.
      */
     @Override
     public void forceLayout() {
@@ -377,11 +377,11 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     }
 
     /**
-     * Устанавливает интервал строк.
+     * Задает объединение по горизонтали указанной ячейки.
      *
-     * @param row     - int, строка
-     * @param column  - int, столбец
-     * @param rowSpan - int, интервал
+     * @param row     - int, номер строки
+     * @param column  - int, номер столбца
+     * @param rowSpan - int, количество объединяемых ячеек
      */
     public void setRowSpan(int row, int column, int rowSpan) {
         if (rowSpan < 1) {
@@ -410,7 +410,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     }
 
     /**
-     * Устанавливает интервал.
+     * Устанавливает объединение области.
      *
      * @param row     - int, строка
      * @param column  - int, столбец
@@ -494,7 +494,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     }
 
     /**
-     * Устанавливает отступы в ячейках
+     * Устанавливает отступы в ячейке.
      *
      * @param padding - int, отступ
      */
