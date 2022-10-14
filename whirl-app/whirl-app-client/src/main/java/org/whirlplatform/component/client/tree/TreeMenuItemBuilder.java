@@ -19,6 +19,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Элемент меню дерева
+ */
 @JsType(name = "TreeMenuItem", namespace = "Whirl")
 public class TreeMenuItemBuilder extends ComponentBuilder implements
         ClickEvent.HasClickHandlers, Containable {
@@ -53,6 +56,7 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         return menuItem;
     }
 
+    @JsIgnore
     public ComponentMenuItem getMenuItem() {
         return menuItem;
     }
@@ -93,12 +97,16 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         children.remove(child);
     }
 
+    @JsIgnore
     @Override
     public void clearContainer() {
         // TODO не правильно, надо удалять из children тоже
         // container.clear();
     }
 
+    /**
+     *
+     */
     @Override
     public void forceLayout() {
         // container.forceLayout();
@@ -147,25 +155,25 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -175,18 +183,18 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

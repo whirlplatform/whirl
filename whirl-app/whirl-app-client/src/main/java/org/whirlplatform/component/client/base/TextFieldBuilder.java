@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Text field.
+ * Текстовое поле.
  */
 @JsType(namespace = "Whirl", name = "TextField")
 public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativeParameter<String>, Parameter<DataValue> {
@@ -67,7 +67,7 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Установка зачения текстового поля
+     * Установка значения текстового поля
      *
      * @param value String
      */
@@ -77,9 +77,9 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Returns the field's required minimum length.
+     * Возвращает требуемую минимальную длину поля.
      *
-     * @return field's required minimum length
+     * @return требуемая минимальная длина поля
      */
     @Override
     public int getMinLength() {
@@ -87,9 +87,9 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Returns the field's maximum length.
+     * Возвращает максимальную длину поля.
      *
-     * @return field's maximum length
+     * @return максимальная длина возвращаемого поля
      */
     @Override
     public int getMaxLength() {
@@ -97,27 +97,27 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     public void setFieldMask(String mask) {
         super.setFieldMask(mask);
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус недействительности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
@@ -125,7 +125,7 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Очищает статус недействительности для поля.
      */
     @Override
     public void clearInvalid() {
@@ -133,7 +133,7 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
@@ -141,19 +141,19 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Check if field is valid.
+     * Проверяет, является ли поле валидным.
      *
-     * @param invalidate true to invalidate field
-     * @return true if field is valid
+     * @param invalidate true для не валидного поля
+     * @return true если поле доступно
      */
     public boolean isValid(boolean invalidate) {
         return super.isValid(invalidate);
     }
 
     /**
-     * Checks if is required.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -161,9 +161,9 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
@@ -171,18 +171,18 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     public void setReadOnly(boolean readOnly) {
         super.setReadOnly(readOnly);
     }
 
     /**
-     * Returns component's code.
+     * Возвращает код компонента.
      *
-     * @return component's code
+     * @return код компонента
      */
     @Override
     public String getCode() {
@@ -190,7 +190,7 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Установка кода компонента
+     * Устанавливает кода компонента
      */
     @JsIgnore
     @Override
@@ -199,34 +199,34 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Добавляет имя CSS
+     * Добавляет имя CSS стиля.
      *
-     * @param name - String
+     * @param name - String, имя CSS стиля
      */
     public void addStyleName(String name) {
         super.addStyleName(name);
     }
 
     /**
-     * Установка стиля компонета
+     * Устанавливает стиль компонента.
      *
      * @param styleName - String, название стиля
      */
@@ -235,51 +235,71 @@ public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativePar
     }
 
     /**
-     * Удаляет имя CSS стиля
+     * Удаляет имя CSS стиля.
      *
-     * @param name - String
+     * @param name - String, название стиля
      */
     public void removeStyleName(String name) {
         super.removeStyleName(name);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         super.focus();
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true, если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
+    /**
+     * Устанавливает ширину виджета.
+     *
+     * @param value - int, новая ширина для установки
+     */
     public void setWidth(int value) {
         super.setWidth(value);
     }
 
+    /**
+     * Устанавливает высоту виджета.
+     *
+     * @param value - int, новая высота для установки
+     */
     public void setHeight(int value) {
         super.setHeight(value);
     }
 
+    /**
+     * Возвращает идентификатор элемента HTML.
+     *
+     * @return идентификатор элемента
+     */
     public String getDomId() {
         return super.getDomId();
     }
 
+    /**
+     * Устанавливает идентификатор элемента HTML.
+     *
+     * @param domId - String, новый идентификатор компонента
+     */
     public void setDomId(String domId) {
         super.setDomId(domId);
     }

@@ -35,6 +35,9 @@ import org.whirlplatform.rpc.shared.SessionToken;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Поле загрузки
+ */
 @JsType(name = "UploadField", namespace = "Whirl")
 public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		Prepareable, NativeParameter<String>, Parameter<DataValue> {
@@ -64,8 +67,8 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	public UploadFieldBuilder() {
 		this(Collections.emptyMap());
 	}
-	
-	
+
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.UploadFieldType;
@@ -151,6 +154,11 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		form.submit();
 	}
 
+	/**
+	 * Получить значение текстового поля
+	 *
+	 * @return String
+	 */
 	@Override
 	public String getValue() {
 		return fileId + "&" + Boolean.valueOf(saveFilename);
@@ -170,11 +178,17 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		isValid(true);
 	}
 
+	/**
+	 * Установка значения текстового поля
+	 *
+	 * @param value String
+	 */
 	@Override
 	public void setValue(String value) {
 		// do nothing
 	}
 
+	@JsIgnore
 	@Override
 	public void prepair(Command complete) {
 		readyCommand = complete;
@@ -182,11 +196,18 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		submit();
 	}
 
+	/**
+	 * Проверяет готовность.
+	 * @return true, если готов
+	 */
 	@Override
 	public boolean isReady() {
 		return ready;
 	}
 
+	/**
+	 * Очищает значение поля.
+	 */
 	@Override
 	public void clear() {
 		upload.clear();
@@ -198,17 +219,31 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 		return (C) upload;
 	}
 
+	/**
+	 * Устанавливает значение только для чтения.
+	 *
+	 * @param readOnly true, если поле доступно только для чтения
+	 */
 	@Override
 	public void setReadOnly(boolean readOnly) {
 		upload.setReadOnly(readOnly);
 	}
 
+	/**
+	 * Очищает статус недействительности для поля.
+	 */
 	@Override
 	public void clearInvalid() {
 		upload.clearInvalid();
 		adapter.clearInvalid();
 	}
 
+	/**
+	 * Проверяет, является ли поле валидным.
+	 *
+	 * @param invalidate true для не валидного поля
+	 * @return true если поле доступно
+	 */
 	@Override
 	public boolean isValid(boolean invalidate) {
 		if (!upload.isValid(false)) {
@@ -255,11 +290,20 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 			}
 		});
 	}
-	
+
+	/**
+	 * Получает имя файла.
+	 * @return String - имя файла
+	 */
 	public String getFileName() {
 		return adapter.getValue();
 	}
-	
+
+	/**
+	 * Устанавливает включенное состояние компонента.
+	 *
+	 * @param enabled true - для включения компонента, false - для отключения компонента
+	 */
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
@@ -267,9 +311,9 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Gets the field mask.
+	 * Получает маску поля.
 	 *
-	 * @return the field mask
+	 * @return маска поля
 	 */
 	@Override
 	public String getFieldMask() {
@@ -277,9 +321,9 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Sets the field mask.
+	 * Устанавливает маску поля.
 	 *
-	 * @param mask the new field mask
+	 * @param mask новая маска поля
 	 */
 	@Override
 	public void setFieldMask(String mask) {
@@ -287,9 +331,9 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Sets the invalid status for the field with given text.
+	 * Устанавливает статус недействительности для поля с заданным текстом.
 	 *
-	 * @param msg message
+	 * @param msg сообщение
 	 */
 	@Override
 	public void markInvalid(String msg) {
@@ -297,9 +341,9 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Checks if is required.
+	 * Проверяет, обязательно ли поле для заполнения.
 	 *
-	 * @return true, if is required
+	 * @return true, если обязательно
 	 */
 	@Override
 	public boolean isRequired() {
@@ -307,9 +351,9 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
 	}
 
 	/**
-	 * Sets the required to fill.
+	 * Устанавливает обязательность для заполнения поля.
 	 *
-	 * @param required true, if the field is required to be filled
+	 * @param required true, если поле обязательно для заполнения
 	 */
 	@Override
 	public void setRequired(boolean required) {

@@ -57,6 +57,9 @@ import org.whirlplatform.storage.client.StorageHelper;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * Древовидное меню
+ */
 @JsType(name = "TreeMenu", namespace = "Whirl")
 public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickHandlers, Containable {
 
@@ -121,6 +124,9 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return result;
     }
 
+    /**
+     * @param child
+     */
     @Override
     public void addChild(ComponentBuilder child) {
         if (child instanceof HorizontalMenuItemBuilder) {
@@ -134,17 +140,22 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         }
     }
 
+    /**
+     * @param child
+     */
     @Override
     public void removeChild(ComponentBuilder child) {
         builderMap.remove(child);
         children.remove(child);
     }
 
+    @JsIgnore
     @Override
     public void clearContainer() {
         // TODO Auto-generated method stub
     }
 
+    @JsIgnore
     @Override
     public void forceLayout() {
         // TODO Auto-generated method stub
@@ -404,35 +415,40 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         }
     }
 
+    /**
+     *
+     */
+    @JsIgnore //todo смотреть что это
     public void showLocal() {
         loadLocalData();
         tree.unmask();
     }
 
+    @JsIgnore
     public Tree<RowModelData, String> getTree() {
         return tree;
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -442,87 +458,139 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
+    @Override
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
+    @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
+    /**
+     * Очищает значение поля.
+     */
     @Override
     public void clear() {
         super.clear();
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         return super.isValid(invalidate);
     }
 
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
     @Override
     public boolean isRequired() {
         return super.isRequired();
     }
 
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
     }
 
+    @JsIgnore
     @Override
     public TreeStore<RowModelData> getStore() {
         return super.getStore();
     }
 
+    /**
+     * Устанавливает статус не валидности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
     @Override
     public void markInvalid(String msg) {
         super.markInvalid(msg);
     }
 
+    /**
+     * Очищает статус не валидности для поля.
+     */
     @Override
     public void clearInvalid() {
         super.clearInvalid();
     }
 
+    /**
+     * Загружает данные, используя текущую конфигурацию
+     */
     public void load() {
         super.load();
     }
 
+    /**
+     * Проверяет необходимость сохранения состояния дерева в БД.
+     *
+     * @return true, если состояние нужно сохранить
+     */
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return super.isSaveState();
     }
 
+    /**
+     * Устанавливает, необходимо ли сохранять состояние дерева в БД.
+     *
+     * @param save true, если состояние нужно сохранить
+     */
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         super.setSaveState(save);
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return super.getStateScope();
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         super.setStateScope(scope);
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         super.saveState();
     }
 
+    /**
+     * Очищает фильтр лейбла
+     */
+    @JsIgnore //todo посмотреть что это
     @Override
     public void clearLabelFilter() {
         super.clearLabelFilter();

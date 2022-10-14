@@ -10,10 +10,7 @@ import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.container.AbstractHtmlLayoutContainer.HtmlData;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
 import com.sencha.gxt.widget.core.client.container.HtmlLayoutContainer;
-import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -36,6 +33,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		this(Collections.emptyMap());
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FramedLoginPanelType;
@@ -101,15 +99,16 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		return SafeHtmlUtils.fromTrustedString(html.toString());
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		return super.getLocatorByElement(element);
 	}
 
 	/**
-	 * Returns component's code.
+	 * Возвращает код компонента.
 	 *
-	 * @return component's code
+	 * @return код компонента
 	 */
 	@Override
 	public String getCode() {
@@ -117,9 +116,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	}
 
 	/**
-	 * Checks if component is in hidden state.
+	 * Проверяет, находится ли компонент в скрытом состоянии.
 	 *
-	 * @return true if component is hidden
+	 * @return true если компонент скрыт
 	 */
 	@Override
 	public boolean isHidden() {
@@ -127,9 +126,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	}
 
 	/**
-	 * Sets component's hidden state.
+	 * Устанавливает скрытое состояние компонента.
 	 *
-	 * @param hidden true - to hide component, false - to show component
+	 * @param hidden true - для скрытия компонента, false - для отображения компонента
 	 */
 	@Override
 	public void setHidden(boolean hidden) {
@@ -137,7 +136,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	}
 
 	/**
-	 * Focuses component.
+	 * Фокусирует компонент.
 	 */
 	@Override
 	public void focus() {
@@ -145,9 +144,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	}
 
 	/**
-	 * Checks if component is enabled.
+	 * Проверяет, включен ли компонент.
 	 *
-	 * @return true if component is enabled
+	 * @return true если компонент включен
 	 */
 	@Override
 	public boolean isEnabled() {
@@ -155,9 +154,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 	}
 
 	/**
-	 * Sets component's enabled state.
+	 * Устанавливает включенное состояние компонента.
 	 *
-	 * @param enabled true - to enable component, false - to disable component
+	 * @param enabled true - для включения компонента, false - для отключения компонента
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {
