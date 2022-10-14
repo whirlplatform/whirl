@@ -40,7 +40,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     private CheckBox checkBox;
 
     @JsConstructor
-    public CheckBoxBuilder(@JsOptional  Map<String, DataValue> builderProperties) {
+    public CheckBoxBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
@@ -150,7 +150,6 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      * @param invalidate true to invalidate field
      * @return true if field is valid
      */
-    @JsIgnore
     @Override
     public boolean isValid(boolean invalidate) {
         if (!super.isValid(invalidate)) {
@@ -189,6 +188,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      *
      * @return true, if is in valid state
      */
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
@@ -287,4 +287,99 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
         }
         return null;
     }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Gets the field mask.
+     *
+     * @return the field mask
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Sets the field mask.
+     *
+     * @param mask the new field mask
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Clears the field value.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void clear() {
+        super.clear();
+    }
+
+    /**
+     * Checks if is required.
+     *
+     * @return true, if is required
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Sets the required to fill.
+     *
+     * @param required true, if the field is required to be filled
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+
+
 }

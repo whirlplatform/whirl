@@ -18,10 +18,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
-import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
-import jsinterop.annotations.JsOptional;
-import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.utils.InfoHelper;
@@ -39,9 +36,7 @@ import java.util.Map;
 
 /**
  * Компонент Форма логина. Берет контейнер с формой из ClientLoginUtil.
- *
  */
-@JsType(name = "LoginPanel", namespace = "Whirl")
 public class LoginPanelBuilder extends ComponentBuilder {
 
 	private HTML html;
@@ -87,12 +82,10 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		}
 	}
 
-	@JsConstructor
-	public LoginPanelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+	public LoginPanelBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
-	@JsIgnore
 	public LoginPanelBuilder() {
 		this(Collections.emptyMap());
 	}
@@ -117,7 +110,6 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		// так что нужно будет пересоздавать этот элемент в редакторе форм.
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.LoginPanelType;
@@ -136,6 +128,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		wrapper = new WidgetComponent(html);
 		return wrapper;
 	}
+
 
 	public static void login() {
 		login(loginField.getValue(), passwordField.getValue());
@@ -181,10 +174,12 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		DataServiceAsync.Util.getDataService(callback).login(SessionToken.get(), login, password);
 	}
 
+	@JsIgnore
 	public static void setBuildApplicationCommand(ScheduledCommand command) {
 		buildApplicationCommand = command;
 	}
 
+	@JsIgnore
 	public static void setLoginSuccessCommand(ScheduledCommand command) {
 		loginSuccessCommand = command;
 	}
@@ -206,6 +201,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 
 	}
 
+	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		return locatorByElement(element);
@@ -217,6 +213,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		return elementByLocator(locator);
 	}
 
+	@JsIgnore
 	public static Locator locatorByElement(Element element) {
 		if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
 			return null;
@@ -235,6 +232,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		return null;
 	}
 
+	@JsIgnore
 	public static Element elementByLocator(Locator locator) {
 		if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
 			return null;
@@ -255,9 +253,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Returns component's code.
+	 * Возвращает код компонента.
 	 *
-	 * @return component's code
+	 * @return код компонента
 	 */
 	@Override
 	public String getCode() {
@@ -265,9 +263,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Checks if component is in hidden state.
+	 * Проверяет, находится ли компонент в скрытом состоянии.
 	 *
-	 * @return true if component is hidden
+	 * @return true если компонент скрыт
 	 */
 	@Override
 	public boolean isHidden() {
@@ -275,9 +273,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Sets component's hidden state.
+	 * Устанавливает скрытое состояние компонента.
 	 *
-	 * @param hidden true - to hide component, false - to show component
+	 * @param hidden true - для скрытия компонента, false - для отображения компонента
 	 */
 	@Override
 	public void setHidden(boolean hidden) {
@@ -285,7 +283,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Focuses component.
+	 * Фокусирует компонент.
 	 */
 	@Override
 	public void focus() {
@@ -293,9 +291,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Checks if component is enabled.
+	 * Проверяет, включен ли компонент.
 	 *
-	 * @return true if component is enabled
+	 * @return true если компонент включен
 	 */
 	@Override
 	public boolean isEnabled() {
@@ -303,9 +301,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Sets component's enabled state.
+	 * Устанавливает включенное состояние компонента.
 	 *
-	 * @param enabled true - to enable component, false - to disable component
+	 * @param enabled true - для включения компонента, false - для отключения компонента
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {

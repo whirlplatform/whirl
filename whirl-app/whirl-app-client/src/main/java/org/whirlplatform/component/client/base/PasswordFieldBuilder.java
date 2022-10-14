@@ -15,80 +15,80 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Password field.
+ * Поле пароля.
  */
 @JsType(namespace = "Whirl", name = "PasswordField")
 public class PasswordFieldBuilder extends ValueBaseFieldBuilder {
 
-	@JsIgnore
-	public PasswordFieldBuilder() {
-		this(Collections.emptyMap());
-	}
+    @JsIgnore
+    public PasswordFieldBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	@JsConstructor
-	public PasswordFieldBuilder(@JsOptional  Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    @JsConstructor
+    public PasswordFieldBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-	@JsIgnore
-	@Override
-	public ComponentType getType() {
-		return ComponentType.PasswordFieldType;
-	}
+    @JsIgnore
+    @Override
+    public ComponentType getType() {
+        return ComponentType.PasswordFieldType;
+    }
 
-	@Override
-	protected Component init(Map<String, DataValue> builderProperties) {
-		super.init(builderProperties);
+    @Override
+    protected Component init(Map<String, DataValue> builderProperties) {
+        super.init(builderProperties);
 
-		field = new PasswordField();
-		field.setSelectOnFocus(true);
-		return field;
-	}
+        field = new PasswordField();
+        field.setSelectOnFocus(true);
+        return field;
+    }
 
-	/**
-	 * Получить значение текстового поля
-	 *
-	 * @return String
-	 */
-	@Override
-	public String getValue() {
-		return super.getValue();
-	}
+    /**
+     * Получает значение текстового поля
+     *
+     * @return String
+     */
+    @Override
+    public String getValue() {
+        return super.getValue();
+    }
 
-	/**
-	 * Установка зачения текстового поля
-	 *
-	 * @param value
-	 *            String
-	 */
-	@Override
-	public void setValue(String value) {
-		super.setValue(value);
-	}
+    /**
+     * Устанавливает значения текстового поля
+     *
+     * @param value String
+     */
+    @Override
+    public void setValue(String value) {
+        super.setValue(value);
+    }
 
-	/**
-	 * Returns the field's required minimum length.
-	 *
-	 * @return field's required minimum length
-	 */
-	@Override
-	public int getMinLength() {
-		return super.getMinLength();
-	}
+    /**
+     * Возвращает требуемую минимальную длину поля.
+     *
+     * @return требуемая минимальная длина поля
+     */
+    @Override
+    public int getMinLength() {
+        return super.getMinLength();
+    }
 
-	/**
-	 * Returns the field's maximum length.
-	 *
-	 * @return field's maximum length
-	 */
-	@Override
-	public int getMaxLength() {
-		return super.getMaxLength();
-	}
+    /**
+     * Возвращает максимальную длину поля.
+     *
+     * @return максимальная длина поля
+     */
+    @Override
+    public int getMaxLength() {
+        return super.getMaxLength();
+    }
 
-	@Override
-	public Locator getLocatorByElement(Element element) {
-		return super.getLocatorByElement(element);
-	}
+    @JsIgnore
+    @Override
+    public Locator getLocatorByElement(Element element) {
+        return super.getLocatorByElement(element);
+    }
 
 }

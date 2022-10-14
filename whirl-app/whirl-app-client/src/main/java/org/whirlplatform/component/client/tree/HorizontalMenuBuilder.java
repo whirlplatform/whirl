@@ -5,6 +5,10 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuBar;
 import com.sencha.gxt.widget.core.client.menu.MenuBarItem;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.component.client.base.InsertContainerBuilder;
@@ -12,23 +16,23 @@ import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@JsType(name = "HorizontalMenu", namespace = "Whirl")
 public class HorizontalMenuBuilder extends InsertContainerBuilder implements Containable {
 
 	private MenuBar menuBar;
 	private Map<Menu, MenuBarItem> map = new HashMap<Menu, MenuBarItem>();
 	private List<ComponentBuilder> children;
 
-	public HorizontalMenuBuilder(Map<String, DataValue> builderProperties) {
+	@JsConstructor
+	public HorizontalMenuBuilder(@JsOptional Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
+	@JsIgnore
 	public HorizontalMenuBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	@Override
@@ -61,6 +65,7 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
 		return menuBar;
 	}
 
+	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.HorizontalMenuType;
@@ -129,6 +134,52 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
 	@Override
 	protected MenuBar getRealComponent() {
 		return menuBar;
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	public void focus() {
+		if (componentInstance == null) {
+			return;
+		}
+		componentInstance.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 
 }

@@ -8,6 +8,10 @@ import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent.StoreDataChangeHandler;
 import com.sencha.gxt.widget.core.client.Component;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
 import org.whirlplatform.component.client.ListParameter;
@@ -33,11 +37,13 @@ import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
  * Чек-бокс группа
  */
+@JsType(name = "CheckGroup", namespace = "Whirl")
 public class CheckGroupBuilder extends ComponentBuilder implements
         ListParameter<RowListValue>, HasState {
 
@@ -54,12 +60,14 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     private boolean restoreState;
     private ParameterHelper paramHelper;
 
-    public CheckGroupBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public CheckGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public CheckGroupBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     private LabelProvider<RowModelData> labelProvider;
@@ -72,6 +80,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     /**
      * Получить тип CheckGroup
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.CheckGroupType;
@@ -82,6 +91,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      *
      * @return Component, CheckGroup
      */
+    @JsIgnore
     @Override
     protected Component init(Map<String, DataValue> builderProperties) {
         labelProvider = new LabelProvider<RowModelData>() {
@@ -127,6 +137,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     /**
      * Создание и загрузка списка CheckGroup
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -143,6 +154,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DataSource.getCode())) {
@@ -256,6 +268,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      *
      * @return RowListValue
      */
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         RowListValue result = new RowListValueImpl();
@@ -281,6 +294,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      *
      * @param value - RowListValue
      */
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         for (RowValue row : value.getRowList()) {
@@ -358,6 +372,52 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             RowListValue v = getSelectionStore().restore(getId() + "/select");
             setFieldValue(v);
         }
+    }
+
+    /**
+     * Checks if component is in hidden state.
+     *
+     * @return true if component is hidden
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Sets component's hidden state.
+     *
+     * @param hidden true - to hide component, false - to show component
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Focuses component.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Checks if component is enabled.
+     *
+     * @return true if component is enabled
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Sets component's enabled state.
+     *
+     * @param enabled true - to enable component, false - to disable component
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 
 }

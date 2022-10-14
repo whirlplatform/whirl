@@ -48,6 +48,10 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
@@ -116,6 +120,7 @@ import java.util.Set;
 /**
  * Редактируемый грид
  */
+@JsType(name = "EditGrid", namespace = "Whirl")
 public class EditGridBuilder extends ComponentBuilder implements Clearable, Validatable, TitleProvider,
         ListParameter<RowListValue>, org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers, org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers, InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
         DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState, RowDoubleClickEvent.HasRowDoubleClickHandlers {
@@ -196,17 +201,20 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     // private boolean refreshHeader = true;
     private HandlerRegistration headerRefreshRegistration;
 
-    public EditGridBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public EditGridBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public EditGridBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип редактируемого грида
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.EditGridType;
@@ -285,6 +293,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DataSource.getCode())) {
@@ -450,6 +459,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Создание и загрузка редактируемого грида
      */
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -513,6 +523,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param config   - TableConfig
      * @param skipLoad - boolean
      */
+    @JsIgnore
     public void reconfigure(TableConfig config, boolean skipLoad) {
         this.metadata = config.getMetadata();
 
@@ -621,36 +632,39 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Загрузка грида
+     * Загрузка грида.
      */
+    @JsIgnore
     public void load() {
         load(reloadMetadata);
     }
 
     /**
-     * Загрузка грида с параметрами
+     * Загрузка грида с параметрами.
      *
      * @param parameters - List< DataValue >
      */
+    @JsIgnore
     public void load(List<DataValue> parameters) {
         load(reloadMetadata, parameters);
     }
 
     /**
-     * Загрузка грида
+     * Загрузка грида.
      *
      * @param reconfigure - boolean
      */
-    public void load(boolean reconfigure) {
+    public void load(@JsOptional Boolean reconfigure) {
         load(reconfigure, Collections.emptyList());
     }
 
     /**
-     * Загрузка грида с параметрами
+     * Загрузка грида с параметрами.
      *
      * @param reconfigure - boolean
      * @param parameters  - List< DataValue >
      */
+    @JsIgnore
     public void load(boolean reconfigure, final List<DataValue> parameters) {
         loading = true;
         if (showLoadMask) {
@@ -669,10 +683,11 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получить загруженную конфигурацию грида
+     * Получить загруженную конфигурацию грида.
      *
      * @return
      */
+    @JsIgnore
     public ClassLoadConfig getLoadConfig(List<DataValue> parameters) {
         ClassLoadConfig loadConfig = new ClassLoadConfig();
         loadConfig.setAll(loadAll);
@@ -696,7 +711,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация панели инструментов грида
+     * Инициализация панели инструментов грида.
      *
      * @param metadata - ClassMetadata
      */
@@ -865,7 +880,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Отобразить конфигурацию грида
+     * Отобразить конфигурацию грида.
      *
      * @param confirmText - String
      * @param handler     - SelectHandler
@@ -882,7 +897,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация фильтра грида
+     * Инициализация фильтра грида.
      *
      */
     private void initFilter(ClassMetadata meta) {
@@ -929,7 +944,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация панели сортировки в гриде
+     * Инициализация панели сортировки в гриде.
      *
      */
     private void initSortPanel(ClassMetadata meta) {
@@ -962,7 +977,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Открыть фильтр грида
+     * Открыть фильтр грида.
      */
     private void openFilter() {
         filterPanel.show();
@@ -1027,7 +1042,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Спрятать окно редактирования грида
+     * Спрятать окно редактирования грида.
      *
      * @param window - Window
      */
@@ -1041,7 +1056,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Вставить запись в грид
+     * Вставить запись в грид.
      *
      * @param window - Window
      * @param model  - RowModelData
@@ -1062,7 +1077,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Обновить запись в гриде
+     * Обновить запись в гриде.
      *
      * @param window - Window
      * @param model  - RowModelData
@@ -1083,7 +1098,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Удалить запись из грида
+     * Удалить запись из грида.
      *
      */
     // private void deleteRecord(RowModelData model) {
@@ -1094,7 +1109,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация разбивки на страницы в гриде
+     * Инициализация разбивки на страницы в гриде.
      */
     private void initPaginator() {
         if (!showPagingToolbar) {
@@ -1124,15 +1139,16 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Проверка на валидность грида
+     * Проверка на валидность грида.
      */
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
     }
 
     /**
-     * Проверка на валидность грида
+     * Проверка на валидность грида.
      *
      * @param invalidate - boolean
      */
@@ -1155,7 +1171,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получить информацию о свойстве "Обязателен для заполнения" у грида
+     * Получить информацию о свойстве "Обязателен для заполнения" у грида.
      *
      * @return boolean
      */
@@ -1165,7 +1181,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Установка свойства "Обязателен для заполнения" для грида
+     * Установка свойства "Обязателен для заполнения" для грида.
      *
      * @param required - boolean
      */
@@ -1175,7 +1191,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Очистка выделения в гриде
+     * Очистка выделения в гриде.
      */
     @Override
     public void clear() {
@@ -1183,10 +1199,11 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получение записей из грида
+     * Получение записей из грида.
      *
      * @return RowListValue
      */
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         RowListValue result = new RowListValueImpl();
@@ -1211,10 +1228,11 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Установка записей в грид
+     * Установка записей в грид.
      *
      * @param value - RowListValue
      */
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         if (value == null) {
@@ -1231,33 +1249,46 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         grid.getSelectionModel().setSelection(models);
     }
 
+    /**
+     * Возвращает список всех элементов.
+     *
+     * @return List
+     */
     public List<RowModelData> getAllItems() {
         return store.getAll();
     }
 
+    /**
+     * Удаляет все элементы.
+     */
     public void clearItems() {
         store.clear();
     }
 
+    @JsIgnore
     public void removeItem(RowModelData model) {
         store.remove(model);
     }
 
+    @JsIgnore
     public void addItem(RowModelData model) {
         store.add(model);
     }
 
+    @JsIgnore
     public void insertItem(int index, RowModelData model) {
         store.add(index, model);
     }
 
+    @JsIgnore
     public RowModelData getItemById(String id) {
         return store.findModelWithKey(id);
     }
 
     /**
-     * Инициализация обработчика выбора в гриде
+     * Инициализация обработчика выбора в гриде.
      */
+    @JsIgnore
     private void initSelectHandler() {
         grid.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
             @Override
@@ -1280,7 +1311,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Очистка сообщения о не валидности в гриде
+     * Очистка сообщения о не валидности в гриде.
      */
     @Override
     public void clearInvalid() {
@@ -1303,21 +1334,25 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         paginator.setConfig(config, false);
     }
 
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
     }
 
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore == null || (stateStore != null && scope != stateStore.getScope())) {
@@ -1335,11 +1370,13 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         }
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         RowListValue v = getFieldValue();
@@ -1383,6 +1420,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - LoadHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addLoadHandler(org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
         return addHandler(handler, org.whirlplatform.component.client.event.LoadEvent.getType());
@@ -1394,6 +1432,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - SelectHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(
             org.whirlplatform.component.client.event.SelectEvent.SelectHandler handler) {
@@ -1406,6 +1445,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - InsertHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addInsertHandler(InsertEvent.InsertHandler handler) {
         return addHandler(handler, InsertEvent.getType());
@@ -1417,6 +1457,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - UpdateHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addUpdateHandler(UpdateEvent.UpdateHandler handler) {
         return addHandler(handler, UpdateEvent.getType());
@@ -1428,11 +1469,13 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param handler - DeleteHandler
      * @return HandlerRegistration
      */
+    @JsIgnore
     @Override
     public HandlerRegistration addDeleteHandler(DeleteEvent.DeleteHandler handler) {
         return addHandler(handler, DeleteEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addRowDoubleClickHandler(RowDoubleClickEvent.RowDoubleClickHandler handler) {
         return addHandler(handler, RowDoubleClickEvent.getType());
@@ -1446,6 +1489,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         filterStateStore.save(getId() + "/filter", new ArrayList<FilterValue>());
     }
 
+    @JsIgnore
     @Override
     public Widget getWrapper() {
         return wrapper;
@@ -1569,6 +1613,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
 
+    @JsIgnore
     public Element getCellByColumnName(RowModelData row, String columnName) {
         return grid.getView().getCell(store.indexOf(row),
                 grid.getColumnModel().indexOf(grid.getColumnModel().findColumnConfig(columnName)));
@@ -1598,6 +1643,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * return cell.getFirstChildElement() != null ? cell.getFirstChildElement()
      * : cell; } } return null; }
      */
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!fitsLocator(locator) || !locator.typeEquals(getType().getType())) {
@@ -1648,6 +1694,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         return grid.getColumnModel().getColumn(colInd).getPath();
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator locator = super.getLocatorByElement(element);
@@ -1799,4 +1846,49 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         }
     }
 
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Фокусирует компонент.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true, если компонент включен
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 }

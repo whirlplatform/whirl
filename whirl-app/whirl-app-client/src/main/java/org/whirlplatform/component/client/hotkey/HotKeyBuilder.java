@@ -17,6 +17,7 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class HotKeyBuilder extends ComponentBuilder implements
@@ -32,12 +33,12 @@ public class HotKeyBuilder extends ComponentBuilder implements
 
 	private FlowLayoutContainer container;
 
-	public HotKeyBuilder(Map<String, DataValue> builderProperties) {
+	public HotKeyBuilder( Map<String, DataValue> builderProperties) {
 		super(builderProperties);
 	}
 
 	public HotKeyBuilder() {
-		super();
+		this(Collections.emptyMap());
 	}
 
 	@Override
@@ -121,5 +122,51 @@ public class HotKeyBuilder extends ComponentBuilder implements
 	@Override
 	public HandlerRegistration addKeyPressHandler(KeyPressHandler handler) {
 		return ensureHandler().addHandler(KeyPressEvent.getType(), handler);
+	}
+
+	/**
+	 * Checks if component is in hidden state.
+	 *
+	 * @return true if component is hidden
+	 */
+	public boolean isHidden() {
+		return super.isHidden();
+	}
+
+	/**
+	 * Sets component's hidden state.
+	 *
+	 * @param hidden true - to hide component, false - to show component
+	 */
+	public void setHidden(boolean hidden) {
+		super.setHidden(hidden);
+	}
+
+	/**
+	 * Focuses component.
+	 */
+	public void focus() {
+		if (componentInstance == null) {
+			return;
+		}
+		componentInstance.focus();
+	}
+
+	/**
+	 * Checks if component is enabled.
+	 *
+	 * @return true if component is enabled
+	 */
+	public boolean isEnabled() {
+		return super.isEnabled();
+	}
+
+	/**
+	 * Sets component's enabled state.
+	 *
+	 * @param enabled true - to enable component, false - to disable component
+	 */
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 	}
 }

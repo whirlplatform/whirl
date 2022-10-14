@@ -30,10 +30,15 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ListParameter;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.ext.CountElement;
 import org.whirlplatform.component.client.selenium.Locator;
+import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.CSVParser;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.LoadData;
@@ -49,12 +54,14 @@ import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+/**
+ * Список с мультивыбором
+ *
+ * @param <T>
+ */
+@JsType(name = "MultiComboBox", namespace = "Whirl")
 public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T> implements
         ListParameter<RowListValue> {
 
@@ -82,14 +89,17 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     private CheckBoxCell cell;
 
-    public MultiComboBoxBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public MultiComboBoxBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public MultiComboBoxBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.MultiComboBoxType;
@@ -113,11 +123,13 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         checkedModels = new CheckedModels();
         valueProvider = new ValueProvider<ListModelData, Boolean>() {
 
+            @JsIgnore
             @Override
             public Boolean getValue(ListModelData object) {
                 return modelCheck.get(object);
             }
 
+            @JsIgnore
             @Override
             public void setValue(ListModelData object, Boolean value) {
                 modelCheck.put(object, value);
@@ -209,6 +221,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         ce.setCount(0);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component c = super.create();
@@ -301,20 +314,30 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         });
     }
 
+    @JsIgnore
     @Override
     public void setValue(ListModelData value) {
         throw new UnsupportedOperationException();
     }
 
+    @JsIgnore
     @Override
     public ListModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Получает текст объекта.
+     *
+     * @return новый текст объекта
+     */
     public String getText() {
         return comboBox.getText();
     }
 
+    /**
+     * Очищает значение поля.
+     */
     @Override
     public void clear() {
         checkedModels.models.clear();
@@ -323,6 +346,12 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         ValueChangeEvent.fire(getRealComponent(), null);
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         if (isRequired() && checkedModels.models.size() == 0) {
@@ -337,6 +366,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         return true;
     }
 
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         RowListValue result = new RowListValueImpl();
@@ -349,6 +379,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         return result;
     }
 
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         int size = checkedModels.models.size();
@@ -382,6 +413,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         }
     }
 
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
@@ -453,6 +485,11 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         }
     }
 
+    /**
+     * Устанавливает значение только для чтения.
+     *
+     * @param readOnly true, если поле доступно только для чтения
+     */
     @Override
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
@@ -471,6 +508,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     // TODO Selenium
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator part = null;
@@ -512,7 +550,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         return locator;
     }
 
-
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         Element element = null;
@@ -564,4 +602,162 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         }
         return element;
     }
+
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Фокусирует компонент.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true, если компонент включен
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Проверяет доступность для редактирования.
+     *
+     * @return true, если доступен для редактирования
+     */
+    @Override
+    public boolean isEditable() {
+        return super.isEditable();
+    }
+
+    /**
+     * Устанавливает доступность для редактирования.
+     *
+     * @param editable true, доступ для редактирования
+     */
+    @Override
+    public void setEditable(boolean editable) {
+        super.setEditable(editable);
+    }
+
+    @JsIgnore
+    @Override
+    public boolean isSaveState() {
+        return super.isSaveState();
+    }
+
+    @JsIgnore
+    @Override
+    public void setSaveState(boolean save) {
+        super.setSaveState(save);
+    }
+
+    @JsIgnore
+    public void setRestoreState(boolean restore) {
+        super.setRestoreState(restore);
+    }
+
+    @JsIgnore
+    @Override
+    public StateScope getStateScope() {
+        return super.getStateScope();
+    }
+
+    @JsIgnore
+    @Override
+    public void setStateScope(StateScope scope) {
+        super.setStateScope(scope);
+    }
+
+    @JsIgnore
+    @Override
+    public void saveState() {
+        super.saveState();
+    }
+
+    /**
+     * Получает маску поля.
+     *
+     * @return маска поля
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Устанавливает маску поля.
+     *
+     * @param mask новая маска поля
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Устанавливает статус недействительности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Очищает статус недействительности для поля.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
 }

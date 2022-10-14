@@ -172,17 +172,6 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if is in valid state.
-     *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
-
-    /**
      * Check if field is valid.
      *
      * @param invalidate true to invalidate field
@@ -223,6 +212,7 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
         super.setReadOnly(readOnly);
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         return super.getElementByLocator(locator);

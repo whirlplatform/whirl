@@ -25,305 +25,299 @@ import java.util.Map;
 
 /**
  * Текстовая строка вывода, надпись
- *
  */
 @JsType(name = "Label", namespace = "Whirl")
 public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
-	private String bgColor;
-	protected boolean hasEvent;
+    private String bgColor;
+    protected boolean hasEvent;
 
-	private Label field;
-	private WidgetComponent wrapper;
+    private Label field;
+    private WidgetComponent wrapper;
 
-	@JsConstructor
-	public LabelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    @JsConstructor
+    public LabelBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-	@JsIgnore
-	public LabelBuilder() {
-		this(Collections.emptyMap());
-	}
+    @JsIgnore
+    public LabelBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	/**
-	 * Получить тип текста
-	 */
-	@JsIgnore
-	@Override
-	public ComponentType getType() {
-		return ComponentType.LabelType;
-	}
+    /**
+     * Получить тип текста.
+     */
+    @JsIgnore
+    @Override
+    public ComponentType getType() {
+        return ComponentType.LabelType;
+    }
 
-	/**
-	 * Создание компонента - текст
-	 * 
-	 * @return Component, Созданный текст
-	 */
-	@Override
-	protected Component init(Map<String, DataValue> builderProperties) {
-		field = new Label();
-		wrapper = new WidgetComponent(field);
-		wrapper.getElement().applyStyles("fontSize: 12px");
+    /**
+     * Создание компонента - текст
+     *
+     * @return Component, Созданный текст
+     */
+    @Override
+    protected Component init(Map<String, DataValue> builderProperties) {
+        field = new Label();
+        wrapper = new WidgetComponent(field);
+        wrapper.getElement().applyStyles("fontSize: 12px");
 
-		// Иначе событие при клике в редакторе не обрабатывается
-		field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
-		field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
-		field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
-		field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
-		return wrapper;
-	}
+        // Иначе событие при клике в редакторе не обрабатывается
+        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
+        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
+        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
+        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
+        return wrapper;
+    }
 
-	/**
-	 * Инициализация обработчиков текста
-	 */
-	@Override
-	protected void initHandlers() {
-		super.initHandlers();
-		wrapper.addAttachHandler(new AttachEvent.Handler() {
-			@Override
-			public void onAttachOrDetach(AttachEvent e) {
-				if (e.isAttached()) {
-					updateBgColor((WidgetComponent) e.getSource());
-				}
-			}
-		});
-		field.addClickHandler(new com.google.gwt.event.dom.client.ClickHandler() {
+    /**
+     * Инициализация обработчиков текста
+     */
+    @Override
+    protected void initHandlers() {
+        super.initHandlers();
+        wrapper.addAttachHandler(new AttachEvent.Handler() {
+            @Override
+            public void onAttachOrDetach(AttachEvent e) {
+                if (e.isAttached()) {
+                    updateBgColor((WidgetComponent) e.getSource());
+                }
+            }
+        });
+        field.addClickHandler(new com.google.gwt.event.dom.client.ClickHandler() {
 
-			@Override
-			public void onClick(com.google.gwt.event.dom.client.ClickEvent event) {
-				if (isEnabled()) {
-					fireEvent(new ClickEvent());
-				}
-			}
-		});
-		field.addDoubleClickHandler(new com.google.gwt.event.dom.client.DoubleClickHandler() {
+            @Override
+            public void onClick(com.google.gwt.event.dom.client.ClickEvent event) {
+                if (isEnabled()) {
+                    fireEvent(new ClickEvent());
+                }
+            }
+        });
+        field.addDoubleClickHandler(new com.google.gwt.event.dom.client.DoubleClickHandler() {
 
-			@Override
-			public void onDoubleClick(com.google.gwt.event.dom.client.DoubleClickEvent event) {
-				if (isEnabled()) {
-					fireEvent(new DoubleClickEvent());
-				}
-			}
-		});
-	}
+            @Override
+            public void onDoubleClick(com.google.gwt.event.dom.client.DoubleClickEvent event) {
+                if (isEnabled()) {
+                    fireEvent(new DoubleClickEvent());
+                }
+            }
+        });
+    }
 
-	/**
-	 * Обновление фона под текстом
-	 * 
-	 * @param c
-	 *            - Component
-	 */
-	private void updateBgColor(Component c) {
-		if (c.getParent() != null)
-			if (bgColor != null)
-				c.getElement().getParentElement().getStyle().setBackgroundColor(bgColor);
-	}
+    /**
+     * Обновление фона под текстом
+     *
+     * @param c - Component
+     */
+    private void updateBgColor(Component c) {
+        if (c.getParent() != null)
+            if (bgColor != null)
+                c.getElement().getParentElement().getStyle().setBackgroundColor(bgColor);
+    }
 
-	/**
-	 * Установка атрибута для текста
-	 * 
-	 * @param name
-	 *            - String, название атрибута
-	 * @param value
-	 *            - String, значение атрибута
-	 * @return boolean
-	 */
-	@JsIgnore
-	public boolean setProperty(String name, DataValue value) {
-		if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				setHtml(value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.FontFamily.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				wrapper.getElement().applyStyles("fontFamily:" + value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.FontSize.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				wrapper.getElement().applyStyles("fontSize:" + value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.FontStyle.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				wrapper.getElement().applyStyles("fontStyle:" + value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.FontWeight.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				wrapper.getElement().applyStyles("fontWeight:" + value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.Color.getCode())) {
-			if (value != null && !Util.isEmptyString(value.getString())) {
-				wrapper.getElement().applyStyles("color:" + value.getString());
-			}
-			return true;
-		} else if (name.equalsIgnoreCase(PropertyType.BackgroundColor.getCode())) {
-			if (value != null) {
-				bgColor = value.getString();
-				updateBgColor(wrapper);
-				return true;
-			}
-		} else if (name.equalsIgnoreCase(PropertyType.TextDecoration.getCode())) {
-			if (value != null && value.getBoolean() != null) {
-				Boolean textDecor = value.getBoolean();
-				if (textDecor) {
-					wrapper.getElement().applyStyles("textDecoration:" + textDecor);
-				}
-			}
-			return true;
-		}
-		return super.setProperty(name, value);
-	}
+    /**
+     * Установка атрибута для текста
+     *
+     * @param name  - String, название атрибута
+     * @param value - String, значение атрибута
+     * @return boolean
+     */
+    @JsIgnore
+    public boolean setProperty(String name, DataValue value) {
+        if (name.equalsIgnoreCase(PropertyType.Html.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                setHtml(value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.FontFamily.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                wrapper.getElement().applyStyles("fontFamily:" + value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.FontSize.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                wrapper.getElement().applyStyles("fontSize:" + value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.FontStyle.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                wrapper.getElement().applyStyles("fontStyle:" + value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.FontWeight.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                wrapper.getElement().applyStyles("fontWeight:" + value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.Color.getCode())) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
+                wrapper.getElement().applyStyles("color:" + value.getString());
+            }
+            return true;
+        } else if (name.equalsIgnoreCase(PropertyType.BackgroundColor.getCode())) {
+            if (value != null) {
+                bgColor = value.getString();
+                updateBgColor(wrapper);
+                return true;
+            }
+        } else if (name.equalsIgnoreCase(PropertyType.TextDecoration.getCode())) {
+            if (value != null && value.getBoolean() != null) {
+                Boolean textDecor = value.getBoolean();
+                if (textDecor) {
+                    wrapper.getElement().applyStyles("textDecoration:" + textDecor);
+                }
+            }
+            return true;
+        }
+        return super.setProperty(name, value);
+    }
 
-	/**
-	 * Установка текста
-	 * 
-	 * @param value
-	 *            - String, текст
-	 */
-	public void setHtml(String value) {
-		field.setText(value == null ? "" : value);
-	}
+    /**
+     * Установка текста
+     *
+     * @param value - String, текст
+     */
+    public void setHtml(String value) {
+        field.setText(value == null ? "" : value);
+    }
 
-	/**
-	 * Получение текста
-	 * 
-	 * @return String
-	 */
-	public String getHtml() {
-		return field.getText();
-	}
+    /**
+     * Получение текста
+     *
+     * @return String
+     */
+    public String getHtml() {
+        return field.getText();
+    }
 
-	/**
-	 * Почение сущности текста
-	 * 
-	 * @return (C) wrapper
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	protected <C> C getRealComponent() {
-		return (C) wrapper;
-	}
+    /**
+     * Получение сущности текста
+     *
+     * @return (C) wrapper
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    protected <C> C getRealComponent() {
+        return (C) wrapper;
+    }
 
-	/**
-	 * Добавление обработчика двойного нажатия левой кнопкой мыши
-	 * 
-	 * @param handler
-	 *            - DoubleClickHandler
-	 * @return HandlerRegistration
-	 */
-	@JsIgnore
-	@Override
+    /**
+     * Добавление обработчика двойного нажатия левой кнопкой мыши
+     *
+     * @param handler - DoubleClickHandler
+     * @return HandlerRegistration
+     */
+    @JsIgnore
+    @Override
     public HandlerRegistration addDoubleClickHandler(DoubleClickEvent.DoubleClickHandler handler) {
-		return addHandler(handler, DoubleClickEvent.getType());
-	}
+        return addHandler(handler, DoubleClickEvent.getType());
+    }
 
-	/**
-	 * Добавление обработчика нажатия левой кнопкой мыши
-	 * 
-	 * @param handler
-	 *            - ClickHandler
-	 * @return HandlerRegistration
-	 */
-	@JsIgnore
-	@Override
+    /**
+     * Добавление обработчика нажатия левой кнопкой мыши
+     *
+     * @param handler - ClickHandler
+     * @return HandlerRegistration
+     */
+    @JsIgnore
+    @Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
-		field.addStyleName("xs-link-text");
-		return addHandler(handler, ClickEvent.getType());
-	}
+        field.addStyleName("xs-link-text");
+        return addHandler(handler, ClickEvent.getType());
+    }
 
-	// TODO Selenium
+    // TODO Selenium
 
-	private static class LocatorParams {
-		private static String TYPE_TEXT = "Text";
-	}
+    private static class LocatorParams {
+        private static String TYPE_TEXT = "Text";
+    }
 
-	@Override
-	public Locator getLocatorByElement(Element element) {
-		Locator result = super.getLocatorByElement(element);
-		if (result != null) {
-			if (field.getElement().isOrHasChild(element)) {
-				result.setPart(new Locator(LabelBuilder.LocatorParams.TYPE_TEXT));
-			}
-		}
-		return result;
-	}
+    @JsIgnore
+    @Override
+    public Locator getLocatorByElement(Element element) {
+        Locator result = super.getLocatorByElement(element);
+        if (result != null) {
+            if (field.getElement().isOrHasChild(element)) {
+                result.setPart(new Locator(LabelBuilder.LocatorParams.TYPE_TEXT));
+            }
+        }
+        return result;
+    }
 
-	@JsIgnore
-	@Override
-	public Element getElementByLocator(Locator locator) {
-		if (!super.fitsLocator(locator)) {
-			return null;
-		}
-		Element element = null;
-		Locator part = locator.getPart();
-		if (part != null) {
-			if (LocatorParams.TYPE_TEXT.equals(part.getType())) {
-				element = field.getElement();
-			}
-		}
-		return element;
-	}
+    @JsIgnore
+    @Override
+    public Element getElementByLocator(Locator locator) {
+        if (!super.fitsLocator(locator)) {
+            return null;
+        }
+        Element element = null;
+        Locator part = locator.getPart();
+        if (part != null) {
+            if (LocatorParams.TYPE_TEXT.equals(part.getType())) {
+                element = field.getElement();
+            }
+        }
+        return element;
+    }
 
-	/**
-	 * Returns component's code.
-	 *
-	 * @return component's code
-	 */
-	@Override
-	public String getCode() {
-		return super.getCode();
-	}
+    /**
+     * Возвращает код компонента.
+     *
+     * @return код компонента
+     */
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
 
-	/**
-	 * Checks if component is in hidden state.
-	 *
-	 * @return true if component is hidden
-	 */
-	@Override
-	public boolean isHidden() {
-		return super.isHidden();
-	}
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true если компонент скрыт
+     */
+    @Override
+    public boolean isHidden() {
+        return super.isHidden();
+    }
 
-	/**
-	 * Sets component's hidden state.
-	 *
-	 * @param hidden true - to hide component, false - to show component
-	 */
-	@Override
-	public void setHidden(boolean hidden) {
-		super.setHidden(hidden);
-	}
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    @Override
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
 
-	/**
-	 * Focuses component.
-	 */
-	@Override
-	public void focus() {
-		super.focus();
-	}
+    /**
+     * Фокусирует компонент.
+     */
+    @Override
+    public void focus() {
+        super.focus();
+    }
 
-	/**
-	 * Checks if component is enabled.
-	 *
-	 * @return true if component is enabled
-	 */
-	@Override
-	public boolean isEnabled() {
-		return super.isEnabled();
-	}
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
 
-	/**
-	 * Sets component's enabled state.
-	 *
-	 * @param enabled true - to enable component, false - to disable component
-	 */
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-	}
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 }

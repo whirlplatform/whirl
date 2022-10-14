@@ -10,6 +10,12 @@ import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.DateTimePropertyEditor;
+import com.sencha.gxt.widget.core.client.form.Field;
+import com.sencha.gxt.widget.core.client.form.ValueBaseField;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.Parameter;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -21,12 +27,14 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
 /**
  * Поле ввода даты
  */
+@JsType(name = "DateField", namespace = "Whirl")
 public class DateFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Date>, Parameter<DataValue> {
 
     private DateField field;
@@ -34,17 +42,20 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     private DateTimeFormat dateFormat;
     // private DateTimeFormat dateInFormat;
 
-    public DateFieldBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public DateFieldBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public DateFieldBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
     /**
      * Получить тип поля даты
      */
+    @JsIgnore
     @Override
     public ComponentType getType() {
         return ComponentType.DateFieldType;
@@ -89,6 +100,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.DateMinValue.getCode())) {
@@ -132,31 +144,36 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Получение значения поля даты
+     * Получение значения поля даты.
      *
      * @return Date
      */
+    @JsIgnore
     @Override
     public Date getValue() {
         return field.getValue();
     }
 
     /**
-     * Установка зачения поля даты
+     * Установка значения поля даты.
      *
      * @param value Date
      */
+    @JsIgnore
     @Override
     public void setValue(Date value) {
         field.setValue(value);
     }
 
+    /**
+     * Получить тип текста.
+     */
     public String getText() {
         return field.getText();
     }
 
     /**
-     * Получение шаблона поля даты
+     * Получение шаблона поля даты.
      *
      * @return String
      */
@@ -165,7 +182,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Установка шаблона поля даты
+     * Установка шаблона поля даты.
      *
      * @param datePattern - String
      */
@@ -175,19 +192,21 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Получение формата поля даты
+     * Получение формата поля даты.
      *
      * @return DateTimeFormat
      */
+    @JsIgnore
     public DateTimeFormat getDateFormat() {
         return dateFormat;
     }
 
     /**
-     * Установить формат поля даты
+     * Установить формат поля даты.
      *
      * @param dateFormat - DateTimeFormat
      */
+    @JsIgnore
     public void setDateFormat(DateTimeFormat dateFormat) {
         this.dateFormat = dateFormat;
         field.setPropertyEditor(new DateTimePropertyEditor(dateFormat));
@@ -195,34 +214,37 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Получить текущую дату
+     * Получить текущую дату.
      *
      * @return Date
      */
+    @JsIgnore
     public Date getCurrentDate() {
         return new Date();
     }
 
     /**
-     * Установить минимальное значение поля даты
+     * Установить минимальное значение поля даты.
      *
      * @param minValue - Date
      */
+    @JsIgnore
     public void setMinValue(Date minValue) {
         field.setMinValue(minValue);
     }
 
     /**
-     * Установить максимальное значение поля даты
+     * Установить максимальное значение поля даты.
      *
      * @param maxValue - Date
      */
+    @JsIgnore
     public void setMaxValue(Date maxValue) {
         field.setMaxValue(maxValue);
     }
 
     /**
-     * Установить "редактируемость" поля даты
+     * Установить "редактируемость" поля даты.
      *
      * @param editable - boolean
      */
@@ -231,7 +253,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Установить скрытость выпадающего поля выбора даты
+     * Установить скрытость выпадающего поля выбора даты.
      *
      * @param hideTrigger - Boolean
      */
@@ -240,7 +262,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Установка параметра "только чтение" для поля даты
+     * Установка параметра "только чтение" для поля даты.
      *
      * @param readOnly - boolean
      */
@@ -249,7 +271,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Получение сущности поля даты
+     * Получение сущности поля даты.
      *
      * @return (C) field
      */
@@ -260,10 +282,11 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Получение записи из поля даты
+     * Получение записи из поля даты.
      *
      * @return DataValue(Type, Code, Value)
      */
+    @JsIgnore
     @Override
     public DataValue getFieldValue() {
         DataValue result = new DataValueImpl(DataType.DATE);
@@ -273,10 +296,11 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     }
 
     /**
-     * Присвоить запись полю даты
+     * Присвоить запись полю даты.
      *
      * @param value - DataValue(Type, Value, Code)
      */
+    @JsIgnore
     @Override
     public void setFieldValue(DataValue value) {
         if (DataType.DATE.equals(value.getType())) {
@@ -289,6 +313,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         private static String TYPE_TRIGGER = "Trigger";
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator result = super.getLocatorByElement(element);
@@ -302,6 +327,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         return result;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!super.fitsLocator(locator)) {
@@ -324,4 +350,123 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         return element;
     }
 
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Фокусирует компонент.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true, если компонент включен
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
+    public boolean isValid(boolean invalidate) {
+        return super.isValid(invalidate);
+    }
+
+    /**
+     * Получает маску поля.
+     *
+     * @return маска поля
+     */
+    public String getFieldMask() {
+        return super.getFieldMask();
+    }
+
+    /**
+     * Устанавливает маску поля.
+     *
+     * @param mask новая маска поля
+     */
+    public void setFieldMask(String mask) {
+        super.setFieldMask(mask);
+    }
+
+    /**
+     * Устанавливает статус недействительности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Очищает статус недействительности для поля.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Очищает значение поля.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public void clear() {
+        super.clear();
+    }
 }

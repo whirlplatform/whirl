@@ -4,6 +4,7 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeUri;
@@ -28,6 +29,10 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
@@ -35,26 +40,27 @@ import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.EventManager;
 import org.whirlplatform.component.client.event.SelectEvent;
 import org.whirlplatform.component.client.ext.XTree;
+import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.InfoHelper;
+import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.data.RowModelDataImpl;
+import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
+import org.whirlplatform.storage.client.StorageHelper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * Древовидное меню
+ */
+@JsType(name = "TreeMenu", namespace = "Whirl")
 public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickHandlers, Containable {
 
     // TODO переписать, выкинуть наследование от TreeBuilder
@@ -66,14 +72,17 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     private Map<ComponentBuilder, RowModelData> builderMap;
     private IconProvider<RowModelData> iconProvider;
 
-    public TreeMenuBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeMenuBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeMenuBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     public ComponentType getType() {
         return ComponentType.TreeMenuType;
     }
@@ -102,6 +111,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return super.init(builderProperties);
     }
 
+    @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
         boolean result = super.setProperty(name, value);
@@ -114,6 +124,9 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return result;
     }
 
+    /**
+     * @param child
+     */
     @Override
     public void addChild(ComponentBuilder child) {
         if (child instanceof HorizontalMenuItemBuilder) {
@@ -127,17 +140,22 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         }
     }
 
+    /**
+     * @param child
+     */
     @Override
     public void removeChild(ComponentBuilder child) {
         builderMap.remove(child);
         children.remove(child);
     }
 
+    @JsIgnore
     @Override
     public void clearContainer() {
         // TODO Auto-generated method stub
     }
 
+    @JsIgnore
     @Override
     public void forceLayout() {
         // TODO Auto-generated method stub
@@ -153,11 +171,13 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return children.size();
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addClickHandler(ClickEvent.ClickHandler handler) {
         return addHandler(handler, ClickEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         registration = addHandler(handler, SelectEvent.getType());
@@ -395,12 +415,184 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         }
     }
 
+    /**
+     *
+     */
+    @JsIgnore //todo смотреть что это
     public void showLocal() {
         loadLocalData();
         tree.unmask();
     }
 
+    @JsIgnore
     public Tree<RowModelData, String> getTree() {
         return tree;
+    }
+
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Фокусирует компонент.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    /**
+     * Очищает значение поля.
+     */
+    @Override
+    public void clear() {
+        super.clear();
+    }
+
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
+    @Override
+    public boolean isValid(boolean invalidate) {
+        return super.isValid(invalidate);
+    }
+
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
+    @Override
+    public boolean isRequired() {
+        return super.isRequired();
+    }
+
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
+    @Override
+    public void setRequired(boolean required) {
+        super.setRequired(required);
+    }
+
+    @JsIgnore
+    @Override
+    public TreeStore<RowModelData> getStore() {
+        return super.getStore();
+    }
+
+    /**
+     * Устанавливает статус не валидности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
+    @Override
+    public void markInvalid(String msg) {
+        super.markInvalid(msg);
+    }
+
+    /**
+     * Очищает статус не валидности для поля.
+     */
+    @Override
+    public void clearInvalid() {
+        super.clearInvalid();
+    }
+
+    /**
+     * Загружает данные, используя текущую конфигурацию
+     */
+    public void load() {
+        super.load();
+    }
+
+    /**
+     * Проверяет необходимость сохранения состояния дерева в БД.
+     *
+     * @return true, если состояние нужно сохранить
+     */
+    @JsIgnore
+    @Override
+    public boolean isSaveState() {
+        return super.isSaveState();
+    }
+
+    /**
+     * Устанавливает, необходимо ли сохранять состояние дерева в БД.
+     *
+     * @param save true, если состояние нужно сохранить
+     */
+    @JsIgnore
+    @Override
+    public void setSaveState(boolean save) {
+        super.setSaveState(save);
+    }
+
+    @JsIgnore
+    @Override
+    public StateScope getStateScope() {
+        return super.getStateScope();
+    }
+
+    @JsIgnore
+    @Override
+    public void setStateScope(StateScope scope) {
+        super.setStateScope(scope);
+    }
+
+    @JsIgnore
+    @Override
+    public void saveState() {
+        super.saveState();
+    }
+
+    /**
+     * Очищает фильтр лейбла
+     */
+    @JsIgnore //todo посмотреть что это
+    @Override
+    public void clearLabelFilter() {
+        super.clearLabelFilter();
     }
 }

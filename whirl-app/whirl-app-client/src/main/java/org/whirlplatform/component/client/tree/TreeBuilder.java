@@ -37,6 +37,10 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOptional;
+import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.Clearable;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.HasState;
@@ -78,6 +82,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Дерево
+ */
+@JsType(name = "Tree", namespace = "Whirl")
 public class TreeBuilder extends ComponentBuilder
         implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
@@ -149,14 +157,17 @@ public class TreeBuilder extends ComponentBuilder
     private boolean useSearchField;
     private int minChars;
 
-    public TreeBuilder(Map<String, DataValue> builderProperties) {
+    @JsConstructor
+    public TreeBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
 
+    @JsIgnore
     public TreeBuilder() {
-        super();
+        this(Collections.emptyMap());
     }
 
+    @JsIgnore
     public ComponentType getType() {
         return ComponentType.TreePanelType;
     }
@@ -214,6 +225,7 @@ public class TreeBuilder extends ComponentBuilder
         return container;
     }
 
+    @JsIgnore
     @SuppressWarnings("rawtypes")
     @Override
     public boolean setProperty(String name, DataValue value) {
@@ -525,16 +537,26 @@ public class TreeBuilder extends ComponentBuilder
         return tree;
     }
 
+    /**
+     * Очищает значение поля.
+     */
     @Override
     public void clear() {
         selModel.deselectAll();
     }
 
+    @JsIgnore
     @Override
     public boolean isValid() {
         return isValid(false);
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         if (forceInvalidText != null) {
@@ -554,16 +576,27 @@ public class TreeBuilder extends ComponentBuilder
         return true;
     }
 
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
     @Override
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
     @Override
     public void setRequired(boolean required) {
         this.required = required;
     }
 
+    @JsIgnore
     @Override
     public RowListValue getFieldValue() {
         boolean containSelected = false;
@@ -591,6 +624,7 @@ public class TreeBuilder extends ComponentBuilder
         return result;
     }
 
+    @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
         if (value == null || value.getRowList().isEmpty()) {
@@ -614,10 +648,16 @@ public class TreeBuilder extends ComponentBuilder
         tree.setCheckedSelection(models);
     }
 
+    @JsIgnore
     public TreeStore<RowModelData> getStore() {
         return store;
     }
 
+    /**
+     * Устанавливает статус недействительности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
     @Override
     public void markInvalid(String msg) {
         EditorError error = new SimpleEditorError(msg);
@@ -625,42 +665,62 @@ public class TreeBuilder extends ComponentBuilder
         forceInvalidText = msg;
     }
 
+    /**
+     * Очищает статус недействительности для поля.
+     */
     @Override
     public void clearInvalid() {
         errorHandler.clearInvalid();
         forceInvalidText = null;
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         return addHandler(handler, SelectEvent.getType());
     }
 
+    /**
+     * Загружает данные, используя текущую конфигурацию
+     */
     public void load() {
         load(Collections.emptyList());
     }
 
+    @JsIgnore
     public void load(List<DataValue> parameters) {
         lastParameters = parameters;
         loader.load();
     }
 
+    /**
+     * Проверяет необходимость сохранения состояния дерева в БД.
+     *
+     * @return true, если состояние нужно сохранить
+     */
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    /**
+     * Устанавливает необходимо ли сохранять состояние дерева в БД.
+     *
+     * @param save true, если состояние нужно сохранить
+     */
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore != null && scope != null && scope != stateStore.getScope()) {
@@ -678,6 +738,7 @@ public class TreeBuilder extends ComponentBuilder
         }
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         RowListValue v = getFieldValue();
@@ -718,6 +779,7 @@ public class TreeBuilder extends ComponentBuilder
         return tree.hasSearch() && tree.getSearchText().length() >= minChars;
     }
 
+    @JsIgnore
     @SuppressWarnings("rawtypes")
     public void clearLabelFilter() {
         if (tree.hasSearch()) {
@@ -725,11 +787,13 @@ public class TreeBuilder extends ComponentBuilder
         }
     }
 
+    @JsIgnore
     @Override
     public HandlerRegistration addChangeHandler(ChangeEvent.ChangeHandler handler) {
         return addHandler(handler, ChangeEvent.getType());
     }
 
+    @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
         Locator locator = super.getLocatorByElement(element);
@@ -768,6 +832,7 @@ public class TreeBuilder extends ComponentBuilder
         return locator;
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         if (!fitsLocator(locator)) {
@@ -812,6 +877,54 @@ public class TreeBuilder extends ComponentBuilder
             }
         }
         return super.getElementByLocator(locator);
+    }
+
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
+
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
+
+    /**
+     * Фокусирует компонент.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
+
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 
     private static class LocatorParams {
