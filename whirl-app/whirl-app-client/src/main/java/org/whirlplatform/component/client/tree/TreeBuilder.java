@@ -231,7 +231,7 @@ public class TreeBuilder extends ComponentBuilder
                 setDataSourceId(value.getListModelData().getId());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
+        } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
             labelColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
@@ -521,6 +521,7 @@ public class TreeBuilder extends ComponentBuilder
         config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
+        config.setLabelExpression(labelColumn);
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());

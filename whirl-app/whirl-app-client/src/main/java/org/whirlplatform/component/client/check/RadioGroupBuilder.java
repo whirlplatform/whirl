@@ -175,7 +175,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                 setDataSourceId(value.getListModelData().getId());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
             column = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.WhereSql.getCode())) {
@@ -256,8 +256,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
         if (paramHelper != null) {
             config.setParameters(paramHelper.getValues());
         }
-
         config.setWhereSql(whereSql);
+        config.setLabelExpression(column);
         return config;
     }
 

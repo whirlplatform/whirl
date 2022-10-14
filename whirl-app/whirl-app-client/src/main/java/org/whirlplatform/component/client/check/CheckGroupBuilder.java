@@ -162,7 +162,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
                 setDataSourceId(value.getListModelData().getId());
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
             nameColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode())) {
@@ -249,6 +249,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             config.setParameters(paramHelper.getValues());
         }
         config.setWhereSql(whereSql);
+        config.setLabelExpression(nameColumn);
         return config;
     }
 

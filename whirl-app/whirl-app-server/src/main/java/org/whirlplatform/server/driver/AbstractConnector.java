@@ -136,22 +136,28 @@ public abstract class AbstractConnector implements Connector {
      *
      * @param model
      */
-    protected void encodeWhereSql(ComponentModel model, ApplicationUser user) {
+    protected void encode(ComponentModel model, ApplicationUser user) {
         if (model == null) {
             return;
         }
         DataValue whereSql = model.getValue(PropertyType.WhereSql.getCode());
+        DataValue labelExpression = model.getValue(PropertyType.LabelExpression.getCode());
         if (whereSql != null && !StringUtils.isEmpty(whereSql.getString())) {
             model.setValue(PropertyType.WhereSql.getCode(),
                     new DataValueImpl(DataType.STRING, user.getEncryptor().encrypt(whereSql.getString())));
+        }
+        if (labelExpression != null && !StringUtils.isEmpty(labelExpression.getString())) {
+            model.setValue(PropertyType.LabelExpression.getCode(),
+                    new DataValueImpl(DataType.STRING, user.getEncryptor().encrypt(labelExpression.getString())));
         }
         if (model.getChildren() == null || model.getChildren().isEmpty()) {
             return;
         }
         for (ComponentModel m : model.getChildren()) {
-            encodeWhereSql(m, user);
+            encode(m, user);
         }
     }
+
 //
 //	public String encrypt(String value, ApplicationUser user) {
 //		return user.getEncryptor().encrypt(value);

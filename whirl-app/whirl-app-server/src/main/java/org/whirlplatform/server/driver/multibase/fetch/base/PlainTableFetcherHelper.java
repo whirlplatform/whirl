@@ -50,8 +50,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         String viewName = table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName()) ? table.getView().getViewName() :
             table.getTableName();
     
-        this.dbTable = new DBTable(viewName, this.dbDatabase);
-        // this.dbTable.setAlias("a");
+        this.dbTable = new DBTable(viewName, this.dbDatabase, "t");
 
         if (table.getIdColumn() != null) {
             // добавляем колонку первичного ключа если ее еще нет

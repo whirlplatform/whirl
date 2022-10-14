@@ -178,7 +178,7 @@ public class MultibaseConnector extends AbstractConnector {
                 break;
             }
         }
-        encodeWhereSql(model, user);
+        encode(model, user);
         return model;
     }
 
@@ -226,7 +226,7 @@ public class MultibaseConnector extends AbstractConnector {
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
             return conn.getDataSourceDriver().createListFetcher(table).getListData(metadata, table,
-                    decrypt(loadConfig, user));
+                    decode(loadConfig, user));
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -246,7 +246,7 @@ public class MultibaseConnector extends AbstractConnector {
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
             return conn.getDataSourceDriver().createTableFetcher(table).getTableData(metadata, table,
-                    decrypt(loadConfig, user));
+                    decode(loadConfig, user));
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -273,7 +273,7 @@ public class MultibaseConnector extends AbstractConnector {
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
             return conn.getDataSourceDriver().createTreeFetcher(table).getTreeData(metadata, table,
-                    (TreeClassLoadConfig) decrypt(loadConfig, user));
+                    (TreeClassLoadConfig) decode(loadConfig, user));
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -337,7 +337,7 @@ public class MultibaseConnector extends AbstractConnector {
             // Проходим по всем ячейкам, шифруем whereSql в компонентах
             for (FormRowModel r : model.getRows()) {
                 for (FormCellModel c : r.getCells()) {
-                    encodeWhereSql(c.getComponent(), user);
+                    encode(c.getComponent(), user);
                 }
             }
             return model;
@@ -418,7 +418,7 @@ public class MultibaseConnector extends AbstractConnector {
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
             reader = conn.getDataSourceDriver().createDataFetcher(table).getTableReader(metadata, table,
-                    decrypt(loadConfig, user));
+                    decode(loadConfig, user));
 
             XLSExporter exporter = new XLSExporter(metadata, reader);
             exporter.setColumnHeader(columnHeader);
@@ -448,7 +448,7 @@ public class MultibaseConnector extends AbstractConnector {
         DBReader reader = null;
         try (ConnectionWrapper conn = aliasConnection((DatabaseTableElement) table, user)) {
             reader = conn.getDataSourceDriver().createDataFetcher(table).getTableReader(metadata, table,
-                    decrypt(loadConfig, user));
+                    decode(loadConfig, user));
 
             CSVExporter exporter = new CSVExporter(metadata, reader);
             exporter.setColumnHeader(columnHeader);
@@ -681,9 +681,12 @@ public class MultibaseConnector extends AbstractConnector {
     // }
     // }
 
-    public ClassLoadConfig decrypt(ClassLoadConfig config, ApplicationUser user) {
+    public ClassLoadConfig decode(ClassLoadConfig config, ApplicationUser user) {
         if (config.getWhereSql() != null) {
             config.setWhereSql(user.getEncryptor().decrypt(config.getWhereSql()));
+        }
+        if(config.getLabelExpression() != null) {
+            config.setLabelExpression(user.getEncryptor().decrypt(config.getLabelExpression()));
         }
         return config;
     }

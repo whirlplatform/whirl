@@ -66,7 +66,7 @@ First the database to store platform data should be created.
 To prepare dependencies for running platform in development mode you should build prerequisites:
 
 ```bash
-mvn clean install -Dgwt.skipCompilation=true
+mvn clean install "-Dgwt.skipCompilation=true"
 ```
 
 #### Main platform - whirl-app

@@ -3,12 +3,7 @@ package org.whirlplatform.component.client.combo;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.logical.shared.ResizeEvent;
-import com.google.gwt.event.logical.shared.ResizeHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.cell.core.client.form.TriggerFieldCell.TriggerFieldAppearance;
@@ -25,22 +20,15 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-import com.sencha.gxt.widget.core.client.form.Field;
-import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.AbstractFieldBuilder;
-import org.whirlplatform.component.client.Editable;
-import org.whirlplatform.component.client.HasState;
-import org.whirlplatform.component.client.Parameter;
-import org.whirlplatform.component.client.ParameterHelper;
+import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
-import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;
@@ -52,11 +40,7 @@ import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
@@ -85,7 +69,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected boolean loadAll;
     protected boolean useSearchParameters;
     protected boolean reloadMetadata;
-    protected String labelColumn;
+    protected String labelExpression;
     private ClassMetadata metadata;
     // private boolean required = false;
     private boolean editable;
@@ -148,8 +132,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.LabelColumn.getCode()) && value != null) {
-            labelColumn = value.getString();
+        if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.HideTrigger.getCode())) {
             if (value != null && value.getBoolean() != null) {
@@ -386,6 +370,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         config.setAll(loadAll);
         config.setUseSearchParameters(useSearchParameters);
         config.setReloadMetadata(reloadMetadata);
+        config.setLabelExpression(labelExpression);
 
         return config;
     }
