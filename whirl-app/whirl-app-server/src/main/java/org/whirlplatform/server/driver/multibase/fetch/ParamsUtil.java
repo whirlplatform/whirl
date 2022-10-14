@@ -4,11 +4,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.whirlplatform.meta.shared.FileValue;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.RowListValue;
-import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.server.driver.multibase.Getter;
 import org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainDataFetcher;
 import org.whirlplatform.server.log.Logger;
@@ -89,9 +85,7 @@ public class ParamsUtil {
     public static List<Object> listFunctionParams(List<DataValue> params, ApplicationUser user) {
         List<Object> result = new ArrayList<Object>();
         for (DataValue v : params) {
-            if (v.getObject() == null) {
-                result.add(null);
-            } else if (v instanceof RowListValue) {
+            if (v instanceof RowListValue) {
                 result.add(asString((RowListValue) v));
             } else if (v.getType() == DataType.LIST) {
                 ListModelData list = v.getListModelData();
@@ -105,6 +99,8 @@ public class ParamsUtil {
                 result.add(file.getInputStream());
             } else if (v.getType() == DataType.DATE) {
                 result.add(v);
+            } else if (v.getObject() == null) {
+                result.add(null);
             } else {
                 if (v.getType() == null) {
                     _log.warn("Parameter " + v.getCode() + " has null type. Value " + v.getObject() + " passed.");
