@@ -75,7 +75,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private SimpleContainer container;
     private SideErrorHandler errorHandler;
     private ClassMetadata metadata;
-    private String column;
+    private String labelExpression;
     private String whereSql;
     private Orientation orientation; // Сделать в базе обязательным
     // полем?
@@ -176,7 +176,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
-            column = value.getString();
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.WhereSql.getCode())) {
             whereSql = value.getString();
@@ -218,7 +218,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      * Загрузка списка радиогруппы
      */
     private void loadData() {
-        FieldMetadata field = new FieldMetadata(column, DataType.STRING, null);
+        FieldMetadata field = new FieldMetadata(labelExpression, DataType.STRING, null);
         metadata.addField(field);
         store = new ClassStore<RowModelData, ClassLoadConfig>(metadata, new TableClassProxy(metadata));
         store.getLoader().addLoadHandler(loadHandler);
@@ -232,7 +232,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void rebuild() {
         for (int i = 0; i < store.size(); i++) {
             Radio radio = new Radio();
-            radio.setBoxLabel((String) store.get(i).get(column));
+            radio.setBoxLabel((String) store.get(i).get(labelExpression));
             radio.setData(LocatorParams.DATA_PARAM_ID, store.get(i).getId());
             layout.add(radio);
             group.add(radio);
@@ -257,7 +257,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
             config.setParameters(paramHelper.getValues());
         }
         config.setWhereSql(whereSql);
-        config.setLabelExpression(column);
+        config.setLabelExpression(labelExpression);
         return config;
     }
 

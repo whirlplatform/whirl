@@ -93,7 +93,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка лейбла
      */
-    protected String labelColumn;
+    protected String labelExpression;
     /**
      * Выражение для вычисления наличия родителей
      */
@@ -185,7 +185,7 @@ public class TreeBuilder extends ComponentBuilder
 
             @Override
             public String getValue(RowModelData object) {
-                return object.get(labelColumn);
+                return object.get(labelExpression);
             }
 
             @Override
@@ -235,7 +235,7 @@ public class TreeBuilder extends ComponentBuilder
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
-            labelColumn = value.getString();
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
             isLeafColumn = value.getString();
@@ -441,7 +441,7 @@ public class TreeBuilder extends ComponentBuilder
             public void render(com.google.gwt.cell.client.Cell.Context context, String value, SafeHtmlBuilder sb) {
                 String q = tree.getSearchText();
                 RowModelData model = store.findModelWithKey((String) context.getKey());
-                String style = model.getStyle(labelColumn);
+                String style = model.getStyle(labelExpression);
 
                 String data = value == null ? "" : SafeHtmlUtils.htmlEscape(value);
                 StringBuilder result = new StringBuilder();
@@ -520,11 +520,10 @@ public class TreeBuilder extends ComponentBuilder
         config.setStateColumn(stateColumn);
         config.setCheckColumn(checkColumn);
         config.setSelectColumn(selectColumn);
-        config.setLabelColumn(labelColumn);
         config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
-        config.setLabelExpression(labelColumn);
+        config.setLabelExpression(labelExpression);
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());
