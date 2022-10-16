@@ -14,6 +14,10 @@ import org.whirlplatform.meta.shared.data.DataValue;
 
 import java.util.Collections;
 import java.util.Map;
+
+/**
+ * Вертикальный контейнер списка
+ */
 @JsType(name = "VBoxContainer", namespace = "Whirl")
 public class VBoxContainerBuilder extends BoxContainerBuilder {
 

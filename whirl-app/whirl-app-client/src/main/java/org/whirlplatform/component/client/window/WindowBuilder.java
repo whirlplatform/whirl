@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Window component.
+ * Компонент окна
  */
 @JsType(name = "Window", namespace = "Whirl")
 public class WindowBuilder extends ComponentBuilder implements Containable {
@@ -115,9 +115,9 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Sets window title.
+     * Устанавливает заголовок окна.
      *
-     * @param title title
+     * @param title заголовок
      */
     @Override
     public void setTitle(String title) {
@@ -126,18 +126,20 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Is window modal.
+     * Является ли окно модальным.
      *
-     * @return is modal
+     * @return true, если модальное поведение включено
      */
     public boolean isModal() {
         return window.isModal();
     }
 
     /**
-     * Sets window modality.
+     * Устанавливает модальность окна и скрывает все за ним при отображении
+     * (по умолчанию false).
      *
-     * @param modal
+     * @param modal - boolean, true сделать окно модальным, false, чтобы отобразить его
+     *              без ограничения доступа к другим элементам пользовательского интерфейса
      */
     public void setModal(boolean modal) {
         this.modal = modal;
@@ -145,92 +147,95 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Is window resizable.
+     * Проверяет, можно ли изменять размеры окна.
      *
-     * @return is resizable
+     * @return true, если изменение размеров окна включено
      */
     public boolean isResizable() {
         return window.isResizable();
     }
 
     /**
-     * Sets if window is resizable.
+     * Устанавливает, можно ли изменять размеры окна по каждому краю и углу
+     * (по умолчанию true).
      *
-     * @param resizable
+     * @param resizable - boolean, true для включения изменения размеров
      */
     public void setResizable(boolean resizable) {
         window.setResizable(resizable);
     }
 
     /**
-     * Is window minimizable.
+     * Проверяет, можно ли свернуть окно.
      *
-     * @return is minimizable
+     * @return true, если минимизация окна включена
      */
     public boolean isMinimizable() {
         return window.isMinimizable();
     }
 
     /**
-     * Sets if window can be minimized.
+     * Устанавливает, можно ли свернуть окно.
      *
-     * @param minimizable
+     * @param minimizable - boolean, true, чтобы включить минимизацию
      */
     public void setMinimizable(boolean minimizable) {
         window.setMinimizable(minimizable);
     }
 
     /**
-     * Is window maximizable.
+     * Проверяет, является ли окно максимизируемым.
      *
-     * @return is maximizable
+     * @return true, если максимизация окна включена.
      */
     public boolean isMaximizable() {
         return window.isMaximizable();
     }
 
     /**
-     * Sets if window can be maximized.
+     * Устанавливает, может ли окно быть максимизировано
+     * (по умолчанию false).
      *
-     * @param maximizable
+     * @param maximizable - boolean, true для разрешения пользователю максимизировать окно,
+     *                    false для скрытия кнопки и запрета максимизации окна
      */
     public void setMaximizable(boolean maximizable) {
         window.setMaximizable(maximizable);
     }
 
     /**
-     * Is window can be closed.
+     * Проверяет можно ли закрыть окно.
      *
-     * @return is closable
+     * @return true, если окно является закрываемым
      */
     public boolean isClosable() {
         return window.isClosable();
     }
 
     /**
-     * Sets if window can be closed.
+     * Устанавливает, можно ли закрыть окно.
      *
-     * @param closable
+     * @param closable - boolean true, чтобы включить закрытие
      */
     public void setClosable(boolean closable) {
         window.setClosable(closable);
     }
 
     /**
-     * Sets window position.
+     * Устанавливает позицию окна.
      *
-     * @param left position from the left
-     * @param top  position from the top
+     * @param left положение слева
+     * @param top  положение сверху
      */
     public void setPosition(int left, int top) {
         window.setPosition(left, top);
     }
 
     /**
-     * Sets window page position.
+     * Устанавливает положение виджета на странице XY.
      *
-     * @param x
-     * @param y
+     * @param x - координата x
+     * @param y - координата y
      */
     public void setPagePosition(int x, int y) {
         window.setPagePosition(x, y);
@@ -275,7 +280,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Перерисовка окна вывода
+     * Пересчитывает расположение компонентов в данном контейнере.
      */
     @JsIgnore
     @Override
@@ -326,14 +331,14 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Hide window.
+     * Скрывает окно.
      */
     public void hide() {
         window.hide();
     }
 
     /**
-     * Show window.
+     * Показывает окно.
      */
     public void show() {
         // Нужно ли делать окно модальным
@@ -357,21 +362,24 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Maximize window.
+     * Устанавливает окно в пределах его текущего контейнера
+     * и автоматически заменяет кнопку инструмента "максимизировать"
+     * на кнопку инструмента "восстановить".
      */
     public void maximize() {
         window.maximize();
     }
 
     /**
-     * Miniimize window.
+     * Минимизация окна.
      */
     public void minimize() {
         window.minimize();
     }
 
     /**
-     * Center window. Should be called after window is shown.
+     * Выравнивание окна по центру.
+     * Должен вызываться после отображения окна.
      */
     public void center() {
         window.center();
@@ -457,25 +465,26 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента,
+     *               false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -485,18 +494,18 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true, если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

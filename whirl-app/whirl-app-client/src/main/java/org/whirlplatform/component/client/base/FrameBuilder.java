@@ -17,125 +17,127 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Фрейм
+ */
 @JsType(name = "Frame", namespace = "Whirl")
 public class FrameBuilder extends ComponentBuilder {
 
-	private Frame frame;
+    private Frame frame;
 
-	private WidgetComponent wrapper;
+    private WidgetComponent wrapper;
 
-	private String template;
+    private String template;
 
-	@JsConstructor
-	public FrameBuilder(@JsOptional Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    @JsConstructor
+    public FrameBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-	@JsIgnore
-	public FrameBuilder() {
-		this(Collections.emptyMap());
-	}
-	
-	@JsIgnore
-	@Override
-	public ComponentType getType() {
-		return ComponentType.FrameType;
-	}
+    @JsIgnore
+    public FrameBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	@Override
-	protected Component init(Map<String, DataValue> builderProperties) {
-		frame = new Frame();
-		wrapper = new WidgetComponent(frame);
-		return wrapper;
-	}
+    @JsIgnore
+    @Override
+    public ComponentType getType() {
+        return ComponentType.FrameType;
+    }
 
-	@JsIgnore
-	@Override
-	public boolean setProperty(String name, DataValue value) {
-		if (name.equalsIgnoreCase(PropertyType.Template.getCode())) {
-			if (value != null && value.getString() != null){
-				setTemplate(value.getString());
-				return true;
-			}
-		} else if (name.equalsIgnoreCase(PropertyType.Url.getCode())) {
-			if (value != null && value.getString() != null){
-				frame.setUrl(value.getString());
-				return true;
-			}
-		}
-		return super.setProperty(name, value);
-	}
+    @Override
+    protected Component init(Map<String, DataValue> builderProperties) {
+        frame = new Frame();
+        wrapper = new WidgetComponent(frame);
+        return wrapper;
+    }
 
-	private void setTemplate(String template) {
-		this.template = template;
-		if (template != null) {
-			FrameElement frameEl = frame.getElement().cast();
-			BodyElement bodyEl = frameEl.getContentDocument().getBody();
-			bodyEl.setInnerHTML(template);
-		}
-	}
+    @JsIgnore
+    @Override
+    public boolean setProperty(String name, DataValue value) {
+        if (name.equalsIgnoreCase(PropertyType.Template.getCode())) {
+            if (value != null && value.getString() != null) {
+                setTemplate(value.getString());
+                return true;
+            }
+        } else if (name.equalsIgnoreCase(PropertyType.Url.getCode())) {
+            if (value != null && value.getString() != null) {
+                frame.setUrl(value.getString());
+                return true;
+            }
+        }
+        return super.setProperty(name, value);
+    }
 
-	@Override
-	protected <C> C getRealComponent() {
-		return (C) frame;
-	}
+    private void setTemplate(String template) {
+        this.template = template;
+        if (template != null) {
+            FrameElement frameEl = frame.getElement().cast();
+            BodyElement bodyEl = frameEl.getContentDocument().getBody();
+            bodyEl.setInnerHTML(template);
+        }
+    }
 
-	/**
-	 * Returns component's code.
-	 *
-	 * @return component's code
-	 */
-	@Override
-	public String getCode() {
-		return super.getCode();
-	}
+    @Override
+    protected <C> C getRealComponent() {
+        return (C) frame;
+    }
 
-	/**
-	 * Checks if component is in hidden state.
-	 *
-	 * @return true if component is hidden
-	 */
-	@Override
-	public boolean isHidden() {
-		return super.isHidden();
-	}
+    /**
+     * Возвращает код компонента.
+     *
+     * @return код компонента
+     */
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
 
-	/**
-	 * Sets component's hidden state.
-	 *
-	 * @param hidden true - to hide component, false - to show component
-	 */
-	@Override
-	public void setHidden(boolean hidden) {
-		super.setHidden(hidden);
-	}
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
 
-	/**
-	 * Focuses component.
-	 */
-	@Override
-	public void focus() {
-		super.focus();
-	}
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
 
-	/**
-	 * Checks if component is enabled.
-	 *
-	 * @return true if component is enabled
-	 */
-	@Override
-	public boolean isEnabled() {
-		return super.isEnabled();
-	}
+    /**
+     * Фокусирует компонент.
+     */
+    @Override
+    public void focus() {
+        super.focus();
+    }
 
-	/**
-	 * Sets component's enabled state.
-	 *
-	 * @param enabled true - to enable component, false - to disable component
-	 */
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-	}
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 
 }

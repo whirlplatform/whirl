@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Check box field.
+ * Чек-бокс поле.
  */
 @JsType(namespace = "Whirl", name = "CheckBox")
 public class CheckBoxBuilder extends AbstractFieldBuilder
@@ -107,27 +107,27 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Gets field label.
+     * Получает лейбл поля.
      *
-     * @return label text
+     * @return текст лейбла
      */
     public String getBoxLabel() {
         return checkBox.getBoxLabel().asString();
     }
 
     /**
-     * Set label for the field.
+     * Устанавливает лейбл для поля.
      *
-     * @param label text
+     * @param label - String текст
      */
     public void setBoxLabel(String label) {
         checkBox.setBoxLabel(label);
     }
 
     /**
-     * Get field's value.
+     * Получить значение поля.
      *
-     * @return field's value
+     * @return значение поля
      */
     @Override
     public Boolean getValue() {
@@ -135,9 +135,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Set field's value.
+     * Устанавливает значение поля.
      *
-     * @param value field's value
+     * @param value - boolean значение поля
      */
     @Override
     public void setValue(Boolean value) {
@@ -145,10 +145,10 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Check if field is valid.
+     * Проверяет, является ли поле валидным.
      *
-     * @param invalidate true to invalidate field
-     * @return true if field is valid
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
      */
     @Override
     public boolean isValid(boolean invalidate) {
@@ -166,9 +166,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус не валидности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     public void markInvalid(String msg) {
         checkBox.getErrorSupport().markInvalid(
@@ -176,7 +176,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Очищает статус не валидности для поля.
      */
     @Override
     public void clearInvalid() {
@@ -184,9 +184,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if is in valid state.
+     * Проверяет, является ли поле валидным.
      *
-     * @return true, if is in valid state
+     * @return true, для признания поля валидным
      */
     @JsIgnore
     @Override
@@ -195,9 +195,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     public void setReadOnly(boolean readOnly) {
         Field<?> field = getRealComponent();
@@ -289,25 +289,25 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -317,43 +317,45 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
+    @Override
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     public void setFieldMask(String mask) {
         super.setFieldMask(mask);
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
@@ -361,9 +363,9 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if is required.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -371,15 +373,14 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
     }
-
 
 
 }

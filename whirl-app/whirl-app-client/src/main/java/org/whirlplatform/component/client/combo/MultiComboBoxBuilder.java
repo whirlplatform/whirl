@@ -350,7 +350,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
      * Проверяет, является ли поле валидным.
      *
      * @param invalidate true для признания поля валидным
-     * @return true если поле валидно
+     * @return true, если поле валидно
      */
     @Override
     public boolean isValid(boolean invalidate) {

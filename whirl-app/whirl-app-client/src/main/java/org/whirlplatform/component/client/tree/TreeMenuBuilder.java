@@ -155,6 +155,9 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         // TODO Auto-generated method stub
     }
 
+    /**
+     * Пересчитывает расположение компонентов в данном контейнере.
+     */
     @JsIgnore
     @Override
     public void forceLayout() {
@@ -470,7 +473,8 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента, false - для отключения компонента
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

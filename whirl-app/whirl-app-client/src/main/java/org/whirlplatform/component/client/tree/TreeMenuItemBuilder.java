@@ -76,10 +76,19 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
         return super.setProperty(name, value);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getImage() {
         return imageUrl;
     }
 
+    /**
+     * Устанавливает изображение.
+     *
+     * @param url - String
+     */
     public void setImage(String url) {
         imageUrl = url;
     }
@@ -105,7 +114,7 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
     }
 
     /**
-     *
+     * Пересчитывает расположение компонентов в данном контейнере.
      */
     @Override
     public void forceLayout() {

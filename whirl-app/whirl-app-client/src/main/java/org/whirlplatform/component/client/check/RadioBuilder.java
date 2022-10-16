@@ -242,11 +242,19 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
         return true;
     }
 
+    /**
+     * Устанавливает статус не валидности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
     public void markInvalid(String msg) {
         radio.getErrorSupport().markInvalid(
                 Collections.singletonList(new DefaultEditorError(radio, msg, radio.getValue())));
     }
 
+    /**
+     * Очищает статус не валидности для поля.
+     */
     @Override
     public void clearInvalid() {
         radio.getErrorSupport().clearInvalid();
@@ -283,25 +291,25 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -311,27 +319,29 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
+    @Override
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
     /**
-     * Checks if is required.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -339,9 +349,9 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
@@ -349,34 +359,34 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     public void setReadOnly(boolean readOnly) {
       super.setReadOnly(readOnly);
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     public void setFieldMask(String mask) {
         super.setFieldMask(mask);
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {

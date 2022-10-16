@@ -698,6 +698,7 @@ public class TreeBuilder extends ComponentBuilder
      *
      * @return true, если состояние нужно сохранить
      */
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
@@ -708,6 +709,7 @@ public class TreeBuilder extends ComponentBuilder
      *
      * @param save true, если состояние нужно сохранить
      */
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;

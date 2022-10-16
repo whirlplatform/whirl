@@ -124,6 +124,11 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
         field.setValue(value);
     }
 
+    /**
+     * Получает текст объекта.
+     *
+     * @return новый текст объекта
+     */
     public String getText() {
         return field.getText();
     }
