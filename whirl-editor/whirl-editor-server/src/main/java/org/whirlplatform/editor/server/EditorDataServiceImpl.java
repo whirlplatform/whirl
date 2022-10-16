@@ -555,9 +555,9 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
 
     @Override
     public List<String> getIcons() throws RPCException {
-        String path = "META-INF/resources/webjars/famfamfam-silk";  //"resources.webjars.famfamfam-silk.1.3.icons";
-        Reflections reflections = new Reflections(path, new ResourcesScanner() );
-        Set<String > result = reflections.getResources(Pattern.compile(".*\\.png"));
+//        String path = "META-INF/resources/webjars/famfamfam-silk";  //"resources.webjars.famfamfam-silk.1.3.icons";
+//        Reflections reflections = new Reflections(path, new ResourcesScanner() );
+//        Set<String > result = reflections.getResources(Pattern.compile(".*\\.png"));
 //        return result;
         List<String> res = new ArrayList<>(Arrays.asList("META-INF/resources/webjars/famfamfam-silk/1.3/icons/font_delete.png",
                 "META-INF/resources/webjars/famfamfam-silk/1.3/icons/lorry_link.png",

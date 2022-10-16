@@ -1,22 +1,32 @@
 package org.whirlplatform.editor.client.view;
 
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
+import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.core.client.XTemplates;
+import com.sencha.gxt.core.client.resources.CommonStyles;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.ListStoreBinding;
 import com.sencha.gxt.data.shared.loader.Loader;
+import com.sencha.gxt.theme.base.client.listview.ListViewCustomAppearance;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import org.whirlplatform.editor.shared.EditorDataService;
 
 import java.util.List;
@@ -34,6 +44,25 @@ public class AppShowIconsView extends Window {
     private ListView<String, String> view;
 
     private RpcProxy<Void, List<String>> proxy;
+
+    private Style style;
+
+
+//    interface Style extends CssResource {
+//        String courtesy();
+//
+//        String detail();
+//
+//        String detailInfo();
+//
+//        String over();
+//
+//        String select();
+//
+//        String thumb();
+//
+//        String thumbWrap();
+//    }
     public AppShowIconsView() {
 
         store = new ListStore<>(String::toString);
@@ -67,18 +96,37 @@ public class AppShowIconsView extends Window {
             }
         });
 
+//        final Renderer renderer = GWT.create(Renderer.class);
 
+//        ListViewCustomAppearance<String> appearance = new ListViewCustomAppearance<String>("." + style.thumbWrap(),
+//                style.over(), style.select()) {
+//            @Override
+//            public void renderEnd(SafeHtmlBuilder builder) {
+//                String markup = new StringBuilder("<div class=\"").append(CommonStyles.get().clear()).append("\"></div>").toString();
+//                builder.appendHtmlConstant(markup);
+//            }
+//
+//            @Override
+//            public void renderItem(SafeHtmlBuilder builder, SafeHtml content) {
+//                builder.appendHtmlConstant("<div class='" + style.thumbWrap() + "' style='border: 1px solid white'>");
+//                builder.append(content);
+//                builder.appendHtmlConstant("</div>");
+//            }
+//        };
 
 
         view.setCell(new SimpleSafeHtmlCell<String>(new AbstractSafeHtmlRenderer<String>() {
             @Override
             public SafeHtml render(String object) {
-                String html = "<span style='display: inline-block; width:20px; height:20px; vertical-align: middle; background-color: "
-                        + object + "; border: 1px solid gray; margin: 3px;'>&nbsp;</span>";
+      //          return renderer.renderItem(object, style);
+//                String html = "<span style='display: inline-block; width:20px; height:20px; vertical-align: middle; background-color: "
+//                        + object + "; border: 1px solid gray; margin: 3px;'>&nbsp;</span>";
+                String res = object.replace("META-INF/resources/", "");
+                String html = "<img src="+ res+" style='border: 1px solid white; width:20px; height:20px>";
                 return SafeHtmlUtils.fromSafeConstant(html);
             }
         }));
-
+      //  view.getSelectionModel().select(0, false);
         view.getSelectionModel().setSelectionMode(Style.SelectionMode.SINGLE);
         view.setBorders(false);
 
@@ -103,6 +151,9 @@ public class AppShowIconsView extends Window {
     }
 
     public void buildUI() {
+        Image image = new Image();
+        VerticalLayoutContainer panel = new VerticalLayoutContainer();
+
         BorderLayoutContainer.BorderLayoutData centerData = new BorderLayoutContainer.BorderLayoutData();
         centerData.setMargins(new Margins(0, 0, 0, 0));
 
@@ -125,6 +176,24 @@ public class AppShowIconsView extends Window {
         choose.setClosable(false);
         choose.add(con);
         choose.show();
+
+        choose.addDialogHideHandler(new DialogHideEvent.DialogHideHandler() {
+            @Override
+            public void onDialogHide(DialogHideEvent event) {
+               String photo = view.getSelectionModel().getSelectedItem();
+                if (photo != null) {
+                    if (event.getHideButton() == Dialog.PredefinedButton.OK) {
+                        image.setUrl(photo);
+                        image.setVisible(true);
+                        panel.forceLayout();
+                    }
+                }
+            }
+        });
+
+
+        panel.add(buttonBar, new VerticalLayoutContainer.VerticalLayoutData(1, -1, new Margins(0, 0, 20, 0)));
+        panel.add(image, new VerticalLayoutContainer.VerticalLayoutData(1, -1));
 
     }
 
