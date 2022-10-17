@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
 
@@ -553,42 +554,32 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         connector().deleteTemplate(template);
     }
 
+    private List<String> res = new ArrayList<>(Arrays.asList("webjars/famfamfam-silk/1.3/icons/font_delete.png",
+            "webjars/famfamfam-silk/1.3/icons/lorry_link.png",
+            "webjars/famfamfam-silk/1.3/icons/map_go.png",
+            "webjars/famfamfam-silk/1.3/icons/layout_link.png",
+            "webjars/famfamfam-silk/1.3/icons/user_female.png",
+            "webjars/famfamfam-silk/1.3/icons/text_heading_1.png",
+            "webjars/famfamfam-silk/1.3/icons/page_white_tux.png",
+            "webjars/famfamfam-silk/1.3/icons/sound.png",
+            "webjars/famfamfam-silk/1.3/icons/brick_delete.png",
+            "webjars/famfamfam-silk/1.3/icons/table_relationship.png",
+            "webjars/famfamfam-silk/1.3/icons/report_picture.png",
+            "webjars/famfamfam-silk/1.3/icons/link_delete.png",
+            "webjars/famfamfam-silk/1.3/icons/building_edit.png",
+            "webjars/famfamfam-silk/1.3/icons/dvd.png",
+            "webjars/famfamfam-silk/1.3/icons/application_form_delete.png",
+            "webjars/famfamfam-silk/1.3/icons/shape_move_back.png"));
+
     @Override
     public List<String> getIcons() throws RPCException {
-//        String path = "META-INF/resources/webjars/famfamfam-silk";  //"resources.webjars.famfamfam-silk.1.3.icons";
-//        Reflections reflections = new Reflections(path, new ResourcesScanner() );
-//        Set<String > result = reflections.getResources(Pattern.compile(".*\\.png"));
-//        return result;
-        List<String> res = new ArrayList<>(Arrays.asList("META-INF/resources/webjars/famfamfam-silk/1.3/icons/font_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/lorry_link.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/map_go.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/layout_link.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/user_female.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/text_heading_1.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/page_white_tux.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/sound.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/brick_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/table_relationship.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/report_picture.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/link_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/building_edit.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/dvd.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/application_form_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/shape_move_back.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/control_equalizer.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/drink_empty.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/database_add.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/sport_shuttlecock.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/cart_put.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/world_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/cd_add.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/cd_delete.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/dvd_edit.png",
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/tag_blue.png" ,
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/award_star_delete.png" ,
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/text_italic.png" ,
-                "META-INF/resources/webjars/famfamfam-silk/1.3/icons/page_go.png"));
-        return res;
+//        return res;
+        String path = "META-INF/resources/webjars/famfamfam-silk";  //"resources.webjars.famfamfam-silk.1.3.icons";
+        Reflections reflections = new Reflections(path, new ResourcesScanner());
+        List<String> result = reflections.getResources(Pattern.compile(".*\\.png")).stream()
+                .map(s -> s.replace("META-INF/resources/", ""))
+                .collect(Collectors.toList());
+        return result;
 
 
     }
