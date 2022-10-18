@@ -113,6 +113,31 @@ Command to set new version in all pom.xml files is:
 mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 ```
 
+## Database Naming Conventions
+incoming parameters
+- p_...
+```bash
+example idx
+```
+
+Variables in the body
+- v_....
+```bash
+example idx
+```
+
+Links to the other tables
+- r_...
+```bash
+example idx
+```
+
+Indexes
+- Idx
+```bash
+example idx
+```
+
 ## License
 
 Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving [GPL v3](LICENSE) license.

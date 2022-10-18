@@ -15,8 +15,13 @@
                          path="postgresql/as_result.sql"
                          relativeToChangelogFile="true"/>
 
+        <createProcedure procedureName="example_func_3"
+                         path="postgresql/example_func_3.sql"
+                         relativeToChangelogFile="true"/>
+
         <rollback>
             <dropProcedure procedureName="as_result"/>
+            <dropProcedure procedureName="example_func_3"/>
         </rollback>
     </changeSet>
 
