@@ -133,11 +133,11 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
         EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
             @Override
             public void onFailure(Throwable caught) {
-
             }
-
             @Override
             public void onSuccess(List<String> result) {
+//                eventBus.loadIcons();
+                eventBus.getIcons();
                 System.out.println(result.toString());
                 System.out.println("Result OK");
 

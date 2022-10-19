@@ -18,12 +18,14 @@ public class ToolBarShowIconsButton extends AbstractContextTextButton<ToolBarPre
 
     @Override
     protected SelectEvent.SelectHandler createSelectHandler() {
-        return event -> {
-            new AppShowIconsView(); // new SelectEvent.SelectHandler() {  //
-//            @Override
-//            public void onSelect(SelectEvent event) {
-//                getContext().getIcons();
-//            }
+       return
+               //event -> {
+//            new AppShowIconsView();
+        new SelectEvent.SelectHandler() {
+            @Override
+            public void onSelect(SelectEvent event) {
+                getContext().getIcons();
+            }
         };
     }
 

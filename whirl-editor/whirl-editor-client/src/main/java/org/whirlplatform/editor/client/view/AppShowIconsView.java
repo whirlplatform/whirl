@@ -1,49 +1,36 @@
 package org.whirlplatform.editor.client.view;
-
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
-import com.google.gwt.text.shared.Renderer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
 import com.sencha.gxt.core.client.Style;
 import com.sencha.gxt.core.client.ValueProvider;
-import com.sencha.gxt.core.client.XTemplates;
-import com.sencha.gxt.core.client.resources.CommonStyles;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.ListStoreBinding;
 import com.sencha.gxt.data.shared.loader.Loader;
-import com.sencha.gxt.theme.base.client.listview.ListViewCustomAppearance;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.ListView;
-import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
-import com.sencha.gxt.widget.core.client.event.ShowEvent;
-import com.sencha.gxt.widget.core.client.menu.Item;
-import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
+import org.whirlplatform.editor.client.presenter.AppShowIconsPresenter;
 import org.whirlplatform.editor.shared.EditorDataService;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-public class AppShowIconsView extends Dialog {
+public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IAppShowIconsView {
 
     private final static Logger logger = Logger.getLogger(AppShowIconsView.class.getName());
     protected static final int MIN_HEIGHT = 200;
     protected static final int MIN_WIDTH = 200;
 
-    private Dialog choose;
+    private AppShowIconsPresenter presenter;
+
     private ListStore<String> store;
 
     private ListView<String, String> view;
@@ -51,14 +38,21 @@ public class AppShowIconsView extends Dialog {
     private RpcProxy<Void, List<String>> proxy;
 
     public AppShowIconsView() {
+        presenter = new AppShowIconsPresenter(this);
 
-        store = new ListStore<>(String::toString);
-        proxy = new RpcProxy<Void, List<String>>() {
-            @Override
-            public void load(Void loadConfig, AsyncCallback<List<String>> callback) {
-                EditorDataService.Util.getDataService().getIcons(callback);
-            }
-        };
+        presenter.setIconsView(this);
+        setProxy(presenter.getProxy());
+        setStore(presenter.getStore());
+
+//        store = new ListStore<>(String::toString);
+//        proxy = new RpcProxy<Void, List<String>>() {
+//            @Override
+//            public void load(Void loadConfig, AsyncCallback<List<String>> callback) {
+//                EditorDataService.Util.getDataService().getIcons(callback);
+//            }
+//        };
+
+//        presenter.loadIcons();
 
         Loader<Void, List<String>> loader = new Loader<>(proxy);
         loader.addLoadHandler(new ListStoreBinding<>(store));
@@ -68,9 +62,11 @@ public class AppShowIconsView extends Dialog {
             public String getValue(String object) {
                 return object;
             }
+
             @Override
             public void setValue(String object, String value) {
             }
+
             @Override
             public String getPath() {
                 return null;
@@ -92,18 +88,20 @@ public class AppShowIconsView extends Dialog {
         view.setBorders(false);
 
         loader.load();
-        EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
-            @Override
-            public void onFailure(Throwable caught) {
-            }
-
-            @Override
-            public void onSuccess(List<String> result) {
-                logger.info(result.toString());
-                logger.info("Result OK");
-
-            }
-        });
+        buildUI();
+        //======================================================================================
+//        EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//            }
+//
+//            @Override
+//            public void onSuccess(List<String> result) {
+//                logger.info(result.toString());
+//                logger.info("Result OK");
+//
+//            }
+//        });
 //        SelectionHandler<Item> handler = new SelectionHandler<Item>() {
 //            @Override
 //            public void onSelection(SelectionEvent<Item> event) {
@@ -111,14 +109,14 @@ public class AppShowIconsView extends Dialog {
 //            }
 //        };
 
-        buildUI();
+
     }
 
     public void buildUI() {
-        Image image = new Image();
-        image.setVisible(false);
+//        Image image = new Image();
+//        image.setVisible(false);
 
-        VerticalLayoutContainer panel = new VerticalLayoutContainer();
+//        VerticalLayoutContainer panel = new VerticalLayoutContainer();
 
         BorderLayoutContainer.BorderLayoutData centerData = new BorderLayoutContainer.BorderLayoutData();
         centerData.setMargins(new Margins(0, 0, 0, 0));
@@ -126,27 +124,27 @@ public class AppShowIconsView extends Dialog {
         BorderLayoutContainer con = new BorderLayoutContainer();
         con.setCenterWidget(view, centerData);
         //      con.add(view);
-
         // Dialog ex. Window
-        choose = new Dialog();
-        choose.setPixelSize(640, 480);
-        choose.setResizable(false);
-        choose.setMinHeight(MIN_HEIGHT);
-        choose.setMinWidth(MIN_WIDTH);
-        choose.setId("img-chooser-dlg");
-        choose.setHeading("Icons chooser");
-        choose.setModal(true);
-        choose.setBodyBorder(false);
-        choose.setPredefinedButtons(Dialog.PredefinedButton.OK, Dialog.PredefinedButton.CANCEL);
-        choose.setHideOnButtonClick(true);
-        choose.setClosable(false);
-        choose.addDialogHideHandler(new DialogHideEvent.DialogHideHandler() {
+
+        setPixelSize(640, 480);
+        setResizable(false);
+        setMinHeight(MIN_HEIGHT);
+        setMinWidth(MIN_WIDTH);
+        setId("img-chooser-dlg");
+        setHeading("Icons chooser");
+        setModal(true);
+        setBodyBorder(false);
+        setPredefinedButtons(PredefinedButton.OK, PredefinedButton.CLOSE);
+        getButton(Dialog.PredefinedButton.OK).setText("Копировать");
+        setHideOnButtonClick(true);
+        setClosable(false);
+        addDialogHideHandler(new DialogHideEvent.DialogHideHandler() {
             @Override
             public void onDialogHide(DialogHideEvent event) {
                 String photo = view.getSelectionModel().getSelectedItem();
                 if (photo != null) {
                     if (event.getHideButton() == Dialog.PredefinedButton.OK) {
-                        choose.getButton(Dialog.PredefinedButton.OK).enable();
+                        AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).enable();
                         com.google.gwt.user.client.Window.open(view.getSelectionModel().getSelectedItem(), "", "");
 //                        image.setUrl(photo);
 //                        image.setVisible(true);
@@ -157,10 +155,29 @@ public class AppShowIconsView extends Dialog {
         });
 
 //        panel.add(buttonBar, new VerticalLayoutContainer.VerticalLayoutData(1, -1, new Margins(0, 0, 20, 0)));
-        panel.add(image, new VerticalLayoutContainer.VerticalLayoutData(1, -1));
+//        panel.add(image, new VerticalLayoutContainer.VerticalLayoutData(1, -1));
 
-        choose.add(con);
-        choose.show();
+        add(con);
+        show();
+    }
+
+    @Override
+    public AppShowIconsPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void setPresenter(AppShowIconsPresenter presenter) {
+        this.presenter = presenter;
+//        buildUI();
+    }
+
+    public void setProxy(RpcProxy<Void, List<String>> proxy) {
+        this.proxy = proxy;
+    }
+
+    public void setStore(ListStore<String> store) {
+        this.store = store;
     }
 
 
