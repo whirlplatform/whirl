@@ -75,6 +75,15 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         loader.load();
         buildUI();
     }
+
+    private  static native void copyToClipboard(String text)/*-{
+        navigator.clipboard.writeText(text).then(function() {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function(err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }-*/;
+
     public void buildUI() {
 
         BorderLayoutContainer.BorderLayoutData centerData = new BorderLayoutContainer.BorderLayoutData();
@@ -102,7 +111,7 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
                 if (photo != null) {
                     if (event.getHideButton() == Dialog.PredefinedButton.OK) {
                         AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).enable();
-                        com.google.gwt.user.client.Window.open(view.getSelectionModel().getSelectedItem(), "", "");
+                        copyToClipboard(photo);
                     }
                 }
             }

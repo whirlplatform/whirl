@@ -58,7 +58,6 @@ public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.I
                 @Override
                 public void onSuccess(List<String> result) {
                     logger.info("RESULT FROM AppShowIconsPresenter");
-                    logger.info(store.toString());
                     store.replaceAll(result);
 
 
