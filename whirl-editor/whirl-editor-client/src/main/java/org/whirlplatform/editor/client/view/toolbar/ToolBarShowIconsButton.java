@@ -10,14 +10,13 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 public class ToolBarShowIconsButton extends AbstractContextTextButton<ToolBarPresenter> {
 
-
     public ToolBarShowIconsButton(ToolBarPresenter context) {
         super(context);
     }
 
     @Override
     protected SelectEvent.SelectHandler createSelectHandler() {
-       return new SelectEvent.SelectHandler() {
+        return new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 getContext().showIconsPanel();
@@ -42,7 +41,6 @@ public class ToolBarShowIconsButton extends AbstractContextTextButton<ToolBarPre
 
     @Override
     public void updateState() {
-
     }
 
 

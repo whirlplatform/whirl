@@ -133,15 +133,5 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
 
     public void showIconsPanel() {
         eventBus.showIconsPanel();
-        EditorDataService.Util.getDataService().showIconsPanel(new AsyncCallback<List<String>>() {
-            @Override
-            public void onFailure(Throwable caught) {
-            }
-            @Override
-            public void onSuccess(List<String> result) {
-                logger.info("RESULT FROM ToolBarPresenter");
-                logger.info(result.toString());
-            }
-        });
     }
 }

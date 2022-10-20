@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 
 public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IAppShowIconsView {
 
-    private final static Logger logger = Logger.getLogger(AppShowIconsView.class.getName());
     protected static final int MIN_HEIGHT = 200;
     protected static final int MIN_WIDTH = 200;
 
@@ -48,11 +47,9 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
             public String getValue(String object) {
                 return object;
             }
-
             @Override
             public void setValue(String object, String value) {
             }
-
             @Override
             public String getPath() {
                 return null;
@@ -96,7 +93,6 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         setResizable(false);
         setMinHeight(MIN_HEIGHT);
         setMinWidth(MIN_WIDTH);
-        setId("img-chooser-dlg");
         setHeading("Icons chooser");
         setModal(true);
         setBodyBorder(false);
@@ -107,11 +103,11 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         addDialogHideHandler(new DialogHideEvent.DialogHideHandler() {
             @Override
             public void onDialogHide(DialogHideEvent event) {
-                String photo = view.getSelectionModel().getSelectedItem();
-                if (photo != null) {
+                String item = view.getSelectionModel().getSelectedItem();
+                if (item != null) {
                     if (event.getHideButton() == Dialog.PredefinedButton.OK) {
                         AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).enable();
-                        copyToClipboard(photo);
+                        copyToClipboard(item);
                     }
                 }
             }

@@ -22,15 +22,12 @@ public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.I
         void show();
     }
 
-    private final static Logger logger = Logger.getLogger(AppShowIconsPresenter.class.getName());
-
     private IAppShowIconsView IconsView;
     private ListStore<String> store;
     private RpcProxy<Void, List<String>> proxy;
 
-
     public void onShowIconsPanel() {
-        loadIcons();
+        getView().show();
     }
 
     public AppShowIconsPresenter() {
@@ -42,31 +39,9 @@ public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.I
         this.proxy = new RpcProxy<Void, List<String>>() {
             @Override
             public void load(Void loadConfig, AsyncCallback<List<String>> callback) {
-                EditorDataService.Util.getDataService().showIconsPanel(callback);
+                EditorDataService.Util.getDataService().getIcons(callback);
             }
         };
-    }
-
-    public void loadIcons() {
-//        if (store.size()==0){
-        if (store == null) {
-            logger.info("store = null");
-            EditorDataService.Util.getDataService().showIconsPanel(new AsyncCallback<List<String>>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                }
-                @Override
-                public void onSuccess(List<String> result) {
-                    logger.info("RESULT FROM AppShowIconsPresenter");
-                    store.replaceAll(result);
-
-
-                }
-            });
-        }
-        logger.info("store not null");
-        getView().show();
-
     }
 
     public RpcProxy<Void, List<String>> getProxy() {
@@ -75,13 +50,5 @@ public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.I
 
     public ListStore<String> getStore() {
         return store;
-    }
-
-    public IAppShowIconsView getIconsView() {
-        return IconsView;
-    }
-
-    public void setIconsView(AppShowIconsView iconsView) {
-        this.IconsView = iconsView;
     }
 }
