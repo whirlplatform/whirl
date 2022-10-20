@@ -19,6 +19,7 @@ import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Основная панель инструментов
@@ -26,6 +27,7 @@ import java.util.List;
 @Presenter(view = ToolBarView.class)
 public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarView, EditorEventBus> {
 
+    private final static Logger logger = Logger.getLogger(ToolBarPresenter.class.getName());
     public interface IToolBarView extends IsWidget, ReverseViewInterface<ToolBarPresenter> {
 
         void updateButtonState();
@@ -129,18 +131,16 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
         HRefUtil.openNewApplicationTab(data);
     }
 
-    public void getIcons() {
-        EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
+    public void showIconsPanel() {
+        eventBus.showIconsPanel();
+        EditorDataService.Util.getDataService().showIconsPanel(new AsyncCallback<List<String>>() {
             @Override
             public void onFailure(Throwable caught) {
             }
             @Override
             public void onSuccess(List<String> result) {
-//                eventBus.loadIcons();
-                eventBus.getIcons();
-                System.out.println(result.toString());
-                System.out.println("Result OK");
-
+                logger.info("RESULT FROM ToolBarPresenter");
+                logger.info(result.toString());
             }
         });
     }

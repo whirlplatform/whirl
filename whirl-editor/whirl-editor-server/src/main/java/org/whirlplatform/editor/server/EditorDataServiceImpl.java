@@ -51,7 +51,6 @@ import java.util.zip.CheckedInputStream;
 public class EditorDataServiceImpl extends RemoteServiceServlet implements EditorDataService {
 
     private Logger _log = LoggerFactory.getLogger(ExportServlet.class);
-
     private EditorConnector _connector;
     private AccountAuthenticator _authenticator;
 
@@ -554,27 +553,9 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         connector().deleteTemplate(template);
     }
 
-    private List<String> res = new ArrayList<>(Arrays.asList("webjars/famfamfam-silk/1.3/icons/font_delete.png",
-            "webjars/famfamfam-silk/1.3/icons/lorry_link.png",
-            "webjars/famfamfam-silk/1.3/icons/map_go.png",
-            "webjars/famfamfam-silk/1.3/icons/layout_link.png",
-            "webjars/famfamfam-silk/1.3/icons/user_female.png",
-            "webjars/famfamfam-silk/1.3/icons/text_heading_1.png",
-            "webjars/famfamfam-silk/1.3/icons/page_white_tux.png",
-            "webjars/famfamfam-silk/1.3/icons/sound.png",
-            "webjars/famfamfam-silk/1.3/icons/brick_delete.png",
-            "webjars/famfamfam-silk/1.3/icons/table_relationship.png",
-            "webjars/famfamfam-silk/1.3/icons/report_picture.png",
-            "webjars/famfamfam-silk/1.3/icons/link_delete.png",
-            "webjars/famfamfam-silk/1.3/icons/building_edit.png",
-            "webjars/famfamfam-silk/1.3/icons/dvd.png",
-            "webjars/famfamfam-silk/1.3/icons/application_form_delete.png",
-            "webjars/famfamfam-silk/1.3/icons/shape_move_back.png"));
-
     @Override
-    public List<String> getIcons() throws RPCException {
-//        return res;
-        String path = "META-INF/resources/webjars/famfamfam-silk";  //"resources.webjars.famfamfam-silk.1.3.icons";
+    public List<String> showIconsPanel() throws RPCException {
+        String path = "META-INF/resources/webjars/famfamfam-silk";
         Reflections reflections = new Reflections(path, new ResourcesScanner());
         List<String> result = reflections.getResources(Pattern.compile(".*\\.png")).stream()
                 .map(s -> s.replace("META-INF/resources/", ""))

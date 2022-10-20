@@ -5,7 +5,6 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
-import org.whirlplatform.editor.client.view.AppShowIconsView;
 import org.whirlplatform.editor.client.view.context.AbstractContextTextButton;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
@@ -18,13 +17,10 @@ public class ToolBarShowIconsButton extends AbstractContextTextButton<ToolBarPre
 
     @Override
     protected SelectEvent.SelectHandler createSelectHandler() {
-       return
-               //event -> {
-//            new AppShowIconsView();
-        new SelectEvent.SelectHandler() {
+       return new SelectEvent.SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
-                getContext().getIcons();
+                getContext().showIconsPanel();
             }
         };
     }

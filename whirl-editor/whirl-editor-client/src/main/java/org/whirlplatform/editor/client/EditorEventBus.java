@@ -358,5 +358,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void getAppInfoForSaveAs(ApplicationBasicInfo info, Callback<ApplicationBasicInfo, Throwable> callback);
 
     @Event(handlers = AppShowIconsPresenter.class)
-    void getIcons();
+    void showIconsPanel();
+
+//    @Event(handlers = AppShowIconsPresenter.class)
+//    void getIcons();
 }

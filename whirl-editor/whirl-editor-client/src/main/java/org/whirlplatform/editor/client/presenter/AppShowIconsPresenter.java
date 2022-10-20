@@ -1,103 +1,84 @@
 package org.whirlplatform.editor.client.presenter;
 
-import com.google.gwt.core.client.Callback;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
-import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.inject.Inject;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
-import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
-import com.sencha.gxt.core.client.Style;
-import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
-import com.sencha.gxt.data.shared.loader.ListStoreBinding;
-import com.sencha.gxt.data.shared.loader.Loader;
-import com.sencha.gxt.widget.core.client.ListView;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.AppShowIconsView;
 import org.whirlplatform.editor.shared.EditorDataService;
-import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
-import org.whirlplatform.meta.shared.ApplicationStoreData;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
+import java.util.logging.Logger;
 
 @Presenter(view = AppShowIconsView.class)
 public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
 
     public interface IAppShowIconsView extends IsWidget, ReverseViewInterface<AppShowIconsPresenter> {
-
+        void show();
     }
 
-    private Callback<String, Throwable> resultCallback;
+    private final static Logger logger = Logger.getLogger(AppShowIconsPresenter.class.getName());
 
-    private List<String> list = new ArrayList<>();
-
-    private AppShowIconsView IconsView;
+    private IAppShowIconsView IconsView;
     private ListStore<String> store;
-
-    private ListView<String, String> viewList;
-
     private RpcProxy<Void, List<String>> proxy;
 
 
-    public void onGetIcons() {
+    public void onShowIconsPanel() {
         loadIcons();
     }
 
     public AppShowIconsPresenter() {
     }
 
-    public AppShowIconsPresenter(AppShowIconsView iconsView) {
+    public AppShowIconsPresenter(IAppShowIconsView iconsView) {
         this.IconsView = iconsView;
         this.store = new ListStore<>(String::toString);
         this.proxy = new RpcProxy<Void, List<String>>() {
             @Override
             public void load(Void loadConfig, AsyncCallback<List<String>> callback) {
-                EditorDataService.Util.getDataService().getIcons(callback);
+                EditorDataService.Util.getDataService().showIconsPanel(callback);
             }
         };
-//        onGetIcons();
     }
 
     public void loadIcons() {
-        EditorDataService.Util.getDataService().getIcons(new AsyncCallback<List<String>>() {
-            @Override
-            public void onFailure(Throwable caught) {
+//        if (store.size()==0){
+        if (store == null) {
+            logger.info("store = null");
+            EditorDataService.Util.getDataService().showIconsPanel(new AsyncCallback<List<String>>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                }
+                @Override
+                public void onSuccess(List<String> result) {
+                    logger.info("RESULT FROM AppShowIconsPresenter");
+                    logger.info(store.toString());
+                    store.replaceAll(result);
 
-            }
 
-            @Override
-            public void onSuccess(List<String> result) {
-                list = result;
-
-            }
-        });
+                }
+            });
+        }
+        logger.info("store not null");
+        getView().show();
 
     }
 
     public RpcProxy<Void, List<String>> getProxy() {
-//        this.proxy = new RpcProxy<Void, List<String>>() {
-//            @Override
-//            public void load(Void loadConfig, AsyncCallback<List<String>> callback) {
-//                EditorDataService.Util.getDataService().getIcons(callback);
-//            }
-//        };
         return proxy;
     }
 
     public ListStore<String> getStore() {
-//        this.store = new ListStore<>(String::toString);
         return store;
     }
 
-    public AppShowIconsView getIconsView() {
+    public IAppShowIconsView getIconsView() {
         return IconsView;
     }
 

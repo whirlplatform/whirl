@@ -74,6 +74,6 @@ public interface EditorDataService extends RemoteService {
 
     void deleteTemplate(BaseTemplate template) throws RPCException;
 
-    List<String> getIcons() throws RPCException;
+    List<String> showIconsPanel() throws RPCException;
 
 }
