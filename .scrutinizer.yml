@@ -44,6 +44,6 @@ build:
               idle_timeout: 700
         - branch: develop
           commands:
-            - command: 'ENV_PREFIX=${JELASTIC_ENV} ENV_TYPE=${JELASTIC_ENV_DEMO} bash ~/build/scripts/whirl/deploy-jelastic-cli.sh'
+            - command: 'ENV_PREFIX=${JELASTIC_ENV} ENV_TYPE=${JELASTIC_ENV_DEMO} bash ~/build/scripts/whirl/deploy-jelastic-maven.sh'
               only_if: '$JELASTIC_ENABLED && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
               idle_timeout: 700
