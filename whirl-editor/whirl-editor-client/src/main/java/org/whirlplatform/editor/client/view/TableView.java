@@ -374,7 +374,7 @@ public class TableView extends ContentPanel implements ITableView {
         list.add(configListTable);
     
         ColumnConfig<TableColumnElement, String> configLabelColumn = new ColumnConfig<TableColumnElement, String>(
-            properties.labelColumn(), 100, EditorMessage.Util.MESSAGE.table_column_label());
+            properties.labelExpression(), 100, EditorMessage.Util.MESSAGE.table_column_label());
         list.add(configLabelColumn);
 
 //        ColumnConfig<TableColumnElement, String> configFunction = new ColumnConfig<TableColumnElement, String>(

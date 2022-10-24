@@ -35,7 +35,7 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     private String regex;
     private PropertyValue regexMessage = new PropertyValue(DataType.STRING);
     private String configColumn;
-    private String labelColumn;
+    private String labelExpression;
     private String color;
 
     public TableColumnElement() {
@@ -225,12 +225,12 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
         this.configColumn = configColumn;
     }
     
-    public String getLabelColumn() {
-        return labelColumn;
+    public String getLabelExpression() {
+        return labelExpression;
     }
     
-    public void setLabelColumn(String labelColumn) {
-        this.labelColumn = labelColumn;
+    public void setLabelExpression(String labelExpression) {
+        this.labelExpression = labelExpression;
     }
     
     @Deprecated

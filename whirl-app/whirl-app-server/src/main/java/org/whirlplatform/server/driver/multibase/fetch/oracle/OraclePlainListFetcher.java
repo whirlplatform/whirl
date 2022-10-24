@@ -36,7 +36,7 @@ public class OraclePlainListFetcher
 
         List<ListModelData> result = data.getData().stream().map(v -> {
             ListModelData l = ListModelData.fromRowModelData(v);
-            l.setLabel(v.get(table.getLabelColumn().getColumnName()));
+            l.setLabel(v.get(table.getLabelExpression().getColumnName()));
             return l;
         }).collect(java.util.stream.Collectors.toList());
 

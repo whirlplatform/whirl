@@ -160,7 +160,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
                 // Если тип поля - список, сортировать по строке
                 if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType() ||
                     org.whirlplatform.meta.shared.data.DataType.FILE == s.getField().getType()) {
-                    orderString.append(s.getField().getLabelColumn());
+                    orderString.append(s.getField().getLabelExpression());
                 } else {
                     orderString.append(s.getField().getName());
                 }
@@ -177,7 +177,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
                 if (column.isDefaultOrder() && column != table.getDeleteColumn()) {
                     if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType() ||
                         org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
-                        orderString.append(column.getLabelColumn());
+                        orderString.append(column.getLabelExpression());
                     } else {
                         orderString.append(column.getColumnName());
                     }
@@ -209,7 +209,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
 
         // Для списков стиль задается в поле ..dfname
         if (field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
-            int labelInd = reader.getFieldIndex(field.getLabelColumn());
+            int labelInd = reader.getFieldIndex(field.getLabelExpression());
             formattedMap = fromUrlEncoded(reader.getString(labelInd));
             value = formattedMap.get(SrvConstant.VALUE);
             objValue = reader.getString(colInd);

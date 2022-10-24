@@ -16,7 +16,7 @@ import org.whirlplatform.server.utils.TypesUtil;
 
 public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
-    public DBColumnExpr labelColumn;
+    public DBColumnExpr labelExpression;
 
     public PlainListFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
@@ -26,11 +26,11 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.labelColumn = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN).as("Column");
+        this.labelExpression = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN).as(metadata.getTitle() + "_list");
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
-            this.where.add(createContains(this.labelColumn, query));
+            this.where.add(createContains(this.labelExpression, query));
         }
 
         if (config instanceof TreeClassLoadConfig) {
