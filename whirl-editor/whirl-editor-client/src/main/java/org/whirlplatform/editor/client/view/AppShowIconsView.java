@@ -59,9 +59,10 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         view.setCell(new SimpleSafeHtmlCell<String>(new AbstractSafeHtmlRenderer<String>() {
             @Override
             public SafeHtml render(String object) {
+                int sep = object.lastIndexOf("/");
                 String html = "<div style='width: 50%; overflow: hidden; white-space: nowrap;'>" +
                         "<img src=" + object + " style='width: 5%; display: inline-block; overflow: hidden; " +
-                        "vertical-align: middle;'> " + object.replace("webjars/famfamfam-silk/1.3/icons/", "") + "</div>" +
+                        "vertical-align: middle;'> " + object.substring(sep+1) + "</div>" +
                         "</div>";
                 return SafeHtmlUtils.fromSafeConstant(html);
             }

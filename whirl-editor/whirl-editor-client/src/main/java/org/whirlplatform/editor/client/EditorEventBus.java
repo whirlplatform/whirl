@@ -360,6 +360,4 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     @Event(handlers = AppShowIconsPresenter.class)
     void showIconsPanel();
 
-//    @Event(handlers = AppShowIconsPresenter.class)
-//    void getIcons();
 }
