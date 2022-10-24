@@ -174,12 +174,10 @@ public class LoginPanelBuilder extends ComponentBuilder {
 		DataServiceAsync.Util.getDataService(callback).login(SessionToken.get(), login, password);
 	}
 
-	@JsIgnore
 	public static void setBuildApplicationCommand(ScheduledCommand command) {
 		buildApplicationCommand = command;
 	}
 
-	@JsIgnore
 	public static void setLoginSuccessCommand(ScheduledCommand command) {
 		loginSuccessCommand = command;
 	}
@@ -283,7 +281,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
 	}
 
 	/**
-	 * Фокусирует компонент.
+	 * Устанавливает фокус на компоненте.
 	 */
 	@Override
 	public void focus() {

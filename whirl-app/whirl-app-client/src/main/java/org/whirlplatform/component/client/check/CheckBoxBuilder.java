@@ -307,7 +307,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

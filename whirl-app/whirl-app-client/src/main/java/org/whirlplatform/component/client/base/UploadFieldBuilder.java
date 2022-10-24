@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Поле загрузки
+ * Поле загрузки файла.
  */
 @JsType(name = "UploadField", namespace = "Whirl")
 public class UploadFieldBuilder extends AbstractFieldBuilder implements

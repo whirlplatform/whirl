@@ -232,7 +232,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает положение виджета на странице XY.
+     * Устанавливает положение компонент на странице XY.
      *
      * @param x - координата x
      * @param y - координата y
@@ -484,7 +484,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Центральный контейнер
+ * Контейнер содержимое которого центрируется.
  */
 @JsType(name = "CenterContainer", namespace = "Whirl")
 public class CenterContainerBuilder extends SimpleContainerBuilder {
@@ -106,7 +106,7 @@ public class CenterContainerBuilder extends SimpleContainerBuilder {
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

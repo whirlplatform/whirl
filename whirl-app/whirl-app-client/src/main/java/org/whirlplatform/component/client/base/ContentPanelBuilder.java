@@ -187,7 +187,7 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

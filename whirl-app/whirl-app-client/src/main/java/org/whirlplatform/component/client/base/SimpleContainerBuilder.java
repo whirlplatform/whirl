@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Простой контейнер
+ * Контейнер с одним элементом.
  */
 @JsType(name = "SimpleContainer", namespace = "Whirl")
 public class SimpleContainerBuilder extends ComponentBuilder implements
@@ -131,7 +131,7 @@ public class SimpleContainerBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

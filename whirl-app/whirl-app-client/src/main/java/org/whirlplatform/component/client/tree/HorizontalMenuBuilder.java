@@ -164,7 +164,7 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

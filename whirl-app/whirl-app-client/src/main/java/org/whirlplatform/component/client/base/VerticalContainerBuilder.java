@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Вертикальный контейнер
+ * Контейнер располагающей компоненты в одну колонку.
  */
 @JsType(name = "VerticalContainer", namespace = "Whirl")
 public class VerticalContainerBuilder extends InsertContainerBuilder {

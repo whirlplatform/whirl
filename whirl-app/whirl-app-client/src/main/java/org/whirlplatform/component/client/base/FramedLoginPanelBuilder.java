@@ -33,7 +33,6 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		this(Collections.emptyMap());
 	}
 
-	@JsIgnore
 	@Override
 	public ComponentType getType() {
 		return ComponentType.FramedLoginPanelType;
@@ -99,7 +98,6 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
 		return SafeHtmlUtils.fromTrustedString(html.toString());
 	}
 
-	@JsIgnore
 	@Override
 	public Locator getLocatorByElement(Element element) {
 		return super.getLocatorByElement(element);

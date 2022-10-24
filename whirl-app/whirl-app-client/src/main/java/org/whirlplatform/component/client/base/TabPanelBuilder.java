@@ -217,7 +217,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
 
 
     /**
-     * Получает активный виджет.
+     * Получает активный компонент.
      *
      * @return ComponentBuilder
      */
@@ -232,7 +232,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает активный виджет.
+     * Устанавливает активный компонент.
      *
      * @param child - ComponentBuilder
      */
@@ -283,7 +283,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

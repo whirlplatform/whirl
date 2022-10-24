@@ -183,7 +183,7 @@ public class ImageBuilder extends ComponentBuilder implements ClickEvent.HasClic
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

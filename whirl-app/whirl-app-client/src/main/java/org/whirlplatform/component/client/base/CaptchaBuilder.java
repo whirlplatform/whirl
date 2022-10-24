@@ -398,7 +398,7 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

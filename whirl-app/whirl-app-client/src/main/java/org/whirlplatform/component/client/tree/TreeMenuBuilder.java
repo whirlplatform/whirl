@@ -451,7 +451,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

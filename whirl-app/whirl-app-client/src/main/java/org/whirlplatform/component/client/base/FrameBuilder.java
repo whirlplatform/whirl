@@ -112,7 +112,7 @@ public class FrameBuilder extends ComponentBuilder {
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

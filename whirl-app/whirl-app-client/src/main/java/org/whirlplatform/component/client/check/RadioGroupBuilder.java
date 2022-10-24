@@ -551,7 +551,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

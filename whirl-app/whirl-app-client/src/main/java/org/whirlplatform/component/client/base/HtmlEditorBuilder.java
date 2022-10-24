@@ -171,7 +171,7 @@ public class HtmlEditorBuilder extends ComponentBuilder
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

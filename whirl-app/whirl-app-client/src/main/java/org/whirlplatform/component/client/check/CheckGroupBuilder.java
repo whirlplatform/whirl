@@ -399,7 +399,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

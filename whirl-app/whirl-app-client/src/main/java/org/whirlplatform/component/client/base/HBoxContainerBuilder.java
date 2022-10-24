@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Горизонтальный контейнер списков
+ * Контейнер расположения компонентов в виде горизонтальных рядов.
  */
 @JsType(name = "HBoxContainer", namespace = "Whirl")
 public class HBoxContainerBuilder extends BoxContainerBuilder {
@@ -87,7 +87,7 @@ public class HBoxContainerBuilder extends BoxContainerBuilder {
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

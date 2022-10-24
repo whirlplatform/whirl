@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Горизонтальный контейнер
+ * Контейнер располагающей компоненты в один ряд.
  */
 @JsType(name = "HorizontalContainer", namespace = "Whirl")
 public class HorizontalContainerBuilder extends InsertContainerBuilder {
@@ -99,7 +99,7 @@ public class HorizontalContainerBuilder extends InsertContainerBuilder {
 	}
 
 	/**
-	 * Фокусирует компонент.
+	 * Устанавливает фокус на компоненте.
 	 */
 	@Override
 	public void focus() {

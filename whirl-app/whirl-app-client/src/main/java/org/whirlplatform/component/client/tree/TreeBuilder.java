@@ -900,7 +900,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

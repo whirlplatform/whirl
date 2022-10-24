@@ -237,7 +237,7 @@ public class HtmlBuilder extends ComponentBuilder implements ClickEvent.HasClick
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

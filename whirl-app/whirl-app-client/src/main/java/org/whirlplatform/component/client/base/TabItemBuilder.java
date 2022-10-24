@@ -54,7 +54,7 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Устанавливает активный виджет.
+	 * Делает данную вкладку активной в панели.
 	 */
 	public void activate() {
 		TabPanelBuilder tabPanelBuilder = (TabPanelBuilder) parentBuilder;
@@ -93,6 +93,7 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 
 	/**
 	 * Устанавливает заголовок.
+	 *
 	 * @param title - String, заголовок
 	 */
 	@Override
@@ -102,7 +103,8 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 
 	/**
 	 * Возвращает заголовок.
-	 * @return
+	 *
+	 * @return String - содержимое заголовка в формате html
 	 */
 	@Override
 	public String getTitle() {
@@ -176,9 +178,9 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Проверяет активность виджета.
+	 * Проверяет активность компонента.
 	 *
-	 * @return true, виджет активен
+	 * @return true, компонент активен
 	 */
 	public boolean isActive() {
         return parentBuilder != null
@@ -222,7 +224,7 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Фокусирует компонент.
+	 * Устанавливает фокус на компоненте.
 	 */
 	@Override
 	public void focus() {

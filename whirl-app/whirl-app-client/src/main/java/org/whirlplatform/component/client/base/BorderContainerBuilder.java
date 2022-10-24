@@ -165,7 +165,7 @@ public class BorderContainerBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {

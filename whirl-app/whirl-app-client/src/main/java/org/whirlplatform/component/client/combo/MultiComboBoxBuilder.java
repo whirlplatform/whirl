@@ -622,7 +622,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {

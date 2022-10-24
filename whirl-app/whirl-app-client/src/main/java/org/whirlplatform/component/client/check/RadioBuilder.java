@@ -309,7 +309,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Фокусирует компонент.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {
