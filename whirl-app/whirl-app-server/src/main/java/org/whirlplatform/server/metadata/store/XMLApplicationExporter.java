@@ -900,9 +900,9 @@ public class XMLApplicationExporter {
             setElementText(parameterEl, column.getConfigColumn());
         }
     
-        if (column.getLabelColumn() != null) {
-            parameterEl = columnEl.addElement("labelColumn");
-            setElementText(parameterEl, column.getLabelColumn());
+        if (column.getLabelExpression() != null) {
+            parameterEl = columnEl.addElement("labelExpression");
+            setElementText(parameterEl, column.getLabelExpression());
         }
     }
 

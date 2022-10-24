@@ -72,7 +72,7 @@ public class CSVExporter extends Exporter {
                                     DBReader reader) {
 		String result;
 		if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
-			result = reader.getString(reader.getFieldIndex(field.getLabelColumn()));
+			result = reader.getString(reader.getFieldIndex(field.getLabelExpression()));
 		} else {
 			result = ServerGetter.getResultSetValue(reader,
 					reader.getFieldIndex(field.getName()));

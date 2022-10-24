@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static org.whirlplatform.server.global.SrvConstant.COLUMN_BASIC_NAME;
+
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<FieldMetadata, TableColumnElement>();
     public boolean ready = false;
@@ -66,7 +68,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
         // Добавление стилизованных колонок в дереве по новому алгоритму
         if (tree) {
-            TableColumnElement nameColumn = table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelColumn());
+            TableColumnElement nameColumn = table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelExpression());
             if (nameColumn.getConfigColumn() != null) {
                 addConfigColumn(this.dbTable, nameColumn);
             }
@@ -97,9 +99,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             // для списков и для файлов
             if ((org.whirlplatform.meta.shared.data.DataType.LIST == f.getType() ||
                     org.whirlplatform.meta.shared.data.DataType.FILE == f.getType()) &&
-                    !StringUtils.isEmpty(f.getLabelColumn())) {
-                this.dbTable.addColumn(f.getLabelColumn(), DataType.TEXT, 0,
-                                       DataMode.NotNull);
+                    !StringUtils.isEmpty(f.getLabelExpression())) {
+                this.dbTable.addColumn(COLUMN_BASIC_NAME, DataType.TEXT, 0, DataMode.NotNull);
             }
         }
 
@@ -117,7 +118,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         for (FilterValue filter : loadConfig.getFilters()) {
             DBColumnExpr col;
             if (filter.getMetadata().getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
-                col = this.dbTable.getColumn(filter.getMetadata().getLabelColumn());
+                col = this.dbTable.getColumn(filter.getMetadata().getLabelExpression());
             } else {
                 col = this.dbTable.getColumn(filter.getMetadata().getName());
             }

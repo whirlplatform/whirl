@@ -15,13 +15,33 @@
                          path="postgresql/as_result.sql"
                          relativeToChangelogFile="true"/>
 
-        <createProcedure procedureName="example_func_3"
-                         path="postgresql/example_func_3.sql"
+        <createProcedure procedureName="row_list"
+                         path="postgresql/row_list.sql"
+                         relativeToChangelogFile="true"/>
+
+        <createProcedure procedureName="index_map"
+                         path="postgresql/index_map.sql"
+                         relativeToChangelogFile="true"/>
+
+        <createProcedure procedureName="split_to_map"
+                         path="postgresql/split_to_map.sql"
+                         relativeToChangelogFile="true"/>
+
+        <createProcedure procedureName="parse_row_list"
+                         path="postgresql/parse_row_list.sql"
+                         relativeToChangelogFile="true"/>
+
+        <createProcedure procedureName="get_last_id"
+                         path="postgresql/get_last_id.sql"
                          relativeToChangelogFile="true"/>
 
         <rollback>
             <dropProcedure procedureName="as_result"/>
-            <dropProcedure procedureName="example_func_3"/>
+            <dropProcedure procedureName="row_list"/>
+            <dropProcedure procedureName="index_map"/>
+            <dropProcedure procedureName="split_to_map"/>
+            <dropProcedure procedureName="parse_row_list"/>
+            <dropProcedure procedureName="get_last_id"/>
         </rollback>
     </changeSet>
 

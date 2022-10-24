@@ -13,4 +13,6 @@ public class SrvConstant {
 
     public static final String VALUE = "VALUE";
     public static final String STYLE = "STYLE";
+
+    public static final String COLUMN_BASIC_NAME = "_label";
 }
