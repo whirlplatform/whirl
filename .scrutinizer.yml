@@ -40,10 +40,10 @@ build:
             - command: 'TAG=${TAG} bash ~/build/scripts/whirl/release-docker.sh'
               only_if: '[[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
             - command: 'TAG=${TAG} ENV_PREFIX=${JELASTIC_ENV_PREFIX} ENV_TYPE=${JELASTIC_ENV_DEMO} bash ~/build/scripts/whirl/deploy-jelastic-cli.sh'
-              only_if: '$JELASTIC_ENABLED && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
+              only_if: '$JELASTIC_ENABLED_DEMO && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
               idle_timeout: 700
         - branch: develop
           commands:
             - command: 'ENV_PREFIX=${JELASTIC_ENV_PREFIX} ENV_TYPE=${JELASTIC_ENV_DEVELOP} bash ~/build/scripts/whirl/deploy-jelastic-maven.sh'
-              only_if: '$JELASTIC_ENABLED && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
+              only_if: '$JELASTIC_ENABLED_DEVELOP && [[ -z "$SCRUTINIZER_PR_NUMBER" ]]'
               idle_timeout: 700
