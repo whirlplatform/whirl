@@ -2,6 +2,7 @@ package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.combo.MultiComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -31,25 +32,25 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -59,108 +60,137 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true, если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         return super.create();
     }
 
+    @JsIgnore
     @Override
     public void setValue(ListModelData value) {
         super.setValue(value);
     }
 
+    @JsIgnore
     @Override
     public ListModelData getValue() {
         return super.getValue();
     }
 
+    /**
+     * Возвращает текст объекта.
+     *
+     * @return новый текст объекта
+     */
     public String getText() {
         return super.getText();
     }
 
+    /**
+     * Очищает значение поля.
+     */
     @Override
     public void clear() {
-     super.clear();
+        super.clear();
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для не валидного поля
+     * @return true если поле доступно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         return super.isValid(invalidate);
     }
 
+
+    /**
+     * Устанавливает значение только для чтения.
+     *
+     * @param readOnly true, если поле доступно только для чтения
+     */
     @Override
     public void setReadOnly(boolean readOnly) {
         super.setReadOnly(readOnly);
     }
 
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return super.isSaveState();
     }
 
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         super.setSaveState(save);
     }
 
+    @JsIgnore
     public void setRestoreState(boolean restore) {
         super.setRestoreState(restore);
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return super.getStateScope();
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         super.setStateScope(scope);
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         super.saveState();
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     public void setFieldMask(String mask) {
         super.setFieldMask(mask);
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус недействительности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
@@ -168,7 +198,7 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Очищает статус недействительности для поля.
      */
     @Override
     public void clearInvalid() {
@@ -176,9 +206,9 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
     }
 
     /**
-     * Checks if is required.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -186,9 +216,9 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {

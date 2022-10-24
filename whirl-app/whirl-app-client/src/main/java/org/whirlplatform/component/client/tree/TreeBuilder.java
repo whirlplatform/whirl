@@ -82,6 +82,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Дерево
+ */
 @JsType(name = "Tree", namespace = "Whirl")
 public class TreeBuilder extends ComponentBuilder
         implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
@@ -535,6 +538,9 @@ public class TreeBuilder extends ComponentBuilder
         return tree;
     }
 
+    /**
+     * Очищает значение поля.
+     */
     @Override
     public void clear() {
         selModel.deselectAll();
@@ -546,6 +552,12 @@ public class TreeBuilder extends ComponentBuilder
         return isValid(false);
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         if (forceInvalidText != null) {
@@ -565,11 +577,21 @@ public class TreeBuilder extends ComponentBuilder
         return true;
     }
 
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
     @Override
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
     @Override
     public void setRequired(boolean required) {
         this.required = required;
@@ -627,10 +649,16 @@ public class TreeBuilder extends ComponentBuilder
         tree.setCheckedSelection(models);
     }
 
+    @JsIgnore
     public TreeStore<RowModelData> getStore() {
         return store;
     }
 
+    /**
+     * Устанавливает статус недействительности для поля с заданным текстом.
+     *
+     * @param msg сообщение
+     */
     @Override
     public void markInvalid(String msg) {
         EditorError error = new SimpleEditorError(msg);
@@ -638,6 +666,9 @@ public class TreeBuilder extends ComponentBuilder
         forceInvalidText = msg;
     }
 
+    /**
+     * Очищает статус недействительности для поля.
+     */
     @Override
     public void clearInvalid() {
         errorHandler.clearInvalid();
@@ -650,6 +681,9 @@ public class TreeBuilder extends ComponentBuilder
         return addHandler(handler, SelectEvent.getType());
     }
 
+    /**
+     * Загружает данные, используя текущую конфигурацию
+     */
     public void load() {
         load(Collections.emptyList());
     }
@@ -660,22 +694,36 @@ public class TreeBuilder extends ComponentBuilder
         loader.load();
     }
 
+    /**
+     * Проверяет необходимость сохранения состояния дерева в БД.
+     *
+     * @return true, если состояние нужно сохранить
+     */
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    /**
+     * Устанавливает необходимо ли сохранять состояние дерева в БД.
+     *
+     * @param save true, если состояние нужно сохранить
+     */
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore != null && scope != null && scope != stateStore.getScope()) {
@@ -693,6 +741,7 @@ public class TreeBuilder extends ComponentBuilder
         }
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         RowListValue v = getFieldValue();
@@ -733,6 +782,7 @@ public class TreeBuilder extends ComponentBuilder
         return tree.hasSearch() && tree.getSearchText().length() >= minChars;
     }
 
+    @JsIgnore
     @SuppressWarnings("rawtypes")
     public void clearLabelFilter() {
         if (tree.hasSearch()) {
@@ -833,25 +883,25 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -861,19 +911,21 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
+    @Override
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
+    @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }

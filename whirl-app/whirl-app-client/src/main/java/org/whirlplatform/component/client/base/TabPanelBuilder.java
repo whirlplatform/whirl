@@ -32,261 +32,283 @@ import java.util.Map.Entry;
 @JsType(namespace = "Whirl", name = "TabPane")
 public class TabPanelBuilder extends ComponentBuilder implements Containable {
 
-	private TabPanel panel;
+    private TabPanel panel;
 
-	private List<ComponentBuilder> children;
+    private List<ComponentBuilder> children;
 
-	private Map<ComponentBuilder, TabItemBuilder> builderToTabItem;
+    private Map<ComponentBuilder, TabItemBuilder> builderToTabItem;
 
-	public TabPanelBuilder(Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    public TabPanelBuilder(Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-	@JsIgnore
-	public TabPanelBuilder() {
-		this(Collections.emptyMap());
-	}
+    @JsIgnore
+    public TabPanelBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	@JsIgnore
-	@Override
-	public ComponentType getType() {
-		return ComponentType.TabPanelType;
-	}
+    @JsIgnore
+    @Override
+    public ComponentType getType() {
+        return ComponentType.TabPanelType;
+    }
 
-	protected Component init(Map<String, DataValue> builderProperties) {
-		children = new ArrayList<ComponentBuilder>();
-		builderToTabItem = new HashMap<ComponentBuilder, TabItemBuilder>();
+    protected Component init(Map<String, DataValue> builderProperties) {
+        children = new ArrayList<ComponentBuilder>();
+        builderToTabItem = new HashMap<ComponentBuilder, TabItemBuilder>();
 
-		panel = new TabPanel();
-		panel.setTabScroll(true);
-		panel.setCloseContextMenu(true);
-		panel.addSelectionHandler(new SelectionHandler() {
-			public void onSelection(
-					final com.google.gwt.event.logical.shared.SelectionEvent event) {
-				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-					@Override
-					public void execute() {
-						((ResizeContainer) event.getSelectedItem())
-								.forceLayout();
-					}
-				});
+        panel = new TabPanel();
+        panel.setTabScroll(true);
+        panel.setCloseContextMenu(true);
+        panel.addSelectionHandler(new SelectionHandler() {
+            public void onSelection(
+                    final com.google.gwt.event.logical.shared.SelectionEvent event) {
+                Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+                    @Override
+                    public void execute() {
+                        ((ResizeContainer) event.getSelectedItem())
+                                .forceLayout();
+                    }
+                });
 
             }
         });
-		panel.addCloseHandler(new CloseHandler<Widget>() {
-			@Override
-			public void onClose(CloseEvent<Widget> event) {
-				Widget widget = event.getItem();
-				ComponentBuilder builder = null;
-				for (ComponentBuilder b : children) {
-					if (b.getComponent() == widget) {
-						builder = b;
-					}
-				}
-				for (Entry<ComponentBuilder, TabItemBuilder> b : builderToTabItem
-						.entrySet()) {
-					if (b.getValue().getComponent() == widget) {
-						builder = b.getKey();
-					}
-				}
-				removeChild(builder, true);
-			}
-		});
-		
-		TabPanelMessages messages = new TabPanelMessages() {
-			@Override
-			public String closeOtherTabs() {
-				return AppMessage.Util.MESSAGE.closeOthers();
-			}
-			
-			@Override
-			public String closeTab() {
-				return AppMessage.Util.MESSAGE.close();
-			}
-		};
-		panel.setMessages(messages);
-		return panel;
-	}
+        panel.addCloseHandler(new CloseHandler<Widget>() {
+            @Override
+            public void onClose(CloseEvent<Widget> event) {
+                Widget widget = event.getItem();
+                ComponentBuilder builder = null;
+                for (ComponentBuilder b : children) {
+                    if (b.getComponent() == widget) {
+                        builder = b;
+                    }
+                }
+                for (Entry<ComponentBuilder, TabItemBuilder> b : builderToTabItem
+                        .entrySet()) {
+                    if (b.getValue().getComponent() == widget) {
+                        builder = b.getKey();
+                    }
+                }
+                removeChild(builder, true);
+            }
+        });
 
-	@Override
-	protected void setInitProperties(Map<String, DataValue> properties) {
-		super.setInitProperties(properties);
-		if (panel.getWidgetCount() > 0) {
-			panel.setActiveWidget(panel.getWidget(0));
-		}
-	}
+        TabPanelMessages messages = new TabPanelMessages() {
+            @Override
+            public String closeOtherTabs() {
+                return AppMessage.Util.MESSAGE.closeOthers();
+            }
 
-	public void setBorder(boolean show) {
-		TabPanel panel = (TabPanel) componentInstance;
-		panel.setBodyBorder(show);
-	}
+            @Override
+            public String closeTab() {
+                return AppMessage.Util.MESSAGE.close();
+            }
+        };
+        panel.setMessages(messages);
+        return panel;
+    }
 
-	protected void update(TabItemBuilder item) {
-		TabPanel panel = (TabPanel) componentInstance;
-		panel.update(item.getComponent(), item.getTabItemConfig());
-	}
+    @Override
+    protected void setInitProperties(Map<String, DataValue> properties) {
+        super.setInitProperties(properties);
+        if (panel.getWidgetCount() > 0) {
+            panel.setActiveWidget(panel.getWidget(0));
+        }
+    }
 
-	@Override
-	public void addChild(ComponentBuilder child) {
-		TabItemBuilder itemBuilder;
-		if (child instanceof TabItemBuilder) {
-			itemBuilder = (TabItemBuilder) child;
-		} else {
-			itemBuilder = new TabItemBuilder();
-			itemBuilder.setProperties(child.getProperties(), false);
-			itemBuilder.create();
-			if (child instanceof CloseProvider) {
+    /**
+     * Устанавливает отображение границы панели
+     * (по умолчанию true, pre-render).
+     *
+     * @param show - boolean, true для отображения границы
+     */
+    public void setBorder(boolean show) {
+        TabPanel panel = (TabPanel) componentInstance;
+        panel.setBodyBorder(show);
+    }
+
+    protected void update(TabItemBuilder item) {
+        TabPanel panel = (TabPanel) componentInstance;
+        panel.update(item.getComponent(), item.getTabItemConfig());
+    }
+
+    @Override
+    public void addChild(ComponentBuilder child) {
+        TabItemBuilder itemBuilder;
+        if (child instanceof TabItemBuilder) {
+            itemBuilder = (TabItemBuilder) child;
+        } else {
+            itemBuilder = new TabItemBuilder();
+            itemBuilder.setProperties(child.getProperties(), false);
+            itemBuilder.create();
+            if (child instanceof CloseProvider) {
                 itemBuilder.setClosable(child.isClosable());
-			}
-			String title = null;
-			if (child instanceof TitleProvider) {
+            }
+            String title = null;
+            if (child instanceof TitleProvider) {
                 title = child.getTitle();
-			}
-			if (title == null || title.isEmpty()) {
-				title = "...";
-			}
-			itemBuilder.setProperty(PropertyType.Title.getCode(),new DataValueImpl(DataType.STRING, title));
-			itemBuilder.setProperty(PropertyType.LayoutDataIndex.getCode(),
-					new DataValueImpl(DataType.NUMBER, panel.getWidgetCount()));
-			itemBuilder.addChild(child);
-			builderToTabItem.put(child, itemBuilder);
-		}
-		panel.insert(itemBuilder.getComponent(),
-				itemBuilder.getIndexPosition(), itemBuilder.getTabItemConfig());
-		children.add(child);
-		child.setParentBuilder(this);
-		if(child.getProperties().containsKey(PropertyType.Active.getCode())){
-			Boolean active = child.getProperties().get(PropertyType.Active.getCode()).getBoolean();
-			if(active){
-				setActive(child);
-			}
-		}
-	}
+            }
+            if (title == null || title.isEmpty()) {
+                title = "...";
+            }
+            itemBuilder.setProperty(PropertyType.Title.getCode(), new DataValueImpl(DataType.STRING, title));
+            itemBuilder.setProperty(PropertyType.LayoutDataIndex.getCode(),
+                    new DataValueImpl(DataType.NUMBER, panel.getWidgetCount()));
+            itemBuilder.addChild(child);
+            builderToTabItem.put(child, itemBuilder);
+        }
+        panel.insert(itemBuilder.getComponent(),
+                itemBuilder.getIndexPosition(), itemBuilder.getTabItemConfig());
+        children.add(child);
+        child.setParentBuilder(this);
+        if (child.getProperties().containsKey(PropertyType.Active.getCode())) {
+            Boolean active = child.getProperties().get(PropertyType.Active.getCode()).getBoolean();
+            if (active) {
+                setActive(child);
+            }
+        }
+    }
 
-	@Override
-	public void removeChild(ComponentBuilder child) {
-		removeChild(child, false);
-	}
+    @Override
+    public void removeChild(ComponentBuilder child) {
+        removeChild(child, false);
+    }
 
-	private void removeChild(ComponentBuilder child, boolean ignoreComponent) {
-		ComponentBuilder removable = child;
-		if (!(child instanceof TabItemBuilder)) {
-			removable = builderToTabItem.remove(child);
-		}
-		TabPanel panel = (TabPanel) componentInstance;
-		if (panel.remove(removable.getComponent()) || ignoreComponent) {
-			children.remove(child);
-			child.setParentBuilder(null);
-		}
-	}
+    private void removeChild(ComponentBuilder child, boolean ignoreComponent) {
+        ComponentBuilder removable = child;
+        if (!(child instanceof TabItemBuilder)) {
+            removable = builderToTabItem.remove(child);
+        }
+        TabPanel panel = (TabPanel) componentInstance;
+        if (panel.remove(removable.getComponent()) || ignoreComponent) {
+            children.remove(child);
+            child.setParentBuilder(null);
+        }
+    }
 
-	@Override
-	public void clearContainer() {
-		for (ComponentBuilder c : children) {
-			removeChild(c);
-		}
-	}
+    /**
+     * Очищает контейнер.
+     */
+    @Override
+    public void clearContainer() {
+        for (ComponentBuilder c : children) {
+            removeChild(c);
+        }
+    }
 
-	@Override
-	public void forceLayout() {
-		TabPanel panel = (TabPanel) componentInstance;
-		panel.forceLayout();
-	}
+    /**
+     * Пересчитывает расположение компонентов в данном контейнере.
+     */
+    @Override
+    public void forceLayout() {
+        TabPanel panel = (TabPanel) componentInstance;
+        panel.forceLayout();
+    }
 
-	@Override
-	protected <C> C getRealComponent() {
-		return (C) panel;
-	}
+    @Override
+    protected <C> C getRealComponent() {
+        return (C) panel;
+    }
 
-	@Override
-	public ComponentBuilder[] getChildren() {
-		return children.toArray(new ComponentBuilder[0]);
-	}
+    @Override
+    public ComponentBuilder[] getChildren() {
+        return children.toArray(new ComponentBuilder[0]);
+    }
 
-	public ComponentBuilder getActive() {
-		Widget active = panel.getActiveWidget();
-		for (ComponentBuilder c : children) {
-			if (active == c.getComponent()) {
-				return c;
-			}
-		}
-		return null;
-	}
 
-	public void setActive(ComponentBuilder child) {
-		if (!children.contains(child)) {
-			return;
-		}
-		Widget widget;
-		if (panel.getWidgetIndex(child.getComponent()) > -1) {
-			widget = child.getComponent();
-		} else {
-			widget = builderToTabItem.get(child).getComponent();
-		}
-		panel.setActiveWidget(widget);
-	}
+    /**
+     * Получает активный компонент.
+     *
+     * @return ComponentBuilder
+     */
+    public ComponentBuilder getActive() {
+        Widget active = panel.getActiveWidget();
+        for (ComponentBuilder c : children) {
+            if (active == c.getComponent()) {
+                return c;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public int getChildrenCount() {
-		return children.size();
-	}
+    /**
+     * Устанавливает активный компонент.
+     *
+     * @param child - ComponentBuilder
+     */
+    public void setActive(ComponentBuilder child) {
+        if (!children.contains(child)) {
+            return;
+        }
+        Widget widget;
+        if (panel.getWidgetIndex(child.getComponent()) > -1) {
+            widget = child.getComponent();
+        } else {
+            widget = builderToTabItem.get(child).getComponent();
+        }
+        panel.setActiveWidget(widget);
+    }
 
-	/**
-	 * Returns component's code.
-	 *
-	 * @return component's code
-	 */
-	@Override
-	public String getCode() {
-		return super.getCode();
-	}
+    @Override
+    public int getChildrenCount() {
+        return children.size();
+    }
 
-	/**
-	 * Checks if component is in hidden state.
-	 *
-	 * @return true if component is hidden
-	 */
-	@Override
-	public boolean isHidden() {
-		return super.isHidden();
-	}
+    /**
+     * Возвращает код компонента.
+     *
+     * @return код компонента
+     */
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
 
-	/**
-	 * Sets component's hidden state.
-	 *
-	 * @param hidden true - to hide component, false - to show component
-	 */
-	@Override
-	public void setHidden(boolean hidden) {
-		super.setHidden(hidden);
-	}
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
 
-	/**
-	 * Focuses component.
-	 */
-	@Override
-	public void focus() {
-		super.focus();
-	}
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
 
-	/**
-	 * Checks if component is enabled.
-	 *
-	 * @return true if component is enabled
-	 */
-	@Override
-	public boolean isEnabled() {
-		return super.isEnabled();
-	}
+    /**
+     * Устанавливает фокус на компоненте.
+     */
+    @Override
+    public void focus() {
+        super.focus();
+    }
 
-	/**
-	 * Sets component's enabled state.
-	 *
-	 * @param enabled true - to enable component, false - to disable component
-	 */
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-	}
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 
 }

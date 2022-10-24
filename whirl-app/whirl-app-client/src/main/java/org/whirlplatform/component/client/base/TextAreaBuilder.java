@@ -73,6 +73,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
      * @param value - String, значение атрибута
      * @return boolean
      */
+    @JsIgnore
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.Required.getCode())) {
             if (value != null && value.getBoolean() != null) {
@@ -114,7 +115,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Установка зачения текстовой области
+     * Установка значения текстовой области
      *
      * @param value String
      */
@@ -123,6 +124,11 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
         field.setValue(value);
     }
 
+    /**
+     * Получает текст объекта.
+     *
+     * @return новый текст объекта
+     */
     public String getText() {
         return field.getText();
     }
@@ -178,9 +184,9 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     @Override
     public String getFieldMask() {
@@ -188,9 +194,9 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     @Override
     public void setFieldMask(String mask) {
@@ -198,9 +204,9 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает не валидный статус для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
@@ -208,7 +214,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Удаляет не валидный статус для поля.
      */
     @Override
     public void clearInvalid() {
@@ -216,7 +222,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -225,10 +231,10 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Check if field is valid.
+     * Проверяет, является ли поле валидным.
      *
-     * @param invalidate true to invalidate field
-     * @return true if field is valid
+     * @param invalidate true для не валидного поля
+     * @return true если поле доступно
      */
     @Override
     public boolean isValid(boolean invalidate) {
@@ -236,7 +242,7 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Checks if is required.
+     * Проверяет обязательность для заполнения.
      *
      * @return true, if is required
      */
@@ -246,9 +252,9 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательное требование для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
@@ -256,9 +262,9 @@ public class TextAreaBuilder extends AbstractFieldBuilder implements
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     @Override
     public void setReadOnly(boolean readOnly) {

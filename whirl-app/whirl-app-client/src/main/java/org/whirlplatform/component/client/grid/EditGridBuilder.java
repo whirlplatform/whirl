@@ -523,6 +523,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param config   - TableConfig
      * @param skipLoad - boolean
      */
+    @JsIgnore
     public void reconfigure(TableConfig config, boolean skipLoad) {
         this.metadata = config.getMetadata();
 
@@ -631,7 +632,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Загрузка грида
+     * Загрузка грида.
      */
     @JsIgnore
     public void load() {
@@ -639,7 +640,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Загрузка грида с параметрами
+     * Загрузка грида с параметрами.
      *
      * @param parameters - List< DataValue >
      */
@@ -649,7 +650,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Загрузка грида
+     * Загрузка грида.
      *
      * @param reconfigure - boolean
      */
@@ -658,7 +659,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Загрузка грида с параметрами
+     * Загрузка грида с параметрами.
      *
      * @param reconfigure - boolean
      * @param parameters  - List< DataValue >
@@ -682,10 +683,11 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получить загруженную конфигурацию грида
+     * Получить загруженную конфигурацию грида.
      *
      * @return
      */
+    @JsIgnore
     public ClassLoadConfig getLoadConfig(List<DataValue> parameters) {
         ClassLoadConfig loadConfig = new ClassLoadConfig();
         loadConfig.setAll(loadAll);
@@ -709,7 +711,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация панели инструментов грида
+     * Инициализация панели инструментов грида.
      *
      * @param metadata - ClassMetadata
      */
@@ -878,7 +880,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Отобразить конфигурацию грида
+     * Отобразить конфигурацию грида.
      *
      * @param confirmText - String
      * @param handler     - SelectHandler
@@ -895,7 +897,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация фильтра грида
+     * Инициализация фильтра грида.
      *
      */
     private void initFilter(ClassMetadata meta) {
@@ -942,7 +944,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация панели сортировки в гриде
+     * Инициализация панели сортировки в гриде.
      *
      */
     private void initSortPanel(ClassMetadata meta) {
@@ -975,7 +977,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Открыть фильтр грида
+     * Открыть фильтр грида.
      */
     private void openFilter() {
         filterPanel.show();
@@ -1040,7 +1042,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Спрятать окно редактирования грида
+     * Спрятать окно редактирования грида.
      *
      * @param window - Window
      */
@@ -1054,7 +1056,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Вставить запись в грид
+     * Вставить запись в грид.
      *
      * @param window - Window
      * @param model  - RowModelData
@@ -1075,7 +1077,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Обновить запись в гриде
+     * Обновить запись в гриде.
      *
      * @param window - Window
      * @param model  - RowModelData
@@ -1096,7 +1098,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Удалить запись из грида
+     * Удалить запись из грида.
      *
      */
     // private void deleteRecord(RowModelData model) {
@@ -1107,7 +1109,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Инициализация разбивки на страницы в гриде
+     * Инициализация разбивки на страницы в гриде.
      */
     private void initPaginator() {
         if (!showPagingToolbar) {
@@ -1137,7 +1139,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Проверка на валидность грида
+     * Проверка на валидность грида.
      */
     @JsIgnore
     @Override
@@ -1146,7 +1148,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Проверка на валидность грида
+     * Проверка на валидность грида.
      *
      * @param invalidate - boolean
      */
@@ -1169,7 +1171,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получить информацию о свойстве "Обязателен для заполнения" у грида
+     * Получить информацию о свойстве "Обязателен для заполнения" у грида.
      *
      * @return boolean
      */
@@ -1179,7 +1181,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Установка свойства "Обязателен для заполнения" для грида
+     * Установка свойства "Обязателен для заполнения" для грида.
      *
      * @param required - boolean
      */
@@ -1189,7 +1191,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Очистка выделения в гриде
+     * Очистка выделения в гриде.
      */
     @Override
     public void clear() {
@@ -1197,7 +1199,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Получение записей из грида
+     * Получение записей из грида.
      *
      * @return RowListValue
      */
@@ -1226,7 +1228,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Установка записей в грид
+     * Установка записей в грид.
      *
      * @param value - RowListValue
      */
@@ -1247,32 +1249,44 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         grid.getSelectionModel().setSelection(models);
     }
 
+    /**
+     * Возвращает список всех элементов.
+     *
+     * @return List
+     */
     public List<RowModelData> getAllItems() {
         return store.getAll();
     }
 
+    /**
+     * Удаляет все элементы.
+     */
     public void clearItems() {
         store.clear();
     }
 
+    @JsIgnore
     public void removeItem(RowModelData model) {
         store.remove(model);
     }
 
+    @JsIgnore
     public void addItem(RowModelData model) {
         store.add(model);
     }
 
+    @JsIgnore
     public void insertItem(int index, RowModelData model) {
         store.add(index, model);
     }
 
+    @JsIgnore
     public RowModelData getItemById(String id) {
         return store.findModelWithKey(id);
     }
 
     /**
-     * Инициализация обработчика выбора в гриде
+     * Инициализация обработчика выбора в гриде.
      */
     @JsIgnore
     private void initSelectHandler() {
@@ -1297,7 +1311,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Очистка сообщения о не валидности в гриде
+     * Очистка сообщения о не валидности в гриде.
      */
     @Override
     public void clearInvalid() {
@@ -1320,21 +1334,25 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         paginator.setConfig(config, false);
     }
 
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
     }
 
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore == null || (stateStore != null && scope != stateStore.getScope())) {
@@ -1352,11 +1370,13 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         }
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         RowListValue v = getFieldValue();
@@ -1469,6 +1489,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         filterStateStore.save(getId() + "/filter", new ArrayList<FilterValue>());
     }
 
+    @JsIgnore
     @Override
     public Widget getWrapper() {
         return wrapper;
@@ -1592,6 +1613,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
 
+    @JsIgnore
     public Element getCellByColumnName(RowModelData row, String columnName) {
         return grid.getView().getCell(store.indexOf(row),
                 grid.getColumnModel().indexOf(grid.getColumnModel().findColumnConfig(columnName)));
@@ -1825,25 +1847,25 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -1853,18 +1875,18 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true, если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

@@ -12,82 +12,86 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Панель задач
+ */
 @JsType(name = "TaskBar", namespace = "Whirl")
 public class TaskBarBuilder extends ComponentBuilder {
 
-	private TaskBar taskBar;
+    private TaskBar taskBar;
 
-	@JsConstructor
-	public TaskBarBuilder(@JsOptional Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    @JsConstructor
+    public TaskBarBuilder(@JsOptional Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-	@JsIgnore
-	public TaskBarBuilder() {
-		this(Collections.emptyMap());
-	}
-	
-	@JsIgnore
-	@Override
-	public ComponentType getType() {
-		return ComponentType.TaskBarType;
-	}
+    @JsIgnore
+    public TaskBarBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	@Override
-	protected Component init(Map<String, DataValue> builderProperties) {
-		taskBar = new TaskBar();
-		return taskBar;
-	}
+    @JsIgnore
+    @Override
+    public ComponentType getType() {
+        return ComponentType.TaskBarType;
+    }
 
-	@Override
-	protected <C> C getRealComponent() {
-		return (C) taskBar;
-	}
+    @Override
+    protected Component init(Map<String, DataValue> builderProperties) {
+        taskBar = new TaskBar();
+        return taskBar;
+    }
 
-	/**
-	 * Checks if component is in hidden state.
-	 *
-	 * @return true if component is hidden
-	 */
-	public boolean isHidden() {
-		return super.isHidden();
-	}
+    @Override
+    protected <C> C getRealComponent() {
+        return (C) taskBar;
+    }
 
-	/**
-	 * Sets component's hidden state.
-	 *
-	 * @param hidden true - to hide component, false - to show component
-	 */
-	public void setHidden(boolean hidden) {
-		super.setHidden(hidden);
-	}
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true, если компонент скрыт
+     */
+    public boolean isHidden() {
+        return super.isHidden();
+    }
 
-	/**
-	 * Focuses component.
-	 */
-	public void focus() {
-		if (componentInstance == null) {
-			return;
-		}
-		componentInstance.focus();
-	}
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
 
-	/**
-	 * Checks if component is enabled.
-	 *
-	 * @return true if component is enabled
-	 */
-	public boolean isEnabled() {
-		return super.isEnabled();
-	}
+    /**
+     * Устанавливает фокус на компоненте.
+     */
+    public void focus() {
+        if (componentInstance == null) {
+            return;
+        }
+        componentInstance.focus();
+    }
 
-	/**
-	 * Sets component's enabled state.
-	 *
-	 * @param enabled true - to enable component, false - to disable component
-	 */
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-	}
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true, если компонент включен
+     */
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
+
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
+     */
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 
 }

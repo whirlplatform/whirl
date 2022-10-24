@@ -41,6 +41,9 @@ import org.whirlplatform.rpc.shared.SessionToken;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Каптча
+ */
 @JsType(name = "Captcha", namespace = "Whirl")
 public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable {
 
@@ -282,6 +285,12 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
         return isValid(false);
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         if (!valid && invalidate) {
@@ -290,20 +299,30 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
         return valid;
     }
 
+    /**
+     * Проверяет, обязательно ли поле для заполнения.
+     *
+     * @return true, если обязательно
+     */
     @Override
     public boolean isRequired() {
         return required;
     }
 
+    /**
+     * Устанавливает обязательность для заполнения поля.
+     *
+     * @param required true, если поле обязательно для заполнения
+     */
     @Override
     public void setRequired(boolean required) {
         this.required = required;
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     @Override
     public String getFieldMask() {
@@ -311,9 +330,9 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     @Override
     public void setFieldMask(String mask) {
@@ -321,18 +340,17 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус не валидности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
         super.markInvalid(msg);
     }
 
-
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -341,9 +359,9 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     @Override
     public void setReadOnly(boolean readOnly) {
@@ -351,9 +369,9 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Returns component's code.
+     * Возвращает код компонента.
      *
-     * @return component's code
+     * @return код компонента
      */
     @Override
     public String getCode() {
@@ -361,27 +379,26 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
-    @Override
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     @Override
     public void setHidden(boolean hidden) {
-     super.setHidden(hidden);
+        super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {
@@ -392,9 +409,9 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
     @Override
     public boolean isEnabled() {
@@ -402,15 +419,15 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
-
 
 
 }

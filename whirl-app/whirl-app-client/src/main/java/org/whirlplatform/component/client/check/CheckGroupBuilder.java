@@ -305,22 +305,26 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         }
     }
 
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore == null
@@ -339,11 +343,13 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         }
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         RowListValue v = getFieldValue();
@@ -376,25 +382,25 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Устанавливает фокус на компоненте.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -404,18 +410,20 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
+    @Override
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

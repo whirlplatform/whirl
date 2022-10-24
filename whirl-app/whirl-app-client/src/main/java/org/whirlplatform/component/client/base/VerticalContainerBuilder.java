@@ -15,6 +15,9 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Контейнер располагающей компоненты в одну колонку.
+ */
 @JsType(name = "VerticalContainer", namespace = "Whirl")
 public class VerticalContainerBuilder extends InsertContainerBuilder {
 
@@ -75,11 +78,17 @@ public class VerticalContainerBuilder extends InsertContainerBuilder {
 		super.removeChild(child);
     }
 
+    /**
+     * Очищает контейнер.
+     */
     @Override
     public void clearContainer() {
         super.clearContainer();
     }
 
+    /**
+     * Пересчитывает расположение компонентов в данном контейнере.
+     */
     @Override
     public void forceLayout() {
         super.forceLayout();
