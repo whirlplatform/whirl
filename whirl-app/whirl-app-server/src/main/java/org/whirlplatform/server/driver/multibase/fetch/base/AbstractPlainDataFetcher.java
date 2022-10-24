@@ -16,7 +16,7 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.COLUMN_BASIC_NAME;
 
 public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
 
@@ -87,8 +87,12 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
     }
 
     private String getLabelValue(FieldMetadata field, DBReader reader, int colInd) {
-        if (!StringUtils.isEmpty(field.getLabelExpression()) && field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
-            int labelInd = reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME);
+        if (!StringUtils.isEmpty(field.getLabelExpression())) {
+            if (field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+                int labelInd = reader.getFieldIndex(COLUMN_BASIC_NAME);
+                return reader.getString(labelInd);
+            }
+            int labelInd = reader.getFieldIndex(field.getLabelExpression());
             return reader.getString(labelInd);
         } else {
             return reader.getString(colInd);

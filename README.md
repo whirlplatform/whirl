@@ -114,28 +114,41 @@ mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 ```
 
 ## Database Naming Conventions
-incoming parameters
-- p_...
-```bash
-example idx
+
+Example: function which takes two parameters (message and type of the window) and show a window depends on that parameters. 
+```bash 
+CREATE OR REPLACE FUNCTION whirl_admin.show_message(p_message_text text, p_message_type text)
+ RETURNS text
+ LANGUAGE plpgsql
+AS $function$
+declare 
+		v_version varchar(2048);
+		v_result whirl.function_result;
+	BEGIN
+		select version()
+		into v_version;
+		v_result.title := 'Message';
+		v_result.message := p_message_text;
+		v_result.message_type := p_message_type;
+		return whirl.as_result(v_result);
+	END;
+$function$
+;
 ```
 
-Variables in the body
-- v_....
+Incoming parameters of the function
 ```bash
-example idx
+p_message_text text
 ```
 
-Links to the other tables
-- r_...
+Variables in the body of the function
 ```bash
-example idx
+v_parameter_type  varchar(4000);
 ```
 
-Indexes
-- Idx
+Links to the other tables (name of the column in the other table)
 ```bash
-example idx
+r_whirl_users
 ```
 
 ## License

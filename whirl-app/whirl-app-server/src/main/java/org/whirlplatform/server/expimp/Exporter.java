@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
-
 public abstract class Exporter {
 
     public abstract void write(OutputStream stream) throws SQLException,
@@ -19,7 +17,7 @@ public abstract class Exporter {
         Object object;
     
         if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
-            object = reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
+            object = reader.getString(reader.getFieldIndex(field.getLabelExpression()));
         } else if (DataType.DATE == field.getType()) {
             object = reader.getDateTime(reader.getFieldIndex(field.getName()));
         } else {
