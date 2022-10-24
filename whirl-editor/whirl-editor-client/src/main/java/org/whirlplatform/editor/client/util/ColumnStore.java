@@ -71,7 +71,7 @@ public class ColumnStore extends ListStore<TableColumnElement> {
 		
 		ValueProvider<TableColumnElement, AbstractTableElement> listTable();
 	
-		ValueProvider<TableColumnElement, String> labelColumn();
+		ValueProvider<TableColumnElement, String> labelExpression();
 		
 		ValueProvider<TableColumnElement, String> function();
 		

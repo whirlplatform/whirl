@@ -10,7 +10,7 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
     private String checkColumn;
     // New property
     private String selectColumn;
-    private String labelColumn;
+    private String labelExpression;
     private String parentColumn;
     private RowModelData parent;
 
@@ -50,12 +50,12 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.checkColumn = checkColumn;
     }
 
-    public String getLabelColumn() {
-        return labelColumn;
+    public String getLabelExpression() {
+        return labelExpression;
     }
 
-    public void setLabelColumn(String labelColumn) {
-        this.labelColumn = labelColumn;
+    public void setLabelExpression(String labelExpression) {
+        this.labelExpression = labelExpression;
     }
 
     public String getParentColumn() {

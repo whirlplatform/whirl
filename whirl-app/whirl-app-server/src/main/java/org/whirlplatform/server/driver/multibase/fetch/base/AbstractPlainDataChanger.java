@@ -55,7 +55,7 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
         for (TableColumnElement c : table.getColumns()) {
             if (c.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 dbTable.addColumn(c.getColumnName(), DataType.BLOB, 0, c.isNotNull());
-                dbTable.addColumn(c.getLabelColumn(), DataType.TEXT,
+                dbTable.addColumn(c.getLabelExpression(), DataType.TEXT,
                                   c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             } else {
                 org.whirlplatform.meta.shared.data.DataType dataType = (c.getListTable()) == null ? null
@@ -84,7 +84,7 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
 
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(), (int) fileValue.getSize());
                 record.setValue(dbTable.getColumn(f), blob);
-                record.setValue(dbTable.getColumn(c.getLabelColumn()),
+                record.setValue(dbTable.getColumn(c.getLabelExpression()),
                                 ((FileValue) model.get(f)).getName());
             } else if (c.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
                 record.setValue(dbTable.getColumn(f),
@@ -129,7 +129,7 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher impl
                 DBTableColumn dbColumn = dbTable.addColumn(f, DataType.BLOB, 0, c.isNotNull());
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(), (int) fileValue.getSize());
                 updateCmd.set(dbColumn.to(blob));
-                DBTableColumn fileNameColumn = dbTable.addColumn(c.getLabelColumn(), DataType.TEXT,
+                DBTableColumn fileNameColumn = dbTable.addColumn(c.getLabelExpression(), DataType.TEXT,
                                                                  c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
                 selectCmd.select(fileNameColumn);
                 updateCmd.set(fileNameColumn.to(((FileValue) model.get(f)).getName()));

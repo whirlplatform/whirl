@@ -17,7 +17,7 @@ public abstract class Exporter {
         Object object;
     
         if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
-            object = reader.getString(reader.getFieldIndex(field.getLabelColumn()));
+            object = reader.getString(reader.getFieldIndex(field.getLabelExpression()));
         } else if (DataType.DATE == field.getType()) {
             object = reader.getDateTime(reader.getFieldIndex(field.getName()));
         } else {

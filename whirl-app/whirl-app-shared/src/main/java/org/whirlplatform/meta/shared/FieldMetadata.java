@@ -115,7 +115,7 @@ public class FieldMetadata implements Serializable, Cloneable {
 
     private String color;
     
-    private String labelColumn;
+    private String labelExpression;
     
     private String configColumn;
 
@@ -327,12 +327,12 @@ public class FieldMetadata implements Serializable, Cloneable {
         this.color = color;
     }
     
-    public String getLabelColumn() {
-        return labelColumn;
+    public String getLabelExpression() {
+        return labelExpression;
     }
     
-    public void setLabelColumn(String labelColumn) {
-        this.labelColumn = labelColumn;
+    public void setLabelExpression(String labelExpression) {
+        this.labelExpression = labelExpression;
     }
     
     public String getConfigColumn() {
