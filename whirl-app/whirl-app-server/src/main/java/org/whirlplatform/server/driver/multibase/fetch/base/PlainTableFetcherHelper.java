@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import static org.whirlplatform.server.global.SrvConstant.COLUMN_BASIC_NAME;
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<FieldMetadata, TableColumnElement>();
@@ -100,7 +100,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             if ((org.whirlplatform.meta.shared.data.DataType.LIST == f.getType() ||
                     org.whirlplatform.meta.shared.data.DataType.FILE == f.getType()) &&
                     !StringUtils.isEmpty(f.getLabelExpression())) {
-                this.dbTable.addColumn(COLUMN_BASIC_NAME, DataType.TEXT, 0, DataMode.NotNull);
+                this.dbTable.addColumn(LABEL_EXPRESSION_NAME, DataType.TEXT, 0, DataMode.NotNull);
             }
         }
 
