@@ -11,7 +11,7 @@ import org.whirlplatform.server.driver.multibase.fetch.DataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
-import static org.whirlplatform.server.global.SrvConstant.COLUMN_BASIC_NAME;
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
@@ -50,13 +50,12 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
         command.select(temp.dbPrimaryKey);
         for (FieldMetadata f : temp.tableColumns.keySet()) {
             if (f.isView()) {
-                if(f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST && f.getLabelExpression() != "" && f.getLabelExpression() != null) {
-                    DBColumnExpr expression = temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN).as(f.getName() + COLUMN_BASIC_NAME);
+                if(f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+                    DBColumnExpr expression = temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN).as(f.getName() + LABEL_EXPRESSION_NAME);
                     command.select(expression);
-                    command.select(temp.dbTable.getColumn(f.getName()));
-                } else {
-                    command.select(temp.dbTable.getColumn(f.getName()));
                 }
+                command.select(temp.dbTable.getColumn(f.getName()));
+
             }
         }
 
