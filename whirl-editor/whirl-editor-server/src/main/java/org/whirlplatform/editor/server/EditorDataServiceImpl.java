@@ -4,6 +4,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.apache.commons.fileupload.FileItem;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
 import org.whirlplatform.editor.client.meta.*;
 import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
 import org.whirlplatform.editor.server.packager.Packager;
@@ -38,9 +40,9 @@ import org.whirlplatform.server.servlet.ExportServlet;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.Adler32;
 import java.util.zip.CheckedInputStream;
 
@@ -49,7 +51,6 @@ import java.util.zip.CheckedInputStream;
 public class EditorDataServiceImpl extends RemoteServiceServlet implements EditorDataService {
 
     private Logger _log = LoggerFactory.getLogger(ExportServlet.class);
-
     private EditorConnector _connector;
     private AccountAuthenticator _authenticator;
 
@@ -552,4 +553,15 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         connector().deleteTemplate(template);
     }
 
+    @Override
+    public List<String> getIcons() throws RPCException {
+        String path = "META-INF/resources/webjars/famfamfam-silk";
+        Reflections reflections = new Reflections(path, new ResourcesScanner());
+        List<String> result = reflections.getResources(Pattern.compile(".*\\.png")).stream()
+                .map(s -> s.replace("META-INF/resources/", ""))
+                .collect(Collectors.toList());
+        return result;
+
+
+    }
 }

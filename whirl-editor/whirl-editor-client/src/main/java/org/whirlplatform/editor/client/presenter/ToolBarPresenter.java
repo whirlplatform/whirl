@@ -18,12 +18,16 @@ import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 /**
  * Основная панель инструментов
  */
 @Presenter(view = ToolBarView.class)
 public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarView, EditorEventBus> {
 
+    private final static Logger logger = Logger.getLogger(ToolBarPresenter.class.getName());
     public interface IToolBarView extends IsWidget, ReverseViewInterface<ToolBarPresenter> {
 
         void updateButtonState();
@@ -125,5 +129,9 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
     public void runApplication() {
         ApplicationStoreData data = new ApplicationStoreData(currentApplication, currentVersion);
         HRefUtil.openNewApplicationTab(data);
+    }
+
+    public void showIconsPanel() {
+        eventBus.showIconsPanel();
     }
 }

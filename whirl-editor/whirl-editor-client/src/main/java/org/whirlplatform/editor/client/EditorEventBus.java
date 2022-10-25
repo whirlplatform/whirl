@@ -9,6 +9,7 @@ import com.mvp4g.client.event.EventBus;
 import org.whirlplatform.editor.client.presenter.*;
 import org.whirlplatform.editor.client.presenter.compare.CompareApplicationsPresenter;
 import org.whirlplatform.editor.client.presenter.tree.ApplicationTreePresenter;
+import org.whirlplatform.editor.client.view.AppShowIconsView;
 import org.whirlplatform.editor.shared.OpenResult;
 import org.whirlplatform.editor.shared.TreeState;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
@@ -355,4 +356,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      */
     @Event(handlers = AppBasicInfoPresenter.class)
     void getAppInfoForSaveAs(ApplicationBasicInfo info, Callback<ApplicationBasicInfo, Throwable> callback);
+
+    @Event(handlers = AppShowIconsPresenter.class)
+    void showIconsPanel();
+
 }
