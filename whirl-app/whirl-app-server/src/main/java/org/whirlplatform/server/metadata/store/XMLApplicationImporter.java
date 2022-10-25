@@ -587,7 +587,7 @@ public class XMLApplicationImporter {
             result.setConfigColumn(configColumnEl.getText());
         }
     
-        Element labelColumnEl = columnEl.element("labelColumn");
+        Element labelColumnEl = columnEl.element("labelExpression");
         if (labelColumnEl != null) {
             result.setLabelExpression(labelColumnEl.getText());
         }
