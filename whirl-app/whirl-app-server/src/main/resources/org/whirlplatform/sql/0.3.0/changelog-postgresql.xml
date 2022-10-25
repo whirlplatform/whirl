@@ -7,7 +7,7 @@
 
     <changeSet
             id="whirl_0.3.0-postgresql"
-            author="otlichnosti@gmail.com"
+            author="whirl"
             failOnError="true"
             dbms="postgresql">
 

@@ -17,7 +17,7 @@
 
     <changeSet
             id="whirl_0.1.0-postgresql"
-            author="otlichnosti@gmail.com"
+            author="whirl"
             failOnError="true"
             dbms="postgresql">
 
@@ -215,18 +215,6 @@
         <sqlFile path="postgresql/row_value.sql"
                  relativeToChangelogFile="true"/>
 
-        <createProcedure procedureName="internal_next_index"
-                         path="postgresql/internal_next_index.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_varchar"
-                         path="postgresql/add_parameter_varchar.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_boolean"
-                         path="postgresql/add_parameter_boolean.sql"
-                         relativeToChangelogFile="true"/>
-
         <createProcedure procedureName="add_parameter_number"
                          path="postgresql/add_parameter_number.sql"
                          relativeToChangelogFile="true"/>
@@ -264,9 +252,6 @@
             <dropProcedure procedureName="add_parameter_list"/>
             <dropProcedure procedureName="add_parameter_date"/>
             <dropProcedure procedureName="add_parameter_number"/>
-            <dropProcedure procedureName="add_parameter_boolean"/>
-            <dropProcedure procedureName="add_parameter_varchar"/>
-            <dropProcedure procedureName="internal_next_index"/>
 
 
             <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>

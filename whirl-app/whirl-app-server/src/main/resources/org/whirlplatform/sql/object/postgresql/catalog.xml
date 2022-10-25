@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="whirl" id="internal_next_index" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="internal_next_index"
+                         path="procedure/internal_next_index.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="internal_next_index"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_varchar" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_varchar"
+                         path="postgresql/add_parameter_varchar.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_varchar"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_boolean" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_boolean"
+                         path="postgresql/add_parameter_boolean.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_boolean"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
