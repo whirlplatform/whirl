@@ -10,6 +10,5 @@
 
     <!-- Migrations -->
     <include file="0.1.0/changelog.xml" relativeToChangelogFile="true"/>
-    <include file="0.3.0/changelog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

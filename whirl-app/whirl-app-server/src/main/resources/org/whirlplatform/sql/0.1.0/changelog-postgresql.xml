@@ -206,54 +206,7 @@
                     value="Whirl Editor access group"/>
         </insert>
 
-        <sqlFile path="postgresql/function_result.sql"
-                 relativeToChangelogFile="true"/>
-
-        <sqlFile path="postgresql/function_input.sql"
-                 relativeToChangelogFile="true"/>
-
-        <sqlFile path="postgresql/row_value.sql"
-                 relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_number"
-                         path="postgresql/add_parameter_number.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_date"
-                         path="postgresql/add_parameter_date.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_list"
-                         path="postgresql/add_parameter_list.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="add_parameter_component"
-                         path="postgresql/add_parameter_component.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="set_message"
-                         path="postgresql/set_message.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="set_next_event"
-                         path="postgresql/set_next_event.sql"
-                         relativeToChangelogFile="true"/>
-
-        <createProcedure procedureName="as_result"
-                         path="postgresql/as_result.sql"
-                         relativeToChangelogFile="true"/>
-
         <rollback>
-
-            <dropProcedure procedureName="as_result"/>
-            <dropProcedure procedureName="set_next_event"/>
-            <dropProcedure procedureName="set_message"/>
-            <dropProcedure procedureName="add_parameter_component"/>
-            <dropProcedure procedureName="add_parameter_list"/>
-            <dropProcedure procedureName="add_parameter_date"/>
-            <dropProcedure procedureName="add_parameter_number"/>
-
-
             <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
             <dropIndex tableName="WHIRL_USER_GROUPS" indexName="IDX_WHIRL_USER_GROUPS_RWU"/>
             <dropTable tableName="WHIRL_USER_GROUPS"/>

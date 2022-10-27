@@ -5,6 +5,26 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+    <changeSet id="row_value" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <sqlFile path="procedure/row_value.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="row_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <sqlFile path="procedure/row_list.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="function_result" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <sqlFile path="procedure/function_result.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="function_input" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <sqlFile path="procedure/function_input.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+
     <changeSet author="whirl" id="internal_next_index" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="internal_next_index"
                          path="procedure/internal_next_index.sql"
@@ -16,7 +36,7 @@
 
     <changeSet id="add_parameter_varchar" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="add_parameter_varchar"
-                         path="postgresql/add_parameter_varchar.sql"
+                         path="procedure/add_parameter_varchar.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
             <dropProcedure procedureName="add_parameter_varchar"/>
@@ -25,10 +45,82 @@
 
     <changeSet id="add_parameter_boolean" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="add_parameter_boolean"
-                         path="postgresql/add_parameter_boolean.sql"
+                         path="procedure/add_parameter_boolean.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
             <dropProcedure procedureName="add_parameter_boolean"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_number" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_number"
+                         path="procedure/add_parameter_number.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_number"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_component" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_component"
+                         path="procedure/add_parameter_component.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_component"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_date" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_date"
+                         path="procedure/add_parameter_date.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_date"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add_parameter_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="add_parameter_list"
+                         path="procedure/add_parameter_list.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="add_parameter_list"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="as_result" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="as_result"
+                         path="procedure/as_result.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="as_result"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="parse_row_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="parse_row_list"
+                         path="procedure/parse_row_list.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="parse_row_list"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="set_message" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="set_message"
+                         path="procedure/set_message.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="set_message"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="set_next_event" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="set_next_event"
+                         path="procedure/set_next_event.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="set_next_event"/>
         </rollback>
     </changeSet>
 
