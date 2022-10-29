@@ -158,10 +158,6 @@
 
         <insert tableName="WHIRL_USERS">
             <column
-                    name="ID"
-                    type="bigint"
-                    valueNumeric="1"/>
-            <column
                     name="DELETED"
                     type="boolean"/>
             <column
