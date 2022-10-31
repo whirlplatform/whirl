@@ -12,7 +12,7 @@
 
     <changeSet
             id="whirl_0.1.0-mysql"
-            author="otlichnosti@gmail.com"
+            author="whirl"
             failOnError="true"
             dbms="mysql">
 
