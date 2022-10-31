@@ -18,6 +18,9 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Контент-панель
+ */
 @JsType(name = "ContentPanel", namespace = "Whirl")
 public class ContentPanelBuilder extends ComponentBuilder implements Containable {
 
@@ -114,6 +117,9 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
         }
     }
 
+    /**
+     * Очищает контейнер.
+     */
     @Override
     public void clearContainer() {
         if (topComponent != null) {
@@ -121,6 +127,9 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
         }
     }
 
+    /**
+     * Пересчитывает расположение компонентов в данном контейнере.
+     */
     @Override
     public void forceLayout() {
         panel.forceLayout();
@@ -150,9 +159,9 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
     }
 
     /**
-     * Returns component's code.
+     * Возвращает код компонента.
      *
-     * @return component's code
+     * @return код компонента
      */
     @Override
     public String getCode() {
@@ -160,27 +169,25 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
-    @Override
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
-    @Override
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Устанавливает фокус на компоненте.
      */
     @Override
     public void focus() {
@@ -188,9 +195,9 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true если компонент включен
      */
     @Override
     public boolean isEnabled() {
@@ -198,9 +205,10 @@ public class ContentPanelBuilder extends ComponentBuilder implements Containable
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента,
+     *                false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

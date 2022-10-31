@@ -1,6 +1,5 @@
 package org.whirlplatform.component.client.base;
 
-import com.google.gwt.event.shared.HandlerManager;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.TabPanel;
@@ -18,6 +17,10 @@ import org.whirlplatform.meta.shared.data.DataValue;
 
 import java.util.Collections;
 import java.util.Map;
+
+/**
+ * Вкладка
+ */
 @JsType(namespace = "Whirl", name = "TabItem")
 public class TabItemBuilder extends ComponentBuilder implements Containable,
 		Closable {
@@ -50,32 +53,59 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 		return container;
 	}
 
+	/**
+	 * Делает данную вкладку активной в панели.
+	 */
 	public void activate() {
 		TabPanelBuilder tabPanelBuilder = (TabPanelBuilder) parentBuilder;
 		TabPanel panel = (TabPanel) tabPanelBuilder.getComponent();
 		panel.setActiveWidget(componentInstance);
 	}
 
+	/**
+	 * Устанавливает для элемента разрешение быть закрываемым
+	 * (по умолчанию false).
+	 *
+	 * @param closable - boolean, true для закрываемого
+	 */
 	public void setClosable(boolean closable) {
 		itemConfig.setClosable(closable);
 	}
 
+	/**
+	 * Возвращает состояние закрытия элемента.
+	 *
+	 * @return true, если закрыт
+	 */
 	@Override
 	public boolean isClosable() {
 		return itemConfig.isClosable();
 	}
 
+	/**
+	 * Закрывает элемент.
+	 */
 	@Override
 	public void close() {
 		TabPanelBuilder panel = (TabPanelBuilder) parentBuilder;
 		panel.removeChild(this);
 	}
 
+	/**
+	 * Устанавливает заголовок.
+	 *
+	 * @param title - String, заголовок
+	 */
 	@Override
 	public void setTitle(String title) {
 		itemConfig.setHTML(title == null ? "" : title);
 	}
 
+	/**
+	 * Возвращает заголовок.
+	 *
+	 * @return String - содержимое заголовка в формате html
+	 */
 	@Override
 	public String getTitle() {
 		return itemConfig.getHTML();
@@ -104,6 +134,9 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 		}
 	}
 
+	/**
+	 * Очищает контейнер.
+	 */
 	@Override
 	public void clearContainer() {
 		if (topComponent != null) {
@@ -111,11 +144,17 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 		}
 	}
 
+	/**
+	 * Пересчитывает расположение компонентов в данном контейнере.
+	 */
 	@Override
 	public void forceLayout() {
 		container.forceLayout();
 	}
 
+	/**
+	 * Обновляет элемент.
+	 */
 	public void refresh() {
 		if (parentBuilder != null && parentBuilder instanceof TabPanelBuilder) {
 			TabPanelBuilder panel = (TabPanelBuilder) parentBuilder;
@@ -138,6 +177,11 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 		}
 	}
 
+	/**
+	 * Проверяет активность компонента.
+	 *
+	 * @return true, компонент активен
+	 */
 	public boolean isActive() {
         return parentBuilder != null
                 && ((TabPanelBuilder) parentBuilder).getActive() == this;
@@ -152,9 +196,9 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Returns component's code.
+	 * Возвращает код компонента.
 	 *
-	 * @return component's code
+	 * @return код компонента
 	 */
 	@Override
 	public String getCode() {
@@ -162,37 +206,35 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Checks if component is in hidden state.
+	 * Проверяет, находится ли компонент в скрытом состоянии.
 	 *
-	 * @return true if component is hidden
+	 * @return true, если компонент скрыт
 	 */
-	@Override
 	public boolean isHidden() {
 		return super.isHidden();
 	}
 
 	/**
-	 * Sets component's hidden state.
+	 * Устанавливает скрытое состояние компонента.
 	 *
-	 * @param hidden true - to hide component, false - to show component
+	 * @param hidden true - для скрытия компонента, false - для отображения компонента
 	 */
-	@Override
 	public void setHidden(boolean hidden) {
 		super.setHidden(hidden);
 	}
 
 	/**
-	 * Focuses component.
+	 * Устанавливает фокус на компоненте.
 	 */
 	@Override
 	public void focus() {
 		super.focus();
 	}
 
-	/**
-	 * Checks if component is enabled.
+	 /**
+	 * Проверяет, включен ли компонент.
 	 *
-	 * @return true if component is enabled
+	 * @return true если компонент включен
 	 */
 	@Override
 	public boolean isEnabled() {
@@ -200,9 +242,10 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
 	}
 
 	/**
-	 * Sets component's enabled state.
+	 * Устанавливает включенное состояние компонента.
 	 *
-	 * @param enabled true - to enable component, false - to disable component
+	 * @param enabled true - для включения компонента,
+	 *                false - для отключения компонента
 	 */
 	@Override
 	public void setEnabled(boolean enabled) {

@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- *
+ * Простой HTML редактор
  */
 @JsType(namespace = "Whirl", name = "SimpleHtmlEditor")
 public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
@@ -92,11 +92,21 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
         return super.setProperty(name, value);
     }
 
+    /**
+     * Получает значение текстового поля
+     *
+     * @return String
+     */
     @Override
     public String getValue() {
         return field.getValue();
     }
 
+    /**
+     * Устанавливает значения текстового поля
+     *
+     * @param value String
+     */
     @Override
     public void setValue(String value) {
         field.setValue(value);
@@ -125,19 +135,18 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
-    @Override
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     @Override
     public void setFieldMask(String mask) {
@@ -145,9 +154,9 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус недействительности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
@@ -155,7 +164,7 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Очищает статус недействительности для поля.
      */
     @Override
     public void clearInvalid() {
@@ -163,7 +172,7 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -172,21 +181,10 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if is in valid state.
+     * Проверяет, является ли поле валидным.
      *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
-
-    /**
-     * Check if field is valid.
-     *
-     * @param invalidate true to invalidate field
-     * @return true if field is valid
+     * @param invalidate true для признания поля валидным
+     * @return true если поле валидно
      */
     @Override
     public boolean isValid(boolean invalidate) {
@@ -194,9 +192,9 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Checks if is required.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -204,9 +202,9 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
@@ -214,15 +212,16 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     @Override
     public void setReadOnly(boolean readOnly) {
         super.setReadOnly(readOnly);
     }
 
+    @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
         return super.getElementByLocator(locator);

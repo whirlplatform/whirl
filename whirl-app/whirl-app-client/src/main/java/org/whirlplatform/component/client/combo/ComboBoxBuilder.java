@@ -25,8 +25,6 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
-import com.sencha.gxt.widget.core.client.form.Field;
-import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -40,7 +38,6 @@ import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
-import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;
@@ -65,6 +62,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Список
+ */
 @JsType(name = "ComboBox", namespace = "Whirl")
 public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder implements Editable,
         NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
@@ -245,6 +245,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return super.setProperty(name, value);
     }
 
+    @JsIgnore
     @Override
     public Component create() {
         Component comp = super.create();
@@ -393,32 +394,55 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return classId;
     }
 
+    /**
+     * Проверяет доступность для редактирования.
+     *
+     * @return true, если доступен для редактирования
+     */
     @Override
     public boolean isEditable() {
         return editable;
     }
 
+    /**
+     * Устанавливает доступность для редактирования.
+     *
+     * @param editable true, доступ для редактирования
+     */
     @Override
     public void setEditable(boolean editable) {
         this.editable = editable;
         comboBox.setEditable(editable);
     }
 
+    @JsIgnore
     @Override
     public ListModelData getValue() {
         ListModelData model = comboBox.getValue();
         return model;
     }
 
+    @JsIgnore
     @Override
     public void setValue(ListModelData value) {
         comboBox.setValue(value, true);
     }
 
+    /**
+     * Возвращает текст объекта.
+     *
+     * @return новый текст объекта
+     */
     public String getText() {
         return comboBox.getText();
     }
 
+    /**
+     * Проверяет, является ли поле валидным.
+     *
+     * @param invalidate true для не валидного поля
+     * @return true если поле доступно
+     */
     @Override
     public boolean isValid(boolean invalidate) {
         if (isRequired()) {
@@ -440,6 +464,11 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         return true;
     }
 
+    /**
+     * Получение сущности числового поля.
+     *
+     * @return (C) поле
+     */
     @Override
     @SuppressWarnings("unchecked")
     protected ComboBox<ListModelData> getRealComponent() {
@@ -465,27 +494,32 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         }
     }
 
+    @JsIgnore
     @Override
     public boolean isSaveState() {
         return saveState;
     }
 
+    @JsIgnore
     @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
+    @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
     }
 
+    @JsIgnore
     @Override
     public StateScope getStateScope() {
         return getStateStore().getScope();
     }
 
+    @JsIgnore
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore == null || (stateStore != null && scope != stateStore.getScope())) {
@@ -503,6 +537,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         }
     }
 
+    @JsIgnore
     @Override
     public void saveState() {
         DataValue v = getFieldValue();
@@ -644,25 +679,25 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Checks if component is in hidden state.
+     * Проверяет, находится ли компонент в скрытом состоянии.
      *
-     * @return true if component is hidden
+     * @return true, если компонент скрыт
      */
     public boolean isHidden() {
         return super.isHidden();
     }
 
     /**
-     * Sets component's hidden state.
+     * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - to hide component, false - to show component
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
     }
 
     /**
-     * Focuses component.
+     * Фокусирует компонент.
      */
     public void focus() {
         if (componentInstance == null) {
@@ -672,45 +707,45 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Checks if component is enabled.
+     * Проверяет, включен ли компонент.
      *
-     * @return true if component is enabled
+     * @return true, если компонент включен
      */
     public boolean isEnabled() {
         return super.isEnabled();
     }
 
     /**
-     * Sets component's enabled state.
+     * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - to enable component, false - to disable component
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
     }
 
     /**
-     * Gets the field mask.
+     * Получает маску поля.
      *
-     * @return the field mask
+     * @return маска поля
      */
     public String getFieldMask() {
         return super.getFieldMask();
     }
 
     /**
-     * Sets the field mask.
+     * Устанавливает маску поля.
      *
-     * @param mask the new field mask
+     * @param mask новая маска поля
      */
     public void setFieldMask(String mask) {
         super.setFieldMask(mask);
     }
 
     /**
-     * Sets the invalid status for the field with given text.
+     * Устанавливает статус недействительности для поля с заданным текстом.
      *
-     * @param msg message
+     * @param msg сообщение
      */
     @Override
     public void markInvalid(String msg) {
@@ -718,7 +753,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Clears the invalid status for the field.
+     * Очищает статус недействительности для поля.
      */
     @Override
     public void clearInvalid() {
@@ -726,7 +761,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Clears the field value.
+     * Очищает значение поля.
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
@@ -734,20 +769,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Checks if is in valid state.
+     * Проверяет, обязательно ли поле для заполнения.
      *
-     * @return true, if is in valid state
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return super.isValid();
-    }
-
-    /**
-     * Checks if is required.
-     *
-     * @return true, if is required
+     * @return true, если обязательно
      */
     @Override
     public boolean isRequired() {
@@ -755,9 +779,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Sets the required to fill.
+     * Устанавливает обязательность для заполнения поля.
      *
-     * @param required true, if the field is required to be filled
+     * @param required true, если поле обязательно для заполнения
      */
     @Override
     public void setRequired(boolean required) {
@@ -765,9 +789,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     /**
-     * Sets the read only.
+     * Устанавливает значение только для чтения.
      *
-     * @param readOnly true, if the field is read only
+     * @param readOnly true, если поле доступно только для чтения
      */
     public void setReadOnly(boolean readOnly) {
         super.setReadOnly(readOnly);
