@@ -128,48 +128,72 @@
         <createProcedure procedureName="parse_function_input"
                          path="procedure/parse_function_input.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="parse_function_input"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameters_count" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameters_count"
                          path="procedure/get_parameters_count.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameters_count"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_text" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_text"
                          path="procedure/get_parameter_text.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameter_text"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_number" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_number"
                          path="procedure/get_parameter_number.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameter_number"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_list_id" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_list_id"
                          path="procedure/get_parameter_list_id.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameter_list_id"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_date" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_date"
                          path="procedure/get_parameter_date.sql"
                          relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameter_date"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_codes" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_codes"
                          path="procedure/get_parameter_codes.sql"
                          relativeToChangelogFile="true"/>
-
+        <rollback>
+            <dropProcedure procedureName="get_parameter_codes"/>
+        </rollback>
     </changeSet>
 
     <changeSet id="get_parameter_boolean" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="get_parameter_boolean"
-                         path="procedure/get_parameter_boolean.sql" relativeToChangelogFile="true"/>
+                         path="procedure/get_parameter_boolean.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="get_parameter_boolean"/>
+        </rollback>
     </changeSet>
 
 </databaseChangeLog>
