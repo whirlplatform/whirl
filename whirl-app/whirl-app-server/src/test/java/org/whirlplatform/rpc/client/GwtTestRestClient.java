@@ -44,8 +44,15 @@
 //import FormModel;
 //import ClientRestException;
 //import ListHolder;
-//import org.whirlplatform.rpc.shared.ObjectProvider;
+//import org.whirlplatform.meta.shared.*;
+//import org.whirlplatform.meta.shared.component.ComponentModel;
+//import org.whirlplatform.meta.shared.component.PropertyType;
+//import org.whirlplatform.meta.shared.data.*;
+//import org.whirlplatform.meta.shared.form.FormModel;
+//import org.whirlplatform.rpc.shared.ListHolder;
+//import org.whirlplatform.rpc.shared.*;
 //import SessionToken;
+//import org.whirlplatform.rpc.shared.SessionToken;
 //
 //public class GwtTestRestClient extends GWTTestCase {
 //
@@ -292,7 +299,7 @@
 //		HashMap<String, DataValue> params = new HashMap<String, DataValue>();
 //		params.put("param1", new DataValueImpl(DataType.BOOLEAN, true));
 //		params.put("param2", new DataValueImpl(DataType.DATE, new Date()));
-//		DataModifyConfig config = new DataModifyConfig(DataModifyType.INSERT,
+//		DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.INSERT,
 //				Arrays.asList(provider.getRowModelData()), params);
 //		service.insert(sessionToken, provider.getClassMetadata(), config);
 //	}
@@ -323,7 +330,7 @@
 //		RowListValue rlv = new RowListValueImpl();
 //		rlv.addRowValue(new RowValueImpl("elem_id"));
 //		params.put("param2", rlv);
-//		DataModifyConfig config = new DataModifyConfig(DataModifyType.UPDATE,
+//		DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.UPDATE,
 //				Arrays.asList(provider.getRowModelData()), params);
 //		service.update(sessionToken, provider.getClassMetadata(), config);
 //	}
@@ -347,7 +354,7 @@
 //		HashMap<String, DataValue> params = new HashMap<String, DataValue>();
 //		params.put("param1", new DataValueImpl(DataType.BOOLEAN, true));
 //		params.put("param2", new DataValueImpl(DataType.DATE, new Date()));
-//		DataModifyConfig config = new DataModifyConfig(DataModifyType.INSERT,
+//		DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.INSERT,
 //				Arrays.asList(provider.getRowModelData()), params);
 //		service.delete(sessionToken, provider.getClassMetadata(), config);
 //	}
@@ -509,7 +516,7 @@
 //			@Override
 //			public void onSuccess(Boolean result) {
 //				assertTrue(result);
-//				
+//
 //				finishTest();
 //			}
 //		});
