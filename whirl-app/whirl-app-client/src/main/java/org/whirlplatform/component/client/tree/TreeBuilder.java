@@ -426,7 +426,7 @@ public class TreeBuilder extends ComponentBuilder
             @Override
             public void render(com.google.gwt.cell.client.Cell.Context context, String value, SafeHtmlBuilder sb) {
                 String q = tree.getSearchText();
-                RowModelData model = store.findModelWithKey((String) context.getKey());
+                ListModelData model = store.findModelWithKey((String) context.getKey());
                 String style = model.getStyle(labelExpression);
 
                 String data = value == null ? "" : SafeHtmlUtils.htmlEscape(value);
@@ -499,7 +499,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @SuppressWarnings("rawtypes")
-    protected TreeClassLoadConfig getLoadConfig(RowModelData parent) {
+    protected TreeClassLoadConfig getLoadConfig(ListModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafColumn(isLeafColumn);
