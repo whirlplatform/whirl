@@ -90,7 +90,6 @@ public class CheckGroupBuilder extends ComponentBuilder implements
 
             @Override
             public String getLabel(ListModelData item) {
-                //return item.get(labelExpression);
                 return item.getLabel();
             }
 
@@ -195,17 +194,11 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      * Инициализация списка CheckGroup
      */
     private void initStore() {
-        /*if (labelExpression != null) {
-            metadata.addField(new FieldMetadata(labelExpression, DataType.STRING,
-                    null));
-        }*/
         if (checkColumn != null) {
             metadata.addField(new FieldMetadata(checkColumn, DataType.BOOLEAN,
                     null));
         }
         store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
-        /*store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-                new TableClassProxy(metadata));*/
         checkedRegistration = store
                 .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
                     @Override

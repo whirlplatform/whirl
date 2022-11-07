@@ -200,7 +200,6 @@ public class TreeBuilder extends ComponentBuilder
         SimpleContainer container = new SimpleContainer();
         errorHandler = new SideErrorHandler(container);
         store = new TreeStore<ListModelData>(new ClassKeyProvider());
-        //store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
 
         // tree = initTree(initLoader(store));
         loader = initLoader(store);

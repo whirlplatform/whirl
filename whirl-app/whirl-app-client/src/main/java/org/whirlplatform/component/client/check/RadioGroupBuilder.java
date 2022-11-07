@@ -200,7 +200,6 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void setDataSourceId(String dataSourceId) {
         metadata = new ClassMetadata(dataSourceId);
         selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
-        //selectionStateStore = new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
     }
 
     /**
@@ -440,7 +439,6 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
-            //selectionStateStore = new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
