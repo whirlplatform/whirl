@@ -23,14 +23,9 @@ import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.Clearable;
-import org.whirlplatform.component.client.ComponentBuilder;
-import org.whirlplatform.component.client.HasState;
-import org.whirlplatform.component.client.ListParameter;
-import org.whirlplatform.component.client.ParameterHelper;
-import org.whirlplatform.component.client.Validatable;
+import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.data.ClassStore;
-import org.whirlplatform.component.client.data.TableClassProxy;
+import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.SelectEvent;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
@@ -39,17 +34,10 @@ import org.whirlplatform.component.client.state.StateStore;
 import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.RowListValue;
-import org.whirlplatform.meta.shared.data.RowListValueImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.data.RowValue;
-import org.whirlplatform.meta.shared.data.RowValueImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
@@ -81,11 +69,11 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     // полем?
     private String checkedIds;
     private boolean required = false;
-    private ClassStore<RowModelData, ClassLoadConfig> store;
+    private ClassStore<ListModelData, ClassLoadConfig> store;
     private ParameterHelper paramHelper;
-    private LoadHandler<ClassLoadConfig, LoadData<RowModelData>> loadHandler = new LoadHandler<ClassLoadConfig, LoadData<RowModelData>>() {
+    private LoadHandler<ClassLoadConfig, LoadData<ListModelData>> loadHandler = new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
         @Override
-        public void onLoad(LoadEvent<ClassLoadConfig, LoadData<RowModelData>> event) {
+        public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
             rebuild();
         }
     };
@@ -212,15 +200,14 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void setDataSourceId(String dataSourceId) {
         metadata = new ClassMetadata(dataSourceId);
         selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+        //selectionStateStore = new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
     }
 
     /**
      * Загрузка списка радиогруппы
      */
     private void loadData() {
-        FieldMetadata field = new FieldMetadata(labelExpression, DataType.STRING, null);
-        metadata.addField(field);
-        store = new ClassStore<RowModelData, ClassLoadConfig>(metadata, new TableClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
         store.getLoader().addLoadHandler(loadHandler);
 
         store.getLoader().load(getLoadConfig());
@@ -232,7 +219,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void rebuild() {
         for (int i = 0; i < store.size(); i++) {
             Radio radio = new Radio();
-            radio.setBoxLabel((String) store.get(i).get(labelExpression));
+            radio.setBoxLabel((String) store.get(i).getLabel());
+
             radio.setData(LocatorParams.DATA_PARAM_ID, store.get(i).getId());
             layout.add(radio);
             group.add(radio);
@@ -452,6 +440,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+            //selectionStateStore = new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }

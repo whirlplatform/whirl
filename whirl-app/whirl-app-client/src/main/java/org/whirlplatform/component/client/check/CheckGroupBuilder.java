@@ -17,7 +17,7 @@ import org.whirlplatform.component.client.HasState;
 import org.whirlplatform.component.client.ListParameter;
 import org.whirlplatform.component.client.ParameterHelper;
 import org.whirlplatform.component.client.data.ClassStore;
-import org.whirlplatform.component.client.data.TableClassProxy;
+import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.state.StateStore;
@@ -26,14 +26,7 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.RowListValue;
-import org.whirlplatform.meta.shared.data.RowListValueImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.data.RowModelDataImpl;
-import org.whirlplatform.meta.shared.data.RowValue;
-import org.whirlplatform.meta.shared.data.RowValueImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
@@ -69,11 +62,11 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         this(Collections.emptyMap());
     }
 
-    private LabelProvider<RowModelData> labelProvider;
+    private LabelProvider<ListModelData> labelProvider;
 
     private ValueProvider<RowModelData, Boolean> valueProvider;
 
-    private ClassStore<RowModelData, ClassLoadConfig> store;
+    private ClassStore<ListModelData, ClassLoadConfig> store;
     private CheckBoxList list;
 
     /**
@@ -93,11 +86,12 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     @JsIgnore
     @Override
     protected Component init(Map<String, DataValue> builderProperties) {
-        labelProvider = new LabelProvider<RowModelData>() {
+        labelProvider = new LabelProvider<ListModelData>() {
 
             @Override
-            public String getLabel(RowModelData item) {
-                return item.get(labelExpression);
+            public String getLabel(ListModelData item) {
+                //return item.get(labelExpression);
+                return item.getLabel();
             }
 
         };
@@ -201,26 +195,27 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      * Инициализация списка CheckGroup
      */
     private void initStore() {
-        if (labelExpression != null) {
+        /*if (labelExpression != null) {
             metadata.addField(new FieldMetadata(labelExpression, DataType.STRING,
                     null));
-        }
+        }*/
         if (checkColumn != null) {
             metadata.addField(new FieldMetadata(checkColumn, DataType.BOOLEAN,
                     null));
         }
-        store = new ClassStore<RowModelData, ClassLoadConfig>(metadata,
-                new TableClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
+        /*store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
+                new TableClassProxy(metadata));*/
         checkedRegistration = store
-                .addStoreDataChangeHandler(new StoreDataChangeHandler<RowModelData>() {
+                .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
                     @Override
                     public void onDataChange(
-                            StoreDataChangeEvent<RowModelData> event) {
+                            StoreDataChangeEvent<ListModelData> event) {
                         if (checkedIds == null) {
                             restoreSelectionState();
                         } else {
                             for (String obj : checkedIds.split(",")) {
-                                RowModelData m = store.findModelWithKey(obj);
+                                ListModelData m = store.findModelWithKey(obj);
                                 list.getSelectionModel().select(m, true);
                             }
                         }

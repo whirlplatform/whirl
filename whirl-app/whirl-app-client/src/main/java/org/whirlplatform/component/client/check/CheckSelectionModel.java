@@ -5,16 +5,16 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.event.CheckChangedEvent;
 import com.sencha.gxt.widget.core.client.event.CheckChangedEvent.CheckChangedHandler;
 import com.sencha.gxt.widget.core.client.selection.AbstractStoreSelectionModel;
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.ListModelData;
 
 public class CheckSelectionModel extends
-		AbstractStoreSelectionModel<RowModelData> {
+		AbstractStoreSelectionModel<ListModelData> {
 
 	private HandlerRegistration handlerRegistrartion;
 	private CheckBoxList checkList;
 
 	@Override
-	protected void onSelectChange(RowModelData model, boolean select) {
+	protected void onSelectChange(ListModelData model, boolean select) {
 		checkList.setChecked(model, select, false);
 	}
 
@@ -25,11 +25,11 @@ public class CheckSelectionModel extends
 			handlerRegistrartion = null;
 		}
 		handlerRegistrartion = checkList
-				.addCheckChangedHandler(new CheckChangedHandler<RowModelData>() {
+				.addCheckChangedHandler(new CheckChangedHandler<ListModelData>() {
 
 					@Override
 					public void onCheckChanged(
-							CheckChangedEvent<RowModelData> event) {
+							CheckChangedEvent<ListModelData> event) {
 						select(event.getItems(), true);
 					}
 				});
