@@ -8,7 +8,6 @@ public class CommonsLoggerFactory extends LoggerFactory {
 	private static class LoggerImpl implements Logger {
 
 		private org.apache.logging.log4j.Logger log;
-		//private org.apache.logging.log4j.LogManager log;
 
 		private LoggerImpl(org.apache.logging.log4j.Logger log) {
 			this.log = log;
