@@ -1,6 +1,6 @@
 package org.whirlplatform.server.log;
 
-import org.whirlplatform.server.log.impl.CommonsLoggerFactory;
+import org.whirlplatform.server.log.impl.LoggerFactoryImpl;
 
 public abstract class LoggerFactory {
 
@@ -8,7 +8,7 @@ public abstract class LoggerFactory {
 
     private static LoggerFactory get() {
         if (_instance == null) {
-            _instance = new CommonsLoggerFactory();
+            _instance = new LoggerFactoryImpl();
         }
         return _instance;
     }
