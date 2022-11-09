@@ -4,7 +4,7 @@ import org.apache.empire.xml.XMLConfiguration;
 
 public class DBConfig extends XMLConfiguration {
 
-    private String databaseProvider = "oracle";
+    private String databaseProvider = "postgres";
     private String jdbcClass;
     private String jdbcURL;
     private String jdbcUser;

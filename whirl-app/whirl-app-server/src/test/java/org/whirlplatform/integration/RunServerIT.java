@@ -61,7 +61,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class RunServerIT {
 
-	public static final String WHIRL_PROJECT_VERSION = "3.9.0-SNAPSHOT";
+	public static final String WHIRL_PROJECT_VERSION = "0.3.0-SNAPSHOT";
 
 	@ArquillianResource
 	URL contextPath;
@@ -73,17 +73,17 @@ public class RunServerIT {
 		return testWar;
 	}
 
-	@BeforeClass
-	public static void preapreDB() {
-		System.out.println("Starting prepare DB for testing!");
-		DBInitUtil.prepareDB();
-	}
-
-	@AfterClass
-	public static void cleanDB () {
-		System.out.println("Clean DB after testing!");
-		DBInitUtil.cleanDB(TestTableSet.get());
-	}
+//	@BeforeClass
+//	public static void preapreDB() {
+//		System.out.println("Starting prepare DB for testing!");
+//		DBInitUtil.prepareDB();
+//	}
+//
+//	@AfterClass
+//	public static void cleanDB () {
+//		System.out.println("Clean DB after testing!");
+//		DBInitUtil.cleanDB(TestTableSet.get());
+//	}
 
 	@Test
 	@InSequence(0)
