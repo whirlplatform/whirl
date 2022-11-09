@@ -87,12 +87,8 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
     }
 
     private String getLabelValue(FieldMetadata field, DBReader reader, int colInd) {
-        if (!StringUtils.isEmpty(field.getLabelExpression())) {
-            if (field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
-                int labelInd = reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME);
-                return reader.getString(labelInd);
-            }
-            int labelInd = reader.getFieldIndex(field.getLabelExpression());
+        if (!StringUtils.isEmpty(field.getLabelExpression()) && field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+            int labelInd = reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME);
             return reader.getString(labelInd);
         } else {
             return reader.getString(colInd);
