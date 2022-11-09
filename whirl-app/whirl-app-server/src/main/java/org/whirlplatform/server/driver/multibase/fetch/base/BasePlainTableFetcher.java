@@ -2,8 +2,10 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
@@ -23,9 +25,8 @@ import java.util.List;
 
 public class BasePlainTableFetcher extends BasePlainDataFetcher implements TableFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
-    //private static Logger _log = LoggerFactory.getLogger(BasePlainTableFetcher.class.getName());
-    private static Logger _log = LogManager.getLogger(BasePlainTableFetcher.class.getName());
-
+    private static Logger _log = LoggerFactory.getLogger(BasePlainTableFetcher.class);
+    //private static Logger _log = LogManager.getLogger(BasePlainTableFetcher.class.getName());
 
     public BasePlainTableFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
         super(connection, fetcher);

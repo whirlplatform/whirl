@@ -21,7 +21,7 @@
 //			System.setProperty("context.path", path.replaceFirst("/", ""));
 //
 ////			PropertyConfigurator.configure(ContextPathInitializer.class
-////					.getResourceAsStream("/log4j.properties"));
+////					.getResourceAsStream("/log4j.propertiesex"));
 //		} catch (Exception e) {
 //		}
 //	}
