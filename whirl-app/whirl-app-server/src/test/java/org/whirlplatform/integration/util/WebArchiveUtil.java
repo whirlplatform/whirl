@@ -29,7 +29,7 @@ public class WebArchiveUtil {
     }
 
     public static WebArchive getWhirlApplicationWar(final String projectVersion) {
-        final String warFileName = String.format("target/whirl-application-%s.war", projectVersion);
+        final String warFileName = String.format("target/whirl-app-server-%s.war", projectVersion);
         return ShrinkWrap.createFromZipFile(WebArchive.class, new File(warFileName))
                 .filter(new ExcludePaths("/WEB-INF/web.xml"));
     }

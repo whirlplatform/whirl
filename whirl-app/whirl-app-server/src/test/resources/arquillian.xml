@@ -8,6 +8,7 @@
             default="true"
             qualifier="tomcat7-managed">
         <configuration>
+            <property name="catalinaHome">C:\Projects\apache-tomcat-7.0.32</property>
             <!-- <property name="javaVmArguments">-Xmx1024m -XX:MaxPermSize=512m</property> -->
             <property name="jmxPort">9090</property>
             <property name="bindHttpPort">8080</property>
@@ -18,8 +19,8 @@
 
     <extension qualifier="webdriver">
         <property name="browser">firefox</property>
-        <property name="firefox_binary">E:\FirefoxPortable\FirefoxPortable.exe</property>
-        <property name="firefox_profile">E:\FirefoxPortable\Data\profile</property>
+        <property name="firefox_binary">C:\Program Files\Firefox Developer Edition\firefox.exe</property>
+        <property name="firefox_profile">C:\Program Files\Firefox Developer Edition\Data\profile</property>
         <property name=""></property>
     </extension>
 
