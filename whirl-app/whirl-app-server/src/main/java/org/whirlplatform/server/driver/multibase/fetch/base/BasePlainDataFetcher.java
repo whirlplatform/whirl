@@ -55,7 +55,6 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
                     command.select(expression);
                 }
                 command.select(temp.dbTable.getColumn(f.getName()));
-
             }
         }
 

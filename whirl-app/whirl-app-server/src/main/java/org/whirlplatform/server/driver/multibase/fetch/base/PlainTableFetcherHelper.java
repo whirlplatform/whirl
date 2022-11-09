@@ -1,7 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import org.apache.empire.commons.StringUtils;
-import org.apache.empire.data.DataMode;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.*;
 import org.apache.empire.db.expr.compare.DBCompareColExpr;
@@ -24,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<FieldMetadata, TableColumnElement>();
@@ -95,13 +92,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             if (StringUtils.isEmpty(c.getFunction())) {
                 this.dbTable.addColumn(c.getColumnName(), type, c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
-    
-            // для списков и для файлов
-            if ((org.whirlplatform.meta.shared.data.DataType.LIST == f.getType() ||
-                    org.whirlplatform.meta.shared.data.DataType.FILE == f.getType()) &&
-                    !StringUtils.isEmpty(f.getLabelExpression())) {
-                this.dbTable.addColumn(LABEL_EXPRESSION_NAME, DataType.TEXT, 0, DataMode.NotNull);
-            }
         }
 
         try {
@@ -117,6 +107,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         // собираем фильтры
         for (FilterValue filter : loadConfig.getFilters()) {
             DBColumnExpr col;
+
+            // TODO: add functionality for file column
             if (filter.getMetadata().getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 col = this.dbTable.getColumn(filter.getMetadata().getLabelExpression());
             } else {
