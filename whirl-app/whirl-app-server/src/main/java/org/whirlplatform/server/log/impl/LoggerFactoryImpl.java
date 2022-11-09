@@ -3,7 +3,7 @@ package org.whirlplatform.server.log.impl;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-public class CommonsLoggerFactory extends LoggerFactory {
+public class LoggerFactoryImpl extends LoggerFactory {
 
 	private static class LoggerImpl implements Logger {
 
