@@ -85,7 +85,7 @@ public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFet
             fieldMetadata.setRegExError(columnElement.getRegexMessage().getValue(userLocale).getString());
             fieldMetadata.setHidden(columnElement.isHidden());
             // TODO field.setEvent();
-            fieldMetadata.setLabelColumn(columnElement.getLabelColumn());
+            fieldMetadata.setLabelExpression(columnElement.getLabelExpression());
             
             if (table.getIdColumn() == columnElement) {
                 result.setIdField(fieldMetadata);

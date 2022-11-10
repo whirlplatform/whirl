@@ -19,6 +19,7 @@ import com.sencha.gxt.widget.core.client.event.CheckChangedEvent;
 import com.sencha.gxt.widget.core.client.event.CheckChangedEvent.CheckChangedHandler;
 import com.sencha.gxt.widget.core.client.event.CheckChangedEvent.HasCheckChangedHandlers;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
+import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
 import java.util.Collections;
@@ -27,46 +28,46 @@ import java.util.List;
 import java.util.Map;
 
 public class CheckBoxList extends SimpleContainer implements
-		HasCheckChangedHandlers<RowModelData> {
+		HasCheckChangedHandlers<ListModelData> {
 
-	private StoreHandlers<RowModelData> handlers = new StoreHandlers<RowModelData>() {
+	private StoreHandlers<ListModelData> handlers = new StoreHandlers<ListModelData>() {
 
 		@Override
-		public void onAdd(StoreAddEvent<RowModelData> event) {
+		public void onAdd(StoreAddEvent<ListModelData> event) {
 			onAddItems(event.getItems(), event.getIndex());
 		}
 
 		@Override
-		public void onRemove(StoreRemoveEvent<RowModelData> event) {
+		public void onRemove(StoreRemoveEvent<ListModelData> event) {
 			onRemoveItem(event.getItem());
 		}
 
 		@Override
-		public void onFilter(StoreFilterEvent<RowModelData> event) {
+		public void onFilter(StoreFilterEvent<ListModelData> event) {
 			// not filtered
 		}
 
 		@Override
-		public void onClear(StoreClearEvent<RowModelData> event) {
+		public void onClear(StoreClearEvent<ListModelData> event) {
 			onClearItems();
 		}
 
 		@Override
-		public void onUpdate(StoreUpdateEvent<RowModelData> event) {
+		public void onUpdate(StoreUpdateEvent<ListModelData> event) {
 		}
 
 		@Override
-		public void onDataChange(StoreDataChangeEvent<RowModelData> event) {
+		public void onDataChange(StoreDataChangeEvent<ListModelData> event) {
 			onClearItems();
 			onAddItems(store.getAll(), 0);
 		}
 
 		@Override
-		public void onRecordChange(StoreRecordChangeEvent<RowModelData> event) {
+		public void onRecordChange(StoreRecordChangeEvent<ListModelData> event) {
 		}
 
 		@Override
-		public void onSort(StoreSortEvent<RowModelData> event) {
+		public void onSort(StoreSortEvent<ListModelData> event) {
 		}
 
 	};
@@ -74,18 +75,18 @@ public class CheckBoxList extends SimpleContainer implements
 	private GroupingHandlerRegistration groupingRegistration;
 
 	private InsertResizeContainer list;
-	private LabelProvider<RowModelData> labelProvider;
+	private LabelProvider<ListModelData> labelProvider;
 	private ValueProvider<RowModelData, Boolean> valueProvider;
 
 	private Map<RowModelData, CheckBox> modelCheck = new HashMap<RowModelData, CheckBox>();
 	private Map<CheckBox, HandlerRegistration> checkHandler = new HashMap<CheckBox, HandlerRegistration>();
 
-	private Store<RowModelData> store;
+	private Store<ListModelData> store;
 	private CheckSelectionModel selectionModel = new CheckSelectionModel();
 
 	public CheckBoxList(Orientation orientation,
-			LabelProvider<RowModelData> labelProvider,
-			ValueProvider<RowModelData, Boolean> valueProvider) {
+						LabelProvider<ListModelData> labelProvider,
+						ValueProvider<RowModelData, Boolean> valueProvider) {
 		super();
 		this.labelProvider = labelProvider;
 		this.valueProvider = valueProvider;
@@ -103,9 +104,9 @@ public class CheckBoxList extends SimpleContainer implements
 		return new CheckBox();
 	}
 
-	private void onAddItems(List<RowModelData> items, int index) {
+	private void onAddItems(List<ListModelData> items, int index) {
 		int count = 0;
-		for (final RowModelData m : items) {
+		for (final ListModelData m : items) {
 			CheckBox check = initCheckBox();
 			check.setBoxLabel(labelProvider.getLabel(m));
 			list.insert(check, index + count);
@@ -146,7 +147,7 @@ public class CheckBoxList extends SimpleContainer implements
 
 	@Override
 	public HandlerRegistration addCheckChangedHandler(
-			CheckChangedHandler<RowModelData> handler) {
+			CheckChangedHandler<ListModelData> handler) {
 		return addHandler(handler, CheckChangedEvent.getType());
 	}
 
@@ -161,7 +162,7 @@ public class CheckBoxList extends SimpleContainer implements
 		}
 	}
 
-	public void setStore(Store<RowModelData> store) {
+	public void setStore(Store<ListModelData> store) {
 		if (groupingRegistration != null) {
 			groupingRegistration.removeHandler();
 			groupingRegistration = null;
@@ -181,7 +182,7 @@ public class CheckBoxList extends SimpleContainer implements
 		selectionModel.bindCheckList(this);
 	}
 
-	public Store<RowModelData> getStore() {
+	public Store<ListModelData> getStore() {
 		return store;
 	}
 

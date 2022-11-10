@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 public class CSVExporter extends Exporter {
 
 	private ClassMetadata metadata;
@@ -72,7 +74,7 @@ public class CSVExporter extends Exporter {
                                     DBReader reader) {
 		String result;
 		if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
-			result = reader.getString(reader.getFieldIndex(field.getLabelColumn()));
+			result = reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
 		} else {
 			result = ServerGetter.getResultSetValue(reader,
 					reader.getFieldIndex(field.getName()));

@@ -70,7 +70,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher implements ListF
 
     protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig, PlainListFetcherHelper temp) {
         DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr valueColumn = temp.labelColumn;
+        DBColumnExpr valueColumn = temp.labelExpression;
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
@@ -78,7 +78,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher implements ListF
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
         }
-        subCommand.orderBy(temp.labelColumn.lower().asc());
+        subCommand.orderBy(temp.labelExpression.lower().asc());
 
         DBQuery subQuery = new DBQuery(subCommand);
         idColumn = subQuery.findQueryColumn(idColumn);

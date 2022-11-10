@@ -18,7 +18,7 @@ public class PlainTableElement extends DatabaseTableElement {
     private String tableName;
     private TableColumnElement idColumn;
     private TableColumnElement deleteColumn;
-    private TableColumnElement labelColumn;
+    private TableColumnElement labelExpression;
     private Set<TableColumnElement> columns = new HashSet<TableColumnElement>();
     private ViewElement view;
 
@@ -171,17 +171,17 @@ public class PlainTableElement extends DatabaseTableElement {
         }
     }
 
-    public TableColumnElement getLabelColumn() {
-        return labelColumn;
+    public TableColumnElement getLabelExpression() {
+        return labelExpression;
     }
 
-    public void setLabelColumn(TableColumnElement labelColumn) {
-        if (labelColumn != null) {
-            labelColumn.setTable(null);
-            this.labelColumn = labelColumn;
-            this.labelColumn.setTable(this);
+    public void setLabelExpression(TableColumnElement labelExpression) {
+        if (labelExpression != null) {
+            labelExpression.setTable(null);
+            this.labelExpression = labelExpression;
+            this.labelExpression.setTable(this);
         } else {
-            this.labelColumn = null;
+            this.labelExpression = null;
         }
     }
 

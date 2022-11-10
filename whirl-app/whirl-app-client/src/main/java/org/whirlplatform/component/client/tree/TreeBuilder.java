@@ -41,12 +41,7 @@ import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.Clearable;
-import org.whirlplatform.component.client.ComponentBuilder;
-import org.whirlplatform.component.client.HasState;
-import org.whirlplatform.component.client.ListParameter;
-import org.whirlplatform.component.client.ParameterHelper;
-import org.whirlplatform.component.client.Validatable;
+import org.whirlplatform.component.client.*;
 import org.whirlplatform.component.client.data.ClassKeyProvider;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
@@ -61,26 +56,14 @@ import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.RowListValue;
-import org.whirlplatform.meta.shared.data.RowListValueImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.data.RowModelDataImpl;
-import org.whirlplatform.meta.shared.data.RowValue;
-import org.whirlplatform.meta.shared.data.RowValueImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Дерево
@@ -89,11 +72,11 @@ import java.util.Map;
 public class TreeBuilder extends ComponentBuilder
         implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
-    protected TreeStore<RowModelData> store;
+    protected TreeStore<ListModelData> store;
     /**
      * Колонка лейбла
      */
-    protected String labelColumn;
+    protected String labelExpression;
     /**
      * Выражение для вычисления наличия родителей
      */
@@ -102,7 +85,7 @@ public class TreeBuilder extends ComponentBuilder
     protected StorageWrapper<RowListValue> stateStore;
     protected StateStore<RowListValue> selectionStateStore;
     protected HandlerRegistration checkChangedHandler;
-    private XTree<RowModelData, String> tree;
+    private XTree<ListModelData, String> tree;
     /**
      * Идентификатор таблицы (DataSource)
      */
@@ -144,15 +127,15 @@ public class TreeBuilder extends ComponentBuilder
     private String whereSql;
     private DelayedTask saveCurrentTask;
     private SideErrorHandler errorHandler;
-    private TreeSelectionModel<RowModelData> selModel;
+    private TreeSelectionModel<ListModelData> selModel;
     private ParameterHelper paramHelper;
     private List<DataValue> lastParameters;
 
     @SuppressWarnings("rawtypes")
     private TreeLoader loader;
-    private ValueProvider<RowModelData, String> valueProvider;
+    private ValueProvider<ListModelData, String> valueProvider;
 
-    private IconProvider<RowModelData> iconProvider;
+    private IconProvider<ListModelData> iconProvider;
 
     private boolean useSearchField;
     private int minChars;
@@ -181,15 +164,16 @@ public class TreeBuilder extends ComponentBuilder
         paramHelper = new ParameterHelper();
         lastParameters = Collections.emptyList();
 
-        valueProvider = new ValueProvider<RowModelData, String>() {
+        valueProvider = new ValueProvider<ListModelData, String>() {
 
             @Override
-            public String getValue(RowModelData object) {
-                return object.get(labelColumn);
+            public String getValue(ListModelData object) {
+                //return object.get(labelExpression);
+                return object.getLabel();
             }
 
             @Override
-            public void setValue(RowModelData object, String value) {
+            public void setValue(ListModelData object, String value) {
             }
 
             @Override
@@ -198,10 +182,10 @@ public class TreeBuilder extends ComponentBuilder
             }
 
         };
-        iconProvider = new IconProvider<RowModelData>() {
+        iconProvider = new IconProvider<ListModelData>() {
 
             @Override
-            public ImageResource getIcon(RowModelData model) {
+            public ImageResource getIcon(ListModelData model) {
                 if (imageColumn != null) {
                     String data = model.get(imageColumn);
                     if (data != null) {
@@ -215,7 +199,8 @@ public class TreeBuilder extends ComponentBuilder
 
         SimpleContainer container = new SimpleContainer();
         errorHandler = new SideErrorHandler(container);
-        store = new TreeStore<RowModelData>(new ClassKeyProvider());
+        store = new TreeStore<ListModelData>(new ClassKeyProvider());
+
         // tree = initTree(initLoader(store));
         loader = initLoader(store);
         tree = initTree(loader);
@@ -235,7 +220,7 @@ public class TreeBuilder extends ComponentBuilder
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
-            labelColumn = value.getString();
+            labelExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
             isLeafColumn = value.getString();
@@ -312,25 +297,25 @@ public class TreeBuilder extends ComponentBuilder
         selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, getClassMetadata());
     }
 
-    protected TreeLoader<RowModelData> initLoader(final TreeStore<RowModelData> store) {
-        RpcProxy<RowModelData, List<RowModelData>> proxy = createProxy();
+    protected TreeLoader<ListModelData> initLoader(final TreeStore<ListModelData> store) {
+        RpcProxy<ListModelData, List<ListModelData>> proxy = createProxy();
 
-        TreeLoader<RowModelData> loader = new TreeLoader<RowModelData>(proxy) {
+        TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
             @Override
-            public boolean hasChildren(RowModelData parent) {
+            public boolean hasChildren(ListModelData parent) {
                 return parent.<Boolean>get(isLeafColumn);
             }
 
             @Override
-            protected void onLoadSuccess(RowModelData loadConfig, List<RowModelData> result) {
+            protected void onLoadSuccess(ListModelData loadConfig, List<ListModelData> result) {
                 super.onLoadSuccess(loadConfig, result);
                 tree.unmask();
                 restoreState(result);
             }
         };
-        loader.addLoadHandler(new ChildTreeStoreBinding<RowModelData>(store) {
+        loader.addLoadHandler(new ChildTreeStoreBinding<ListModelData>(store) {
             @Override
-            public void onLoad(LoadEvent<RowModelData, List<RowModelData>> event) {
+            public void onLoad(LoadEvent<ListModelData, List<ListModelData>> event) {
                 if (event.getLoadConfig() == null && isQuery()) {
                     store.clear();
                     if (!event.getLoadResult().isEmpty()) {
@@ -344,12 +329,12 @@ public class TreeBuilder extends ComponentBuilder
         return loader;
     }
 
-    private void loadQueryResult(TreeStore<RowModelData> store, List<RowModelData> models) {
+    private void loadQueryResult(TreeStore<ListModelData> store, List<ListModelData> models) {
         boolean hasChanged = true;
-        Map<String, RowModelData> added = new HashMap<String, RowModelData>();
+        Map<String, ListModelData> added = new HashMap<String, ListModelData>();
         while (hasChanged) {
             hasChanged = false;
-            for (RowModelData m : models) {
+            for (ListModelData m : models) {
 
                 String parentId = m.get(parentColumn);
                 if (added.containsKey(m.getId())) {
@@ -366,7 +351,7 @@ public class TreeBuilder extends ComponentBuilder
                 }
             }
         }
-        for (RowModelData md : store.getAll()) {
+        for (ListModelData md : store.getAll()) {
             if (store.hasChildren(md)) {
                 tree.findNode(md).setLoaded(true);
                 tree.setExpanded(md, true);
@@ -375,10 +360,10 @@ public class TreeBuilder extends ComponentBuilder
 
     }
 
-    protected RpcProxy<RowModelData, List<RowModelData>> createProxy() {
-        RpcProxy<RowModelData, List<RowModelData>> proxy = new RpcProxy<RowModelData, List<RowModelData>>() {
+    protected RpcProxy<ListModelData, List<ListModelData>> createProxy() {
+        RpcProxy<ListModelData, List<ListModelData>> proxy = new RpcProxy<ListModelData, List<ListModelData>>() {
             @Override
-            public void load(final RowModelData parent, final AsyncCallback<List<RowModelData>> callback) {
+            public void load(final ListModelData parent, final AsyncCallback<List<ListModelData>> callback) {
                 Scheduler.get().scheduleDeferred(new ScheduledCommand() {
                     @Override
                     public void execute() {
@@ -393,8 +378,8 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @SuppressWarnings({"rawtypes"})
-    protected XTree<RowModelData, String> initTree(TreeLoader<RowModelData> loader) {
-        tree = new XTree<RowModelData, String>(store, valueProvider) {
+    protected XTree<ListModelData, String> initTree(TreeLoader<ListModelData> loader) {
+        tree = new XTree<ListModelData, String>(store, valueProvider) {
             @Override
             protected void onAfterFirstAttach() {
                 super.onAfterFirstAttach();
@@ -409,9 +394,9 @@ public class TreeBuilder extends ComponentBuilder
         tree.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Будет работать при нажатии чекбокса?
-        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
+        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
             @Override
-            public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
+            public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
                 if (saveState) {
                     saveCurrentTask.delay(100);
                 } else {
@@ -421,7 +406,7 @@ public class TreeBuilder extends ComponentBuilder
             }
         });
 
-        tree.addValueChangeHandler(new ValueChangeHandler<RowModelData>() {
+        tree.addValueChangeHandler(new ValueChangeHandler<ListModelData>() {
             @Override
             public void onValueChange(ValueChangeEvent event) {
                 if (saveState) {
@@ -440,8 +425,8 @@ public class TreeBuilder extends ComponentBuilder
             @Override
             public void render(com.google.gwt.cell.client.Cell.Context context, String value, SafeHtmlBuilder sb) {
                 String q = tree.getSearchText();
-                RowModelData model = store.findModelWithKey((String) context.getKey());
-                String style = model.getStyle(labelColumn);
+                ListModelData model = store.findModelWithKey((String) context.getKey());
+                String style = model.getStyle(labelExpression);
 
                 String data = value == null ? "" : SafeHtmlUtils.htmlEscape(value);
                 StringBuilder result = new StringBuilder();
@@ -473,12 +458,12 @@ public class TreeBuilder extends ComponentBuilder
         };
     }
 
-    protected void restoreState(List<RowModelData> list) {
+    protected void restoreState(List<ListModelData> list) {
         if (checkColumn == null && stateColumn == null && selectColumn == null) {
             return;
         }
-        RowModelData firstChecked = null;
-        for (RowModelData m : list) {
+        ListModelData firstChecked = null;
+        for (ListModelData m : list) {
             // Отмечаем чекбокс
             if (m.<Boolean>get(checkColumn)) {
                 if (firstChecked == null) {
@@ -513,18 +498,17 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @SuppressWarnings("rawtypes")
-    protected TreeClassLoadConfig getLoadConfig(RowModelData parent) {
+    protected TreeClassLoadConfig getLoadConfig(ListModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafColumn(isLeafColumn);
         config.setStateColumn(stateColumn);
         config.setCheckColumn(checkColumn);
         config.setSelectColumn(selectColumn);
-        config.setLabelColumn(labelColumn);
         config.setParentColumn(parentColumn);
         config.setParent(parent);
         config.setWhereSql(whereSql);
-        config.setLabelExpression(labelColumn);
+        config.setLabelExpression(labelExpression);
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());
@@ -534,7 +518,7 @@ public class TreeBuilder extends ComponentBuilder
 
     @Override
     @SuppressWarnings("unchecked")
-    protected Tree<RowModelData, String> getRealComponent() {
+    protected Tree<ListModelData, String> getRealComponent() {
         return tree;
     }
 
@@ -604,9 +588,9 @@ public class TreeBuilder extends ComponentBuilder
         RowListValue result = new RowListValueImpl();
         result.setCheckable(checkable);
         result.setCode(getCode());
-        RowModelData last = tree.getSelectionModel().getSelectedItem();
-        List<RowModelData> checked = tree.getCheckedSelection();
-        for (RowModelData m : checked) {
+        ListModelData last = tree.getSelectionModel().getSelectedItem();
+        List<ListModelData> checked = tree.getCheckedSelection();
+        for (ListModelData m : checked) {
             RowValue row = new RowValueImpl(m.getId());
             row.setChecked(true);
             if (m == last) {
@@ -633,10 +617,10 @@ public class TreeBuilder extends ComponentBuilder
             tree.getSelectionModel().deselectAll();
             return;
         }
-        List<RowModelData> models = new ArrayList<RowModelData>();
-        RowModelData selected = null;
+        List<ListModelData> models = new ArrayList<ListModelData>();
+        ListModelData selected = null;
         for (RowValue row : value.getRowList()) {
-            RowModelData model = new RowModelDataImpl();
+            ListModelData model = new ListModelDataImpl();
             model.setId(row.getId());
             models.add(model);
             if (row.isSelected()) {
@@ -650,7 +634,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @JsIgnore
-    public TreeStore<RowModelData> getStore() {
+    public TreeStore<ListModelData> getStore() {
         return store;
     }
 
@@ -812,13 +796,13 @@ public class TreeBuilder extends ComponentBuilder
         } else if (tree.getSearchButton() != null && tree.getSearchButton().getElement().isOrHasChild(element)) {
             part = new Locator(LocatorParams.TYPE_SEARCH_BUTTON);
         } else {
-            Tree.TreeNode<RowModelData> itemNode = tree.findNode(element);
+            Tree.TreeNode<ListModelData> itemNode = tree.findNode(element);
             if (itemNode != null) {
                 part = new Locator(LocatorParams.TYPE_ITEM);
                 part.setParameter(LocatorParams.PARAMETER_ID, itemNode.getModelId());
                 part.setParameter(LocatorParams.PARAMETER_INDEX, String.valueOf(store.indexOf(itemNode.getModel())));
                 part.setParameter(LocatorParams.PARAMETER_LABEL, valueProvider.getValue(itemNode.getModel()));
-                TreeView<RowModelData> view = tree.getView();
+                TreeView<ListModelData> view = tree.getView();
                 if (view.getCheckElement(itemNode).isOrHasChild(element)) {
                     part.setPart(new Locator(LocatorParams.TYPE_CHECK));
                 } else if (view.getJointElement(itemNode).isOrHasChild(element)) {
@@ -850,13 +834,13 @@ public class TreeBuilder extends ComponentBuilder
             } else if (LocatorParams.TYPE_SEARCH_BUTTON.equals(part.getType()) && tree.getSearchButton() != null) {
                 return tree.getSearchButton().getElement();
             } else if (LocatorParams.TYPE_ITEM.equals(part.getType())) {
-                RowModelData model = null;
-                Tree.TreeNode<RowModelData> itemNode = null;
+                ListModelData model = null;
+                Tree.TreeNode<ListModelData> itemNode = null;
                 if (part.hasParameter(LocatorParams.PARAMETER_ID)) {
                     model = store.findModelWithKey(part.getParameter(LocatorParams.PARAMETER_ID));
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
                         && !Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
-                    for (RowModelData m : store.getAll()) {
+                    for (ListModelData m : store.getAll()) {
                         if (part.getParameter(LocatorParams.PARAMETER_LABEL).equals(valueProvider.getValue(model))) {
                             model = m;
                             break;
@@ -868,7 +852,7 @@ public class TreeBuilder extends ComponentBuilder
                 }
                 if (itemNode != null && part.getPart() != null) {
                     Locator subPart = part.getPart();
-                    TreeView<RowModelData> view = tree.getView();
+                    TreeView<ListModelData> view = tree.getView();
                     if (LocatorParams.TYPE_CHECK.equals(subPart.getType())) {
                         return view.getCheckElement(itemNode);
                     } else if (LocatorParams.TYPE_JOINT.equals(subPart.getType())) {

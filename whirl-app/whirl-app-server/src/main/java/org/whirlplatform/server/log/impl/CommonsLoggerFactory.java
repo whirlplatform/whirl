@@ -7,9 +7,10 @@ public class CommonsLoggerFactory extends LoggerFactory {
 
 	private static class LoggerImpl implements Logger {
 
-		private org.slf4j.Logger log;
+		private org.apache.logging.log4j.Logger log;
+		//private org.apache.logging.log4j.LogManager log;
 
-		private LoggerImpl(org.slf4j.Logger log) {
+		private LoggerImpl(org.apache.logging.log4j.Logger log) {
 			this.log = log;
 		}
 
@@ -64,7 +65,7 @@ public class CommonsLoggerFactory extends LoggerFactory {
 
 	@Override
 	public Logger getLogger(String name) {
-		return new LoggerImpl(org.slf4j.LoggerFactory.getLogger(name));
+		return new LoggerImpl(org.apache.logging.log4j.LogManager.getLogger(name));
 	}
 
 }

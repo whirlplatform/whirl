@@ -4,7 +4,6 @@ import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeUri;
@@ -42,17 +41,14 @@ import org.whirlplatform.component.client.event.SelectEvent;
 import org.whirlplatform.component.client.ext.XTree;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.InfoHelper;
-import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.*;
-import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
-import org.whirlplatform.storage.client.StorageHelper;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -66,11 +62,11 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     // TODO переписать, выкинуть наследование от TreeBuilder
 
     private String eventColumn;
-    private XTree<RowModelData, String> tree;
+    private XTree<ListModelData, String> tree;
     private HandlerRegistration registration;
     private List<ComponentBuilder> children;
-    private Map<ComponentBuilder, RowModelData> builderMap;
-    private IconProvider<RowModelData> iconProvider;
+    private Map<ComponentBuilder, ListModelData> builderMap;
+    private IconProvider<ListModelData> iconProvider;
 
     @JsConstructor
     public TreeMenuBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -90,10 +86,10 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     @Override
     protected Component init(Map<String, DataValue> builderProperties) {
         children = new ArrayList<ComponentBuilder>();
-        builderMap = new HashMap<ComponentBuilder, RowModelData>();
-        iconProvider = new IconProvider<RowModelData>() {
+        builderMap = new HashMap<ComponentBuilder, ListModelData>();
+        iconProvider = new IconProvider<ListModelData>() {
             @Override
-            public ImageResource getIcon(RowModelData model) {
+            public ImageResource getIcon(ListModelData model) {
                 // для потомков, добавленных вручную (MenuItemBuilder), можно
                 // выставить иконку
                 if (model.getId().startsWith("temp")) {
@@ -130,7 +126,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     @Override
     public void addChild(ComponentBuilder child) {
         if (child instanceof HorizontalMenuItemBuilder) {
-            RowModelData root = getModelData((HorizontalMenuItemBuilder) child);
+            ListModelData root = getModelData((HorizontalMenuItemBuilder) child);
 
             children.add(child);
             builderMap.put(child, root);
@@ -187,12 +183,12 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return registration;
     }
 
-    protected TreeLoader<RowModelData> initLoader(final TreeStore<RowModelData> store) {
-        RpcProxy<RowModelData, List<RowModelData>> proxy = createProxy();
+    protected TreeLoader<ListModelData> initLoader(final TreeStore<ListModelData> store) {
+        RpcProxy<ListModelData, List<ListModelData>> proxy = createProxy();
 
-        TreeLoader<RowModelData> loader = new TreeLoader<RowModelData>(proxy) {
+        TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
             @Override
-            public boolean hasChildren(RowModelData parent) {
+            public boolean hasChildren(ListModelData parent) {
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
                 if (getClassMetadata().getClassId() != null && parent.getProperties().containsKey(isLeafColumn)) {
@@ -204,7 +200,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
             }
 
             @Override
-            protected void onLoadSuccess(RowModelData loadConfig, List<RowModelData> result) {
+            protected void onLoadSuccess(ListModelData loadConfig, List<ListModelData> result) {
                 super.onLoadSuccess(loadConfig, result);
 
                 loadLocalData();
@@ -213,7 +209,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
             }
 
             @Override
-            protected void onLoadFailure(RowModelData loadConfig, Throwable t) {
+            protected void onLoadFailure(ListModelData loadConfig, Throwable t) {
                 super.onLoadFailure(loadConfig, t);
 
                 loadLocalData();
@@ -221,15 +217,15 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
             }
 
             @Override
-            protected void loadData(RowModelData config) {
+            protected void loadData(ListModelData config) {
                 if (builderMap.values().contains(config)) {
                     // добавляем в результат loader-а локальные данные
                     // (MenuItemBuilder)
                     ComponentBuilder builder = findBuilder(config);
-                    List<RowModelData> result = new ArrayList<RowModelData>();
+                    List<ListModelData> result = new ArrayList<ListModelData>();
                     if (builder != null) {
                         for (ComponentBuilder c : ((HorizontalMenuItemBuilder) builder).getChildren()) {
-                            RowModelData m = builderMap.get(c);
+                            ListModelData m = builderMap.get(c);
                             if (m == null) {
                                 m = getModelData((HorizontalMenuItemBuilder) c);
                                 builderMap.put(c, m);
@@ -243,17 +239,17 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
                 }
             }
         };
-        loader.addLoadHandler(new ChildTreeStoreBinding<RowModelData>(store));
+        loader.addLoadHandler(new ChildTreeStoreBinding<ListModelData>(store));
         return loader;
     }
 
     @Override
-    protected XTree<RowModelData, String> initTree(TreeLoader<RowModelData> loader) {
+    protected XTree<ListModelData, String> initTree(TreeLoader<ListModelData> loader) {
         tree = super.initTree(loader);
 
         // Чтобы событие вызывалось не только при смене выбранного элемента, но
         // и при клике
-        tree.setSelectionModel(new TreeSelectionModel<RowModelData>() {
+        tree.setSelectionModel(new TreeSelectionModel<ListModelData>() {
             @Override
             protected void onMouseClick(com.google.gwt.event.dom.client.ClickEvent ce) {
                 fireSelectionChangeOnClick = true;
@@ -266,18 +262,18 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         if (checkChangedHandler != null) {
             checkChangedHandler.removeHandler();
         }
-        checkChangedHandler = tree.addCheckChangedHandler(new CheckChangedHandler<RowModelData>() {
+        checkChangedHandler = tree.addCheckChangedHandler(new CheckChangedHandler<ListModelData>() {
             @Override
-            public void onCheckChanged(CheckChangedEvent<RowModelData> event) {
+            public void onCheckChanged(CheckChangedEvent<ListModelData> event) {
                 tree.fireEvent(new SelectEvent());
             }
         });
 
-        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
+        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
 
             @Override
-            public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
-                for (Entry<ComponentBuilder, RowModelData> entry : builderMap.entrySet()) {
+            public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
+                for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
                     if (event.getSelection().size() > 0 && entry.getValue() == event.getSelection().get(0)) {
                         entry.getKey().fireEvent(new ClickEvent());
                         break;
@@ -299,7 +295,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
                         registration.removeHandler();
                     }
 
-                    RowModelData model = getStore().getChild(context.getIndex());
+                    ListModelData model = getStore().getChild(context.getIndex());
                     String eventCode = model.get(eventColumn);
 
                     ComponentBuilder cb = findBuilder(model);
@@ -344,9 +340,9 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return metadata;
     }
 
-    private ComponentBuilder findBuilder(RowModelData model) {
+    private ComponentBuilder findBuilder(ListModelData model) {
         ComponentBuilder builder = null;
-        for (Entry<ComponentBuilder, RowModelData> cb : builderMap.entrySet()) {
+        for (Entry<ComponentBuilder, ListModelData> cb : builderMap.entrySet()) {
             if (cb.getValue().equals(model)) {
                 builder = cb.getKey();
                 break;
@@ -365,22 +361,22 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
         return UriUtils.fromString(url.toString());
     }
 
-    private RowModelData getModelData(HorizontalMenuItemBuilder cb) {
-        RowModelData model = new RowModelDataImpl();
+    private ListModelData getModelData(HorizontalMenuItemBuilder cb) {
+        ListModelData model = new ListModelDataImpl();
         model.setId("temp" + Random.nextInt());
         // if (nameExpression == null) {
         // nameExpression = "labelColumn";
         // }
-        model.set(labelColumn, cb.getTitle());
+        model.set(labelExpression, cb.getTitle());
         model.set("image", cb.getImage());
         model.set(PropertyType.LayoutDataIndex.getCode(), cb.getIndexPosition());
         return model;
     }
 
     private void buildTree(HorizontalMenuItemBuilder item) {
-        RowModelData root = builderMap.get(item);
+        ListModelData root = builderMap.get(item);
         for (ComponentBuilder cb : item.getChildren()) {
-            RowModelData model = getModelData((HorizontalMenuItemBuilder) cb);
+            ListModelData model = getModelData((HorizontalMenuItemBuilder) cb);
             builderMap.put(cb, model);
             store.add(root, model);
 
@@ -410,7 +406,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     private void loadLocalData() {
         for (int i = 0; i < children.size(); i++) {
             ComponentBuilder cb = children.get(i);
-            RowModelData model = builderMap.get(cb);
+            ListModelData model = builderMap.get(cb);
             if (store.findModel(model) == null) {
                 store.insert(i, model);
                 buildTree((HorizontalMenuItemBuilder) cb);
@@ -428,7 +424,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     }
 
     @JsIgnore
-    public Tree<RowModelData, String> getTree() {
+    public Tree<ListModelData, String> getTree() {
         return tree;
     }
 
@@ -522,7 +518,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
 
     @JsIgnore
     @Override
-    public TreeStore<RowModelData> getStore() {
+    public TreeStore<ListModelData> getStore() {
         return super.getStore();
     }
 

@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import org.apache.empire.data.DataType;
+import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.*;
@@ -9,6 +11,7 @@ import org.whirlplatform.server.driver.multibase.fetch.DataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
@@ -47,6 +50,10 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
         command.select(temp.dbPrimaryKey);
         for (FieldMetadata f : temp.tableColumns.keySet()) {
             if (f.isView()) {
+                if(f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+                    DBColumnExpr expression = temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN).as(f.getName() + LABEL_EXPRESSION_NAME);
+                    command.select(expression);
+                }
                 command.select(temp.dbTable.getColumn(f.getName()));
             }
         }
