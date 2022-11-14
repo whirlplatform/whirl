@@ -1,52 +1,48 @@
 package org.whirlplatform.integration;
 
-import ch.qos.logback.core.net.SocketConnector;
-import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.seleniumhq.jetty9.server.Server;
-import org.seleniumhq.jetty9.server.handler.ResourceHandler;
-import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.testcontainers.containers.startupcheck.OneShotStartupCheckStrategy;
+import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Paths;
-import java.time.Duration;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestrcontainersRun {
 
-    private final String pathNameIndex = "src/test/resources/index.html";
-    private final String pathNameWar = "C:\\Projects\\whirl_\\whirl-app\\whirl-app-server\\target\\whirl-app-server-0.3.0-SNAPSHOT.war";
+//    private final String pathNameIndex = "index.html";
+//    private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
+    private final String pathNameWar = "target/index.html";
     MountableFile warFile = MountableFile.forHostPath(
-            Paths.get(pathNameWar)
-                    .toAbsolutePath(), 0777);
+            Paths.get(pathNameWar), 0777);
+
+    Network net = Network.newNetwork();
 
     @Rule
-    public GenericContainer<?> container = new GenericContainer<>(
-            DockerImageName.parse("tomcat:9"))
+    public GenericContainer<?> tomcat = new GenericContainer<>(
+            DockerImageName.parse("tomcat:9-jdk8"))
+            .withNetwork(net)
+            .withNetworkAliases("tomcat")
             .withExposedPorts(8080)
-            .withCopyToContainer(warFile, "\\usr\\local\\tomcat\\webapps\\ROOT.war")
+            .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT/index.html")
 //            .withStartupCheckStrategy(new OneShotStartupCheckStrategy().withTimeout(Duration.ofSeconds(6)))
-            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 6))
+            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
 //            .withCommand("--deploy \\usr\\local\\tomcat\\webapps\\ROOT.war ----contextRoot /")
-                ;
+            ;
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withAccessToHost(true)
-            .withCapabilities(new ChromeOptions())
-            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:\\Users\\Nastia\\Documents").toFile());
+            .withNetwork(net)
+            .withNetworkAliases("chrome")
+            .withCapabilities(new ChromeOptions());
+//            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:\\Users\\Nastia\\Documents").toFile());
 //            .withNetwork(NETWORK);
 
     private Integer localPort= 8090;
@@ -70,37 +66,39 @@ public class TestrcontainersRun {
 //    }
 
 
-    @Before
-    public void setUp() {
-        tomcatHost = container.getHost();
-        tomcatPort = container.getFirstMappedPort();
-
-    }
+//    @Before
+//    public void setUp() {
+//        tomcatHost = container.getHost();
+//        tomcatPort = container.getFirstMappedPort();
+//
+//    }
 
 
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
+        System.out.println(Paths.get(pathNameWar).toAbsolutePath());
+
+
         final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
         System.out.println(rootUrl);
 
+
+        RemoteWebDriver driver = chrome.getWebDriver();
+        driver.get("http://tomcat:8080/index.html");
+
         try {
-            Thread.sleep(60000);
+            String heading = driver.getTitle();
+            while (heading.isEmpty()) {
+                Thread.sleep(1000);
+                heading = driver.getTitle();
+            }
+            System.out.println(heading);
+//        assertEquals("Приложение не доступно на этом сервере.", heading);
+
+            Thread.sleep(3000000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        RemoteWebDriver driver = chrome.getWebDriver();
-//        driver.get(rootUrl);
-
-
-        Testcontainers.exposeHostPorts(localPort);
-        driver.get("http://localhost:"+localPort+"/whirl-demo.jelastic.regruhosting.ru/");
-
-
-//        driver.get("http://whirl-demo.jelastic.regruhosting.ru/");
-//        String heading = driver.findElement(By.xpath("//div[contains(text(),'Приложение')]"))
-//                .getText();
-//        assertEquals("Приложение не доступно на этом сервере.", heading);
 
         assertTrue(false);
     }
