@@ -17,9 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 public class TestrcontainersRun {
 
-//    private final String pathNameIndex = "index.html";
-//    private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
-    private final String pathNameWar = "target/index.html";
+    //private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT/index.html";
+    //private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT.war";
+    //private final String pathNameWar = "target/index.html";
+    private final String pathNameWar = "src/test/resources/index.html";
     MountableFile warFile = MountableFile.forHostPath(
             Paths.get(pathNameWar), 0777);
 
@@ -36,6 +37,10 @@ public class TestrcontainersRun {
             .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
 //            .withCommand("--deploy \\usr\\local\\tomcat\\webapps\\ROOT.war ----contextRoot /")
             ;
+//    public GenericContainer<?> postgres = new GenericContainer<>(
+//            DockerImageName.parse("postgres:10"))
+//            .withNetwork(net);
+
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withAccessToHost(true)
@@ -76,6 +81,8 @@ public class TestrcontainersRun {
 
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
+        tomcatHost = tomcat.getHost();
+        tomcatPort = tomcat.getFirstMappedPort();
         System.out.println(Paths.get(pathNameWar).toAbsolutePath());
 
 
