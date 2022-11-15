@@ -1,19 +1,16 @@
 package org.whirlplatform.integration;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testcontainers.containers.BrowserWebDriverContainer;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.*;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
@@ -40,23 +37,21 @@ public class TestrcontainersRun {
     DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
-            .withDatabaseName("whirl")
-            .withUsername("whirl")
-            .withPassword("password")
+            //.withDatabaseName("whirl")
+            //.withUsername("whirl")
+            //.withPassword("password")
             .withNetwork(net)
             .withNetworkAliases("postgres")
             .withExposedPorts(5432)
-            //.withInitScript("init_postgres.sql")
-            ;
+            .withInitScript("init_postgres.sql");
 
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withAccessToHost(true)
             .withNetwork(net)
             .withNetworkAliases("chrome")
-            .withCapabilities(new ChromeOptions());
-//            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:\\Users\\Nastia\\Documents").toFile());
-//            .withNetwork(NETWORK);
+            .withCapabilities(new ChromeOptions())
+            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:/1-must-have/1-workspace/5-job").toFile());
 
     private Integer localPort= 8090;
     private Integer tomcatPort;
@@ -79,26 +74,31 @@ public class TestrcontainersRun {
 //    }
 
 
-    @Before
-    public void setUp() {
+//    @Before
+//    public void setUp() {
+//
+//    }
 
-    }
 
+    ArrayList<String> portBindings = new ArrayList<>();
 
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
 
         postgres.start();
 
+        portBindings.add(String.format("%s:%d/%s", "localhost", 8080, InternetProtocol.TCP));
+        tomcat.setPortBindings(portBindings);
         tomcatHost = tomcat.getHost();
-        tomcatPort = tomcat.getFirstMappedPort();
-        System.out.println(Paths.get(pathNameWar).toAbsolutePath());
+        // = tomcat.getFirstMappedPort();
+        tomcatPort = tomcat.getMappedPort(8080);
 
+        System.out.println(Paths.get(pathNameWar).toAbsolutePath());
         final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
         System.out.println(rootUrl);
 
         RemoteWebDriver driver = chrome.getWebDriver();
-        driver.get("http://tomcat:8080");
+        driver.get("http://tomcat:8080/");
 
         try {
             String heading = driver.getTitle();
