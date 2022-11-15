@@ -1,6 +1,5 @@
 package org.whirlplatform.integration;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -44,8 +43,7 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("postgres")
             .withExposedPorts(5432)
-            .withInitScript("init_postgres.sql")
-            ;
+            .withInitScript("init_postgres.sql");
 
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
@@ -54,7 +52,6 @@ public class TestrcontainersRun {
             .withNetworkAliases("chrome")
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:/1-must-have/1-workspace/5-job").toFile());
-//            .withNetwork(NETWORK);
 
     private Integer localPort= 8090;
     private Integer tomcatPort;
@@ -77,10 +74,10 @@ public class TestrcontainersRun {
 //    }
 
 
-    @Before
-    public void setUp() {
-
-    }
+//    @Before
+//    public void setUp() {
+//
+//    }
 
 
     ArrayList<String> portBindings = new ArrayList<>();
@@ -101,7 +98,7 @@ public class TestrcontainersRun {
         System.out.println(rootUrl);
 
         RemoteWebDriver driver = chrome.getWebDriver();
-        driver.get("http://tomcat:8080");
+        driver.get("http://tomcat:8080/");
 
         try {
             String heading = driver.getTitle();
@@ -118,9 +115,5 @@ public class TestrcontainersRun {
         }
 
         assertTrue(false);
-    }
-
-    protected void addFixedExposedPort(int hostPort, int containerPort, InternetProtocol protocol) {
-        portBindings.add(String.format("%d:%d/%s", hostPort, containerPort, protocol.toDockerNotation()));
     }
 }
