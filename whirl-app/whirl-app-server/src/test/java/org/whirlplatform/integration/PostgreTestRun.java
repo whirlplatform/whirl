@@ -22,9 +22,9 @@ public class PostgreTestRun {
     DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
-            .withDatabaseName("whirl")
-            .withUsername("whirl")
-            .withPassword("password")
+            //.withDatabaseName("whirl")
+            //.withUsername("whirl")
+            //.withPassword("password")
             //.withNetwork(net)
             .withNetworkAliases("postgres")
             .withExposedPorts(5432);
