@@ -1,5 +1,6 @@
 package org.whirlplatform.integration;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -12,14 +13,18 @@ import org.testcontainers.utility.MountableFile;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestrcontainersRun {
 
     private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT.war";
-    //private final String pathNameWar = "src/test/resources/index.html";
+    private final String littleWebAppPath = "target/LittleWebApp.war";
+    private final String pathNameIndex = "src/test/resources/index.html";
+    private final String urlWhirlDemo = "whirl-demo.jelastic.regruhosting.ru/app";
+
     MountableFile warFile = MountableFile.forHostPath(
-            Paths.get(pathNameWar), 0777);
+            Paths.get(littleWebAppPath), 0777);
 
     Network net = Network.newNetwork();
     @Rule
@@ -37,13 +42,14 @@ public class TestrcontainersRun {
     DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
-            //.withDatabaseName("whirl")
-            //.withUsername("whirl")
-            //.withPassword("password")
+//            .withDatabaseName("whirl")
+//            .withUsername("whirl")
+//            .withPassword("password")
             .withNetwork(net)
             .withNetworkAliases("postgres")
             .withExposedPorts(5432)
-            .withInitScript("init_postgres.sql");
+            .withInitScript("init_postgres.sql")
+            ;
 
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
@@ -51,28 +57,12 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("chrome")
             .withCapabilities(new ChromeOptions())
-            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("C:/1-must-have/1-workspace/5-job").toFile());
+//            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, Paths.get("C:\\Users\\Nastia\\Documents").toFile())
+            ;
 
     private Integer localPort= 8090;
     private Integer tomcatPort;
     private String tomcatHost;
-
-
-//    @Before
-//    public void setupLocalServer() throws Exception {
-//        // Set up a local Jetty HTTP server
-//        Server server = new Server();
-//        server.addConnector();
-//
-//        ResourceHandler resourceHandler = new ResourceHandler();
-//        resourceHandler.setResourceBase("src/test/resources/server");
-//        server.addHandler(resourceHandler);
-//        server.start();
-//
-//        // The server will have a random port assigned, so capture that
-//        localPort = server.getConnectors()[0].getLocalPort();
-//    }
-
 
 //    @Before
 //    public void setUp() {
@@ -85,10 +75,15 @@ public class TestrcontainersRun {
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
 
-        postgres.start();
+//        postgres.start();
+//        tomcat.start();
+
+        tomcat.addExposedPort(8090);
 
         portBindings.add(String.format("%s:%d/%s", "localhost", 8080, InternetProtocol.TCP));
         tomcat.setPortBindings(portBindings);
+
+
         tomcatHost = tomcat.getHost();
         // = tomcat.getFirstMappedPort();
         tomcatPort = tomcat.getMappedPort(8080);
@@ -107,13 +102,14 @@ public class TestrcontainersRun {
                 heading = driver.getTitle();
             }
             System.out.println(heading);
-//        assertEquals("Приложение не доступно на этом сервере.", heading);
 
-            Thread.sleep(3000000);
+            assertEquals("LittleApp", heading);
+
+            Thread.sleep(300000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        assertTrue(false);
+//       assertTrue(false);
     }
 }
