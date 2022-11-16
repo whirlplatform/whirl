@@ -275,6 +275,12 @@
             <version>0.9.2-1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.4.1</version>
+        </dependency>
+
         <!-- Arquillian -->
         <dependency>
             <groupId>${project.groupId}</groupId>
