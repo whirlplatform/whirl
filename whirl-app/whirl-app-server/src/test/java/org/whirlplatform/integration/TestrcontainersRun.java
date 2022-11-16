@@ -13,44 +13,44 @@ import org.testcontainers.utility.MountableFile;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TestrcontainersRun {
 
+    private final String contextFile =  "../../docker/conf/postgresql/context.xml";
     private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT.war";
     private final String littleWebAppPath = "target/LittleWebApp.war";
     private final String pathNameIndex = "src/test/resources/index.html";
     private final String urlWhirlDemo = "whirl-demo.jelastic.regruhosting.ru/app";
 
     MountableFile warFile = MountableFile.forHostPath(
-            Paths.get(littleWebAppPath), 0777);
+            Paths.get(pathNameWar), 0777);
+    MountableFile ctxFile = MountableFile.forHostPath(
+            Paths.get(contextFile), 0777);
 
     Network net = Network.newNetwork();
-    @Rule
-    public GenericContainer<?> tomcat = new GenericContainer<>(
-            DockerImageName.parse("tomcat:9-jdk8"))
-            .withNetwork(net)
-            .withNetworkAliases("tomcat")
-            .withExposedPorts(8080)
-            .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT.war")
-//            .withStartupCheckStrategy(new OneShotStartupCheckStrategy().withTimeout(Duration.ofSeconds(6)))
-            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
-//            .withCommand("--deploy \\usr\\local\\tomcat\\webapps\\ROOT.war ----contextRoot /")
-            ;
+
 
     DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
-//            .withDatabaseName("whirl")
-//            .withUsername("whirl")
-//            .withPassword("password")
+            .withUsername("postgres")
             .withNetwork(net)
-            .withNetworkAliases("postgres")
+            .withNetworkAliases("postgresql")
             .withExposedPorts(5432)
-            .withInitScript("init_postgres.sql")
+            .withFileSystemBind("../../docker/db/postgresql/", "/docker-entrypoint-initdb.d/")
             ;
-
+    @Rule
+    public FixedHostPortGenericContainer<?> tomcat = new FixedHostPortGenericContainer<>(
+            "tomcat:9-jdk8")
+            .withNetwork(net)
+            .withNetworkAliases("tomcat")
+            .withFixedExposedPort(8090, 8080)
+            .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT.war")
+            .withCopyToContainer(ctxFile, "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
+            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
+            .dependsOn(postgres)
+//            .withCommand("--deploy \\usr\\local\\tomcat\\webapps\\ROOT.war ----contextRoot /")
+            ;
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withAccessToHost(true)
@@ -64,18 +64,17 @@ public class TestrcontainersRun {
     private Integer tomcatPort;
     private String tomcatHost;
 
-//    @Before
-//    public void setUp() {
-//
-//    }
-
+    @Before
+    public void setUp() {
+        postgres.start();
+    }
 
     ArrayList<String> portBindings = new ArrayList<>();
 
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
 
-//        postgres.start();
+
 //        tomcat.start();
 
         tomcat.addExposedPort(8090);
@@ -103,7 +102,7 @@ public class TestrcontainersRun {
             }
             System.out.println(heading);
 
-            assertEquals("LittleApp", heading);
+//            assertEquals("LittleApp", heading);
 
             Thread.sleep(300000);
         } catch (InterruptedException e) {
