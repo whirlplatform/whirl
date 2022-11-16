@@ -21,8 +21,6 @@
             failOnError="true"
             dbms="postgresql">
 
-        <sql>CREATE EXTENSION IF NOT EXISTS hstore</sql>
-
         <createTable
                 tableName="WHIRL_USERS"
                 remarks="Stores user information">
@@ -214,7 +212,6 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
 
-            <sql>DROP EXTENSION IF EXISTS hstore</sql>
         </rollback>
     </changeSet>
 
