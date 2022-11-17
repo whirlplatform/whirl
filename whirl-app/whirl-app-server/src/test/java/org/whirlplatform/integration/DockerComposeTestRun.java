@@ -50,15 +50,10 @@ public class DockerComposeTestRun {
     @ClassRule
     public static DockerComposeContainer environment =
 //            new DockerComposeContainer(solve())
-            new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"))
+            new DockerComposeContainer(new File("../../docker/docker-compose.yml"))
+                    .withOptions("--profile image")
                     .withLocalCompose(true)
-
-//                    .withExposedService("postgresql_1", 5432)
-//                    .withExposedService("elasticsearch_1", ELASTICSEARCH_PORT);
-
-                    //.withExposedService("redis_1", REDIS_PORT)
-                    //.withExposedService("elasticsearch_1", ELASTICSEARCH_PORT);
-                        ;
+            ;
 
     @Test
     public void startWhirlWithCompose() throws InterruptedException {
