@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class TestrcontainersRun {
 
-    private final String contextFile =  "../../docker/conf/postgresql/context.xml";
+    private final String contextFile =  "../../../docker/conf/postgresql/context.xml";
     private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT.war";
     private final String littleWebAppPath = "target/LittleWebApp.war";
     private final String pathNameIndex = "src/test/resources/index.html";
@@ -29,7 +29,6 @@ public class TestrcontainersRun {
 
     Network net = Network.newNetwork();
 
-
     DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
@@ -37,7 +36,11 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("postgresql")
             .withExposedPorts(5432)
-            .withFileSystemBind("../../docker/db/postgresql/", "/docker-entrypoint-initdb.d/")
+            .withFileSystemBind("../../../docker/db/postgresql/", "/something/docker-entrypoint-initdb.d/")
+            //.withFileSystemBind("../../../docker/db/postgresql/02-init-db.sh", "/docker-entrypoint-initdb.d/02-init-db.sh")
+
+            //.withInitScript("src/test/resources/init_postgres.sql")
+            //.withInitScript("C:/1-must-have/1-workspace/5-job/whirl/whirl-app/whirl-app-server/src/test/resources/init_postgres.sql")
             ;
     @Rule
     public FixedHostPortGenericContainer<?> tomcat = new FixedHostPortGenericContainer<>(
@@ -74,14 +77,9 @@ public class TestrcontainersRun {
     @Test
     public void whenNavigatedToPage_thenHeadingIsInThePage() {
 
-
-//        tomcat.start();
-
         tomcat.addExposedPort(8090);
-
         portBindings.add(String.format("%s:%d/%s", "localhost", 8080, InternetProtocol.TCP));
         tomcat.setPortBindings(portBindings);
-
 
         tomcatHost = tomcat.getHost();
         // = tomcat.getFirstMappedPort();
