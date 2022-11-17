@@ -39,7 +39,7 @@ services:
   image:
     profiles:
       - image
-    image: otlichnosti/whirl:v0.3.0-all
+    image: otlichnosti/whirl:v0.2.0-all
     ports:
       - 8090:8080
     volumes:
