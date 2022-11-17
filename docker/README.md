@@ -4,7 +4,7 @@ This folder contains docker configurations.
 Entire application stack can be run with docker compose by command:
 
 ```bash
-docker-compose up --build image
+docker-compose --profile image up --build
 ```
 
 Thera are two profiles:
