@@ -5,8 +5,27 @@ services:
       - source
     build:
       context: ..
-      dockerfile: docker/Build.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      dockerfile: docker/Source.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
       target: all
+    ports:
+      - 8090:8080
+    volumes:
+      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+    links:
+      - postgresql:postgresql
+    depends_on:
+      - postgresql
+
+  packaged:
+    profiles:
+      - packaged
+    build:
+      context: ..
+      dockerfile: docker/Packaged.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      target: all
+      args:
+        VERSION: 0.3.0-SNAPSHOT # For packaged only.
     ports:
       - 8090:8080
     volumes:
@@ -22,10 +41,10 @@ services:
       - prebuild
     build:
       context: ..
-      dockerfile: docker/Download.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      dockerfile: docker/Prebuild.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
       target: all
       args:
-        TAG: v0.1.0 # For prebuilt only.
+        TAG: v0.2.0 # For prebuilt only.
     ports:
       - 8090:8080
     volumes:
