@@ -1,0 +1,60 @@
+services:
+
+  source:
+    profiles:
+      - source
+    build:
+      context: ..
+      dockerfile: docker/Build.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      target: all
+    ports:
+      - 8090:8080
+    volumes:
+      - ./conf/postgresql/context.xml:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+    links:
+      - postgresql:postgresql
+    depends_on:
+      - postgresql
+
+  prebuild:
+    profiles:
+      - prebuild
+    build:
+      context: ..
+      dockerfile: docker/Download.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
+      target: all
+      args:
+        TAG: v0.1.0 # For prebuilt only.
+    ports:
+      - 8090:8080
+    volumes:
+      - ./conf/postgresql/context.xml:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+    links:
+      - postgresql:postgresql
+    depends_on:
+      - postgresql
+
+  image:
+    profiles:
+      - image
+    image: otlichnosti/whirl:v0.3.0-all
+    ports:
+      - 8090:8080
+    volumes:
+      - ./conf/postgresql/context.xml:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+    links:
+      - postgresql:postgresql
+    depends_on:
+      - postgresql
+
+  postgresql:
+    image: postgres:10
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db/postgresql/:/docker-entrypoint-initdb.d/ # Database initialisation scripts.
