@@ -3,12 +3,11 @@ package org.whirlplatform.server.log.impl;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-public class CommonsLoggerFactory extends LoggerFactory {
+public class LoggerFactoryImpl extends LoggerFactory {
 
 	private static class LoggerImpl implements Logger {
 
 		private org.apache.logging.log4j.Logger log;
-		//private org.apache.logging.log4j.LogManager log;
 
 		private LoggerImpl(org.apache.logging.log4j.Logger log) {
 			this.log = log;
