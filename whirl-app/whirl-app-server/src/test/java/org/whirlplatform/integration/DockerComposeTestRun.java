@@ -19,10 +19,6 @@ public class DockerComposeTestRun {
 
     @Test
     public void startWhirlWithCompose() throws InterruptedException {
-
-        //environment.getServiceHost("", );
-        //environment.getServicePort("", )
-
         Thread.sleep(100000000);
         assertTrue(true);
     }
