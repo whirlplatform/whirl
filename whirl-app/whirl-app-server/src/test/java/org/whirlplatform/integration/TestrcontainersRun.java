@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class TestrcontainersRun {
 
-    private final String contextFile =  "../../../docker/conf/postgresql/context.xml";
+    private final String contextFile =  "../../docker/conf/postgresql/context.xml";
     private final String pathNameWar =  "target/whirl-app-server-0.3.0-SNAPSHOT.war";
     private final String littleWebAppPath = "target/LittleWebApp.war";
     private final String pathNameIndex = "src/test/resources/index.html";
@@ -36,7 +36,7 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("postgresql")
             .withExposedPorts(5432)
-            .withFileSystemBind("../../../docker/db/postgresql/", "/something/docker-entrypoint-initdb.d/")
+            .withFileSystemBind("../../docker/db/postgresql/", "/docker-entrypoint-initdb.d/")
             //.withFileSystemBind("../../../docker/db/postgresql/02-init-db.sh", "/docker-entrypoint-initdb.d/02-init-db.sh")
 
             //.withInitScript("src/test/resources/init_postgres.sql")
