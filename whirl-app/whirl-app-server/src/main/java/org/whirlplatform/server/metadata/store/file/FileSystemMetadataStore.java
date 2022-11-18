@@ -129,7 +129,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         Path applicationPath;
         if (appVersion == null) {
             if (!Files.exists(tag)) {
-                return null;
+               throw new MetadataStoreException(); // return null;
             }
             // достаем последнюю доступную версию если не указано
             List<Version> versions = new ArrayList<>();
