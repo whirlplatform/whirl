@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>whirl-jsdoc</artifactId>
+    <artifactId>whirl-build-tool</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -110,7 +110,7 @@
                             <executable>./node_modules/.bin/esdoc</executable>
                             <arguments>
                                 <argument>-c</argument>
-                                <argument>${project.basedir}/esdoc.json</argument>
+                                <argument>${project.basedir}/config/jsdoc/esdoc.json</argument>
                             </arguments>
                         </configuration>
                     </execution>

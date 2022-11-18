@@ -1,0 +1,6 @@
+# Consider all text files have LF ending
+* text=auto eol=lf
+
+# Windows files should have CRLF ending
+*.bat text eol=crlf
+*.cmd text eol=crlf

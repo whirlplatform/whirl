@@ -12,7 +12,7 @@
         <module>whirl-selenium</module>
         <module>whirl-app</module>
         <module>whirl-codemirror</module>
-        <module>whirl-jsdoc</module>
+        <module>whirl-build-tools</module>
         <module>whirl-editor</module>
     </modules>
 
