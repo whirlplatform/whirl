@@ -12,6 +12,7 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import javax.xml.bind.Element;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -21,13 +22,18 @@ public class TestrcontainersRun {
 
     private final String contextFile = "../../docker/conf/postgresql/context.xml.default";
     private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
-    private DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
+
+    String appPath = "../../.whirl-work/";
+
     private MountableFile warFile = MountableFile.forHostPath(
             Paths.get(pathNameWar), 0777);
     private MountableFile ctxFile = MountableFile.forHostPath(
             Paths.get(contextFile), 0777);
-    private Network net = Network.newNetwork();
 
+    private MountableFile app = MountableFile.forHostPath(
+            Paths.get(appPath), 0777);
+    private Network net = Network.newNetwork();
+    private DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
     public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
             .withUsername("postgres")
@@ -45,6 +51,7 @@ public class TestrcontainersRun {
             .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT.war")
             .withCopyToContainer(ctxFile, "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
             .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
+            .withCopyToContainer(app, "/usr/local/whirl")
             .dependsOn(postgres);
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
@@ -55,23 +62,33 @@ public class TestrcontainersRun {
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING,
                     Paths.get("C:/Users/Nastia/Documents").toFile());
 
-    RemoteWebDriver driver = chrome.getWebDriver();
+
     @Test
-    public void whenNavigatedToPage_thenHeadingIsInThePage() {
-//        String tomcatHost = tomcat.getHost();
-//        Integer tomcatPort = tomcat.getMappedPort(8080);
-//        final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
-//        System.out.println(rootUrl);
+    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
 //        RemoteWebDriver driver = chrome.getWebDriver();
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
+
+        String tomcatHost = tomcat.getHost();
+
+        Integer tomcatPort = tomcat.getMappedPort(8080);
+        final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
+        System.out.println(rootUrl);
+        RemoteWebDriver driver = chrome.getWebDriver();
         driver.get("http://tomcat:8080/");
+
         String heading = driver.getTitle();
+        while (heading.isEmpty()) {
+            Thread.sleep(100);
+        }
+
+        Thread.sleep(1000000);
 
         assertEquals("Whirl Platform", heading);
     }
 
-    @Test
-    public void openApplicationTest(){
-        WebElement button = driver.findElement(By.xpath("//div[text()='Event']"));
-        assertNotNull(button);
-    }
+//    @Test
+//    public void openApplicationTest(){
+//        WebElement button = driver.findElement(By.xpath("//div[text()='Event']"));
+//        assertNotNull(button);
+//    }
 }
