@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testcontainers.containers.BrowserWebDriverContainer;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
 import org.testcontainers.containers.Network;
@@ -16,8 +18,7 @@ import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Paths;
 
-public class TestrcontainersRun {
-
+public class ApplicationsTests {
     private final String contextFile = "../../docker/conf/postgresql/context.xml.default";
     private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
 
@@ -61,27 +62,6 @@ public class TestrcontainersRun {
                     //Paths.get("C:/Users/Nastia/Documents").toFile());
                     Paths.get("C:/Users/User/Documents").toFile());
 
-//    @Test
-//    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
-//
-//        String tomcatHost = tomcat.getHost();
-//
-//        Integer tomcatPort = tomcat.getMappedPort(8080);
-//        final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
-//        System.out.println(rootUrl);
-//        RemoteWebDriver driver = chrome.getWebDriver();
-//        driver.get("http://tomcat:8080/");
-//
-//        String heading = driver.getTitle();
-//        while (heading.isEmpty()) {
-//            Thread.sleep(100);
-//        }
-//        //Thread.sleep(1000000);
-//        assertEquals("Whirl Platform", heading);
-//        System.out.println("Successfully enter into the platform");
-//    }
-
     @Test
     public void loginAndOpenApplicationTest() throws InterruptedException {
         RemoteWebDriver driver = chrome.getWebDriver();
@@ -95,36 +75,56 @@ public class TestrcontainersRun {
         System.out.println("Current URL: " + driver.getCurrentUrl());
 
         System.out.println(driver.getPageSource());
-        System.out.println("\n\n\n");
+        System.out.println();
 
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        // this does not work in the executeScript
+//        WebElement submitButton = driver.findElementByXPath(
+//                "//html/body/div[3]/form/table/tbody/tr[3]/td[2]/input"
+//        );
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("submit-btn")));
+        //WebElement submitButton = driver.findElement(By.name("submit-btn"));
+        System.out.println("Button text: " + submitButton.getAttribute("value"));
+
+        // not visible
 //        WebElement loginTextField = driver.findElementByXPath(
 //                "//html/body/div[3]/form/table/tbody/tr[1]/td[2]/input"
 //        );
 //        assertNotNull(loginTextField);
+
+        // empty
 //        System.out.println("Login field text: " + loginTextField.getText());
-//        //assertEquals(loginTextField.getText(), "whirl");
-//
+
+    // not visible
 //        WebElement passwordTextField = driver.findElementByXPath(
 //                "//html/body/div[3]/form/table/tbody/tr[2]/td[2]/input"
 //        );
 //        assertNotNull(passwordTextField);
-        //System.out.println("Password field text: " + passwordTextField.getText());
-        //assertEquals(passwordTextField.getText(), "password");
 
-        driver.findElement(By.name("login-field")).sendKeys("whirl");
-        driver.findElement(By.name("pwd-field")).sendKeys("password");
+        // not visible
+        //driver.findElement(By.name("login-field")).sendKeys("whirl");
+        //driver.findElement(By.name("pwd-field")).sendKeys("password");
 
-        WebElement submitButton = driver.findElementByXPath(
-                "//html/body/div[3]/form/table/tbody/tr[3]/td[2]/input"
-        );
-        System.out.println("Button text: " + submitButton.getAttribute("value"));
-
+        // not visible
         //loginTextField.sendKeys("whirl");
         //passwordTextField.sendKeys("password");
 
-        System.out.println("Finally:");
+
+        //WebElement passwordTextField = driver.findElement(By.name("pwd-field"));
+        WebElement passwordTextField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pwd-field")));
+        passwordTextField.sendKeys("password");
+
+        String tagName = passwordTextField.getTagName();
+        System.out.println("Tagname: " + tagName);
+
+        System.out.println("Script started:");
         driver.executeScript("arguments[0].click();", submitButton);
+        System.out.println("Script completed:");
         System.out.println("Current URL: " + driver.getCurrentUrl());
+        System.out.println("\n\n");
+        Thread.sleep(4000);
+        System.out.println(driver.getPageSource());
         Thread.sleep(1000000);
     }
 
@@ -144,5 +144,4 @@ public class TestrcontainersRun {
 //
 //        //assertTrue(true);
 //    }
-
 }
