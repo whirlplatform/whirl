@@ -123,7 +123,13 @@ public class ApplicationsTests {
         System.out.println("Script completed:");
         System.out.println("Current URL: " + driver.getCurrentUrl());
         System.out.println("\n\n");
+
         Thread.sleep(4000);
+
+        driver.get("http://tomcat:8080/app?application=whirl-showcase");
+
+        Thread.sleep(4000);
+
         System.out.println(driver.getPageSource());
         Thread.sleep(1000000);
     }

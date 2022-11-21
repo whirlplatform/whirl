@@ -2,8 +2,6 @@ package org.whirlplatform.integration;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.BrowserWebDriverContainer;
@@ -14,7 +12,10 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
+import java.io.IOException;
 import java.nio.file.Paths;
+
+import static org.junit.Assert.assertEquals;
 
 public class TestrcontainersRun {
 
@@ -61,88 +62,25 @@ public class TestrcontainersRun {
                     //Paths.get("C:/Users/Nastia/Documents").toFile());
                     Paths.get("C:/Users/User/Documents").toFile());
 
-//    @Test
-//    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
-//
-//        String tomcatHost = tomcat.getHost();
-//
-//        Integer tomcatPort = tomcat.getMappedPort(8080);
-//        final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
-//        System.out.println(rootUrl);
-//        RemoteWebDriver driver = chrome.getWebDriver();
-//        driver.get("http://tomcat:8080/");
-//
-//        String heading = driver.getTitle();
-//        while (heading.isEmpty()) {
-//            Thread.sleep(100);
-//        }
-//        //Thread.sleep(1000000);
-//        assertEquals("Whirl Platform", heading);
-//        System.out.println("Successfully enter into the platform");
-//    }
-
     @Test
-    public void loginAndOpenApplicationTest() throws InterruptedException {
+    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
+
+        String tomcatHost = tomcat.getHost();
+
+        Integer tomcatPort = tomcat.getMappedPort(8080);
+        final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
+        System.out.println(rootUrl);
         RemoteWebDriver driver = chrome.getWebDriver();
-        driver.get("http://tomcat:8080/app?application=whirl-showcase");
+        driver.get("http://tomcat:8080/");
 
         String heading = driver.getTitle();
         while (heading.isEmpty()) {
             Thread.sleep(100);
         }
-        System.out.println("current title: " + driver.getTitle());
-        System.out.println("Current URL: " + driver.getCurrentUrl());
-
-        System.out.println(driver.getPageSource());
-        System.out.println("\n\n\n");
-
-//        WebElement loginTextField = driver.findElementByXPath(
-//                "//html/body/div[3]/form/table/tbody/tr[1]/td[2]/input"
-//        );
-//        assertNotNull(loginTextField);
-//        System.out.println("Login field text: " + loginTextField.getText());
-//        //assertEquals(loginTextField.getText(), "whirl");
-//
-//        WebElement passwordTextField = driver.findElementByXPath(
-//                "//html/body/div[3]/form/table/tbody/tr[2]/td[2]/input"
-//        );
-//        assertNotNull(passwordTextField);
-        //System.out.println("Password field text: " + passwordTextField.getText());
-        //assertEquals(passwordTextField.getText(), "password");
-
-        driver.findElement(By.name("login-field")).sendKeys("whirl");
-        driver.findElement(By.name("pwd-field")).sendKeys("password");
-
-        WebElement submitButton = driver.findElementByXPath(
-                "//html/body/div[3]/form/table/tbody/tr[3]/td[2]/input"
-        );
-        System.out.println("Button text: " + submitButton.getAttribute("value"));
-
-        //loginTextField.sendKeys("whirl");
-        //passwordTextField.sendKeys("password");
-
-        System.out.println("Finally:");
-        driver.executeScript("arguments[0].click();", submitButton);
-        System.out.println("Current URL: " + driver.getCurrentUrl());
         Thread.sleep(1000000);
+        assertEquals("Whirl Platform", heading);
+        System.out.println("Successfully enter into the platform");
     }
-
-//    @Test
-//    public void comboboxApplicationTest() throws InterruptedException {
-//        RemoteWebDriver driver = chrome.getWebDriver();
-//        driver.get("http://tomcat:8080/app?application=combobox_test");
-//
-//        String heading = driver.getTitle();
-//        while (heading.isEmpty()) {
-//            Thread.sleep(100);
-//        }
-//        System.out.println("current title: " + driver.getTitle());
-//        System.out.println("Current URL: " + driver.getCurrentUrl());
-//
-//        Thread.sleep(1000000);
-//
-//        //assertTrue(true);
-//    }
 
 }
