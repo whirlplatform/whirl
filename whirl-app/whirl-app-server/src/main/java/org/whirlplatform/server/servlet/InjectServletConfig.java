@@ -45,6 +45,7 @@ public class InjectServletConfig extends GuiceServletContextListener {
         super.contextInitialized(servletContextEvent);
         initMBeans(servletContextEvent.getServletContext());
         initDatabase((Injector) servletContextEvent.getServletContext().getAttribute(Injector.class.getName()));
+        _log.info(String.format("Whirl platform context started: %s", servletContextEvent.getServletContext().getServletContextName()));
     }
 
     // Создание бинов для управления приложением
