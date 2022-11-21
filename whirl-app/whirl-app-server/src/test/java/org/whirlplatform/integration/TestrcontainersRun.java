@@ -11,6 +11,7 @@ import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.Duration;
 
 import static org.junit.Assert.*;
 
@@ -39,7 +40,8 @@ public class TestrcontainersRun {
                     "/usr/local/tomcat/webapps/ROOT.war")
             .withCopyToContainer(MountableFile.forHostPath(Paths.get(contextFile), 0777),
                     "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
-            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
+            .waitingFor(Wait.forLogMessage(".*Whirl platform context started.*\\s", 1)
+                    .withStartupTimeout(Duration.ofMinutes(2)))
             .withCopyToContainer(MountableFile.forHostPath(Paths.get(appPath), 0777),
                     "/usr/local/whirl")
             .dependsOn(postgres);
@@ -59,7 +61,7 @@ public class TestrcontainersRun {
         Integer tomcatPort = tomcat.getMappedPort(8080);
 
         postgres.execInContainer("psql", "-U", "whirl", "-c",
-                "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-group', '')");
+                "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
 //        postgres.setCommand();
 //        postgres.
