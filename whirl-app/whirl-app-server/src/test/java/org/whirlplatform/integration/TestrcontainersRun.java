@@ -2,8 +2,6 @@ package org.whirlplatform.integration;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testcontainers.containers.*;
@@ -11,10 +9,8 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
-import javax.xml.bind.Element;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -22,20 +18,11 @@ public class TestrcontainersRun {
 
     private final String contextFile = "../../docker/conf/postgresql/context.xml.default";
     private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
-
-    String appPath = "../../.whirl-work/";
-
-    private MountableFile warFile = MountableFile.forHostPath(
-            Paths.get(pathNameWar), 0777);
-    private MountableFile ctxFile = MountableFile.forHostPath(
-            Paths.get(contextFile), 0777);
-
-    private MountableFile app = MountableFile.forHostPath(
-            Paths.get(appPath), 0777);
+    private String appPath = "../../.whirl-work/";
     private Network net = Network.newNetwork();
-    private DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
-    public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
+    public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+            DockerImageName.parse("postgres:10"))
             .withUsername("postgres")
             .withNetwork(net)
             .withNetworkAliases("postgresql")
@@ -48,10 +35,13 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("tomcat")
             .withFixedExposedPort(8090, 8080)
-            .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT.war")
-            .withCopyToContainer(ctxFile, "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(pathNameWar), 0777),
+                    "/usr/local/tomcat/webapps/ROOT.war")
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(contextFile), 0777),
+                    "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
             .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
-            .withCopyToContainer(app, "/usr/local/whirl")
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(appPath), 0777),
+                    "/usr/local/whirl")
             .dependsOn(postgres);
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
@@ -64,21 +54,26 @@ public class TestrcontainersRun {
 
 
     @Test
-    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
-//        RemoteWebDriver driver = chrome.getWebDriver();
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
-
-        String tomcatHost = tomcat.getHost();
-
+    // переименовать метод
+    public void openShowCaseAppTest() throws InterruptedException, IOException {
         Integer tomcatPort = tomcat.getMappedPort(8080);
+
+        postgres.execInContainer("psql", "-U", "whirl", "-c",
+                "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-group', '')");
+
+//        postgres.setCommand();
+//        postgres.
+        String tomcatHost = tomcat.getHost();
         final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
         System.out.println(rootUrl);
+
         RemoteWebDriver driver = chrome.getWebDriver();
         driver.get("http://tomcat:8080/");
 
+
         String heading = driver.getTitle();
         while (heading.isEmpty()) {
-            Thread.sleep(100);
+            Thread.sleep(10000);
         }
 
         Thread.sleep(1000000);
