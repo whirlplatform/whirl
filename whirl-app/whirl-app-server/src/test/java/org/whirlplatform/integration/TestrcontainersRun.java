@@ -8,10 +8,16 @@ import org.testcontainers.containers.*;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
+import sideex.ProtocalType;
+import sideex.SideeXWebServiceClientAPI;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +46,7 @@ public class TestrcontainersRun {
                     "/usr/local/tomcat/webapps/ROOT.war")
             .withCopyToContainer(MountableFile.forHostPath(Paths.get(contextFile), 0777),
                     "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
-            .waitingFor(Wait.forLogMessage(".*Whirl platform context started.*\\s", 1)
+            .waitingFor(Wait.forLogMessage(".*Server startup.*\\s", 1)
                     .withStartupTimeout(Duration.ofMinutes(2)))
             .withCopyToContainer(MountableFile.forHostPath(Paths.get(appPath), 0777),
                     "/usr/local/whirl")
@@ -55,11 +61,15 @@ public class TestrcontainersRun {
                     Paths.get("C:/Users/Nastia/Documents").toFile());
 
 
+
     @Test
     // переименовать метод
     public void openShowCaseAppTest() throws InterruptedException, IOException {
         Integer tomcatPort = tomcat.getMappedPort(8080);
 
+
+//        Thread.sleep();
+//        postgres.withStartupTimeoutSeconds(1000000);
         postgres.execInContainer("psql", "-U", "whirl", "-c",
                 "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
@@ -88,4 +98,19 @@ public class TestrcontainersRun {
 //        WebElement button = driver.findElement(By.xpath("//div[text()='Event']"));
 //        assertNotNull(button);
 //    }
+
+
+    public void openSideex() {
+        try {
+            //Connect to a SideeX WebService server
+            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
+            File file = new File("testcase.zip"); //
+
+            Map<String, File> fileParams = new HashMap<String, File>();
+            fileParams.put(file.getName(), file);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

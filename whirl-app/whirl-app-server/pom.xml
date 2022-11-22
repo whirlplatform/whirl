@@ -269,17 +269,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.SideeX/sideex-webservice-client-api-java -->
         <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>42.4.1</version>
+            <groupId>com.github.SideeX</groupId>
+            <artifactId>sideex-webservice-client-api-java</artifactId>
+            <version>1.0.1-1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.4.1</version>
-        </dependency>
 
         <!-- Arquillian -->
         <dependency>
