@@ -348,6 +348,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.SideeX/sideex-webservice-client-api-java -->
+        <dependency>
+            <groupId>com.github.SideeX</groupId>
+            <artifactId>sideex-webservice-client-api-java</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

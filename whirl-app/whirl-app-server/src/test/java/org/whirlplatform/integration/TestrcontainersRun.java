@@ -14,6 +14,7 @@ import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,20 +22,11 @@ public class TestrcontainersRun {
 
     private final String contextFile = "../../docker/conf/postgresql/context.xml.default";
     private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
-
-    String appPath = "../../.whirl-work/";
-
-    private MountableFile warFile = MountableFile.forHostPath(
-            Paths.get(pathNameWar), 0777);
-    private MountableFile ctxFile = MountableFile.forHostPath(
-            Paths.get(contextFile), 0777);
-
-    private MountableFile app = MountableFile.forHostPath(
-            Paths.get(appPath), 0777);
+    private String appPath = "../../.whirl-work/";
     private Network net = Network.newNetwork();
-    private DockerImageName POSTGRES_TEST_IMAGE = DockerImageName.parse("postgres:10");
     @Rule
-    public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(POSTGRES_TEST_IMAGE)
+    public PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+            DockerImageName.parse("postgres:10"))
             .withUsername("postgres")
             .withNetwork(net)
             .withNetworkAliases("postgresql")
@@ -47,10 +39,14 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("tomcat")
             .withFixedExposedPort(8090, 8080)
-            .withCopyToContainer(warFile, "/usr/local/tomcat/webapps/ROOT.war")
-            .withCopyToContainer(ctxFile, "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
-            .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
-            .withCopyToContainer(app, "/usr/local/whirl")
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(pathNameWar), 0777),
+                    "/usr/local/tomcat/webapps/ROOT.war")
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(contextFile), 0777),
+                    "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
+            .waitingFor(Wait.forLogMessage(".*Server startup.*\\s", 1)
+                    .withStartupTimeout(Duration.ofMinutes(2)))
+            .withCopyToContainer(MountableFile.forHostPath(Paths.get(appPath), 0777),
+                    "/usr/local/whirl")
             .dependsOn(postgres);
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
@@ -59,28 +55,39 @@ public class TestrcontainersRun {
             .withNetworkAliases("chrome")
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING,
-                    //Paths.get("C:/Users/Nastia/Documents").toFile());
-                    Paths.get("C:/Users/User/Documents").toFile());
+                    Paths.get("C:/Users/Nastia/Documents").toFile());
+
+
 
     @Test
-    public void whenNavigatedToPage_thenHeadingIsInThePage() throws InterruptedException, IOException {
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "insert into whirl_user_groups(id, r_whirl_users, group_code) values(5,1,'whirl-admin')");
-
-        String tomcatHost = tomcat.getHost();
-
+    // переименовать метод
+    public void openShowCaseAppTest() throws InterruptedException, IOException {
         Integer tomcatPort = tomcat.getMappedPort(8080);
+
+
+//        Thread.sleep();
+//        postgres.withStartupTimeoutSeconds(1000000);
+        postgres.execInContainer("psql", "-U", "whirl", "-c",
+                "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
+
+//        postgres.setCommand();
+//        postgres.
+        String tomcatHost = tomcat.getHost();
         final String rootUrl = String.format("http://%s:%d/", tomcatHost, tomcatPort);
         System.out.println(rootUrl);
+
         RemoteWebDriver driver = chrome.getWebDriver();
         driver.get("http://tomcat:8080/");
 
+
         String heading = driver.getTitle();
         while (heading.isEmpty()) {
-            Thread.sleep(100);
+            Thread.sleep(10000);
         }
+
         Thread.sleep(1000000);
+
         assertEquals("Whirl Platform", heading);
-        System.out.println("Successfully enter into the platform");
     }
 
 }
