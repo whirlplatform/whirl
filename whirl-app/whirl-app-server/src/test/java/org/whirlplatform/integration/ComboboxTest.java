@@ -3,9 +3,12 @@ package org.whirlplatform.integration;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testcontainers.containers.BrowserWebDriverContainer;
@@ -18,7 +21,11 @@ import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Paths;
 
-public class ApplicationsTests {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+public class ComboboxTest {
+
     private final String contextFile = "../../docker/conf/postgresql/context.xml.default";
     private final String pathNameWar = "target/whirl-app-server-0.3.0-SNAPSHOT.war";
 
@@ -40,7 +47,8 @@ public class ApplicationsTests {
             .withNetworkAliases("postgresql")
             .withExposedPorts(5432)
             .withFileSystemBind("../../docker/db/postgresql/",
-                    "/docker-entrypoint-initdb.d/");
+                    "/docker-entrypoint-initdb.d/")
+            ;
     @Rule
     public FixedHostPortGenericContainer<?> tomcat = new FixedHostPortGenericContainer<>(
             "tomcat:9-jdk8")
@@ -51,7 +59,9 @@ public class ApplicationsTests {
             .withCopyToContainer(ctxFile, "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
             .waitingFor(Wait.forLogMessage(".* Server startup .*\\s", 1))
             .withCopyToContainer(app, "/usr/local/whirl")
-            .dependsOn(postgres);
+            .dependsOn(postgres)
+            ;
+
     @Rule
     public BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withAccessToHost(true)
@@ -60,94 +70,47 @@ public class ApplicationsTests {
             .withCapabilities(new ChromeOptions())
             .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING,
                     //Paths.get("C:/Users/Nastia/Documents").toFile());
-                    Paths.get("C:/Users/User/Documents").toFile());
+                    Paths.get("C:/Users/User/Documents").toFile())
+            ;
 
     @Test
-    public void loginAndOpenApplicationTest() throws InterruptedException {
+    public void comboboxApplicationTest() throws InterruptedException {
         RemoteWebDriver driver = chrome.getWebDriver();
-        driver.get("http://tomcat:8080/app?application=whirl-showcase");
-
-        String heading = driver.getTitle();
-        while (heading.isEmpty()) {
-            Thread.sleep(100);
-        }
-        System.out.println("current title: " + driver.getTitle());
-        System.out.println("Current URL: " + driver.getCurrentUrl());
-
-        System.out.println(driver.getPageSource());
-        System.out.println();
-
         WebDriverWait wait = new WebDriverWait(driver, 10);
+        driver.get("http://tomcat:8080/app?application=combobox_test");
 
-        // this does not work in the executeScript
-//        WebElement submitButton = driver.findElementByXPath(
-//                "//html/body/div[3]/form/table/tbody/tr[3]/td[2]/input"
-//        );
-        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("submit-btn")));
-        //WebElement submitButton = driver.findElement(By.name("submit-btn"));
-        System.out.println("Button text: " + submitButton.getAttribute("value"));
+        wait.until(ExpectedConditions.titleIs("Whirl Platform"));
 
-        // not visible
-//        WebElement loginTextField = driver.findElementByXPath(
-//                "//html/body/div[3]/form/table/tbody/tr[1]/td[2]/input"
-//        );
-//        assertNotNull(loginTextField);
+        WebElement loginTextField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("login-field")));
+        loginTextField.sendKeys("whirl-admin");
 
-        // empty
-//        System.out.println("Login field text: " + loginTextField.getText());
-
-    // not visible
-//        WebElement passwordTextField = driver.findElementByXPath(
-//                "//html/body/div[3]/form/table/tbody/tr[2]/td[2]/input"
-//        );
-//        assertNotNull(passwordTextField);
-
-        // not visible
-        //driver.findElement(By.name("login-field")).sendKeys("whirl");
-        //driver.findElement(By.name("pwd-field")).sendKeys("password");
-
-        // not visible
-        //loginTextField.sendKeys("whirl");
-        //passwordTextField.sendKeys("password");
-
-
-        //WebElement passwordTextField = driver.findElement(By.name("pwd-field"));
         WebElement passwordTextField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("pwd-field")));
         passwordTextField.sendKeys("password");
 
-        String tagName = passwordTextField.getTagName();
-        System.out.println("Tagname: " + tagName);
-
-        System.out.println("Script started:");
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("submit-btn")));
         driver.executeScript("arguments[0].click();", submitButton);
-        System.out.println("Script completed:");
-        System.out.println("Current URL: " + driver.getCurrentUrl());
-        System.out.println("\n\n");
 
-        Thread.sleep(4000);
+        wait.until(ExpectedConditions.titleIs("combobox_test"));
+        System.out.println("Current title: " + driver.getTitle());
 
-        driver.get("http://tomcat:8080/app?application=whirl-showcase");
+        assertEquals(driver.getTitle(), "combobox_test");
 
-        Thread.sleep(4000);
+        waitForLoad(driver);
+        System.out.println("\n\n" + driver.getPageSource());
 
-        System.out.println(driver.getPageSource());
+        WebElement comboboxButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("EWFIG3-z-k")));
+        assertNotNull(comboboxButton);
         Thread.sleep(1000000);
     }
 
-//    @Test
-//    public void comboboxApplicationTest() throws InterruptedException {
-//        RemoteWebDriver driver = chrome.getWebDriver();
-//        driver.get("http://tomcat:8080/app?application=combobox_test");
-//
-//        String heading = driver.getTitle();
-//        while (heading.isEmpty()) {
-//            Thread.sleep(100);
-//        }
-//        System.out.println("current title: " + driver.getTitle());
-//        System.out.println("Current URL: " + driver.getCurrentUrl());
-//
-//        Thread.sleep(1000000);
-//
-//        //assertTrue(true);
-//    }
+    void waitForLoad(WebDriver driver) {
+        ExpectedCondition<Boolean> pageLoadCondition = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+                    }
+                };
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(pageLoadCondition);
+    }
 }
