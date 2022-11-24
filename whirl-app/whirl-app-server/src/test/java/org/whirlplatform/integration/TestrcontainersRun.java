@@ -1,5 +1,6 @@
 package org.whirlplatform.integration;
 
+import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -61,6 +62,38 @@ public class TestrcontainersRun {
                     Paths.get("C:/Users/Nastia/Documents").toFile());
 
 
+    @Rule
+    public GenericContainer<?> selenium = new GenericContainer<>(
+            DockerImageName.parse("selenium/hub"))
+            .withNetwork(net)
+            .withNetworkAliases("hub")
+            .withExposedPorts(4444)
+            .withCopyToContainer(MountableFile.forHostPath(
+                            Paths.get("../../src/test/resources/serviceconfig.json"), 0777),
+                    "/opt/sideex-webservice/serviceconfig.json")
+//            .waitingFor(Wait.forLogMessage(".*Server startup.*\\s", 1)
+//                    .withStartupTimeout(Duration.ofMinutes(2)))
+            .dependsOn(tomcat)
+            ;
+
+    @Rule
+    public BrowserWebDriverContainer<?> nodeChrome = (BrowserWebDriverContainer<?>) new BrowserWebDriverContainer(
+            DockerImageName.parse("selenium/node-chrome-debug"))
+            .withNetwork(net)
+            .withNetworkAliases("nodeChrome")
+            .withExposedPorts(5900)
+            .dependsOn(selenium);
+
+    @Rule
+    public GenericContainer<?> sideex = new GenericContainer<>(
+            DockerImageName.parse("sideex/webservice"))
+            .withNetwork(net)
+            .withNetworkAliases("sideex")
+            .withExposedPorts(50000)
+            .dependsOn(nodeChrome)
+            ;
+
+//    public GenericContainer
 
     @Test
     // переименовать метод
@@ -80,7 +113,7 @@ public class TestrcontainersRun {
         System.out.println(rootUrl);
 
         RemoteWebDriver driver = chrome.getWebDriver();
-        driver.get("http://tomcat:8080/");
+        driver.get("http://tomcat:8080/app?application=whirl-showcase&");
 
 
         String heading = driver.getTitle();
@@ -88,10 +121,64 @@ public class TestrcontainersRun {
             Thread.sleep(10000);
         }
 
-        Thread.sleep(1000000);
+        Thread.sleep(100000);
 
         assertEquals("Whirl Platform", heading);
+
     }
+
+    @Test
+    public void openSideex() {
+        try {
+            RemoteWebDriver driver = nodeChrome.getWebDriver();
+
+                    //Connect to a SideeX WebService server
+            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:05000", ProtocalType.HTTPS_DISABLE);
+            File file = new File("testcase.zip");
+
+            Map<String, File> fileParams = new HashMap<String, File>();
+            fileParams.put(file.getName(), file);
+
+            String token = new JSONObject(wsClient.runTestSuite(fileParams)).getString("token"); // get the token
+            boolean flag = false;
+
+            while (!flag) {
+                //Get the current state
+                String state = new JSONObject(wsClient.getState(token)).getJSONObject("webservice").getString("state");
+                if (!state.equals("complete") && !state.equals("error")) {
+                    System.out.println(state);
+                    Thread.sleep(2000);
+                }
+                //If test is error
+                else if (state.equals("error")) {
+                    System.out.println(state);
+                    flag = true;
+                }
+                //If test is complete
+                else {
+                    System.out.println(state);
+                    Map<String, String> formData = new HashMap<String, String>();
+                    formData.put("token", token);
+                    formData.put("file", "reports.zip");
+                    //Download the test report
+                    wsClient.download(formData, "./reports.zip", 0);
+
+                    formData = new HashMap<String, String>();
+                    formData.put("token", token);
+                    //Download the logs
+                    wsClient.download(formData, "./logs.zip", 1);
+                    flag = true;
+
+                    //Delete the test case and report from the server
+                    System.out.println(wsClient.deleteReport(token));
+                }
+            }
+            System.out.println(wsClient.runTestSuite(fileParams));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 //    @Test
 //    public void openApplicationTest(){
@@ -99,18 +186,4 @@ public class TestrcontainersRun {
 //        assertNotNull(button);
 //    }
 
-
-    public void openSideex() {
-        try {
-            //Connect to a SideeX WebService server
-            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
-            File file = new File("testcase.zip"); //
-
-            Map<String, File> fileParams = new HashMap<String, File>();
-            fileParams.put(file.getName(), file);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
