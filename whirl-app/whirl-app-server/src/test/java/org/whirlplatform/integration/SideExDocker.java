@@ -1,6 +1,16 @@
 package org.whirlplatform.integration;
 
+import org.junit.ClassRule;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
+
 public class SideExDocker {
+
+    public static final DockerImageName REDIS_IMAGE = DockerImageName.parse("redis:3.0.2");
+
+    @ClassRule
+    public static GenericContainer<?> redis = new GenericContainer<>(REDIS_IMAGE)
+            .withExposedPorts(6379);
 
 //    public void openSideex() {
 //        try {

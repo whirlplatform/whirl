@@ -1,0 +1,9 @@
+org\whirlplatform\jsdoc\EsDocProcessor$Property.class
+org\whirlplatform\jsdoc\EsDocProcessor$Constructor.class
+org\whirlplatform\jsdoc\CodeGenerator.class
+org\whirlplatform\jsdoc\EsDocProcessor$Type.class
+org\whirlplatform\jsdoc\EsDocProcessor$Method.class
+org\whirlplatform\jsdoc\ProcessingException.class
+org\whirlplatform\jsdoc\GenerationException.class
+org\whirlplatform\jsdoc\AbstractProcessor.class
+org\whirlplatform\jsdoc\EsDocProcessor.class
