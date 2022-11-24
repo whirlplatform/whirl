@@ -14,13 +14,12 @@ import sideex.SideeXWebServiceClientAPI;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestrcontainersRun {
 
@@ -67,30 +66,27 @@ public class TestrcontainersRun {
             DockerImageName.parse("selenium/hub"))
             .withNetwork(net)
             .withNetworkAliases("hub")
-            .withExposedPorts(4444)
-            .withCopyToContainer(MountableFile.forHostPath(
-                            Paths.get("../../src/test/resources/serviceconfig.json"), 0777),
-                    "/opt/sideex-webservice/serviceconfig.json")
-//            .waitingFor(Wait.forLogMessage(".*Server startup.*\\s", 1)
-//                    .withStartupTimeout(Duration.ofMinutes(2)))
+            .waitingFor(Wait.forLogMessage(".*Started Selenium Hub.*\\s", 1)
+                    .withStartupTimeout(Duration.ofMinutes(2)))
             .dependsOn(tomcat)
             ;
 
     @Rule
     public GenericContainer<?> nodeChrome = new GenericContainer<>(
-            DockerImageName.parse("selenium/node-chrome-debug"))
+            DockerImageName.parse("selenium/node-chrome"))
             .withNetwork(net)
             .withNetworkAliases("nodeChrome")
-            .withExposedPorts(5900)
+            .withEnv("SE_EVENT_BUS_HOST", "hub")
+            .withEnv("SE_EVENT_BUS_PUBLISH_PORT", "4442")
+            .withEnv("SE_EVENT_BUS_SUBSCRIBE_PORT", "4443")
             .dependsOn(selenium)
             ;
 
     @Rule
-    public GenericContainer<?> sideex = new GenericContainer<>(
-            DockerImageName.parse("sideex/webservice"))
+    public FixedHostPortGenericContainer<?> sideex = new FixedHostPortGenericContainer<>("sideex/webservice")
             .withNetwork(net)
             .withNetworkAliases("sideex")
-            .withExposedPorts(50000)
+            .withFixedExposedPort(50000, 50000)
             .dependsOn(nodeChrome)
             ;
 
@@ -122,7 +118,7 @@ public class TestrcontainersRun {
             Thread.sleep(10000);
         }
 
-        Thread.sleep(100000);
+        Thread.sleep(10000000);
 
         assertEquals("Whirl Platform", heading);
 
@@ -132,11 +128,13 @@ public class TestrcontainersRun {
     public void openSideex() {
         try {
             //Connect to a SideeX WebService server
-            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:05000", ProtocalType.HTTPS_DISABLE);
+            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
             File file = new File("testcase.zip");
 
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
+
+//            Thread.sleep(10000000);
 
             String token = new JSONObject(wsClient.runTestSuite(fileParams)).getString("token"); // get the token
             boolean flag = false;
