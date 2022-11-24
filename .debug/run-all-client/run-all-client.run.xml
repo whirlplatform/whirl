@@ -1,7 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="run-all-client" type="CompoundRunConfigurationType">
-    <toRun name="whirl-app-client-js" type="JavascriptDebugType" />
-    <toRun name="whirl-editor-client-js" type="JavascriptDebugType" />
     <method v="2" />
   </configuration>
 </component>

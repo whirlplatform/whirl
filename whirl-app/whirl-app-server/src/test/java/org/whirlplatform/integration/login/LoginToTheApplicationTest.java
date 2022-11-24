@@ -102,6 +102,8 @@ public class LoginToTheApplicationTest {
         Thread.sleep(1000000);
     }
 
+    // @Order(1)
+
     void waitForLoad(WebDriver driver) {
         ExpectedCondition<Boolean> pageLoadCondition = new
                 ExpectedCondition<Boolean>() {
