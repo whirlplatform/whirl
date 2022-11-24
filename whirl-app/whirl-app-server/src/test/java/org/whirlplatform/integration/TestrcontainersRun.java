@@ -77,12 +77,13 @@ public class TestrcontainersRun {
             ;
 
     @Rule
-    public BrowserWebDriverContainer<?> nodeChrome = (BrowserWebDriverContainer<?>) new BrowserWebDriverContainer(
+    public GenericContainer<?> nodeChrome = new GenericContainer<>(
             DockerImageName.parse("selenium/node-chrome-debug"))
             .withNetwork(net)
             .withNetworkAliases("nodeChrome")
             .withExposedPorts(5900)
-            .dependsOn(selenium);
+            .dependsOn(selenium)
+            ;
 
     @Rule
     public GenericContainer<?> sideex = new GenericContainer<>(
@@ -130,9 +131,7 @@ public class TestrcontainersRun {
     @Test
     public void openSideex() {
         try {
-            RemoteWebDriver driver = nodeChrome.getWebDriver();
-
-                    //Connect to a SideeX WebService server
+            //Connect to a SideeX WebService server
             SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:05000", ProtocalType.HTTPS_DISABLE);
             File file = new File("testcase.zip");
 
