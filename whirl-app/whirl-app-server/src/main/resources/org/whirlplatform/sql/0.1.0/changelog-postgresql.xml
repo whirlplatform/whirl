@@ -21,8 +21,6 @@
             failOnError="true"
             dbms="postgresql">
 
-        <sql>CREATE EXTENSION IF NOT EXISTS hstore</sql>
-
         <createTable
                 tableName="WHIRL_USERS"
                 remarks="Stores user information">

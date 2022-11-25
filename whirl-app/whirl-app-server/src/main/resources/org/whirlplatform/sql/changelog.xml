@@ -5,10 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <!-- Recreatable objects -->
-    <include file="object/catalog.xml" relativeToChangelogFile="true"/>
-
     <!-- Migrations -->
     <include file="0.1.0/changelog.xml" relativeToChangelogFile="true"/>
+
+    <!-- Recreatable objects -->
+    <include file="object/catalog.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
