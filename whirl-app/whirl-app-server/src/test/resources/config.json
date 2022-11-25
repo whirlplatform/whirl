@@ -1,0 +1,18 @@
+{
+  "webdriver": {
+    "configs": [
+      {
+        "serverUrl": "http://localhost:4444",
+        "type": "selenium",
+        "browsers":[
+          {
+            "active": true,
+            "capability": {
+              "browserName": "chrome"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

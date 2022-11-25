@@ -1,0 +1,364 @@
+{
+  "time": 1669190347591,
+  "version": {
+    "sideex": [
+      3,
+      7,
+      3
+    ],
+    "format": [
+      2,
+      0,
+      0
+    ]
+  },
+  "suites": [
+    {
+      "title": "Untitled Test Suite",
+      "description": "",
+      "enableOnPlaying": true,
+      "cases": [
+        {
+          "title": "Untitled Test Case",
+          "description": "",
+          "enableOnPlaying": true,
+          "networkSpeed": 3.5,
+          "records": [
+            {
+              "name": "open",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "http://localhost:8090/app?token=92718172&application=whirl-showcase"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "setViewportSize",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "1920,937"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "id",
+                    "value": "id=login-field"
+                  },
+                  {
+                    "type": "name",
+                    "value": "name=login-field"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//form[@id='login_form']/table[1]/tbody[1]/tr[1]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='login-field']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#login-field"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "whirl-admin"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "id",
+                    "value": "id=pwd-field"
+                  },
+                  {
+                    "type": "name",
+                    "value": "name=pwd-field"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//form[@id='login_form']/table[1]/tbody[1]/tr[2]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tr[2]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='pwd-field']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#pwd-field"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "password"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "id",
+                    "value": "id=login-field"
+                  },
+                  {
+                    "type": "name",
+                    "value": "name=login-field"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//form[@id='login_form']/table[1]/tbody[1]/tr[1]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='login-field']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#login-field"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "84,10"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": -8823,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-F2906B7F-A531-4E75-8A7E-E8BCCD7ED8F8']/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[4]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#gwt-debug-F2906B7F-A531-4E75-8A7E-E8BCCD7ED8F8 > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "84,3"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 7,
+                "prw": 0,
+                "pdw": 58
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-4E37104C-C8DA-4D06-A94A-B8E795D3DEDE']/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "121,10"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 3,
+                "prw": 0,
+                "pdw": 79
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@class='EWFIG3-X-a EWFIG3-T-l EWFIG3-F-a']"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-X-a.EWFIG3-T-l.EWFIG3-F-a.EWFIG3-F-b"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "8,14"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

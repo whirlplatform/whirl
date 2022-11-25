@@ -10,7 +10,7 @@ services:
     ports:
       - 8090:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default.default # Tomcats global context configuration location.
+      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
       - ../.whirl-work:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
@@ -48,7 +48,7 @@ services:
     ports:
       - 8090:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default.default # Tomcats global context configuration location.
+      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
       - ../.whirl-work:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
@@ -62,7 +62,7 @@ services:
     ports:
       - 8090:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default.default # Tomcats global context configuration location.
+      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
       - ../.whirl-work:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
