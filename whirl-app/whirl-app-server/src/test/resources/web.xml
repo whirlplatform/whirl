@@ -53,8 +53,6 @@
         </web-resource-collection>
     </security-constraint>
 
-    <deny-uncovered-http-methods/>
-
     <distributable/>
 
 </web-app>

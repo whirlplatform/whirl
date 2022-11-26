@@ -50,8 +50,6 @@
         <url-pattern>/version</url-pattern>
     </servlet-mapping>
 
-    <deny-uncovered-http-methods/>
-
     <distributable/>
 
 </web-app>
