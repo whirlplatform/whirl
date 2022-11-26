@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-        xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-        version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
 
     <display-name>Whirlplatform</display-name>
 
@@ -41,15 +41,6 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>CheckTokenServlet</servlet-name>
-        <servlet-class>org.whirlplatform.server.servlet.CheckTokenServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CheckTokenServlet</servlet-name>
-        <url-pattern>/checktoken</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>VersionServlet</servlet-name>
         <servlet-class>org.whirlplatform.server.servlet.VersionServlet</servlet-class>
     </servlet>
@@ -59,15 +50,7 @@
         <url-pattern>/version</url-pattern>
     </servlet-mapping>
 
-    <security-constraint>
-        <display-name>SecurityConstraint</display-name>
-        <web-resource-collection>
-            <web-resource-name>All</web-resource-name>
-            <url-pattern>/*</url-pattern>
-            <http-method>PUT</http-method>
-            <http-method>DELETE</http-method>
-        </web-resource-collection>
-    </security-constraint>
+    <deny-uncovered-http-methods/>
 
     <distributable/>
 
