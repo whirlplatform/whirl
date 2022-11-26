@@ -180,16 +180,12 @@
         </insert>
         <insert tableName="WHIRL_USER_GROUPS">
             <column
-                    name="ID"
-                    type="bigint"
-                    valueNumeric="1"/>
-            <column
                     name="DELETED"
                     type="boolean"/>
             <column
                     name="R_WHIRL_USERS"
                     type="bigint"
-                    valueNumeric="1"/>
+                    valueComputed="(SELECT U.ID FROM WHIRL_USERS U WHERE U.LOGIN = 'whirl-admin')"/>
             <column
                     name="GROUP_CODE"
                     type="${varchar_type}"
@@ -212,7 +208,6 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
 
-            <sql>DROP EXTENSION IF EXISTS hstore</sql>
         </rollback>
     </changeSet>
 
