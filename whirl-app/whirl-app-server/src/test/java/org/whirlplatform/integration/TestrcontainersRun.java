@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestrcontainersRun {
 
@@ -148,7 +150,6 @@ public class TestrcontainersRun {
 //            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
 
 
-
             URL resource = getClass().getClassLoader().getResource("tests/tescase.zip");
 //            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
             File file = new File(resource.toURI());
@@ -172,7 +173,7 @@ public class TestrcontainersRun {
 //            response.close();
 //            httpclient.close();
 
-            HttpPost runTestSuitesPost = new HttpPost(url+"runTestSuites");
+            HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
 
             HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
                     .addBinaryBody("file", file, ContentType.MULTIPART_FORM_DATA, file.getName())
@@ -183,14 +184,20 @@ public class TestrcontainersRun {
 
             CloseableHttpResponse respons = httpclient.execute(runTestSuitesPost);
 
-
-            System.out.println("Executing request " + EntityUtils.toString(respons.getEntity()));
-
-            String token = EntityUtils.toString(respons.getEntity());
-
-            System.out.println("Token: "+token);
+            String body = EntityUtils.toString(respons.getEntity());
+            System.out.println("Executing request " + body);
 
 
+            Matcher matcher = Pattern.compile("token\":\"(.*)\"").matcher(body);
+            matcher.find();
+            String token = matcher.group(1);
+            System.out.println("Token: " + token);
+
+            HttpGet getStateGet = new HttpGet(url + "getState?token="+token);
+
+            respons  = httpclient.execute(getStateGet);
+            Thread.sleep(100000);
+            System.out.println("Test status "+ EntityUtils.toString(respons.getEntity()));
 
 
 //            Thread.sleep(1000000);
