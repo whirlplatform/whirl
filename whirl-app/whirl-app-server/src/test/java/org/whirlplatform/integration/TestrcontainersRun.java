@@ -1,6 +1,22 @@
 package org.whirlplatform.integration;
 
-import org.json.JSONObject;
+
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.entity.mime.HttpMultipartMode;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+import org.apache.http.client.methods.RequestBuilder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
@@ -8,16 +24,17 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
-import sideex.ProtocalType;
-import sideex.SideeXWebServiceClientAPI;
 
-import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestrcontainersRun {
@@ -65,8 +82,7 @@ public class TestrcontainersRun {
             DockerImageName.parse("selenium/hub:3.141.59"))
             .withNetwork(net)
             .withNetworkAliases("hub")
-            .dependsOn(tomcat)
-            ;
+            .dependsOn(tomcat);
 
     @Rule
     public GenericContainer<?> nodeChrome = new GenericContainer<>(
@@ -74,8 +90,7 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("node-chrome")
             .withEnv("HUB_HOST", "hub")
-            .dependsOn(selenium)
-            ;
+            .dependsOn(selenium);
 
     @Rule
     public FixedHostPortGenericContainer<?> sideex = new FixedHostPortGenericContainer<>("sideex/webservice")
@@ -125,53 +140,96 @@ public class TestrcontainersRun {
     @Test
     public void openSideex() {
         try {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            postgres.execInContainer("psql", "-U", "whirl", "-c",
+                    "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
+
             //Connect to a SideeX WebService server
-            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
+//            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
+
+
 
             URL resource = getClass().getClassLoader().getResource("tests/tescase.zip");
+//            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
             File file = new File(resource.toURI());
-
-
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-            Thread.sleep(10000000);
+            Thread.sleep(10000);
+            String url = "http://127.0.0.1:50000/sideex-webservice/";
+//            HttpGet httpGet = new HttpGet(url+"echo");
 
-            String token = wsClient.runTestSuite(fileParams); // get the token
-            boolean flag = false;
+//            Thread.sleep(10000);
 
-            while (!flag) {
-                //Get the current state
-                String state = new JSONObject(wsClient.getState(token)).getJSONObject("webservice").getString("state");
-                if (!state.equals("complete") && !state.equals("error")) {
-                    System.out.println(state);
-                    Thread.sleep(2000);
-                }
-                //If test is error
-                else if (state.equals("error")) {
-                    System.out.println(state);
-                    flag = true;
-                }
-                //If test is complete
-                else {
-                    System.out.println(state);
-                    Map<String, String> formData = new HashMap<String, String>();
-                    formData.put("token", token);
-                    formData.put("file", "reports.zip");
-                    //Download the test report
-                    wsClient.download(formData, "./reports.zip", 0);
+//            CloseableHttpResponse response = httpclient.execute(httpGet);
 
-                    formData = new HashMap<String, String>();
-                    formData.put("token", token);
-                    //Download the logs
-                    wsClient.download(formData, "./logs.zip", 1);
-                    flag = true;
+//            HttpEntity entity = response.getEntity();
+//            System.out.println(EntityUtils.toString(entity));
+//            if (response.getCode() != 200) {
+//                System.out.println("Connection id bad " + response.getCode());
+//                return;
+//            }
+//            response.close();
+//            httpclient.close();
 
-                    //Delete the test case and report from the server
-                    System.out.println(wsClient.deleteReport(token));
-                }
-            }
-            System.out.println(wsClient.runTestSuite(fileParams));
+            HttpPost runTestSuitesPost = new HttpPost(url+"runTestSuites");
+
+            HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
+                    .addBinaryBody("file", file, ContentType.MULTIPART_FORM_DATA, file.getName())
+                    .build();
+            runTestSuitesPost.setEntity(data);
+
+            Thread.sleep(10000);
+
+            CloseableHttpResponse respons = httpclient.execute(runTestSuitesPost);
+
+
+            System.out.println("Executing request " + EntityUtils.toString(respons.getEntity()));
+
+            String token = EntityUtils.toString(respons.getEntity());
+
+            System.out.println("Token: "+token);
+
+
+
+
+//            Thread.sleep(1000000);
+//            String token = wsClient.runTestSuite(fileParams); // get the token
+//            boolean flag = false;
+//            System.out.println("Token: "+token);
+//
+//            while (!flag) {
+//                //Get the current state
+//                String state = new JSONObject(wsClient.getState(token)).getJSONObject("webservice").getString("state");
+//                if (!state.equals("complete") && !state.equals("error")) {
+//                    System.out.println(state);
+//                    Thread.sleep(2000);
+//                }
+//                //If test is error
+//                else if (state.equals("error")) {
+//                    System.out.println(state);
+//                    flag = true;
+//                }
+//                //If test is complete
+//                else {
+//                    System.out.println(state);
+//                    Map<String, String> formData = new HashMap<String, String>();
+//                    formData.put("token", token);
+//                    formData.put("file", "reports.zip");
+//                    //Download the test report
+//                    wsClient.download(formData, "./reports.zip", 0);
+//
+//                    formData = new HashMap<String, String>();
+//                    formData.put("token", token);
+//                    //Download the logs
+//                    wsClient.download(formData, "./logs.zip", 1);
+//                    flag = true;
+//
+//                    //Delete the test case and report from the server
+////                    System.out.println(wsClient.deleteReport(token));
+//                }
+//            }
+//            System.out.println(wsClient.runTestSuite(fileParams));
         } catch (Exception e) {
             e.printStackTrace();
         }
