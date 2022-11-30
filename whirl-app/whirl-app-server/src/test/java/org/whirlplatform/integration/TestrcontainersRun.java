@@ -1,6 +1,7 @@
 package org.whirlplatform.integration;
 
 
+import liquibase.pro.packaged.S;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
@@ -17,6 +18,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.http.client.methods.RequestBuilder;
+import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
@@ -101,17 +103,16 @@ public class TestrcontainersRun {
             .withFixedExposedPort(50000, 50000)
             .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
                     "/opt/sideex-webservice/serviceconfig.json")
-            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
-                    "/opt/sideex-webservice/tests/")
+//            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
+//                    "/opt/sideex-webservice/tests/")
+            .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
+                    .withStartupTimeout(Duration.ofMinutes(2)))
             .dependsOn(nodeChrome);
-
-//    public GenericContainer
 
 //    @Test
 //    // переименовать метод
 //    public void openShowCaseAppTest() throws InterruptedException, IOException {
 //        Integer tomcatPort = tomcat.getMappedPort(8080);
-//
 //
 ////        Thread.sleep();
 ////        postgres.withStartupTimeoutSeconds(1000000);
@@ -141,27 +142,20 @@ public class TestrcontainersRun {
 
     @Test
     public void openSideex() {
-        try {
-            CloseableHttpClient httpclient = HttpClients.createDefault();
+        try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
+
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
-            //Connect to a SideeX WebService server
-//            SideeXWebServiceClientAPI wsClient = new SideeXWebServiceClientAPI("http://127.0.0.1:50000", ProtocalType.HTTPS_DISABLE);
-
-
-            URL resource = getClass().getClassLoader().getResource("tests/tescase.zip");
+            URL resource = getClass().getClassLoader().getResource("tests/testcase2.zip");
 //            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
             File file = new File(resource.toURI());
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-            Thread.sleep(10000);
+//            Thread.sleep(1000000);
             String url = "http://127.0.0.1:50000/sideex-webservice/";
 //            HttpGet httpGet = new HttpGet(url+"echo");
-
-//            Thread.sleep(10000);
-
 //            CloseableHttpResponse response = httpclient.execute(httpGet);
 
 //            HttpEntity entity = response.getEntity();
@@ -174,68 +168,67 @@ public class TestrcontainersRun {
 //            httpclient.close();
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
-
             HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
                     .addBinaryBody("file", file, ContentType.MULTIPART_FORM_DATA, file.getName())
                     .build();
             runTestSuitesPost.setEntity(data);
 
-            Thread.sleep(10000);
+//            Thread.sleep(10000);
 
             CloseableHttpResponse respons = httpclient.execute(runTestSuitesPost);
 
             String body = EntityUtils.toString(respons.getEntity());
             System.out.println("Executing request " + body);
 
-
-            Matcher matcher = Pattern.compile("token\":\"(.*)\"").matcher(body);
-            matcher.find();
-            String token = matcher.group(1);
-            System.out.println("Token: " + token);
-
-            HttpGet getStateGet = new HttpGet(url + "getState?token="+token);
-
-            respons  = httpclient.execute(getStateGet);
-            Thread.sleep(100000);
-            System.out.println("Test status "+ EntityUtils.toString(respons.getEntity()));
+            JSONObject jsonRunSuite = new JSONObject(body);
+            String token = jsonRunSuite.getString("token");
+            System.out.println("Json token: "+token);
 
 
-//            Thread.sleep(1000000);
-//            String token = wsClient.runTestSuite(fileParams); // get the token
-//            boolean flag = false;
-//            System.out.println("Token: "+token);
-//
-//            while (!flag) {
-//                //Get the current state
-//                String state = new JSONObject(wsClient.getState(token)).getJSONObject("webservice").getString("state");
-//                if (!state.equals("complete") && !state.equals("error")) {
-//                    System.out.println(state);
-//                    Thread.sleep(2000);
-//                }
-//                //If test is error
-//                else if (state.equals("error")) {
-//                    System.out.println(state);
-//                    flag = true;
-//                }
-//                //If test is complete
-//                else {
-//                    System.out.println(state);
-//                    Map<String, String> formData = new HashMap<String, String>();
-//                    formData.put("token", token);
-//                    formData.put("file", "reports.zip");
-//                    //Download the test report
+            boolean flag = false;
+            while (!flag) {
+                HttpGet getStateGet = new HttpGet(url + "getState?token="+token);
+
+                respons  = httpclient.execute(getStateGet);
+//            Thread.sleep(100000);
+
+                String stateSt = EntityUtils.toString(respons.getEntity());
+                System.out.println("Test status "+ stateSt);
+
+                JSONObject jsonState = new JSONObject(stateSt);
+
+
+                //Get the current state
+                String state = jsonState.getJSONObject("webservice").getString("state");
+                if (!state.equals("complete") && !state.equals("error")) {
+                    System.out.println(state);
+                    Thread.sleep(2000);
+                }
+                //If test is error
+                else if (state.equals("error")) {
+                    System.out.println(state);
+                    flag = true;
+                }
+                //If test is complete
+                else {
+                    System.out.println(state);
+                    Map<String, String> formData = new HashMap<String, String>();
+                    formData.put("token", token);
+                    formData.put("file", "reports.zip");
+
+                    //Download the test report
 //                    wsClient.download(formData, "./reports.zip", 0);
-//
-//                    formData = new HashMap<String, String>();
-//                    formData.put("token", token);
-//                    //Download the logs
+
+                    formData = new HashMap<String, String>();
+                    formData.put("token", token);
+                    //Download the logs
 //                    wsClient.download(formData, "./logs.zip", 1);
-//                    flag = true;
-//
-//                    //Delete the test case and report from the server
-////                    System.out.println(wsClient.deleteReport(token));
-//                }
-//            }
+                    flag = true;
+
+                    //Delete the test case and report from the server
+//                    System.out.println(wsClient.deleteReport(token));
+                }
+            }
 //            System.out.println(wsClient.runTestSuite(fileParams));
         } catch (Exception e) {
             e.printStackTrace();
