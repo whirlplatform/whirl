@@ -101,8 +101,8 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("sideex")
             .withFixedExposedPort(50000, 50000)
-            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
-                    "/opt/sideex-webservice/serviceconfig.json")
+//            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
+//                    "/opt/sideex-webservice/serviceconfig.json")
 //            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
 //                    "/opt/sideex-webservice/tests/")
             .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
@@ -146,6 +146,8 @@ public class TestrcontainersRun {
 
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
+            postgres.execInContainer("psql", "-U", "whirl", "-c",
+                    "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (3, NULL, 1, 'whirl-admin-admin', '')");
 
             URL resource = getClass().getClassLoader().getResource("tests/testcase2.zip");
 //            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
@@ -153,7 +155,7 @@ public class TestrcontainersRun {
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-//            Thread.sleep(1000000);
+            Thread.sleep(1000000);
             String url = "http://127.0.0.1:50000/sideex-webservice/";
 //            HttpGet httpGet = new HttpGet(url+"echo");
 //            CloseableHttpResponse response = httpclient.execute(httpGet);
@@ -211,7 +213,9 @@ public class TestrcontainersRun {
                 }
                 //If test is complete
                 else {
+
                     System.out.println(state);
+//                    Thread.sleep(100000);
                     Map<String, String> formData = new HashMap<String, String>();
                     formData.put("token", token);
                     formData.put("file", "reports.zip");
