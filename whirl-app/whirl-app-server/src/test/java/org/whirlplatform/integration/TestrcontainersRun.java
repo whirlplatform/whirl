@@ -103,8 +103,8 @@ public class TestrcontainersRun {
             .withFixedExposedPort(50000, 50000)
             .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
                     "/opt/sideex-webservice/serviceconfig.json")
-//            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
-//                    "/opt/sideex-webservice/tests/")
+            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
+                    "/opt/sideex-webservice/tests/")
             .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
                     .withStartupTimeout(Duration.ofMinutes(2)))
             .withEnv("TOMCAT_HOST", "tomcat")
@@ -152,21 +152,21 @@ public class TestrcontainersRun {
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
 
-            URL resource = getClass().getClassLoader().getResource("tests/testcase2.zip");
+            URL resource = getClass().getClassLoader().getResource("tests/testcase4.zip");
 //            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
             File file = new File(resource.toURI());
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-
+            tomcat.getTestHostIpAddress();
             System.out.println("Tomcat: http://"+tomcat.getHost()+":"+tomcat.getMappedPort(8080));
             System.out.println("Sideex: http://"+  sideex.getHost()+":"+ sideex.getMappedPort(50000)+"/sideex-webservice/");
 //            System.out.println("Selenium: http://"+selenium.getHost()+":"+selenium.getMappedPort(4444));
 //            System.out.println(sideex.execInContainer("wget", "-O", "-", "http://tomcat:8080/app?").getStdout());
 //            Thread.sleep(1000000);
 
-//            String url = "http://127.0.0.1:50000/sideex-webservice/";
-            String url = "http://0.0.0.0:50000/sideex-webservice/";
+            String url = "http://127.0.0.1:50000/sideex-webservice/";
+//            String url = "http://0.0.0.0:50000/sideex-webservice/";
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
             HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
