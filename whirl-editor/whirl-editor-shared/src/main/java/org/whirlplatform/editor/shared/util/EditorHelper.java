@@ -4,11 +4,16 @@ import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.component.RandomUUID;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
 
 public class EditorHelper {
 
-    public static ComponentElement newComponentElement(ComponentType type, LocaleElement defaultLocale) {
+    public static ComponentElement newComponentElement(ComponentType type,
+                                                       LocaleElement defaultLocale) {
         ComponentElement result;
         if (ComponentType.FormBuilderType == type) {
             result = new FormElement();
@@ -37,7 +42,8 @@ public class EditorHelper {
     }
 
     @SuppressWarnings("incomplete-switch")
-    private static ComponentElement setDefaultProps(ComponentElement comp, LocaleElement defaultLocale) {
+    private static ComponentElement setDefaultProps(ComponentElement comp,
+                                                    LocaleElement defaultLocale) {
         switch (comp.getType()) {
             case ButtonType:
                 setProperty(comp, defaultLocale, PropertyType.Html, "Button");
@@ -112,7 +118,8 @@ public class EditorHelper {
                 break;
             case ReportType:
                 setProperty(comp, defaultLocale, PropertyType.ShowReportParams, true);
-                setProperty(comp, defaultLocale, PropertyType.ReportFormat, AppConstant.REPORT_FORMAT_HTML);
+                setProperty(comp, defaultLocale, PropertyType.ReportFormat,
+                        AppConstant.REPORT_FORMAT_HTML);
                 break;
             case TabPanelType:
                 setProperty(comp, defaultLocale, PropertyType.Width, 1);
@@ -162,7 +169,8 @@ public class EditorHelper {
         return comp;
     }
 
-    private static void setProperty(ComponentElement element, LocaleElement locale, PropertyType type, Object value) {
+    private static void setProperty(ComponentElement element, LocaleElement locale,
+                                    PropertyType type, Object value) {
         element.setProperty(type, new PropertyValue(type.getType(), locale, value));
     }
 

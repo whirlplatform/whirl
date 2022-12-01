@@ -10,6 +10,13 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.IsField;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.ListParameter;
 import org.whirlplatform.component.client.base.NumberFieldBuilder;
@@ -29,13 +36,12 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.RowListValue;
 
-import java.util.*;
-import java.util.Map.Entry;
-
 public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAware {
 
-    private Map<FieldMetadata, AbstractFieldBuilder> builders = new HashMap<FieldMetadata, AbstractFieldBuilder>();
-    private Map<FieldMetadata, UploadFieldBuilder> uploadBuilders = new HashMap<FieldMetadata, UploadFieldBuilder>();
+    private Map<FieldMetadata, AbstractFieldBuilder> builders =
+            new HashMap<FieldMetadata, AbstractFieldBuilder>();
+    private Map<FieldMetadata, UploadFieldBuilder> uploadBuilders =
+            new HashMap<FieldMetadata, UploadFieldBuilder>();
     private Map<FieldMetadata, IsField<?>> components = new HashMap<FieldMetadata, IsField<?>>();
 
     private Set<FieldMetadata> changed = new HashSet<FieldMetadata>();
@@ -163,7 +169,7 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
             // ((Field) field).getElement().focus();
             // ((Field) field).getElement().blur();
         }
-    
+
         field.setValue(value.getObject());
     }
 

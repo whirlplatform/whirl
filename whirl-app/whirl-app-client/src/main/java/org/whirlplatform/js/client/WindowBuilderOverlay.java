@@ -20,24 +20,46 @@ public abstract class WindowBuilderOverlay {
     }
 
     /**
+     * Установить потомка для окна
+     *
+     * @param instance - WindowBuilder
+     * @param builder  - ComponentBuilder
+     */
+    public static void setChild(WindowBuilder instance, ComponentBuilder builder) {
+        instance.addChild(builder);
+    }
+
+    /**
+     * Удаление окна
+     *
+     * @param instance - WindowBuilder
+     * @param builder  - ComponentBuilder
+     */
+    public static void remove(WindowBuilder instance, ComponentBuilder builder) {
+        instance.removeChild(builder);
+    }
+
+    /**
+     * Получение родительского компонента для окна
+     *
+     * @param instance - NumberFieldBuilder
+     * @return ComponentBuilder
+     */
+    public static ComponentBuilder getParent(WindowBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на окно
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получить код окна
@@ -47,11 +69,11 @@ public abstract class WindowBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установить активность окна
+     * Установить код на окно
      *
-     * @param enabled - boolean
+     * @param name - String, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получить информачию об активности окна
@@ -61,11 +83,11 @@ public abstract class WindowBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установить скрытость окна
+     * Установить активность окна
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получить информацию о скрытости окна
@@ -73,6 +95,13 @@ public abstract class WindowBuilderOverlay {
      * @return boolean
      */
     public abstract boolean isHidden();
+
+    /**
+     * Установить скрытость окна
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
 
     /**
      * Установить стиль на окно
@@ -120,26 +149,6 @@ public abstract class WindowBuilderOverlay {
     public abstract void setPagePosition(int x, int y);
 
     /**
-     * Установить потомка для окна
-     *
-     * @param instance - WindowBuilder
-     * @param builder  - ComponentBuilder
-     */
-    public static void setChild(WindowBuilder instance, ComponentBuilder builder) {
-        instance.addChild(builder);
-    }
-
-    /**
-     * Удаление окна
-     *
-     * @param instance - WindowBuilder
-     * @param builder  - ComponentBuilder
-     */
-    public static void remove(WindowBuilder instance, ComponentBuilder builder) {
-        instance.removeChild(builder);
-    }
-
-    /**
      * Получение массива потомков
      *
      * @return ComponentBuilder[]
@@ -150,16 +159,6 @@ public abstract class WindowBuilderOverlay {
      * Перерисовка окна вывода
      */
     public abstract void forceLayout();
-
-    /**
-     * Получение родительского компонента для окна
-     *
-     * @param instance - NumberFieldBuilder
-     * @return ComponentBuilder
-     */
-    public static ComponentBuilder getParent(WindowBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Получить количество потомков окна
@@ -175,7 +174,6 @@ public abstract class WindowBuilderOverlay {
 
     /**
      * Блокирует содержимое(компоненты) окна (визуально - покрывает серым оверлеем).
-     *
      */
     public abstract void mask();
 

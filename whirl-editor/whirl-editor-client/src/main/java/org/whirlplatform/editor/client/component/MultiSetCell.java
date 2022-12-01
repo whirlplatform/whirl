@@ -15,20 +15,15 @@ import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
-
 import java.util.Collection;
 
 public class MultiSetCell<T> extends TriggerFieldCell<String> {
-
-    public interface MultiSetCellAppearance extends TriggerFieldAppearance {
-    }
 
     private Menu menu;
     private XElement trigger;
     private T currentKey;
     private Collection<T> keys;
     private AnchorAlignment alignment = new AnchorAlignment(Anchor.TOP_LEFT);
-
     public MultiSetCell() {
         this(
                 GWT.<MultiSetCellDefaultAppearance>create(MultiSetCellDefaultAppearance.class));
@@ -126,5 +121,8 @@ public class MultiSetCell<T> extends TriggerFieldCell<String> {
     public void setValue(com.google.gwt.cell.client.Cell.Context context,
                          Element parent, String value) {
         super.setValue(context, parent, value);
+    }
+
+    public interface MultiSetCellAppearance extends TriggerFieldAppearance {
     }
 }

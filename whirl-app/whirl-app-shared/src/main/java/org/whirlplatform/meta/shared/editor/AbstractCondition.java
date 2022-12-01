@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public abstract class AbstractCondition<T> implements Condition, Cloneable, Serializable {
+    protected T value;
     @SuppressWarnings("unused")
     private Boolean _boolean;
     @SuppressWarnings("unused")
     private String _string;
-
-    protected T value;
 
     protected AbstractCondition() {
     }

@@ -14,49 +14,49 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  * Пункт меню сравниваемого дерева приложения - Изменения
  */
 public class ChangesComparableAppTreeMenuItem extends AbstractAppTreeMenuItem<ComparableAppTree> {
-	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_changes();
-	private final static ImageResource ICON = ComponentBundle.INSTANCE.compare();
+    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_changes();
+    private final static ImageResource ICON = ComponentBundle.INSTANCE.compare();
 
-	public ChangesComparableAppTreeMenuItem() {
-		super();
-	}
+    public ChangesComparableAppTreeMenuItem() {
+        super();
+    }
 
-	public ChangesComparableAppTreeMenuItem(final ComparableAppTree tree) {
-		super(tree);
-	}
+    public ChangesComparableAppTreeMenuItem(final ComparableAppTree tree) {
+        super(tree);
+    }
 
-	@Override
-	public void updateState() {
-		boolean enabled = false;
-		if (getAppTree() != null) {
-			AbstractElement element = getAppTree().getSelectedElement();
-			if (element != null) {
-				enabled = (getAppTree().getChangeState(element) != ElementChangeState.NONE);
-			}
-		}
-		setEnabled(enabled);
-	}
+    @Override
+    public void updateState() {
+        boolean enabled = false;
+        if (getAppTree() != null) {
+            AbstractElement element = getAppTree().getSelectedElement();
+            if (element != null) {
+                enabled = (getAppTree().getChangeState(element) != ElementChangeState.NONE);
+            }
+        }
+        setEnabled(enabled);
+    }
 
-	@Override
-	protected SelectionHandler<Item> createSelectionHandler() {
-		return new SelectionHandler<Item>() {
-			@Override
-			public void onSelection(SelectionEvent<Item> event) {
-				AbstractElement element = getAppTree().getSelectedElement();
-				if (element != null) {
-					getAppTree().doOpenElement(element);
-				}
-			}
-		};
-	}
+    @Override
+    protected SelectionHandler<Item> createSelectionHandler() {
+        return new SelectionHandler<Item>() {
+            @Override
+            public void onSelection(SelectionEvent<Item> event) {
+                AbstractElement element = getAppTree().getSelectedElement();
+                if (element != null) {
+                    getAppTree().doOpenElement(element);
+                }
+            }
+        };
+    }
 
-	@Override
-	protected String getItemTitle() {
-		return TITLE;
-	}
+    @Override
+    protected String getItemTitle() {
+        return TITLE;
+    }
 
-	@Override
-	protected ImageResource getItemIcon() {
-		return ICON;
-	}
+    @Override
+    protected ImageResource getItemIcon() {
+        return ICON;
+    }
 }

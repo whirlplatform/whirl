@@ -14,103 +14,103 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 
 public class TabPanelDropTarget extends DropTarget {
 
-	private TabPanel panel;
-	private boolean before;
-	private int insertIndex;
+    private TabPanel panel;
+    private boolean before;
+    private int insertIndex;
 
-	public TabPanelDropTarget(TabPanel panel) {
-		super(panel);
-		this.panel = panel;
-	}
+    public TabPanelDropTarget(TabPanel panel) {
+        super(panel);
+        this.panel = panel;
+    }
 
-	@Override
-	protected void showFeedback(DndDragMoveEvent event) {
-		event.getStatusProxy().setStatus(true);
+    @Override
+    protected void showFeedback(DndDragMoveEvent event) {
+        event.getStatusProxy().setStatus(true);
 
-		int x = event.getDragMoveEvent().getNativeEvent().getClientX();
-		int y = event.getDragMoveEvent().getNativeEvent().getClientY();
+        int x = event.getDragMoveEvent().getNativeEvent().getClientX();
+        int y = event.getDragMoveEvent().getNativeEvent().getClientY();
 
-		insertIndex = panel.getWidgetCount();
+        insertIndex = panel.getWidgetCount();
 
-		Element selected = null;
+        Element selected = null;
 
-		XElement el = panel.getElement().cast();
-		NodeList<Element> ulElements = el.getElementsByTagName("ul");
-		for (int i = 0; i < ulElements.getLength(); i++) {
-			Element ul = ulElements.getItem(i);
-			NodeList<Element> liElements = ul.getElementsByTagName("li");
+        XElement el = panel.getElement().cast();
+        NodeList<Element> ulElements = el.getElementsByTagName("ul");
+        for (int i = 0; i < ulElements.getLength(); i++) {
+            Element ul = ulElements.getItem(i);
+            NodeList<Element> liElements = ul.getElementsByTagName("li");
 
-			before = false;
-			selected = liElements.getItem(panel.getWidgetCount() - 1);
+            before = false;
+            selected = liElements.getItem(panel.getWidgetCount() - 1);
 
-			for (int j = 0; j < liElements.getLength(); j++) {
-				Element li = liElements.getItem(j);
-				if (li.<XElement> cast().getBounds().contains(x, y)) {
-					panel.setActiveWidget(panel.getWidget(j));
-					before = true;
-					selected = li;
-					insertIndex = j;
-				}
-			}
-		}
-		if (selected != null) {
-			showInsert(selected);
-		}
-	}
+            for (int j = 0; j < liElements.getLength(); j++) {
+                Element li = liElements.getItem(j);
+                if (li.<XElement>cast().getBounds().contains(x, y)) {
+                    panel.setActiveWidget(panel.getWidget(j));
+                    before = true;
+                    selected = li;
+                    insertIndex = j;
+                }
+            }
+        }
+        if (selected != null) {
+            showInsert(selected);
+        }
+    }
 
-	@Override
-	protected void onDragMove(DndDragMoveEvent event) {
-		ComponentType type = null;
-		if (event.getData() instanceof ComponentType) {
-			type = (ComponentType) event.getData();
-		} else if (event.getData() instanceof ComponentElement) {
-			type = ((ComponentElement) event.getData()).getType();
-		}
+    @Override
+    protected void onDragMove(DndDragMoveEvent event) {
+        ComponentType type = null;
+        if (event.getData() instanceof ComponentType) {
+            type = (ComponentType) event.getData();
+        } else if (event.getData() instanceof ComponentElement) {
+            type = ((ComponentElement) event.getData()).getType();
+        }
 
-		if (type != null && type.equals(ComponentType.TabItemType)) {
-			event.setCancelled(false);
-			event.getStatusProxy().setStatus(true);
-		} else {
-			event.setCancelled(true);
-			event.getStatusProxy().setStatus(false);
-		}
-	}
+        if (type != null && type.equals(ComponentType.TabItemType)) {
+            event.setCancelled(false);
+            event.getStatusProxy().setStatus(true);
+        } else {
+            event.setCancelled(true);
+            event.getStatusProxy().setStatus(false);
+        }
+    }
 
-	@Override
-	protected void onDragDrop(DndDropEvent event) {
-		hideInsert();
-		insertIndex = -1;
-	}
+    @Override
+    protected void onDragDrop(DndDropEvent event) {
+        hideInsert();
+        insertIndex = -1;
+    }
 
-	@Override
-	protected void onDragLeave(DndDragLeaveEvent event) {
-		hideInsert();
-	}
+    @Override
+    protected void onDragLeave(DndDragLeaveEvent event) {
+        hideInsert();
+    }
 
-	public int getIndex() {
-		return insertIndex;
-	}
+    public int getIndex() {
+        return insertIndex;
+    }
 
-	private void showInsert(Element el) {
-		HorizontalInsert insert = HorizontalInsert.get();
-		insert.show(el);
+    private void showInsert(Element el) {
+        HorizontalInsert insert = HorizontalInsert.get();
+        insert.show(el);
 
-		Rectangle rect = el.<XElement> cast().getBounds();
+        Rectangle rect = el.<XElement>cast().getBounds();
 
-		int x;
-		if (before) {
-			x = rect.getX() - 4;
-		} else {
-			x = rect.getX() + rect.getWidth();
-		}
+        int x;
+        if (before) {
+            x = rect.getX() - 4;
+        } else {
+            x = rect.getX() + rect.getWidth();
+        }
 
-		insert.getElement().makePositionable(true);
-		insert.getElement().setBounds(x, rect.getY(), 6, rect.getHeight());
-	}
+        insert.getElement().makePositionable(true);
+        insert.getElement().setBounds(x, rect.getY(), 6, rect.getHeight());
+    }
 
-	private void hideInsert() {
-		HorizontalInsert insert = HorizontalInsert.get();
-		insert.setVisible(false);
-	}
+    private void hideInsert() {
+        HorizontalInsert insert = HorizontalInsert.get();
+        insert.setVisible(false);
+    }
 
 }

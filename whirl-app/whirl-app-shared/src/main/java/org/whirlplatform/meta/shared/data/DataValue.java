@@ -6,10 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import org.whirlplatform.meta.shared.FileValue;
-
 import java.io.Serializable;
 import java.util.Date;
+import org.whirlplatform.meta.shared.FileValue;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS, defaultImpl = DataValueImpl.class)
@@ -17,10 +16,10 @@ import java.util.Date;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public interface DataValue extends Serializable, Cloneable {
 
+    DataType getType();
+
     void setType(DataType type);
 
-    DataType getType();
-    
     @Deprecated
     <X> void setValue(X value);
 
@@ -48,9 +47,9 @@ public interface DataValue extends Serializable, Cloneable {
 
     String asString();
 
-    void setCode(String code);
-
     String getCode();
+
+    void setCode(String code);
 
     DataValue clone();
 }

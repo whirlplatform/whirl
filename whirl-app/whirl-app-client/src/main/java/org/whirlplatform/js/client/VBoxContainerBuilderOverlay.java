@@ -9,8 +9,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 /**
  * Контейнер, позволяющий располагать элементы один под другим. В отличие от
- * VerticalContainerBuilder, вложенные компоненты занимают по высоте минимум
- * места.
+ * VerticalContainerBuilder, вложенные компоненты занимают по высоте минимум места.
  */
 public abstract class VBoxContainerBuilderOverlay {
 
@@ -19,40 +18,16 @@ public abstract class VBoxContainerBuilderOverlay {
         return instance;
     }
 
-    /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    public abstract void setHidden(boolean hidden);
-
-    public abstract void isHidden();
-
-    public abstract void setStyleName(String styleName);
-
-    public static void addChild(VBoxContainerBuilder instance, ComponentBuilder builder, BoxLayoutData data) {
+    public static void addChild(VBoxContainerBuilder instance, ComponentBuilder builder,
+                                BoxLayoutData data) {
         addChildByIndex(instance, instance.getChildrenCount(), builder, data);
     }
 
-    public static void addChildByIndex(VBoxContainerBuilder instance, int index, ComponentBuilder builder,
+    public static void addChildByIndex(VBoxContainerBuilder instance, int index,
+                                       ComponentBuilder builder,
                                        BoxLayoutData data) {
-        builder.setProperty(PropertyType.LayoutDataIndex.getCode(), new DataValueImpl(DataType.NUMBER, index));
+        builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
+                new DataValueImpl(DataType.NUMBER, index));
 
         if (data != null) {
             builder.setProperty(PropertyType.LayoutDataMinSize.getCode(),
@@ -81,13 +56,39 @@ public abstract class VBoxContainerBuilderOverlay {
         instance.removeChild(builder);
     }
 
-    public abstract ComponentBuilder[] getChildren();
-
-    public abstract void forceLayout();
-
     public static ComponentBuilder getParent(VBoxContainerBuilder instance) {
         return instance.getParentBuilder();
     }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    public abstract void setEnabled(boolean enabled);
+
+    public abstract void setHidden(boolean hidden);
+
+    public abstract void isHidden();
+
+    public abstract void setStyleName(String styleName);
+
+    public abstract ComponentBuilder[] getChildren();
+
+    public abstract void forceLayout();
 
     public abstract int getChildrenCount();
 

@@ -138,7 +138,8 @@ public class MainView extends Viewport implements IMainView {
 
     @Override
     public void addSecondRightComponent(IsWidget component) {
-        TabItemConfig config = new TabItemConfig(EditorMessage.Util.MESSAGE.design_panel_components());
+        TabItemConfig config =
+                new TabItemConfig(EditorMessage.Util.MESSAGE.design_panel_components());
         config.setIcon(EditorBundle.INSTANCE.templates());
         tabPanel.add(component, config);
         tabPanel.forceLayout();

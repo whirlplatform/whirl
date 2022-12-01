@@ -21,8 +21,11 @@
  */
 package org.whirlplatform.jsdoc;
 
-import freemarker.template.*;
-
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapperBuilder;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.Version;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -47,12 +50,11 @@ public class CodeGenerator {
     }
 
     /**
-     * Generates the code using the specified context and freemarker template. Wraps any kind of error inside a
-     * {@code GenerationException}.
+     * Generates the code using the specified context and freemarker template. Wraps any kind of
+     * error inside a {@code GenerationException}.
      *
      * @param template the relative template name
      * @param context  a supplier function to create the templates' context
-     *
      * @return the generated content
      */
     public StringBuffer generate(String template, Supplier<Map<String, Object>> context) {
@@ -62,14 +64,16 @@ public class CodeGenerator {
             final Template t = config.getTemplate(template);
             t.process(context.get(), bw);
         } catch (IOException | TemplateException e) {
-            throw new GenerationException("Error generating template " + template + ": " + e.getMessage(), e);
+            throw new GenerationException(
+                    "Error generating template " + template + ": " + e.getMessage(), e);
         } finally {
             try {
                 bw.close();
                 sw.close();
             } catch (IOException ioe) {
                 //noinspection ThrowFromFinallyBlock
-                throw new GenerationException("Error generating template " + template + ": " + ioe.getMessage(), ioe);
+                throw new GenerationException(
+                        "Error generating template " + template + ": " + ioe.getMessage(), ioe);
             }
         }
         return sw.getBuffer();

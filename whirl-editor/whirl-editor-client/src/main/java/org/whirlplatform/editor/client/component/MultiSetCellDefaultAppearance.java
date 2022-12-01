@@ -4,7 +4,16 @@ import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import org.whirlplatform.editor.client.component.MultiSetCell.MultiSetCellAppearance;
 
-public class MultiSetCellDefaultAppearance extends TriggerFieldDefaultAppearance implements MultiSetCellAppearance {
+public class MultiSetCellDefaultAppearance extends TriggerFieldDefaultAppearance
+        implements MultiSetCellAppearance {
+
+    public MultiSetCellDefaultAppearance() {
+        this(GWT.create(MultiSetCellResources.class));
+    }
+
+    public MultiSetCellDefaultAppearance(MultiSetCellResources resources) {
+        super(resources);
+    }
 
     public interface MultiSetCellResources extends TriggerFieldResources {
 
@@ -24,13 +33,5 @@ public class MultiSetCellDefaultAppearance extends TriggerFieldDefaultAppearance
     }
 
     public interface MultiSetCellTinyStyle extends MultiSetCellStyle {
-    }
-
-    public MultiSetCellDefaultAppearance() {
-        this(GWT.create(MultiSetCellResources.class));
-    }
-
-    public MultiSetCellDefaultAppearance(MultiSetCellResources resources) {
-        super(resources);
     }
 }

@@ -8,47 +8,47 @@ import org.whirlplatform.component.client.event.SelectEvent.SelectHandler;
 
 public class SelectEvent extends GwtEvent<SelectHandler> {
 
-	private static Type<SelectHandler> TYPE;
+    private static Type<SelectHandler> TYPE;
 
-	public static Type<SelectHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<SelectHandler>() {
-				@Override
-				public String toString() {
-					return "SelectHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public SelectEvent() {
+    }
 
-	public SelectEvent() {
-	}
+    public SelectEvent(ComponentBuilder source) {
+        setSource(source);
+    }
 
-	public SelectEvent(ComponentBuilder source) {
-		setSource(source);
-	}
+    public static Type<SelectHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<SelectHandler>() {
+                @Override
+                public String toString() {
+                    return "SelectHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<SelectHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<SelectHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(SelectHandler handler) {
-		handler.onSelect(this);
-	}
+    @Override
+    protected void dispatch(SelectHandler handler) {
+        handler.onSelect(this);
+    }
 
-	public interface SelectHandler extends EventHandler {
+    public interface SelectHandler extends EventHandler {
 
-		void onSelect(SelectEvent event);
+        void onSelect(SelectEvent event);
 
-	}
+    }
 
-	public interface HasSelectHandlers {
+    public interface HasSelectHandlers {
 
         HandlerRegistration addSelectHandler(SelectHandler handler);
 
-	}
+    }
 
 }

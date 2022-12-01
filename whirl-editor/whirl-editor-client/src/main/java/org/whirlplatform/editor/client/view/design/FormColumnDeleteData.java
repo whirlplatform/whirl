@@ -4,8 +4,8 @@ import org.whirlplatform.meta.shared.editor.FormElement;
 
 public class FormColumnDeleteData extends FormIndexData {
 
-	public FormColumnDeleteData(FormElement form, int index) {
-		super(form, index);
-	}
+    public FormColumnDeleteData(FormElement form, int index) {
+        super(form, index);
+    }
 
 }

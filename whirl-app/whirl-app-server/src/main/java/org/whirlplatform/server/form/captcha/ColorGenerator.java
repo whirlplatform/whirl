@@ -1,6 +1,6 @@
 package org.whirlplatform.server.form.captcha;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * This class is responsible for generating CAPTCHA random color...

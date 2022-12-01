@@ -20,24 +20,26 @@ public abstract class HtmlBuilderOverlay {
     }
 
     /**
+     * Полчение родительского компонента HtmlBuilder
+     *
+     * @param instance - HtmlBuilder
+     * @return ComponentBuilder, компонент
+     */
+    public static ComponentBuilder getParent(HtmlBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установка кода на HtmlBuilder
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получение кода HtmlBuilder
@@ -47,11 +49,11 @@ public abstract class HtmlBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установка активности HtmlBuilder
+     * Установка кода на HtmlBuilder
      *
-     * @param enabled - boolean
+     * @param name - String, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получение информации об активности HtmlBuilder
@@ -61,11 +63,11 @@ public abstract class HtmlBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установка скрытности HtmlBuilder
+     * Установка активности HtmlBuilder
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получение информации о скрытности HtmlBuilder
@@ -75,18 +77,18 @@ public abstract class HtmlBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установка скрытности HtmlBuilder
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Установка стиля HtmlBuilder
      *
      * @param styleName - String, название стиля
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Установка необходимого контента в HtmlBuilder
-     *
-     * @param html - String, контент
-     */
-    public abstract void setHTML(String html);
 
     /**
      * Получение контента из HtmlBuilder
@@ -96,14 +98,11 @@ public abstract class HtmlBuilderOverlay {
     public abstract String getHTML();
 
     /**
-     * Полчение родительского компонента HtmlBuilder
+     * Установка необходимого контента в HtmlBuilder
      *
-     * @param instance - HtmlBuilder
-     * @return ComponentBuilder, компонент
+     * @param html - String, контент
      */
-    public static ComponentBuilder getParent(HtmlBuilder instance) {
-        return instance.getParentBuilder();
-    }
+    public abstract void setHTML(String html);
 
     /**
      * Установить фокус на HtmlBuilder

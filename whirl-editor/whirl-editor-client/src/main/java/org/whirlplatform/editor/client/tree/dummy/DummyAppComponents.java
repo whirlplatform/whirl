@@ -10,40 +10,40 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  */
 @SuppressWarnings("serial")
 public class DummyAppComponents extends AbstractDummyElement implements OrderedDummy {
-	private static final String ID_PREFIX = "dummy-application-components-";
-	private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_application_components();
-	private static final int INDEX = 50;
+    private static final String ID_PREFIX = "dummy-application-components-";
+    private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_application_components();
+    private static final int INDEX = 50;
 
-	public DummyAppComponents() {
-		super();
-	}
+    public DummyAppComponents() {
+        super();
+    }
 
-	public DummyAppComponents(final String id) {
-		super(id);
-	}
+    public DummyAppComponents(final String id) {
+        super(id);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public int getIndex() {
-		return INDEX;
-	}
+    @Override
+    public int getIndex() {
+        return INDEX;
+    }
 
-	@Override
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+    @Override
+    public String getIdPrefix() {
+        return ID_PREFIX;
+    }
 
-	@Override
-	public String getTitle() {
-		return TITLE;
-	}
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 }

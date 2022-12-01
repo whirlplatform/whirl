@@ -13,17 +13,16 @@ import com.sencha.gxt.widget.core.client.container.HasHeight;
 import com.sencha.gxt.widget.core.client.container.HasWidth;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
 import org.whirlplatform.component.client.event.EventManager;
 import org.whirlplatform.component.client.form.GridLayoutData;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 public class ContainerHelper {
 
@@ -232,10 +231,12 @@ public class ContainerHelper {
     }
 
     public static ComponentBuilder buildComponent(ComponentModel model,
-                                                  Containable container, List<DataValue> parameters) {
+                                                  Containable container,
+                                                  List<DataValue> parameters) {
         String id = model.getId();
 
-        ComponentBuilder builder = ComponentTypeUtil.findBuilder(model.getType(), model.getValues());
+        ComponentBuilder builder =
+                ComponentTypeUtil.findBuilder(model.getType(), model.getValues());
 
         if (builder != null) {
             builder.setId(id);

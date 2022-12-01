@@ -4,35 +4,34 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import org.whirlplatform.meta.shared.data.EventParameter;
-
 import java.util.Map;
+import org.whirlplatform.meta.shared.data.EventParameter;
 
 @JsonTypeInfo(use = Id.MINIMAL_CLASS, defaultImpl = JavaEventResult.class)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public interface EventResult {
 
-    void setNextEvent(EventMetadata event);
-
     EventMetadata getNextEvent();
+
+    void setNextEvent(EventMetadata event);
 
     boolean hasNextEvent();
 
-    void setNextEventCode(String nextEventCode);
-
     String getNextEventCode();
 
-    void setTitle(String title);
+    void setNextEventCode(String nextEventCode);
 
     String getTitle();
 
-    void setMessage(String message);
+    void setTitle(String title);
 
     String getMessage();
 
-    void setMessageType(String type);
+    void setMessage(String message);
 
     String getMessageType();
+
+    void setMessageType(String type);
 
     void addParameter(EventParameter parameter);
 

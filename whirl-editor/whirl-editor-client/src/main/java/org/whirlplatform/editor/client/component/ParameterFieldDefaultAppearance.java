@@ -8,6 +8,14 @@ import org.whirlplatform.editor.client.component.ParameterEditorComponent.Parame
 public class ParameterFieldDefaultAppearance extends
         TriggerFieldDefaultAppearance implements ParameterFieldAppearance {
 
+    public ParameterFieldDefaultAppearance() {
+        this(GWT.create(ParameterFieldResources.class));
+    }
+
+    public ParameterFieldDefaultAppearance(ParameterFieldResources resources) {
+        super(resources);
+    }
+
     public interface ParameterFieldResources extends TriggerFieldResources {
 
         @Source({"ValueBaseFieldTiny.gss", "TextFieldTiny.gss", "TriggerField.gss"})
@@ -27,13 +35,5 @@ public class ParameterFieldDefaultAppearance extends
     }
 
     public interface ParameterFieldStyle extends TriggerFieldStyle {
-    }
-
-    public ParameterFieldDefaultAppearance() {
-        this(GWT.create(ParameterFieldResources.class));
-    }
-
-    public ParameterFieldDefaultAppearance(ParameterFieldResources resources) {
-        super(resources);
     }
 }

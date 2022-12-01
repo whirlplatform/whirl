@@ -30,6 +30,13 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -53,40 +60,23 @@ import org.whirlplatform.meta.shared.data.RowValue;
 import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.io.IOException;
-import java.util.*;
-
 /**
  * Список с мультивыбором
  *
  * @param <T>
  */
 @JsType(name = "MultiComboBox", namespace = "Whirl")
-public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T> implements
+public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T>
+        implements
         ListParameter<RowListValue> {
 
     protected CountElement ce;
-    private Map<ListModelData, Boolean> modelCheck;
     protected ListView<ListModelData, ?> listView;
-
-    class CheckedModels {
-        List<ListModelData> models = new ArrayList<>();
-        boolean idReady = false;
-        boolean labelReady = false;
-
-        boolean isReady() {
-            return idReady && labelReady;
-        }
-    }
-
     protected CheckedModels checkedModels;
-
     protected boolean singleSelection;
-
     protected boolean readOnly;
-
+    private Map<ListModelData, Boolean> modelCheck;
     private ValueProvider<ListModelData, Boolean> valueProvider;
-
     private CheckBoxCell cell;
 
     @JsConstructor
@@ -205,11 +195,12 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         };
         listView = new ListView<ListModelData, Boolean>(null, valueProvider, cell);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SIMPLE);
-        comboBox = (T) new ComboBox<ListModelData>(new ComboBoxCell<ListModelData>(null, labelProvider, listView) {
-            @Override
-            protected void onSelect(ListModelData item) {
-            }
-        });
+        comboBox = (T) new ComboBox<ListModelData>(
+                new ComboBoxCell<ListModelData>(null, labelProvider, listView) {
+                    @Override
+                    protected void onSelect(ListModelData item) {
+                    }
+                });
         comboBox.setQueryDelay(delayTimeMs);
         initCountElement();
         return comboBox;
@@ -316,13 +307,13 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public ListModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public void setValue(ListModelData value) {
         throw new UnsupportedOperationException();
     }
 
@@ -495,19 +486,6 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         this.readOnly = readOnly;
     }
 
-    private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_TRIGGER = "Trigger";
-        private static String TYPE_CLEAR = "Clear";
-        private static String TYPE_ITEM = "Item";
-        private static String TYPE_CHECK = "Check";
-        private static String PARAMETER_ID = "id";
-        private static String PARAMETER_INDEX = "index";
-        private static String PARAMETER_LABEL = "label";
-    }
-
-    // TODO Selenium
-
     @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -517,7 +495,8 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             if (comboBox.getCell().getInputElement(comboBox.getElement()).isOrHasChild(element)) {
                 part = new Locator(LocatorParams.TYPE_INPUT);
             }
-            if (comboBox.getCell().getAppearance().triggerIsOrHasChild(comboBox.getElement(), element)) {
+            if (comboBox.getCell().getAppearance()
+                    .triggerIsOrHasChild(comboBox.getElement(), element)) {
                 part = new Locator(LocatorParams.TYPE_TRIGGER);
             }
             if (super.clearDecorator != null) {
@@ -565,8 +544,10 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             if (LocatorParams.TYPE_TRIGGER.equals(part.getType())) {
                 TriggerFieldAppearance appearance = comboBox.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
-                    TriggerFieldDefaultAppearance defApp = (TriggerFieldDefaultAppearance) appearance;
-                    element = comboBox.getElement().selectNode("." + defApp.getStyle().trigger()); // TODO надо что-то сделать
+                    TriggerFieldDefaultAppearance defApp =
+                            (TriggerFieldDefaultAppearance) appearance;
+                    element = comboBox.getElement().selectNode(
+                            "." + defApp.getStyle().trigger()); // TODO надо что-то сделать
                 }
             }
             if (LocatorParams.TYPE_CLEAR.equals(part.getType())) {
@@ -602,6 +583,8 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         }
         return element;
     }
+
+    // TODO Selenium
 
     /**
      * Проверяет, находится ли компонент в скрытом состоянии.
@@ -758,6 +741,27 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
+    }
+
+    private static class LocatorParams {
+        private static String TYPE_INPUT = "Input";
+        private static String TYPE_TRIGGER = "Trigger";
+        private static String TYPE_CLEAR = "Clear";
+        private static String TYPE_ITEM = "Item";
+        private static String TYPE_CHECK = "Check";
+        private static String PARAMETER_ID = "id";
+        private static String PARAMETER_INDEX = "index";
+        private static String PARAMETER_LABEL = "label";
+    }
+
+    class CheckedModels {
+        List<ListModelData> models = new ArrayList<>();
+        boolean idReady = false;
+        boolean labelReady = false;
+
+        boolean isReady() {
+            return idReady && labelReady;
+        }
     }
 
 }

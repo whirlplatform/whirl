@@ -18,7 +18,8 @@ public abstract class HorizontalLayoutDataOverlay {
     }
 
     public static HorizontalLayoutData constructor(double width, double height,
-                                                   int marginTop, int marginRight, int marginBottom, int marginLeft) {
+                                                   int marginTop, int marginRight, int marginBottom,
+                                                   int marginLeft) {
         return new HorizontalLayoutData(width, height, new Margins(marginTop,
                 marginRight, marginBottom, marginLeft));
     }

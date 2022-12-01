@@ -1,7 +1,36 @@
 package org.whirlplatform.component.client;
 
 import com.sencha.gxt.widget.core.client.box.MessageBox;
-import org.whirlplatform.component.client.base.*;
+import java.util.Collections;
+import java.util.Map;
+import org.whirlplatform.component.client.base.BorderContainerBuilder;
+import org.whirlplatform.component.client.base.ButtonBuilder;
+import org.whirlplatform.component.client.base.CaptchaBuilder;
+import org.whirlplatform.component.client.base.CenterContainerBuilder;
+import org.whirlplatform.component.client.base.ContentPanelBuilder;
+import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
+import org.whirlplatform.component.client.base.FieldSetBuilder;
+import org.whirlplatform.component.client.base.FrameBuilder;
+import org.whirlplatform.component.client.base.FramedLoginPanelBuilder;
+import org.whirlplatform.component.client.base.HBoxContainerBuilder;
+import org.whirlplatform.component.client.base.HorizontalContainerBuilder;
+import org.whirlplatform.component.client.base.HtmlBuilder;
+import org.whirlplatform.component.client.base.HtmlEditorBuilder;
+import org.whirlplatform.component.client.base.ImageBuilder;
+import org.whirlplatform.component.client.base.LabelBuilder;
+import org.whirlplatform.component.client.base.LoginPanelBuilder;
+import org.whirlplatform.component.client.base.NumberFieldBuilder;
+import org.whirlplatform.component.client.base.PasswordFieldBuilder;
+import org.whirlplatform.component.client.base.SimpleContainerBuilder;
+import org.whirlplatform.component.client.base.SimpleHtmlEditorBuilder;
+import org.whirlplatform.component.client.base.TabItemBuilder;
+import org.whirlplatform.component.client.base.TabPanelBuilder;
+import org.whirlplatform.component.client.base.TextAreaBuilder;
+import org.whirlplatform.component.client.base.TextFieldBuilder;
+import org.whirlplatform.component.client.base.TimerBuilder;
+import org.whirlplatform.component.client.base.UploadFieldBuilder;
+import org.whirlplatform.component.client.base.VBoxContainerBuilder;
+import org.whirlplatform.component.client.base.VerticalContainerBuilder;
 import org.whirlplatform.component.client.check.CheckBoxBuilder;
 import org.whirlplatform.component.client.check.CheckGroupBuilder;
 import org.whirlplatform.component.client.check.RadioBuilder;
@@ -24,23 +53,22 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.util.Collections;
-import java.util.Map;
-
 public class ComponentTypeUtil {
 
     public static ComponentBuilder findBuilder(final ComponentType type) {
         return findBuilder(type, Collections.emptyMap());
     }
 
-    public static ComponentBuilder findBuilder(final String type, Map<String, DataValue> builderProperties) {
+    public static ComponentBuilder findBuilder(final String type,
+                                               Map<String, DataValue> builderProperties) {
         if (type == null) {
             return null;
         }
         return findBuilder(ComponentType.parse(type), builderProperties);
     }
 
-    public static ComponentBuilder findBuilder(final ComponentType type, Map<String, DataValue> builderProperties) {
+    public static ComponentBuilder findBuilder(final ComponentType type,
+                                               Map<String, DataValue> builderProperties) {
         ComponentBuilder builder = null;
         if (type != null) {
             if (ComponentType.BorderContainerType == type) {

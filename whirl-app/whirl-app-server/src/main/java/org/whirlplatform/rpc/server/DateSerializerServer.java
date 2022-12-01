@@ -3,10 +3,9 @@ package org.whirlplatform.rpc.server;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.whirlplatform.meta.shared.AppConstant;
-
 import java.io.IOException;
 import java.util.Date;
+import org.whirlplatform.meta.shared.AppConstant;
 
 @SuppressWarnings("serial")
 public class DateSerializerServer extends StdSerializer<Date> {
@@ -20,7 +19,8 @@ public class DateSerializerServer extends StdSerializer<Date> {
     }
 
     @Override
-    public void serialize(Date value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Date value, JsonGenerator gen, SerializerProvider provider)
+            throws IOException {
         gen.writeString(AppConstant.getDateFormatSerialize().format(value));
     }
 }

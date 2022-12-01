@@ -1,11 +1,10 @@
 package org.whirlplatform.component.client.event;
 
-import org.whirlplatform.component.client.ComponentBuilder;
-import org.whirlplatform.meta.shared.data.DataValue;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.meta.shared.data.DataValue;
 
 public class EventCallbackResult {
     private ComponentBuilder source;

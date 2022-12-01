@@ -14,6 +14,58 @@ import com.sencha.gxt.core.client.dom.XElement;
 
 public class ThreeStateCheckCell extends FieldCell<CheckState> {
 
+    private ThreeStateCheckAppearance appearance;
+
+    public ThreeStateCheckCell() {
+        this(
+                new DefaultTreeStateCheckAppearance(
+                        GWT.create(ThreeStateCheckResources.class)));
+    }
+
+    public ThreeStateCheckCell(ThreeStateCheckAppearance appearance) {
+        super(appearance);
+        this.appearance = appearance;
+    }
+
+    @Override
+    public void onEmpty(XElement parent, boolean empty) {
+
+    }
+
+    @Override
+    public void render(com.google.gwt.cell.client.Cell.Context context,
+                       CheckState value, SafeHtmlBuilder sb) {
+        this.appearance.render(sb, value);
+    }
+
+    @Override
+    public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
+                               Element parent, CheckState value, NativeEvent event,
+                               ValueUpdater<CheckState> valueUpdater) {
+        super.onBrowserEvent(context, parent, value, event, valueUpdater);
+
+        if ("click".equals(event.getType())
+                ||
+                ("keypress".equals(event.getType()) && event.getKeyCode() == KeyCodes.KEY_ENTER)) {
+            CheckState v = nextState(value);
+            valueUpdater.update(v);
+            setValue(context, parent, v);
+        }
+    }
+
+    private CheckState nextState(CheckState value) {
+        if (value == CheckState.PARTIAL) {
+            return CheckState.CHECKED;
+        } else if (value == CheckState.CHECKED) {
+            return CheckState.UNCHECKED;
+        } else if (value == null || value == CheckState.UNCHECKED) {
+            return CheckState.PARTIAL;
+        } else {
+            return CheckState.UNCHECKED;
+        }
+
+    }
+
     public interface ThreeStateCheckAppearance extends FieldAppearance {
 
         void render(SafeHtmlBuilder sb, CheckState value);
@@ -79,57 +131,6 @@ public class ThreeStateCheckCell extends FieldCell<CheckState> {
                     + image.getSafeUri().asString() + "\" width=\""
                     + image.getWidth() + "px;\" + height=\""
                     + image.getHeight() + "px;\"></img>"));
-        }
-
-    }
-
-    private ThreeStateCheckAppearance appearance;
-
-    public ThreeStateCheckCell() {
-        this(
-                new DefaultTreeStateCheckAppearance(
-                        GWT.create(ThreeStateCheckResources.class)));
-    }
-
-    public ThreeStateCheckCell(ThreeStateCheckAppearance appearance) {
-        super(appearance);
-        this.appearance = appearance;
-    }
-
-    @Override
-    public void onEmpty(XElement parent, boolean empty) {
-
-    }
-
-    @Override
-    public void render(com.google.gwt.cell.client.Cell.Context context,
-                       CheckState value, SafeHtmlBuilder sb) {
-        this.appearance.render(sb, value);
-    }
-
-    @Override
-    public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
-                               Element parent, CheckState value, NativeEvent event,
-                               ValueUpdater<CheckState> valueUpdater) {
-        super.onBrowserEvent(context, parent, value, event, valueUpdater);
-
-        if ("click".equals(event.getType())
-                || ("keypress".equals(event.getType()) && event.getKeyCode() == KeyCodes.KEY_ENTER)) {
-            CheckState v = nextState(value);
-            valueUpdater.update(v);
-            setValue(context, parent, v);
-        }
-    }
-
-    private CheckState nextState(CheckState value) {
-        if (value == CheckState.PARTIAL) {
-            return CheckState.CHECKED;
-        } else if (value == CheckState.CHECKED) {
-            return CheckState.UNCHECKED;
-        } else if (value == null || value == CheckState.UNCHECKED) {
-            return CheckState.PARTIAL;
-        } else {
-            return CheckState.UNCHECKED;
         }
 
     }

@@ -3,7 +3,12 @@ package org.whirlplatform.component.client.combo;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.logical.shared.*;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.cell.core.client.form.TriggerFieldCell.TriggerFieldAppearance;
@@ -20,11 +25,18 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent;
 import com.sencha.gxt.widget.core.client.event.TriggerClickEvent.TriggerClickHandler;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.AbstractFieldBuilder;
+import org.whirlplatform.component.client.Editable;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.ParameterHelper;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.ChangeEvent;
@@ -40,21 +52,23 @@ import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Список
  */
 @JsType(name = "ComboBox", namespace = "Whirl")
-public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder implements Editable,
-        NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
+public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder
+        implements Editable,
+        NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers,
+        ChangeEvent.HasChangeHandlers, HasState {
 
     protected static final String SEARCH_QUERY = "SEARCH_QUERY";
     protected int minChars = 2;
@@ -156,7 +170,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.DisplayValue.getCode())) {
-            if (value != null && !Util.isEmptyString(value.getString()) && comboBox.getValue() != null) {
+            if (value != null && !Util.isEmptyString(value.getString()) &&
+                    comboBox.getValue() != null) {
                 ListModelData model = comboBox.getValue();
                 if (model == null) {
                     model = new ListModelDataImpl();
@@ -247,7 +262,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
 
     private void createStore() {
         metadata = new ClassMetadata(getClassList());
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
+                new ListClassProxy(metadata));
     }
 
     protected void bindStore() {
@@ -320,22 +336,24 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
         });
 
-        store.getLoader().addLoadHandler(new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+        store.getLoader()
+                .addLoadHandler(new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
 
-            @Override
-            public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                    @Override
+                    public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
 
-                List<ListModelData> result = event.getLoadResult().getData();
-                if (!comboBox.isExpanded() && result != null && result.size() == 1) {
-                    comboBox.setValue(result.get(0));
-                    comboBox.collapse();
-                }
-                // Чтобы в комбобоксе не выделялся текст при загрузке
-                // данных
-                comboBox.select(comboBox.getText().length(), 0);
-                ComboBoxBuilder.this.fireEvent(new org.whirlplatform.component.client.event.LoadEvent());
-            }
-        });
+                        List<ListModelData> result = event.getLoadResult().getData();
+                        if (!comboBox.isExpanded() && result != null && result.size() == 1) {
+                            comboBox.setValue(result.get(0));
+                            comboBox.collapse();
+                        }
+                        // Чтобы в комбобоксе не выделялся текст при загрузке
+                        // данных
+                        comboBox.select(comboBox.getText().length(), 0);
+                        ComboBoxBuilder.this.fireEvent(
+                                new org.whirlplatform.component.client.event.LoadEvent());
+                    }
+                });
 
         // Может пренести в ClassStore?
         store.getLoader().addLoadExceptionHandler(new LoadExceptionHandler<ClassLoadConfig>() {
@@ -544,7 +562,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
 
     protected StateStore<DataValue> getSelectionStore() {
         if (selectionStateStore == null) {
-            selectionStateStore = new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
+            selectionStateStore =
+                    new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
@@ -584,7 +603,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             if (comboBox.getCell().getInputElement(comboBox.getElement()).isOrHasChild(element)) {
                 part = new Locator(LocatorParams.TYPE_INPUT);
             }
-            if (comboBox.getCell().getAppearance().triggerIsOrHasChild(comboBox.getElement(), element)) {
+            if (comboBox.getCell().getAppearance()
+                    .triggerIsOrHasChild(comboBox.getElement(), element)) {
                 part = new Locator(LocatorParams.TYPE_TRIGGER);
             }
             if (super.clearDecorator != null) {
@@ -630,8 +650,10 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             if (LocatorParams.TYPE_TRIGGER.equals(part.getType())) {
                 TriggerFieldAppearance appearance = comboBox.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
-                    TriggerFieldDefaultAppearance defApp = (TriggerFieldDefaultAppearance) appearance;
-                    element = comboBox.getElement().selectNode("." + defApp.getStyle().trigger()); // TODO Посмотреть
+                    TriggerFieldDefaultAppearance defApp =
+                            (TriggerFieldDefaultAppearance) appearance;
+                    element = comboBox.getElement()
+                            .selectNode("." + defApp.getStyle().trigger()); // TODO Посмотреть
                     // что можно
                     // сделать?
                 }

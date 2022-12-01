@@ -2,8 +2,8 @@ package org.whirlplatform.component.client;
 
 public interface HasCode {
 
-	String getCode();
+    String getCode();
 
-	void setCode(String code);
+    void setCode(String code);
 
 }

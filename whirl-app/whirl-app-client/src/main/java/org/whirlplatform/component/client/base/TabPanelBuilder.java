@@ -10,6 +10,12 @@ import com.sencha.gxt.widget.core.client.TabPanel.TabPanelMessages;
 import com.sencha.gxt.widget.core.client.container.ResizeContainer;
 import com.sencha.gxt.widget.core.client.event.CloseEvent;
 import com.sencha.gxt.widget.core.client.event.CloseEvent.CloseHandler;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.CloseProvider;
@@ -22,9 +28,6 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
-
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * Панель вкладок
@@ -117,8 +120,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает отображение границы панели
-     * (по умолчанию true, pre-render).
+     * Устанавливает отображение границы панели (по умолчанию true, pre-render).
      *
      * @param show - boolean, true для отображения границы
      */
@@ -151,7 +153,8 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
             if (title == null || title.isEmpty()) {
                 title = "...";
             }
-            itemBuilder.setProperty(PropertyType.Title.getCode(), new DataValueImpl(DataType.STRING, title));
+            itemBuilder.setProperty(PropertyType.Title.getCode(),
+                    new DataValueImpl(DataType.STRING, title));
             itemBuilder.setProperty(PropertyType.LayoutDataIndex.getCode(),
                     new DataValueImpl(DataType.NUMBER, panel.getWidgetCount()));
             itemBuilder.addChild(child);
@@ -303,8 +306,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

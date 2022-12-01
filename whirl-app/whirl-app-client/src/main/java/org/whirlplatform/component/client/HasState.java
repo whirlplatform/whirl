@@ -4,14 +4,14 @@ import org.whirlplatform.component.client.state.StateScope;
 
 public interface HasState {
 
-	void setSaveState(boolean save);
+    boolean isSaveState();
 
-	boolean isSaveState();
+    void setSaveState(boolean save);
 
-	void setStateScope(StateScope scope);
+    StateScope getStateScope();
 
-	StateScope getStateScope();
+    void setStateScope(StateScope scope);
 
-	void saveState();
+    void saveState();
 
 }

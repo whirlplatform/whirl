@@ -1,5 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.util.List;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.RowModelData;
@@ -11,9 +12,8 @@ import org.whirlplatform.server.driver.multibase.fetch.base.PlainListFetcherHelp
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-import java.util.List;
-
-public class OraclePlainTreeFetcher extends OraclePlainTableFetcher implements TreeFetcher<PlainTableElement> {
+public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
+        implements TreeFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainTreeFetcher.class);
 
     public OraclePlainTreeFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
@@ -24,7 +24,8 @@ public class OraclePlainTreeFetcher extends OraclePlainTableFetcher implements T
     public List<RowModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
                                           TreeClassLoadConfig loadConfig) {
 
-        PlainListFetcherHelper temp = new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+        PlainListFetcherHelper temp =
+                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp).getData();
     }
 

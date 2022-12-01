@@ -1,11 +1,22 @@
 package org.whirlplatform.meta.shared.editor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.editor.db.*;
-
-import java.util.*;
-import java.util.Map.Entry;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
 @SuppressWarnings("serial")
 public class ApplicationElement extends AbstractElement {
@@ -41,9 +52,12 @@ public class ApplicationElement extends AbstractElement {
 
     private Set<GroupElement> groups = new HashSet<GroupElement>();
 
-    private Map<AbstractTableElement, RightCollectionElement> tableRights = new HashMap<AbstractTableElement, RightCollectionElement>();
-    private Map<TableColumnElement, RightCollectionElement> tableColumnRights = new HashMap<TableColumnElement, RightCollectionElement>();
-    private Map<EventElement, RightCollectionElement> eventRights = new HashMap<EventElement, RightCollectionElement>();
+    private Map<AbstractTableElement, RightCollectionElement> tableRights =
+            new HashMap<AbstractTableElement, RightCollectionElement>();
+    private Map<TableColumnElement, RightCollectionElement> tableColumnRights =
+            new HashMap<TableColumnElement, RightCollectionElement>();
+    private Map<EventElement, RightCollectionElement> eventRights =
+            new HashMap<EventElement, RightCollectionElement>();
 
     private boolean available = true;
 
@@ -153,12 +167,12 @@ public class ApplicationElement extends AbstractElement {
         this.guest = guest;
     }
 
-    public void setHtmlHeader(String htmlHeader) {
-        this.htmlHeader = htmlHeader;
-    }
-
     public String getHtmlHeader() {
         return htmlHeader;
+    }
+
+    public void setHtmlHeader(String htmlHeader) {
+        this.htmlHeader = htmlHeader;
     }
 
     public void addDataSource(DataSourceElement dataSource) {
@@ -345,20 +359,20 @@ public class ApplicationElement extends AbstractElement {
         return Collections.unmodifiableSet(imageFiles);
     }
 
-    public void setStaticFile(FileElement file) {
-        staticFile = file;
-    }
-
     public FileElement getStaticFile() {
         return staticFile;
     }
 
-    public void setDefaultLocale(LocaleElement locale) {
-        this.defaultLocale = locale;
+    public void setStaticFile(FileElement file) {
+        staticFile = file;
     }
 
     public LocaleElement getDefaultLocale() {
         return defaultLocale;
+    }
+
+    public void setDefaultLocale(LocaleElement locale) {
+        this.defaultLocale = locale;
     }
 
     public boolean hasLocale(LocaleElement locale) {
@@ -440,7 +454,8 @@ public class ApplicationElement extends AbstractElement {
         }
     }
 
-    public void setTableRightCollection(AbstractTableElement table, RightCollectionElement collection) {
+    public void setTableRightCollection(AbstractTableElement table,
+                                        RightCollectionElement collection) {
         removeTableRights(table);
         for (RightElement r : collection.getApplicationRights()) {
             addApplicationTableRight(table, r);
@@ -456,7 +471,8 @@ public class ApplicationElement extends AbstractElement {
         getTableRightCollection(table).addApplicationRight(right);
     }
 
-    public void addGroupTableRight(AbstractTableElement table, GroupElement group, RightElement right) {
+    public void addGroupTableRight(AbstractTableElement table, GroupElement group,
+                                   RightElement right) {
         getTableRightCollection(table).addGroupRight(group, right);
     }
 
@@ -464,7 +480,8 @@ public class ApplicationElement extends AbstractElement {
         getTableRightCollection(table).removeApplicationRight(right);
     }
 
-    public void removeGroupTableRight(AbstractTableElement table, GroupElement group, RightElement right) {
+    public void removeGroupTableRight(AbstractTableElement table, GroupElement group,
+                                      RightElement right) {
         getTableRightCollection(table).removeGroupRight(group, right);
     }
 
@@ -506,7 +523,8 @@ public class ApplicationElement extends AbstractElement {
         }
     }
 
-    public void setTableColumnRightCollection(TableColumnElement column, RightCollectionElement collection) {
+    public void setTableColumnRightCollection(TableColumnElement column,
+                                              RightCollectionElement collection) {
         removeTableColumnRights(column);
         for (RightElement r : collection.getApplicationRights()) {
             addApplicationTableColumnRight(column, r);
@@ -522,7 +540,8 @@ public class ApplicationElement extends AbstractElement {
         getTableColumnRightCollection(column).addApplicationRight(right);
     }
 
-    public void addGroupTableColumnRight(TableColumnElement column, GroupElement group, RightElement right) {
+    public void addGroupTableColumnRight(TableColumnElement column, GroupElement group,
+                                         RightElement right) {
         getTableColumnRightCollection(column).addGroupRight(group, right);
     }
 
@@ -530,7 +549,8 @@ public class ApplicationElement extends AbstractElement {
         getTableColumnRightCollection(column).removeApplicationRight(right);
     }
 
-    public void removeGroupTableColumnRight(TableColumnElement column, GroupElement group, RightElement right) {
+    public void removeGroupTableColumnRight(TableColumnElement column, GroupElement group,
+                                            RightElement right) {
         getTableColumnRightCollection(column).removeGroupRight(group, right);
     }
 
@@ -550,7 +570,8 @@ public class ApplicationElement extends AbstractElement {
 
     public void removeTableColumnRights(AbstractTableElement table) {
         synchronized (tableColumnRights) {
-            Iterator<Entry<TableColumnElement, RightCollectionElement>> iter = tableColumnRights.entrySet().iterator();
+            Iterator<Entry<TableColumnElement, RightCollectionElement>> iter =
+                    tableColumnRights.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<TableColumnElement, RightCollectionElement> e = iter.next();
                 if (table == e.getKey().getTable()) {
@@ -642,12 +663,12 @@ public class ApplicationElement extends AbstractElement {
         references.remove(element);
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
     public boolean isAvailable() {
         return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public AbstractTableElement findTableElementById(final String tableId) {
@@ -664,7 +685,8 @@ public class ApplicationElement extends AbstractElement {
         return result;
     }
 
-    public EventElement findNextEventElement(final String parentEventId, final String nextEventCode) {
+    public EventElement findNextEventElement(final String parentEventId,
+                                             final String nextEventCode) {
         EventElement result = null;
         for (ComponentElement component : this.getAvailableComponents()) {
             result = getEventFromList(component.getEvents(), nextEventCode, parentEventId, true);
@@ -688,16 +710,20 @@ public class ApplicationElement extends AbstractElement {
         return result;
     }
 
-    private EventElement getEventFromList(Collection<EventElement> events, String codeOrId, String parentId,
+    private EventElement getEventFromList(Collection<EventElement> events, String codeOrId,
+                                          String parentId,
                                           boolean code) {
         if (events != null) {
             for (EventElement event : events) {
-                boolean equalsCodeOrId = (code && codeOrId.equals(event.getCode()) || codeOrId.equals(event.getId()));
-                boolean equalsParentId = (parentId == null || parentId.equals(event.getParentEventId()));
+                boolean equalsCodeOrId = (code && codeOrId.equals(event.getCode()) ||
+                        codeOrId.equals(event.getId()));
+                boolean equalsParentId =
+                        (parentId == null || parentId.equals(event.getParentEventId()));
                 if (equalsCodeOrId && equalsParentId) {
                     return event;
                 }
-                EventElement subEvent = getEventFromList(event.getSubEvents(), codeOrId, parentId, code);
+                EventElement subEvent =
+                        getEventFromList(event.getSubEvents(), codeOrId, parentId, code);
                 if (subEvent != null) {
                     return subEvent;
                 }

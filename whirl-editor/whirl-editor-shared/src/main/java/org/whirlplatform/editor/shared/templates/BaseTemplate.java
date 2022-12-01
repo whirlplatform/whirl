@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.shared.templates;
 
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.EventElement;
-
-import java.io.Serializable;
 
 
 @SuppressWarnings("serial")

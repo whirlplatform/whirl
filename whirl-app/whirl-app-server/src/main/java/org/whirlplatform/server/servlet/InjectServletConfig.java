@@ -3,6 +3,18 @@ package org.whirlplatform.server.servlet;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
+import java.lang.management.ManagementFactory;
+import java.util.HashSet;
+import java.util.Set;
+import javax.management.InstanceAlreadyExistsException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanRegistrationException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.NotCompliantMBeanException;
+import javax.management.ObjectName;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 import org.whirlplatform.server.config.Configuration;
 import org.whirlplatform.server.config.CoreModule;
 import org.whirlplatform.server.config.JndiConfiguration;
@@ -14,13 +26,6 @@ import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.monitor.mbeans.Events;
 import org.whirlplatform.server.monitor.mbeans.Main;
 import org.whirlplatform.server.monitor.mbeans.Users;
-
-import javax.management.*;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import java.lang.management.ManagementFactory;
-import java.util.HashSet;
-import java.util.Set;
 
 public class InjectServletConfig extends GuiceServletContextListener {
 
@@ -44,7 +49,8 @@ public class InjectServletConfig extends GuiceServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         super.contextInitialized(servletContextEvent);
         initMBeans(servletContextEvent.getServletContext());
-        initDatabase((Injector) servletContextEvent.getServletContext().getAttribute(Injector.class.getName()));
+        initDatabase((Injector) servletContextEvent.getServletContext()
+                .getAttribute(Injector.class.getName()));
     }
 
     // Создание бинов для управления приложением
@@ -76,8 +82,9 @@ public class InjectServletConfig extends GuiceServletContextListener {
             mbeanServer.registerMBean(new Users(), usersName);
             mBeans.add(usersName);
 
-        } catch (MalformedObjectNameException | InstanceAlreadyExistsException | MBeanRegistrationException
-                | NotCompliantMBeanException e) {
+        } catch (MalformedObjectNameException | InstanceAlreadyExistsException |
+                 MBeanRegistrationException
+                 | NotCompliantMBeanException e) {
             _log.warn("MBeanServer initialization failed", e);
         }
     }

@@ -1,7 +1,5 @@
 /**
- * Sencha GXT 3.1.1 - Sencha for GWT
- * Copyright(c) 2007-2014, Sencha, Inc.
- * licensing@sencha.com
+ * Sencha GXT 3.1.1 - Sencha for GWT Copyright(c) 2007-2014, Sencha, Inc. licensing@sencha.com
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
@@ -22,7 +20,8 @@ public class CascadeDesktopLayout extends LimitedDesktopLayout implements Deskto
     }
 
     @Override
-    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element, Iterable<Window> windows,
+    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element,
+                              Iterable<Window> windows,
                               int containerWidth, int containerHeight) {
 
         if (requestType == RequestType.LAYOUT) {
@@ -31,11 +30,13 @@ public class CascadeDesktopLayout extends LimitedDesktopLayout implements Deskto
             offsetIndex = 0;
         }
 
-        super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth, containerHeight);
+        super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth,
+                containerHeight);
     }
 
     @Override
-    protected void layoutWindow(Window window, int containerWidth, int containerHeight, int width, int height) {
+    protected void layoutWindow(Window window, int containerWidth, int containerHeight, int width,
+                                int height) {
 
         int offset = window.getHeader().getOffsetHeight();
 

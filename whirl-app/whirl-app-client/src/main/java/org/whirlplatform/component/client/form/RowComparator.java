@@ -1,8 +1,7 @@
 package org.whirlplatform.component.client.form;
 
-import org.whirlplatform.meta.shared.form.FormRowModel;
-
 import java.util.Comparator;
+import org.whirlplatform.meta.shared.form.FormRowModel;
 
 public class RowComparator implements Comparator<FormRowModel> {
 

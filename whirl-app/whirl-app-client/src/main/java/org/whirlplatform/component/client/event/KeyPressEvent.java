@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.KeyPressEvent.KeyPressHandler;
 
 public class KeyPressEvent extends GwtEvent<KeyPressHandler> {
 
-	private static Type<KeyPressHandler> TYPE;
+    private static Type<KeyPressHandler> TYPE;
 
-	public static Type<KeyPressHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<KeyPressHandler>() {
-				@Override
-				public String toString() {
-					return "KeyPressHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<KeyPressHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<KeyPressHandler>() {
+                @Override
+                public String toString() {
+                    return "KeyPressHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<KeyPressHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<KeyPressHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(KeyPressHandler handler) {
-		handler.onKeyPress(this);
-	}
+    @Override
+    protected void dispatch(KeyPressHandler handler) {
+        handler.onKeyPress(this);
+    }
 
-	public interface KeyPressHandler extends EventHandler {
+    public interface KeyPressHandler extends EventHandler {
 
-		void onKeyPress(KeyPressEvent event);
+        void onKeyPress(KeyPressEvent event);
 
-	}
+    }
 
-	public interface HasKeyPressHandlers {
+    public interface HasKeyPressHandlers {
 
         HandlerRegistration addKeyPressHandler(KeyPressHandler handler);
 
-	}
+    }
 
 }

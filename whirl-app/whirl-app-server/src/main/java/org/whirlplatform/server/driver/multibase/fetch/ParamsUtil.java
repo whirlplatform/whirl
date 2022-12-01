@@ -1,21 +1,24 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.whirlplatform.meta.shared.FileValue;
-import org.whirlplatform.meta.shared.data.*;
-import org.whirlplatform.server.driver.multibase.Getter;
-import org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainDataFetcher;
-import org.whirlplatform.server.log.Logger;
-import org.whirlplatform.server.log.LoggerFactory;
-import org.whirlplatform.server.login.ApplicationUser;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.whirlplatform.meta.shared.FileValue;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.server.driver.multibase.Getter;
+import org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainDataFetcher;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
+import org.whirlplatform.server.login.ApplicationUser;
 
 public class ParamsUtil {
 
@@ -73,7 +76,8 @@ public class ParamsUtil {
                 }
             } else {
                 if (v.getType() == null) {
-                    _log.warn("Parameter " + v.getCode() + " not found for event. Null value passed.");
+                    _log.warn("Parameter " + v.getCode() +
+                            " not found for event. Null value passed.");
                 }
                 param.setText(Getter.toDBString(v.getObject()));
             }
@@ -103,7 +107,9 @@ public class ParamsUtil {
                 result.add(null);
             } else {
                 if (v.getType() == null) {
-                    _log.warn("Parameter " + v.getCode() + " has null type. Value " + v.getObject() + " passed.");
+                    _log.warn(
+                            "Parameter " + v.getCode() + " has null type. Value " + v.getObject() +
+                                    " passed.");
                 }
                 result.add(v.getObject());
             }

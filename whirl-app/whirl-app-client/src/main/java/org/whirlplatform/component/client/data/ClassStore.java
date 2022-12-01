@@ -15,54 +15,54 @@ import org.whirlplatform.meta.shared.data.RowModelData;
 
 //TODO перенести в component/client
 public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
-		extends ListStore<T> {
+        extends ListStore<T> {
 
-	protected ClassMetadata metadata;
+    protected ClassMetadata metadata;
 
-	protected RpcProxy<?, LoadData<T>> proxy;
+    protected RpcProxy<?, LoadData<T>> proxy;
 
-	protected Loader<C, LoadData<T>> loader;
+    protected Loader<C, LoadData<T>> loader;
 
-	protected ClassStore() {
-		super(new ClassKeyProvider());
-	}
+    protected ClassStore() {
+        super(new ClassKeyProvider());
+    }
 
-	public ClassStore(ClassMetadata metadata, RpcProxy<C, LoadData<T>> proxy) {
-		this();
-		this.metadata = metadata;
+    public ClassStore(ClassMetadata metadata, RpcProxy<C, LoadData<T>> proxy) {
+        this();
+        this.metadata = metadata;
 
-		this.proxy = proxy;
-		loader = new Loader<C, LoadData<T>>(proxy);
-		loader.addLoadHandler(new LoadHandler<C, LoadData<T>>() {
+        this.proxy = proxy;
+        loader = new Loader<C, LoadData<T>>(proxy);
+        loader.addLoadHandler(new LoadHandler<C, LoadData<T>>() {
 
-			@Override
-			public void onLoad(LoadEvent<C, LoadData<T>> event) {
-				ClassStore.this.replaceAll(event.getLoadResult().getData());
-			}
-		});
-		loader.addLoadExceptionHandler(new LoadExceptionHandler<C>() {
-			@Override
-			public void onLoadException(LoadExceptionEvent<C> event) {
-				InfoHelper.throwInfo("loader-exception", event.getException());
-			}
-		});
-	}
+            @Override
+            public void onLoad(LoadEvent<C, LoadData<T>> event) {
+                ClassStore.this.replaceAll(event.getLoadResult().getData());
+            }
+        });
+        loader.addLoadExceptionHandler(new LoadExceptionHandler<C>() {
+            @Override
+            public void onLoadException(LoadExceptionEvent<C> event) {
+                InfoHelper.throwInfo("loader-exception", event.getException());
+            }
+        });
+    }
 
-	public Loader<C, LoadData<T>> getLoader() {
-		return loader;
-	}
+    public Loader<C, LoadData<T>> getLoader() {
+        return loader;
+    }
 
-	
-	@Override
-	public T findModelWithKey(String key) {
-		for (int i = 0; i < size(); i++) {
-			String findedKey = getKeyProvider().getKey(get(i));
-			// TODO ошибка в реализации GXT хорошо бы оформить у них
-			if (findedKey == key || (findedKey != null && findedKey.equals(key))) {
-				return get(i);
-			}
-		}
-		return null;
-	}
+
+    @Override
+    public T findModelWithKey(String key) {
+        for (int i = 0; i < size(); i++) {
+            String findedKey = getKeyProvider().getKey(get(i));
+            // TODO ошибка в реализации GXT хорошо бы оформить у них
+            if (findedKey == key || (findedKey != null && findedKey.equals(key))) {
+                return get(i);
+            }
+        }
+        return null;
+    }
 
 }

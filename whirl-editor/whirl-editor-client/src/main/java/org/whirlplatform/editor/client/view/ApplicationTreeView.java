@@ -21,9 +21,15 @@ import org.whirlplatform.editor.client.tree.toolbar.AppTreeToolBarWithSort;
 import org.whirlplatform.editor.client.view.widget.WidgetUtil;
 import org.whirlplatform.editor.shared.TreeState;
 import org.whirlplatform.meta.shared.Version;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
 
-public class ApplicationTreeView extends VBoxLayoutContainer implements HasSelectionHandlers<AbstractElement>,
+public class ApplicationTreeView extends VBoxLayoutContainer
+        implements HasSelectionHandlers<AbstractElement>,
         IApplicationTreeView, ReverseViewInterface<ApplicationTreePresenter> {
 
     private ApplicationTreePresenter presenter;
@@ -38,7 +44,8 @@ public class ApplicationTreeView extends VBoxLayoutContainer implements HasSelec
             @Override
             public void doOpenElement(AbstractElement element) {
                 if (!(element instanceof ComponentElement)
-                        || (element instanceof ComponentElement && ((ComponentElement) element).getType().isContainer())) {
+                        || (element instanceof ComponentElement &&
+                        ((ComponentElement) element).getType().isContainer())) {
                     //Если контейнер, то можно открыть для редактирования. Иначе - редактировать только свойства.
                     presenter.openElement(tree.getSelectedElement());
                 }
@@ -68,30 +75,34 @@ public class ApplicationTreeView extends VBoxLayoutContainer implements HasSelec
 
             @Override
             protected void onDragMove(DndDragMoveEvent event) {
-                event.getStatusProxy().setStatus(tree.canDragDrop(getDropTargetElement(event), event.getData()));
+                event.getStatusProxy()
+                        .setStatus(tree.canDragDrop(getDropTargetElement(event), event.getData()));
             }
         };
         dropTarget.setAllowSelfAsSource(true);
 
         @SuppressWarnings("unused")
-        TreeDragSource<AbstractElement> source = new TreeDragSource<AbstractElement>((Tree<AbstractElement, ?>) tree) {
-            @Override
-            protected void onDragDrop(DndDropEvent event) {
-            }
+        TreeDragSource<AbstractElement> source =
+                new TreeDragSource<AbstractElement>((Tree<AbstractElement, ?>) tree) {
+                    @Override
+                    protected void onDragDrop(DndDropEvent event) {
+                    }
 
-            @Override
-            protected void onDragStart(DndDragStartEvent event) {
-                super.onDragStart(event);
-                AbstractElement selectedItem = tree.getSelectedElement();
-                if (selectedItem instanceof ComponentElement || selectedItem instanceof EventParameterElement
-                        || selectedItem instanceof EventElement || selectedItem instanceof ContextMenuItemElement) {
-                    event.setData(tree.getSelectedElement());
-                } else {
-                    event.setCancelled(true);
-                }
+                    @Override
+                    protected void onDragStart(DndDragStartEvent event) {
+                        super.onDragStart(event);
+                        AbstractElement selectedItem = tree.getSelectedElement();
+                        if (selectedItem instanceof ComponentElement ||
+                                selectedItem instanceof EventParameterElement
+                                || selectedItem instanceof EventElement ||
+                                selectedItem instanceof ContextMenuItemElement) {
+                            event.setData(tree.getSelectedElement());
+                        } else {
+                            event.setCancelled(true);
+                        }
 
-            }
-        };
+                    }
+                };
     }
 
     @SuppressWarnings("unchecked")
@@ -114,13 +125,13 @@ public class ApplicationTreeView extends VBoxLayoutContainer implements HasSelec
     }
 
     @Override
-    public void setPresenter(ApplicationTreePresenter presenter) {
-        this.presenter = presenter;
+    public ApplicationTreePresenter getPresenter() {
+        return presenter;
     }
 
     @Override
-    public ApplicationTreePresenter getPresenter() {
-        return presenter;
+    public void setPresenter(ApplicationTreePresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

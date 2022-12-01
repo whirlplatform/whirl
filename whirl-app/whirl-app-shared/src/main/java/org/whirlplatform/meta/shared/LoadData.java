@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import org.whirlplatform.meta.shared.data.RowModelData;
-
-import java.util.*;
 
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
@@ -27,12 +30,12 @@ public class LoadData<T extends RowModelData> {
         return data;
     }
 
-    public void setRows(int rows) {
-        this.page.setRows(rows);
-    }
-
     public int getRows() {
         return page.getRows();
+    }
+
+    public void setRows(int rows) {
+        this.page.setRows(rows);
     }
 
     public int size() {

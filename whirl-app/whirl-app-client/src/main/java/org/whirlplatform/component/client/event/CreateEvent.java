@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.CreateEvent.CreateHandler;
 
 public class CreateEvent extends GwtEvent<CreateHandler> {
 
-	private static Type<CreateHandler> TYPE;
+    private static Type<CreateHandler> TYPE;
 
-	public static Type<CreateHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<CreateHandler>() {
-				@Override
-				public String toString() {
-					return "CreateHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<CreateHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<CreateHandler>() {
+                @Override
+                public String toString() {
+                    return "CreateHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<CreateHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<CreateHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(CreateHandler handler) {
-		handler.onCreate(this);
-	}
+    @Override
+    protected void dispatch(CreateHandler handler) {
+        handler.onCreate(this);
+    }
 
-	public interface CreateHandler extends EventHandler {
+    public interface CreateHandler extends EventHandler {
 
-		void onCreate(CreateEvent event);
+        void onCreate(CreateEvent event);
 
-	}
+    }
 
-	public interface HasCreateHandlers {
+    public interface HasCreateHandlers {
 
         HandlerRegistration addCreateHandler(CreateHandler handler);
 
-	}
+    }
 
 }

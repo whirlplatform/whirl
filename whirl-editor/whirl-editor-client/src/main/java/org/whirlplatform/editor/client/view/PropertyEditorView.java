@@ -38,6 +38,13 @@ import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
 import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.ClickEvent.ClickHandler;
 import org.whirlplatform.component.client.event.ClickEvent.HasClickHandlers;
@@ -66,14 +73,6 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class PropertyEditorView extends AccordionLayoutContainer implements IPropertyEditorView {
 
@@ -124,7 +123,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             public void onValueChange(ValueChangeEvent<PropertyType> event) {
                 PropertyValue value = layoutPanel.getProperty(event.getValue());
                 presenter.onChangeComponentProperty(event.getValue(), defaultLocale, false,
-                                                    value.getValue(defaultLocale).getObject());
+                        value.getValue(defaultLocale).getObject());
             }
         });
     }
@@ -204,7 +203,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
     }
 
     @Override
-    public void setComponentProperties(ComponentType type, Map<PropertyType, PropertyValue> properties) {
+    public void setComponentProperties(ComponentType type,
+                                       Map<PropertyType, PropertyValue> properties) {
         rebuild(properties);
     }
 
@@ -248,7 +248,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             if (replaceable) {
                 img.setAttribute("src", EditorBundle.INSTANCE.redToggle().getSafeUri().asString());
             } else {
-                img.setAttribute("src", EditorBundle.INSTANCE.greenToggle().getSafeUri().asString());
+                img.setAttribute("src",
+                        EditorBundle.INSTANCE.greenToggle().getSafeUri().asString());
             }
         }
 
@@ -313,7 +314,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     }
 
                     LocaleElement key =
-                            value.getDefaultLocale() != null ? value.getDefaultLocale() : textField.getCurrentKey();
+                            value.getDefaultLocale() != null ? value.getDefaultLocale() :
+                                    textField.getCurrentKey();
                     restoreValue(textField, key);
                 }
                 rebuild(true);
@@ -328,9 +330,11 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 ((DateField) typeField).setValue(dataValue.getDate());
             } else if (DataType.FILE.equals(dataValue.getType())) {
                 // У нас не может быть свойства типа файл
-            } else if (DataType.LIST.equals(dataValue.getType()) && dataValue.getListModelData() != null) {
+            } else if (DataType.LIST.equals(dataValue.getType()) &&
+                    dataValue.getListModelData() != null) {
                 ListModelData l = dataValue.getListModelData();
-                AbstractElement e = ((ComboBox<AbstractElement>) typeField).getStore().findModelWithKey(l.getId());
+                AbstractElement e = ((ComboBox<AbstractElement>) typeField).getStore()
+                        .findModelWithKey(l.getId());
                 ((ComboBox<AbstractElement>) typeField).setValue(e);
                 ((ComboBox<AbstractElement>) typeField).setText(l.getLabel());
             } else if (DataType.NUMBER.equals(dataValue.getType())) {
@@ -340,11 +344,13 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     ((SimpleComboBox<String>) typeField).setValue(dataValue.getString());
                 } else {
                     for (LocaleElement locale : value.getLocales()) {
-                        ((MultiSetField<LocaleElement>) typeField).setValue(locale, value.getValue(locale).getString());
+                        ((MultiSetField<LocaleElement>) typeField).setValue(locale,
+                                value.getValue(locale).getString());
                     }
 
-                    LocaleElement key = value.getDefaultLocale() != null ? value.getDefaultLocale() :
-                            ((MultiSetField<LocaleElement>) typeField).getCurrentKey();
+                    LocaleElement key =
+                            value.getDefaultLocale() != null ? value.getDefaultLocale() :
+                                    ((MultiSetField<LocaleElement>) typeField).getCurrentKey();
                     restoreValue((MultiSetField<LocaleElement>) typeField, key);
                 }
             } else {
@@ -379,7 +385,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
          * @return
          */
         private PropertyValueField createStringField() {
-            PropertyValueField field = new PropertyValueField(GWT.create(MultiSetCellTinyResources.class));
+            PropertyValueField field =
+                    new PropertyValueField(GWT.create(MultiSetCellTinyResources.class));
             if (propertyType.isSimple()) {
                 field.setLocales(defaultLocale, Collections.emptyList());
             } else {
@@ -418,7 +425,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 FileElement img = new FileElement();
                 img.setId("");
                 img.setName(EditorMessage.Util.MESSAGE.property_no_data());
-                field = new ComboBox<AbstractElement>(store, new ElementLabelProvider<AbstractElement>());
+                field = new ComboBox<AbstractElement>(store,
+                        new ElementLabelProvider<AbstractElement>());
                 ((ComboBox<? extends AbstractElement>) field).setTriggerAction(TriggerAction.ALL);
             }
             return field;
@@ -433,7 +441,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
         }
 
         private Field<String> createParametersField() {
-            return new ParameterEditorComponent(new ComponentStore(getPresenter().getEventBus(), false));
+            return new ParameterEditorComponent(
+                    new ComponentStore(getPresenter().getEventBus(), false));
         }
 
         /**
@@ -507,7 +516,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                         }
                         // presenter.onChangeComponentProperty(propertyType, l,
                         // false, value);
-                        presenter.onChangeComponentProperty(propertyType, l, propertyValue.isReplaceable(), value);
+                        presenter.onChangeComponentProperty(propertyType, l,
+                                propertyValue.isReplaceable(), value);
                     }
 
                 });
@@ -525,7 +535,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 @Override
                 public void onValueChange(ValueChangeEvent<String> event) {
                     presenter
-                            .onChangeComponentProperty(propertyType, textField.getCurrentKey(), true, event.getValue());
+                            .onChangeComponentProperty(propertyType, textField.getCurrentKey(),
+                                    true, event.getValue());
                 }
             });
             textField.addFocusHandler(new FocusHandler() {

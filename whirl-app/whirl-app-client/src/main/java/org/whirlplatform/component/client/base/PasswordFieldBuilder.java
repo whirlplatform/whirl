@@ -3,6 +3,8 @@ package org.whirlplatform.component.client.base;
 import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.PasswordField;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -10,9 +12,6 @@ import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Поле пароля.

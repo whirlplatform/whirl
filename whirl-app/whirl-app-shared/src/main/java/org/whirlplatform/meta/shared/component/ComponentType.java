@@ -70,6 +70,15 @@ public enum ComponentType implements Serializable {
         this(type, false);
     }
 
+    public static ComponentType parse(String type) {
+        for (ComponentType t : ComponentType.values()) {
+            if (t.getType().equals(type)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
     public String getType() {
         return type;
     }
@@ -81,15 +90,6 @@ public enum ComponentType implements Serializable {
     @Override
     public String toString() {
         return type;
-    }
-
-    public static ComponentType parse(String type) {
-        for (ComponentType t : ComponentType.values()) {
-            if (t.getType().equals(type)) {
-                return t;
-            }
-        }
-        return null;
     }
 
     public Set<PropertyType> getProperties() {

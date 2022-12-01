@@ -1,8 +1,15 @@
 package org.whirlplatform.editor.shared.visitor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
 import com.google.common.reflect.Reflection;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;
 import org.javers.core.diff.Diff;
@@ -19,15 +26,8 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
 public class CloneVisitorTest {
 
-    private JaversBuilder builder;
     private static final Set<Class<?>> ENTITIES = new HashSet<>();
     private static final Set<Class<?>> VALUES = new HashSet<>();
     private static final Set<Class<?>> VALUE_OBJECTS = new HashSet<>();
@@ -37,6 +37,11 @@ public class CloneVisitorTest {
         collectAllSubclasses(VALUES, DataValue.class);
         collectAllSubclasses(VALUES, PropertyValue.class);
     }
+
+    LocaleElement defaultLocale;
+    SchemaElement schema;
+    PlainTableElement table;
+    private JaversBuilder builder;
 
     private static void collectAllSubclasses(Set<Class<?>> collection, Class<?> superclass) {
         try {
@@ -81,10 +86,6 @@ public class CloneVisitorTest {
         return javers.compare(left, right);
     }
 
-    LocaleElement defaultLocale;
-    SchemaElement schema;
-    PlainTableElement table;
-
     private PlainTableElement createTable(String id, String code, String name, String tableName) {
         PlainTableElement table = new PlainTableElement();
         table.setId(id);
@@ -95,7 +96,8 @@ public class CloneVisitorTest {
         return table;
     }
 
-    private TableColumnElement createColumn(String id, DataType type, String columnName, int width, boolean hidden) {
+    private TableColumnElement createColumn(String id, DataType type, String columnName, int width,
+                                            boolean hidden) {
         TableColumnElement column = new TableColumnElement();
         column.setId(id);
         column.setType(type);
@@ -116,7 +118,8 @@ public class CloneVisitorTest {
         table.addColumn(idColumn);
         table.setIdColumn(idColumn);
 
-        TableColumnElement deleteColumn = createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
+        TableColumnElement deleteColumn =
+                createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
         table.addColumn(deleteColumn);
         table.setDeleteColumn(deleteColumn);
 
@@ -136,7 +139,8 @@ public class CloneVisitorTest {
         copy.setTitle(new PropertyValue(DataType.STRING, defaultLocale, "Name has changed"));
 
         diff = javers().compare(table, copy);
-        assertEquals("Copied object should not be equals: " + diff.prettyPrint(), diff.getChanges().size(), 2);
+        assertEquals("Copied object should not be equals: " + diff.prettyPrint(),
+                diff.getChanges().size(), 2);
 
         // Copy table with clone
         PlainTableElement clone = createTable("1", "table_clone", "Clone", "CLONE");
@@ -144,7 +148,8 @@ public class CloneVisitorTest {
         clone.addColumn(cloneId);
         clone.setIdColumn(cloneId);
 
-        TableColumnElement deleteId = createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
+        TableColumnElement deleteId =
+                createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
         clone.addColumn(deleteId);
         clone.setDeleteColumn(deleteId);
 

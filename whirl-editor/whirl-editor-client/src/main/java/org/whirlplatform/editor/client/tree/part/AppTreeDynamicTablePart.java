@@ -1,17 +1,18 @@
 package org.whirlplatform.editor.client.tree.part;
 
+import java.util.Arrays;
+import java.util.Collections;
 import org.whirlplatform.editor.client.tree.AppTree;
 import org.whirlplatform.editor.client.tree.AppTreePresenter;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 
-import java.util.Arrays;
-import java.util.Collections;
+public class AppTreeDynamicTablePart extends AbstractAppTreePart<DynamicTableElement>
+        implements AppTreePart<DynamicTableElement> {
 
-public class AppTreeDynamicTablePart extends AbstractAppTreePart<DynamicTableElement> implements AppTreePart<DynamicTableElement> {
-
-    public AppTreeDynamicTablePart(AppTree appTree, AppTreePresenter treePresenter, DynamicTableElement table) {
+    public AppTreeDynamicTablePart(AppTree appTree, AppTreePresenter treePresenter,
+                                   DynamicTableElement table) {
         super(appTree, treePresenter, table);
     }
 
@@ -93,8 +94,9 @@ public class AppTreeDynamicTablePart extends AbstractAppTreePart<DynamicTableEle
     public boolean doEditElementRights(AbstractElement element) {
         if (element == handledElement) {
             treePresenter.riseEditRights(Collections.singleton(element),
-                    Collections.unmodifiableCollection(Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
-                            RightType.VIEW, RightType.RESTRICT)));
+                    Collections.unmodifiableCollection(
+                            Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
+                                    RightType.VIEW, RightType.RESTRICT)));
         }
         return false;
     }

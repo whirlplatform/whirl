@@ -21,68 +21,6 @@ public abstract class TextFieldBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на текстовое поле
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
-
-    /**
-     * Получить код текстового поля
-     *
-     * @return String
-     */
-    public abstract String getCode();
-
-    /**
-     * Установить активность текстового поля
-     *
-     * @param enabled - boolean
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    /**
-     * Получить информачию об активности текстового поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Установить скрытость текстового поля
-     *
-     * @param hidden - boolean
-     */
-    public abstract void setHidden(boolean hidden);
-
-    /**
-     * Получить информацию о скрытости текстового поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isHidden();
-
-    /**
-     * Установить стиль на текстовое поле
-     *
-     * @param styleName - String, название стиля
-     */
-    public abstract void setStyleName(String styleName);
-
-    /**
      * Проверка на null значения текстового поля
      *
      * @param instance - TextFieldBuilder
@@ -93,18 +31,79 @@ public abstract class TextFieldBuilderOverlay {
     }
 
     /**
-     * Установка значения текстового поля
+     * Получение родителя текстового поля
      *
-     * @param value - String
+     * @param instance - TextFieldBuilder
+     * @return ComponentBuilder
      */
-    public abstract void setValue(String value);
+    public static ComponentBuilder getParent(TextFieldBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    public static void setToolTip(TextFieldBuilder instance, String toolTip) {
+        instance.getComponent().setToolTip(toolTip);
+    }
 
     /**
-     * Получить значение текстового поля
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    /**
+     * Получить код текстового поля
      *
      * @return String
      */
-    public abstract String getValue();
+    public abstract String getCode();
+
+    /**
+     * Установить код на текстовое поле
+     *
+     * @param name - String, код
+     */
+    public abstract void setCode(String name);
+
+    /**
+     * Получить информачию об активности текстового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isEnabled();
+
+    /**
+     * Установить активность текстового поля
+     *
+     * @param enabled - boolean
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Получить информацию о скрытости текстового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isHidden();
+
+    /**
+     * Установить скрытость текстового поля
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
+     * Установить стиль на текстовое поле
+     *
+     * @param styleName - String, название стиля
+     */
+    public abstract void setStyleName(String styleName);
 
 ////    public static DataValue getDataValue(TextFieldBuilder instance) {
 //        return instance.getFieldValue();
@@ -114,7 +113,28 @@ public abstract class TextFieldBuilderOverlay {
 //        instance.setFieldValue(value);
 //    }
 
+    /**
+     * Получить значение текстового поля
+     *
+     * @return String
+     */
+    public abstract String getValue();
+
+    /**
+     * Установка значения текстового поля
+     *
+     * @param value - String
+     */
+    public abstract void setValue(String value);
+
     public abstract String getText();
+
+    /**
+     * Получить информацию о свойстве "Обязателен для заполнения" у текстового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isRequired();
 
     /**
      * Установка свойства "Обязателен для заполнения" для текстового поля
@@ -124,27 +144,9 @@ public abstract class TextFieldBuilderOverlay {
     public abstract void setRequired(boolean required);
 
     /**
-     * Получить информацию о свойстве "Обязателен для заполнения" у текстового
-     * поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isRequired();
-
-    /**
      * Очистка значения текстового поля
      */
     public abstract void clear();
-
-    /**
-     * Получение родителя текстового поля
-     *
-     * @param instance - TextFieldBuilder
-     * @return ComponentBuilder
-     */
-    public static ComponentBuilder getParent(TextFieldBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на текстовое поле
@@ -170,8 +172,4 @@ public abstract class TextFieldBuilderOverlay {
      * @return boolean
      */
     public abstract boolean isValid(boolean invalidate);
-
-    public static void setToolTip(TextFieldBuilder instance, String toolTip) {
-        instance.getComponent().setToolTip(toolTip);
-    }
 }

@@ -1,23 +1,22 @@
 package org.whirlplatform.editor.client.tree;
 
+import java.util.List;
 import org.whirlplatform.editor.client.presenter.compare.ElementChangeState;
 import org.whirlplatform.editor.shared.merge.ChangeUnit;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
-import java.util.List;
-
 public interface ComparableAppTree extends AppTree {
-	void setChanges(List<ChangeUnit> changes);
+    void setChanges(List<ChangeUnit> changes);
 
-	void clearChanges();
+    void clearChanges();
 
-	ElementChangeState getChangeState(AbstractElement element);
+    ElementChangeState getChangeState(AbstractElement element);
 
-	List<AbstractElement> getCheckedSelection();
+    List<AbstractElement> getCheckedSelection();
 
-	boolean isChecked(AbstractElement element);
-	
-	List<ChangeUnit> getChangeUnits(AbstractElement element);
-	
-	List<ChangeUnit> getCheckedChangeUnits();
+    boolean isChecked(AbstractElement element);
+
+    List<ChangeUnit> getChangeUnits(AbstractElement element);
+
+    List<ChangeUnit> getCheckedChangeUnits();
 }

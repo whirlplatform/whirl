@@ -3,6 +3,8 @@ package org.whirlplatform.component.client.base;
 import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -13,14 +15,12 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Текстовое поле.
  */
 @JsType(namespace = "Whirl", name = "TextField")
-public class TextFieldBuilder extends ValueBaseFieldBuilder implements NativeParameter<String>, Parameter<DataValue> {
+public class TextFieldBuilder extends ValueBaseFieldBuilder
+        implements NativeParameter<String>, Parameter<DataValue> {
 
     @JsIgnore
     public TextFieldBuilder() {

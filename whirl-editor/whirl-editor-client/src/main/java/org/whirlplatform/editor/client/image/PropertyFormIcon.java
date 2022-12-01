@@ -5,6 +5,9 @@ import com.google.gwt.resources.client.CssResource;
 
 public interface PropertyFormIcon extends ClientBundle {
 
+    @Source("PropertyForm.gss")
+    PropertyFormResource style();
+
     interface PropertyFormResource extends CssResource {
 
         String tableInsert();
@@ -12,7 +15,4 @@ public interface PropertyFormIcon extends ClientBundle {
         String tableDelete();
 
     }
-
-    @Source("PropertyForm.gss")
-    PropertyFormResource style();
 }

@@ -2,6 +2,17 @@ package org.whirlplatform.editor.server.servlet;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -14,18 +25,6 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.MetadataStoreException;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Singleton
 public class ImportServlet extends HttpServlet {
@@ -56,9 +55,11 @@ public class ImportServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
             List<FileItem> items = upload.parseRequest(req);
             for (FileItem item : items) {
-                if (!item.isFormField() && item.getFieldName() != null && item.getFieldName().equals("file")) {
+                if (!item.isFormField() && item.getFieldName() != null &&
+                        item.getFieldName().equals("file")) {
                     InputStream stream = item.getInputStream();
-                    ApplicationElement application = metadataStore.deserialize(IOUtils.toString(stream, "UTF-8"));
+                    ApplicationElement application =
+                            metadataStore.deserialize(IOUtils.toString(stream, "UTF-8"));
                     req.getSession().setAttribute("APPLICATION", application);
                     saveFilesIntoTheContext(req.getSession(), application.getJavaFiles());
                     saveFilesIntoTheContext(req.getSession(), application.getJavaScriptFiles());
@@ -74,7 +75,8 @@ public class ImportServlet extends HttpServlet {
         }
     }
 
-    private void saveFilesIntoTheContext(HttpSession session, Collection<FileElement> files) throws IOException {
+    private void saveFilesIntoTheContext(HttpSession session, Collection<FileElement> files)
+            throws IOException {
         for (final FileElement file : files) {
             saveFileIntoContext(session, file);
         }

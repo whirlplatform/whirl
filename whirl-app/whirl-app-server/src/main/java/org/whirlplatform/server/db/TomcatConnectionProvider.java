@@ -1,10 +1,9 @@
 
 package org.whirlplatform.server.db;
 
-import org.whirlplatform.server.login.ApplicationUser;
-
 import javax.inject.Singleton;
 import javax.sql.DataSource;
+import org.whirlplatform.server.login.ApplicationUser;
 
 @Singleton
 public class TomcatConnectionProvider implements ConnectionProvider {
@@ -18,13 +17,14 @@ public class TomcatConnectionProvider implements ConnectionProvider {
     }
 
     @Override
-    public ConnectionWrapper getConnection(String alias, ApplicationUser user) throws ConnectException {
+    public ConnectionWrapper getConnection(String alias, ApplicationUser user)
+            throws ConnectException {
         return DBConnection.getConnection(alias, user);
     }
-    
+
     @Override
     public DataSource getDataSource(String alias) throws ConnectException {
-    	return DBConnection.getDataSource(alias);
+        return DBConnection.getDataSource(alias);
     }
 
 }

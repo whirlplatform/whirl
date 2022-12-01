@@ -7,71 +7,71 @@ import org.whirlplatform.meta.shared.AppConstant;
 
 public class LocationManager {
 
-	private static LocationManager _instance;
+    private static LocationManager _instance;
 
-	private String role;
-	private String token;
-	private boolean newSession = false;
-	private String oldToken;
+    private String role;
+    private String token;
+    private boolean newSession = false;
+    private String oldToken;
 
-	public static LocationManager get() {
-		if (_instance == null) {
-			_instance = new LocationManager();
-		}
-		return _instance;
-	}
+    public static LocationManager get() {
+        if (_instance == null) {
+            _instance = new LocationManager();
+        }
+        return _instance;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public String getToken() {
+        return Location.getParameter(AppConstant.TOKEN);
+    }
 
-	public String getToken() {
-		return Location.getParameter(AppConstant.TOKEN);
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public void setNewSession(boolean newSession) {
-		this.newSession = newSession;
-	}
+    public boolean isNewSession() {
+        return Boolean.valueOf(Location.getParameter(AppConstant.NEW_SESSION));
+    }
 
-	public boolean isNewSession() {
-		return Boolean.valueOf(Location.getParameter(AppConstant.NEW_SESSION));
-	}
+    public void setNewSession(boolean newSession) {
+        this.newSession = newSession;
+    }
 
-	public void setOldToken(String oldToken) {
-		this.oldToken = oldToken;
-	}
+    public String getOldToken() {
+        return Location.getParameter(AppConstant.OLD_TOKEN);
+    }
 
-	public String getOldToken() {
-		return Location.getParameter(AppConstant.OLD_TOKEN);
-	}
+    public void setOldToken(String oldToken) {
+        this.oldToken = oldToken;
+    }
 
-	private String getURL() {
-		UrlBuilder builder = Location.createUrlBuilder();
-		if (!Util.isEmptyString(role)) {
+    private String getURL() {
+        UrlBuilder builder = Location.createUrlBuilder();
+        if (!Util.isEmptyString(role)) {
             builder.setParameter(AppConstant.APPLICATION_URL, role);
-		}
-		if (!Util.isEmptyString(token)) {
-			builder.setParameter(AppConstant.TOKEN, token);
-		}
-		if (!Util.isEmptyString(oldToken)) {
-			builder.setParameter(AppConstant.OLD_TOKEN, oldToken);
-		} else {
-			builder.removeParameter(AppConstant.OLD_TOKEN);
-		}
-		if (newSession) {
-			builder.setParameter(AppConstant.NEW_SESSION, String.valueOf(newSession));
-		} else {
-			builder.removeParameter(AppConstant.NEW_SESSION);
-		}
-		return builder.buildString();
-	}
+        }
+        if (!Util.isEmptyString(token)) {
+            builder.setParameter(AppConstant.TOKEN, token);
+        }
+        if (!Util.isEmptyString(oldToken)) {
+            builder.setParameter(AppConstant.OLD_TOKEN, oldToken);
+        } else {
+            builder.removeParameter(AppConstant.OLD_TOKEN);
+        }
+        if (newSession) {
+            builder.setParameter(AppConstant.NEW_SESSION, String.valueOf(newSession));
+        } else {
+            builder.removeParameter(AppConstant.NEW_SESSION);
+        }
+        return builder.buildString();
+    }
 
-	public void reload() {
-		Location.assign(getURL());
-	}
+    public void reload() {
+        Location.assign(getURL());
+    }
 
 }

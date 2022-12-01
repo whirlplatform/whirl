@@ -1,25 +1,33 @@
 package org.whirlplatform.server.form;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.editor.FormElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.RequestElement;
 import org.whirlplatform.server.utils.XPoint;
 
-import java.util.*;
-
 public class FormElementWrapper {
 
     private FormElement element;
     private LocaleElement locale;
 
-    private SortedMap<Integer, RowElementWrapper> rowMap = new TreeMap<Integer, RowElementWrapper>();
-    private SortedMap<Integer, ColumnElementWrapper> colMap = new TreeMap<Integer, ColumnElementWrapper>();
+    private SortedMap<Integer, RowElementWrapper> rowMap =
+            new TreeMap<Integer, RowElementWrapper>();
+    private SortedMap<Integer, ColumnElementWrapper> colMap =
+            new TreeMap<Integer, ColumnElementWrapper>();
     private Map<XPoint, CellElementWrapper> cellMap = new HashMap<XPoint, CellElementWrapper>();
 
     private SqlManager sqlManager = new SqlManager();
 
-    private SortedMap<Integer, RowElementWrapper> finalRowMap = new TreeMap<Integer, RowElementWrapper>();
+    private SortedMap<Integer, RowElementWrapper> finalRowMap =
+            new TreeMap<Integer, RowElementWrapper>();
 
     public FormElementWrapper(FormElement element, LocaleElement locale) {
         this.element = element;

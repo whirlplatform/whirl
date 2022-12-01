@@ -9,6 +9,7 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Collection;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.DynamicTableView;
@@ -19,57 +20,12 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 
-import java.util.Collection;
-
 @Presenter(view = DynamicTableView.class)
-public class DynamicTablePresenter extends BasePresenter<DynamicTablePresenter.IDynaimcTableView, EditorEventBus>
+public class DynamicTablePresenter
+        extends BasePresenter<DynamicTablePresenter.IDynaimcTableView, EditorEventBus>
         implements ElementPresenter {
 
-    public interface IDynaimcTableView extends ReverseViewInterface<DynamicTablePresenter>, IsWidget {
-
-        void setTableTitle(PropertyValue title);
-
-        PropertyValue getTableTitle();
-
-        void setCode(String code);
-
-        String getCode();
-
-        void setMetadataFunction(String metadataFunction);
-
-        String getMetadataFunction();
-
-        void setDataFunction(String dataFunction);
-
-        String getDataFunction();
-
-        void setInsertFunction(String insertFunction);
-
-        String getInsertFunction();
-
-        void setUpdateFunction(String updateFunction);
-
-        String getUpdateFunction();
-
-        void setDeleteFunction(String detleteFunction);
-
-        String getDeleteFunction();
-
-        void setEmptyRow(boolean emptyRow);
-
-        boolean getEmptyRow();
-
-        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
-
-        void clearFields();
-
-        void setHeaderText(String headerText);
-
-        void setEnableAll(boolean enabled);
-    }
-
     private DynamicTableElement table;
-
     private TextButton saveButton;
     private TextButton closeButton;
 
@@ -89,22 +45,29 @@ public class DynamicTablePresenter extends BasePresenter<DynamicTablePresenter.I
 
                 // Собираем текст ошибки (если есть)
                 if (getMetadataFunction == null || getMetadataFunction.isEmpty()) {
-                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_empty_metadata() + "<br/>";
+                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_empty_metadata() +
+                            "<br/>";
                 }
                 if (getDataFunction == null || getDataFunction.isEmpty()) {
-                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_empty_data() + "<br/>";
+                    errorText +=
+                            EditorMessage.Util.MESSAGE.error_dynamic_table_empty_data() + "<br/>";
                 }
                 if (getDataFunction != null && !getDataFunction.isEmpty()
-                        && (!getDataFunction.contains(":data_config") || !getDataFunction.contains(":data_count"))) {
-                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_get_data() + "<br/>";
+                        && (!getDataFunction.contains(":data_config") ||
+                        !getDataFunction.contains(":data_count"))) {
+                    errorText +=
+                            EditorMessage.Util.MESSAGE.error_dynamic_table_get_data() + "<br/>";
                 }
-                if (insertFunction != null && !insertFunction.isEmpty() && !insertFunction.contains(":insert_config")) {
+                if (insertFunction != null && !insertFunction.isEmpty() &&
+                        !insertFunction.contains(":insert_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_insert() + "<br/>";
                 }
-                if (updateFunction != null && !updateFunction.isEmpty() && !updateFunction.contains(":update_config")) {
+                if (updateFunction != null && !updateFunction.isEmpty() &&
+                        !updateFunction.contains(":update_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_update() + "<br/>";
                 }
-                if (deleteFunction != null && !deleteFunction.isEmpty() && !deleteFunction.contains(":delete_config")) {
+                if (deleteFunction != null && !deleteFunction.isEmpty() &&
+                        !deleteFunction.contains(":delete_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_delete() + "<br/>";
                 }
 
@@ -124,7 +87,8 @@ public class DynamicTablePresenter extends BasePresenter<DynamicTablePresenter.I
 
                 eventBus.syncServerApplication();
 
-                InfoHelper.display(EditorMessage.Util.MESSAGE.success(), EditorMessage.Util.MESSAGE.info_table_saved());
+                InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
+                        EditorMessage.Util.MESSAGE.info_table_saved());
             }
         });
         panel.addButton(saveButton);
@@ -177,5 +141,49 @@ public class DynamicTablePresenter extends BasePresenter<DynamicTablePresenter.I
         eventBus.openElementView(view);
         view.setEnableAll(!readOnly);
         saveButton.setEnabled(!readOnly);
+    }
+
+    public interface IDynaimcTableView
+            extends ReverseViewInterface<DynamicTablePresenter>, IsWidget {
+
+        PropertyValue getTableTitle();
+
+        void setTableTitle(PropertyValue title);
+
+        String getCode();
+
+        void setCode(String code);
+
+        String getMetadataFunction();
+
+        void setMetadataFunction(String metadataFunction);
+
+        String getDataFunction();
+
+        void setDataFunction(String dataFunction);
+
+        String getInsertFunction();
+
+        void setInsertFunction(String insertFunction);
+
+        String getUpdateFunction();
+
+        void setUpdateFunction(String updateFunction);
+
+        String getDeleteFunction();
+
+        void setDeleteFunction(String detleteFunction);
+
+        boolean getEmptyRow();
+
+        void setEmptyRow(boolean emptyRow);
+
+        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
+
+        void clearFields();
+
+        void setHeaderText(String headerText);
+
+        void setEnableAll(boolean enabled);
     }
 }

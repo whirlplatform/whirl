@@ -24,12 +24,15 @@ public interface DataSourceDriver {
 
     <T extends AbstractTableElement> TreeFetcher<T> createTreeFetcher(T table);
 
-    default <T extends AbstractTableElement> NotImplementedException createException(final String fetcherName, T table,
-                                                                                     ConnectionWrapper connection) {
+    default <T extends AbstractTableElement> NotImplementedException createException(
+            final String fetcherName, T table,
+            ConnectionWrapper connection) {
         String tableClass = (table == null) ? "null" : table.getClass().getSimpleName();
         String connClass = (connection == null) ? "null" : connection.getClass().getSimpleName();
-        String message = String.format("Fetcher '%s' is not implemented for table=%s conn=%s", fetcherName, tableClass,
-                connClass);
+        String message =
+                String.format("Fetcher '%s' is not implemented for table=%s conn=%s", fetcherName,
+                        tableClass,
+                        connClass);
         NotImplementedException result = new NotImplementedException(message);
         return result;
     }

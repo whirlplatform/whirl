@@ -1,5 +1,14 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.InputStream;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.List;
 import org.whirlplatform.meta.shared.EventResult;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -18,12 +27,6 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.DBFunctionMessage;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.monitor.RunningEvent;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.List;
 
 public class OracleEventExecutor extends AbstractEventExecutor {
     private static Logger _log = LoggerFactory.getLogger(OracleEventExecutor.class);
@@ -47,7 +50,7 @@ public class OracleEventExecutor extends AbstractEventExecutor {
             params = ParamsUtil.listFunctionParams(paramsDataValue, getUser());
         }
 
-        _log.debug("Execute function:/nFUNCTION = " + function + "	params = " + params);
+        _log.debug("Execute function:/nFUNCTION = " + function + "    params = " + params);
         CallableStatement stmt = null;
 
         DBFunctionMessage m = new DBFunctionMessage(getUser(), eventElement, paramsDataValue);
@@ -136,7 +139,8 @@ public class OracleEventExecutor extends AbstractEventExecutor {
             } catch (Exception e) {
                 if (stoppedHolder[0]) {
                     throw new CustomException(
-                            I18NMessage.getMessage(I18NMessage.getRequestLocale()).alert_event_cancelled());
+                            I18NMessage.getMessage(I18NMessage.getRequestLocale())
+                                    .alert_event_cancelled());
                 }
                 String err = function + " params =" + params + '\t' + e + ", sql: " + sql;
                 _log.error(err, e);
@@ -149,7 +153,8 @@ public class OracleEventExecutor extends AbstractEventExecutor {
     protected Clob createTemporaryClob() throws SQLException {
         CallableStatement cst = null;
         try {
-            cst = getConnection().prepareCall("{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
+            cst = getConnection().prepareCall(
+                    "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
             cst.registerOutParameter(1, Types.CLOB);
             cst.execute();
             return cst.getClob(1);

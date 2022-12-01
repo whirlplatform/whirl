@@ -10,6 +10,15 @@ public abstract class TreeComboBoxBuilderOverlay {
         return instance;
     }
 
+    public static ComponentBuilder getParent(TreeComboBoxBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
     /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
@@ -17,19 +26,13 @@ public abstract class TreeComboBoxBuilderOverlay {
      */
     public abstract void setDomId(String domId);
 
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
+    public abstract String getCode();
 
     public abstract void setCode(String name);
 
-    public abstract String getCode();
+    public abstract boolean isEnabled();
 
     public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
 
     public abstract void setHidden(boolean hidden);
 
@@ -38,10 +41,6 @@ public abstract class TreeComboBoxBuilderOverlay {
     public abstract void setStyleName(String styleName);
 
     public abstract boolean markInvalid(String message);
-
-    public static ComponentBuilder getParent(TreeComboBoxBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     public abstract void focus();
 

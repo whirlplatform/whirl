@@ -1,5 +1,7 @@
 package org.whirlplatform.server.evolution;
 
+import java.sql.SQLException;
+import javax.inject.Inject;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -16,9 +18,6 @@ import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
-
 public class LiquibaseEvolutionManager implements EvolutionManager {
 
     private static Logger _log = LoggerFactory.getLogger(LiquibaseEvolutionManager.class);
@@ -27,13 +26,15 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     private Configuration configuration;
 
     @Inject
-    public LiquibaseEvolutionManager(ConnectionProvider connectionProvider, Configuration configuration) {
+    public LiquibaseEvolutionManager(ConnectionProvider connectionProvider,
+                                     Configuration configuration) {
         this.connectionProvider = connectionProvider;
         this.configuration = configuration;
     }
 
     @Override
-    public void applyApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
+    public void applyApplicationEvolution(String alias, String scriptPath)
+            throws EvolutionException {
         applyEvolution(alias, scriptPath, new FileSystemResourceAccessor());
     }
 
@@ -42,7 +43,8 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
         applyEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
     }
 
-    private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor) throws EvolutionException {
+    private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
+            throws EvolutionException {
         Boolean applyEvolutions = configuration.<Boolean>lookup("Whirl/ds/" + alias
                 + "/evolutions/enabled");
         if (applyEvolutions == null || !applyEvolutions) {

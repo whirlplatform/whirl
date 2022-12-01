@@ -2,6 +2,27 @@ package org.whirlplatform.server.metadata.store.file;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.Version.VersionFormatException;
@@ -14,35 +35,30 @@ import org.whirlplatform.server.config.Configuration;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
-import org.whirlplatform.server.metadata.store.*;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.util.*;
-import java.util.Map.Entry;
+import org.whirlplatform.server.metadata.store.AbstractMetadataStore;
+import org.whirlplatform.server.metadata.store.ApplicationFilesUtil;
+import org.whirlplatform.server.metadata.store.MetadataModifiedHandler;
+import org.whirlplatform.server.metadata.store.MetadataStoreException;
+import org.whirlplatform.server.metadata.store.WatchableStore;
 
 @Singleton
 @Named("FileSystemMetadataStore")
-public class FileSystemMetadataStore extends AbstractMetadataStore implements Runnable, WatchableStore {
-    private static final Logger _log = LoggerFactory.getLogger(FileSystemMetadataStore.class);
+public class FileSystemMetadataStore extends AbstractMetadataStore
+        implements Runnable, WatchableStore {
     protected static final String APPLICATIONS_PATH = "applications";
     protected static final String TAG_PATH = "tag";
     protected static final String BRANCH_PATH = "branch";
     protected static final String APPLICATION_FILE = "application.wrl";
     protected static final String EVOLUTION_PATH = "evolutions";
     protected static final String EVOLUTION_ROOT = "root.xml";
-
+    private static final Logger _log = LoggerFactory.getLogger(FileSystemMetadataStore.class);
     protected FileSystem fileSystem;
+    protected Table<String, Version, Set<MetadataModifiedHandler>> modifiedHandlers =
+            HashBasedTable.create();
     private String workPath;
-
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
-    protected Table<String, Version, Set<MetadataModifiedHandler>> modifiedHandlers = HashBasedTable.create();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -51,19 +67,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         initWatchService(fileSystem);
     }
 
-    private void initWatchService(FileSystem fileSystem) {
-        try {
-            this.watchService = fileSystem.newWatchService();
-            Thread watchThread = new Thread(this, "FileWatchService");
-            watchThread.start();
-        } catch (UnsupportedOperationException e) {
-            _log.error("WatchService: is not supporeted by this FileSystem", e);
-        } catch (IOException e) {
-            _log.error("WatchService: initialization error", e);
-        }
-    }
-
-    public static void loadDatabaseEvolutions(final Path applicationPath, final ApplicationElement application) {
+    public static void loadDatabaseEvolutions(final Path applicationPath,
+                                              final ApplicationElement application) {
         for (DataSourceElement dataSource : application.getDataSources()) {
             Path path = applicationPath.resolve(EVOLUTION_PATH).resolve(dataSource.getAlias());
             Path root = path.resolve(EVOLUTION_ROOT);
@@ -85,11 +90,25 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         }
     }
 
-    private ApplicationElement loadApplicationFromPath(Path applicationPath, boolean ignoreReferences)
+    private void initWatchService(FileSystem fileSystem) {
+        try {
+            this.watchService = fileSystem.newWatchService();
+            Thread watchThread = new Thread(this, "FileWatchService");
+            watchThread.start();
+        } catch (UnsupportedOperationException e) {
+            _log.error("WatchService: is not supporeted by this FileSystem", e);
+        } catch (IOException e) {
+            _log.error("WatchService: initialization error", e);
+        }
+    }
+
+    private ApplicationElement loadApplicationFromPath(Path applicationPath,
+                                                       boolean ignoreReferences)
             throws MetadataStoreException, IOException {
         final String xml = readApplicationXmlFile(applicationPath);
         if (xml == null) {
-            String message = String.format("The application xml file not found in %", applicationPath);
+            String message =
+                    String.format("The application xml file not found in %", applicationPath);
             _log.error(message);
             throw new MetadataStoreException(message);
         }
@@ -143,7 +162,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
                 }
             }
             if (versions.isEmpty()) {
-                final String message = String.format("Versions not found for the application: '%s'", appCode);
+                final String message =
+                        String.format("Versions not found for the application: '%s'", appCode);
                 _log.error(message);
                 throw new MetadataStoreException(message);
             }
@@ -161,7 +181,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
     }
 
     @Override
-    public ApplicationElement loadApplication(String code, Version version, boolean ignoreReferences)
+    public ApplicationElement loadApplication(String code, Version version,
+                                              boolean ignoreReferences)
             throws MetadataStoreException {
         final String stringVersion = (version != null) ? version.toString() : "null";
         try {
@@ -169,7 +190,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
             Path applicationPath = resolveApplicationPath(code, version);
 
             // загружаем xml
-            ApplicationElement application = loadApplicationFromPath(applicationPath, ignoreReferences);
+            ApplicationElement application =
+                    loadApplicationFromPath(applicationPath, ignoreReferences);
             // загружаем файлы
             ApplicationFilesUtil.loadApplicationFiles(applicationPath, application);
 
@@ -177,20 +199,23 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
 
             return application;
         } catch (IOException e) {
-            final String message = String.format("Error loading the application %s[%s]", code, stringVersion);
+            final String message =
+                    String.format("Error loading the application %s[%s]", code, stringVersion);
             _log.error(message, e);
             throw new MetadataStoreException(message, e);
         }
     }
 
     @Override
-    public void saveApplication(ApplicationElement application, Version version, ApplicationUser user)
+    public void saveApplication(ApplicationElement application, Version version,
+                                ApplicationUser user)
             throws MetadataStoreException {
         try {
             final String appCode = application.getCode();
             if (version == null) {
                 //TODO сделать нормальное сообщение о том что приложение не доступно
-                throw new MetadataStoreException(String.format("The version of '%s' should be provided", appCode));
+                throw new MetadataStoreException(
+                        String.format("The version of '%s' should be provided", appCode));
             }
             final Path applicationPath = createApplicatonPath(appCode, version);
             writeApplicationXmlFile(applicationPath, serialize(application));
@@ -200,10 +225,12 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         }
     }
 
-    private Path createApplicatonPath(final String appCode, final Version version) throws IOException {
+    private Path createApplicatonPath(final String appCode, final Version version)
+            throws IOException {
         final Path appsRoot = basePath().resolve(APPLICATIONS_PATH);
         final String versionFolder = version.isBranch() ? BRANCH_PATH : TAG_PATH;
-        final Path result = appsRoot.resolve(appCode).resolve(versionFolder).resolve(version.toString());
+        final Path result =
+                appsRoot.resolve(appCode).resolve(versionFolder).resolve(version.toString());
         if (!Files.exists(result)) {
             Files.createDirectories(result);
         }
@@ -217,7 +244,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
      * @param xml             - xml приложения
      * @throws IOException
      */
-    protected void writeApplicationXmlFile(final Path applicationPath, final String xml) throws IOException {
+    protected void writeApplicationXmlFile(final Path applicationPath, final String xml)
+            throws IOException {
         Path appFile = applicationPath.resolve(APPLICATION_FILE);
         if (!Files.exists(appFile)) {
             Files.createFile(appFile);
@@ -228,10 +256,13 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
     }
 
     protected void saveApplicationFiles(Path applicationPath, ApplicationElement application) {
-        Map<FileElement, Exception> errors = ApplicationFilesUtil.saveApplicationFiles(applicationPath, application);
+        Map<FileElement, Exception> errors =
+                ApplicationFilesUtil.saveApplicationFiles(applicationPath, application);
         final String NOT_SAVED = "Application file %s not saved to path %s";
         for (Entry<FileElement, Exception> e : errors.entrySet()) {
-            _log.warn(String.format(NOT_SAVED, e.getKey().getFileName(), applicationPath.toString()), e.getValue());
+            _log.warn(
+                    String.format(NOT_SAVED, e.getKey().getFileName(), applicationPath.toString()),
+                    e.getValue());
         }
     }
 
@@ -253,7 +284,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
                 final Version notNullVersion = getVersionByKey(key);
                 if (code == null || notNullVersion == null) {
                     Path unregistered = (Path) key.watchable();
-                    _log.warn(String.format("WatchService: Unregistered WatchKey for the path:'%s'", unregistered));
+                    _log.warn(String.format("WatchService: Unregistered WatchKey for the path:'%s'",
+                            unregistered));
                     continue;
                 }
                 for (WatchEvent<?> event : key.pollEvents()) {
@@ -285,13 +317,15 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         }
         Set<MetadataModifiedHandler> handlers = modifiedHandlers.get(code, notNullVersion);
         if (handlers == null) {
-            final String NO_HANDLERS = "WatchService: Not found handlers for the application %s[%s]";
+            final String NO_HANDLERS =
+                    "WatchService: Not found handlers for the application %s[%s]";
             _log.warn(String.format(NO_HANDLERS, code, notNullVersion));
             return;
         }
         String context = event.context().toString();
         if (APPLICATION_FILE.equals(context) || context.endsWith("jar")) {
-            final String MODIFY = "WatchService: The application %s[%s] context '%s' has been modified";
+            final String MODIFY =
+                    "WatchService: The application %s[%s] context '%s' has been modified";
             _log.info(String.format(MODIFY, code, notNullVersion, context));
             _log.info(String.format("WatchService: %d handler(s) registered", handlers.size()));
             ApplicationElement application = loadApplication(code, originalVersion(notNullVersion));
@@ -299,14 +333,16 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
                 h.loaded(application);
             }
         } else if (!"java".equals(context)) {
-            _log.info(String.format("WatchService: the context '%s' was deliberately ignored", context));
+            _log.info(String.format("WatchService: the context '%s' was deliberately ignored",
+                    context));
         }
     }
 
     @Override
     public void addModifiedHandler(String code, Version version, MetadataModifiedHandler handler) {
         if (watchService == null) {
-            _log.warn("WatchService: Unable to register the handler due to the service is not available");
+            _log.warn(
+                    "WatchService: Unable to register the handler due to the service is not available");
             return;
         }
         if (code == null || handler == null) {
@@ -322,13 +358,16 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
                 startChangeTracking(javaPath, code, version);
                 set.add(handler);
             } catch (IOException | MetadataStoreException e) {
-                _log.warn(String.format("WatchService: the tracking not started for the application '%s[%s]' ", code,
+                _log.warn(String.format(
+                        "WatchService: the tracking not started for the application '%s[%s]' ",
+                        code,
                         version), e);
             }
         }
     }
 
-    protected Set<MetadataModifiedHandler> getModifiedHandlers(final String code, final Version version) {
+    protected Set<MetadataModifiedHandler> getModifiedHandlers(final String code,
+                                                               final Version version) {
         Version notNullVersion = assureNotNull(version);
         Set<MetadataModifiedHandler> result = modifiedHandlers.get(code, notNullVersion);
         if (result == null) {
@@ -338,7 +377,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         return result;
     }
 
-    private void startChangeTracking(final Path path, final String code, final Version version) throws IOException {
+    private void startChangeTracking(final Path path, final String code, final Version version)
+            throws IOException {
         if (Files.exists(path) && Files.isDirectory(path)) {
             WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
             registerCodeVersionKey(key, code, version);
@@ -346,7 +386,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         }
     }
 
-    private void registerCodeVersionKey(final WatchKey key, final String code, final Version version) {
+    private void registerCodeVersionKey(final WatchKey key, final String code,
+                                        final Version version) {
         Version notNullVersion = assureNotNull(version);
         watchedCodes.put(key, code);
         watchedVersions.put(key, notNullVersion);
@@ -375,7 +416,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         Path applications = base.resolve(APPLICATIONS_PATH);
 
         // проверка наличия директории
-        if (Files.notExists(applications)){
+        if (Files.notExists(applications)) {
             try {
                 Files.createDirectories(applications);
             } catch (IOException e) {
@@ -400,7 +441,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
 
                 }
                 if (Files.exists(branches)) {
-                    try (DirectoryStream<Path> branchesStream = Files.newDirectoryStream(branches)) {
+                    try (DirectoryStream<Path> branchesStream = Files.newDirectoryStream(
+                            branches)) {
                         for (Path b : branchesStream) {
                             if (Files.exists(b.resolve(APPLICATION_FILE))) {
                                 result.add(createApplicationStoreData(b, true));
@@ -417,7 +459,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         return result;
     }
 
-    private ApplicationStoreData createApplicationStoreData(Path applicationVersionPath, boolean branch)
+    private ApplicationStoreData createApplicationStoreData(Path applicationVersionPath,
+                                                            boolean branch)
             throws IOException {
         Path appFile = applicationVersionPath.resolve(APPLICATION_FILE);
         String appFileContent = new String(Files.readAllBytes(appFile), StandardCharsets.UTF_8);
@@ -435,7 +478,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore implements Ru
         Path applicationPath;
         try {
             applicationPath = resolveApplicationPath(appCode, null);
-            if (applicationPath == null || Files.notExists(applicationPath) || !Files.isDirectory(applicationPath)) {
+            if (applicationPath == null || Files.notExists(applicationPath) ||
+                    !Files.isDirectory(applicationPath)) {
                 return null;
             }
             Version result = Version.parseVersion(applicationPath.getFileName().toString());

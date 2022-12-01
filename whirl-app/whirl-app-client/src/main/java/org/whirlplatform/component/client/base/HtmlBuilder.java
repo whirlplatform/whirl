@@ -7,6 +7,8 @@ import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -18,14 +20,12 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * HTML компонент
  */
 @JsType(name = "Html", namespace = "Whirl")
-public class HtmlBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+public class HtmlBuilder extends ComponentBuilder
+        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
     private HTML html;
 
@@ -257,8 +257,7 @@ public class HtmlBuilder extends ComponentBuilder implements ClickEvent.HasClick
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

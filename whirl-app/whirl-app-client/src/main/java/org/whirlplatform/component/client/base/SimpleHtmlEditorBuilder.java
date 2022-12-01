@@ -3,6 +3,8 @@ package org.whirlplatform.component.client.base;
 import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.HtmlEditor;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -17,9 +19,6 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Простой HTML редактор
  */
@@ -33,6 +32,7 @@ public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
     public SimpleHtmlEditorBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
+
     @JsIgnore
     public SimpleHtmlEditorBuilder() {
         this(Collections.emptyMap());

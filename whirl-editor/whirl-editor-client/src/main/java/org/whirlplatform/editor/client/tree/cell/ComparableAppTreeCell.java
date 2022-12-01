@@ -12,52 +12,52 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  * Cell for highlighting differences
  */
 public class ComparableAppTreeCell extends AbstractCell<String> {
-	final ComparableAppTree tree;
-	final TreeStore<AbstractElement> store;
+    final ComparableAppTree tree;
+    final TreeStore<AbstractElement> store;
 
-	public ComparableAppTreeCell(final ComparableAppTree tree) {
-		this.tree = tree;
-		this.store = tree.getStore();
-	}
+    public ComparableAppTreeCell(final ComparableAppTree tree) {
+        this.tree = tree;
+        this.store = tree.getStore();
+    }
 
-	@Override
-	public void render(Context context, String value, SafeHtmlBuilder sb) {
-		AbstractElement element = store.findModelWithKey(context.getKey().toString());
-		ElementChangeState changeState = tree.getChangeState(element);
-			switch (changeState) {
-			case CHANGED:
-				sb.appendHtmlConstant("<span style='color:blue'>");
-				sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				sb.appendHtmlConstant("</span>");
-				break;
-			case ADDED:
-				sb.appendHtmlConstant("<span style='color:green;text-decoration:underline'>");
-				sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				sb.appendHtmlConstant("</span>");
-				break;
-			case REMOVED:
-				sb.appendHtmlConstant("<span style='color:red;text-decoration:line-through'>");
-				sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				sb.appendHtmlConstant("</span>");
-				break;
-			case INHERITED_ADDED:
-				sb.appendHtmlConstant("<span style='color:green'>");
-				sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				sb.appendHtmlConstant("</span>");
-				break;
-			case INHERITED_REMOVED:
-				sb.appendHtmlConstant("<span style='color:red'>");
-				sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				sb.appendHtmlConstant("</span>");
-				break;
-			case NONE:
-				if (!tree.isReference(element) && !(element instanceof AbstractDummyElement)) {
-					sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-				} else {
-					sb.appendEscaped(value);
-				}
-				break;
-			default:
-			}
-	}
+    @Override
+    public void render(Context context, String value, SafeHtmlBuilder sb) {
+        AbstractElement element = store.findModelWithKey(context.getKey().toString());
+        ElementChangeState changeState = tree.getChangeState(element);
+        switch (changeState) {
+            case CHANGED:
+                sb.appendHtmlConstant("<span style='color:blue'>");
+                sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                sb.appendHtmlConstant("</span>");
+                break;
+            case ADDED:
+                sb.appendHtmlConstant("<span style='color:green;text-decoration:underline'>");
+                sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                sb.appendHtmlConstant("</span>");
+                break;
+            case REMOVED:
+                sb.appendHtmlConstant("<span style='color:red;text-decoration:line-through'>");
+                sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                sb.appendHtmlConstant("</span>");
+                break;
+            case INHERITED_ADDED:
+                sb.appendHtmlConstant("<span style='color:green'>");
+                sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                sb.appendHtmlConstant("</span>");
+                break;
+            case INHERITED_REMOVED:
+                sb.appendHtmlConstant("<span style='color:red'>");
+                sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                sb.appendHtmlConstant("</span>");
+                break;
+            case NONE:
+                if (!tree.isReference(element) && !(element instanceof AbstractDummyElement)) {
+                    sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+                } else {
+                    sb.appendEscaped(value);
+                }
+                break;
+            default:
+        }
+    }
 }

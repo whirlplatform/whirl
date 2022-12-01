@@ -16,27 +16,29 @@
 package org.whirlplatform.server.servlet;
 
 import com.google.inject.Singleton;
-import org.apache.commons.lang.StringUtils;
-import org.whirlplatform.server.utils.ContextUtil;
-import org.whirlplatform.server.utils.PathUtils;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang.StringUtils;
+import org.whirlplatform.server.utils.ContextUtil;
+import org.whirlplatform.server.utils.PathUtils;
 
 /**
- * A file servlet supporting resume of downloads and client-side caching and
- * GZIP of text content. This servlet can also be used for images, client-side
- * caching would become more efficient. This servlet can also be used for text
- * files, GZIP would decrease network bandwidth.
+ * A file servlet supporting resume of downloads and client-side caching and GZIP of text content.
+ * This servlet can also be used for images, client-side caching would become more efficient. This
+ * servlet can also be used for text files, GZIP would decrease network bandwidth.
  *
  * @author BalusC
  * @link http://balusc.blogspot.com/2009/02/fileservlet-supporting-resume-and.html
@@ -61,6 +63,105 @@ public class StaticResourceServlet extends HttpServlet {
     // Actions
     // ------------------------------------------------------------------------------------
 
+    /**
+     * Returns true if the given match header matches the given value.
+     *
+     * @param matchHeader The match header.
+     * @param toMatch     The value to be matched.
+     * @return True if the given match header matches the given value.
+     */
+    private static boolean matches(String matchHeader, String toMatch) {
+        String[] matchValues = matchHeader.split("\\s*,\\s*");
+        Arrays.sort(matchValues);
+        return Arrays.binarySearch(matchValues, toMatch) > -1 ||
+                Arrays.binarySearch(matchValues, "*") > -1;
+    }
+
+    /**
+     * Copy the given byte range of the given input to the given output.
+     *
+     * @param input  The input to copy the given range to the given output for.
+     * @param output The output to copy the given range from the given input for.
+     * @param start  Start of the byte range.
+     * @param length Length of the byte range.
+     * @throws IOException If something fails at I/O level.
+     */
+    private static void copy(RandomAccessFile input, OutputStream output, long start, long length)
+            throws IOException {
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        int read;
+
+        if (input.length() == length) {
+            // Write full range.
+            while ((read = input.read(buffer)) > 0) {
+                output.write(buffer, 0, read);
+            }
+        } else {
+            // Write partial range.
+            input.seek(start);
+            long toRead = length;
+
+            while ((read = input.read(buffer)) > 0) {
+                if ((toRead -= read) > 0) {
+                    output.write(buffer, 0, read);
+                } else {
+                    output.write(buffer, 0, (int) toRead + read);
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns true if the given accept header accepts the given value.
+     *
+     * @param acceptHeader The accept header.
+     * @param toAccept     The value to be accepted.
+     * @return True if the given accept header accepts the given value.
+     */
+    private static boolean accepts(String acceptHeader, String toAccept) {
+        String[] acceptValues = acceptHeader.split("\\s*(,|;)\\s*");
+        Arrays.sort(acceptValues);
+        return Arrays.binarySearch(acceptValues, toAccept) > -1
+                || Arrays.binarySearch(acceptValues, toAccept.replaceAll("/.*$", "/*")) > -1
+                || Arrays.binarySearch(acceptValues, "*/*") > -1;
+    }
+
+    /**
+     * Returns a substring of the given string value from the given begin index to the given end
+     * index as a long. If the substring is empty, then -1 will be returned
+     *
+     * @param value      The string value to return a substring as long for.
+     * @param beginIndex The begin index of the substring to be returned as long.
+     * @param endIndex   The end index of the substring to be returned as long.
+     * @return A substring of the given string value as long or -1 if substring is empty.
+     */
+    private static long sublong(String value, int beginIndex, int endIndex) {
+        String substring = value.substring(beginIndex, endIndex);
+        return (substring.length() > 0) ? Long.parseLong(substring) : -1;
+    }
+
+    /**
+     * Close the given resource.
+     *
+     * @param resource The resource to be closed.
+     */
+    private static void close(Closeable resource) {
+        if (resource != null) {
+            try {
+                resource.close();
+            } catch (IOException ignore) {
+                // Ignore IOException. If you want to handle this anyway, it
+                // might be useful to know
+                // that this will generally only be thrown when the client
+                // aborted the request.
+            }
+        }
+    }
+
+    // Helpers (can be refactored to public utility class)
+    // ----------------------------------------
+
     private String getPlatformContextPath() {
         String context = getServletContext().getContextPath().startsWith("/")
                 ? getServletContext().getContextPath().substring(1)
@@ -73,37 +174,7 @@ public class StaticResourceServlet extends HttpServlet {
     }
 
     /**
-     * Initialize the servlet.
-     *
-     * @see HttpServlet#init().
-     */
-    public void init() throws ServletException {
-
-        // Get base path (path to get all resources from) as init parameter.
-        this.basePath = ContextUtil.lookup("Whirl/work-path");
-
-        // Validate base path.
-        if (this.basePath == null) {
-            throw new ServletException("FileServlet init param 'basePath' is required.");
-        } else {
-            File path = new File(this.basePath);
-            if (!path.exists() && !path.mkdirs()) {
-                throw new ServletException("FileServlet init param 'basePath' value '" + this.basePath
-                        + "' does actually not exist in file system.");
-            }
-            if (!path.isDirectory()) {
-                throw new ServletException("FileServlet init param 'basePath' value '" + this.basePath
-                        + "' is actually not a directory in file system.");
-            } else if (!path.canRead()) {
-                throw new ServletException("FileServlet init param 'basePath' value '" + this.basePath
-                        + "' is actually not readable in file system.");
-            }
-        }
-    }
-
-    /**
-     * Process HEAD request. This returns the same headers as GET request, but
-     * without content.
+     * Process HEAD request. This returns the same headers as GET request, but without content.
      *
      * @see HttpServlet#doHead(HttpServletRequest, HttpServletResponse).
      */
@@ -125,6 +196,38 @@ public class StaticResourceServlet extends HttpServlet {
     }
 
     /**
+     * Initialize the servlet.
+     *
+     * @see HttpServlet#init().
+     */
+    public void init() throws ServletException {
+
+        // Get base path (path to get all resources from) as init parameter.
+        this.basePath = ContextUtil.lookup("Whirl/work-path");
+
+        // Validate base path.
+        if (this.basePath == null) {
+            throw new ServletException("FileServlet init param 'basePath' is required.");
+        } else {
+            File path = new File(this.basePath);
+            if (!path.exists() && !path.mkdirs()) {
+                throw new ServletException(
+                        "FileServlet init param 'basePath' value '" + this.basePath
+                                + "' does actually not exist in file system.");
+            }
+            if (!path.isDirectory()) {
+                throw new ServletException(
+                        "FileServlet init param 'basePath' value '" + this.basePath
+                                + "' is actually not a directory in file system.");
+            } else if (!path.canRead()) {
+                throw new ServletException(
+                        "FileServlet init param 'basePath' value '" + this.basePath
+                                + "' is actually not readable in file system.");
+            }
+        }
+    }
+
+    /**
      * Process the actual request.
      *
      * @param request  The request to be processed.
@@ -132,7 +235,8 @@ public class StaticResourceServlet extends HttpServlet {
      * @param content  Whether the request body should be written (GET) or not (HEAD).
      * @throws IOException If something fails at I/O level.
      */
-    private void processRequest(HttpServletRequest request, HttpServletResponse response, boolean content)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response,
+                                boolean content)
             throws IOException {
         // Validate the requested file
         // ------------------------------------------------------------
@@ -150,10 +254,13 @@ public class StaticResourceServlet extends HttpServlet {
         }
         requestedFile = URLDecoder.decode(requestedFile, "UTF-8");
 
-        String applicationCode = StringUtils.substringBefore(StringUtils.substringAfter(requestedFile, "/static/"),
-                "/");
-        String filePath = StringUtils.substringAfter(requestedFile, "/static/" + applicationCode + "/");
-        requestedFile = PathUtils.getApplicationFilePath(basePath, getPlatformContextPath(), applicationCode, "static",
+        String applicationCode =
+                StringUtils.substringBefore(StringUtils.substringAfter(requestedFile, "/static/"),
+                        "/");
+        String filePath =
+                StringUtils.substringAfter(requestedFile, "/static/" + applicationCode + "/");
+        requestedFile = PathUtils.getApplicationFilePath(basePath, getPlatformContextPath(),
+                applicationCode, "static",
                 filePath);
 
         // URL-decode the file name (might contain spaces and on) and prepare
@@ -355,7 +462,8 @@ public class StaticResourceServlet extends HttpServlet {
                 // Return full file.
                 Range r = full;
                 response.setContentType(contentType);
-                response.setHeader("Content-Range", "bytes " + r.start + "-" + r.end + "/" + r.total);
+                response.setHeader("Content-Range",
+                        "bytes " + r.start + "-" + r.end + "/" + r.total);
 
                 if (content) {
                     if (acceptsGzip) {
@@ -379,7 +487,8 @@ public class StaticResourceServlet extends HttpServlet {
                 // Return single part of file.
                 Range r = ranges.get(0);
                 response.setContentType(contentType);
-                response.setHeader("Content-Range", "bytes " + r.start + "-" + r.end + "/" + r.total);
+                response.setHeader("Content-Range",
+                        "bytes " + r.start + "-" + r.end + "/" + r.total);
                 response.setHeader("Content-Length", String.valueOf(r.length));
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT); // 206.
 
@@ -406,7 +515,8 @@ public class StaticResourceServlet extends HttpServlet {
                         sos.println();
                         sos.println("--" + MULTIPART_BOUNDARY);
                         sos.println("Content-Type: " + contentType);
-                        sos.println("Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
+                        sos.println(
+                                "Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
 
                         // Copy single part range of multi part range.
                         copy(input, output, r.start, r.length);
@@ -421,105 +531,6 @@ public class StaticResourceServlet extends HttpServlet {
             // Gently close streams.
             close(output);
             close(input);
-        }
-    }
-
-    // Helpers (can be refactored to public utility class)
-    // ----------------------------------------
-
-    /**
-     * Returns true if the given accept header accepts the given value.
-     *
-     * @param acceptHeader The accept header.
-     * @param toAccept     The value to be accepted.
-     * @return True if the given accept header accepts the given value.
-     */
-    private static boolean accepts(String acceptHeader, String toAccept) {
-        String[] acceptValues = acceptHeader.split("\\s*(,|;)\\s*");
-        Arrays.sort(acceptValues);
-        return Arrays.binarySearch(acceptValues, toAccept) > -1
-                || Arrays.binarySearch(acceptValues, toAccept.replaceAll("/.*$", "/*")) > -1
-                || Arrays.binarySearch(acceptValues, "*/*") > -1;
-    }
-
-    /**
-     * Returns true if the given match header matches the given value.
-     *
-     * @param matchHeader The match header.
-     * @param toMatch     The value to be matched.
-     * @return True if the given match header matches the given value.
-     */
-    private static boolean matches(String matchHeader, String toMatch) {
-        String[] matchValues = matchHeader.split("\\s*,\\s*");
-        Arrays.sort(matchValues);
-        return Arrays.binarySearch(matchValues, toMatch) > -1 || Arrays.binarySearch(matchValues, "*") > -1;
-    }
-
-    /**
-     * Returns a substring of the given string value from the given begin index to
-     * the given end index as a long. If the substring is empty, then -1 will be
-     * returned
-     *
-     * @param value      The string value to return a substring as long for.
-     * @param beginIndex The begin index of the substring to be returned as long.
-     * @param endIndex   The end index of the substring to be returned as long.
-     * @return A substring of the given string value as long or -1 if substring is
-     * empty.
-     */
-    private static long sublong(String value, int beginIndex, int endIndex) {
-        String substring = value.substring(beginIndex, endIndex);
-        return (substring.length() > 0) ? Long.parseLong(substring) : -1;
-    }
-
-    /**
-     * Copy the given byte range of the given input to the given output.
-     *
-     * @param input  The input to copy the given range to the given output for.
-     * @param output The output to copy the given range from the given input for.
-     * @param start  Start of the byte range.
-     * @param length Length of the byte range.
-     * @throws IOException If something fails at I/O level.
-     */
-    private static void copy(RandomAccessFile input, OutputStream output, long start, long length) throws IOException {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-        int read;
-
-        if (input.length() == length) {
-            // Write full range.
-            while ((read = input.read(buffer)) > 0) {
-                output.write(buffer, 0, read);
-            }
-        } else {
-            // Write partial range.
-            input.seek(start);
-            long toRead = length;
-
-            while ((read = input.read(buffer)) > 0) {
-                if ((toRead -= read) > 0) {
-                    output.write(buffer, 0, read);
-                } else {
-                    output.write(buffer, 0, (int) toRead + read);
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Close the given resource.
-     *
-     * @param resource The resource to be closed.
-     */
-    private static void close(Closeable resource) {
-        if (resource != null) {
-            try {
-                resource.close();
-            } catch (IOException ignore) {
-                // Ignore IOException. If you want to handle this anyway, it
-                // might be useful to know
-                // that this will generally only be thrown when the client
-                // aborted the request.
-            }
         }
     }
 

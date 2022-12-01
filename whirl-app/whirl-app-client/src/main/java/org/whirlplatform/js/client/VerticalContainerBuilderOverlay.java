@@ -8,8 +8,8 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 /**
- * Контейнер, позволяющий располагать элементы один под другим.
- * В отличие от VBoxContainerBuilder, вложенные компоненты стараются занять максимум места по высоте
+ * Контейнер, позволяющий располагать элементы один под другим. В отличие от VBoxContainerBuilder,
+ * вложенные компоненты стараются занять максимум места по высоте
  */
 public abstract class VerticalContainerBuilderOverlay {
 
@@ -19,40 +19,14 @@ public abstract class VerticalContainerBuilderOverlay {
         return instance;
     }
 
-    /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    public abstract void setHidden(boolean hidden);
-
-    public abstract void isHidden();
-
-    public abstract void setStyleName(String styleName);
-
     public static void addChild(VerticalContainerBuilder instance,
                                 ComponentBuilder builder, VerticalLayoutData data) {
         addChildByIndex(instance, instance.getChildrenCount(), builder, data);
     }
 
     public static void addChildByIndex(VerticalContainerBuilder instance,
-                                       int index, ComponentBuilder builder, VerticalLayoutData data) {
+                                       int index, ComponentBuilder builder,
+                                       VerticalLayoutData data) {
         builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
                 new DataValueImpl(DataType.NUMBER, index));
         if (data != null) {
@@ -81,13 +55,39 @@ public abstract class VerticalContainerBuilderOverlay {
         instance.removeChild(builder);
     }
 
-    public abstract ComponentBuilder[] getChildren();
-
-    public abstract void forceLayout();
-
     public static ComponentBuilder getParent(VerticalContainerBuilder instance) {
         return instance.getParentBuilder();
     }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    public abstract void setEnabled(boolean enabled);
+
+    public abstract void setHidden(boolean hidden);
+
+    public abstract void isHidden();
+
+    public abstract void setStyleName(String styleName);
+
+    public abstract ComponentBuilder[] getChildren();
+
+    public abstract void forceLayout();
 
     public abstract int getChildrenCount();
 

@@ -1,5 +1,9 @@
 package org.whirlplatform.server.metadata;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
 import org.apache.empire.db.DBCmpType;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
@@ -14,11 +18,6 @@ import org.whirlplatform.server.evolution.EvolutionManager;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import javax.inject.Inject;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MetadataProviderImpl implements MetadataProvider {
 
@@ -35,7 +34,8 @@ public class MetadataProviderImpl implements MetadataProvider {
     private EvolutionManager evolutionManager;
 
     @Inject
-    public MetadataProviderImpl(MetadataConfig metadataConfig, ConnectionProvider connectionProvider,
+    public MetadataProviderImpl(MetadataConfig metadataConfig,
+                                ConnectionProvider connectionProvider,
                                 Configuration configuration, EvolutionManager evolutionManager) {
         this.metadataConfig = metadataConfig;
         this.connectionProvider = connectionProvider;
@@ -160,7 +160,8 @@ public class MetadataProviderImpl implements MetadataProvider {
     @Override
     public void createDatabaseStructure() {
         try {
-            evolutionManager.applyMetadataEvolution(metadataConfig.getMetadataAlias(), "org/whirlplatform/sql/changelog.xml");
+            evolutionManager.applyMetadataEvolution(metadataConfig.getMetadataAlias(),
+                    "org/whirlplatform/sql/changelog.xml");
         } catch (EvolutionException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());

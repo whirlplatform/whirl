@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.DeleteEvent.DeleteHandler;
 
 public class DeleteEvent extends GwtEvent<DeleteHandler> {
 
-	private static Type<DeleteHandler> TYPE;
+    private static Type<DeleteHandler> TYPE;
 
-	public static Type<DeleteHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<DeleteHandler>() {
-				@Override
-				public String toString() {
-					return "DeleteHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<DeleteHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<DeleteHandler>() {
+                @Override
+                public String toString() {
+                    return "DeleteHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<DeleteHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<DeleteHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(DeleteHandler handler) {
-		handler.onDelete(this);
-	}
+    @Override
+    protected void dispatch(DeleteHandler handler) {
+        handler.onDelete(this);
+    }
 
-	public interface DeleteHandler extends EventHandler {
+    public interface DeleteHandler extends EventHandler {
 
-		void onDelete(DeleteEvent event);
+        void onDelete(DeleteEvent event);
 
-	}
+    }
 
-	public interface HasDeleteHandlers {
+    public interface HasDeleteHandlers {
 
         HandlerRegistration addDeleteHandler(DeleteHandler handler);
 
-	}
+    }
 
 }

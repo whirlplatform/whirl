@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -31,281 +33,280 @@ import org.whirlplatform.rpc.shared.ClientRestException;
 import org.whirlplatform.rpc.shared.ExceptionData;
 import org.whirlplatform.rpc.shared.SessionToken;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Компонент Форма логина. Берет контейнер с формой из ClientLoginUtil.
  */
 public class LoginPanelBuilder extends ComponentBuilder {
 
-	private HTML html;
-	private WidgetComponent wrapper;
+    private static Element loginDiv;
+    private static InputElement loginField;
+    private static InputElement passwordField;
+    private static InputElement submitButton;
+    private static ScheduledCommand buildApplicationCommand = new ScheduledCommand() {
+        @Override
+        public void execute() {
+        }
+    };
+    private static ScheduledCommand loginSuccessCommand = new ScheduledCommand() {
 
-	private static Element loginDiv;
-	private static InputElement loginField;
-	private static InputElement passwordField;
-	private static InputElement submitButton;
+        @Override
+        public void execute() {
+        }
 
-	private static ScheduledCommand buildApplicationCommand = new ScheduledCommand() {
-		@Override
-		public void execute() {
-		}
-	};
+    };
 
-	private static ScheduledCommand loginSuccessCommand = new ScheduledCommand() {
+    static {
+        loginDiv = DOM.getElementById("div_login_form");
 
-		@Override
-		public void execute() {
-		}
+        if (loginDiv == null) {
+            initLoginPanelMock();
+        }
 
-	};
+        Element loginEl = DOM.getElementById("login-field");
+        if (loginEl != null) {
+            loginField = loginEl.cast();
+        }
+        Element passwordEl = DOM.getElementById("pwd-field");
+        if (passwordEl != null) {
+            passwordField = passwordEl.cast();
+        }
+        Element submitEl = DOM.getElementById("submit-btn");
+        if (submitEl != null) {
+            submitButton = submitEl.cast();
+        }
+    }
 
-	static {
-		loginDiv = DOM.getElementById("div_login_form");
+    private HTML html;
+    private WidgetComponent wrapper;
 
-		if (loginDiv == null) {
-			initLoginPanelMock();
-		}
+    public LoginPanelBuilder(Map<String, DataValue> builderProperties) {
+        super(builderProperties);
+    }
 
-		Element loginEl = DOM.getElementById("login-field");
-		if (loginEl != null) {
-			loginField = loginEl.cast();
-		}
-		Element passwordEl = DOM.getElementById("pwd-field");
-		if (passwordEl != null) {
-			passwordField = passwordEl.cast();
-		}
-		Element submitEl = DOM.getElementById("submit-btn");
-		if (submitEl != null) {
-			submitButton = submitEl.cast();
-		}
-	}
+    public LoginPanelBuilder() {
+        this(Collections.emptyMap());
+    }
 
-	public LoginPanelBuilder( Map<String, DataValue> builderProperties) {
-		super(builderProperties);
-	}
+    // предполагается срабатывание только в редакторе форм
+    // это достигается путём отсутствия тэга c id=div_login_form в editor.jsp
+    private static void initLoginPanelMock() {
+        loginDiv = DOM.createDiv().cast(); // for avoid error "A widget that has
+        // an existing parent widget may not
+        // be added to the detach list"
+        loginDiv.getStyle().setBorderWidth(1, Unit.PX);
+        loginDiv.getStyle().setBorderStyle(BorderStyle.DASHED);
+        loginDiv.setInnerText("Login Panel");
+        loginDiv.setAttribute("id", "div_login_form");
+        RootPanel.getBodyElement().appendChild(loginDiv); // чуть позже
+        // HTML.wrap
+        // переместит этот
+        // элемент внутрь
+        // виджета, и затем
+        // уберёт из дом
+        // модели.
+        // так что нужно будет пересоздавать этот элемент в редакторе форм.
+    }
 
-	public LoginPanelBuilder() {
-		this(Collections.emptyMap());
-	}
+    public static void login() {
+        login(loginField.getValue(), passwordField.getValue());
+    }
 
-	// предполагается срабатывание только в редакторе форм
-	// это достигается путём отсутствия тэга c id=div_login_form в editor.jsp
-	private static void initLoginPanelMock() {
-		loginDiv = DOM.createDiv().cast(); // for avoid error "A widget that has
-											// an existing parent widget may not
-											// be added to the detach list"
-		loginDiv.getStyle().setBorderWidth(1, Unit.PX);
-		loginDiv.getStyle().setBorderStyle(BorderStyle.DASHED);
-		loginDiv.setInnerText("Login Panel");
-		loginDiv.setAttribute("id", "div_login_form");
-		RootPanel.getBodyElement().appendChild(loginDiv); // чуть позже
-															// HTML.wrap
-															// переместит этот
-															// элемент внутрь
-															// виджета, и затем
-															// уберёт из дом
-															// модели.
-		// так что нужно будет пересоздавать этот элемент в редакторе форм.
-	}
+    private static void login(String login, String password) {
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
+            InfoHelper.error("login", AppMessage.Util.MESSAGE.alert(),
+                    AppMessage.Util.MESSAGE.login_header());
+            return;
+        }
 
-	@Override
-	public ComponentType getType() {
-		return ComponentType.LoginPanelType;
-	}
+        submitButton.setDisabled(true);
 
-	@Override
-	protected Component init(Map<String, DataValue> builderProperties) {
-		loginDiv = DOM.getElementById("div_login_form");
+        AsyncCallback<ClientUser> callback = new AsyncCallback<ClientUser>() {
+            @Override
+            public void onSuccess(ClientUser user) {
+                ClientUser.setCurrentUser(user);
+                SessionToken.set(user.getSessionToken());
 
-		if (loginDiv == null) { // в редакторе форм будет именно так. поэтому
-								// предусматриваем заглушку
-			initLoginPanelMock();
-		}
-		html = HTML.wrap(loginDiv);
-		loginDiv.getStyle().setDisplay(Display.BLOCK);
-		wrapper = new WidgetComponent(html);
-		return wrapper;
-	}
+                submitButton.setDisabled(false);
 
+                loginSuccessCommand.execute();
 
-	public static void login() {
-		login(loginField.getValue(), passwordField.getValue());
-	}
+                Scheduler.get().scheduleDeferred(buildApplicationCommand);
+            }
 
-	private static void login(String login, String password) {
-		if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-			InfoHelper.error("login", AppMessage.Util.MESSAGE.alert(), AppMessage.Util.MESSAGE.login_header());
-			return;
-		}
+            @Override
+            public void onFailure(Throwable caught) {
+                if (caught instanceof ClientRestException &&
+                        ((ClientRestException) caught).getData() != null
+                        && ((ClientRestException) caught).getData().getType() ==
+                        ExceptionData.ExceptionType.PASSWORDCHANGE) {
+                    ExceptionData pce = ((ClientRestException) caught).getData();
+                    String pwdServiceUrl = pce.getPasswordChangeServiceUrl();
+                    String currentUrl = URL.encodeComponent(Window.Location.getHref());
+                    pwdServiceUrl = pwdServiceUrl.replace("{{redirect_uri}}", currentUrl);
+                    Location.replace(pwdServiceUrl);
 
-		submitButton.setDisabled(true);
+                } else {
+                    submitButton.setDisabled(false);
+                    InfoHelper.throwInfo("login", caught);
+                }
+            }
+        };
+        DataServiceAsync.Util.getDataService(callback).login(SessionToken.get(), login, password);
+    }
 
-		AsyncCallback<ClientUser> callback = new AsyncCallback<ClientUser>() {
-			@Override
-			public void onSuccess(ClientUser user) {
-				ClientUser.setCurrentUser(user);
-				SessionToken.set(user.getSessionToken());
+    public static void setBuildApplicationCommand(ScheduledCommand command) {
+        buildApplicationCommand = command;
+    }
 
-				submitButton.setDisabled(false);
+    public static void setLoginSuccessCommand(ScheduledCommand command) {
+        loginSuccessCommand = command;
+    }
 
-				loginSuccessCommand.execute();
+    public static boolean isLoginPanelExists() {
+        return Document.get().getBody().isOrHasChild(loginDiv);
+    }
 
-				Scheduler.get().scheduleDeferred(buildApplicationCommand);
-			}
+    @JsIgnore
+    public static Locator locatorByElement(Element element) {
+        if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
+            return null;
+        }
+        Locator result = new Locator(ComponentType.LoginPanelType);
+        if (loginField.isOrHasChild(element)) {
+            result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_LOGIN_FIELD));
+            return result;
+        } else if (passwordField.isOrHasChild(element)) {
+            result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD));
+            return result;
+        } else if (submitButton.isOrHasChild(element)) {
+            result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON));
+            return result;
+        }
+        return null;
+    }
 
-			@Override
-			public void onFailure(Throwable caught) {
-				if (caught instanceof ClientRestException && ((ClientRestException) caught).getData() != null
-                        && ((ClientRestException) caught).getData().getType() == ExceptionData.ExceptionType.PASSWORDCHANGE) {
-					ExceptionData pce = ((ClientRestException) caught).getData();
-					String pwdServiceUrl = pce.getPasswordChangeServiceUrl();
-					String currentUrl = URL.encodeComponent(Window.Location.getHref());
-					pwdServiceUrl = pwdServiceUrl.replace("{{redirect_uri}}", currentUrl);
-					Location.replace(pwdServiceUrl);
+    @JsIgnore
+    public static Element elementByLocator(Locator locator) {
+        if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
+            return null;
+        }
+        if (ComponentType.LoginPanelType.getType().equals(locator.getType())) {
+            Locator part = locator.getPart();
+            if (part != null) {
+                if (part.getType().equals(LoginPanelBuilder.LocatorParams.TYPE_LOGIN_FIELD)) {
+                    return loginField;
+                } else if (part.getType()
+                        .equals(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD)) {
+                    return passwordField;
+                } else if (part.getType()
+                        .equals(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON)) {
+                    return submitButton;
+                }
+            }
+        }
+        return null;
+    }
 
-				} else {
-					submitButton.setDisabled(false);
-					InfoHelper.throwInfo("login", caught);
-				}
-			}
-		};
-		DataServiceAsync.Util.getDataService(callback).login(SessionToken.get(), login, password);
-	}
+    @Override
+    public ComponentType getType() {
+        return ComponentType.LoginPanelType;
+    }
 
-	public static void setBuildApplicationCommand(ScheduledCommand command) {
-		buildApplicationCommand = command;
-	}
+    @Override
+    protected Component init(Map<String, DataValue> builderProperties) {
+        loginDiv = DOM.getElementById("div_login_form");
 
-	public static void setLoginSuccessCommand(ScheduledCommand command) {
-		loginSuccessCommand = command;
-	}
+        if (loginDiv == null) { // в редакторе форм будет именно так. поэтому
+            // предусматриваем заглушку
+            initLoginPanelMock();
+        }
+        html = HTML.wrap(loginDiv);
+        loginDiv.getStyle().setDisplay(Display.BLOCK);
+        wrapper = new WidgetComponent(html);
+        return wrapper;
+    }
 
-	@Override
-	protected <C> C getRealComponent() {
-		return (C) html;
-	}
+    @Override
+    protected <C> C getRealComponent() {
+        return (C) html;
+    }
 
-	public static boolean isLoginPanelExists() {
-		return Document.get().getBody().isOrHasChild(loginDiv);
-	}
+    @JsIgnore
+    @Override
+    public Locator getLocatorByElement(Element element) {
+        return locatorByElement(element);
+    }
 
-	private static class LocatorParams {
+    @JsIgnore
+    @Override
+    public Element getElementByLocator(Locator locator) {
+        return elementByLocator(locator);
+    }
 
-		private static String TYPE_LOGIN_FIELD = "LoginField";
-		private static String TYPE_PASSWORD_FIELD = "PasswordField";
-		private static String TYPE_SUBMIT_BUTTON = "SubmitButton";
+    /**
+     * Возвращает код компонента.
+     *
+     * @return код компонента
+     */
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
 
-	}
+    /**
+     * Проверяет, находится ли компонент в скрытом состоянии.
+     *
+     * @return true если компонент скрыт
+     */
+    @Override
+    public boolean isHidden() {
+        return super.isHidden();
+    }
 
-	@JsIgnore
-	@Override
-	public Locator getLocatorByElement(Element element) {
-		return locatorByElement(element);
-	}
+    /**
+     * Устанавливает скрытое состояние компонента.
+     *
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
+     */
+    @Override
+    public void setHidden(boolean hidden) {
+        super.setHidden(hidden);
+    }
 
-	@JsIgnore
-	@Override
-	public Element getElementByLocator(Locator locator) {
-		return elementByLocator(locator);
-	}
+    /**
+     * Устанавливает фокус на компоненте.
+     */
+    @Override
+    public void focus() {
+        super.focus();
+    }
 
-	@JsIgnore
-	public static Locator locatorByElement(Element element) {
-		if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
-			return null;
-		}
-		Locator result = new Locator(ComponentType.LoginPanelType);
-		if (loginField.isOrHasChild(element)) {
-			result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_LOGIN_FIELD));
-			return result;
-		} else if (passwordField.isOrHasChild(element)) {
-			result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD));
-			return result;
-		} else if (submitButton.isOrHasChild(element)) {
-			result.setPart(new Locator(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON));
-			return result;
-		}
-		return null;
-	}
+    /**
+     * Проверяет, включен ли компонент.
+     *
+     * @return true если компонент включен
+     */
+    @Override
+    public boolean isEnabled() {
+        return super.isEnabled();
+    }
 
-	@JsIgnore
-	public static Element elementByLocator(Locator locator) {
-		if (loginDiv == null || !loginDiv.<XElement>cast().isVisible()) {
-			return null;
-		}
-		if (ComponentType.LoginPanelType.getType().equals(locator.getType())) {
-			Locator part = locator.getPart();
-			if (part != null) {
-				if (part.getType().equals(LoginPanelBuilder.LocatorParams.TYPE_LOGIN_FIELD)) {
-					return loginField;
-				} else if (part.getType().equals(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD)) {
-					return passwordField;
-				} else if (part.getType().equals(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON)) {
-					return submitButton;
-				}
-			}
-		}
-		return null;
-	}
+    /**
+     * Устанавливает включенное состояние компонента.
+     *
+     * @param enabled true - для включения компонента, false - для отключения компонента
+     */
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
 
-	/**
-	 * Возвращает код компонента.
-	 *
-	 * @return код компонента
-	 */
-	@Override
-	public String getCode() {
-		return super.getCode();
-	}
+    private static class LocatorParams {
 
-	/**
-	 * Проверяет, находится ли компонент в скрытом состоянии.
-	 *
-	 * @return true если компонент скрыт
-	 */
-	@Override
-	public boolean isHidden() {
-		return super.isHidden();
-	}
+        private static String TYPE_LOGIN_FIELD = "LoginField";
+        private static String TYPE_PASSWORD_FIELD = "PasswordField";
+        private static String TYPE_SUBMIT_BUTTON = "SubmitButton";
 
-	/**
-	 * Устанавливает скрытое состояние компонента.
-	 *
-	 * @param hidden true - для скрытия компонента, false - для отображения компонента
-	 */
-	@Override
-	public void setHidden(boolean hidden) {
-		super.setHidden(hidden);
-	}
-
-	/**
-	 * Устанавливает фокус на компоненте.
-	 */
-	@Override
-	public void focus() {
-		super.focus();
-	}
-
-	/**
-	 * Проверяет, включен ли компонент.
-	 *
-	 * @return true если компонент включен
-	 */
-	@Override
-	public boolean isEnabled() {
-		return super.isEnabled();
-	}
-
-	/**
-	 * Устанавливает включенное состояние компонента.
-	 *
-	 * @param enabled true - для включения компонента, false - для отключения компонента
-	 */
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-	}
+    }
 
 }

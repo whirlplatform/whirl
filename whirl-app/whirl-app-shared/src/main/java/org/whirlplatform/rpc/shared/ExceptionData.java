@@ -5,18 +5,12 @@ import java.util.Map;
 
 public class ExceptionData {
 
-    public enum ExceptionType {SIMPLE, PASSWORDCHANGE, WRONGAPP}
-
-    public enum ExceptionLevel {ERROR, INFO}
-
     private ExceptionType type = ExceptionType.SIMPLE;
     private String message;
     private boolean sessionExpired;
     private ExceptionLevel level;
-
     // PASSWORDCHANGE
     private String passwordChangeServiceUrl;
-
     // WRONGAPPS
     private Map<String, String> allowedApps;
 
@@ -74,4 +68,8 @@ public class ExceptionData {
     public void setAllowedApps(Map<String, String> allowedApps) {
         this.allowedApps = allowedApps;
     }
+
+    public enum ExceptionType {SIMPLE, PASSWORDCHANGE, WRONGAPP}
+
+    public enum ExceptionLevel {ERROR, INFO}
 }

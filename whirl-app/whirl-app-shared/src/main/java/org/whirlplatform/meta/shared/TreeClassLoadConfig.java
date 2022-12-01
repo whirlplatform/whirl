@@ -66,11 +66,11 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.parentColumn = parentColumn;
     }
 
-    public void setParent(RowModelData parent) {
-        this.parent = parent;
-    }
-
     public RowModelData getParent() {
         return parent;
+    }
+
+    public void setParent(RowModelData parent) {
+        this.parent = parent;
     }
 }

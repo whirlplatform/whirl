@@ -1,10 +1,9 @@
 package org.whirlplatform.editor.client.util;
 
+import java.util.Comparator;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-
-import java.util.Comparator;
 
 public class TreeElementNamesComparator implements Comparator<AbstractElement> {
     /**

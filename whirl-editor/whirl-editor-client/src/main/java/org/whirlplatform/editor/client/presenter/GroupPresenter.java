@@ -8,6 +8,7 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Collection;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppGroups;
 import org.whirlplatform.editor.client.view.GroupView;
@@ -17,21 +18,9 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.GroupElement;
 
-import java.util.Collection;
-
 @Presenter(view = GroupView.class)
 public class GroupPresenter extends BasePresenter<GroupPresenter.IGroupView, EditorEventBus>
         implements ElementPresenter {
-
-    public interface IGroupView extends ReverseViewInterface<GroupPresenter>, IsWidget {
-
-        void addGroup(GroupElement group);
-
-        Collection<GroupElement> getGroups();
-
-        void clearUI();
-
-    }
 
     private ApplicationElement application;
 
@@ -75,5 +64,15 @@ public class GroupPresenter extends BasePresenter<GroupPresenter.IGroupView, Edi
             view.addGroup(group);
         }
         eventBus.openElementView(view);
+    }
+
+    public interface IGroupView extends ReverseViewInterface<GroupPresenter>, IsWidget {
+
+        void addGroup(GroupElement group);
+
+        Collection<GroupElement> getGroups();
+
+        void clearUI();
+
     }
 }

@@ -13,7 +13,11 @@
     <packaging>gwt-app</packaging>
 
     <properties>
+        <project.rootdir>${project.basedir}/../..</project.rootdir>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <gwt.module>org.whirlplatform.app.Application</gwt.module>
     </properties>
 
@@ -119,6 +123,10 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

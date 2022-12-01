@@ -19,96 +19,97 @@ import com.sencha.gxt.widget.core.client.grid.GridView.GridStateStyles;
 
 public class CheckBoxColumnDefaultAppearance implements CheckBoxColumnAppearance {
 
-  public interface CheckBoxColumnStyle extends CssResource {
-    String headerChecked();
+    private final CheckBoxColumnResources resources;
+    private final CheckBoxColumnStyle style;
+    private final CheckBoxColumnTemplates template;
 
-    String hdChecker();
+    public CheckBoxColumnDefaultAppearance() {
+        this(GWT.create(CheckBoxColumnResources.class), GWT.create(CheckBoxColumnTemplates.class));
+    }
 
-    String cell();
+    public CheckBoxColumnDefaultAppearance(CheckBoxColumnResources resources,
+                                           CheckBoxColumnTemplates template) {
+        this.resources = resources;
+        this.style = this.resources.style();
+        this.template = template;
 
-    String cellInner();
+        StyleInjectorHelper.ensureInjected(style, true);
+    }
 
-    String rowChecker();
+    @Override
+    public String getCellClassName() {
+        return style.cell();
+    }
 
-  }
+    @Override
+    public String getCellInnerClassName() {
+        return style.cellInner();
+    }
 
-  public interface CheckBoxColumnResources extends ClientBundle {
-    @Source("CheckBoxColumn.gss")
-    @Import({GridStateStyles.class, ColumnHeaderStyles.class})
-    CheckBoxColumnStyle style();
+    @Override
+    public void renderCellCheckBox(Context context, Object value, SafeHtmlBuilder sb) {
+        sb.append(template.renderCell(style));
+    }
 
-    @ImageOptions(repeatStyle = RepeatStyle.Vertical)
-    ImageResource specialColumn();
+    @Override
+    public SafeHtml renderHeadCheckBox() {
+        return template.renderHeader(style);
+    }
 
-    @ImageOptions(repeatStyle = RepeatStyle.Vertical)
-    ImageResource specialColumnSelected();
+    @Override
+    public void onHeaderChecked(XElement header, boolean checked) {
+        header.setClassName(style.headerChecked(), checked);
+    }
 
-    ImageResource checked();
+    @Override
+    public boolean isHeaderChecked(XElement header) {
+        return header.findParent("." + style.headerChecked(), 3) != null;
+    }
 
-    ImageResource unchecked();
-  }
+    @Override
+    public boolean isRowChecker(XElement target) {
+        return target.is("." + style.rowChecker());
+    }
 
-  public interface CheckBoxColumnTemplates extends XTemplates {
-    @XTemplate("<div class='{style.rowChecker}'>&#160;</div>")
-    SafeHtml renderCell(CheckBoxColumnStyle style);
+    public CheckBoxColumnStyle getStyle() {
+        return style;
+    }
 
-    @XTemplate("<div class='{style.hdChecker}'></div>")
-    SafeHtml renderHeader(CheckBoxColumnStyle style);
-  }
+    public interface CheckBoxColumnStyle extends CssResource {
+        String headerChecked();
 
-  private final CheckBoxColumnResources resources;
-  private final CheckBoxColumnStyle style;
-  private final CheckBoxColumnTemplates template;
+        String hdChecker();
 
-  public CheckBoxColumnDefaultAppearance() {
-      this(GWT.create(CheckBoxColumnResources.class), GWT.create(CheckBoxColumnTemplates.class));
-  }
+        String cell();
 
-  public CheckBoxColumnDefaultAppearance(CheckBoxColumnResources resources, CheckBoxColumnTemplates template) {
-    this.resources = resources;
-    this.style = this.resources.style();
-    this.template = template;
+        String cellInner();
 
-    StyleInjectorHelper.ensureInjected(style, true);
-  }
+        String rowChecker();
 
-  @Override
-  public String getCellClassName() {
-    return style.cell();
-  }
+    }
 
-  @Override
-  public String getCellInnerClassName() {
-    return style.cellInner();
-  }
+    public interface CheckBoxColumnResources extends ClientBundle {
+        @Source("CheckBoxColumn.gss")
+        @Import({GridStateStyles.class, ColumnHeaderStyles.class})
+        CheckBoxColumnStyle style();
 
-  @Override
-  public void renderCellCheckBox(Context context, Object value, SafeHtmlBuilder sb) {
-    sb.append(template.renderCell(style));
-  }
+        @ImageOptions(repeatStyle = RepeatStyle.Vertical)
+        ImageResource specialColumn();
 
-  @Override
-  public SafeHtml renderHeadCheckBox() {
-    return template.renderHeader(style);
-  }
+        @ImageOptions(repeatStyle = RepeatStyle.Vertical)
+        ImageResource specialColumnSelected();
 
-  @Override
-  public void onHeaderChecked(XElement header, boolean checked) {
-    header.setClassName(style.headerChecked(), checked);
-  }
+        ImageResource checked();
 
-  @Override
-  public boolean isHeaderChecked(XElement header) {
-    return header.findParent("." + style.headerChecked(), 3) != null;
-  }
+        ImageResource unchecked();
+    }
 
-  @Override
-  public boolean isRowChecker(XElement target) {
-    return target.is("." + style.rowChecker());
-  }
-  
-  public CheckBoxColumnStyle getStyle() {
-	return style;
-  }
+    public interface CheckBoxColumnTemplates extends XTemplates {
+        @XTemplate("<div class='{style.rowChecker}'>&#160;</div>")
+        SafeHtml renderCell(CheckBoxColumnStyle style);
+
+        @XTemplate("<div class='{style.hdChecker}'></div>")
+        SafeHtml renderHeader(CheckBoxColumnStyle style);
+    }
 
 }

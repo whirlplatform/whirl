@@ -2,6 +2,8 @@ package org.whirlplatform.component.client.base;
 
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.CenterLayoutContainer;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -9,9 +11,6 @@ import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Контейнер содержимое которого центрируется.
@@ -126,8 +125,7 @@ public class CenterContainerBuilder extends SimpleContainerBuilder {
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

@@ -6,12 +6,12 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 
 public class ContentPanelDesigner extends ComponentDesigner {
 
-	public ContentPanelDesigner(LocaleElement defaultLocale, ComponentElement element) {
-		super(defaultLocale, element);
-	}
+    public ContentPanelDesigner(LocaleElement defaultLocale, ComponentElement element) {
+        super(defaultLocale, element);
+    }
 
-	@Override
-	protected ComponentType componentType(ComponentElement element) {
-		return ComponentType.SimpleContainerType;
-	}
+    @Override
+    protected ComponentType componentType(ComponentElement element) {
+        return ComponentType.SimpleContainerType;
+    }
 }

@@ -10,8 +10,9 @@ import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.DateTimePropertyEditor;
-import com.sencha.gxt.widget.core.client.form.Field;
-import com.sencha.gxt.widget.core.client.form.ValueBaseField;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -27,15 +28,12 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-
 /**
  * Поле ввода даты
  */
 @JsType(name = "DateField", namespace = "Whirl")
-public class DateFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Date>, Parameter<DataValue> {
+public class DateFieldBuilder extends AbstractFieldBuilder
+        implements NativeParameter<Date>, Parameter<DataValue> {
 
     private DateField field;
     private String datePattern;
@@ -76,7 +74,8 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
 
         DateCell cell = new DateCell() {
             @Override
-            public void finishEditing(Element parent, Date value, Object key, ValueUpdater<Date> valueUpdater) {
+            public void finishEditing(Element parent, Date value, Object key,
+                                      ValueUpdater<Date> valueUpdater) {
                 Object empty = getComponent().getData(AppConstant.MASK_EMPTY);
                 if (empty != null && empty instanceof Boolean && (Boolean) empty) {
                     return;
@@ -308,11 +307,6 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         }
     }
 
-    private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_TRIGGER = "Trigger";
-    }
-
     @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -320,7 +314,8 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
         if (result != null) {
             if (field.getCell().getInputElement(field.getElement()).isOrHasChild(element)) {
                 result.setPart(new Locator(DateFieldBuilder.LocatorParams.TYPE_INPUT));
-            } else if (field.getCell().getAppearance().triggerIsOrHasChild(field.getElement(), element)) {
+            } else if (field.getCell().getAppearance()
+                    .triggerIsOrHasChild(field.getElement(), element)) {
                 result.setPart(new Locator(DateFieldBuilder.LocatorParams.TYPE_TRIGGER));
             }
         }
@@ -342,8 +337,10 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
             if (LocatorParams.TYPE_TRIGGER.equals(part.getType())) {
                 TriggerFieldAppearance appearance = field.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
-                    TriggerFieldDefaultAppearance defApp = (TriggerFieldDefaultAppearance) appearance;
-                    element = field.getElement().selectNode("." + defApp.getStyle().trigger()); //TODO что-то придумать
+                    TriggerFieldDefaultAppearance defApp =
+                            (TriggerFieldDefaultAppearance) appearance;
+                    element = field.getElement()
+                            .selectNode("." + defApp.getStyle().trigger()); //TODO что-то придумать
                 }
             }
         }
@@ -468,5 +465,10 @@ public class DateFieldBuilder extends AbstractFieldBuilder implements NativePara
     @SuppressWarnings({"unchecked", "rawtypes"})
     public void clear() {
         super.clear();
+    }
+
+    private static class LocatorParams {
+        private static String TYPE_INPUT = "Input";
+        private static String TYPE_TRIGGER = "Trigger";
     }
 }

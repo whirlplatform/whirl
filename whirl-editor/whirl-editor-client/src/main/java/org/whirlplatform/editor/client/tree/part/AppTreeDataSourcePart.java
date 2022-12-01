@@ -1,5 +1,9 @@
 package org.whirlplatform.editor.client.tree.part;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import org.whirlplatform.editor.client.meta.NewSchemaElement;
 import org.whirlplatform.editor.client.tree.AppTree;
 import org.whirlplatform.editor.client.tree.AppTreePresenter;
@@ -11,24 +15,12 @@ import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-
 public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement> {
-
-    class DataSourceFolders {
-        private DummySchemas schemas;
-
-        private DataSourceFolders(DataSourceElement datasource) {
-            schemas = new DummySchemas(datasource.getId());
-        }
-    }
 
     private DataSourceFolders folders;
 
-    AppTreeDataSourcePart(AppTree appTree, AppTreePresenter treePresenter, DataSourceElement datasource) {
+    AppTreeDataSourcePart(AppTree appTree, AppTreePresenter treePresenter,
+                          DataSourceElement datasource) {
         super(appTree, treePresenter, datasource);
         this.folders = new DataSourceFolders(datasource);
     }
@@ -90,10 +82,12 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
 
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
-        if (parent == handledElement && element instanceof SchemaElement && handledElement.getSchemas().contains(element)) {
+        if (parent == handledElement && element instanceof SchemaElement &&
+                handledElement.getSchemas().contains(element)) {
             removeElement(element);
             addChildElement(folders.schemas, element);
-            putTreePart(element, new AppTreeSchemaPart(appTree, treePresenter, (SchemaElement) element));
+            putTreePart(element,
+                    new AppTreeSchemaPart(appTree, treePresenter, (SchemaElement) element));
             return true;
         }
         return false;
@@ -138,7 +132,8 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
             }
             if (!tables.isEmpty()) {
                 treePresenter.riseEditRights(tables, Collections.unmodifiableCollection(Arrays
-                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW, RightType.RESTRICT)));
+                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
+                                RightType.RESTRICT)));
             }
         }
         return false;
@@ -158,5 +153,13 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
 
     @Override
     public void clear() {
+    }
+
+    class DataSourceFolders {
+        private DummySchemas schemas;
+
+        private DataSourceFolders(DataSourceElement datasource) {
+            schemas = new DummySchemas(datasource.getId());
+        }
     }
 }

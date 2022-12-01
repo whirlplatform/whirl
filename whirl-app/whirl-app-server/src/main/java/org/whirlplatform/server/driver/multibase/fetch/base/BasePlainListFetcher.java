@@ -1,5 +1,8 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBQuery;
@@ -21,11 +24,8 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-public class BasePlainListFetcher extends BasePlainTableFetcher implements ListFetcher<PlainTableElement> {
+public class BasePlainListFetcher extends BasePlainTableFetcher
+        implements ListFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(BasePlainListFetcher.class);
 
     public BasePlainListFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
@@ -37,7 +37,8 @@ public class BasePlainListFetcher extends BasePlainTableFetcher implements ListF
                                                ClassLoadConfig loadConfig) {
         @SuppressWarnings("unused")
         Date start = new Date();
-        PlainListFetcherHelper temp = new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+        PlainListFetcherHelper temp =
+                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
 
         List<ListModelData> result = new ArrayList<ListModelData>();
@@ -68,7 +69,8 @@ public class BasePlainListFetcher extends BasePlainTableFetcher implements ListF
         }
     }
 
-    protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig, PlainListFetcherHelper temp) {
+    protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
+                                                PlainListFetcherHelper temp) {
         DBColumnExpr idColumn = temp.dbPrimaryKey;
         DBColumnExpr valueColumn = temp.labelExpression;
 

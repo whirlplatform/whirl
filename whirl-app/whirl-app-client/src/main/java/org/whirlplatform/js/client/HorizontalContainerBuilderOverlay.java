@@ -8,8 +8,8 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 /**
- * Контейнер, позволяющий располагать элементы один рядом с другим.
- * В отличие от HBoxContainerBuilder, вложенные компоненты стараются занять всю ширину контейнера
+ * Контейнер, позволяющий располагать элементы один рядом с другим. В отличие от
+ * HBoxContainerBuilder, вложенные компоненты стараются занять всю ширину контейнера
  */
 public abstract class HorizontalContainerBuilderOverlay {
 
@@ -19,40 +19,14 @@ public abstract class HorizontalContainerBuilderOverlay {
         return instance;
     }
 
-    /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    public abstract void setHidden(boolean hidden);
-
-    public abstract void isHidden();
-
-    public abstract void setStyleName(String styleName);
-
     public static void addChild(HorizontalContainerBuilder instance,
                                 ComponentBuilder builder, HorizontalLayoutData data) {
         addChildByIndex(instance, instance.getChildrenCount(), builder, data);
     }
 
     public static void addChildByIndex(HorizontalContainerBuilder instance,
-                                       int index, ComponentBuilder builder, HorizontalLayoutData data) {
+                                       int index, ComponentBuilder builder,
+                                       HorizontalLayoutData data) {
         builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
                 new DataValueImpl(DataType.NUMBER, index));
         if (data != null) {
@@ -81,13 +55,39 @@ public abstract class HorizontalContainerBuilderOverlay {
         instance.removeChild(builder);
     }
 
-    public abstract ComponentBuilder[] getChildren();
-
-    public abstract void forceLayout();
-
     public static ComponentBuilder getParent(HorizontalContainerBuilder instance) {
         return instance.getParentBuilder();
     }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    public abstract void setEnabled(boolean enabled);
+
+    public abstract void setHidden(boolean hidden);
+
+    public abstract void isHidden();
+
+    public abstract void setStyleName(String styleName);
+
+    public abstract ComponentBuilder[] getChildren();
+
+    public abstract void forceLayout();
 
     public abstract int getChildrenCount();
 

@@ -5,13 +5,13 @@ import org.whirlplatform.editor.client.component.surface.Surface.SurfaceResource
 import org.whirlplatform.editor.client.component.surface.Surface.SurfaceStyle;
 
 public interface BlueDottedSurfaceResources extends SurfaceResources,
-		ClientBundle {
+        ClientBundle {
+
+    @Source("BlueDottedSurface.gss")
+    BlueDottedSurfaceStyle style();
 
     interface BlueDottedSurfaceStyle extends SurfaceStyle {
-		@Override
+        @Override
         String surface();
-	}
-
-	@Source("BlueDottedSurface.gss")
-	BlueDottedSurfaceStyle style();
+    }
 }

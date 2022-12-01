@@ -1,9 +1,17 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.EventResult;
 import org.whirlplatform.meta.shared.JavaEventResult;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.EventParameter;
+import org.whirlplatform.meta.shared.data.EventParameterImpl;
+import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.editor.EventElement;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -14,10 +22,6 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.log.impl.DBFunctionMessage;
 import org.whirlplatform.server.utils.ServerJSONConverter;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public abstract class AbstractEventExecutor extends AbstractFetcher implements EventExecutor {
 
@@ -103,7 +107,7 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
     @Override
     public EventResult executeQuery(EventElement eventElement, List<DataValue> params) {
         String query = eventElement.getSource();
-        _log.info("QUERY = " + query + "	params = " + params);
+        _log.info("QUERY = " + query + "    params = " + params);
         DBFunctionMessage m = new DBFunctionMessage(getUser(), eventElement, params);
         Map<String, DataValue> paramMap = new HashMap<>();
         for (DataValue v : params) {
@@ -111,14 +115,16 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
                 paramMap.put(v.getCode(), v);
             }
         }
-        Map<String, DataValue> resultMap = queryExecutor.executeQuery(eventElement.getSource(), paramMap);
+        Map<String, DataValue> resultMap =
+                queryExecutor.executeQuery(eventElement.getSource(), paramMap);
         DataValue queryResultColumn = resultMap.getOrDefault(AppConstant.WHIRL_RESULT,
                 resultMap.getOrDefault(AppConstant.WHIRL_RESULT.toLowerCase(), null));
 
         EventResult result;
         if (queryResultColumn != null) {
             if (!queryResultColumn.isTypeOf(DataType.STRING)) {
-                throw new CustomException("Result column " + AppConstant.WHIRL_RESULT + " should be string type.");
+                throw new CustomException(
+                        "Result column " + AppConstant.WHIRL_RESULT + " should be string type.");
             }
             result = parseEventResult(queryResultColumn.getString());
 

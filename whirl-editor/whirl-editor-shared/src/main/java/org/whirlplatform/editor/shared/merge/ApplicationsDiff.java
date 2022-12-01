@@ -1,10 +1,9 @@
 package org.whirlplatform.editor.shared.merge;
 
-import org.whirlplatform.meta.shared.ApplicationStoreData;
-import org.whirlplatform.meta.shared.editor.ApplicationElement;
-
 import java.io.Serializable;
 import java.util.List;
+import org.whirlplatform.meta.shared.ApplicationStoreData;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
 public class ApplicationsDiff implements Serializable {
 
@@ -21,7 +20,8 @@ public class ApplicationsDiff implements Serializable {
     public ApplicationsDiff() {
     }
 
-    public ApplicationsDiff(List<ChangeUnit> changes, ApplicationElement left, ApplicationElement right) {
+    public ApplicationsDiff(List<ChangeUnit> changes, ApplicationElement left,
+                            ApplicationElement right) {
         this.changes = changes;
         this.left = left;
         this.right = right;
@@ -31,24 +31,24 @@ public class ApplicationsDiff implements Serializable {
         return changes;
     }
 
-    public void setLeftStoreData(ApplicationStoreData leftStoreData) {
-        this.leftStoreData = leftStoreData;
-    }
-
     public ApplicationStoreData getLeftStoreData() {
         return leftStoreData;
+    }
+
+    public void setLeftStoreData(ApplicationStoreData leftStoreData) {
+        this.leftStoreData = leftStoreData;
     }
 
     public ApplicationElement getLeft() {
         return left;
     }
 
-    public void setRightStoreData(ApplicationStoreData rightStoreData) {
-        this.rightStoreData = rightStoreData;
-    }
-
     public ApplicationStoreData getRightStoreData() {
         return rightStoreData;
+    }
+
+    public void setRightStoreData(ApplicationStoreData rightStoreData) {
+        this.rightStoreData = rightStoreData;
     }
 
     public ApplicationElement getRight() {

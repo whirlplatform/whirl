@@ -1,16 +1,15 @@
 package org.whirlplatform.editor.server.merge;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.editor.shared.merge.ChangeUnit;
 import org.whirlplatform.editor.shared.merge.MergeException;
 import org.whirlplatform.editor.shared.merge.Merger;
 import org.whirlplatform.editor.shared.visitor.SearchGraphVisitor;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 public class ReflectionMerger implements Merger {
 
@@ -45,7 +44,8 @@ public class ReflectionMerger implements Merger {
         return (T) result;
     }
 
-    private Field getDeclaredClassOrSuperclassField(Class<?> clazz, String property) throws NoSuchFieldException {
+    private Field getDeclaredClassOrSuperclassField(Class<?> clazz, String property)
+            throws NoSuchFieldException {
         Class<?> current = clazz;
         while (current != null) {
             try {

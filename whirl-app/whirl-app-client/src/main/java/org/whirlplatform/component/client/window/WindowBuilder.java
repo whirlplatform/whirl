@@ -8,6 +8,8 @@ import com.sencha.gxt.widget.core.client.Header;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.ToolButton;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -19,22 +21,16 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Компонент окна
  */
 @JsType(name = "Window", namespace = "Whirl")
 public class WindowBuilder extends ComponentBuilder implements Containable {
 
-    private ComponentBuilder topComponent;
-
-    private Window window;
-
     private static final int WINDOW_MIN_WIDTH = 100;
     private static final int WINDOW_MIN_HEIGHT = 100;
-
+    private ComponentBuilder topComponent;
+    private Window window;
     private boolean modal;
 
     @JsConstructor
@@ -135,11 +131,10 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает модальность окна и скрывает все за ним при отображении
-     * (по умолчанию false).
+     * Устанавливает модальность окна и скрывает все за ним при отображении (по умолчанию false).
      *
-     * @param modal - boolean, true сделать окно модальным, false, чтобы отобразить его
-     *              без ограничения доступа к другим элементам пользовательского интерфейса
+     * @param modal - boolean, true сделать окно модальным, false, чтобы отобразить его без
+     *              ограничения доступа к другим элементам пользовательского интерфейса
      */
     public void setModal(boolean modal) {
         this.modal = modal;
@@ -156,8 +151,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает, можно ли изменять размеры окна по каждому краю и углу
-     * (по умолчанию true).
+     * Устанавливает, можно ли изменять размеры окна по каждому краю и углу (по умолчанию true).
      *
      * @param resizable - boolean, true для включения изменения размеров
      */
@@ -193,11 +187,10 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает, может ли окно быть максимизировано
-     * (по умолчанию false).
+     * Устанавливает, может ли окно быть максимизировано (по умолчанию false).
      *
-     * @param maximizable - boolean, true для разрешения пользователю максимизировать окно,
-     *                    false для скрытия кнопки и запрета максимизации окна
+     * @param maximizable - boolean, true для разрешения пользователю максимизировать окно, false
+     *                    для скрытия кнопки и запрета максимизации окна
      */
     public void setMaximizable(boolean maximizable) {
         window.setMaximizable(maximizable);
@@ -342,11 +335,13 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
      */
     public void show() {
         // Нужно ли делать окно модальным
-        WindowManager.get().add(this); // т.к. при вызове window.hide() билдер удаляется из списка, регистрирую его
+        WindowManager.get()
+                .add(this); // т.к. при вызове window.hide() билдер удаляется из списка, регистрирую его
         // заново, что необходимо для работы локаторов
         boolean parentModal = isParentModal();
         window.setModal(this.modal || parentModal);
-        WindowManager.get().showWindow(window); // излишне выполняется операция syncTaskBars(). но это не критично.
+        WindowManager.get().showWindow(
+                window); // излишне выполняется операция syncTaskBars(). но это не критично.
     }
 
     /**
@@ -362,9 +357,8 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Устанавливает окно в пределах его текущего контейнера
-     * и автоматически заменяет кнопку инструмента "максимизировать"
-     * на кнопку инструмента "восстановить".
+     * Устанавливает окно в пределах его текущего контейнера и автоматически заменяет кнопку
+     * инструмента "максимизировать" на кнопку инструмента "восстановить".
      */
     public void maximize() {
         window.maximize();
@@ -378,8 +372,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     }
 
     /**
-     * Выравнивание окна по центру.
-     * Должен вызываться после отображения окна.
+     * Выравнивание окна по центру. Должен вызываться после отображения окна.
      */
     public void center() {
         window.center();
@@ -389,15 +382,6 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     @Override
     public void setParentBuilder(ComponentBuilder parentBuilder) {
         super.setParentBuilder(parentBuilder);
-    }
-
-    public static class LocatorParams {
-        public static String TYPE_HEADER = "Header";
-
-        public static String TYPE_TOOL_CLOSE = "Close";
-        public static String TYPE_TOOL_MAXIMIZE = "Maximize";
-        public static String TYPE_TOOL_MINIMIZE = "Minimize";
-        public static String TYPE_TOOL_RESTORE = "Restore";
     }
 
     @JsIgnore
@@ -459,7 +443,8 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
                     }
                 }
             }
-            return window.getHeader().getElement(); // если toolbarButton не определена - возвращаю просто header окна
+            return window.getHeader()
+                    .getElement(); // если toolbarButton не определена - возвращаю просто header окна
         }
         return null;
     }
@@ -476,8 +461,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     /**
      * Устанавливает скрытое состояние компонента.
      *
-     * @param hidden true - для скрытия компонента,
-     *               false - для отображения компонента
+     * @param hidden true - для скрытия компонента, false - для отображения компонента
      */
     public void setHidden(boolean hidden) {
         super.setHidden(hidden);
@@ -511,6 +495,15 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
         super.setEnabled(enabled);
     }
 
+    public static class LocatorParams {
+        public static String TYPE_HEADER = "Header";
+
+        public static String TYPE_TOOL_CLOSE = "Close";
+        public static String TYPE_TOOL_MAXIMIZE = "Maximize";
+        public static String TYPE_TOOL_MINIMIZE = "Minimize";
+        public static String TYPE_TOOL_RESTORE = "Restore";
+    }
+
     /**
      * Помощь при работе с элементами Header-а окна.
      */
@@ -531,12 +524,18 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
                             if (tool.getElement().isOrHasChild(element)) {
                                 if (tool.getElement().hasClassName(ToolButton.CLOSE.getStyle())) {
                                     headerPart.setPart(new Locator(LocatorParams.TYPE_TOOL_CLOSE));
-                                } else if (tool.getElement().hasClassName(ToolButton.RESTORE.getStyle())) {
-                                    headerPart.setPart(new Locator(LocatorParams.TYPE_TOOL_RESTORE));
-                                } else if (tool.getElement().hasClassName(ToolButton.MAXIMIZE.getStyle())) {
-                                    headerPart.setPart(new Locator(LocatorParams.TYPE_TOOL_MAXIMIZE));
-                                } else if (tool.getElement().hasClassName(ToolButton.MINIMIZE.getStyle())) {
-                                    headerPart.setPart(new Locator(LocatorParams.TYPE_TOOL_MINIMIZE));
+                                } else if (tool.getElement()
+                                        .hasClassName(ToolButton.RESTORE.getStyle())) {
+                                    headerPart.setPart(
+                                            new Locator(LocatorParams.TYPE_TOOL_RESTORE));
+                                } else if (tool.getElement()
+                                        .hasClassName(ToolButton.MAXIMIZE.getStyle())) {
+                                    headerPart.setPart(
+                                            new Locator(LocatorParams.TYPE_TOOL_MAXIMIZE));
+                                } else if (tool.getElement()
+                                        .hasClassName(ToolButton.MINIMIZE.getStyle())) {
+                                    headerPart.setPart(
+                                            new Locator(LocatorParams.TYPE_TOOL_MINIMIZE));
                                 }
                                 break;
                             }

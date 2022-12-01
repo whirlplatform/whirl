@@ -1,35 +1,32 @@
 package org.whirlplatform.editor.shared.visitor;
 
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.ElementVisitor;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public class SearchGraphVisitor extends GraphVisitor<SearchGraphVisitor.SearchVisitorContext> {
-
-    static class SearchVisitorContext implements ElementVisitor.VisitContext {
-
-        private ApplicationElement application;
-        private String currentSearchId;
-
-        private AbstractElement result;
-
-        public SearchVisitorContext(ApplicationElement application, String currentSearchId) {
-            this.application = application;
-            this.currentSearchId = currentSearchId;
-        }
-
-        public String getCurrentSearchId() {
-            return currentSearchId;
-        }
-
-        public void setResult(AbstractElement result) {
-            this.result = result;
-        }
-
-        public AbstractElement getResult() {
-            return result;
-        }
-
-    }
 
     public SearchGraphVisitor() {
 
@@ -254,6 +251,32 @@ public class SearchGraphVisitor extends GraphVisitor<SearchGraphVisitor.SearchVi
             return;
         }
         super.visit(ctx, element);
+    }
+
+    static class SearchVisitorContext implements ElementVisitor.VisitContext {
+
+        private ApplicationElement application;
+        private String currentSearchId;
+
+        private AbstractElement result;
+
+        public SearchVisitorContext(ApplicationElement application, String currentSearchId) {
+            this.application = application;
+            this.currentSearchId = currentSearchId;
+        }
+
+        public String getCurrentSearchId() {
+            return currentSearchId;
+        }
+
+        public AbstractElement getResult() {
+            return result;
+        }
+
+        public void setResult(AbstractElement result) {
+            this.result = result;
+        }
+
     }
 
 }

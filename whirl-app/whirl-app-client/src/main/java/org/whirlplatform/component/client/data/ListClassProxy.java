@@ -12,25 +12,26 @@ import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
 public class ListClassProxy extends
-		RpcProxy<ClassLoadConfig, LoadData<ListModelData>> {
+        RpcProxy<ClassLoadConfig, LoadData<ListModelData>> {
 
-	private ClassMetadata metadata;
+    private ClassMetadata metadata;
 
-	public ListClassProxy(ClassMetadata metadata) {
-		this.metadata = metadata;
-	}
+    public ListClassProxy(ClassMetadata metadata) {
+        this.metadata = metadata;
+    }
 
-	@Override
-	public void load(final ClassLoadConfig loadConfig,
-			final AsyncCallback<LoadData<ListModelData>> callback) {
-		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-			@Override
-			public void execute() {
-				DataServiceAsync.Util.getDataService(callback).getListClassData(SessionToken.get(), metadata,
-						loadConfig);
-			}
-		});
+    @Override
+    public void load(final ClassLoadConfig loadConfig,
+                     final AsyncCallback<LoadData<ListModelData>> callback) {
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                DataServiceAsync.Util.getDataService(callback)
+                        .getListClassData(SessionToken.get(), metadata,
+                                loadConfig);
+            }
+        });
 
-	}
+    }
 
 }

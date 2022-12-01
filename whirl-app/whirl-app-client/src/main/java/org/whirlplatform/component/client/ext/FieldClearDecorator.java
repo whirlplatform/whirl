@@ -20,34 +20,10 @@ import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 
 public class FieldClearDecorator {
 
-    public interface ClearDecoratorResources extends ClientBundle {
-
-        @Source("clear-cross.png")
-        ImageResource cross();
-
-        @Source("ClearDecorator.css")
-        ClearDecoratorStyle style();
-
-    }
-
-    public interface ClearDecoratorStyle extends CssResource {
-
-        String clear();
-
-    }
-
-    public interface ClearDecoratorTemplate extends XTemplates {
-
-        @XTemplate(source = "ClearDecorator.html")
-        SafeHtml render(ClearDecoratorStyle style);
-
-    }
-
     private Element crossEl;
     private ValueBaseField<?> field;
     private Command command;
     private HandlerRegistration registration;
-
     public FieldClearDecorator(ValueBaseField<?> field, Command clearCommand) {
         this.field = field;
         this.command = clearCommand;
@@ -120,5 +96,28 @@ public class FieldClearDecorator {
 
     public Element getElement() {
         return crossEl;
+    }
+
+    public interface ClearDecoratorResources extends ClientBundle {
+
+        @Source("clear-cross.png")
+        ImageResource cross();
+
+        @Source("ClearDecorator.css")
+        ClearDecoratorStyle style();
+
+    }
+
+    public interface ClearDecoratorStyle extends CssResource {
+
+        String clear();
+
+    }
+
+    public interface ClearDecoratorTemplate extends XTemplates {
+
+        @XTemplate(source = "ClearDecorator.html")
+        SafeHtml render(ClearDecoratorStyle style);
+
     }
 }

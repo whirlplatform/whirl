@@ -1,11 +1,10 @@
 package org.whirlplatform.server.driver.multibase.condition;
 
+import java.util.Collection;
 import org.whirlplatform.meta.shared.editor.BooleanCondition;
 import org.whirlplatform.meta.shared.editor.RightElement;
 import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.condition.ConditionSolver;
-
-import java.util.Collection;
 
 @SuppressWarnings("serial")
 public abstract class AbstractConditionSolver implements ConditionSolver {

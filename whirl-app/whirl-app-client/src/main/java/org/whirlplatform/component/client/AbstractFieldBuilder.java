@@ -9,6 +9,7 @@ import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.form.ValueBaseField;
+import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.KeyPressEvent;
@@ -19,13 +20,12 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.util.Map;
-
 /**
  * Билдер-родитель для всех билдеров-полей.
  */
 public abstract class AbstractFieldBuilder extends ComponentBuilder
-        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, KeyPressEvent.HasKeyPressHandlers {
+        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers,
+        KeyPressEvent.HasKeyPressHandlers {
 
     protected boolean required;
     protected FieldClearDecorator clearDecorator;
@@ -87,8 +87,10 @@ public abstract class AbstractFieldBuilder extends ComponentBuilder
             setFieldMask(value.getString());
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
-            if (Boolean.TRUE.equals(value.getBoolean()) && componentInstance instanceof ValueBaseField<?>) {
-                clearDecorator = new FieldClearDecorator((ValueBaseField<?>) componentInstance, createClearCommand());
+            if (Boolean.TRUE.equals(value.getBoolean()) &&
+                    componentInstance instanceof ValueBaseField<?>) {
+                clearDecorator = new FieldClearDecorator((ValueBaseField<?>) componentInstance,
+                        createClearCommand());
                 setClearCrossRightOffset(2);
             }
             return true;

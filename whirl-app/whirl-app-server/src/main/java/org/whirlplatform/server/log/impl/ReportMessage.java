@@ -1,9 +1,8 @@
 package org.whirlplatform.server.log.impl;
 
+import java.util.Collection;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.util.Collection;
 
 public class ReportMessage extends AbstractMessage {
 
@@ -11,7 +10,8 @@ public class ReportMessage extends AbstractMessage {
     private String reportName;
     private Collection<DataValue> params;
 
-    public ReportMessage(ApplicationUser user, String reportId, String reportName, Collection<DataValue> params) {
+    public ReportMessage(ApplicationUser user, String reportId, String reportName,
+                         Collection<DataValue> params) {
         super(user);
         this.reportId = reportId;
         this.reportName = reportName;
@@ -23,7 +23,8 @@ public class ReportMessage extends AbstractMessage {
     public String getMessage() {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"type\": \"report\", \"reportId\": \"").append(reportId).append("\", ");
-        builder.append("\"reportName\": \"").append(reportName.replaceAll("\"", "\\\"")).append("\", ");
+        builder.append("\"reportName\": \"").append(reportName.replaceAll("\"", "\\\""))
+                .append("\", ");
         builder.append("\"params\": ").append(getParamsString()).append("}");
 
         return getFullLogMessage(builder.toString());

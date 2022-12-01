@@ -10,78 +10,26 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Collection;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.ApplicationView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.Version;
-import org.whirlplatform.meta.shared.editor.*;
-
-import java.util.Collection;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @Presenter(view = ApplicationView.class)
-public class ApplicationPresenter extends BasePresenter<ApplicationPresenter.IApplicationView, EditorEventBus>
+public class ApplicationPresenter
+        extends BasePresenter<ApplicationPresenter.IApplicationView, EditorEventBus>
         implements ElementPresenter {
-
-    public interface IApplicationView extends IsWidget, ReverseViewInterface<ApplicationPresenter> {
-
-        void setHeaderText(String text);
-
-        void setApplicationCode(String code);
-
-        String getApplicationCode();
-
-        void setApplicationTitle(PropertyValue title);
-
-        PropertyValue getApplicationTitle();
-
-        void setGuest(Boolean guest);
-
-        Boolean getGuest();
-
-        void addJavaScriptFile(FileElement file);
-
-        Collection<FileElement> getJavaScriptFiles();
-
-        void addCssFile(FileElement file);
-
-        Collection<FileElement> getCssFiles();
-
-        void addJavaFile(FileElement file);
-
-        Collection<FileElement> getJavaFiles();
-
-        void addImageFile(FileElement file);
-
-        Collection<FileElement> getImageFiles();
-
-        void setStaticFile(FileElement file);
-
-        FileElement getStaticFile();
-
-        String getHeaderHtml();
-
-        void setHtmlHeader(String headerHtml);
-
-        void setCompleteCommand(Command completeCommand);
-
-        void save();
-
-        void clearFilesFields();
-
-        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
-
-        void setEnableAll(boolean enable);
-
-        // void initFields(ApplicationElement application, Version version);
-        void initFields();
-    }
 
     private ApplicationElement application;
     private Version version;
-
     private TextButton saveButton;
     private TextButton closeButton;
-
     public ApplicationPresenter() {
         super();
     }
@@ -160,8 +108,9 @@ public class ApplicationPresenter extends BasePresenter<ApplicationPresenter.IAp
         // view.initFields(application, version);
         // view.initFields();
 
-        view.setHeaderText(EditorMessage.Util.MESSAGE.editing_application() + application.getName() + " ["
-                + application.getVersion() + "]");
+        view.setHeaderText(
+                EditorMessage.Util.MESSAGE.editing_application() + application.getName() + " ["
+                        + application.getVersion() + "]");
         view.clearFilesFields();
         view.setLocales(application.getLocales(), application.getDefaultLocale());
         view.setApplicationCode(application.getCode());
@@ -189,5 +138,59 @@ public class ApplicationPresenter extends BasePresenter<ApplicationPresenter.IAp
 
         view.setEnableAll(!readOnly);
         saveButton.setEnabled(!readOnly);
+    }
+
+    public interface IApplicationView extends IsWidget, ReverseViewInterface<ApplicationPresenter> {
+
+        void setHeaderText(String text);
+
+        String getApplicationCode();
+
+        void setApplicationCode(String code);
+
+        PropertyValue getApplicationTitle();
+
+        void setApplicationTitle(PropertyValue title);
+
+        Boolean getGuest();
+
+        void setGuest(Boolean guest);
+
+        void addJavaScriptFile(FileElement file);
+
+        Collection<FileElement> getJavaScriptFiles();
+
+        void addCssFile(FileElement file);
+
+        Collection<FileElement> getCssFiles();
+
+        void addJavaFile(FileElement file);
+
+        Collection<FileElement> getJavaFiles();
+
+        void addImageFile(FileElement file);
+
+        Collection<FileElement> getImageFiles();
+
+        FileElement getStaticFile();
+
+        void setStaticFile(FileElement file);
+
+        String getHeaderHtml();
+
+        void setHtmlHeader(String headerHtml);
+
+        void setCompleteCommand(Command completeCommand);
+
+        void save();
+
+        void clearFilesFields();
+
+        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
+
+        void setEnableAll(boolean enable);
+
+        // void initFields(ApplicationElement application, Version version);
+        void initFields();
     }
 }

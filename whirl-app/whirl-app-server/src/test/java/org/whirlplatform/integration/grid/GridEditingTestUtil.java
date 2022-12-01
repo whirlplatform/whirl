@@ -1,13 +1,12 @@
 package org.whirlplatform.integration.grid;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.whirlplatform.integration.db.DBInitUtil;
 import org.whirlplatform.integration.db.GridDataExtractor;
-
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 public class GridEditingTestUtil {
     public static final Integer ID_1 = 2000011;
@@ -81,8 +80,10 @@ public class GridEditingTestUtil {
     }
 
     public static void deleteTestDatabaseRows() {
-        final String queryTemplate = "delete from %s where dfobj=%s or dfobj=%s or dfobj=%s or dfobj=%s";
-        final String query = String.format(queryTemplate, TEST_DATA_TABLE, ID_1, ID_2, COPY_OF_ID_1, COPY_OF_ID_2);
+        final String queryTemplate =
+                "delete from %s where dfobj=%s or dfobj=%s or dfobj=%s or dfobj=%s";
+        final String query = String.format(queryTemplate, TEST_DATA_TABLE, ID_1, ID_2, COPY_OF_ID_1,
+                COPY_OF_ID_2);
         extractor.execute(query);
     }
 
@@ -93,8 +94,10 @@ public class GridEditingTestUtil {
     }
 
     public static Map<Integer, GridTestRowModel> readTestDatabaseRows() {
-        final String queryTemplate = "select * from %s where dfobj=%s or dfobj=%s or dfobj=%s or dfobj=%s";
-        final String query = String.format(queryTemplate, TEST_DATA_TABLE, ID_1, ID_2, COPY_OF_ID_1, COPY_OF_ID_2);
+        final String queryTemplate =
+                "select * from %s where dfobj=%s or dfobj=%s or dfobj=%s or dfobj=%s";
+        final String query = String.format(queryTemplate, TEST_DATA_TABLE, ID_1, ID_2, COPY_OF_ID_1,
+                COPY_OF_ID_2);
         return extractor.extractDbData(query);
     }
 

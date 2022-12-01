@@ -8,6 +8,10 @@ import org.whirlplatform.meta.shared.data.ListModelDataImpl;
  */
 public abstract class ListModelDataOverlay {
 
+    public static String[] getPropertyNames(ListModelDataImpl instance) {
+        return instance.getPropertyNames().toArray(new String[0]);
+    }
+
     public abstract String getId();
 
     public abstract void setId(String id);
@@ -19,9 +23,5 @@ public abstract class ListModelDataOverlay {
     public abstract DataValue getValue(String property);
 
     public abstract void setValue(String property, DataValue value);
-
-    public static String[] getPropertyNames(ListModelDataImpl instance) {
-        return instance.getPropertyNames().toArray(new String[0]);
-    }
 
 }

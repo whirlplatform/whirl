@@ -12,71 +12,71 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 public class DataSourceView extends ContentPanel implements IDataSourceView {
 
-	private VerticalLayoutContainer container;
+    private VerticalLayoutContainer container;
 
-	private FieldLabel labelAlias;
-	private TextField fieldAlias;
+    private FieldLabel labelAlias;
+    private TextField fieldAlias;
 
-	private FieldLabel labelDatabaseName;
-	private TextField fieldDatabaseName;
+    private FieldLabel labelDatabaseName;
+    private TextField fieldDatabaseName;
 
-	public DataSourceView() {
-		super();
-		initUI();
-	}
+    public DataSourceView() {
+        super();
+        initUI();
+    }
 
-	private void initUI() {
-		setHeaderVisible(true);
-		container = new VerticalLayoutContainer();
-		container.setAdjustForScroll(true);
-		container.setScrollMode(ScrollMode.AUTO);
-		initFields();
-		setWidget(container);
-	}
+    private void initUI() {
+        setHeaderVisible(true);
+        container = new VerticalLayoutContainer();
+        container.setAdjustForScroll(true);
+        container.setScrollMode(ScrollMode.AUTO);
+        initFields();
+        setWidget(container);
+    }
 
-	private void initFields() {
-		fieldAlias = new TextField();
-		labelAlias = new FieldLabel(fieldAlias,
-				EditorMessage.Util.MESSAGE.datasource_synonym());
-		container.add(labelAlias, new VerticalLayoutData(1, -1, new Margins(10,
-				10, 0, 10)));
+    private void initFields() {
+        fieldAlias = new TextField();
+        labelAlias = new FieldLabel(fieldAlias,
+                EditorMessage.Util.MESSAGE.datasource_synonym());
+        container.add(labelAlias, new VerticalLayoutData(1, -1, new Margins(10,
+                10, 0, 10)));
 
-		fieldDatabaseName = new TextField();
-		labelDatabaseName = new FieldLabel(fieldDatabaseName,
-				EditorMessage.Util.MESSAGE.datasource_source_name());
-		container.add(labelDatabaseName, new VerticalLayoutData(1, -1,
-				new Margins(10, 10, 0, 10)));
-	}
+        fieldDatabaseName = new TextField();
+        labelDatabaseName = new FieldLabel(fieldDatabaseName,
+                EditorMessage.Util.MESSAGE.datasource_source_name());
+        container.add(labelDatabaseName, new VerticalLayoutData(1, -1,
+                new Margins(10, 10, 0, 10)));
+    }
 
-	@Override
-	public void setHeaderText(String text) {
-		setHeading(text);
-	}
+    @Override
+    public void setHeaderText(String text) {
+        setHeading(text);
+    }
 
-	@Override
-	public void clearValues() {
-		fieldAlias.clear();
-		fieldDatabaseName.clear();
-	}
+    @Override
+    public void clearValues() {
+        fieldAlias.clear();
+        fieldDatabaseName.clear();
+    }
 
-	@Override
-	public void setAlias(String alias) {
-		fieldAlias.setValue(alias);
-	}
+    @Override
+    public String getAlias() {
+        return fieldAlias.getValue();
+    }
 
-	@Override
-	public String getAlias() {
-		return fieldAlias.getValue();
-	}
+    @Override
+    public void setAlias(String alias) {
+        fieldAlias.setValue(alias);
+    }
 
-	@Override
-	public void setDatabaseName(String databaseName) {
-		fieldDatabaseName.setValue(databaseName);
-	}
+    @Override
+    public String getDatabaseName() {
+        return fieldDatabaseName.getValue();
+    }
 
-	@Override
-	public String getDatabaseName() {
-		return fieldDatabaseName.getValue();
-	}
+    @Override
+    public void setDatabaseName(String databaseName) {
+        fieldDatabaseName.setValue(databaseName);
+    }
 
 }

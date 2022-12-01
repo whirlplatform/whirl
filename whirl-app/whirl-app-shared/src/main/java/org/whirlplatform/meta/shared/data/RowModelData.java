@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.CLASS)
-@JsonSubTypes({@JsonSubTypes.Type(RowModelDataImpl.class), @JsonSubTypes.Type(ListModelDataImpl.class)})
+@JsonSubTypes({@JsonSubTypes.Type(RowModelDataImpl.class),
+        @JsonSubTypes.Type(ListModelDataImpl.class)})
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public interface RowModelData extends Serializable, Cloneable {
 
@@ -53,9 +53,9 @@ public interface RowModelData extends Serializable, Cloneable {
 
     void setUnchanged();
 
-    void setLevelCount(int levelCount);
-
     int getLevelCount();
+
+    void setLevelCount(int levelCount);
 
     RowModelData clone();
 }

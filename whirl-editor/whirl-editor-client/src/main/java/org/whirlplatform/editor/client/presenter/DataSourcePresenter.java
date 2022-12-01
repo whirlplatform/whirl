@@ -15,23 +15,8 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 @Presenter(view = DataSourceView.class)
-public class DataSourcePresenter extends BasePresenter<IDataSourceView, EditorEventBus> implements ElementPresenter {
-
-    public interface IDataSourceView extends IsWidget {
-
-        void setHeaderText(String text);
-
-        void clearValues();
-
-        void setAlias(String alias);
-
-        String getAlias();
-
-        void setDatabaseName(String databaseName);
-
-        String getDatabaseName();
-
-    }
+public class DataSourcePresenter extends BasePresenter<IDataSourceView, EditorEventBus>
+        implements ElementPresenter {
 
     private DataSourceElement datasource;
 
@@ -69,5 +54,21 @@ public class DataSourcePresenter extends BasePresenter<IDataSourceView, EditorEv
         view.setAlias(datasource.getAlias());
         view.setDatabaseName(datasource.getDatabaseName());
         eventBus.openElementView(view);
+    }
+
+    public interface IDataSourceView extends IsWidget {
+
+        void setHeaderText(String text);
+
+        void clearValues();
+
+        String getAlias();
+
+        void setAlias(String alias);
+
+        String getDatabaseName();
+
+        void setDatabaseName(String databaseName);
+
     }
 }

@@ -28,6 +28,13 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -46,18 +53,20 @@ import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
-
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * Древовидное меню
  */
 @JsType(name = "TreeMenu", namespace = "Whirl")
-public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickHandlers, Containable {
+public class TreeMenuBuilder extends TreeBuilder
+        implements ClickEvent.HasClickHandlers, Containable {
 
     // TODO переписать, выкинуть наследование от TreeBuilder
 
@@ -191,7 +200,8 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
             public boolean hasChildren(ListModelData parent) {
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
-                if (getClassMetadata().getClassId() != null && parent.getProperties().containsKey(isLeafColumn)) {
+                if (getClassMetadata().getClassId() != null &&
+                        parent.getProperties().containsKey(isLeafColumn)) {
                     return Boolean.valueOf(parent.<Boolean>get(isLeafColumn));
                 } else {
                     HorizontalMenuItemBuilder cb = (HorizontalMenuItemBuilder) findBuilder(parent);
@@ -269,45 +279,49 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
             }
         });
 
-        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
+        tree.getSelectionModel()
+                .addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
 
-            @Override
-            public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
-                for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
-                    if (event.getSelection().size() > 0 && entry.getValue() == event.getSelection().get(0)) {
-                        entry.getKey().fireEvent(new ClickEvent());
-                        break;
+                    @Override
+                    public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
+                        for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
+                            if (event.getSelection().size() > 0 &&
+                                    entry.getValue() == event.getSelection().get(0)) {
+                                entry.getKey().fireEvent(new ClickEvent());
+                                break;
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
 
         tree.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        SimpleSafeHtmlCell<String> cell = new SimpleSafeHtmlCell<String>(SimpleSafeHtmlRenderer.getInstance(),
-                "click") {
-            @Override
-            public void onBrowserEvent(Context context, Element parent, String value, NativeEvent event,
-                                       ValueUpdater<String> valueUpdater) {
-                super.onBrowserEvent(context, parent, value, event, valueUpdater);
-                if (eventColumn != null && "click".equals(event.getType())) {
-                    if (registration != null) {
-                        registration.removeHandler();
+        SimpleSafeHtmlCell<String> cell =
+                new SimpleSafeHtmlCell<String>(SimpleSafeHtmlRenderer.getInstance(),
+                        "click") {
+                    @Override
+                    public void onBrowserEvent(Context context, Element parent, String value,
+                                               NativeEvent event,
+                                               ValueUpdater<String> valueUpdater) {
+                        super.onBrowserEvent(context, parent, value, event, valueUpdater);
+                        if (eventColumn != null && "click".equals(event.getType())) {
+                            if (registration != null) {
+                                registration.removeHandler();
+                            }
+
+                            ListModelData model = getStore().getChild(context.getIndex());
+                            String eventCode = model.get(eventColumn);
+
+                            ComponentBuilder cb = findBuilder(model);
+
+                            if (cb != null) {
+                                cb.fireEvent(new ClickEvent());
+                            } else {
+                                loadEvent(eventCode);
+                            }
+                        }
                     }
-
-                    ListModelData model = getStore().getChild(context.getIndex());
-                    String eventCode = model.get(eventColumn);
-
-                    ComponentBuilder cb = findBuilder(model);
-
-                    if (cb != null) {
-                        cb.fireEvent(new ClickEvent());
-                    } else {
-                        loadEvent(eventCode);
-                    }
-                }
-            }
-        };
+                };
         tree.setCell(cell);
 
         Comparator<RowModelData> comp = new Comparator<RowModelData>() {
@@ -469,8 +483,7 @@ public class TreeMenuBuilder extends TreeBuilder implements ClickEvent.HasClickH
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

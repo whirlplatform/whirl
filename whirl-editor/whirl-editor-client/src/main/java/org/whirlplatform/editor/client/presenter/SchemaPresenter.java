@@ -9,6 +9,8 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Collection;
+import java.util.HashSet;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.presenter.SchemaPresenter.ISchemaView;
@@ -21,35 +23,9 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 @Presenter(view = SchemaView.class)
-public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus> implements ElementPresenter {
-
-    public interface ISchemaView extends IsWidget {
-
-        void setHeaderText(String text);
-
-        void setSchemaName(String schema);
-
-        String getSchema();
-
-        void setImports(Collection<RowModelData> imports);
-
-        Collection<RowModelData> getCheckedImports();
-
-        void addRefreshImportHandler(SelectHandler handler);
-
-        void addImportHandler(SelectHandler handler);
-
-        void clearValues();
-
-        void startProcessing();
-
-        void stopProcessing();
-
-    }
+public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus>
+        implements ElementPresenter {
 
     private SchemaElement schema;
 
@@ -80,20 +56,21 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus> 
             @Override
             public void onSelect(SelectEvent event) {
                 view.startProcessing();
-                EditorDataService.Util.getDataService().getTableImportList(schema.getDataSource(), schema,
-                        new AsyncCallback<Collection<RowModelData>>() {
-                            @Override
-                            public void onSuccess(Collection<RowModelData> result) {
-                                view.setImports(result);
-                                view.stopProcessing();
-                            }
+                EditorDataService.Util.getDataService()
+                        .getTableImportList(schema.getDataSource(), schema,
+                                new AsyncCallback<Collection<RowModelData>>() {
+                                    @Override
+                                    public void onSuccess(Collection<RowModelData> result) {
+                                        view.setImports(result);
+                                        view.stopProcessing();
+                                    }
 
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                InfoHelper.throwInfo("get-table-import-list", caught);
-                                view.stopProcessing();
-                            }
-                        });
+                                    @Override
+                                    public void onFailure(Throwable caught) {
+                                        InfoHelper.throwInfo("get-table-import-list", caught);
+                                        view.stopProcessing();
+                                    }
+                                });
             }
         });
         view.addImportHandler(new SelectHandler() {
@@ -117,23 +94,24 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus> 
     }
 
     public void importTableElements(final Collection<RowModelData> models) {
-        final AsyncCallback<Collection<PlainTableElement>> callback = new AsyncCallback<Collection<PlainTableElement>>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                InfoHelper.throwInfo("import-tables", caught);
-                view.stopProcessing();
-            }
+        final AsyncCallback<Collection<PlainTableElement>> callback =
+                new AsyncCallback<Collection<PlainTableElement>>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        InfoHelper.throwInfo("import-tables", caught);
+                        view.stopProcessing();
+                    }
 
-            @Override
-            public void onSuccess(Collection<PlainTableElement> result) {
-                for (PlainTableElement t : result) {
-                    eventBus.addElement(schema, t);
-                }
-                InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.info_tables_imported());
-                view.stopProcessing();
-            }
-        };
+                    @Override
+                    public void onSuccess(Collection<PlainTableElement> result) {
+                        for (PlainTableElement t : result) {
+                            eventBus.addElement(schema, t);
+                        }
+                        InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
+                                EditorMessage.Util.MESSAGE.info_tables_imported());
+                        view.stopProcessing();
+                    }
+                };
 
         // Проверка на наличие таблиц в приложении
         eventBus.getAvailableTables(new Callback<Collection<AbstractTableElement>, Throwable>() {
@@ -158,15 +136,41 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus> 
                 if (tables.length() > 0) {
                     String warnMsg = EditorMessage.Util.MESSAGE.warn_this_tables_already_imported()
                             + tables.substring(0, tables.length() - 2);
-                    InfoHelper.warning("get-available-tables", EditorMessage.Util.MESSAGE.warn_tables_already_imported(), warnMsg);
+                    InfoHelper.warning("get-available-tables",
+                            EditorMessage.Util.MESSAGE.warn_tables_already_imported(), warnMsg);
                 }
                 if (uniqueModels.size() > 0) {
                     view.startProcessing();
-                    EditorDataService.Util.getDataService().importTables(schema.getDataSource(), schema, uniqueModels,
-                            callback);
+                    EditorDataService.Util.getDataService()
+                            .importTables(schema.getDataSource(), schema, uniqueModels,
+                                    callback);
                 }
             }
         });
+    }
+
+    public interface ISchemaView extends IsWidget {
+
+        void setHeaderText(String text);
+
+        void setSchemaName(String schema);
+
+        String getSchema();
+
+        void setImports(Collection<RowModelData> imports);
+
+        Collection<RowModelData> getCheckedImports();
+
+        void addRefreshImportHandler(SelectHandler handler);
+
+        void addImportHandler(SelectHandler handler);
+
+        void clearValues();
+
+        void startProcessing();
+
+        void stopProcessing();
+
     }
 
 }

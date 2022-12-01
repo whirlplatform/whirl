@@ -6,18 +6,18 @@ import org.whirlplatform.meta.shared.AppConstant;
 
 public class UploadField extends FileUploadField {
 
-	private String fileId = null;
+    private String fileId = null;
 
-	public UploadField() {
-		super();
-		fileId = AppConstant.FORM_UPLOAD + "_FILE_"
-				+ String.valueOf(System.currentTimeMillis())
-				+ String.valueOf(Random.nextInt());
-		setName("file");
-	}
+    public UploadField() {
+        super();
+        fileId = AppConstant.FORM_UPLOAD + "_FILE_"
+                + String.valueOf(System.currentTimeMillis())
+                + String.valueOf(Random.nextInt());
+        setName("file");
+    }
 
-	public String getFileId() {
-		return fileId;
-	}
+    public String getFileId() {
+        return fileId;
+    }
 
 }

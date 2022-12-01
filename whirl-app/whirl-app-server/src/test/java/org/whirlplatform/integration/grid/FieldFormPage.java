@@ -16,15 +16,9 @@ public class FieldFormPage extends AbstractGridPart {
     private final String COMBO_TRIGGER = "%s[%s[ComboBoxBuilder(code=%s)[Trigger]]]";
     private final String COMBO_ITEM = "%s[%s[ComboBoxBuilder(code=%s)[Item(id=%s)]]]";
     private final String CONFIRM_YES = "whirl:Dialog(id=%s-%s)[YesButton]";
-
-    private String formCode;
-
     @Root
     WebElement grid;
-
-    public void setFormCode(final String formCode) {
-        this.formCode = formCode;
-    }
+    private String formCode;
 
     public String getFormStringLocator() {
         return String.format(FORM, getFormCode());
@@ -35,6 +29,10 @@ public class FieldFormPage extends AbstractGridPart {
             throw new IllegalArgumentException("FieldForm code was not initialised");
         }
         return formCode;
+    }
+
+    public void setFormCode(final String formCode) {
+        this.formCode = formCode;
     }
 
     public void clickSaveButton() {
@@ -85,18 +83,22 @@ public class FieldFormPage extends AbstractGridPart {
     }
 
     private WebElement findButton(final String template) {
-        final String locator = String.format(template, getGridStringLocator(), getFormStringLocator());
+        final String locator =
+                String.format(template, getGridStringLocator(), getFormStringLocator());
         return findElementByWhirl(locator);
     }
 
     private WebElement findField(final String template, final String fieldCode) {
-        final String locator = String.format(template, getGridStringLocator(), getFormStringLocator(), fieldCode);
+        final String locator =
+                String.format(template, getGridStringLocator(), getFormStringLocator(), fieldCode);
         return findElementByWhirl(locator);
     }
 
-    private WebElement findItem(final String template, final String fieldCode, final String itemId) {
-        final String locator = String.format(template, getGridStringLocator(), getFormStringLocator(), fieldCode,
-                itemId);
+    private WebElement findItem(final String template, final String fieldCode,
+                                final String itemId) {
+        final String locator =
+                String.format(template, getGridStringLocator(), getFormStringLocator(), fieldCode,
+                        itemId);
         return findElementByWhirl(locator);
     }
 

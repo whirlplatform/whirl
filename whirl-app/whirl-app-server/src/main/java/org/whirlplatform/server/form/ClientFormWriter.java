@@ -1,6 +1,11 @@
 
 package org.whirlplatform.server.form;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.Map;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -13,12 +18,6 @@ import org.whirlplatform.meta.shared.form.FormRowModel;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Map;
 
 public class ClientFormWriter extends FormWriter {
 
@@ -78,8 +77,10 @@ public class ClientFormWriter extends FormWriter {
         model.setColor(cell.getBackgroundColor());
         if (cell.getComponent() != null) {
             ComponentModel cm = cell.getComponent();
-            cm.setValue(PropertyType.LayoutDataFormRow.getCode(), new DataValueImpl(DataType.NUMBER, cell.getRow().getFinalRow()));
-            cm.setValue(PropertyType.LayoutDataFormColumn.getCode(), new DataValueImpl(DataType.NUMBER, cell.getColumn().getFinalCol()));
+            cm.setValue(PropertyType.LayoutDataFormRow.getCode(),
+                    new DataValueImpl(DataType.NUMBER, cell.getRow().getFinalRow()));
+            cm.setValue(PropertyType.LayoutDataFormColumn.getCode(),
+                    new DataValueImpl(DataType.NUMBER, cell.getColumn().getFinalCol()));
         }
         model.setComponent(cell.getComponent());
 

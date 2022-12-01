@@ -3,9 +3,8 @@ package org.whirlplatform.meta.shared.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
-import org.whirlplatform.meta.shared.FileValue;
-
 import java.util.Date;
+import org.whirlplatform.meta.shared.FileValue;
 
 @SuppressWarnings("serial")
 public class DataValueImpl implements DataValue {
@@ -32,13 +31,50 @@ public class DataValueImpl implements DataValue {
         setValue(value);
     }
 
-    @Override
-    public void setType(DataType type) {
-        this.type = type;
+    public static Object convertValueFromString(String value, String labelValue, DataType type) {
+        if (DataType.BOOLEAN == type) {
+            return Boolean.valueOf(value);
+        } else if (DataType.DATE == type) {
+            if (value == null || value.isEmpty()) {
+                return null;
+            }
+            DateTimeFormat df =
+                    new DateTimeFormat("dd.MM.yyyy HH:mm:ss", new DefaultDateTimeFormatInfo()) {
+                    };
+            return df.parseStrict(value);
+        } else if (DataType.NUMBER == type) {
+            if (value == null || value.isEmpty()) {
+                return null;
+            }
+            Number result;
+            try {
+                result = Double.valueOf(value);
+            } catch (NumberFormatException e) {
+                result = Double.valueOf(value.replaceFirst(",", "."));
+            }
+            return result;
+        } else if (DataType.LIST == type) {
+            ListModelData listValue = new ListModelDataImpl();
+            listValue.setId(value);
+            listValue.setLabel(labelValue);
+            return listValue;
+        } else if (DataType.STRING == type) {
+            return value;
+        } else if (DataType.FILE == type) {
+            FileValue fileValue = new FileValue();
+            fileValue.setName(value);
+            return fileValue;
+        }
+        return value;
     }
 
     public DataType getType() {
         return type;
+    }
+
+    @Override
+    public void setType(DataType type) {
+        this.type = type;
     }
 
     @JsonIgnore
@@ -97,11 +133,6 @@ public class DataValueImpl implements DataValue {
         return booleanValue;
     }
 
-    @Override
-    public FileValue getFileValue() {
-        return fileValue;
-    }
-
 //    @SuppressWarnings("unchecked")
 //    @JsonIgnore
 //    public <X> X getValue() {
@@ -120,6 +151,11 @@ public class DataValueImpl implements DataValue {
 //        }
 //        return null;
 //    }
+
+    @Override
+    public FileValue getFileValue() {
+        return fileValue;
+    }
 
     @Override
     public String getCode() {
@@ -237,42 +273,6 @@ public class DataValueImpl implements DataValue {
             return false;
         }
         return type.equals(getType());
-    }
-
-    public static Object convertValueFromString(String value, String labelValue, DataType type) {
-        if (DataType.BOOLEAN == type) {
-            return Boolean.valueOf(value);
-        } else if (DataType.DATE == type) {
-            if (value == null || value.isEmpty()) {
-                return null;
-            }
-            DateTimeFormat df = new DateTimeFormat("dd.MM.yyyy HH:mm:ss", new DefaultDateTimeFormatInfo()) {
-            };
-            return df.parseStrict(value);
-        } else if (DataType.NUMBER == type) {
-            if (value == null || value.isEmpty()) {
-                return null;
-            }
-            Number result;
-            try {
-                result = Double.valueOf(value);
-            } catch (NumberFormatException e) {
-                result = Double.valueOf(value.replaceFirst(",", "."));
-            }
-            return result;
-        } else if (DataType.LIST == type) {
-            ListModelData listValue = new ListModelDataImpl();
-            listValue.setId(value);
-            listValue.setLabel(labelValue);
-            return listValue;
-        } else if (DataType.STRING == type) {
-            return value;
-        } else if (DataType.FILE == type) {
-            FileValue fileValue = new FileValue();
-            fileValue.setName(value);
-            return fileValue;
-        }
-        return value;
     }
 
     @Override

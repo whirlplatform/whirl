@@ -25,6 +25,11 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -50,8 +55,6 @@ import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
-
-import java.util.*;
 
 /**
  * Древовидный список
@@ -238,20 +241,23 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         RpcProxy proxy = new RpcProxy<ListModelData, List<ListModelData>>() {
 
             @Override
-            public void load(ListModelData loadConfig, final AsyncCallback<List<ListModelData>> callback) {
-                AsyncCallback<LoadData<ListModelData>> proxyCallback = new AsyncCallback<LoadData<ListModelData>>() {
-                    @Override
-                    public void onSuccess(LoadData<ListModelData> result) {
-                        callback.onSuccess(result.getData());
-                    }
+            public void load(ListModelData loadConfig,
+                             final AsyncCallback<List<ListModelData>> callback) {
+                AsyncCallback<LoadData<ListModelData>> proxyCallback =
+                        new AsyncCallback<LoadData<ListModelData>>() {
+                            @Override
+                            public void onSuccess(LoadData<ListModelData> result) {
+                                callback.onSuccess(result.getData());
+                            }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        callback.onFailure(caught);
-                    }
-                };
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                callback.onFailure(caught);
+                            }
+                        };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                        .getListClassData(SessionToken.get(), getClassMetadata(), getLoadConfig(loadConfig));
+                        .getListClassData(SessionToken.get(), getClassMetadata(),
+                                getLoadConfig(loadConfig));
             }
         };
         return proxy;
@@ -259,7 +265,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     protected ClassMetadata getClassMetadata() {
         ClassMetadata metadata = new ClassMetadata(classId);
-        //		metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
+        //        metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
         return metadata;
     }
 
@@ -298,7 +304,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             }
         };
 
-        ComboBoxCell cell = new ComboBoxCell(new ListStore<ListModelData>(keyProvider), new StringLabelProvider()) {
+        ComboBoxCell cell = new ComboBoxCell(new ListStore<ListModelData>(keyProvider),
+                new StringLabelProvider()) {
             @Override
             protected void onSelect(Object item) {
             }
@@ -307,9 +314,11 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
             private void renderContains(SafeHtmlBuilder builder, String object) {
                 String q = comboBox.getText();
-                if (isQuery() && !(!Util.isEmptyString(object) && object.toLowerCase().contains(q.toLowerCase()))) {
+                if (isQuery() && !(!Util.isEmptyString(object) &&
+                        object.toLowerCase().contains(q.toLowerCase()))) {
                     builder.append(
-                            SafeHtmlUtils.fromTrustedString("<span style=\"color: darkgray;\">" + object + "</span>"));
+                            SafeHtmlUtils.fromTrustedString(
+                                    "<span style=\"color: darkgray;\">" + object + "</span>"));
                 } else {
                     builder.append(SafeHtmlUtils.fromTrustedString(object));
                 }
@@ -569,13 +578,13 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public ListModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public void setValue(ListModelData value) {
         throw new UnsupportedOperationException();
     }
 

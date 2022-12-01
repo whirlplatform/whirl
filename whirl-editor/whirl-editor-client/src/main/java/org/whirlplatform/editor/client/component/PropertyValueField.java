@@ -1,14 +1,13 @@
 package org.whirlplatform.editor.client.component;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellResources;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 public class PropertyValueField extends MultiSetField<LocaleElement> {
 
@@ -36,7 +35,8 @@ public class PropertyValueField extends MultiSetField<LocaleElement> {
     }
 
     public PropertyValue getPropertyValue() {
-        PropertyValue value = new PropertyValue(DataType.STRING, defaultLocale, getValue(defaultLocale));
+        PropertyValue value =
+                new PropertyValue(DataType.STRING, defaultLocale, getValue(defaultLocale));
         for (LocaleElement locale : locales) {
             value.setValue(locale, new DataValueImpl(DataType.STRING, getValue(locale)));
         }

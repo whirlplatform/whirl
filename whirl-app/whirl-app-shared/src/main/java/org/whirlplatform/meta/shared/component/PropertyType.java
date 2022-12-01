@@ -1,10 +1,9 @@
 package org.whirlplatform.meta.shared.component;
 
-import org.whirlplatform.meta.shared.data.DataType;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import org.whirlplatform.meta.shared.data.DataType;
 
 public enum PropertyType implements Serializable {
 
@@ -61,7 +60,8 @@ public enum PropertyType implements Serializable {
     AllowNegative("AllowNegative", DataType.BOOLEAN, false),
     Alt("Alt", DataType.BOOLEAN, false),
     BoxLabel("BoxLabel", DataType.STRING, true),
-    Checkable("Checkable", DataType.BOOLEAN, false), CheckColumn("CheckColumn", DataType.STRING, false, true),
+    Checkable("Checkable", DataType.BOOLEAN, false),
+    CheckColumn("CheckColumn", DataType.STRING, false, true),
     SelectColumn("SelectColumn", DataType.STRING, false),
     CheckStyle("CheckStyle", DataType.STRING, false, true),
     GroupName("GroupName", DataType.STRING, true, true),
@@ -90,17 +90,22 @@ public enum PropertyType implements Serializable {
     HideColumnHeader("HideColumnHeader", DataType.BOOLEAN, false),
     HideTrigger("HideTrigger", DataType.BOOLEAN, false),
     Key("Key", DataType.STRING, false, true),
-    KeyValidate("KeyValidate", DataType.BOOLEAN, false), IsLeafColumn("IsLeafColumn", DataType.STRING, false, true),
+    KeyValidate("KeyValidate", DataType.BOOLEAN, false),
+    IsLeafColumn("IsLeafColumn", DataType.STRING, false, true),
     SkipInitialLoad("SkipInitialLoad", DataType.BOOLEAN, false, true),
     LoadAll("LoadAll", DataType.BOOLEAN, false),
     MaxLength("MaxLength", DataType.NUMBER, false),
     MaxRowSelected("MaxRowSelected", DataType.NUMBER, false),
     MaxRowMessage("MaxRowMessage", DataType.STRING, false),
-    NumberMaxValue("MaxValue", DataType.NUMBER, false, false, Arrays.asList(ComponentType.NumberFieldType)),
-    DateMaxValue("MaxValue", DataType.DATE, false, false, Arrays.asList(ComponentType.DateFieldType)),
+    NumberMaxValue("MaxValue", DataType.NUMBER, false, false,
+            Arrays.asList(ComponentType.NumberFieldType)),
+    DateMaxValue("MaxValue", DataType.DATE, false, false,
+            Arrays.asList(ComponentType.DateFieldType)),
     MinLength("MinLength", DataType.NUMBER, false),
-    NumberMinValue("MinValue", DataType.NUMBER, false, false, Arrays.asList(ComponentType.NumberFieldType)),
-    DateMinValue("MinValue", DataType.DATE, false, false, Arrays.asList(ComponentType.DateFieldType)),
+    NumberMinValue("MinValue", DataType.NUMBER, false, false,
+            Arrays.asList(ComponentType.NumberFieldType)),
+    DateMinValue("MinValue", DataType.DATE, false, false,
+            Arrays.asList(ComponentType.DateFieldType)),
     Code("Code", DataType.STRING, false, true),
 
     LabelExpression("LabelExpression", DataType.STRING, false, true),
@@ -184,21 +189,22 @@ public enum PropertyType implements Serializable {
     private DataType dataType;
 
     /**
-     * Влияет на визуальное отображение. Используется только в редакторе
-     * приложений для перестроения интерфейса.
+     * Влияет на визуальное отображение. Используется только в редакторе приложений для перестроения
+     * интерфейса.
      */
     private Boolean isUI; // TODO это свойстов должно обявляться отдельно в
     // редакторе приложений
 
     /**
-     * Указывает на наобходимость создания простого не мультиязычного поля
-     * редактирования. Используется только в редакторе приложений.
+     * Указывает на наобходимость создания простого не мультиязычного поля редактирования.
+     * Используется только в редакторе приложений.
      */
     private boolean simple = false; // TODO это свойстов должно обявляться
     // отдельно в редакторе приложений
 
     /**
-     * Указывает в каких компонентах это свойство используется (нужно для свойств с одинаковым кодом)
+     * Указывает в каких компонентах это свойство используется (нужно для свойств с одинаковым
+     * кодом)
      */
     private List<ComponentType> componentTypes;
 
@@ -224,7 +230,8 @@ public enum PropertyType implements Serializable {
     public static PropertyType parse(String type, ComponentType componentType) {
         for (PropertyType t : PropertyType.values()) {
             if (t.getCode().equals(type) &&
-                    (t.getComponentTypes() == null || t.getComponentTypes().contains(componentType))) {
+                    (t.getComponentTypes() == null ||
+                            t.getComponentTypes().contains(componentType))) {
                 return t;
             }
         }

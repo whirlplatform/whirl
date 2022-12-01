@@ -4,9 +4,7 @@ import org.whirlplatform.meta.shared.data.RowListValue;
 
 
 /**
- * Реализация этого интерфейса говорит о том, что собираемый параметр список
- * значений.
- *
+ * Реализация этого интерфейса говорит о том, что собираемый параметр список значений.
  */
 public interface ListParameter<T extends RowListValue> {
 

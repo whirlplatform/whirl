@@ -14,32 +14,7 @@ import com.sencha.gxt.widget.core.client.Component;
 
 public class Surface extends Component {
 
-    public interface SurfaceAppearance {
-        void render(SafeHtmlBuilder sb);
-    }
-
-    public interface SurfaceStyle extends CssResource {
-        String surface();
-    }
-
-    public interface SurfaceResources {
-        SurfaceStyle style();
-    }
-
-    public interface DefaultTemplate extends XTemplates {
-        @XTemplate(source = "Surface.html")
-        SafeHtml render(SurfaceStyle style);
-    }
-
     private static Surface instance;
-
-    public static Surface get() {
-        if (instance == null) {
-            instance = new Surface(new DefaultSurfaceAppearance());
-            instance.getElement().getStyle().setZIndex(99999);
-        }
-        return instance;
-    }
 
     public Surface(SurfaceAppearance appearance) {
         SafeHtmlBuilder sb = new SafeHtmlBuilder();
@@ -49,6 +24,14 @@ public class Surface extends Component {
 
         setShadow(false);
         hide();
+    }
+
+    public static Surface get() {
+        if (instance == null) {
+            instance = new Surface(new DefaultSurfaceAppearance());
+            instance.getElement().getStyle().setZIndex(99999);
+        }
+        return instance;
     }
 
     public void show(Element c) {
@@ -80,6 +63,23 @@ public class Surface extends Component {
         if (!getElement().isConnected()) {
             Document.get().getBody().insertBefore(getElement(), null);
         }
+    }
+
+    public interface SurfaceAppearance {
+        void render(SafeHtmlBuilder sb);
+    }
+
+    public interface SurfaceStyle extends CssResource {
+        String surface();
+    }
+
+    public interface SurfaceResources {
+        SurfaceStyle style();
+    }
+
+    public interface DefaultTemplate extends XTemplates {
+        @XTemplate(source = "Surface.html")
+        SafeHtml render(SurfaceStyle style);
     }
 
 }

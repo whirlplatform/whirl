@@ -11,21 +11,21 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  *
  */
 public class AppTreeMainCell extends AbstractCell<String> {
-	final AppTree tree;
-	final TreeStore<AbstractElement> store;
+    final AppTree tree;
+    final TreeStore<AbstractElement> store;
 
-	public AppTreeMainCell(final AppTree tree) {
-		this.tree = tree;
-		this.store = tree.getStore();
-	}
+    public AppTreeMainCell(final AppTree tree) {
+        this.tree = tree;
+        this.store = tree.getStore();
+    }
 
-	@Override
-	public void render(Context context, String value, SafeHtmlBuilder sb) {
-		AbstractElement element = store.findModelWithKey(context.getKey().toString());
-		if (!tree.isReference(element) && !(element instanceof AbstractDummyElement)) {
-			sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
-		} else {
-			sb.appendEscaped(value);
-		}
-	}
+    @Override
+    public void render(Context context, String value, SafeHtmlBuilder sb) {
+        AbstractElement element = store.findModelWithKey(context.getKey().toString());
+        if (!tree.isReference(element) && !(element instanceof AbstractDummyElement)) {
+            sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
+        } else {
+            sb.appendEscaped(value);
+        }
+    }
 }

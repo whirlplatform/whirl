@@ -12,14 +12,6 @@ public class FileElement extends AbstractElement {
 
     private transient InputStreamProvider inputStreamProvider;
 
-    public interface InputStreamProvider {
-
-        Object get() throws IOException;
-
-        @Deprecated
-        String path();
-    }
-
     public FileElement() {
     }
 
@@ -49,12 +41,12 @@ public class FileElement extends AbstractElement {
         this.contentType = category.toString();
     }
 
-    public void setChecksum(long checksum) {
-        this.checksum = checksum;
-    }
-
     public long getChecksum() {
         return checksum;
+    }
+
+    public void setChecksum(long checksum) {
+        this.checksum = checksum;
     }
 
     public void setInputStreamProvider(InputStreamProvider inputStreamProvider) {
@@ -79,5 +71,13 @@ public class FileElement extends AbstractElement {
     @Override
     public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
         visitor.visit(ctx, this);
+    }
+
+    public interface InputStreamProvider {
+
+        Object get() throws IOException;
+
+        @Deprecated
+        String path();
     }
 }

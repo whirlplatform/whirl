@@ -10,6 +10,7 @@ public interface ComponentBundle extends ClientBundle {
 
     @Source("icon_selection.png")
     ImageResource iconSelection();
+
     @Source("textfield.png")
     ImageResource textField();
 

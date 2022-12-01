@@ -6,6 +6,12 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 
 public interface EventManager {
 
+    EventHelper wrapEvent(EventMetadata metadata);
+
+    void addEvents(ComponentBuilder builder, ComponentModel model);
+
+    void addMenuTreeEvent(ComponentBuilder builder, EventMetadata e);
+
     class Util {
 
         private static EventManager eventManager;
@@ -18,11 +24,5 @@ public interface EventManager {
             return eventManager;
         }
     }
-
-    EventHelper wrapEvent(EventMetadata metadata);
-
-    void addEvents(ComponentBuilder builder, ComponentModel model);
-
-    void addMenuTreeEvent(ComponentBuilder builder, EventMetadata e);
 
 }

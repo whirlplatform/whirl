@@ -4,10 +4,10 @@ import com.google.gwt.user.client.rpc.CustomFieldSerializer;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
-
 import java.util.List;
 
-public class RowListValueImpl_CustomFieldSerializer extends CustomFieldSerializer<RowListValueImpl> {
+public class RowListValueImpl_CustomFieldSerializer
+        extends CustomFieldSerializer<RowListValueImpl> {
 
     public static void serialize(SerializationStreamWriter streamWriter, RowListValueImpl instance)
             throws SerializationException {
@@ -16,14 +16,9 @@ public class RowListValueImpl_CustomFieldSerializer extends CustomFieldSerialize
         streamWriter.writeBoolean(instance.isCheckable());
     }
 
-    @Override
-    public void serializeInstance(SerializationStreamWriter streamWriter, RowListValueImpl instance)
-            throws SerializationException {
-        serialize(streamWriter, instance);
-    }
-
     @SuppressWarnings("unchecked")
-    public static void deserialize(SerializationStreamReader streamReader, RowListValueImpl instance)
+    public static void deserialize(SerializationStreamReader streamReader,
+                                   RowListValueImpl instance)
             throws SerializationException {
         instance.setCode(streamReader.readString());
         instance.setRowList((List<RowValue>) streamReader.readObject());
@@ -31,7 +26,14 @@ public class RowListValueImpl_CustomFieldSerializer extends CustomFieldSerialize
     }
 
     @Override
-    public void deserializeInstance(SerializationStreamReader streamReader, RowListValueImpl instance)
+    public void serializeInstance(SerializationStreamWriter streamWriter, RowListValueImpl instance)
+            throws SerializationException {
+        serialize(streamWriter, instance);
+    }
+
+    @Override
+    public void deserializeInstance(SerializationStreamReader streamReader,
+                                    RowListValueImpl instance)
             throws SerializationException {
         deserialize(streamReader, instance);
     }

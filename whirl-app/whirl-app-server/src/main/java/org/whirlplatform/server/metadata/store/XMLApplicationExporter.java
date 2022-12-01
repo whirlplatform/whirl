@@ -1,5 +1,14 @@
 package org.whirlplatform.server.metadata.store;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
@@ -43,16 +52,6 @@ import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 //import org.whirlplatform.meta.shared.editor.CellGroupElement;
 
 public class XMLApplicationExporter {
@@ -81,7 +80,8 @@ public class XMLApplicationExporter {
         Element applicationEl = document.addElement("application");
         applicationEl.addAttribute("id", application.getId());
         applicationEl.addAttribute("name", application.getName());
-        applicationEl.addAttribute("metaversion", String.valueOf(MetadataSerializer.CURRENT_VERSION));
+        applicationEl.addAttribute("metaversion",
+                String.valueOf(MetadataSerializer.CURRENT_VERSION));
 
         Element propertiesEl = applicationEl.addElement("properties");
 
@@ -207,7 +207,8 @@ public class XMLApplicationExporter {
         return document;
     }
 
-    private void writeCollectionRights(Element parentEl, RightCollectionElement collection, String collectionTag,
+    private void writeCollectionRights(Element parentEl, RightCollectionElement collection,
+                                       String collectionTag,
                                        String idTag) {
         // Второе условие - временное. Нужно сделать чтобы при удалении элемента
         // удалялись и его права(и права всех дочерних удаленных элементов)
@@ -619,7 +620,8 @@ public class XMLApplicationExporter {
                 parameter.addAttribute("name", param.getName());
                 parameter.addAttribute("type", param.getType().toString());
                 parameter.addAttribute("componentId",
-                        param.getComponent() == null ? param.getComponentId() : param.getComponent().getId());
+                        param.getComponent() == null ? param.getComponentId() :
+                                param.getComponent().getId());
                 parameter.addAttribute("componentName", param.getComponentCode());
                 parameter.addAttribute("storageCode", param.getStorageCode());
                 if (type != null) {
@@ -899,7 +901,7 @@ public class XMLApplicationExporter {
             parameterEl = columnEl.addElement("configColumn");
             setElementText(parameterEl, column.getConfigColumn());
         }
-    
+
         if (column.getLabelExpression() != null) {
             parameterEl = columnEl.addElement("labelExpression");
             setElementText(parameterEl, column.getLabelExpression());

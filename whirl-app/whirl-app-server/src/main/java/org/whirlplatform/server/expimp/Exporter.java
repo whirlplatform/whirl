@@ -1,14 +1,13 @@
 package org.whirlplatform.server.expimp;
 
-import org.apache.empire.db.DBReader;
-import org.whirlplatform.meta.shared.FieldMetadata;
-import org.whirlplatform.meta.shared.data.DataType;
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+import org.apache.empire.db.DBReader;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.data.DataType;
 
 public abstract class Exporter {
 
@@ -17,9 +16,10 @@ public abstract class Exporter {
 
     protected Object getColumnValue(FieldMetadata field, DBReader reader) {
         Object object;
-    
+
         if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
-            object = reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
+            object =
+                    reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
         } else if (DataType.DATE == field.getType()) {
             object = reader.getDateTime(reader.getFieldIndex(field.getName()));
         } else {

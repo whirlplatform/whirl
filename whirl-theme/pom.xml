@@ -10,6 +10,11 @@
     <artifactId>whirl-theme</artifactId>
 
     <properties>
+        <project.rootdir>${project.basedir}/..</project.rootdir>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <phantomjs.version>1.9.8</phantomjs.version>
     </properties>
 

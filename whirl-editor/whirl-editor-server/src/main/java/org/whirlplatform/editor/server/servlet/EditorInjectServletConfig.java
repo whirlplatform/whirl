@@ -6,10 +6,10 @@ import org.whirlplatform.server.servlet.InjectServletConfig;
 
 public class EditorInjectServletConfig extends InjectServletConfig {
 
-	@Override
-	protected Injector getInjector() {
-		return Guice.createInjector(new EditorCoreModule(),
-				new EditorServletModule());
-	}
+    @Override
+    protected Injector getInjector() {
+        return Guice.createInjector(new EditorCoreModule(),
+                new EditorServletModule());
+    }
 
 }

@@ -1,11 +1,11 @@
 package org.whirlplatform.server.servlet;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Сервлет отображающий версию платформы.
@@ -25,7 +25,8 @@ public class VersionServlet extends HttpServlet {
         if (version == null) {
             version = getClass().getPackage().getImplementationVersion();
             if (version == null) {
-                try (InputStream is = getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")) {
+                try (InputStream is = getServletContext().getResourceAsStream(
+                        "/META-INF/MANIFEST.MF")) {
                     Properties prop = new Properties();
                     prop.load(is);
                     version = prop.getProperty("Implementation-Version");

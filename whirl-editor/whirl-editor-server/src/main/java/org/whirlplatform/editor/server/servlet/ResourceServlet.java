@@ -1,6 +1,18 @@
 package org.whirlplatform.editor.server.servlet;
 
 import com.google.inject.Singleton;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.inject.Inject;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -14,19 +26,6 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.MetadataStoreException;
-
-import javax.inject.Inject;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Singleton
 @SuppressWarnings("serial")
@@ -84,7 +83,8 @@ public class ResourceServlet extends HttpServlet {
 
     @SuppressWarnings("unchecked")
     public void saveFileInContext(HttpSession session, String fileId, FileItem file) {
-        Map<String, FileItem> files = (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
+        Map<String, FileItem> files =
+                (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
         if (files == null) {
             files = new HashMap<String, FileItem>();
             session.setAttribute("whirl-editor-filemap", files);
@@ -92,7 +92,8 @@ public class ResourceServlet extends HttpServlet {
         files.put(fileId, file);
     }
 
-    private void onUpload(HttpServletRequest req, HttpServletResponse resp) throws FileUploadException {
+    private void onUpload(HttpServletRequest req, HttpServletResponse resp)
+            throws FileUploadException {
         if (ServletFileUpload.isMultipartContent(req)) {
             ServletFileUpload upload = createServletFileUpload();
             List<FileItem> files = upload.parseRequest(req);
@@ -125,7 +126,8 @@ public class ResourceServlet extends HttpServlet {
         } else {
             FileElementCategory category = FileElementCategory.get(type);
             Version version = extractVersion(req);
-            try (InputStream in = metadataStore.getApplicationFileInputStream(appCode, version, category, fileName)) {
+            try (InputStream in = metadataStore.getApplicationFileInputStream(appCode, version,
+                    category, fileName)) {
                 copyInputStreamToResponce(resp, in, fileName);
             } catch (MetadataStoreException | IOException e) {
                 _log.error(e);
@@ -145,7 +147,8 @@ public class ResourceServlet extends HttpServlet {
         return result;
     }
 
-    private void copyInputStreamToResponce(HttpServletResponse resp, InputStream in, String fileName)
+    private void copyInputStreamToResponce(HttpServletResponse resp, InputStream in,
+                                           String fileName)
             throws IOException {
         ServletOutputStream out = resp.getOutputStream();
         resp.setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
@@ -172,7 +175,8 @@ public class ResourceServlet extends HttpServlet {
 
     @SuppressWarnings("unchecked")
     public FileItem getFileFromContext(HttpSession session, String fileName) {
-        Map<String, FileItem> files = (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
+        Map<String, FileItem> files =
+                (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
         if (files == null) {
             return null;
         }

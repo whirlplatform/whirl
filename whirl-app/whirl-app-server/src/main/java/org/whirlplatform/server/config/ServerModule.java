@@ -2,6 +2,7 @@ package org.whirlplatform.server.config;
 
 import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
+import java.util.HashMap;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.whirlplatform.rpc.server.DataServiceImpl;
@@ -12,9 +13,13 @@ import org.whirlplatform.server.cache.CacheFilter;
 import org.whirlplatform.server.form.captcha.CaptchaImgServlet;
 import org.whirlplatform.server.i18n.I18NFilter;
 import org.whirlplatform.server.scheduler.MainInitializerServlet;
-import org.whirlplatform.server.servlet.*;
-
-import java.util.HashMap;
+import org.whirlplatform.server.servlet.ExportServlet;
+import org.whirlplatform.server.servlet.FileServlet;
+import org.whirlplatform.server.servlet.ImportServlet;
+import org.whirlplatform.server.servlet.MainController;
+import org.whirlplatform.server.servlet.ReportServlet;
+import org.whirlplatform.server.servlet.ResourceServlet;
+import org.whirlplatform.server.servlet.StaticResourceServlet;
 
 public class ServerModule extends ServletModule {
 
@@ -29,15 +34,15 @@ public class ServerModule extends ServletModule {
         // Основная страница
         serve("/app").with(MainController.class);
         // Сервлет RPC
-//		serve("/application/data").with(DataServiceImpl.class);
+//        serve("/application/data").with(DataServiceImpl.class);
         // Регистрация REST приложения
         HashMap<String, String> servletParams = new HashMap<>();
         servletParams.put("javax.ws.rs.Application", RestApplication.class.getName());
         bind(ServletContainer.class).in(Scopes.SINGLETON);
         serve("/application/data/*").with(ServletContainer.class, servletParams);
 
-//		serve("/application").with(HttpServletDispatcher.class, servletParams);
-//		bind(HttpServletDispatcher.class).in(Scopes.SINGLETON);
+//        serve("/application").with(HttpServletDispatcher.class, servletParams);
+//        bind(HttpServletDispatcher.class).in(Scopes.SINGLETON);
         bind(JacksonJsonProvider.class);
         bind(DataServiceImpl.class);
         bind(JsonParamConverterProvider.class);
@@ -59,7 +64,7 @@ public class ServerModule extends ServletModule {
         // Сервлет файлы для таблиц
         serve("/file").with(FileServlet.class);
         // Сервлет вызова сервисов
-//		serveRegex("/service/([a-z]+)/([a-z]+)$").with(RewriteRunner.class);
+//        serveRegex("/service/([a-z]+)/([a-z]+)$").with(RewriteRunner.class);
         // Сервлет для статики
         serveRegex("/static/.+$").with(StaticResourceServlet.class);
         //Jobs

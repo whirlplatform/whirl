@@ -2,6 +2,8 @@ package org.whirlplatform.component.client.base;
 
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -11,9 +13,6 @@ import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Контейнер с одним элементом.
  */
@@ -21,8 +20,8 @@ import java.util.Map;
 public class SimpleContainerBuilder extends ComponentBuilder implements
         Containable {
 
-    private ComponentBuilder topComponent;
     protected SimpleContainer container;
+    private ComponentBuilder topComponent;
 
     @JsConstructor
     public SimpleContainerBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -151,8 +150,7 @@ public class SimpleContainerBuilder extends ComponentBuilder implements
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

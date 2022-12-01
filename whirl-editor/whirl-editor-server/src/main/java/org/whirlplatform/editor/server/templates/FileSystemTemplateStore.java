@@ -1,19 +1,18 @@
 package org.whirlplatform.editor.server.templates;
 
 import com.google.inject.Inject;
-import org.whirlplatform.editor.shared.RPCException;
-import org.whirlplatform.editor.shared.templates.BaseTemplate;
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-import org.whirlplatform.server.config.Configuration;
-import org.whirlplatform.server.log.Logger;
-import org.whirlplatform.server.log.LoggerFactory;
-
 import java.io.IOException;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.whirlplatform.editor.shared.RPCException;
+import org.whirlplatform.editor.shared.templates.BaseTemplate;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.server.config.Configuration;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
 
 public class FileSystemTemplateStore implements TemplateStore {
 
@@ -91,7 +90,8 @@ public class FileSystemTemplateStore implements TemplateStore {
 
     @Override
     public List<BaseTemplate> loadComponentTemplates() throws RPCException {
-        return importer.loadComponentTemplates(getPathToFolder(BaseTemplate.Type.COMPONENT_TEMPLATE))
+        return importer.loadComponentTemplates(
+                        getPathToFolder(BaseTemplate.Type.COMPONENT_TEMPLATE))
                 .stream().map(this::asBaseTemplate).collect(Collectors.toList());
     }
 

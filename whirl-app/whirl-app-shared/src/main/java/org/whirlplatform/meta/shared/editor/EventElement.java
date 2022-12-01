@@ -1,326 +1,329 @@
 package org.whirlplatform.meta.shared.editor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.EventType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.EventParameterImpl;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
-import java.util.*;
-
 @SuppressWarnings("serial")
 public class EventElement extends AbstractElement {
 
-	private EventType type;
-	private String code;
-	private String handlerType;
+    private EventType type;
+    private String code;
+    private String handlerType;
 
-	private DataSourceElement dataSource;
-	private String schema;
-	private String function;
-	private String source;
+    private DataSourceElement dataSource;
+    private String schema;
+    private String function;
+    private String source;
 
-	private ComponentElement component;
-	private ComponentElement targetComponent;
+    private ComponentElement component;
+    private ComponentElement targetComponent;
 
-	private AbstractElement parentElement;
+    private AbstractElement parentElement;
 
-	private Set<EventParameterElement> parameters = new HashSet<EventParameterElement>();
+    private Set<EventParameterElement> parameters = new HashSet<EventParameterElement>();
 
-	private String parentEventId;
-	private List<EventElement> subEvents = new ArrayList<EventElement>();
+    private String parentEventId;
+    private List<EventElement> subEvents = new ArrayList<EventElement>();
 
-	private boolean confirm = false;
-	private PropertyValue confirmText = new PropertyValue(DataType.STRING);
+    private boolean confirm = false;
+    private PropertyValue confirmText = new PropertyValue(DataType.STRING);
 
-	private boolean wait = false;
-	private PropertyValue waitText = new PropertyValue(DataType.STRING);
+    private boolean wait = false;
+    private PropertyValue waitText = new PropertyValue(DataType.STRING);
 
-	private boolean named = false;
+    private boolean named = false;
 
-	private boolean createNew = false;
+    private boolean createNew = false;
 
-	public EventElement() {
+    public EventElement() {
 
-	}
+    }
 
-	public EventType getType() {
-		return type;
-	}
+    public static EventMetadata eventElementToMetadata(EventElement event, LocaleElement locale) {
+        EventMetadata meta = new EventMetadata(event.getType());
+        meta.setId(event.getId());
+        meta.setCode(event.getCode());
+        if (event.getComponent() != null) {
+            meta.setComponentId(event.getComponent().getId());
+        }
+        if (event.getTargetComponent() != null) {
+            meta.setTargetComponentId(event.getTargetComponent().getId());
+        }
 
-	public void setType(EventType type) {
-		this.type = type;
-	}
+        meta.setConfirm(event.isConfirm());
+        meta.setConfirmText(event.getConfirmText().getValue(locale).getString());
+        meta.setSource(event.getSource());
+        meta.setNamed(event.isNamed());
+        meta.setWait(event.isWait());
+        meta.setWaitText(event.getWaitText().getValue(locale).getString());
+        meta.setCreateNew(event.isCreateNew());
+        for (EventParameterElement param : event.getParameters()) {
+            EventParameterImpl metaParam = new EventParameterImpl(param.getType());
+            metaParam.setCode(param.getCode());
+            metaParam.setComponentId(param.getComponentId());
+            metaParam.setComponentCode(param.getComponentCode());
+            metaParam.setStorageCode(param.getStorageCode());
+            if (metaParam.getCode() == null || metaParam.getCode().isEmpty()) {
+                metaParam.setDataWithCode(param.getValue());
+            } else {
+                metaParam.setData(param.getValue());
+            }
+            meta.addParameter(metaParam);
+        }
+        return meta;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public EventType getType() {
+        return type;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setType(EventType type) {
+        this.type = type;
+    }
 
-	public void setSchema(String schema) {
-		this.schema = schema;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getSchema() {
-		return schema;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setFunction(String function) {
-		this.function = function;
-	}
+    public String getSchema() {
+        return schema;
+    }
 
-	public String getFunction() {
-		return function;
-	}
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
 
-	public void setSource(String source) {
-		this.source = source;
-	}
+    public String getFunction() {
+        return function;
+    }
 
-	public String getSource() {
-		return source;
-	}
+    public void setFunction(String function) {
+        this.function = function;
+    }
 
-	public void setComponent(ComponentElement component) {
-		this.component = component;
-	}
+    public String getSource() {
+        return source;
+    }
 
-	public ComponentElement getComponent() {
-		return component;
-	}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
-	public void setTargetComponent(ComponentElement targetComponent) {
-		this.targetComponent = targetComponent;
-	}
+    public ComponentElement getComponent() {
+        return component;
+    }
 
-	public ComponentElement getTargetComponent() {
-		return targetComponent;
-	}
+    public void setComponent(ComponentElement component) {
+        this.component = component;
+    }
 
-	public boolean isConfirm() {
-		return confirm;
-	}
+    public ComponentElement getTargetComponent() {
+        return targetComponent;
+    }
 
-	public void setConfirm(boolean confirm) {
-		this.confirm = confirm;
-	}
+    public void setTargetComponent(ComponentElement targetComponent) {
+        this.targetComponent = targetComponent;
+    }
 
-	public PropertyValue getConfirmText() {
-		return confirmText;
-	}
+    public boolean isConfirm() {
+        return confirm;
+    }
 
-	public void setConfirmText(PropertyValue confirmText) {
-		this.confirmText = confirmText;
-	}
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
 
-	public boolean isWait() {
-		return wait;
-	}
+    public PropertyValue getConfirmText() {
+        return confirmText;
+    }
 
-	public void setWait(boolean wait) {
-		this.wait = wait;
-	}
+    public void setConfirmText(PropertyValue confirmText) {
+        this.confirmText = confirmText;
+    }
 
-	public PropertyValue getWaitText() {
-		return waitText;
-	}
+    public boolean isWait() {
+        return wait;
+    }
 
-	public void setWaitText(PropertyValue waitText) {
-		this.waitText = waitText;
-	}
+    public void setWait(boolean wait) {
+        this.wait = wait;
+    }
 
-	public void setHandlerType(String handlerType) {
-		this.handlerType = handlerType;
-	}
+    public PropertyValue getWaitText() {
+        return waitText;
+    }
 
-	public String getHandlerType() {
-		return handlerType;
-	}
+    public void setWaitText(PropertyValue waitText) {
+        this.waitText = waitText;
+    }
 
-	/**
-	 * Пересчитать индексы параметров
-	 * 
-	 * @return возвращает индекс последнего жлемента. Если елементов нет, то
-	 *         возвращает <i>-1</i>.
-	 */
-	private int rebuildIndex() {
-		int index = 0;
-		for (EventParameterElement p : getParameters()) {
-			p.setIndex(index);
-			index++;
-		}
-		return index - 1;
-	}
+    public String getHandlerType() {
+        return handlerType;
+    }
 
-	public void addParameter(EventParameterElement parameter) {
-		if (parameter.getIndex() >= 0) {
-			setParameterIndex(parameter, parameter.getIndex());
-			parameter.setParentEvent(this);
-		} else {
-			parameter.setIndex(rebuildIndex() + 1);
-			parameters.add(parameter);
-			parameter.setParentEvent(this);
-		}
-	}
+    public void setHandlerType(String handlerType) {
+        this.handlerType = handlerType;
+    }
 
-	public Collection<EventParameterElement> getParameters() {
-		List<EventParameterElement> result = new ArrayList<EventParameterElement>(parameters);
-		Collections.sort(result, ParametersComparator.COMPARATOR);
-		return Collections.unmodifiableList(result);
-	}
+    /**
+     * Пересчитать индексы параметров
+     *
+     * @return возвращает индекс последнего жлемента. Если елементов нет, то возвращает <i>-1</i>.
+     */
+    private int rebuildIndex() {
+        int index = 0;
+        for (EventParameterElement p : getParameters()) {
+            p.setIndex(index);
+            index++;
+        }
+        return index - 1;
+    }
 
-	public void removeParameter(EventParameterElement parameter) {
-		parameters.remove(parameter);
-	}
+    public void addParameter(EventParameterElement parameter) {
+        if (parameter.getIndex() >= 0) {
+            setParameterIndex(parameter, parameter.getIndex());
+            parameter.setParentEvent(this);
+        } else {
+            parameter.setIndex(rebuildIndex() + 1);
+            parameters.add(parameter);
+            parameter.setParentEvent(this);
+        }
+    }
 
-	public int getParametersCount() {
-		return parameters.size();
-	}
+    public Collection<EventParameterElement> getParameters() {
+        List<EventParameterElement> result = new ArrayList<EventParameterElement>(parameters);
+        Collections.sort(result, ParametersComparator.COMPARATOR);
+        return Collections.unmodifiableList(result);
+    }
 
-	public void setParameterIndex(EventParameterElement parameter, int index) {
-		boolean addLast = index == parameters.size();
-		int i = 0;
-		parameters.remove(parameter);
-		for (EventParameterElement p : getParameters()) {
-			if (p == parameter) {
-				continue;
-			}
-			if (i == index) {
-				i++;
-			}
-			p.setIndex(i);
-			parameters.add(p);
-			i++;
-		}
-		if (addLast) {
-			parameter.setIndex(i);
-		} else {
-			parameter.setIndex(index);
-		}
-		parameters.add(parameter);
-		parameter.setParentEvent(this);
-	}
+    public void removeParameter(EventParameterElement parameter) {
+        parameters.remove(parameter);
+    }
 
-	public int getParameterIndex(EventParameterElement parameter) {
-		if (!parameters.contains(parameter)) {
-			return -1;
-		}
-		return parameter.getIndex();
-	}
+    public int getParametersCount() {
+        return parameters.size();
+    }
 
-	public void setNamed(boolean named) {
-		this.named = named;
-	}
+    public void setParameterIndex(EventParameterElement parameter, int index) {
+        boolean addLast = index == parameters.size();
+        int i = 0;
+        parameters.remove(parameter);
+        for (EventParameterElement p : getParameters()) {
+            if (p == parameter) {
+                continue;
+            }
+            if (i == index) {
+                i++;
+            }
+            p.setIndex(i);
+            parameters.add(p);
+            i++;
+        }
+        if (addLast) {
+            parameter.setIndex(i);
+        } else {
+            parameter.setIndex(index);
+        }
+        parameters.add(parameter);
+        parameter.setParentEvent(this);
+    }
 
-	public boolean isNamed() {
-		return named;
-	}
+    public int getParameterIndex(EventParameterElement parameter) {
+        if (!parameters.contains(parameter)) {
+            return -1;
+        }
+        return parameter.getIndex();
+    }
 
-	public void setParentEventId(String parentEventId) {
-		this.parentEventId = parentEventId;
-	}
+    public boolean isNamed() {
+        return named;
+    }
 
-	public String getParentEventId() {
-		return parentEventId;
-	}
+    public void setNamed(boolean named) {
+        this.named = named;
+    }
 
-	public void addSubEvent(EventElement subEvent) {
-		subEvents.add(subEvent);
-		subEvent.setParentEvent(this);
-	}
+    public String getParentEventId() {
+        return parentEventId;
+    }
 
-	public List<EventElement> getSubEvents() {
-		return subEvents;
-	}
+    public void setParentEventId(String parentEventId) {
+        this.parentEventId = parentEventId;
+    }
 
-	public void removeSubEvent(EventElement subEvent) {
-		subEvents.remove(subEvent);
-		if (subEvent != null) {
-			subEvent.setParentEvent(null);
-		}
-	}
+    public void addSubEvent(EventElement subEvent) {
+        subEvents.add(subEvent);
+        subEvent.setParentEvent(this);
+    }
 
-	public void removeFromParent() {
-		if (parentElement == null) {
-			return;
-		}
-		if (parentElement instanceof ComponentElement) {
-			((ComponentElement) parentElement).removeEvent(this);
-		} else if (parentElement instanceof EventElement) {
-			((EventElement) parentElement).removeSubEvent(this);
-		} else if (parentElement instanceof ApplicationElement) {
-			((ApplicationElement) parentElement).removeFreeEvent(this);
-		}
-		parentElement = null;
-	}
+    public List<EventElement> getSubEvents() {
+        return subEvents;
+    }
 
-	public void setParentComponent(ComponentElement parentComponent) {
-		this.parentElement = parentComponent;
-	}
+    public void removeSubEvent(EventElement subEvent) {
+        subEvents.remove(subEvent);
+        if (subEvent != null) {
+            subEvent.setParentEvent(null);
+        }
+    }
 
-	public void setParentEvent(EventElement parentEvent) {
-		this.parentElement = parentEvent;
-	}
+    public void removeFromParent() {
+        if (parentElement == null) {
+            return;
+        }
+        if (parentElement instanceof ComponentElement) {
+            ((ComponentElement) parentElement).removeEvent(this);
+        } else if (parentElement instanceof EventElement) {
+            ((EventElement) parentElement).removeSubEvent(this);
+        } else if (parentElement instanceof ApplicationElement) {
+            ((ApplicationElement) parentElement).removeFreeEvent(this);
+        }
+        parentElement = null;
+    }
 
-	public void setParentApplication(ApplicationElement applicationElement) {
-		this.parentElement = applicationElement;
-	}
+    public void setParentComponent(ComponentElement parentComponent) {
+        this.parentElement = parentComponent;
+    }
 
-	public DataSourceElement getDataSource() {
-		return dataSource;
-	}
+    public void setParentEvent(EventElement parentEvent) {
+        this.parentElement = parentEvent;
+    }
 
-	public void setDataSource(DataSourceElement dataSource) {
-		this.dataSource = dataSource;
-	}
+    public void setParentApplication(ApplicationElement applicationElement) {
+        this.parentElement = applicationElement;
+    }
 
-	public boolean isCreateNew() {
-		return createNew;
-	}
+    public DataSourceElement getDataSource() {
+        return dataSource;
+    }
 
-	public void setCreateNew(boolean createNew) {
-		this.createNew = createNew;
-	}
+    public void setDataSource(DataSourceElement dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	public static EventMetadata eventElementToMetadata(EventElement event, LocaleElement locale) {
-		EventMetadata meta = new EventMetadata(event.getType());
-		meta.setId(event.getId());
-		meta.setCode(event.getCode());
-		if (event.getComponent() != null) {
-			meta.setComponentId(event.getComponent().getId());
-		}
-		if (event.getTargetComponent() != null) {
-			meta.setTargetComponentId(event.getTargetComponent().getId());
-		}
+    public boolean isCreateNew() {
+        return createNew;
+    }
 
-		meta.setConfirm(event.isConfirm());
-		meta.setConfirmText(event.getConfirmText().getValue(locale).getString());
-		meta.setSource(event.getSource());
-		meta.setNamed(event.isNamed());
-		meta.setWait(event.isWait());
-		meta.setWaitText(event.getWaitText().getValue(locale).getString());
-		meta.setCreateNew(event.isCreateNew());
-		for (EventParameterElement param : event.getParameters()) {
-			EventParameterImpl metaParam = new EventParameterImpl(param.getType());
-			metaParam.setCode(param.getCode());
-			metaParam.setComponentId(param.getComponentId());
-			metaParam.setComponentCode(param.getComponentCode());
-			metaParam.setStorageCode(param.getStorageCode());
-			if (metaParam.getCode() == null || metaParam.getCode().isEmpty()) {
-				metaParam.setDataWithCode(param.getValue());
-			} else {
-				metaParam.setData(param.getValue());
-			}
-			meta.addParameter(metaParam);
-		}
-		return meta;
-	}
+    public void setCreateNew(boolean createNew) {
+        this.createNew = createNew;
+    }
 
-	@Override
+    @Override
     public <T extends ElementVisitor.VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+        visitor.visit(ctx, this);
+    }
 }

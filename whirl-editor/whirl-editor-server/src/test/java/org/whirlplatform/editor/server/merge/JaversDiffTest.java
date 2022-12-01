@@ -1,5 +1,8 @@
 package org.whirlplatform.editor.server.merge;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -15,17 +18,14 @@ import org.whirlplatform.server.metadata.store.AbstractMetadataStore;
 import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.MetadataStoreException;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-
 @Ignore
 public class JaversDiffTest {
 
     private MetadataStore metadata = new AbstractMetadataStore() {
 
         @Override
-        public void saveApplication(ApplicationElement application, Version version, ApplicationUser user) {
+        public void saveApplication(ApplicationElement application, Version version,
+                                    ApplicationUser user) {
         }
 
         @Override
@@ -39,7 +39,8 @@ public class JaversDiffTest {
         }
 
         @Override
-        public ApplicationElement loadApplication(String code, Version version, boolean ignoreReferences) {
+        public ApplicationElement loadApplication(String code, Version version,
+                                                  boolean ignoreReferences) {
             return null;
         }
 
@@ -58,7 +59,8 @@ public class JaversDiffTest {
     private Merger merger = new ReflectionMerger();
 
     private ApplicationElement load(String file) throws MetadataStoreException, IOException {
-        return metadata.deserialize(IOUtils.toString(JaversDiffTest.class.getResourceAsStream(file)));
+        return metadata.deserialize(
+                IOUtils.toString(JaversDiffTest.class.getResourceAsStream(file)));
     }
 
     private ApplicationElement base() throws MetadataStoreException, IOException {
@@ -101,11 +103,13 @@ public class JaversDiffTest {
         checkDiff(load("event-add-right.xml"), load("add-event.xml"), load("add-event.xml"), 1);
 
         // изменение права на событии
-        checkDiff(load("event-add-right.xml"), load("event-change-right.xml"), load("event-add-right.xml"), 1);
+        checkDiff(load("event-add-right.xml"), load("event-change-right.xml"),
+                load("event-add-right.xml"), 1);
 
     }
 
-    private void checkDiff(ApplicationElement left, ApplicationElement right, ApplicationElement control,
+    private void checkDiff(ApplicationElement left, ApplicationElement right,
+                           ApplicationElement control,
                            int changesCount) {
         ApplicationsDiff changes = differ.diff(left, right);
         Assert.assertSame(changesCount, changes.getChanges().size());

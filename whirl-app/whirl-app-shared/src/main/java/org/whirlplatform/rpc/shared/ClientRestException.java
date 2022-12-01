@@ -15,8 +15,8 @@ public class ClientRestException extends Exception {
     }
 
     /**
-     * Если true, исключение наше. Иначе исключение выброшено фреймфорком либо
-     * ошибкой подключения, и ExceptionData == null
+     * Если true, исключение наше. Иначе исключение выброшено фреймфорком либо ошибкой подключения,
+     * и ExceptionData == null
      */
     public boolean isCustom() {
         return custom;
@@ -27,7 +27,8 @@ public class ClientRestException extends Exception {
     }
 
     /**
-     * Если исключение наше, вернет текст из ExceptionData. Иначе текст ошибки сервера (код ответа и краткое описание)
+     * Если исключение наше, вернет текст из ExceptionData. Иначе текст ошибки сервера (код ответа и
+     * краткое описание)
      */
     @Override
     public String getMessage() {

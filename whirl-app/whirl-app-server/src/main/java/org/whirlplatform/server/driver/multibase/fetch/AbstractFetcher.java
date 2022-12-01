@@ -1,5 +1,9 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBDatabase;
 import org.apache.empire.db.DBDatabaseDriver;
@@ -9,11 +13,6 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.db.NamedParamResolver;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AbstractFetcher {
     private final ConnectionWrapper connection;

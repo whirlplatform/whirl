@@ -4,22 +4,22 @@ import java.util.Date;
 
 public interface Profile extends AutoCloseable {
 
-    class MessageWrapper {
-		public final Message message;
-		public Date startDate;
-		public Date endDate;
+    Date getStartDate();
 
-		public MessageWrapper(Message message) {
-			this.message = message;
-		}
-	}
-	
-	Date getStartDate();
-	
-	Date getEndDate();
-	
-	Message getMessage();
-	
-	@Override
+    Date getEndDate();
+
+    Message getMessage();
+
+    @Override
     void close();
+
+    class MessageWrapper {
+        public final Message message;
+        public Date startDate;
+        public Date endDate;
+
+        public MessageWrapper(Message message) {
+            this.message = message;
+        }
+    }
 }

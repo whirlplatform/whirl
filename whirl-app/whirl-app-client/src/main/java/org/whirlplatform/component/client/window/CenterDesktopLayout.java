@@ -1,7 +1,5 @@
 /**
- * Sencha GXT 3.1.1 - Sencha for GWT
- * Copyright(c) 2007-2014, Sencha, Inc.
- * licensing@sencha.com
+ * Sencha GXT 3.1.1 - Sencha for GWT Copyright(c) 2007-2014, Sencha, Inc. licensing@sencha.com
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
@@ -9,7 +7,6 @@ package org.whirlplatform.component.client.window;
 
 import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Window;
-
 import java.util.Random;
 
 public class CenterDesktopLayout extends LimitedDesktopLayout implements DesktopLayout {
@@ -28,7 +25,8 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
     }
 
     @Override
-    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element, Iterable<Window> windows,
+    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element,
+                              Iterable<Window> windows,
                               int containerWidth, int containerHeight) {
 
         if (requestType == RequestType.LAYOUT) {
@@ -36,15 +34,18 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
             top = MINIMUM;
         }
 
-        super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth, containerHeight);
+        super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth,
+                containerHeight);
     }
 
     @Override
-    protected void layoutWindow(Window window, int containerWidth, int containerHeight, int width, int height) {
+    protected void layoutWindow(Window window, int containerWidth, int containerHeight, int width,
+                                int height) {
 
         int offset = window.getHeader().getOffsetHeight();
 
-        if (((left + VARIANCE + width) > containerWidth) || ((top + VARIANCE + height) > containerHeight)) {
+        if (((left + VARIANCE + width) > containerWidth) ||
+                ((top + VARIANCE + height) > containerHeight)) {
             left = MINIMUM;
             top = MINIMUM;
         }

@@ -13,8 +13,8 @@ import org.whirlplatform.component.client.check.CheckGroupBuilder;
  * var values = rlv.getValues(); // {@link RowValueOverlay RowValue}[]
  *
  * for(var o in values){
- * 	  var e = values[o]; //{@link RowValueOverlay RowValue}
- * 	  console.log(e.getId()+" c:"+e.isChecked()+" s:"+e.isSelected());
+ *       var e = values[o]; //{@link RowValueOverlay RowValue}
+ *       console.log(e.getId()+" c:"+e.isChecked()+" s:"+e.isSelected());
  *    }
  *
  * </pre>
@@ -34,24 +34,26 @@ public abstract class CheckGroupBuilderOverlay {
     }
 
     /**
+     * Получение родительского компонента CheckGroup
+     *
+     * @param instance - CheckGroupBuilder
+     * @return ComponentBuilder, компонент
+     */
+    public static ComponentBuilder getParent(CheckGroupBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установка кода CheckGroup
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получение кода CheckGroup
@@ -61,11 +63,11 @@ public abstract class CheckGroupBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установка активности CheckGroup
+     * Установка кода CheckGroup
      *
-     * @param enabled - boolean
+     * @param name - String, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получение информации об активности CheckGroup
@@ -75,11 +77,11 @@ public abstract class CheckGroupBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установка скрытности CheckGroup
+     * Установка активности CheckGroup
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получение информации о скрытности CheckGroup
@@ -89,21 +91,18 @@ public abstract class CheckGroupBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установка скрытности CheckGroup
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Установка стиля CheckGroup
      *
      * @param styleName - String, название стиля
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Получение родительского компонента CheckGroup
-     *
-     * @param instance - CheckGroupBuilder
-     * @return ComponentBuilder, компонент
-     */
-    public static ComponentBuilder getParent(CheckGroupBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на CheckGroup

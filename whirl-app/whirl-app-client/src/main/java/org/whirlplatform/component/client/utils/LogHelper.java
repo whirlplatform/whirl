@@ -20,9 +20,9 @@ public class LogHelper {
      * @param message - String
      */
     private static native void consoleError(String message) /*-{
-		if (window.console) {
-			window.console.error("JS Error: " + message);
-		}
-	}-*/;
+        if (window.console) {
+            window.console.error("JS Error: " + message);
+        }
+    }-*/;
 
 }

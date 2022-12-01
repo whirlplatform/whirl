@@ -2,14 +2,10 @@ package org.whirlplatform.editor.client.image;
 
 import com.google.gwt.resources.client.ImageResource;
 import com.sencha.gxt.core.shared.FastMap;
+import java.util.Map;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
-import java.util.Map;
-
 public class ComponentIcon {
-
-    public ComponentIcon() {
-    }
 
     @SuppressWarnings("serial")
     private static Map<String, ImageResource> binding = new FastMap<ImageResource>() {
@@ -110,6 +106,9 @@ public class ComponentIcon {
                     ComponentBundle.INSTANCE.passwordField());
         }
     };
+
+    public ComponentIcon() {
+    }
 
     public static ImageResource getIcon(String type) {
         return binding.get(type);

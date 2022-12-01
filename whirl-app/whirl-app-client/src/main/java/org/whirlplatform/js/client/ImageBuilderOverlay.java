@@ -20,11 +20,14 @@ public abstract class ImageBuilderOverlay {
     }
 
     /**
-     * Установка кода картинки
+     * Полчение родительского компонента картинки
      *
-     * @param name - String, код
+     * @param instance - ImageBuilder, картинка
+     * @return ComponentBuilder, компонент
      */
-    public abstract void setCode(String name);
+    public static ComponentBuilder getParent(ImageBuilder instance) {
+        return instance.getParentBuilder();
+    }
 
     /**
      * Получение кода картинки
@@ -34,11 +37,11 @@ public abstract class ImageBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установка активности картинки
+     * Установка кода картинки
      *
-     * @param enabled - boolean
+     * @param name - String, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получение информации об активности картинки
@@ -48,11 +51,11 @@ public abstract class ImageBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установка скрытности картинки
+     * Установка активности картинки
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получение информации о скрытности картинки
@@ -62,21 +65,18 @@ public abstract class ImageBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установка скрытности картинки
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Установка стиля картинки
      *
      * @param styleName - String, название стиля
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Полчение родительского компонента картинки
-     *
-     * @param instance - ImageBuilder, картинка
-     * @return ComponentBuilder, компонент
-     */
-    public static ComponentBuilder getParent(ImageBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на картинку

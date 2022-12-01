@@ -1,8 +1,7 @@
 package org.whirlplatform.java;
 
-import org.whirlplatform.meta.shared.data.DataValue;
-
 import java.util.List;
+import org.whirlplatform.meta.shared.data.DataValue;
 
 public interface Function {
 

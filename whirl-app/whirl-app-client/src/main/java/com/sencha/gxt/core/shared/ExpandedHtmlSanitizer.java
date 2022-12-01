@@ -28,35 +28,35 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
  */
 public final class ExpandedHtmlSanitizer implements HtmlSanitizer {
 
-  private static final ExpandedHtmlSanitizer INSTANCE = new ExpandedHtmlSanitizer();
+    private static final ExpandedHtmlSanitizer INSTANCE = new ExpandedHtmlSanitizer();
 
-  // prevent external instantiation
-  private ExpandedHtmlSanitizer() {
-  }
-
-  /**
-   * Return a singleton ExpandedHtmlSanitizer instance.
-   *
-   * @return the instance
-   */
-  public static ExpandedHtmlSanitizer getInstance() {
-    return INSTANCE;
-  }
-
-  /**
-   * HTML-sanitizes that not sanitize at all.
-   *
-   * @param html the input String
-   * @return a sanitized SafeHtml instance
-   */
-  public static SafeHtml sanitizeHtml(String html) {
-    if (html == null) {
-      throw new NullPointerException("html is null");
+    // prevent external instantiation
+    private ExpandedHtmlSanitizer() {
     }
-    return SafeHtmlUtils.fromTrustedString(html);
-  }
 
-  public SafeHtml sanitize(String html) {
-    return sanitizeHtml(html);
-  }
+    /**
+     * Return a singleton ExpandedHtmlSanitizer instance.
+     *
+     * @return the instance
+     */
+    public static ExpandedHtmlSanitizer getInstance() {
+        return INSTANCE;
+    }
+
+    /**
+     * HTML-sanitizes that not sanitize at all.
+     *
+     * @param html the input String
+     * @return a sanitized SafeHtml instance
+     */
+    public static SafeHtml sanitizeHtml(String html) {
+        if (html == null) {
+            throw new NullPointerException("html is null");
+        }
+        return SafeHtmlUtils.fromTrustedString(html);
+    }
+
+    public SafeHtml sanitize(String html) {
+        return sanitizeHtml(html);
+    }
 }

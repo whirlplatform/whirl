@@ -6,6 +6,10 @@ import com.google.gwt.resources.client.CssResource;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -15,29 +19,12 @@ import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Компонент - Бордер-контейнер
  */
 @JsType(name = "BorderContainer", namespace = "Whirl")
 public class BorderContainerBuilder extends ComponentBuilder implements
         Containable {
-
-    // Добавление стиля position:absolute !important нужно чтобы перебить relative в некоторых компонентах,
-    // т.к. с relative неправильно рассчитываются отступы
-    public interface ChildBundle extends ClientBundle {
-        //		@Source("BorderContainerChild.css")
-        @Source("BorderContainerChild.gss")
-        ChildStyle getCss();
-    }
-
-    public interface ChildStyle extends CssResource {
-        String borderContainerChild();
-    }
 
     private static ChildStyle containerChildStyle;
 
@@ -48,7 +35,6 @@ public class BorderContainerBuilder extends ComponentBuilder implements
     }
 
     private BorderLayoutContainer borderContainer;
-
     private List<ComponentBuilder> children = new ArrayList<ComponentBuilder>();
 
     @JsConstructor
@@ -100,7 +86,8 @@ public class BorderContainerBuilder extends ComponentBuilder implements
         if (borderContainer.remove(child.getComponent())) {
             children.remove(child);
             child.setParentBuilder(null);
-            child.getComponent().getElement().removeClassName(containerChildStyle.borderContainerChild());
+            child.getComponent().getElement()
+                    .removeClassName(containerChildStyle.borderContainerChild());
         }
     }
 
@@ -185,12 +172,23 @@ public class BorderContainerBuilder extends ComponentBuilder implements
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+    }
+
+    // Добавление стиля position:absolute !important нужно чтобы перебить relative в некоторых компонентах,
+    // т.к. с relative неправильно рассчитываются отступы
+    public interface ChildBundle extends ClientBundle {
+        //        @Source("BorderContainerChild.css")
+        @Source("BorderContainerChild.gss")
+        ChildStyle getCss();
+    }
+
+    public interface ChildStyle extends CssResource {
+        String borderContainerChild();
     }
 
 }

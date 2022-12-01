@@ -1,13 +1,12 @@
 package org.whirlplatform.meta.shared.editor.db;
 
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-import org.whirlplatform.meta.shared.editor.ApplicationElement;
-import org.whirlplatform.meta.shared.editor.ElementVisitor;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 @SuppressWarnings("serial")
 public class SchemaElement extends AbstractElement {

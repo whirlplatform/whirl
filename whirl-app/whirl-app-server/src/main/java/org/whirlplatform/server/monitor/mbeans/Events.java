@@ -1,8 +1,11 @@
 package org.whirlplatform.server.monitor.mbeans;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import org.whirlplatform.server.monitor.RunningEvent;
-
-import java.util.*;
 
 public class Events implements EventsMBean {
 
@@ -30,8 +33,8 @@ public class Events implements EventsMBean {
             case GRIDREQUEST:
                 gridRequests.put(event.getEventGUID(), event);
                 break;
-//		default:
-//			break;
+//        default:
+//            break;
         }
     }
 
@@ -49,8 +52,8 @@ public class Events implements EventsMBean {
             case GRIDREQUEST:
                 gridRequests.remove(event.getEventGUID());
                 break;
-//		default:
-//			break;
+//        default:
+//            break;
         }
     }
 
@@ -84,7 +87,8 @@ public class Events implements EventsMBean {
                     .append("\", \"login\": \"").append(e.getUserLogin())
                     .append("\", \"code\": \"").append(e.getCode())
                     .append("\", \"sql\": \"")
-                    .append(e.getSql() == null ? "" : e.getSql().replaceAll("\"", "\\\"")).append("\"},");
+                    .append(e.getSql() == null ? "" : e.getSql().replaceAll("\"", "\\\""))
+                    .append("\"},");
             // eventStrings.add(e.getEventGUID() + ": " + e.getUserLogin() +
             // ": " + e.getSql());
             eventStrings.add(builder.toString());
@@ -118,24 +122,24 @@ public class Events implements EventsMBean {
         return getMethodsByType(RunningEvent.Type.JAVAEVENT);
     }
 
-//	@Override
-//	public void stopActiveJavaMethod(String methodId) {
-//		// TODO Auto-generated method stub
+//    @Override
+//    public void stopActiveJavaMethod(String methodId) {
+//        // TODO Auto-generated method stub
 //
-//	}
+//    }
 
     @Override
     public String[] getActiveFormRequests() {
         return getMethodsByType(RunningEvent.Type.FORMREQUEST);
     }
 
-//	@Override
-//	public void stopActiveFormRequest(String requestId) {
-//		RunningEvent re = formRequests.get(requestId);
-//		if (re != null) {
-//			re.onStop();
-//		}
-//	}
+//    @Override
+//    public void stopActiveFormRequest(String requestId) {
+//        RunningEvent re = formRequests.get(requestId);
+//        if (re != null) {
+//            re.onStop();
+//        }
+//    }
 
     @Override
     public String[] getActiveGridRequests() {

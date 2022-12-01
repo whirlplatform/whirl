@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gwt.user.client.rpc.IsSerializable;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")

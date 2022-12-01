@@ -4,8 +4,8 @@ import java.util.Map;
 
 public interface Configuration {
 
-	<T> T lookup(String name);
+    <T> T lookup(String name);
 
-	<T> Map<String, T> lookupAll(String path, Class<T> cls);
-	
+    <T> Map<String, T> lookupAll(String path, Class<T> cls);
+
 }

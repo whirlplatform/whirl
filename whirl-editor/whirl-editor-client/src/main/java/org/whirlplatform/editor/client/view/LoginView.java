@@ -28,16 +28,6 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
             EditorMessage.Util.MESSAGE.login_submit());
     ModalPanel modal = ModalPanel.pop();
 
-    @Override
-    public void setPresenter(LoginPresenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
-    public LoginPresenter getPresenter() {
-        return presenter;
-    }
-
     public LoginView() {
 
         setWidth(400);
@@ -77,6 +67,25 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
         add(form);
     }
 
+    private static void setFocus(final TextField element) {
+        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+            @Override
+            public void execute() {
+                element.focus();
+            }
+        });
+    }
+
+    @Override
+    public LoginPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void setPresenter(LoginPresenter presenter) {
+        this.presenter = presenter;
+    }
+
     @Override
     public void setButtonEnabled(boolean enabled) {
         submit.setEnabled(enabled);
@@ -103,16 +112,6 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
         });
         setFocus(login);
     }
-
-    private static void setFocus(final TextField element) {
-        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-            @Override
-            public void execute() {
-                element.focus();
-            }
-        });
-    }
-
 
     @Override
     public void hide() {

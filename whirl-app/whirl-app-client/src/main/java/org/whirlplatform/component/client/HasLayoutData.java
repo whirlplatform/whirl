@@ -8,29 +8,29 @@ import org.whirlplatform.component.client.form.GridLayoutData;
 
 public interface HasLayoutData {
 
-	BorderLayoutData getBorderLayoutData();
+    BorderLayoutData getBorderLayoutData();
 
-	GridLayoutData getGridLayoutData();
+    GridLayoutData getGridLayoutData();
 
-	HorizontalLayoutData getHorizontalLayoutData();
+    HorizontalLayoutData getHorizontalLayoutData();
 
-	VerticalLayoutData getVerticalLayoutData();
+    VerticalLayoutData getVerticalLayoutData();
 
-	BoxLayoutData getBoxLayoutData();
+    BoxLayoutData getBoxLayoutData();
 
-	boolean isNorth();
+    boolean isNorth();
 
-	boolean isWest();
+    boolean isWest();
 
-	boolean isSouth();
+    boolean isSouth();
 
-	boolean isEast();
+    boolean isEast();
 
-	boolean isCenter();
+    boolean isCenter();
 
-	int getRowPosition();
+    int getRowPosition();
 
-	int getColumnPosition();
+    int getColumnPosition();
 
-	int getIndexPosition();
+    int getIndexPosition();
 }

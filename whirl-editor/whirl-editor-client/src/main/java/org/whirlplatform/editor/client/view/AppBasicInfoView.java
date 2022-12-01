@@ -25,13 +25,15 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 
 /**
  * Ввод данных приложения
- *
  */
 public class AppBasicInfoView extends Window implements IAppBasicInfoView {
+    protected static final int MIN_WIDTH = 400;
+    protected static final int MIN_HEIGHT = 280;
     private static final String OK = "OK";
     private static final String CLOSE = EditorMessage.Util.MESSAGE.close();
     private static final String WARN = EditorMessage.Util.MESSAGE.warn();
-    private static final String WARN_MESSAGE = EditorMessage.Util.MESSAGE.warn_input_data_is_not_valid();
+    private static final String WARN_MESSAGE =
+            EditorMessage.Util.MESSAGE.warn_input_data_is_not_valid();
     private static final String WARN_EXISTS = EditorMessage.Util.MESSAGE.new_application_exists();
     private static final String NAME = EditorMessage.Util.MESSAGE.new_application_name();
     private static final String CODE = EditorMessage.Util.MESSAGE.new_application_code();
@@ -39,12 +41,9 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     //    private static final String URL = EditorMessage.Util.MESSAGE.new_application_guest();
     private static final String LOCALE = EditorMessage.Util.MESSAGE.new_application_locale();
     private static final String VERSION = EditorMessage.Util.MESSAGE.new_application_version();
-    private static final String TITLE_NEW_APP = EditorMessage.Util.MESSAGE.toolbar_creating_application();
+    private static final String TITLE_NEW_APP =
+            EditorMessage.Util.MESSAGE.toolbar_creating_application();
     private static final String TITLE_SAVE_AS = EditorMessage.Util.MESSAGE.save_as();
-
-    protected static final int MIN_WIDTH = 400;
-    protected static final int MIN_HEIGHT = 280;
-
     private AppBasicInfoPresenter presenter;
     private TextField name;
     private TextField title;
@@ -91,19 +90,24 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private Widget createEditor() {
         VerticalLayoutContainer container = new VerticalLayoutContainer();
         name = WidgetUtil.createTextField(false);
-//		name.addValidator(ValidatorUtil.createNameValidator());
+//        name.addValidator(ValidatorUtil.createNameValidator());
         code = WidgetUtil.createTextField(false);
         code.addValidator(ValidatorUtil.createCodeValidator());
         title = WidgetUtil.createTextField(false);
 //        url = WidgetUtil.createTextField(true);
         locale = new LocaleField();
         version = new VersionField();
-        container.add(new FieldLabel(name, NAME), new VerticalLayoutData(1, -1, new Margins(5, 5, 0, 5)));
-        container.add(new FieldLabel(code, CODE), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
-        container.add(new FieldLabel(title, TITLE), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+        container.add(new FieldLabel(name, NAME),
+                new VerticalLayoutData(1, -1, new Margins(5, 5, 0, 5)));
+        container.add(new FieldLabel(code, CODE),
+                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+        container.add(new FieldLabel(title, TITLE),
+                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
 //        container.add(new FieldLabel(url, URL), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
-        container.add(new FieldLabel(locale, LOCALE), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
-        container.add(new FieldLabel(version, VERSION), new VerticalLayoutData(1, -1, new Margins(10, 5, 0, 5)));
+        container.add(new FieldLabel(locale, LOCALE),
+                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+        container.add(new FieldLabel(version, VERSION),
+                new VerticalLayoutData(1, -1, new Margins(10, 5, 0, 5)));
         container.setBorders(false);
         return container;
     }
@@ -125,15 +129,14 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     }
 
     @Override
-    public void setPresenter(AppBasicInfoPresenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
     public AppBasicInfoPresenter getPresenter() {
         return presenter;
     }
 
+    @Override
+    public void setPresenter(AppBasicInfoPresenter presenter) {
+        this.presenter = presenter;
+    }
 
     @Override
     public void showError(Throwable caught) {

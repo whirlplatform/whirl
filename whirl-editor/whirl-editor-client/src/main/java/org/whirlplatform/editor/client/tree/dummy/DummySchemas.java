@@ -10,34 +10,34 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  */
 @SuppressWarnings("serial")
 public class DummySchemas extends AbstractDummyElement {
-	private static final String ID_PREFIX = "dummy-datasource-schemas-";
-	private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_datasource_schemas();
+    private static final String ID_PREFIX = "dummy-datasource-schemas-";
+    private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_datasource_schemas();
 
-	public DummySchemas() {
-		super();
-	}
+    public DummySchemas() {
+        super();
+    }
 
-	public DummySchemas(final String id) {
-		super(id);
-	}
+    public DummySchemas(final String id) {
+        super(id);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+    @Override
+    public String getIdPrefix() {
+        return ID_PREFIX;
+    }
 
-	@Override
-	public String getTitle() {
-		return TITLE;
-	}
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 }

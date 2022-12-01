@@ -10,15 +10,14 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import org.whirlplatform.component.client.selenium.Locator;
-import org.whirlplatform.component.client.selenium.LocatorAware;
-import org.whirlplatform.component.client.utils.DataUtils;
-import org.whirlplatform.component.client.utils.Pair;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.whirlplatform.component.client.selenium.Locator;
+import org.whirlplatform.component.client.selenium.LocatorAware;
+import org.whirlplatform.component.client.utils.DataUtils;
+import org.whirlplatform.component.client.utils.Pair;
 
 public class DialogManager {
 
@@ -55,25 +54,12 @@ public class DialogManager {
     }
 
     public static MessageBox createMessage(String dialogId, String title, String message) {
-        AlertMessageBox window = new AlertMessageBox(DataUtils.notNull(title, ""), DataUtils.notNull(message, ""));
+        AlertMessageBox window =
+                new AlertMessageBox(DataUtils.notNull(title, ""), DataUtils.notNull(message, ""));
         window.setWidth(500);
         window.setPredefinedButtons(PredefinedButton.OK);
         addHandler(dialogId, window);
         return window;
-    }
-
-    private static class LocatorParams {
-
-        private static String TYPE_DIALOG = "Dialog";
-
-        private static String PARAMETER_ID = "id";
-
-        private static String TYPE_OK_BUTTON = "OkButton";
-        private static String TYPE_CANCEL_BUTTON = "CancelButton";
-        private static String TYPE_CLOSE_BUTTON = "CloseButton";
-        private static String TYPE_YES_BUTTON = "YesButton";
-        private static String TYPE_NO_BUTTON = "NoButton";
-
     }
 
     public static List<LocatorAware> getDialogLocators() {
@@ -117,7 +103,8 @@ public class DialogManager {
                 @Override
                 public Element getElementByLocator(Locator locator) {
                     if (!locator.hasParameter(LocatorParams.PARAMETER_ID)
-                            || !locator.getParameter(LocatorParams.PARAMETER_ID).equals(dialogs.get(d))) {
+                            || !locator.getParameter(LocatorParams.PARAMETER_ID)
+                            .equals(dialogs.get(d))) {
                         return null;
                     }
                     Locator part = locator.getPart();
@@ -149,6 +136,20 @@ public class DialogManager {
             });
         }
         return result;
+    }
+
+    private static class LocatorParams {
+
+        private static String TYPE_DIALOG = "Dialog";
+
+        private static String PARAMETER_ID = "id";
+
+        private static String TYPE_OK_BUTTON = "OkButton";
+        private static String TYPE_CANCEL_BUTTON = "CancelButton";
+        private static String TYPE_CLOSE_BUTTON = "CloseButton";
+        private static String TYPE_YES_BUTTON = "YesButton";
+        private static String TYPE_NO_BUTTON = "NoButton";
+
     }
 
 }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gwt.user.client.rpc.IsSerializable;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,12 +27,12 @@ public class FormRowModel implements Serializable, IsSerializable, Cloneable {
         this.row = row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getRow() {
         return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 
     public double getHeight() {

@@ -1,13 +1,13 @@
 package org.whirlplatform.server.utils;
 
-import org.apache.empire.commons.StringUtils;
-
 import java.io.File;
+import org.apache.empire.commons.StringUtils;
 
 public class PathUtils {
 
     public static String getApplicationFilePath(String base,
-                                                String platformContext, String applicationCode, String type,
+                                                String platformContext, String applicationCode,
+                                                String type,
                                                 String file) {
         String result;
         if (StringUtils.isEmpty(base)) {

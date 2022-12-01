@@ -13,35 +13,37 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 public class TreeMenuDesigner extends ComponentDesigner {
 
-	public TreeMenuDesigner(LocaleElement defaultLocale, ComponentElement element) {
-		super(defaultLocale, element);
-	}
+    public TreeMenuDesigner(LocaleElement defaultLocale, ComponentElement element) {
+        super(defaultLocale, element);
+    }
 
-	@Override
-	protected void initRootDropTarget(final ComponentElement element, final ComponentBuilder builder) {
-		new TreeMenuDropTarget(((TreeMenuBuilder) builder).getTree()) {
-			@Override
-			protected void onDragDrop(DndDropEvent event) {
-				TreeMenuDesigner.super.onRootDrop(element, builder, event.getData(), getIndex());
-				super.onDragDrop(event);
+    @Override
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
+        new TreeMenuDropTarget(((TreeMenuBuilder) builder).getTree()) {
+            @Override
+            protected void onDragDrop(DndDropEvent event) {
+                TreeMenuDesigner.super.onRootDrop(element, builder, event.getData(), getIndex());
+                super.onDragDrop(event);
             }
         };
-	}
+    }
 
-	@Override
-	protected void onRootDropSetLocationData(ComponentElement rootElement, ComponentElement element,
-			Object locationData) {
-		int index = locationData == null ? -1 : (Integer) locationData;
-		if (index >= 0) {
-			fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-					new PropertyValue(DataType.NUMBER, defaultLocale, index)));
-		}
-	}
+    @Override
+    protected void onRootDropSetLocationData(ComponentElement rootElement, ComponentElement element,
+                                             Object locationData) {
+        int index = locationData == null ? -1 : (Integer) locationData;
+        if (index >= 0) {
+            fireComponentPropertyChangeEvent(
+                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+        }
+    }
 
-	@Override
-	protected void onRootDropAddChild(ComponentElement parentElement, ComponentElement element) {
-		if (element.getType() == ComponentType.TreeMenuItemType) {
-			super.onRootDropAddChild(parentElement, element);
-		}
-	}
+    @Override
+    protected void onRootDropAddChild(ComponentElement parentElement, ComponentElement element) {
+        if (element.getType() == ComponentType.TreeMenuItemType) {
+            super.onRootDropAddChild(parentElement, element);
+        }
+    }
 }

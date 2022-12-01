@@ -5,46 +5,53 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.PropertyFormView;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.component.RandomUUID;
-import org.whirlplatform.meta.shared.editor.*;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
 
 @Presenter(view = PropertyFormView.class)
-public class PropertyFormPresenter extends BasePresenter<PropertyFormPresenter.IPropertyFormView, EditorEventBus> {
+public class PropertyFormPresenter
+        extends BasePresenter<PropertyFormPresenter.IPropertyFormView, EditorEventBus> {
 
     private FormElement currentElement;
     private CellRangeElement selectedCellsArea;
     private LocaleElement defaultLoclale;
 
-    public interface IPropertyFormView extends ReverseViewInterface<PropertyFormPresenter>, IsWidget {
-
-        List<RowElement> getRowsHeight();
-
-        void setRowsHeight(ComponentType componentType, List<RowElement> rowsHeight);
-
-        List<ColumnElement> getColumnsWidth();
-
-        void setColumnsWidth(ComponentType componentType, List<ColumnElement> columnsWidth);
-
-        List<RequestElement> getRequests();
-
-        void setRequests(ComponentType componentType, List<RequestElement> requests);
-
-        void initUI();
-
-        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
-
-    }
-
     public PropertyFormPresenter() {
         super();
+    }
+
+    /**
+     * Добавление новой строки в конец списка
+     */
+    public void addNewRow() {
+        List<RowElement> rowsHeight = new ArrayList<RowElement>();
+        rowsHeight.addAll(view.getRowsHeight());
+        final LocaleElement locale =
+                currentElement.getProperty(PropertyType.Rows).getDefaultLocale();
+        Double rowsProp =
+                currentElement.getProperty(PropertyType.Rows).getValue(locale).getDouble();
+        int rows = rowsProp == null ? 0 : rowsProp.intValue();
+        if (rows > rowsHeight.size()) {
+            RowElement model = new RowElement();
+            model.setId(RandomUUID.uuid());
+            model.setRow(rowsHeight.size());
+            rowsHeight.add(model);
+            view.setRowsHeight(currentElement.getType(), rowsHeight);
+        }
     }
 
     @Override
@@ -122,31 +129,15 @@ public class PropertyFormPresenter extends BasePresenter<PropertyFormPresenter.I
     }
 
     /**
-     * Добавление новой строки в конец списка
-     */
-    public void addNewRow() {
-        List<RowElement> rowsHeight = new ArrayList<RowElement>();
-        rowsHeight.addAll(view.getRowsHeight());
-        final LocaleElement locale = currentElement.getProperty(PropertyType.Rows).getDefaultLocale();
-        Double rowsProp = currentElement.getProperty(PropertyType.Rows).getValue(locale).getDouble();
-        int rows = rowsProp == null ? 0 : rowsProp.intValue();
-        if (rows > rowsHeight.size()) {
-            RowElement model = new RowElement();
-            model.setId(RandomUUID.uuid());
-            model.setRow(rowsHeight.size());
-            rowsHeight.add(model);
-            view.setRowsHeight(currentElement.getType(), rowsHeight);
-        }
-    }
-
-    /**
      * Добавление нового столбца в конец списка
      */
     public void addNewColumn() {
         List<ColumnElement> columnsWidth = new ArrayList<ColumnElement>();
         columnsWidth.addAll(view.getColumnsWidth());
-        final LocaleElement locale = currentElement.getProperty(PropertyType.Columns).getDefaultLocale();
-        Double columnsProp = currentElement.getProperty(PropertyType.Columns).getValue(locale).getDouble();
+        final LocaleElement locale =
+                currentElement.getProperty(PropertyType.Columns).getDefaultLocale();
+        Double columnsProp =
+                currentElement.getProperty(PropertyType.Columns).getValue(locale).getDouble();
         int columns = (columnsProp == null) ? 0 : columnsProp.intValue();
         if (columns > columnsWidth.size()) {
             ColumnElement model = new ColumnElement();
@@ -247,5 +238,26 @@ public class PropertyFormPresenter extends BasePresenter<PropertyFormPresenter.I
 
     public LocaleElement getDefaultLocale() {
         return defaultLoclale;
+    }
+
+    public interface IPropertyFormView
+            extends ReverseViewInterface<PropertyFormPresenter>, IsWidget {
+
+        List<RowElement> getRowsHeight();
+
+        void setRowsHeight(ComponentType componentType, List<RowElement> rowsHeight);
+
+        List<ColumnElement> getColumnsWidth();
+
+        void setColumnsWidth(ComponentType componentType, List<ColumnElement> columnsWidth);
+
+        List<RequestElement> getRequests();
+
+        void setRequests(ComponentType componentType, List<RequestElement> requests);
+
+        void initUI();
+
+        void setLocales(Collection<LocaleElement> locales, LocaleElement defaultLocale);
+
     }
 }

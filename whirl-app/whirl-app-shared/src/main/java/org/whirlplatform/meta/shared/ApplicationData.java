@@ -3,7 +3,6 @@ package org.whirlplatform.meta.shared;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,24 +10,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/** Данные о текущем приложении */
+/**
+ * Данные о текущем приложении
+ */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 @SuppressWarnings("serial")
 public class ApplicationData implements Serializable {
 
-	private String rootComponentId;
+    private String rootComponentId;
 
-	private String name;
+    private String name;
 
-	private String logoutPageUrl;
+    private String logoutPageUrl;
 
-	private String startMessage;
+    private String startMessage;
 
-	private boolean guest;
+    private boolean guest;
 
-	private String applicationCode;
+    private String applicationCode;
 
-	private String headerHtml;
+    private String headerHtml;
 
     private boolean blocked = false;
 

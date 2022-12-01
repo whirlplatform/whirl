@@ -9,15 +9,24 @@ import org.whirlplatform.server.driver.db.table.TableWhirlUsers;
 
 public class MetadataDatabase extends DBDatabase {
 
-    private static MetadataDatabase instance;
     private static final long serialVersionUID = 1L;
-
-
+    private static MetadataDatabase instance;
     public final TableWhirlUsers WHIRL_USERS = new TableWhirlUsers(this);
-    public final TableWhirlUserApplications WHIRL_USER_APPLICATIONS = new TableWhirlUserApplications(
-            this);
+    public final TableWhirlUserApplications WHIRL_USER_APPLICATIONS =
+            new TableWhirlUserApplications(
+                    this);
     public final TableWhirlUserGroups WHIRL_USER_GROUPS = new TableWhirlUserGroups(
             this);
+
+    /**
+     * Default constructor for the MetadataDatabase.
+     */
+    private MetadataDatabase() {
+
+        // Define foreign key relations
+
+        // foreign key relations done
+    }
 
     /**
      * Returns the instance of the database.
@@ -29,16 +38,6 @@ public class MetadataDatabase extends DBDatabase {
             instance = new MetadataDatabase();
         }
         return instance;
-    }
-
-    /**
-     * Default constructor for the MetadataDatabase.
-     */
-    private MetadataDatabase() {
-
-        // Define foreign key relations
-
-        // foreign key relations done
     }
 
 }

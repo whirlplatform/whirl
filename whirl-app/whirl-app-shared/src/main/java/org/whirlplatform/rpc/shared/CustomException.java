@@ -8,10 +8,6 @@ public class CustomException extends RuntimeException {
 
     private ExceptionData data;
 
-    public ExceptionData getData() {
-        return data;
-    }
-
     // Для сериализации
     public CustomException() {
         data = new ExceptionData();
@@ -34,6 +30,10 @@ public class CustomException extends RuntimeException {
         data = new ExceptionData(type);
         data.setMessage(msg);
         data.setSessionExpired(sessionExpired);
+    }
+
+    public ExceptionData getData() {
+        return data;
     }
 
     public CustomException setAllowedApps(Map<String, String> allowedApps) {

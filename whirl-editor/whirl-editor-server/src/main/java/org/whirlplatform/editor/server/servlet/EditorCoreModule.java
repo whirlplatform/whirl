@@ -2,6 +2,8 @@
 package org.whirlplatform.editor.server.servlet;
 
 import com.google.inject.AbstractModule;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import org.whirlplatform.editor.server.EditorConnector;
 import org.whirlplatform.editor.server.EditorDatabaseConnector;
 import org.whirlplatform.editor.server.EditorDatabaseConnectorImpl;
@@ -28,9 +30,6 @@ import org.whirlplatform.server.metadata.MetadataProvider;
 import org.whirlplatform.server.metadata.MetadataProviderImpl;
 import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.file.FileSystemMetadataStore;
-
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 
 public class EditorCoreModule extends AbstractModule {
 

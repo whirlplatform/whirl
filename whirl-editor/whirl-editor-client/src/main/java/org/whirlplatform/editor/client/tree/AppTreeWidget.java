@@ -3,12 +3,11 @@ package org.whirlplatform.editor.client.tree;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
+import java.util.Date;
 import org.whirlplatform.editor.client.tree.cell.AppTreeMainCell;
 import org.whirlplatform.editor.client.tree.menu.MainAppTreeMenu;
 import org.whirlplatform.editor.client.util.InlineEditor;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
-
-import java.util.Date;
 
 /**
  * This widget represents the application tree
@@ -61,7 +60,8 @@ public abstract class AppTreeWidget extends AbstractAppTree {
         if (node != null) {
             selectedItem = findNode(event.getEventTarget().cast()).getTextElement();
             long currentTime = new Date().getTime();
-            if (prevTime != 0 && prevItem != null && currentTime - prevTime > 800 && prevItem == selectedItem
+            if (prevTime != 0 && prevItem != null && currentTime - prevTime > 800 &&
+                    prevItem == selectedItem
                     && isRenaming(node.getModel())) {
                 clickTimer.schedule(500);
             }

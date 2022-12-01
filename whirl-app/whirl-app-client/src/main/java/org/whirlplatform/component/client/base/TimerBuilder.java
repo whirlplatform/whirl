@@ -7,15 +7,14 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.TimeEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collections;
-import java.util.Map;
 
 public class TimerBuilder extends ComponentBuilder implements TimeEvent.HasTimeHandlers {
 

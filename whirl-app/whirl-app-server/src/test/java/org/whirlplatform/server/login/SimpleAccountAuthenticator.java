@@ -1,9 +1,8 @@
 package org.whirlplatform.server.login;
 
-import org.whirlplatform.rpc.shared.CustomException;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
+import org.whirlplatform.rpc.shared.CustomException;
 
 @Singleton
 @Named("SimpleAccountAuthenticator")

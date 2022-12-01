@@ -5,10 +5,6 @@ import com.google.gwt.i18n.client.Messages;
 
 public interface AppMessage extends Messages {
 
-    class Util {
-        public static AppMessage MESSAGE = GWT.create(AppMessage.class);
-    }
-
     String yes();
 
     String no();
@@ -363,11 +359,10 @@ public interface AppMessage extends Messages {
 
     String report_makeCSV();
 
+    String errorWrongApplication();
+
     // Form editor
 
-
-    String errorWrongApplication();
-    
     String errorWrongApplicationList();
 
     String deploy_deploy_failed();
@@ -381,4 +376,8 @@ public interface AppMessage extends Messages {
     String emptyValue();
 
     String noData();
+
+    class Util {
+        public static AppMessage MESSAGE = GWT.create(AppMessage.class);
+    }
 }

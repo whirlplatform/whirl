@@ -1,8 +1,7 @@
 package org.whirlplatform.editor.shared.merge;
 
-import org.whirlplatform.meta.shared.editor.ApplicationElement;
-
 import java.util.List;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
 public interface Merger {
 

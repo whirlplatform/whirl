@@ -1,6 +1,10 @@
 package org.whirlplatform.editor.client.presenter.compare;
 
 import com.sencha.gxt.data.shared.TreeStore;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.editor.client.tree.visitor.ChangesSorterVisitContext;
 import org.whirlplatform.editor.client.tree.visitor.ChangesSorterVisitor;
 import org.whirlplatform.editor.client.tree.visitor.VisitableTreeElement;
@@ -10,14 +14,9 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
- * Сортирует полученные от diff изменения по соответствующим абстрактным
- * элементам приложения для отображения в дереве
+ * Сортирует полученные от diff изменения по соответствующим абстрактным элементам приложения для
+ * отображения в дереве
  */
 public class ChangesSorter {
     private ChangesSorterVisitContext ctx;
@@ -44,11 +43,13 @@ public class ChangesSorter {
     }
 
     public List<ChangeUnit> getChangeUnits(final String elementId) {
-        return (changesExist(elementId)) ? changesMap.get(elementId).getChangeUnits() : new ArrayList<ChangeUnit>();
+        return (changesExist(elementId)) ? changesMap.get(elementId).getChangeUnits() :
+                new ArrayList<ChangeUnit>();
     }
 
     public ElementChangeState getChangeState(final String elementId) {
-        return (changesExist(elementId)) ? changesMap.get(elementId).getChangeState() : ElementChangeState.NONE;
+        return (changesExist(elementId)) ? changesMap.get(elementId).getChangeState() :
+                ElementChangeState.NONE;
     }
 
     public void clear() {
@@ -90,7 +91,8 @@ public class ChangesSorter {
         }
     }
 
-    private void processAddedOrRemovedObject(Object value, ChangeUnit unit, ElementChangeState changeState) {
+    private void processAddedOrRemovedObject(Object value, ChangeUnit unit,
+                                             ElementChangeState changeState) {
         if (value instanceof LocaleElement) {
             putChange(ctx.getDummyLocalesId(), unit, ElementChangeState.CHANGED);
         } else if (value instanceof ApplicationElement) {

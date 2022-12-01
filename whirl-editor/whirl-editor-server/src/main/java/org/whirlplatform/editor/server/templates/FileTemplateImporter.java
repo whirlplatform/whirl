@@ -1,5 +1,14 @@
 package org.whirlplatform.editor.server.templates;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -10,16 +19,6 @@ import org.whirlplatform.meta.shared.editor.EventElement;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.metadata.store.XMLApplicationImporter;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileTemplateImporter implements TemplateImporter {
 
@@ -82,7 +81,8 @@ public class FileTemplateImporter implements TemplateImporter {
 
     private List<String> readTemplatesAsStrings(Path pathToFolder) {
         List<String> result = new ArrayList<>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(pathToFolder, "*" + FileSystemTemplateStore.EXT)) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(pathToFolder,
+                "*" + FileSystemTemplateStore.EXT)) {
             for (Path path : stream) {
                 String xmlFile = new String(Files.readAllBytes(path), Charset.forName("UTF-8"));
                 if (!xmlFile.isEmpty()) {

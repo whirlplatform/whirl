@@ -20,24 +20,26 @@ public abstract class RadioGroupBuilderOverlay {
     }
 
     /**
+     * Получение родителя радиогруппы
+     *
+     * @param instance - RadioGroupBuilder
+     * @return ComponentBuilder
+     */
+    public static ComponentBuilder getParent(RadioGroupBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на радиогруппу
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получить код радиогруппы
@@ -47,11 +49,11 @@ public abstract class RadioGroupBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установить активность радиогруппы
+     * Установить код на радиогруппу
      *
-     * @param enabled - boolean
+     * @param name - String, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получить информачию об активности радиогруппы
@@ -61,11 +63,11 @@ public abstract class RadioGroupBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установить скрытость радиогруппы
+     * Установить активность радиогруппы
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получить информацию о скрытости радиогруппы
@@ -75,21 +77,18 @@ public abstract class RadioGroupBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установить скрытость радиогруппы
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Установить стиль на радиогруппу
      *
      * @param styleName - String, название стиля
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Получение родителя радиогруппы
-     *
-     * @param instance - RadioGroupBuilder
-     * @return ComponentBuilder
-     */
-    public static ComponentBuilder getParent(RadioGroupBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на радиогруппу

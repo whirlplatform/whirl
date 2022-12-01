@@ -2,7 +2,6 @@ package org.whirlplatform.editor.client.view.toolbar;
 
 import com.google.gwt.resources.client.ImageResource;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
-
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
 import org.whirlplatform.editor.client.view.context.AbstractContextTextButton;

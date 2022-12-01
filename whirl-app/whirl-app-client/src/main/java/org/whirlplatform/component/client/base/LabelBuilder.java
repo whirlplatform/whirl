@@ -8,6 +8,8 @@ import com.google.gwt.user.client.ui.Label;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -20,18 +22,15 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Текстовая строка вывода, надпись
  */
 @JsType(name = "Label", namespace = "Whirl")
-public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+public class LabelBuilder extends ComponentBuilder
+        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
-    private String bgColor;
     protected boolean hasEvent;
-
+    private String bgColor;
     private Label field;
     private WidgetComponent wrapper;
 
@@ -66,10 +65,14 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
         wrapper.getElement().applyStyles("fontSize: 12px");
 
         // Иначе событие при клике в редакторе не обрабатывается
-        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
-        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
-        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
-        field.sinkEvents(Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
+        field.sinkEvents(
+                Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
+        field.sinkEvents(Event.getTypeInt(
+                com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
+        field.sinkEvents(
+                Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
+        field.sinkEvents(
+                Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
         return wrapper;
     }
 
@@ -176,21 +179,21 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
     }
 
     /**
-     * Установка текста
-     *
-     * @param value - String, текст
-     */
-    public void setHtml(String value) {
-        field.setText(value == null ? "" : value);
-    }
-
-    /**
      * Получение текста
      *
      * @return String
      */
     public String getHtml() {
         return field.getText();
+    }
+
+    /**
+     * Установка текста
+     *
+     * @param value - String, текст
+     */
+    public void setHtml(String value) {
+        field.setText(value == null ? "" : value);
     }
 
     /**
@@ -230,10 +233,6 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
     }
 
     // TODO Selenium
-
-    private static class LocatorParams {
-        private static String TYPE_TEXT = "Text";
-    }
 
     @JsIgnore
     @Override
@@ -319,5 +318,9 @@ public class LabelBuilder extends ComponentBuilder implements ClickEvent.HasClic
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+    }
+
+    private static class LocatorParams {
+        private static String TYPE_TEXT = "Text";
     }
 }

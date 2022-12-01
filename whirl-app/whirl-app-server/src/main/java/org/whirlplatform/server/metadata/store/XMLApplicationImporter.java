@@ -2,6 +2,17 @@ package org.whirlplatform.server.metadata.store;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.empire.commons.StringUtils;
 import org.dom4j.Document;
@@ -54,18 +65,6 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class XMLApplicationImporter {
 
     boolean ignoreReferences = false;
@@ -99,7 +98,8 @@ public class XMLApplicationImporter {
     }
 
     @SuppressWarnings("unchecked")
-    ApplicationElement buildApplication(InputStream stream, MetadataStore loader) throws DocumentException {
+    ApplicationElement buildApplication(InputStream stream, MetadataStore loader)
+            throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(stream);
         Element appEl = document.getRootElement();
@@ -114,7 +114,8 @@ public class XMLApplicationImporter {
 
         if (MetadataSerializer.CURRENT_VERSION != metaversion) {
             throw new DocumentException(
-                    "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: " + metaversion);
+                    "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: " +
+                            metaversion);
         }
 
         application = new ApplicationElement();
@@ -265,7 +266,8 @@ public class XMLApplicationImporter {
 
                 Element tableRightsEl = rightsEl.element("tableRights");
                 if (tableRightsEl != null) {
-                    for (Element collectionEl : (List<Element>) tableRightsEl.elements("collection")) {
+                    for (Element collectionEl : (List<Element>) tableRightsEl.elements(
+                            "collection")) {
                         RightCollectionElement collection = buildTableRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
@@ -279,8 +281,10 @@ public class XMLApplicationImporter {
 
                 Element tableColumnRightsEl = rightsEl.element("tableColumnRights");
                 if (tableColumnRightsEl != null) {
-                    for (Element collectionEl : (List<Element>) tableColumnRightsEl.elements("collection")) {
-                        RightCollectionElement collection = buildTableColumnRightCollection(collectionEl);
+                    for (Element collectionEl : (List<Element>) tableColumnRightsEl.elements(
+                            "collection")) {
+                        RightCollectionElement collection =
+                                buildTableColumnRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
                         }
@@ -293,12 +297,14 @@ public class XMLApplicationImporter {
 
                 Element eventRightsEl = rightsEl.element("eventRights");
                 if (eventRightsEl != null) {
-                    for (Element collectionEl : (List<Element>) eventRightsEl.elements("collection")) {
+                    for (Element collectionEl : (List<Element>) eventRightsEl.elements(
+                            "collection")) {
                         RightCollectionElement collection = buildEventRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
                         }
-                        application.setEventRightCollection((EventElement) collection.getElement(), collection);
+                        application.setEventRightCollection((EventElement) collection.getElement(),
+                                collection);
                     }
                 }
             }
@@ -586,7 +592,7 @@ public class XMLApplicationImporter {
         if (configColumnEl != null) {
             result.setConfigColumn(configColumnEl.getText());
         }
-    
+
         Element labelColumnEl = columnEl.element("labelExpression");
         if (labelColumnEl != null) {
             result.setLabelExpression(labelColumnEl.getText());
@@ -688,7 +694,8 @@ public class XMLApplicationImporter {
     }
 
     @SuppressWarnings("unchecked")
-    private PropertyValue buildPropertyValue(DataType type, Element propertyEl) throws DocumentException {
+    private PropertyValue buildPropertyValue(DataType type, Element propertyEl)
+            throws DocumentException {
 
         Element defaulLocaleEl = propertyEl.element("defaultLocale");
         LocaleElement defaultLocale = parseLocale(defaulLocaleEl.attributeValue("locale"));
@@ -743,7 +750,8 @@ public class XMLApplicationImporter {
             finalization(new Runnable() {
                 @Override
                 public void run() {
-                    event.setDataSource(map(propertiesEl.elementText("dataSourceId"), DataSourceElement.class));
+                    event.setDataSource(
+                            map(propertiesEl.elementText("dataSourceId"), DataSourceElement.class));
                 }
             });
 
@@ -771,7 +779,8 @@ public class XMLApplicationImporter {
             finalization(new Runnable() {
                 @Override
                 public void run() {
-                    event.setComponent(map(propertiesEl.elementText("componentId"), ComponentElement.class));
+                    event.setComponent(
+                            map(propertiesEl.elementText("componentId"), ComponentElement.class));
                 }
             });
         }
@@ -780,7 +789,8 @@ public class XMLApplicationImporter {
                 @Override
                 public void run() {
                     event.setTargetComponent(
-                            map(propertiesEl.elementText("targetComponentId"), ComponentElement.class));
+                            map(propertiesEl.elementText("targetComponentId"),
+                                    ComponentElement.class));
                 }
             });
         }
@@ -795,7 +805,8 @@ public class XMLApplicationImporter {
         Element parametersEl = eventEl.element("parameters");
         if (parametersEl != null) {
             for (Element paramEl : (List<Element>) parametersEl.elements()) {
-                ParameterType eventParamType = ParameterType.valueOf(paramEl.attributeValue("type"));
+                ParameterType eventParamType =
+                        ParameterType.valueOf(paramEl.attributeValue("type"));
                 final EventParameterElement param = new EventParameterElement(eventParamType);
 
                 param.setId(paramEl.attributeValue("id"));
@@ -818,7 +829,8 @@ public class XMLApplicationImporter {
                 String dataTypeStr = paramEl.attributeValue("dataType");
                 if (dataTypeStr != null) {
                     DataType dataType = DataType.valueOf(dataTypeStr);
-                    param.setValue(parseStringValue(dataType, paramEl.getText(), paramEl.attributeValue("label")));
+                    param.setValue(parseStringValue(dataType, paramEl.getText(),
+                            paramEl.attributeValue("label")));
                 }
                 event.addParameter(param);
             }
@@ -907,14 +919,16 @@ public class XMLApplicationImporter {
                 // может
                 // быть
                 // null
-                model.setEmptyText(buildPropertyValue(DataType.STRING, requestEl.element("emptyText")));
+                model.setEmptyText(
+                        buildPropertyValue(DataType.STRING, requestEl.element("emptyText")));
                 model.setSql(requestEl.elementText("query"));
 
                 if (requestEl.element("dataSourceId") != null) {
                     finalization(new Runnable() {
                         @Override
                         public void run() {
-                            model.setDataSource(map(requestEl.elementText("dataSourceId"), DataSourceElement.class));
+                            model.setDataSource(map(requestEl.elementText("dataSourceId"),
+                                    DataSourceElement.class));
                         }
                     });
 
@@ -977,7 +991,8 @@ public class XMLApplicationImporter {
             if (DataType.LIST.equals(type)) {
                 fd.setClassId(fieldEl.attributeValue("classid"));
                 if (!StringUtils.isEmpty(fieldEl.attributeValue("listViewType"))) {
-                    fd.setListViewType(ListViewType.valueOf(fieldEl.attributeValue("listViewType")));
+                    fd.setListViewType(
+                            ListViewType.valueOf(fieldEl.attributeValue("listViewType")));
                 }
             }
             fields.add(fd);
@@ -1017,12 +1032,13 @@ public class XMLApplicationImporter {
     }
 
     public ApplicationElement buildApplicationFromString(String xml, MetadataStore loader)
-        throws DocumentException {
+            throws DocumentException {
         InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
         return buildApplication(stream, loader);
     }
 
-    private DataValue parseStringValue(DataType type, String value, String label) throws DocumentException {
+    private DataValue parseStringValue(DataType type, String value, String label)
+            throws DocumentException {
         DataValue result = new DataValueImpl(type);
         if (DataType.BOOLEAN == type) {
             result.setValue(Boolean.valueOf(value));
@@ -1083,7 +1099,8 @@ public class XMLApplicationImporter {
         try {
 
             ApplicationElement reference = loader
-                    .loadApplication(code, version == null ? null : Version.parseVersion(version), true);
+                    .loadApplication(code, version == null ? null : Version.parseVersion(version),
+                            true);
             if (reference == null) {
                 return null;
             }

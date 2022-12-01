@@ -1,9 +1,13 @@
 package org.whirlplatform.selenium;
 
-import org.openqa.selenium.*;
-
 import java.io.Serializable;
 import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 
 public class ByWhirl extends By implements Serializable {
     private static final long serialVersionUID = -8495280851093917046L;
@@ -16,7 +20,8 @@ public class ByWhirl extends By implements Serializable {
 
     @Override
     public List<WebElement> findElements(SearchContext context) {
-        throw new UnsupportedOperationException("Method findElement not supported by ByWhirl locator.");
+        throw new UnsupportedOperationException(
+                "Method findElement not supported by ByWhirl locator.");
     }
 
     @Override
@@ -24,8 +29,8 @@ public class ByWhirl extends By implements Serializable {
         if (context instanceof JavascriptExecutor) {
             JavascriptExecutor executor = (JavascriptExecutor) context;
             try {
-                WebElement element = (WebElement) executor
-                        .executeScript("return __Whirl.Selenium.getElementByLocator(arguments[0]);", locator);
+                WebElement element = (WebElement) executor.executeScript(
+                        "return __Whirl.Selenium.getElementByLocator(arguments[0]);", locator);
                 if (element != null) {
                     return element;
                 }

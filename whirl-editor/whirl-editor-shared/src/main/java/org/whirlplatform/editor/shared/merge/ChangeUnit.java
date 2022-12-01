@@ -1,17 +1,16 @@
 package org.whirlplatform.editor.shared.merge;
 
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 @SuppressWarnings("serial")
 public class ChangeUnit implements Serializable {
+    protected ChangeType type;
     private String id;
     private boolean approved = false;
-    protected ChangeType type;
     private AbstractElement target;
     private String field;
     private ChangeValue key = new ChangeValue();
@@ -27,11 +26,13 @@ public class ChangeUnit implements Serializable {
         this(type, target, null, null, null);
     }
 
-    public ChangeUnit(ChangeType type, AbstractElement target, String field, Object key, Object rightValue) {
+    public ChangeUnit(ChangeType type, AbstractElement target, String field, Object key,
+                      Object rightValue) {
         this(type, target, field, key, rightValue, null);
     }
 
-    public ChangeUnit(ChangeType type, AbstractElement target, String field, Object key, Object rightValue,
+    public ChangeUnit(ChangeType type, AbstractElement target, String field, Object key,
+                      Object rightValue,
                       Serializable leftValue) {
         this.type = type;
         this.target = target;
@@ -53,28 +54,28 @@ public class ChangeUnit implements Serializable {
         return field;
     }
 
-    public void setKey(Object key) {
-        this.key = new ChangeValue(key);
-    }
-
     public Object getKey() {
         return key.get();
     }
 
-    public void setRightValue(Object rightValue) {
-        this.rightValue = new ChangeValue(rightValue);
+    public void setKey(Object key) {
+        this.key = new ChangeValue(key);
     }
 
     public Object getRightValue() {
         return rightValue.get();
     }
 
-    public void setLeftValue(Serializable leftValue) {
-        this.leftValue = new ChangeValue(leftValue);
+    public void setRightValue(Object rightValue) {
+        this.rightValue = new ChangeValue(rightValue);
     }
 
     public Object getLeftValue() {
         return leftValue.get();
+    }
+
+    public void setLeftValue(Serializable leftValue) {
+        this.leftValue = new ChangeValue(leftValue);
     }
 
     public void addNestedChange(ChangeUnit change) {

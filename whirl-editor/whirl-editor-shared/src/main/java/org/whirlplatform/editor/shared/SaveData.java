@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.shared;
 
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
-
-import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class SaveData implements Serializable {
@@ -15,28 +14,28 @@ public class SaveData implements Serializable {
     public SaveData() {
     }
 
-    public void setApplication(ApplicationElement application) {
-        this.application = application;
-    }
-
     public ApplicationElement getApplication() {
         return application;
     }
 
-    public void setVersion(Version version) {
-        this.version = version;
+    public void setApplication(ApplicationElement application) {
+        this.application = application;
     }
 
     public Version getVersion() {
         return version;
     }
 
-    public void setState(TreeState state) {
-        this.state = state;
+    public void setVersion(Version version) {
+        this.version = version;
     }
 
     public TreeState getState() {
         return state;
+    }
+
+    public void setState(TreeState state) {
+        this.state = state;
     }
 
 }

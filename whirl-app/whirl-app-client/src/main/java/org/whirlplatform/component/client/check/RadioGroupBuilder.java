@@ -19,11 +19,20 @@ import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.Radio;
 import com.sencha.gxt.widget.core.client.form.error.SideErrorHandler;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.Clearable;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.ListParameter;
+import org.whirlplatform.component.client.ParameterHelper;
+import org.whirlplatform.component.client.Validatable;
 import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.component.client.event.SelectEvent;
@@ -37,15 +46,15 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Радиогруппа
@@ -71,12 +80,13 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private boolean required = false;
     private ClassStore<ListModelData, ClassLoadConfig> store;
     private ParameterHelper paramHelper;
-    private LoadHandler<ClassLoadConfig, LoadData<ListModelData>> loadHandler = new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
-        @Override
-        public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
-            rebuild();
-        }
-    };
+    private LoadHandler<ClassLoadConfig, LoadData<ListModelData>> loadHandler =
+            new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+                @Override
+                public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                    rebuild();
+                }
+            };
 
     @JsConstructor
     public RadioGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -199,14 +209,16 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
 
     private void setDataSourceId(String dataSourceId) {
         metadata = new ClassMetadata(dataSourceId);
-        selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+        selectionStateStore =
+                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
     }
 
     /**
      * Загрузка списка радиогруппы
      */
     private void loadData() {
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
+                new ListClassProxy(metadata));
         store.getLoader().addLoadHandler(loadHandler);
 
         store.getLoader().load(getLoadConfig());
@@ -438,7 +450,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
 
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
-            selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+            selectionStateStore =
+                    new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
@@ -503,7 +516,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                     String id = part.getParameter(LocatorParams.PARAMETER_ID);
                     found = finder.findById(id);
                 } else if (part.hasParameter(LocatorParams.PARAMETER_INDEX)) {
-                    int index = Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX));
+                    int index =
+                            Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX));
                     found = finder.findByIndex(index);
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL) &&
                         Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
@@ -560,8 +574,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

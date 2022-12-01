@@ -1,171 +1,166 @@
 package org.whirlplatform.server.form;
 
+import java.util.Comparator;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 
-import java.util.Comparator;
-
 public class CellElementWrapper implements Cloneable {
 
-	public static class CellComparator implements
-			Comparator<CellElementWrapper> {
+    private CellElement element;
+    private RowElementWrapper row;
+    private ColumnElementWrapper col;
+    private ComponentElement componentElement;
+    private ComponentModel component;
 
-		@Override
-		public int compare(CellElementWrapper o1, CellElementWrapper o2) {
-			int row1 = o1.getRow().getRow();
-			int row2 = o2.getRow().getRow();
-			if (row1 < row2) {
-				return -1;
-			} else if (row1 > row2) {
-				return 1;
-			}
-			int col1 = o1.getColumn().getCol();
-			int col2 = o2.getColumn().getCol();
-			if (col1 < col2) {
-				return -1;
-			} else if (col1 > col2) {
-				return 1;
-			}
-			return 0;
-		}
+    protected CellElementWrapper() {
+    }
 
-	}
+    public CellElementWrapper(RowElementWrapper row, ColumnElementWrapper col) {
+        this.row = row;
+        this.col = col;
+    }
 
-	private CellElement element;
+    public String getId() {
+        return element.getId();
+    }
 
-	private RowElementWrapper row;
+    public void setElement(CellElement element) {
+        this.element = element;
+    }
 
-	private ColumnElementWrapper col;
+    public RowElementWrapper getRow() {
+        return row;
+    }
 
-	private ComponentElement componentElement;
+    public void setRow(RowElementWrapper row) {
+        this.row = row;
+    }
 
-	private ComponentModel component;
+    public ColumnElementWrapper getColumn() {
+        return col;
+    }
 
-	protected CellElementWrapper() {
-	}
+    public void setColumn(ColumnElementWrapper col) {
+        this.col = col;
+    }
 
-	public CellElementWrapper(RowElementWrapper row, ColumnElementWrapper col) {
-		this.row = row;
-		this.col = col;
-	}
+    public Integer getRowSpan() {
+        return element.getRowSpan();
+    }
 
-	public String getId() {
-		return element.getId();
-	}
+    public Integer getColSpan() {
+        return element.getColSpan();
+    }
 
-	public void setElement(CellElement element) {
-		this.element = element;
-	}
+    public int getBorderTop() {
+        return element.getBorderTop();
+    }
 
-	public void setRow(RowElementWrapper row) {
-		this.row = row;
-	}
+    public String getBorderTopColor() {
+        return element.getBorderTopColor();
+    }
 
-	public RowElementWrapper getRow() {
-		return row;
-	}
+    public int getBorderRight() {
+        return element.getBorderRight();
+    }
 
-	public void setColumn(ColumnElementWrapper col) {
-		this.col = col;
-	}
+    public String getBorderRightColor() {
+        return element.getBorderRightColor();
+    }
 
-	public ColumnElementWrapper getColumn() {
-		return col;
-	}
+    public int getBorderBottom() {
+        return element.getBorderBottom();
+    }
 
-	public Integer getRowSpan() {
-		return element.getRowSpan();
-	}
+    public String getBorderBottomColor() {
+        return element.getBorderBottomColor();
+    }
 
-	public Integer getColSpan() {
-		return element.getColSpan();
-	}
+    public int getBorderLeft() {
+        return element.getBorderLeft();
+    }
 
-	public int getBorderTop() {
-		return element.getBorderTop();
-	}
-	
-	public String getBorderTopColor() {
-		return element.getBorderTopColor();
-	}
+    public String getBorderLeftColor() {
+        return element.getBorderLeftColor();
+    }
 
-	public int getBorderRight() {
-		return element.getBorderRight();
-	}
-	
-	public String getBorderRightColor() {
-		return element.getBorderRightColor();
-	}
+    public String getBackgroundColor() {
+        return element.getBackgroundColor();
+    }
 
-	public int getBorderBottom() {
-		return element.getBorderBottom();
-	}
-	
-	public String getBorderBottomColor() {
-		return element.getBorderBottomColor();
-	}
+    public ComponentModel getComponent() {
+        return component;
+    }
 
-	public int getBorderLeft() {
-		return element.getBorderLeft();
-	}
-	
-	public String getBorderLeftColor() {
-		return element.getBorderLeftColor();
-	}
+    public void setComponent(ComponentModel component) {
+        this.component = component;
+    }
 
-	public String getBackgroundColor() {
-		return element.getBackgroundColor();
-	}
+    public ComponentElement getComponentElement() {
+        return componentElement;
+    }
 
-	public void setComponent(ComponentModel component) {
-		this.component = component;
-	}
+    public void setComponentElement(ComponentElement componentElement) {
+        this.componentElement = componentElement;
+    }
 
-	public ComponentModel getComponent() {
-		return component;
-	}
+    public boolean isReplaceable(String name) {
+        PropertyType type = PropertyType.valueOf(name);
+        if (type == null) {
+            return false;
+        }
+        return componentElement.getProperty(type).isReplaceable();
+    }
 
-	public void setComponentElement(ComponentElement componentElement) {
-		this.componentElement = componentElement;
-	}
+    @Override
+    protected CellElementWrapper clone() {
+        CellElementWrapper other = new CellElementWrapper();
+        other.element = this.element;
+        if (componentElement != null && component != null) {
+            other.componentElement = componentElement;
+            ComponentModel newComponent = component.clone();
+            other.component = newComponent;
+        }
+        return other;
+    }
 
-	public ComponentElement getComponentElement() {
-		return componentElement;
-	}
+    @Override
+    public String toString() {
+        String result = "[";
+        if (row != null) {
+            result = result + row.toString();
+        }
+        if (col != null) {
+            result = result + col.toString();
+        }
+        result = result + "]";
+        return result;
+    }
 
-	public boolean isReplaceable(String name) {
-		PropertyType type = PropertyType.valueOf(name);
-		if (type == null) {
-			return false;
-		}
-		return componentElement.getProperty(type).isReplaceable();
-	}
+    public static class CellComparator implements
+            Comparator<CellElementWrapper> {
 
-	@Override
-	protected CellElementWrapper clone() {
-		CellElementWrapper other = new CellElementWrapper();
-		other.element = this.element;
-		if (componentElement != null && component != null) {
-			other.componentElement = componentElement;
-			ComponentModel newComponent = component.clone();
-			other.component = newComponent;
-		}
-		return other;
-	}
+        @Override
+        public int compare(CellElementWrapper o1, CellElementWrapper o2) {
+            int row1 = o1.getRow().getRow();
+            int row2 = o2.getRow().getRow();
+            if (row1 < row2) {
+                return -1;
+            } else if (row1 > row2) {
+                return 1;
+            }
+            int col1 = o1.getColumn().getCol();
+            int col2 = o2.getColumn().getCol();
+            if (col1 < col2) {
+                return -1;
+            } else if (col1 > col2) {
+                return 1;
+            }
+            return 0;
+        }
 
-	@Override
-	public String toString() {
-		String result = "[";
-		if (row != null) {
-			result = result + row.toString();
-		}
-		if (col != null) {
-			result = result + col.toString();
-		}
-		result = result + "]";
-		return result;
-	}
+    }
 
 }

@@ -1,9 +1,15 @@
 package org.whirlplatform.meta.shared.editor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-
-import java.util.*;
 
 @SuppressWarnings("serial")
 public class ComponentElement extends AbstractElement {
@@ -26,12 +32,12 @@ public class ComponentElement extends AbstractElement {
         this.type = type;
     }
 
-    public void setType(ComponentType type) {
-        this.type = type;
-    }
-
     public ComponentType getType() {
         return type;
+    }
+
+    public void setType(ComponentType type) {
+        this.type = type;
     }
 
     public Collection<ComponentElement> getChildren() {
@@ -75,12 +81,12 @@ public class ComponentElement extends AbstractElement {
         return Collections.unmodifiableMap(values);
     }
 
-    protected void setParent(ComponentElement parent) {
-        this.parent = parent;
-    }
-
     public ComponentElement getParent() {
         return parent;
+    }
+
+    protected void setParent(ComponentElement parent) {
+        this.parent = parent;
     }
 
     public void removeFromParent() {
@@ -129,7 +135,8 @@ public class ComponentElement extends AbstractElement {
      * @return
      */
     public Collection<ContextMenuItemElement> getContextMenuItems() {
-        List<ContextMenuItemElement> result = new ArrayList<ContextMenuItemElement>(contextMenuItems);
+        List<ContextMenuItemElement> result =
+                new ArrayList<ContextMenuItemElement>(contextMenuItems);
         Collections.sort(result, ContextMenuItemElement.getComparator());
         return Collections.unmodifiableList(result);
     }

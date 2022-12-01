@@ -4,6 +4,8 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
+import java.util.Collection;
+import java.util.List;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppLocales;
 import org.whirlplatform.editor.client.view.LocaleView;
@@ -12,42 +14,39 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 
-import java.util.Collection;
-import java.util.List;
-
 @Presenter(view = LocaleView.class)
 public class LocalePresenter extends BasePresenter<LocalePresenter.ILocaleView, EditorEventBus>
-		implements ElementPresenter {
+        implements ElementPresenter {
 
-	public interface ILocaleView extends ReverseViewInterface<LocalePresenter>, IsWidget {
+    private ApplicationElement application;
 
-		void setLocales(Collection<LocaleElement> locales);
-	}
+    public LocalePresenter() {
+        super();
+    }
 
-	private ApplicationElement application;
+    public void onOpenElement(AbstractElement element) {
+        if (!(element instanceof DummyAppLocales)) {
+            return;
+        }
+        view.setLocales(application.getLocales());
+        eventBus.openElementView(view);
+    }
 
-	public LocalePresenter() {
-		super();
-	}
+    public void onLoadApplication(ApplicationElement application, Version version) {
+        this.application = application;
+    }
 
-	public void onOpenElement(AbstractElement element) {
-		if (!(element instanceof DummyAppLocales)) {
-			return;
-		}
-		view.setLocales(application.getLocales());
-		eventBus.openElementView(view);
-	}
+    public void onUpdateLocales(List<LocaleElement> locales) {
+        application.changeLocales(locales);
+    }
 
-	public void onLoadApplication(ApplicationElement application, Version version) {
-		this.application = application;
-	}
+    public ApplicationElement getApplication() {
+        return application;
+    }
 
-	public void onUpdateLocales(List<LocaleElement> locales) {
-		application.changeLocales(locales);
-	}
+    public interface ILocaleView extends ReverseViewInterface<LocalePresenter>, IsWidget {
 
-	public ApplicationElement getApplication() {
-		return application;
-	}
+        void setLocales(Collection<LocaleElement> locales);
+    }
 
 }

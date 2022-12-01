@@ -3,11 +3,10 @@ package org.whirlplatform.meta.shared;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.ListModelData;
-
 import java.io.Serializable;
 import java.util.Date;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.ListModelData;
 
 @SuppressWarnings("serial")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -38,30 +37,16 @@ public class FilterValue implements Serializable {
         this.metadata = metadata;
     }
 
-    public void setType(FilterType type) {
-        this.type = type;
-    }
-
     public FilterType getType() {
         return type;
     }
 
-    public FieldMetadata getMetadata() {
-        return metadata;
+    public void setType(FilterType type) {
+        this.type = type;
     }
 
-    public <X> void setFirstValue(X value) {
-        if (DataType.STRING == metadata.getType() || DataType.FILE == metadata.getType()) {
-            stringValue = (String) value;
-        } else if (DataType.NUMBER == metadata.getType()) {
-            numberValueFirst = (Double) value;
-        } else if (DataType.LIST == metadata.getType()) {
-            listValue = (ListModelData) value;
-        } else if (DataType.DATE == metadata.getType()) {
-            dateValueFirst = (Date) value;
-        } else if (DataType.BOOLEAN == metadata.getType()) {
-            booleanValue = (Boolean) value;
-        }
+    public FieldMetadata getMetadata() {
+        return metadata;
     }
 
     @SuppressWarnings("unchecked")
@@ -81,11 +66,17 @@ public class FilterValue implements Serializable {
         return (X) result;
     }
 
-    public <X> void setSecondValue(X value) {
-        if (DataType.NUMBER == metadata.getType()) {
-            numberValueSecond = (Double) value;
+    public <X> void setFirstValue(X value) {
+        if (DataType.STRING == metadata.getType() || DataType.FILE == metadata.getType()) {
+            stringValue = (String) value;
+        } else if (DataType.NUMBER == metadata.getType()) {
+            numberValueFirst = (Double) value;
+        } else if (DataType.LIST == metadata.getType()) {
+            listValue = (ListModelData) value;
         } else if (DataType.DATE == metadata.getType()) {
-            dateValueSecond = (Date) value;
+            dateValueFirst = (Date) value;
+        } else if (DataType.BOOLEAN == metadata.getType()) {
+            booleanValue = (Boolean) value;
         }
     }
 
@@ -98,6 +89,14 @@ public class FilterValue implements Serializable {
             result = dateValueSecond;
         }
         return (X) result;
+    }
+
+    public <X> void setSecondValue(X value) {
+        if (DataType.NUMBER == metadata.getType()) {
+            numberValueSecond = (Double) value;
+        } else if (DataType.DATE == metadata.getType()) {
+            dateValueSecond = (Date) value;
+        }
     }
 
     public void clear() {

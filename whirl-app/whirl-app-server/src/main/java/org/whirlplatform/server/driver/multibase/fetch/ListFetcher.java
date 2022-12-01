@@ -8,5 +8,6 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 
 public interface ListFetcher<T extends AbstractTableElement> {
 
-    LoadData<ListModelData> getListData(ClassMetadata metadata, T table, ClassLoadConfig loadConfig);
+    LoadData<ListModelData> getListData(ClassMetadata metadata, T table,
+                                        ClassLoadConfig loadConfig);
 }

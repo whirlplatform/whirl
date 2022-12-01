@@ -8,11 +8,11 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.sencha.gxt.cell.core.client.form.RadioCell;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.widget.core.client.Component;
-import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.form.Radio;
-import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -21,7 +21,6 @@ import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Parameter;
-import org.whirlplatform.component.client.ext.FieldMaskDecorator;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
@@ -31,14 +30,12 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Радиокнопка
  */
 @JsType(name = "Radio", namespace = "Whirl")
-public class RadioBuilder extends AbstractFieldBuilder implements NativeParameter<Boolean>, Parameter<DataValue> {
+public class RadioBuilder extends AbstractFieldBuilder
+        implements NativeParameter<Boolean>, Parameter<DataValue> {
 
     private Radio radio;
 
@@ -70,9 +67,11 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
 
         RadioCell cell = new RadioCell() {
             @Override
-            public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context, Element parent, Boolean value,
+            public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
+                                       Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
-                if (isReadOnly() && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                if (isReadOnly() &&
+                        !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -126,15 +125,6 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Установка подписи радиокнопки
-     *
-     * @param label - String
-     */
-    public void setBoxLabel(String label) {
-        radio.setBoxLabel(label);
-    }
-
-    /**
      * Получение подписи радиокнопки
      *
      * @return String
@@ -144,12 +134,12 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     }
 
     /**
-     * Установка названия радиогруппы
+     * Установка подписи радиокнопки
      *
-     * @param groupName - String
+     * @param label - String
      */
-    public void setGroupName(String groupName) {
-        radio.setName(groupName);
+    public void setBoxLabel(String label) {
+        radio.setBoxLabel(label);
     }
 
     /**
@@ -159,6 +149,15 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
      */
     public String getGroupName() {
         return radio.getName();
+    }
+
+    /**
+     * Установка названия радиогруппы
+     *
+     * @param groupName - String
+     */
+    public void setGroupName(String groupName) {
+        radio.setName(groupName);
     }
 
     /**
@@ -265,10 +264,6 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
         return false;
     }
 
-    private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-    }
-
     @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -331,8 +326,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
@@ -364,7 +358,7 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
      * @param readOnly true, если поле доступно только для чтения
      */
     public void setReadOnly(boolean readOnly) {
-      super.setReadOnly(readOnly);
+        super.setReadOnly(readOnly);
     }
 
     /**
@@ -395,5 +389,9 @@ public class RadioBuilder extends AbstractFieldBuilder implements NativeParamete
             field.clear();
             ValueChangeEvent.fire(field, emptyValue());
         }
+    }
+
+    private static class LocatorParams {
+        private static String TYPE_INPUT = "Input";
     }
 }

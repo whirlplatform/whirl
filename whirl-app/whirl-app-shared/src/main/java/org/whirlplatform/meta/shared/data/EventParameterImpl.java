@@ -21,20 +21,20 @@ public class EventParameterImpl implements EventParameter {
         return type;
     }
 
-    public void setComponentId(String componentId) {
-        this.componentId = componentId;
-    }
-
     public String getComponentId() {
         return componentId;
     }
 
-    public void setComponentCode(String componentCode) {
-        this.componentCode = componentCode;
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
     }
 
     public String getComponentCode() {
         return componentCode;
+    }
+
+    public void setComponentCode(String componentCode) {
+        this.componentCode = componentCode;
     }
 
     @Override
@@ -45,11 +45,6 @@ public class EventParameterImpl implements EventParameter {
     @Override
     public void setStorageCode(String storageCode) {
         this.storageCode = storageCode;
-    }
-
-    @Override
-    public void setData(DataValue data) {
-        this.data = data;
     }
 
     @Override
@@ -64,12 +59,17 @@ public class EventParameterImpl implements EventParameter {
         return data;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    @Override
+    public void setData(DataValue data) {
+        this.data = data;
     }
 
     public String getCode() {
         return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override

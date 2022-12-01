@@ -1,13 +1,19 @@
 package org.whirlplatform.meta.shared.editor;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings("serial")
 public class RightCollectionElement extends AbstractElement {
 
     private AbstractElement element;
     private Set<RightElement> applicationRights = new HashSet<RightElement>();
-    private Map<GroupElement, Set<RightElement>> groupRights = new HashMap<GroupElement, Set<RightElement>>();
+    private Map<GroupElement, Set<RightElement>> groupRights =
+            new HashMap<GroupElement, Set<RightElement>>();
 
     public RightCollectionElement() {
     }

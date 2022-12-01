@@ -5,27 +5,29 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.io.Serializable;
-import java.util.*;
-import java.util.Map.Entry;
 
 @SuppressWarnings("serial")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ComponentModel implements Cloneable, Serializable, IsSerializable {
 
+    protected List<ComponentModel> children = new ArrayList<ComponentModel>();
+    protected Map<String, List<EventMetadata>> events = new HashMap<>();
     private String id;
-
     private ComponentType type;
-
     private Map<String, DataValue> values = new HashMap<>();
     private Set<String> replaceableProperties = new HashSet<String>();
-
-    protected List<ComponentModel> children = new ArrayList<ComponentModel>();
-
-    protected Map<String, List<EventMetadata>> events = new HashMap<>();
     private List<ComponentModel> contextMenuItems = new ArrayList<ComponentModel>();
 
     public ComponentModel(ComponentType type) {
@@ -35,17 +37,12 @@ public class ComponentModel implements Cloneable, Serializable, IsSerializable {
     protected ComponentModel() {
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getId() {
         return id;
     }
 
-    public void setValues(Map<String, DataValue> values) {
-        this.values.clear();
-        this.values.putAll(values);
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setValue(String name, DataValue value) {
@@ -68,19 +65,24 @@ public class ComponentModel implements Cloneable, Serializable, IsSerializable {
         return Collections.unmodifiableMap(values);
     }
 
+    public void setValues(Map<String, DataValue> values) {
+        this.values.clear();
+        this.values.putAll(values);
+    }
+
     public void addReplaceableProperty(String property) {
         replaceableProperties.add(property);
+    }
+
+    @JsonIgnore
+    public Collection<String> getReplaceableProperties() {
+        return Collections.unmodifiableSet(replaceableProperties);
     }
 
     @JsonIgnore
     public void setReplaceableProperties(Collection<String> properties) {
         replaceableProperties.clear();
         replaceableProperties.addAll(properties);
-    }
-
-    @JsonIgnore
-    public Collection<String> getReplaceableProperties() {
-        return Collections.unmodifiableSet(replaceableProperties);
     }
 
     public boolean isReplaceableProperty(String property) {
@@ -140,12 +142,12 @@ public class ComponentModel implements Cloneable, Serializable, IsSerializable {
         return children != null && children.size() >= 1;
     }
 
-    public void setType(ComponentType type) {
-        this.type = type;
-    }
-
     public ComponentType getType() {
         return type;
+    }
+
+    public void setType(ComponentType type) {
+        this.type = type;
     }
 
     public void addContextMenuItem(ComponentModel item) {

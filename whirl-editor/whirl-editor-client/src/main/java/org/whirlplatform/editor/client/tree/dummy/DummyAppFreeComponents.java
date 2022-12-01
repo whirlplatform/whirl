@@ -10,34 +10,35 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  */
 @SuppressWarnings("serial")
 public class DummyAppFreeComponents extends AbstractDummyElement {
-	private static final String ID_PREFIX = "dummy-application-freecomponents-";
-	private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_application_freecomponents();
+    private static final String ID_PREFIX = "dummy-application-freecomponents-";
+    private static final String TITLE =
+            EditorMessage.Util.MESSAGE.dummy_application_freecomponents();
 
-	public DummyAppFreeComponents() {
-		super();
-	}
+    public DummyAppFreeComponents() {
+        super();
+    }
 
-	public DummyAppFreeComponents(final String id) {
-		super(id);
-	}
+    public DummyAppFreeComponents(final String id) {
+        super(id);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+    @Override
+    public String getIdPrefix() {
+        return ID_PREFIX;
+    }
 
-	@Override
-	public String getTitle() {
-		return TITLE;
-	}
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 }

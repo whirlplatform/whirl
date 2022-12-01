@@ -30,63 +30,24 @@ import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 import com.sencha.gxt.widget.core.client.grid.editing.ClicksToEdit;
 import com.sencha.gxt.widget.core.client.grid.editing.GridInlineEditing;
 import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.whirlplatform.editor.client.presenter.LocalePresenter;
 import org.whirlplatform.editor.client.presenter.LocalePresenter.ILocaleView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class LocaleView extends ContentPanel implements ILocaleView {
 
+    private static final LocaleProperties properties = GWT
+            .create(LocaleProperties.class);
     private LocaleElement newLocale = null;
     private LocalePresenter presenter;
     private Grid<LocaleElement> grid;
     private ListStore<LocaleElement> store;
     private GridInlineEditing<LocaleElement> editing;
     private VerticalLayoutContainer container;
-    private static final LocaleProperties properties = GWT
-            .create(LocaleProperties.class);
-
-    interface LocaleProperties extends PropertyAccess<LocaleElement> {
-        @Path("language")
-        ModelKeyProvider<LocaleElement> key();
-
-        ValueProvider<LocaleElement, String> language();
-
-        ValueProvider<LocaleElement, String> country();
-    }
-
-    public class CustomValidator extends AbstractValidator<String> {
-
-        @Override
-        public List<EditorError> validate(Editor<String> editor, String value) {
-            List<EditorError> errors = null;
-
-            boolean duplicate = false;
-            int currentRow = editing.getActiveCell().getRow();
-
-            for (LocaleElement le : store.getAll()) {
-                if (le.getLanguage() == null) {
-                    continue;
-                }
-                if (le.getLanguage().equalsIgnoreCase(value)) {
-                    int row = store.indexOf(le);
-                    if (currentRow != row) {
-                        duplicate = true;
-                    }
-                }
-            }
-            if (duplicate) {
-                String message = EditorMessage.Util.MESSAGE.locale_err_msg();
-                errors = createError(editor, message, value);
-            }
-            return errors;
-        }
-
-    }
 
     public LocaleView() {
         super();
@@ -240,18 +201,56 @@ public class LocaleView extends ContentPanel implements ILocaleView {
     }
 
     @Override
-    public void setPresenter(LocalePresenter presenter) {
-        this.presenter = presenter;
+    public LocalePresenter getPresenter() {
+        return presenter;
     }
 
     @Override
-    public LocalePresenter getPresenter() {
-        return presenter;
+    public void setPresenter(LocalePresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
     public void setLocales(Collection<LocaleElement> locales) {
         store.clear();
         store.addAll(locales);
+    }
+
+    interface LocaleProperties extends PropertyAccess<LocaleElement> {
+        @Path("language")
+        ModelKeyProvider<LocaleElement> key();
+
+        ValueProvider<LocaleElement, String> language();
+
+        ValueProvider<LocaleElement, String> country();
+    }
+
+    public class CustomValidator extends AbstractValidator<String> {
+
+        @Override
+        public List<EditorError> validate(Editor<String> editor, String value) {
+            List<EditorError> errors = null;
+
+            boolean duplicate = false;
+            int currentRow = editing.getActiveCell().getRow();
+
+            for (LocaleElement le : store.getAll()) {
+                if (le.getLanguage() == null) {
+                    continue;
+                }
+                if (le.getLanguage().equalsIgnoreCase(value)) {
+                    int row = store.indexOf(le);
+                    if (currentRow != row) {
+                        duplicate = true;
+                    }
+                }
+            }
+            if (duplicate) {
+                String message = EditorMessage.Util.MESSAGE.locale_err_msg();
+                errors = createError(editor, message, value);
+            }
+            return errors;
+        }
+
     }
 }

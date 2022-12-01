@@ -7,41 +7,41 @@ import org.whirlplatform.component.client.event.RowDoubleClickEvent.RowDoubleCli
 
 public class RowDoubleClickEvent extends GwtEvent<RowDoubleClickHandler> {
 
-	private static Type<RowDoubleClickHandler> TYPE;
+    private static Type<RowDoubleClickHandler> TYPE;
 
-	public static Type<RowDoubleClickHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<RowDoubleClickHandler>() {
-				@Override
-				public String toString() {
-					return "RowDoubleClickHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<RowDoubleClickHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<RowDoubleClickHandler>() {
+                @Override
+                public String toString() {
+                    return "RowDoubleClickHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<RowDoubleClickHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<RowDoubleClickHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(RowDoubleClickHandler handler) {
-		handler.onRowDoubleClick(this);
-	}
+    @Override
+    protected void dispatch(RowDoubleClickHandler handler) {
+        handler.onRowDoubleClick(this);
+    }
 
-	public interface RowDoubleClickHandler extends EventHandler {
+    public interface RowDoubleClickHandler extends EventHandler {
 
-		void onRowDoubleClick(RowDoubleClickEvent event);
+        void onRowDoubleClick(RowDoubleClickEvent event);
 
-	}
+    }
 
-	public interface HasRowDoubleClickHandlers {
+    public interface HasRowDoubleClickHandlers {
 
         HandlerRegistration addRowDoubleClickHandler(
                 RowDoubleClickHandler handler);
 
-	}
+    }
 
 }

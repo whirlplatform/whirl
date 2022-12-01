@@ -41,7 +41,8 @@ public class RightElementTest {
         RightElement origin = new RightElement(ORIGIN_TYPE);
         origin.setCondition(originCondition);
         RightElement clone = origin.clone();
-        Assert.assertEquals("Clone condition value was not copied", origin.getCondition().getValue(),
+        Assert.assertEquals("Clone condition value was not copied",
+                origin.getCondition().getValue(),
                 clone.getCondition().getValue());
         Assert.assertEquals("Clone type value was not copied", origin.getType(), clone.getType());
         Assert.assertEquals("Clone is not equal to the origin", origin, clone);

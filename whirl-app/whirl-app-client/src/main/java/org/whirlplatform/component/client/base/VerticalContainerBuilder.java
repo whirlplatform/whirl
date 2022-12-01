@@ -3,6 +3,8 @@ package org.whirlplatform.component.client.base;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -11,9 +13,6 @@ import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Контейнер располагающей компоненты в одну колонку.
@@ -75,7 +74,7 @@ public class VerticalContainerBuilder extends InsertContainerBuilder {
 
     @Override
     public void removeChild(ComponentBuilder child) {
-		super.removeChild(child);
+        super.removeChild(child);
     }
 
     /**

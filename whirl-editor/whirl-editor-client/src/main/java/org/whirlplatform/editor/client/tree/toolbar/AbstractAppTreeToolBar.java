@@ -14,12 +14,11 @@ import org.whirlplatform.editor.client.tree.AppTree;
 import org.whirlplatform.editor.client.tree.menu.AppTreeMenu;
 
 /**
- * Базовая реализация панели инструментов дерева приложения. Состоит из
- * статусной строки с именем и версией загруженного приложения Статус
- * располагается слева, кнопки, при добавлении их в реализациях класса, будут
- * добавляться справа. Статусная строка форматируется различным образом в
- * зависимости от того были ли приложение в дереве отредактировано или нет.
- * Изменение форматирование производится в этом случае вызовом метода setChanged
+ * Базовая реализация панели инструментов дерева приложения. Состоит из статусной строки с именем и
+ * версией загруженного приложения Статус располагается слева, кнопки, при добавлении их в
+ * реализациях класса, будут добавляться справа. Статусная строка форматируется различным образом в
+ * зависимости от того были ли приложение в дереве отредактировано или нет. Изменение форматирование
+ * производится в этом случае вызовом метода setChanged
  *
  * @param <T> - наследник AppTree
  */
@@ -28,8 +27,8 @@ public abstract class AbstractAppTreeToolBar<T extends AppTree> extends ToolBar 
     private static final int H_SPACING = 5;
     private final Status status;
     private final TextButton contextButton;
-    private AppTreeMenu<T> contextButtonMenu;
     protected T appTree;
+    private AppTreeMenu<T> contextButtonMenu;
 
     public AbstractAppTreeToolBar() {
         super();
@@ -134,10 +133,12 @@ public abstract class AbstractAppTreeToolBar<T extends AppTree> extends ToolBar 
     }
 
     private String getAppCode() {
-        return (appTree != null && appTree.getApplication() != null) ? appTree.getApplication().getCode() : "";
+        return (appTree != null && appTree.getApplication() != null) ?
+                appTree.getApplication().getCode() : "";
     }
 
     private String getAppVersion() {
-        return (appTree != null && appTree.getVersion() != null) ? appTree.getVersion().toString() : "";
+        return (appTree != null && appTree.getVersion() != null) ? appTree.getVersion().toString() :
+                "";
     }
 }

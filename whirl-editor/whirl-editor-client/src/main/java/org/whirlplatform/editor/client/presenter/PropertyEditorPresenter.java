@@ -4,6 +4,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.meta.NewPropertyElement;
 import org.whirlplatform.editor.client.view.PropertyEditorView;
@@ -16,42 +19,20 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
-
 @Presenter(view = PropertyEditorView.class)
 public class PropertyEditorPresenter
         extends BasePresenter<PropertyEditorPresenter.IPropertyEditorView, EditorEventBus> {
 
-    public interface IPropertyEditorView extends IsWidget, ReverseViewInterface<PropertyEditorPresenter> {
-
-        Map<PropertyType, PropertyValue> getProperties();
-
-        void setComponentProperties(ComponentType type, Map<PropertyType, PropertyValue> properties);
-
-        void finishEditing();
-    }
-
     private ApplicationElement application;
     private ComponentElement currentElement;
-
     public PropertyEditorPresenter() {
         super();
-    }
-
-    public void onSelectComponentElement(final ComponentElement element) {
-        view.finishEditing();
-        PropertyEditorPresenter.this.currentElement = element;
-        view.setComponentProperties(currentElement.getType(),
-                prepareProperties(currentElement.getType(), currentElement.getProperties()));
-        eventBus.changeSecondLeftComponent(view);
     }
 
     /**
      * Все доступные свойства компонента, отсортированные по полям isUI и code
      *
-     * @param type           Тип компонента
+     * @param type      Тип компонента
      * @param initProps Свойства, с установленными значениями
      * @return
      */
@@ -73,6 +54,14 @@ public class PropertyEditorPresenter
             result.put(propertyType, propertyValue);
         }
         return result;
+    }
+
+    public void onSelectComponentElement(final ComponentElement element) {
+        view.finishEditing();
+        PropertyEditorPresenter.this.currentElement = element;
+        view.setComponentProperties(currentElement.getType(),
+                prepareProperties(currentElement.getType(), currentElement.getProperties()));
+        eventBus.changeSecondLeftComponent(view);
     }
 
     // TODO параметризовать свойства
@@ -100,5 +89,16 @@ public class PropertyEditorPresenter
 
     public ApplicationElement getApplication() {
         return application;
+    }
+
+    public interface IPropertyEditorView
+            extends IsWidget, ReverseViewInterface<PropertyEditorPresenter> {
+
+        Map<PropertyType, PropertyValue> getProperties();
+
+        void setComponentProperties(ComponentType type,
+                                    Map<PropertyType, PropertyValue> properties);
+
+        void finishEditing();
     }
 }

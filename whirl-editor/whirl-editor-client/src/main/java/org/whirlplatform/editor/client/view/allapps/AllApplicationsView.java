@@ -11,6 +11,7 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.toolbar.FillToolItem;
+import java.util.Collection;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.component.client.utils.ProgressHelper;
 import org.whirlplatform.editor.client.image.ComponentBundle;
@@ -20,8 +21,6 @@ import org.whirlplatform.editor.client.view.widget.WidgetUtil;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 
-import java.util.Collection;
-
 /**
  * Отображение перечня доступных приложений.
  *
@@ -30,7 +29,8 @@ import java.util.Collection;
 public class AllApplicationsView extends Window implements IAllApplicationsView {
     // Operations
     private static final String LOADING = EditorMessage.Util.MESSAGE.action_load_application();
-    private static final String RETRIEVING_APPS = EditorMessage.Util.MESSAGE.all_applications_retrieving_apps();
+    private static final String RETRIEVING_APPS =
+            EditorMessage.Util.MESSAGE.all_applications_retrieving_apps();
     // Button titles
     private static final String REMOVE = EditorMessage.Util.MESSAGE.remove();
     private static final String PACKAGE_TITLE = EditorMessage.Util.MESSAGE.toolbar_package();
@@ -40,30 +40,33 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
     // The main window
     private static final int WINDOW_WIDTH = ApplicationsTreeGrid.estimatedWidth() + 20;
     private static final int WINDOW_HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT;
-    private static final String WINDOW_HEADER = EditorMessage.Util.MESSAGE.all_applications_header();
-    
+    private static final String WINDOW_HEADER =
+            EditorMessage.Util.MESSAGE.all_applications_header();
+
     private AllApplicationsPresenter presenter;
     private ApplicationsTreeGrid tree;
-    
+
     private TextButton removeButton;
     private TextButton packageButton;
     private TextButton loadButton;
     private TextButton closeButton;
-    
+
     private AllApplicationsContextMenu contextMenu;
-    
+
     public AllApplicationsView() {
         getHeader().setText(WINDOW_HEADER);
         getHeader().setIcon(ComponentBundle.INSTANCE.open());
         setWidth(WINDOW_WIDTH);
         setHeight(WINDOW_HEIGHT);
         tree = new ApplicationsTreeGrid();
-        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<ApplicationStoreData>() {
-            @Override
-            public void onSelectionChanged(SelectionChangedEvent<ApplicationStoreData> event) {
-                setButtonsState();
-            }
-        });
+        tree.getSelectionModel()
+                .addSelectionChangedHandler(new SelectionChangedHandler<ApplicationStoreData>() {
+                    @Override
+                    public void onSelectionChanged(
+                            SelectionChangedEvent<ApplicationStoreData> event) {
+                        setButtonsState();
+                    }
+                });
         tree.addCellDoubleClickHandler(new CellDoubleClickHandler() {
             @Override
             public void onCellClick(CellDoubleClickEvent event) {
@@ -75,29 +78,29 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
         initButtons();
         initPanel();
     }
-    
+
     @Override
     public void hide() {
         ProgressHelper.hide();
         super.hide();
     }
-    
+
     @Override
     public AllApplicationsPresenter getPresenter() {
         return presenter;
     }
-    
+
     @Override
     public void setPresenter(AllApplicationsPresenter presenter) {
         this.presenter = presenter;
     }
-    
+
     @Override
     public void loadApplications(Collection<ApplicationStoreData> data) {
         tree.loadData(data);
         ProgressHelper.hide();
     }
-    
+
     @Override
     public void setButtonsState() {
         ApplicationStoreData selected = tree.getSelectedLeaf();
@@ -111,19 +114,19 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
             packageButton.enable();
         }
     }
-    
+
     @Override
     public void showError(Throwable caught) {
         ProgressHelper.hide();
         InfoHelper.throwInfo("all-applications-view", caught);
     }
-    
+
     @Override
     public void showLoadDataProgress() {
         ProgressHelper.hide();
         ProgressHelper.show(RETRIEVING_APPS);
     }
-    
+
     private void initButtons() {
         removeButton = new TextButton(REMOVE, new SelectHandler() {
             @Override
@@ -154,7 +157,7 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
             }
         });
     }
-    
+
     @Override
     public void startApplicationEditing() {
         ApplicationStoreData selected = tree.getSelectedLeaf();
@@ -163,19 +166,19 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
             getPresenter().fetchApplicationElement(selected);
         }
     }
-    
+
     @Override
     public void startApplicationRunning() {
         ApplicationStoreData selected = tree.getSelectedLeaf();
         getPresenter().runApplication(selected);
     }
-    
+
     @Override
     public void startApplicationPackaging() {
         ApplicationStoreData selected = tree.getSelectedLeaf();
         getPresenter().runPackageCreation(selected);
     }
-    
+
     private void initPanel() {
         VerticalLayoutContainer container = new VerticalLayoutContainer();
         container.add(tree, new VerticalLayoutData(1, 1));
@@ -186,20 +189,20 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
         addButton(closeButton);
         setButtonsState();
     }
-    
+
     @Override
     public ApplicationStoreData getSelectedLeaf() {
         return tree.getSelectedLeaf();
     }
-    
+
     public ApplicationStoreData getSelectedFolder() {
         return tree.getSelectedFolder();
     }
-    
+
     public void expandSelectedFolder() {
         tree.expandSelectedFolder();
     }
-    
+
     public void collapseSelectedFolder() {
         tree.collapseSelectedFolder();
     }

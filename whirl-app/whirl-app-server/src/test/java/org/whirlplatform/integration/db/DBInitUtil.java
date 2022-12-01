@@ -1,6 +1,17 @@
 package org.whirlplatform.integration.db;
 
-import org.apache.empire.db.*;
+import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.apache.empire.db.DBCmdType;
+import org.apache.empire.db.DBDatabaseDriver;
+import org.apache.empire.db.DBSQLScript;
+import org.apache.empire.db.DBTable;
+import org.apache.empire.db.DBView;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -9,17 +20,13 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 
-import java.sql.*;
-
-import static org.junit.Assert.assertTrue;
-
 public final class DBInitUtil {
+
+    public static final DBConfig CONFIG = initConfig();
 
     private DBInitUtil() {
 
     }
-
-    public static final DBConfig CONFIG = initConfig();
 
     private static DBConfig initConfig() {
         DBConfig config = new DBConfig();
@@ -36,14 +43,16 @@ public final class DBInitUtil {
             System.out.println(e.getMessage());
         }
         TestTableSet db = TestTableSet.get();
-        try (Connection connection = DriverManager.getConnection(CONFIG.getJdbcURL(), CONFIG.getJdbcUser(),
+        try (Connection connection = DriverManager.getConnection(CONFIG.getJdbcURL(),
+                CONFIG.getJdbcUser(),
                 CONFIG.getJdbcPwd())) {
             String schemaName = CONFIG.getSchemaName().toUpperCase();
             db.setSchema(schemaName);
             assertTrue(!connection.isClosed());
             DBDatabaseDriver driver = null;
             try {
-                driver = (DBDatabaseDriver) Class.forName(CONFIG.getEmpireDBDriverClass()).newInstance();
+                driver = (DBDatabaseDriver) Class.forName(CONFIG.getEmpireDBDriverClass())
+                        .newInstance();
             } catch (ClassNotFoundException e) {
                 System.out.println(e.getMessage());
             }
@@ -51,7 +60,8 @@ public final class DBInitUtil {
             createTables(db, connection);
             IDataSet dataSet = loadDataSet();
             assertTrue(dataSet != null);
-            IDatabaseConnection iDatabaseConnection = new DatabaseConnection(connection, schemaName);
+            IDatabaseConnection iDatabaseConnection =
+                    new DatabaseConnection(connection, schemaName);
             DatabaseOperation.CLEAN_INSERT.execute(iDatabaseConnection, dataSet);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -86,7 +96,8 @@ public final class DBInitUtil {
     }
 
     public static void cleanDB(TestTableSet db) {
-        try (Connection connection = DriverManager.getConnection(CONFIG.getJdbcURL(), CONFIG.getJdbcUser(),
+        try (Connection connection = DriverManager.getConnection(CONFIG.getJdbcURL(),
+                CONFIG.getJdbcUser(),
                 CONFIG.getJdbcPwd())) {
             DBSQLScript script = new DBSQLScript();
             DBDatabaseDriver driver = db.getDriver();
@@ -119,7 +130,8 @@ public final class DBInitUtil {
             // IDataSet dataSet = builder.build(new
             // FileInputStream("src/test/resources/dataset/db_dataset.xml"));
             IDataSet dataSet = builder
-                    .build(DBInitUtil.class.getClassLoader().getResourceAsStream("dataset/db_dataset.xml"));
+                    .build(DBInitUtil.class.getClassLoader()
+                            .getResourceAsStream("dataset/db_dataset.xml"));
             return dataSet;
         } catch (DataSetException e) {
             System.out.println(e.getMessage());

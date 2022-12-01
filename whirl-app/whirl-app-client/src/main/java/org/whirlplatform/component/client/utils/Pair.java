@@ -10,14 +10,6 @@ public class Pair<A, B> {
         this.second = second;
     }
 
-    public A getFirst() {
-        return first;
-    }
-
-    public B getSecond() {
-        return second;
-    }
-
     public static <A, B> A[] asArrayOfFirst(Pair<A, B>[] pairs, A[] zeroArray) {
         @SuppressWarnings("unchecked")
         A[] result = (A[]) new Object[pairs.length];
@@ -34,6 +26,14 @@ public class Pair<A, B> {
             result[i] = pairs[i].getSecond();
         }
         return result;
+    }
+
+    public A getFirst() {
+        return first;
+    }
+
+    public B getSecond() {
+        return second;
     }
 
 }

@@ -4,7 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.whirlplatform.integration.AbstractPage;
 
 public abstract class AbstractGridPart extends AbstractPage {
-    private final String PARAMETER_CODE = "code";// TODO ComponentBuilder.LocatorParams.PARAMETER_CODE;
+    private final String PARAMETER_CODE = "code";
+    // TODO ComponentBuilder.LocatorParams.PARAMETER_CODE;
     private final String PARAMETER_ID = "id";// TODO ComponentBuilder.LocatorParams.PARAMETER_ID;
     private final String GRID = "whirl:EditGridBuilder(%s)";
 
@@ -42,7 +43,8 @@ public abstract class AbstractGridPart extends AbstractPage {
         boolean isId = PARAMETER_ID.equals(gridParameterName);
         boolean isCode = PARAMETER_CODE.equals(gridParameterName);
         if (!isId && !isCode) {
-            throw new IllegalArgumentException(String.format("Unknown Grid parameter '%s'", gridParameterName));
+            throw new IllegalArgumentException(
+                    String.format("Unknown Grid parameter '%s'", gridParameterName));
         }
     }
 }
