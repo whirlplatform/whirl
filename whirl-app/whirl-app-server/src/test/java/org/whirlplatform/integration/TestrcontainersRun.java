@@ -101,12 +101,14 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("sideex")
             .withFixedExposedPort(50000, 50000)
-//            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
-//                    "/opt/sideex-webservice/serviceconfig.json")
+            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
+                    "/opt/sideex-webservice/serviceconfig.json")
 //            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
 //                    "/opt/sideex-webservice/tests/")
             .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
                     .withStartupTimeout(Duration.ofMinutes(2)))
+            .withEnv("TOMCAT_HOST", "tomcat")
+
             .dependsOn(nodeChrome);
 
 //    @Test
@@ -143,11 +145,12 @@ public class TestrcontainersRun {
     @Test
     public void openSideex() {
         try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
+//            postgres.execInContainer("psql", "-U", "whirl", "-c",
+//                    "create extension if not exist hstore");
 
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
-            postgres.execInContainer("psql", "-U", "whirl", "-c",
-                    "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (3, NULL, 1, 'whirl-admin-admin', '')");
+
 
             URL resource = getClass().getClassLoader().getResource("tests/testcase2.zip");
 //            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
@@ -155,19 +158,15 @@ public class TestrcontainersRun {
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-            Thread.sleep(1000000);
-            String url = "http://127.0.0.1:50000/sideex-webservice/";
-//            HttpGet httpGet = new HttpGet(url+"echo");
-//            CloseableHttpResponse response = httpclient.execute(httpGet);
 
-//            HttpEntity entity = response.getEntity();
-//            System.out.println(EntityUtils.toString(entity));
-//            if (response.getCode() != 200) {
-//                System.out.println("Connection id bad " + response.getCode());
-//                return;
-//            }
-//            response.close();
-//            httpclient.close();
+            System.out.println("Tomcat: http://"+tomcat.getHost()+":"+tomcat.getMappedPort(8080));
+            System.out.println("Sideex: http://"+  sideex.getHost()+":"+ sideex.getMappedPort(50000)+"/sideex-webservice/");
+//            System.out.println("Selenium: http://"+selenium.getHost()+":"+selenium.getMappedPort(4444));
+//            System.out.println(sideex.execInContainer("wget", "-O", "-", "http://tomcat:8080/app?").getStdout());
+//            Thread.sleep(1000000);
+
+//            String url = "http://127.0.0.1:50000/sideex-webservice/";
+            String url = "http://0.0.0.0:50000/sideex-webservice/";
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
             HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
@@ -178,6 +177,7 @@ public class TestrcontainersRun {
 //            Thread.sleep(10000);
 
             CloseableHttpResponse respons = httpclient.execute(runTestSuitesPost);
+
 
             String body = EntityUtils.toString(respons.getEntity());
             System.out.println("Executing request " + body);
@@ -215,7 +215,7 @@ public class TestrcontainersRun {
                 else {
 
                     System.out.println(state);
-//                    Thread.sleep(100000);
+                    Thread.sleep(10000000);
                     Map<String, String> formData = new HashMap<String, String>();
                     formData.put("token", token);
                     formData.put("file", "reports.zip");
