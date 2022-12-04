@@ -72,7 +72,7 @@ docker-develop:
 
 docker-release:
   extends:
-    - docker
+    - .docker
   variables:
     IMAGE_TAG: "${CI_COMMIT_TAG}"
   rules:
