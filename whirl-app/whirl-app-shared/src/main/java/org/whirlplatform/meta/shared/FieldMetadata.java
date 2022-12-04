@@ -7,10 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
-
-import java.io.Serializable;
 
 /**
  * Класс - описание поля (tfiled_list)
@@ -114,9 +113,9 @@ public class FieldMetadata implements Serializable, Cloneable {
     private String dataFormat;
 
     private String color;
-    
+
     private String labelExpression;
-    
+
     private String configColumn;
 
     public FieldMetadata() {
@@ -128,8 +127,17 @@ public class FieldMetadata implements Serializable, Cloneable {
         this.type = fieldType;
     }
 
+    public static String getNativeFieldName(String field) {
+        String key = field;
+        return key;
+    }
+
     public String getLabel() {
         return getLabel(false);
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getLabel(Boolean simple) {
@@ -168,10 +176,6 @@ public class FieldMetadata implements Serializable, Cloneable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public boolean isEdit() {
@@ -286,11 +290,6 @@ public class FieldMetadata implements Serializable, Cloneable {
         this.password = password;
     }
 
-    public static String getNativeFieldName(String field) {
-        String key = field;
-        return key;
-    }
-
     public String getEvent() {
         return event;
     }
@@ -326,23 +325,23 @@ public class FieldMetadata implements Serializable, Cloneable {
     public void setColor(String color) {
         this.color = color;
     }
-    
+
     public String getLabelExpression() {
         return labelExpression;
     }
-    
+
     public void setLabelExpression(String labelExpression) {
         this.labelExpression = labelExpression;
     }
-    
+
     public String getConfigColumn() {
         return configColumn;
     }
-    
+
     public void setConfigColumn(String configColumn) {
         this.configColumn = configColumn;
     }
-    
+
     @Override
     public String toString() {
         return name;

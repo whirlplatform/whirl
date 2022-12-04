@@ -3,10 +3,28 @@ package org.whirlplatform.editor.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.zip.Adler32;
+import java.util.zip.CheckedInputStream;
 import org.apache.commons.fileupload.FileItem;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
-import org.whirlplatform.editor.client.meta.*;
+import org.whirlplatform.editor.client.meta.NewComponentElement;
+import org.whirlplatform.editor.client.meta.NewContextMenuItemElement;
+import org.whirlplatform.editor.client.meta.NewDataSourceElement;
+import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
+import org.whirlplatform.editor.client.meta.NewEventElement;
+import org.whirlplatform.editor.client.meta.NewEventParameterElement;
+import org.whirlplatform.editor.client.meta.NewGroupElement;
+import org.whirlplatform.editor.client.meta.NewSchemaElement;
+import org.whirlplatform.editor.client.meta.NewTableColumnElement;
+import org.whirlplatform.editor.client.meta.NewTableElement;
 import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
 import org.whirlplatform.editor.server.packager.Packager;
 import org.whirlplatform.editor.shared.EditorDataService;
@@ -27,9 +45,25 @@ import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.data.RowModelData;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.meta.shared.editor.FileElement.InputStreamProvider;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.AccountAuthenticator;
@@ -37,14 +71,6 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.login.LoginData;
 import org.whirlplatform.server.login.LoginException;
 import org.whirlplatform.server.servlet.ExportServlet;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.zip.Adler32;
-import java.util.zip.CheckedInputStream;
 
 @Singleton
 @SuppressWarnings("serial")
@@ -71,7 +97,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
 
     @Override
     public ApplicationElement newApplication(ApplicationBasicInfo appInfo) throws RPCException {
-        ApplicationElement newApplication = connector().newApplication(appInfo, getApplicationUser());
+        ApplicationElement newApplication =
+                connector().newApplication(appInfo, getApplicationUser());
         syncServerApplication(newApplication, appInfo.getVersion());
         return newApplication;
     }
@@ -85,8 +112,10 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
     }
 
     @Override
-    public ApplicationElement loadApplication(ApplicationStoreData applicationData) throws RPCException {
-        ApplicationElement result = connector().loadApplication(applicationData, getApplicationUser());
+    public ApplicationElement loadApplication(ApplicationStoreData applicationData)
+            throws RPCException {
+        ApplicationElement result =
+                connector().loadApplication(applicationData, getApplicationUser());
         syncServerApplication(result, applicationData.getVersion());
         return result;
     }
@@ -101,7 +130,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         syncServerApplication(application, version);
         connector().saveApplication(application, saveData.getVersion(), getApplicationUser());
         removeApplicationFilesFromSession(application);
-//		syncServerApplication(application, version);
+//        syncServerApplication(application, version);
         return new SaveResult(application, version, saveData.getState());
     }
 
@@ -146,7 +175,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         connector().saveApplication(application, saveData.getVersion(), getApplicationUser());
         connector().saveApplicationAs(application, oldVersion, saveData.getVersion(), appUser);
         removeApplicationFilesFromSession(application);
-//		syncServerApplication(application, version);
+//        syncServerApplication(application, version);
         return new SaveResult(application, version, saveData.getState());
     }
 
@@ -190,7 +219,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         return checksum;
     }
 
-    private void syncApplicationFiles(String path, ApplicationElement application, FileElement element)
+    private void syncApplicationFiles(String path, ApplicationElement application,
+                                      FileElement element)
             throws IOException {
         // получаем файл из сессии
         Map<String, FileItem> files = getSessionApplicationFiles();
@@ -224,7 +254,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
     private void syncFiles(Collection<FileElement> destFiles, Collection<FileElement> srcFiles) {
         for (FileElement destFile : destFiles) {
             for (FileElement srcFile : srcFiles) {
-                if (destFile.getId().equals(srcFile.getId()) && destFile.getChecksum() == srcFile.getChecksum()) {
+                if (destFile.getId().equals(srcFile.getId()) &&
+                        destFile.getChecksum() == srcFile.getChecksum()) {
                     // TODO destFile.setInputStreamProvider(
                     // srcFile.getInputStreamProvider());
                 }
@@ -233,10 +264,12 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
     }
 
     @Override
-    public SaveResult syncServerApplication(ApplicationElement application, Version version) throws RPCException {
+    public SaveResult syncServerApplication(ApplicationElement application, Version version)
+            throws RPCException {
         try {
-            ApplicationElement oldApplication = (ApplicationElement) getThreadLocalRequest().getSession()
-                    .getAttribute("APPLICATION");
+            ApplicationElement oldApplication =
+                    (ApplicationElement) getThreadLocalRequest().getSession()
+                            .getAttribute("APPLICATION");
             if (oldApplication != null) {
                 syncFiles(application, oldApplication);
             }
@@ -266,7 +299,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             return EditorHelper.newComponentElement(ComponentType.FormBuilderType, defaultLocale);
         } else if (element instanceof NewComponentElement) {
             // новый корневой компонент
-            return EditorHelper.newComponentElement(((NewComponentElement) element).getType(), defaultLocale);
+            return EditorHelper.newComponentElement(((NewComponentElement) element).getType(),
+                    defaultLocale);
         } else if (parent instanceof ComponentElement && element instanceof NewEventElement) {
             // добавление нового события компоненту
             ComponentElement component = (ComponentElement) parent;
@@ -312,7 +346,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             ApplicationElement application = (ApplicationElement) parent;
             DataSourceElement datasource = new DataSourceElement("metadata", "DATABASE");
             datasource.setId(RandomUUID.uuid());
-            datasource.setName(getMessage().new_element_datasource() + application.getDataSources().size());
+            datasource.setName(
+                    getMessage().new_element_datasource() + application.getDataSources().size());
             return datasource;
         } else if (parent instanceof DataSourceElement
                 && element instanceof NewSchemaElement) {
@@ -338,7 +373,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             // "Первичный ключ"
             idColumn.setName(getMessage().primary_key());
             // "Первичный ключ"
-            idColumn.setTitle(new PropertyValue(DataType.STRING, defaultLocale, getMessage().primary_key()));
+            idColumn.setTitle(
+                    new PropertyValue(DataType.STRING, defaultLocale, getMessage().primary_key()));
             idColumn.setColumnName("DFOBJ");
             idColumn.setHeight(15);
             idColumn.setNotNull(false);
@@ -351,7 +387,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             deleteColumn.setIndex(1);
             deleteColumn.setType(DataType.BOOLEAN);
             deleteColumn.setName(getMessage().deleted());
-            deleteColumn.setTitle(new PropertyValue(DataType.STRING, defaultLocale, getMessage().deleted()));
+            deleteColumn.setTitle(
+                    new PropertyValue(DataType.STRING, defaultLocale, getMessage().deleted()));
             deleteColumn.setColumnName("DFDELETE");
             deleteColumn.setHeight(15);
             deleteColumn.setHidden(true);
@@ -371,17 +408,20 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
 
             DynamicTableElement table = new DynamicTableElement(schema);
             table.setId(RandomUUID.uuid());
-            table.setName(getMessage().new_element_dynamic_table() + "DYNAMIC_TABLE_NEW_" + schema.getTables().size());
+            table.setName(getMessage().new_element_dynamic_table() + "DYNAMIC_TABLE_NEW_" +
+                    schema.getTables().size());
             table.setMetadataFunction("get_metadata");
             table.setDataFunction("get_data(:data_config, :data_count)");
             table.setInsertFunction("insert(:insert_config)");
             table.setUpdateFunction("update(:update_config)");
             table.setDeleteFunction("delete(:delete_config)");
             return table;
-        } else if (parent instanceof AbstractTableElement && element instanceof NewTableColumnElement) {
+        } else if (parent instanceof AbstractTableElement &&
+                element instanceof NewTableColumnElement) {
             TableColumnElement column = new TableColumnElement();
             column.setId(RandomUUID.uuid());
-            column.setTitle(new PropertyValue(DataType.STRING, defaultLocale, getMessage().new_element_column()));
+            column.setTitle(new PropertyValue(DataType.STRING, defaultLocale,
+                    getMessage().new_element_column()));
             column.setColumnName("DFCOLUMN_NEW");
             column.setType(DataType.STRING);
             column.setSize(255);
@@ -408,7 +448,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             idColumn.setId(RandomUUID.uuid());
             idColumn.setType(DataType.NUMBER);
             idColumn.setName(getMessage().primary_key());
-            idColumn.setTitle(new PropertyValue(DataType.STRING, defaultLocale, getMessage().primary_key()));
+            idColumn.setTitle(
+                    new PropertyValue(DataType.STRING, defaultLocale, getMessage().primary_key()));
             idColumn.setColumnName("DFOBJ");
             idColumn.setHeight(15);
             idColumn.setNotNull(false);
@@ -420,7 +461,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             deleteColumn.setId(RandomUUID.uuid());
             deleteColumn.setType(DataType.BOOLEAN);
             deleteColumn.setName(getMessage().deleted());
-            deleteColumn.setTitle(new PropertyValue(DataType.STRING, defaultLocale, getMessage().deleted()));
+            deleteColumn.setTitle(
+                    new PropertyValue(DataType.STRING, defaultLocale, getMessage().deleted()));
             deleteColumn.setColumnName("DFDELETE");
             deleteColumn.setHeight(15);
             deleteColumn.setHidden(true);
@@ -440,11 +482,13 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             }
 
             return table;
-        } else if (parent instanceof ComponentElement && element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ComponentElement &&
+                element instanceof NewContextMenuItemElement) {
             ComponentElement component = (ComponentElement) parent;
             ContextMenuItemElement item = new ContextMenuItemElement();
             item.setId(RandomUUID.uuid());
-            item.setName(getMessage().new_element_context_menu() + component.getContextMenuItems().size());
+            item.setName(getMessage().new_element_context_menu() +
+                    component.getContextMenuItems().size());
             return item;
         } else if (parent instanceof ContextMenuItemElement && element instanceof NewEventElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
@@ -454,7 +498,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             event.setName(getMessage().new_element_event() + item.getEvents().size());
             event.setHandlerType("AttachHandler");
             return event;
-        } else if (parent instanceof ContextMenuItemElement && element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ContextMenuItemElement &&
+                element instanceof NewContextMenuItemElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
             ContextMenuItemElement child = new ContextMenuItemElement();
             child.setId(RandomUUID.uuid());
@@ -464,13 +509,16 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         return null;
     }
 
-    public Collection<RowModelData> getTableImportList(DataSourceElement datasource, SchemaElement schema)
+    public Collection<RowModelData> getTableImportList(DataSourceElement datasource,
+                                                       SchemaElement schema)
             throws RPCException {
         return connector().getTableImportList(datasource, schema, getApplicationUser());
     }
 
-    public Collection<PlainTableElement> importTables(DataSourceElement datasource, SchemaElement schema,
-                                                      Collection<RowModelData> models) throws RPCException {
+    public Collection<PlainTableElement> importTables(DataSourceElement datasource,
+                                                      SchemaElement schema,
+                                                      Collection<RowModelData> models)
+            throws RPCException {
         return connector().importTables(datasource, schema, models, getApplicationUser(),
                 loadServerApplication().getApplication());
     }
@@ -486,7 +534,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
         loginData.setIp(ip);
         try {
             ApplicationUser user = authenticator().login(loginData);
-            boolean allowed = connector().isEditorAllowed("whirl-editor-access-group", user.getId());
+            boolean allowed =
+                    connector().isEditorAllowed("whirl-editor-access-group", user.getId());
             if (!allowed) {
                 throw new RPCException(getMessage().alert_editor_not_allowed());
             }
@@ -515,12 +564,14 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
     }
 
     @Override
-    public ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData right) throws RPCException {
+    public ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData right)
+            throws RPCException {
         return connector().diff(left, right);
     }
 
     @Override
-    public ApplicationsDiff diff(ApplicationElement left, ApplicationElement right) throws RPCException {
+    public ApplicationsDiff diff(ApplicationElement left, ApplicationElement right)
+            throws RPCException {
         return connector().diff(left, right);
     }
 

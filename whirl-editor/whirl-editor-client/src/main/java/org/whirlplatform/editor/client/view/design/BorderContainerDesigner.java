@@ -17,10 +17,12 @@ public class BorderContainerDesigner extends ComponentDesigner {
     }
 
     @Override
-    protected void initRootDropTarget(final ComponentElement element, final ComponentBuilder builder) {
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
         new BorderLayoutDropTarget((BorderLayoutContainer) builder.getComponent()) {
             protected void onDragDrop(DndDropEvent event) {
-                BorderContainerDesigner.super.onRootDrop(element, builder, event.getData(), getLocation());
+                BorderContainerDesigner.super.onRootDrop(element, builder, event.getData(),
+                        getLocation());
                 super.onDragDrop(event);
             }
 
@@ -30,7 +32,8 @@ public class BorderContainerDesigner extends ComponentDesigner {
     @Override
     protected void onRootDropSetLocationData(ComponentElement rootElement, ComponentElement element,
                                              Object locationData) {
-        fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataLocation,
-                new PropertyValue(DataType.STRING, defaultLocale, locationData)));
+        fireComponentPropertyChangeEvent(
+                new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataLocation,
+                        new PropertyValue(DataType.STRING, defaultLocale, locationData)));
     }
 }

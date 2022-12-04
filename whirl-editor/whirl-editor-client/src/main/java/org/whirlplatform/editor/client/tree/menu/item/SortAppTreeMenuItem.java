@@ -13,6 +13,7 @@ import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import java.util.List;
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.tree.AppTree;
 import org.whirlplatform.editor.client.util.ApplicationTreeComparator;
@@ -20,8 +21,6 @@ import org.whirlplatform.editor.client.util.TreeElementNamesComparator;
 import org.whirlplatform.editor.shared.TreeState;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
-
-import java.util.List;
 
 public class SortAppTreeMenuItem<T extends AppTree> extends MenuItem {
 
@@ -32,12 +31,11 @@ public class SortAppTreeMenuItem<T extends AppTree> extends MenuItem {
     private final static String ASC = EditorMessage.Util.MESSAGE.sort_asc();
     private final static String DESC = EditorMessage.Util.MESSAGE.sort_desc();
     private final static String DEFAULT = EditorMessage.Util.MESSAGE.sort_default();
-
-    private T appTree;
-    private TreeStore<AbstractElement> store;
     CheckMenuItem defaultItem;
     CheckMenuItem ascItem;
     CheckMenuItem descItem;
+    private T appTree;
+    private TreeStore<AbstractElement> store;
 
     public SortAppTreeMenuItem(T appTree) {
         this.appTree = appTree;
@@ -98,10 +96,12 @@ public class SortAppTreeMenuItem<T extends AppTree> extends MenuItem {
                 String message = "";
                 List<StoreSortInfo<AbstractElement>> sortInfo = store.getSortInfo();
                 if (ascItem.equals(currentItem)) {
-                    sortInfo.add(new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.ASC));
+                    sortInfo.add(
+                            new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.ASC));
                     message = EditorMessage.Util.MESSAGE.sort_display_asc();
                 } else if (descItem.equals(currentItem)) {
-                    sortInfo.add(new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.DESC));
+                    sortInfo.add(
+                            new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.DESC));
                     message = EditorMessage.Util.MESSAGE.sort_display_desc();
                 } else if (defaultItem.equals(currentItem)) {
                     message = EditorMessage.Util.MESSAGE.sort_display_default();

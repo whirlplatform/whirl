@@ -1,8 +1,7 @@
 package org.whirlplatform.server.metadata;
 
-import org.whirlplatform.server.login.ApplicationUser;
-
 import java.util.List;
+import org.whirlplatform.server.login.ApplicationUser;
 
 public interface MetadataProvider {
 

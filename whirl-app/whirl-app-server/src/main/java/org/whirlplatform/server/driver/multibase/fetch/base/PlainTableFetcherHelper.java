@@ -1,15 +1,32 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.*;
+import org.apache.empire.db.DBCmpType;
+import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.DBColumnExpr;
+import org.apache.empire.db.DBDatabase;
+import org.apache.empire.db.DBTable;
 import org.apache.empire.db.expr.compare.DBCompareColExpr;
 import org.apache.empire.db.expr.compare.DBCompareExpr;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FilterValue;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RightElement;
+import org.whirlplatform.meta.shared.editor.RightType;
+import org.whirlplatform.meta.shared.editor.SQLCondition;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -18,14 +35,9 @@ import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
-    public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<FieldMetadata, TableColumnElement>();
+    public Map<FieldMetadata, TableColumnElement> tableColumns =
+            new HashMap<FieldMetadata, TableColumnElement>();
     public boolean ready = false;
     public DBDatabase dbDatabase;
     public DBTable dbTable;
@@ -35,20 +47,25 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public List<DBCompareExpr> where = new ArrayList<DBCompareExpr>();
     public DBColumnExpr countColumn;
 
-    public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver datasourceDriver) {
+    public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
+                                   DataSourceDriver datasourceDriver) {
         super(connectionWrapper, datasourceDriver);
     }
 
-    public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
+    public void prepare(ClassMetadata metadata, PlainTableElement table,
+                        ClassLoadConfig loadConfig) {
         prepare(metadata, table, loadConfig, false);
     }
 
-    protected void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig, boolean tree) {
+    protected void prepare(ClassMetadata metadata, PlainTableElement table,
+                           ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
-    
-        String viewName = table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName()) ? table.getView().getViewName() :
-            table.getTableName();
-    
+
+        String viewName =
+                table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName()) ?
+                        table.getView().getViewName() :
+                        table.getTableName();
+
         this.dbTable = new DBTable(viewName, this.dbDatabase, "t");
 
         if (table.getIdColumn() != null) {
@@ -56,16 +73,19 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             TableColumnElement c = table.getIdColumn();
             this.dbPrimaryKey = this.dbTable.getColumn(c.getColumnName());
             if (this.dbPrimaryKey == null) {
-                this.dbPrimaryKey = this.dbTable.addColumn(c.getColumnName(), TypesUtil.toEmpireType(c.getType(),
-                        c.getListTable() == null ? null
-                                : getDataSourceDriver().createDataFetcher(c.getListTable()).getIdColumnType(table)),
+                this.dbPrimaryKey = this.dbTable.addColumn(c.getColumnName(),
+                        TypesUtil.toEmpireType(c.getType(),
+                                c.getListTable() == null ? null
+                                        : getDataSourceDriver().createDataFetcher(c.getListTable())
+                                        .getIdColumnType(table)),
                         c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
         }
 
         // Добавление стилизованных колонок в дереве по новому алгоритму
         if (tree) {
-            TableColumnElement nameColumn = table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelExpression());
+            TableColumnElement nameColumn =
+                    table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelExpression());
             if (nameColumn.getConfigColumn() != null) {
                 addConfigColumn(this.dbTable, nameColumn);
             }
@@ -80,9 +100,10 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
             this.tableColumns.put(f, c);
             DataType type = TypesUtil.toEmpireType(c.getType(), c.getListTable() == null ? null
-                    : getDataSourceDriver().createDataFetcher(c.getListTable()).getIdColumnType(table));
+                    : getDataSourceDriver().createDataFetcher(c.getListTable())
+                    .getIdColumnType(table));
             // TODO: Dynamic DataSource Получение нужного fetcher'а, и из него получение metadata?
-    
+
             if (!StringUtils.isEmpty(c.getConfigColumn())) {
                 // Новый алгоритм
                 addConfigColumn(dbTable, c);
@@ -90,7 +111,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
             // Если поле - функция, добавляем её на этапе формирования запроса
             if (StringUtils.isEmpty(c.getFunction())) {
-                this.dbTable.addColumn(c.getColumnName(), type, c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                this.dbTable.addColumn(c.getColumnName(), type,
+                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
         }
 
@@ -109,7 +131,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             DBColumnExpr col;
 
             // TODO: add functionality for file column
-            if (filter.getMetadata().getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
+            if (filter.getMetadata().getType() ==
+                    org.whirlplatform.meta.shared.data.DataType.FILE) {
                 col = this.dbTable.getColumn(filter.getMetadata().getLabelExpression());
             } else {
                 col = this.dbTable.getColumn(filter.getMetadata().getName());
@@ -175,7 +198,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     }
 
     // Или склеивать все в одну строку и возвращать один DBCompareExpr?
-    protected List<DBCompareExpr> getWhereRestrictions(DBDatabase db, ClassMetadata metadata, ClassLoadConfig config,
+    protected List<DBCompareExpr> getWhereRestrictions(DBDatabase db, ClassMetadata metadata,
+                                                       ClassLoadConfig config,
                                                        PlainTableElement table) {
         List<DBCompareExpr> result = new ArrayList<DBCompareExpr>();
 
@@ -190,7 +214,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
         // Добавление whereSql
         if (config.getWhereSql() != null && !config.getWhereSql().isEmpty()) {
-            String whereSql = resolveValue(config.getWhereSql(), processParams(config.getParameters()));
+            String whereSql =
+                    resolveValue(config.getWhereSql(), processParams(config.getParameters()));
             DBColumnExpr expr = db.getValueExpr(whereSql, DataType.UNKNOWN);
             result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
         }
@@ -198,11 +223,14 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         RightCollectionElement rightCollection = getUser().getApplication().getTableRights(table);
         // Добавление ограничений по правам приложения
         for (RightElement right : rightCollection.getApplicationRights()) {
-            if (RightType.RESTRICT == right.getType() && right.getCondition() instanceof SQLCondition) {
+            if (RightType.RESTRICT == right.getType() &&
+                    right.getCondition() instanceof SQLCondition) {
                 String value = (String) right.getCondition().getValue();
                 if (value != null && !value.isEmpty()) {
-                    String resolvedValue = resolveValue(value, processParams(config.getParameters()));
-                    DBColumnExpr expr = db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
+                    String resolvedValue =
+                            resolveValue(value, processParams(config.getParameters()));
+                    DBColumnExpr expr =
+                            db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
                     result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
                 }
             }
@@ -212,11 +240,14 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         for (String groupName : getUser().getGroups()) {
             GroupElement group = getApplication().getGroup(groupName);
             for (RightElement right : rightCollection.getGroupRights(group)) {
-                if (RightType.RESTRICT == right.getType() && right.getCondition() instanceof SQLCondition) {
+                if (RightType.RESTRICT == right.getType() &&
+                        right.getCondition() instanceof SQLCondition) {
                     String value = (String) right.getCondition().getValue();
                     if (value != null && !value.isEmpty()) {
-                        String resolvedValue = resolveValue(value, processParams(config.getParameters()));
-                        DBColumnExpr expr = db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
+                        String resolvedValue =
+                                resolveValue(value, processParams(config.getParameters()));
+                        DBColumnExpr expr =
+                                db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
                         result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
                     }
                 }
@@ -307,7 +338,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         return column.isMoreOrEqual(value);
     }
 
-    private DBCompareExpr createBetween(DBColumnExpr column, Object valueFirst, Object valueSecond) {
+    private DBCompareExpr createBetween(DBColumnExpr column, Object valueFirst,
+                                        Object valueSecond) {
         return column.isBetween(valueFirst, valueSecond);
     }
 
@@ -318,7 +350,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         } else {
             v = value;
         }
-        return createContains(column.reverse(), this.dbDatabase.getValueExpr(v, DataType.TEXT).reverse());
+        return createContains(column.reverse(),
+                this.dbDatabase.getValueExpr(v, DataType.TEXT).reverse());
     }
 
     /*

@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.apache.empire.db.exceptions.QueryFailedException;
@@ -23,25 +25,27 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 import org.whirlplatform.server.monitor.RunningEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements TableFetcher<PlainTableElement> {
+public class OraclePlainTableFetcher extends OraclePlainDataFetcher
+        implements TableFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainTableFetcher.class);
-    
-    public OraclePlainTableFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver dataSourceDriver) {
+
+    public OraclePlainTableFetcher(ConnectionWrapper connectionWrapper,
+                                   DataSourceDriver dataSourceDriver) {
         super(connectionWrapper, dataSourceDriver);
     }
 
-    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
+                                               ClassLoadConfig loadConfig) {
+        PlainTableFetcherHelper temp =
+                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp);
     }
 
-    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(ClassMetadata metadata,
-                                                                                      PlainTableElement table,
-                                                                                      ClassLoadConfig loadConfig,
-                                                                                      H temp) {
+    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(
+            ClassMetadata metadata,
+            PlainTableElement table,
+            ClassLoadConfig loadConfig,
+            H temp) {
 
         List<RowModelData> result = new ArrayList<RowModelData>();
         temp.prepare(metadata, table, loadConfig);
@@ -52,7 +56,8 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
 
         final boolean[] stoppedHolder = new boolean[]{false};
-        RunningEvent ev = new RunningEvent(RunningEvent.Type.GRIDREQUEST, table.getCode(), selectCmd.getSelect(),
+        RunningEvent ev = new RunningEvent(RunningEvent.Type.GRIDREQUEST, table.getCode(),
+                selectCmd.getSelect(),
                 getUser().getLogin()) {
             @Override
             public void onStop() {
@@ -97,7 +102,8 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher implements T
         } catch (QueryFailedException e) {
             // Обработка остановки выполнения запроса
             if (stoppedHolder[0]) {
-                throw new CustomException(I18NMessage.getMessage(I18NMessage.getRequestLocale()).alert_event_cancelled());
+                throw new CustomException(I18NMessage.getMessage(I18NMessage.getRequestLocale())
+                        .alert_event_cancelled());
             } else {
                 throw e;
             }

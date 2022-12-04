@@ -8,6 +8,7 @@ import com.sencha.gxt.widget.core.client.form.validator.RegExValidator;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 /**
+ *
  */
 public class ValidatorUtil {
     public static final String CODE_REGEX = "[^A-Za-z0-9_-]";
@@ -21,7 +22,8 @@ public class ValidatorUtil {
     }
 
     public static Validator<String> createCodeValidator() {
-        return new InvertedRegExValidator(CODE_REGEX, EditorMessage.Util.MESSAGE.error_name_format());
+        return new InvertedRegExValidator(CODE_REGEX,
+                EditorMessage.Util.MESSAGE.error_name_format());
     }
 
     public static Validator<String> createCountryValidator() {
@@ -29,7 +31,8 @@ public class ValidatorUtil {
     }
 
     public static Validator<String> createLanguageValidator() {
-        return new RegExValidator(LANGUAGE_REGEX, EditorMessage.Util.MESSAGE.error_language_format());
+        return new RegExValidator(LANGUAGE_REGEX,
+                EditorMessage.Util.MESSAGE.error_language_format());
     }
 
     public static Validator<String> createVersionValidator(HasValue<Boolean> branch) {

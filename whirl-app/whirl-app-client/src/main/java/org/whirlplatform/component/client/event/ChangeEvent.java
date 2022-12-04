@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.ChangeEvent.ChangeHandler;
 
 public class ChangeEvent extends GwtEvent<ChangeHandler> {
 
-	private static Type<ChangeHandler> TYPE;
+    private static Type<ChangeHandler> TYPE;
 
-	public static Type<ChangeHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<ChangeHandler>() {
-				@Override
-				public String toString() {
-					return "ChangeHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<ChangeHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<ChangeHandler>() {
+                @Override
+                public String toString() {
+                    return "ChangeHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<ChangeHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<ChangeHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(ChangeHandler handler) {
-		handler.onChange(this);
-	}
+    @Override
+    protected void dispatch(ChangeHandler handler) {
+        handler.onChange(this);
+    }
 
-	public interface ChangeHandler extends EventHandler {
+    public interface ChangeHandler extends EventHandler {
 
-		void onChange(ChangeEvent event);
+        void onChange(ChangeEvent event);
 
-	}
+    }
 
-	public interface HasChangeHandlers {
+    public interface HasChangeHandlers {
 
         HandlerRegistration addChangeHandler(ChangeHandler handler);
 
-	}
+    }
 
 }

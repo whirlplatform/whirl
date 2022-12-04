@@ -1,5 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.util.List;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
@@ -15,8 +16,6 @@ import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-import java.util.List;
-
 public class OraclePlainListFetcher
         extends org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainTableFetcher
         implements ListFetcher<PlainTableElement> {
@@ -31,7 +30,8 @@ public class OraclePlainListFetcher
     public LoadData<ListModelData> getListData(ClassMetadata metadata, PlainTableElement table,
                                                ClassLoadConfig loadConfig) {
 
-        PlainListFetcherHelper temp = new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+        PlainListFetcherHelper temp =
+                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         LoadData<RowModelData> data = getTableData(metadata, table, loadConfig, temp);
 
         List<ListModelData> result = data.getData().stream().map(v -> {

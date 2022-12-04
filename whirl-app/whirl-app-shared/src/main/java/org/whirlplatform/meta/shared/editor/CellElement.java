@@ -42,12 +42,12 @@ public class CellElement extends AbstractElement {
         return borderTop;
     }
 
-    public String getBorderTopColor() {
-        return borderTopColor;
-    }
-
     public void setBorderTop(int borderTop) {
         this.borderTop = borderTop;
+    }
+
+    public String getBorderTopColor() {
+        return borderTopColor;
     }
 
     public void setBorderTopColor(String borderTopColor) {
@@ -58,12 +58,12 @@ public class CellElement extends AbstractElement {
         return borderRight;
     }
 
-    public String getBorderRightColor() {
-        return borderRightColor;
-    }
-
     public void setBorderRight(int borderRight) {
         this.borderRight = borderRight;
+    }
+
+    public String getBorderRightColor() {
+        return borderRightColor;
     }
 
     public void setBorderRightColor(String borderRightColor) {
@@ -74,12 +74,12 @@ public class CellElement extends AbstractElement {
         return borderBottom;
     }
 
-    public String getBorderBottomColor() {
-        return borderBottomColor;
-    }
-
     public void setBorderBottom(int borderBottom) {
         this.borderBottom = borderBottom;
+    }
+
+    public String getBorderBottomColor() {
+        return borderBottomColor;
     }
 
     public void setBorderBottomColor(String borderBottomColor) {
@@ -90,12 +90,12 @@ public class CellElement extends AbstractElement {
         return borderLeft;
     }
 
-    public String getBorderLeftColor() {
-        return borderLeftColor;
-    }
-
     public void setBorderLeft(int borderLeft) {
         this.borderLeft = borderLeft;
+    }
+
+    public String getBorderLeftColor() {
+        return borderLeftColor;
     }
 
     public void setBorderLeftColor(String borderLeftColor) {

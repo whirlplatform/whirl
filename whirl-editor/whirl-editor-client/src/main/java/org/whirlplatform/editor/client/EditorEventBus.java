@@ -6,10 +6,34 @@ import com.mvp4g.client.annotation.Event;
 import com.mvp4g.client.annotation.Events;
 import com.mvp4g.client.annotation.Start;
 import com.mvp4g.client.event.EventBus;
-import org.whirlplatform.editor.client.presenter.*;
+import java.util.Collection;
+import java.util.List;
+import org.whirlplatform.editor.client.presenter.AllApplicationsPresenter;
+import org.whirlplatform.editor.client.presenter.AppBasicInfoPresenter;
+import org.whirlplatform.editor.client.presenter.AppShowIconsPresenter;
+import org.whirlplatform.editor.client.presenter.ApplicationPresenter;
+import org.whirlplatform.editor.client.presenter.ContextMenuItemPresenter;
+import org.whirlplatform.editor.client.presenter.DataSourcePresenter;
+import org.whirlplatform.editor.client.presenter.DesignPresenter;
+import org.whirlplatform.editor.client.presenter.DynamicTablePresenter;
+import org.whirlplatform.editor.client.presenter.ElementEventHandler;
+import org.whirlplatform.editor.client.presenter.EventParameterPresenter;
+import org.whirlplatform.editor.client.presenter.EventPresenter;
+import org.whirlplatform.editor.client.presenter.EventTemplatesPresenter;
+import org.whirlplatform.editor.client.presenter.GroupPresenter;
+import org.whirlplatform.editor.client.presenter.LocalePresenter;
+import org.whirlplatform.editor.client.presenter.LoginPresenter;
+import org.whirlplatform.editor.client.presenter.MainPresenter;
+import org.whirlplatform.editor.client.presenter.PalletePresenter;
+import org.whirlplatform.editor.client.presenter.PropertyEditorPresenter;
+import org.whirlplatform.editor.client.presenter.PropertyFormPresenter;
+import org.whirlplatform.editor.client.presenter.PropertyReportPresenter;
+import org.whirlplatform.editor.client.presenter.RightEditPresenter;
+import org.whirlplatform.editor.client.presenter.SchemaPresenter;
+import org.whirlplatform.editor.client.presenter.TablePresenter;
+import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
 import org.whirlplatform.editor.client.presenter.compare.CompareApplicationsPresenter;
 import org.whirlplatform.editor.client.presenter.tree.ApplicationTreePresenter;
-import org.whirlplatform.editor.client.view.AppShowIconsView;
 import org.whirlplatform.editor.shared.OpenResult;
 import org.whirlplatform.editor.shared.TreeState;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
@@ -17,14 +41,18 @@ import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
-
-import java.util.Collection;
-import java.util.List;
 
 @Events(startPresenter = MainPresenter.class)
 public interface EditorEventBus extends EventBus, ApplicationDataProvider {
@@ -36,7 +64,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     @Event(handlers = MainPresenter.class)
     void initUi();
 
-    @Event(handlers = {ApplicationTreePresenter.class, ToolBarPresenter.class, PalletePresenter.class,
+    @Event(handlers = {ApplicationTreePresenter.class, ToolBarPresenter.class,
+            PalletePresenter.class,
             ApplicationPresenter.class, DesignPresenter.class, EventTemplatesPresenter.class})
     void buildApp();
 
@@ -78,7 +107,6 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
 
     /**
      * Открывает представление с приложениями.
-     *
      */
     @Event(handlers = AllApplicationsPresenter.class)
     void showOpenApplications();
@@ -99,7 +127,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * @param application
      */
     @Event(handlers = {MainPresenter.class, ElementEventHandler.class, LocalePresenter.class,
-            PropertyEditorPresenter.class, ToolBarPresenter.class, GroupPresenter.class, ApplicationPresenter.class,
+            PropertyEditorPresenter.class, ToolBarPresenter.class, GroupPresenter.class,
+            ApplicationPresenter.class,
             DesignPresenter.class, ApplicationTreePresenter.class})
     void loadApplication(ApplicationElement application, Version version);
 
@@ -113,7 +142,6 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
 
     /**
      * Сохранить приложение.
-     *
      */
     @Event(handlers = {ElementEventHandler.class})
     void saveApplication();
@@ -151,11 +179,13 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
 
     /**
      * Открыть элемент на редактирование
-     *
      */
-    @Event(handlers = {DesignPresenter.class, PropertyFormPresenter.class, ApplicationPresenter.class,
-            EventPresenter.class, EventParameterPresenter.class, PropertyReportPresenter.class, LocalePresenter.class,
-            DataSourcePresenter.class, SchemaPresenter.class, TablePresenter.class, GroupPresenter.class,
+    @Event(handlers = {DesignPresenter.class, PropertyFormPresenter.class,
+            ApplicationPresenter.class,
+            EventPresenter.class, EventParameterPresenter.class, PropertyReportPresenter.class,
+            LocalePresenter.class,
+            DataSourcePresenter.class, SchemaPresenter.class, TablePresenter.class,
+            GroupPresenter.class,
             DynamicTablePresenter.class, ContextMenuItemPresenter.class})
     void openElement(AbstractElement element);
 
@@ -164,7 +194,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      *
      * @param element
      */
-    @Event(handlers = {ApplicationPresenter.class, TablePresenter.class, DynamicTablePresenter.class})
+    @Event(handlers = {ApplicationPresenter.class, TablePresenter.class,
+            DynamicTablePresenter.class})
     void viewElement(AbstractElement element);
 
     // компоненты
@@ -179,8 +210,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void addElement(AbstractElement parent, AbstractElement element);
 
     /**
-     * Добавление подчиненного элемента. Абсолютно все новые элементы должны
-     * добавляться через этот метод.
+     * Добавление подчиненного элемента. Абсолютно все новые элементы должны добавляться через этот
+     * метод.
      *
      * @param parent   элемент-родитель
      * @param element  добавляемый элемент
@@ -241,7 +272,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * @param value
      */
     @Event(handlers = PropertyEditorPresenter.class)
-    void changeComponentProperty(PropertyType type, LocaleElement locale, boolean replaceable, Object value);
+    void changeComponentProperty(PropertyType type, LocaleElement locale, boolean replaceable,
+                                 Object value);
 
     /**
      * Применить измененное свойства компонента к интерфейсу.
@@ -293,7 +325,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void getAvailableTables(Callback<Collection<AbstractTableElement>, Throwable> callback);
 
     @Event(handlers = ElementEventHandler.class)
-    void getAvailableColumns(PlainTableElement table, Callback<Collection<TableColumnElement>, Throwable> callback);
+    void getAvailableColumns(PlainTableElement table,
+                             Callback<Collection<TableColumnElement>, Throwable> callback);
 
     // данные для списков
 
@@ -323,7 +356,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void setElementRights(AbstractElement element, RightCollectionElement rights);
 
     @Event(handlers = RightEditPresenter.class)
-    void editRights(Collection<? extends AbstractElement> elements, Collection<RightType> rightTypes);
+    void editRights(Collection<? extends AbstractElement> elements,
+                    Collection<RightType> rightTypes);
 
     // Для вытаскивания defaultLocale и locales. Может придумать как-то по
     // другому?
@@ -355,7 +389,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * Получение информации для "сохраняемого как" приложения.
      */
     @Event(handlers = AppBasicInfoPresenter.class)
-    void getAppInfoForSaveAs(ApplicationBasicInfo info, Callback<ApplicationBasicInfo, Throwable> callback);
+    void getAppInfoForSaveAs(ApplicationBasicInfo info,
+                             Callback<ApplicationBasicInfo, Throwable> callback);
 
     @Event(handlers = AppShowIconsPresenter.class)
     void showIconsPanel();

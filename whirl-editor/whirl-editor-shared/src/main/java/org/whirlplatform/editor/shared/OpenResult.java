@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.shared;
 
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
-
-import java.io.Serializable;
 
 /**
  *
@@ -22,19 +21,19 @@ public class OpenResult implements Serializable {
         this.version = version;
     }
 
-    public void setApplication(ApplicationElement application) {
-        this.application = application;
-    }
-
     public ApplicationElement getApplication() {
         return application;
     }
 
-    public void setVersion(Version version) {
-        this.version = version;
+    public void setApplication(ApplicationElement application) {
+        this.application = application;
     }
 
     public Version getVersion() {
         return version;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
     }
 }

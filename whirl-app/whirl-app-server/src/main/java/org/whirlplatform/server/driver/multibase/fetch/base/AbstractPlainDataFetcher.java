@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBCmpType;
 import org.apache.empire.db.DBColumn;
@@ -16,17 +18,17 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
 
-	public AbstractPlainDataFetcher(ConnectionWrapper connection, DataSourceDriver datasourceDriver) {
-		super(connection, datasourceDriver);
-	}
+    public AbstractPlainDataFetcher(ConnectionWrapper connection,
+                                    DataSourceDriver datasourceDriver) {
+        super(connection, datasourceDriver);
+    }
 
-	public DataType getIdColumnType(PlainTableElement table) {
-		return table.getIdColumn().getType();
-	}
+    public DataType getIdColumnType(PlainTableElement table) {
+        return table.getIdColumn().getType();
+    }
 
     /**
      * Добавляет поля и условия в команды для запроса дерева
@@ -36,7 +38,8 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
      * @param loadConfig
      * @param temp
      */
-    protected void addTreeCommandPart(DBCommand cmd, DBCommand whereCmd, TreeClassLoadConfig loadConfig,
+    protected void addTreeCommandPart(DBCommand cmd, DBCommand whereCmd,
+                                      TreeClassLoadConfig loadConfig,
                                       PlainTableFetcherHelper temp) {
         // Колонка родителя в иерархии
 
@@ -58,16 +61,20 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
         if (colDataType != null) {
             switch (colDataType) {
                 case STRING:
-                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getString(colInd));
+                    model.set(field.getName(),
+                            reader.isNull(colInd) ? null : reader.getString(colInd));
                     break;
                 case NUMBER:
-                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getDouble(colInd));
+                    model.set(field.getName(),
+                            reader.isNull(colInd) ? null : reader.getDouble(colInd));
                     break;
                 case DATE:
-                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getDateTime(colInd));
+                    model.set(field.getName(),
+                            reader.isNull(colInd) ? null : reader.getDateTime(colInd));
                     break;
                 case BOOLEAN:
-                    model.set(field.getName(), reader.isNull(colInd) ? null : reader.getBoolean(colInd));
+                    model.set(field.getName(),
+                            reader.isNull(colInd) ? null : reader.getBoolean(colInd));
                     break;
                 case LIST:
                     ListModelData listValue = new ListModelDataImpl();
@@ -87,7 +94,8 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
     }
 
     private String getLabelValue(FieldMetadata field, DBReader reader, int colInd) {
-        if (!StringUtils.isEmpty(field.getLabelExpression()) && field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+        if (!StringUtils.isEmpty(field.getLabelExpression()) &&
+                field.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
             int labelInd = reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME);
             return reader.getString(labelInd);
         } else {

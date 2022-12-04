@@ -1,11 +1,10 @@
 package org.whirlplatform.editor.shared;
 
-import org.whirlplatform.meta.shared.editor.AbstractElement;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 @SuppressWarnings("serial")
 public class TreeState implements Serializable {
@@ -16,12 +15,12 @@ public class TreeState implements Serializable {
     public TreeState() {
     }
 
-    public void setSelected(AbstractElement selected) {
-        this.selected = selected;
-    }
-
     public AbstractElement getSelected() {
         return selected;
+    }
+
+    public void setSelected(AbstractElement selected) {
+        this.selected = selected;
     }
 
     public void addExpanded(AbstractElement element) {

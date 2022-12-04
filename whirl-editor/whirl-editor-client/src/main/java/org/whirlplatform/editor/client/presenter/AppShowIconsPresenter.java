@@ -7,29 +7,18 @@ import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import com.sencha.gxt.data.shared.ListStore;
+import java.util.List;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.AppShowIconsView;
 import org.whirlplatform.editor.shared.EditorDataService;
 
-
-import java.util.List;
-import java.util.logging.Logger;
-
 @Presenter(view = AppShowIconsView.class)
-public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
-
-    public interface IAppShowIconsView extends IsWidget, ReverseViewInterface<AppShowIconsPresenter> {
-        void show();
-    }
+public class AppShowIconsPresenter
+        extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
 
     private IAppShowIconsView IconsView;
     private ListStore<String> store;
     private RpcProxy<Void, List<String>> proxy;
-
-    public void onShowIconsPanel() {
-        getView().show();
-    }
-
     public AppShowIconsPresenter() {
     }
 
@@ -44,11 +33,20 @@ public class AppShowIconsPresenter extends BasePresenter<AppShowIconsPresenter.I
         };
     }
 
+    public void onShowIconsPanel() {
+        getView().show();
+    }
+
     public RpcProxy<Void, List<String>> getProxy() {
         return proxy;
     }
 
     public ListStore<String> getStore() {
         return store;
+    }
+
+    public interface IAppShowIconsView
+            extends IsWidget, ReverseViewInterface<AppShowIconsPresenter> {
+        void show();
     }
 }

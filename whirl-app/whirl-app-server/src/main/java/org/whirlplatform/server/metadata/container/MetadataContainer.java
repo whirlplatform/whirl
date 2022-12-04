@@ -1,9 +1,8 @@
 package org.whirlplatform.server.metadata.container;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.server.utils.ApplicationReference;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 public interface MetadataContainer {
 

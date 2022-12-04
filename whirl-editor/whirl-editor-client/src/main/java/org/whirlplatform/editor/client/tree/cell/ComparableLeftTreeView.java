@@ -5,12 +5,12 @@ import org.whirlplatform.editor.client.tree.ComparableAppTree;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 public class ComparableLeftTreeView extends ComparableTreeView {
-	@Override
-	public boolean isCheckable(AbstractElement element, boolean defaultValue) {
-		if (tree instanceof ComparableAppTree) {
-			ElementChangeState state = ((ComparableAppTree) tree).getChangeState(element);
-			return (state == ElementChangeState.REMOVED);
-		}
-		return defaultValue;
-	}
+    @Override
+    public boolean isCheckable(AbstractElement element, boolean defaultValue) {
+        if (tree instanceof ComparableAppTree) {
+            ElementChangeState state = ((ComparableAppTree) tree).getChangeState(element);
+            return (state == ElementChangeState.REMOVED);
+        }
+        return defaultValue;
+    }
 }

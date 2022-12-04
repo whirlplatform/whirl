@@ -37,7 +37,8 @@ public class ToolBarView extends ToolBar implements IToolBarView {
     private static final String IMPORT_CLOSE = EditorMessage.Util.MESSAGE.close();
 
     private static final String ERROR = EditorMessage.Util.MESSAGE.error();
-    private static final String ERROR_IMPORT = EditorMessage.Util.MESSAGE.error_import_application();
+    private static final String ERROR_IMPORT =
+            EditorMessage.Util.MESSAGE.error_import_application();
     private static final String WARN = EditorMessage.Util.MESSAGE.warn();
     private static final String WARN_NO_CURR_APP = "No applications loaded!";
 
@@ -145,13 +146,13 @@ public class ToolBarView extends ToolBar implements IToolBarView {
     }
 
     @Override
-    public void setPresenter(ToolBarPresenter presenter) {
-        this.presenter = presenter;
+    public ToolBarPresenter getPresenter() {
+        return presenter;
     }
 
     @Override
-    public ToolBarPresenter getPresenter() {
-        return presenter;
+    public void setPresenter(ToolBarPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override

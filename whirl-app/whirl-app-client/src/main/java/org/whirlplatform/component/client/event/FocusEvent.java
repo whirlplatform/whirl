@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.FocusEvent.FocusHandler;
 
 public class FocusEvent extends GwtEvent<FocusHandler> {
 
-	private static Type<FocusHandler> TYPE;
+    private static Type<FocusHandler> TYPE;
 
-	public static Type<FocusHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<FocusHandler>() {
-				@Override
-				public String toString() {
-					return "FocusHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<FocusHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<FocusHandler>() {
+                @Override
+                public String toString() {
+                    return "FocusHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<FocusHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<FocusHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(FocusHandler handler) {
-		handler.onFocus(this);
-	}
+    @Override
+    protected void dispatch(FocusHandler handler) {
+        handler.onFocus(this);
+    }
 
-	public interface FocusHandler extends EventHandler {
+    public interface FocusHandler extends EventHandler {
 
-		void onFocus(FocusEvent event);
+        void onFocus(FocusEvent event);
 
-	}
+    }
 
-	public interface HasFocusHandlers {
+    public interface HasFocusHandlers {
 
         HandlerRegistration addFocusHandler(FocusHandler handler);
 
-	}
+    }
 
 }

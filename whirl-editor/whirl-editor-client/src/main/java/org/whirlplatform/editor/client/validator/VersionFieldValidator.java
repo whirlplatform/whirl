@@ -5,10 +5,9 @@ import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.ui.HasValue;
+import java.util.List;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.Version;
-
-import java.util.List;
 
 /**
  *

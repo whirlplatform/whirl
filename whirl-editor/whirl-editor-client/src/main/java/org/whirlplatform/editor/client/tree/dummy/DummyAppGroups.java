@@ -9,7 +9,8 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  * Заголовок для раздела Группы пользователей
  */
 @SuppressWarnings("serial")
-public class DummyAppGroups extends AbstractDummyElement implements ChildrenlessDummy, OrderedDummy {
+public class DummyAppGroups extends AbstractDummyElement
+        implements ChildrenlessDummy, OrderedDummy {
     private static final String ID_PREFIX = "dummy-application-groups-";
     private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_application_groups();
     private static final int INDEX = 20;

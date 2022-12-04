@@ -4,13 +4,12 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
+import java.util.List;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.PropertyReportView;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ReportElement;
-
-import java.util.List;
 
 @Presenter(view = PropertyReportView.class)
 public class PropertyReportPresenter
@@ -18,11 +17,6 @@ public class PropertyReportPresenter
         BasePresenter<PropertyReportPresenter.IPropertyReportView, EditorEventBus> {
 
     private ReportElement report;
-
-    public interface IPropertyReportView extends IsWidget,
-            ReverseViewInterface<PropertyReportPresenter> {
-        void setParams(List<FieldMetadata> fields);
-    }
 
     public void onOpenElement(AbstractElement element) {
         if (!(element instanceof ReportElement)) {
@@ -39,5 +33,10 @@ public class PropertyReportPresenter
 
     public void removeParam(FieldMetadata field) {
         report.removeField(field);
+    }
+
+    public interface IPropertyReportView extends IsWidget,
+            ReverseViewInterface<PropertyReportPresenter> {
+        void setParams(List<FieldMetadata> fields);
     }
 }

@@ -18,62 +18,43 @@
  */
 package org.whirlplatform.editor.server.db.retrive;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.*;
+import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.DBCommandExpr;
+import org.apache.empire.db.DBDatabase;
+import org.apache.empire.db.DBRelation;
+import org.apache.empire.db.DBTable;
+import org.apache.empire.db.DBTableColumn;
+import org.apache.empire.db.DBView;
 import org.apache.empire.db.DBView.DBViewColumn;
 import org.apache.empire.exceptions.ItemNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * This class is used to create a in memory DBDatabase of a given SQLConnection and Configuration
- * 
+ *
  * @author Benjamin Venditti
  */
-public class DBDatabaseRetriver
-{
-
-    public static class InMemoryDatabase extends DBDatabase
-    {
-        private static final long serialVersionUID = 1L;
-    }
-
-    public static class InMemoryView extends DBView
-    {
-        private final static long serialVersionUID = 1L;
-
-        public InMemoryView(String name, DBDatabase db)
-        {
-            super(name, db);
-        }
-
-        public DBViewColumn addCol(String columnName, DataType dataType)
-        {
-            return addColumn(columnName, dataType);
-        }
-
-        @Override
-        public DBCommandExpr createCommand()
-        {
-            return null;
-        }
-    }
+public class DBDatabaseRetriver {
 
     private static final Logger log = LoggerFactory.getLogger(DBDatabaseRetriver.class);
-
-    private DatabaseMetaData    dbMeta;
-    private Connection          con;
-    private DBRetriverConfig    config;
+    private DatabaseMetaData dbMeta;
+    private Connection con;
+    private DBRetriverConfig config;
 
     /**
      * create a empty in memory Database and populates it
      */
-    public DBDatabaseRetriver(DBRetriverConfig config, Connection connection)
-    {
+    public DBDatabaseRetriver(DBRetriverConfig config, Connection connection) {
         this.config = config;
         this.con = connection;
     }
@@ -81,65 +62,59 @@ public class DBDatabaseRetriver
     /**
      * returns the populated DBDatabase
      */
-    public DBDatabase loadDbModel()
-    {
+    public DBDatabase loadDbModel() {
         DBDatabase db = new InMemoryDatabase();
-        try
-        {
+        try {
             populateDatabase(db);
-        } catch (SQLException e)
-        {
+        } catch (SQLException e) {
             throw new RuntimeException("Unable to read database metadata: " + e.getMessage(), e);
-        } finally
-        {
+        } finally {
             DBUtil.close(con, log);
         }
         return db;
     }
 
     /**
-     * Queries the metadata of the database for tables and vies and populates the database with those
-     * 
+     * Queries the metadata of the database for tables and vies and populates the database with
+     * those
+     *
      * @throws SQLException
      */
     private void populateDatabase(DBDatabase db)
-        throws SQLException
-    {
+            throws SQLException {
 
         ArrayList<String> populatedTables = new ArrayList<String>();
         this.dbMeta = con.getMetaData();
-        String[] tablePatterns = { null }; // Could be null, so start that
-                                           // way.
+        String[] tablePatterns = {null}; // Could be null, so start that
+        // way.
         if (config.getDbTablePattern() != null)
             tablePatterns = config.getDbTablePattern().split(","); // Support
-                                                                   // a
-                                                                   // comma
-                                                                   // separated
-                                                                   // list
-                                                                   // of
-                                                                   // table
-                                                                   // patterns
-                                                                   // (i.e.
-                                                                   // specify
-                                                                   // a
-                                                                   // list
-                                                                   // of
-                                                                   // table
-                                                                   // names
-                                                                   // in
-                                                                   // the
-                                                                   // config
-                                                                   // file).
+        // a
+        // comma
+        // separated
+        // list
+        // of
+        // table
+        // patterns
+        // (i.e.
+        // specify
+        // a
+        // list
+        // of
+        // table
+        // names
+        // in
+        // the
+        // config
+        // file).
 
         boolean tablesFound = false; // Moved to be outside table pattern loop.
-        for (String pattern : tablePatterns)
-        {
+        for (String pattern : tablePatterns) {
             String patternUpper = pattern == null ? null : pattern.toUpperCase();
             String patternLower = pattern == null ? null : pattern.toLowerCase();
             boolean found = gatherTables(patternUpper, populatedTables, db);
             tablesFound = tablesFound || found;
-            if (patternLower != null)
-            {
+            if (patternLower != null) {
                 found = gatherTables(patternLower, populatedTables, db);
                 tablesFound = tablesFound || found;
             }
@@ -147,65 +122,59 @@ public class DBDatabaseRetriver
         // Add all relations
         gatherRelations(db, dbMeta, populatedTables);
 
-        if (!tablesFound)
-        {
+        if (!tablesFound) {
             // getTables returned no result
             String info = "catalog=" + config.getDbCatalog();
             info += "/ schema=" + config.getDbSchema();
             info += "/ pattern=" + config.getDbTablePattern();
-            log.warn("DatabaseMetaData.getTables() returned no tables or views! Please check parameters: " + info);
+            log.warn(
+                    "DatabaseMetaData.getTables() returned no tables or views! Please check parameters: " +
+                            info);
             log.info("Available catalogs: " + getCatalogs(dbMeta));
             log.info("Available schemata: " + getSchemata(dbMeta));
         }
     }
 
     private boolean gatherTables(String pattern, ArrayList<String> populatedTables, DBDatabase db)
-        throws SQLException
-    {
+            throws SQLException {
         ResultSet tables = null;
         boolean tablesFound = false;
-        try
-        {
+        try {
             // Get table metadata
-            tables = dbMeta.getTables(config.getDbCatalog(), config.getDbSchema(), pattern == null ? pattern : pattern.trim(),
-                                      new String[] { "TABLE", "VIEW" });
+            tables = dbMeta.getTables(config.getDbCatalog(), config.getDbSchema(),
+                    pattern == null ? pattern : pattern.trim(),
+                    new String[]{"TABLE", "VIEW"});
 
             // Add all tables and views
-            while (tables.next())
-            {
+            while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");
                 String tableType = tables.getString("TABLE_TYPE");
                 // Ignore system tables containing a '$' symbol (required
                 // for Oracle!)
-                if (tableName.indexOf('$') >= 0)
-                {
+                if (tableName.indexOf('$') >= 0) {
                     log.info("Ignoring system table " + tableName);
                     continue;
                 }
                 log.info(tableType + ": " + tableName);
-                if (tableType.equalsIgnoreCase("VIEW"))
-                {
+                if (tableType.equalsIgnoreCase("VIEW")) {
                     InMemoryView view = new InMemoryView(tableName, db);
                     populateView(view);
                     tablesFound = true;
-                } else
-                {
+                } else {
                     DBTable table = new DBTable(tableName, db);
                     populateTable(table);
                     populatedTables.add(tableName);
                     tablesFound = true;
                 }
             }
-        } finally
-        {
+        } finally {
             DBUtil.close(tables, log);
         }
         return tablesFound;
     }
 
     private void gatherRelations(DBDatabase db, DatabaseMetaData dbMeta, ArrayList<String> tables)
-        throws SQLException
-    {
+            throws SQLException {
         ResultSet relations = null;
         String fkTableName, pkTableName, fkColName, pkColName, relName;
         DBTableColumn fkCol, pkCol;
@@ -213,13 +182,12 @@ public class DBDatabaseRetriver
         DBColumn col;
 
         // Add all Relations
-        for (String tableName : tables)
-        {
+        for (String tableName : tables) {
 
             // check for foreign-keys
-            relations = dbMeta.getImportedKeys(config.getDbCatalog(), config.getDbSchema(), tableName);
-            while (relations.next())
-            {
+            relations =
+                    dbMeta.getImportedKeys(config.getDbCatalog(), config.getDbSchema(), tableName);
+            while (relations.next()) {
                 pkCol = fkCol = null;
 
                 fkTableName = relations.getString("FKTABLE_NAME");
@@ -236,9 +204,9 @@ public class DBDatabaseRetriver
                 fkTable = db.getTable(fkTableName);
 
                 // check if both tables really exist in the model
-                if (pkTable == null || fkTable == null)
-                {
-                    log.error("Unable to add the relation \"" + relName + "\"! One of the tables could not be found.");
+                if (pkTable == null || fkTable == null) {
+                    log.error("Unable to add the relation \"" + relName +
+                            "\"! One of the tables could not be found.");
                     continue;
                 }
 
@@ -251,9 +219,9 @@ public class DBDatabaseRetriver
                     fkCol = (DBTableColumn) col;
 
                 // check if both columns really exist in the model
-                if (fkCol == null || pkCol == null)
-                {
-                    log.error("Unable to add the relation \"" + relName + "\"! One of the columns could not be found.");
+                if (fkCol == null || pkCol == null) {
+                    log.error("Unable to add the relation \"" + relName +
+                            "\"! One of the columns could not be found.");
                     continue;
                 }
 
@@ -261,8 +229,7 @@ public class DBDatabaseRetriver
                 DBRelation.DBReference reference = fkCol.referenceOn(pkCol);
                 DBRelation.DBReference[] refs = null;
                 DBRelation r = db.getRelation(relName);
-                if (r != null)
-                {
+                if (r != null) {
                     DBRelation.DBReference[] refsOld = r.getReferences();
                     refs = new DBRelation.DBReference[refsOld.length + 1];
                     int i = 0;
@@ -271,9 +238,8 @@ public class DBDatabaseRetriver
                     refs[i] = reference;
                     // remove old relation
                     db.getRelations().remove(r);
-                } else
-                {
-                    refs = new DBRelation.DBReference[] { reference };
+                } else {
+                    refs = new DBRelation.DBReference[]{reference};
                 }
                 // Add a new relation
                 db.addRelation(relName, refs);
@@ -283,12 +249,10 @@ public class DBDatabaseRetriver
     }
 
     private String getCatalogs(DatabaseMetaData dbMeta)
-        throws SQLException
-    {
+            throws SQLException {
         String retVal = "";
         ResultSet rs = dbMeta.getCatalogs();
-        while (rs.next())
-        {
+        while (rs.next()) {
             retVal += rs.getString("TABLE_CAT") + ", ";
         }
         if (retVal.length() > 2)
@@ -298,12 +262,10 @@ public class DBDatabaseRetriver
     }
 
     private String getSchemata(DatabaseMetaData dbMeta)
-        throws SQLException
-    {
+            throws SQLException {
         String retVal = "";
         ResultSet rs = dbMeta.getSchemas();
-        while (rs.next())
-        {
+        while (rs.next()) {
             retVal += rs.getString("TABLE_SCHEM") + ", ";
         }
         if (retVal.length() > 2)
@@ -312,23 +274,21 @@ public class DBDatabaseRetriver
     }
 
     /**
-     * queries the metadata for columns of a specific table and populates the table with that information
-     * 
+     * queries the metadata for columns of a specific table and populates the table with that
+     * information
+     *
      * @throws SQLException
      */
     private void populateTable(DBTable t)
-        throws SQLException
-    {
+            throws SQLException {
         List<String> pkCols = this.findPkColumns(t.getName());
         String lockColName = config.getTimestampColumn();
         DBColumn[] keys = new DBColumn[pkCols.size()];
         ResultSet rs = null;
-        try
-        {
+        try {
             rs = dbMeta.getColumns(config.getDbCatalog(), config.getDbSchema(), t.getName(), null);
             int i = 0;
-            while (rs.next())
-            {
+            while (rs.next()) {
                 DBTableColumn c = addColumn(t, rs);
                 // check if it is a KeyColumn
                 if (pkCols.contains(c.getName()))
@@ -340,61 +300,51 @@ public class DBDatabaseRetriver
             }
             // Check whether all key columns have been set
             for (i = 0; i < keys.length; i++)
-                if (keys[i] == null)
-                {
+                if (keys[i] == null) {
                     throw new ItemNotFoundException(pkCols.get(i));
                 }
-            if (keys.length > 0)
-            {
+            if (keys.length > 0) {
                 t.setPrimaryKey(keys);
             }
-        } finally
-        {
+        } finally {
             DBUtil.close(rs, log);
         }
     }
 
     /**
-     * queries the metadata for columns of a specific table and populates the table with that information
-     * 
+     * queries the metadata for columns of a specific table and populates the table with that
+     * information
+     *
      * @throws SQLException
      */
     private void populateView(InMemoryView v)
-        throws SQLException
-    {
+            throws SQLException {
         ResultSet rs = null;
-        try
-        {
+        try {
             rs = dbMeta.getColumns(config.getDbCatalog(), config.getDbSchema(), v.getName(), null);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 addColumn(v, rs);
             }
-        } finally
-        {
+        } finally {
             DBUtil.close(rs, log);
         }
     }
 
     /**
      * Returns a list of column names that define the primarykey of the given table.
-     * 
+     *
      * @throws SQLException
      */
     private List<String> findPkColumns(String tableName)
-        throws SQLException
-    {
+            throws SQLException {
         List<String> cols = new ArrayList<String>();
         ResultSet rs = null;
-        try
-        {
+        try {
             rs = dbMeta.getPrimaryKeys(config.getDbCatalog(), config.getDbSchema(), tableName);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 cols.add(rs.getString("COLUMN_NAME"));
             }
-        } finally
-        {
+        } finally {
             DBUtil.close(rs, log);
         }
         return cols;
@@ -404,12 +354,11 @@ public class DBDatabaseRetriver
      * Adds DBColumn object to the given DBTable. The DBColumn is created from the given ResultSet
      */
     private DBTableColumn addColumn(DBTable t, ResultSet rs)
-        throws SQLException
-    {
+            throws SQLException {
         String name = rs.getString("COLUMN_NAME");
         DataType empireType = getEmpireDataType(rs.getInt("DATA_TYPE"));
         double colSize = Double.parseDouble("" + rs.getInt("COLUMN_SIZE") + '.'
-                                            + (rs.getInt("DECIMAL_DIGITS") < 0 ? 0 : rs.getInt("DECIMAL_DIGITS")));
+                + (rs.getInt("DECIMAL_DIGITS") < 0 ? 0 : rs.getInt("DECIMAL_DIGITS")));
         boolean required = false;
         String defaultValue = rs.getString("COLUMN_DEF");
         if (rs.getString("IS_NULLABLE").equalsIgnoreCase("NO"))
@@ -424,15 +373,15 @@ public class DBDatabaseRetriver
         // In this case, MySQL "CURRENT_TIMESTAMP" for Types.TIMESTAMP needs to
         // emit from the Empire-db driver the null value and not
         // "CURRENT_TIMESTAMP".
-        if (rs.getInt("DATA_TYPE") == Types.TIMESTAMP && defaultValue != null && defaultValue.equals("CURRENT_TIMESTAMP"))
-        {
+        if (rs.getInt("DATA_TYPE") == Types.TIMESTAMP && defaultValue != null &&
+                defaultValue.equals("CURRENT_TIMESTAMP")) {
             required = false; // It is in fact not required even though MySQL
-                              // schema is required because it has a default
-                              // value. Generally, should Empire-db emit
-                              // (required && defaultValue != null) to truly
-                              // determine if a column is required?
+            // schema is required because it has a default
+            // value. Generally, should Empire-db emit
+            // (required && defaultValue != null) to truly
+            // determine if a column is required?
             defaultValue = null; // If null (and required per schema?) MySQL
-                                 // will apply internal default value.
+            // will apply internal default value.
         }
 
         // AUTOINC indicator is not in java.sql.Types but rather meta data from
@@ -443,15 +392,15 @@ public class DBDatabaseRetriver
         ResultSetMetaData metaData = rs.getMetaData();
         int colCount = metaData.getColumnCount();
         String colName;
-        for (int i = 1; i <= colCount; i++)
-        {
+        for (int i = 1; i <= colCount; i++) {
             colName = metaData.getColumnName(i);
             // MySQL matches on IS_AUTOINCREMENT column.
             // SQL Server matches on TYPE_NAME column with identity somewhere in
             // the string value.
-            if ((colName.equalsIgnoreCase("IS_AUTOINCREMENT") && rs.getString(i).equalsIgnoreCase("YES"))
-                || (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*")))
-            {
+            if ((colName.equalsIgnoreCase("IS_AUTOINCREMENT") &&
+                    rs.getString(i).equalsIgnoreCase("YES"))
+                    ||
+                    (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*"))) {
                 empireType = DataType.AUTOINC;
 
             }
@@ -477,8 +426,7 @@ public class DBDatabaseRetriver
      * Adds DBColumn object to the given DBTable. The DBColumn is created from the given ResultSet
      */
     private DBViewColumn addColumn(InMemoryView v, ResultSet rs)
-        throws SQLException
-    {
+            throws SQLException {
         String name = rs.getString("COLUMN_NAME");
         DataType empireType = getEmpireDataType(rs.getInt("DATA_TYPE"));
 
@@ -489,11 +437,9 @@ public class DBDatabaseRetriver
     /**
      * converts a SQL DataType to a EmpireDataType
      */
-    private DataType getEmpireDataType(int sqlType)
-    {
+    private DataType getEmpireDataType(int sqlType) {
         DataType empireType = DataType.UNKNOWN;
-        switch (sqlType)
-        {
+        switch (sqlType) {
             case Types.INTEGER:
             case Types.SMALLINT:
             case Types.TINYINT:
@@ -542,6 +488,27 @@ public class DBDatabaseRetriver
         }
         log.debug("Mapping date type " + String.valueOf(sqlType) + " to " + empireType);
         return empireType;
+    }
+
+    public static class InMemoryDatabase extends DBDatabase {
+        private static final long serialVersionUID = 1L;
+    }
+
+    public static class InMemoryView extends DBView {
+        private final static long serialVersionUID = 1L;
+
+        public InMemoryView(String name, DBDatabase db) {
+            super(name, db);
+        }
+
+        public DBViewColumn addCol(String columnName, DataType dataType) {
+            return addColumn(columnName, dataType);
+        }
+
+        @Override
+        public DBCommandExpr createCommand() {
+            return null;
+        }
     }
 
 }

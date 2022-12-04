@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.UpdateEvent.UpdateHandler;
 
 public class UpdateEvent extends GwtEvent<UpdateHandler> {
 
-	private static Type<UpdateHandler> TYPE;
+    private static Type<UpdateHandler> TYPE;
 
-	public static Type<UpdateHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<UpdateHandler>() {
-				@Override
-				public String toString() {
-					return "UpdateHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<UpdateHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<UpdateHandler>() {
+                @Override
+                public String toString() {
+                    return "UpdateHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<UpdateHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<UpdateHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(UpdateHandler handler) {
-		handler.onUpdate(this);
-	}
+    @Override
+    protected void dispatch(UpdateHandler handler) {
+        handler.onUpdate(this);
+    }
 
-	public interface UpdateHandler extends EventHandler {
+    public interface UpdateHandler extends EventHandler {
 
-		void onUpdate(UpdateEvent event);
+        void onUpdate(UpdateEvent event);
 
-	}
+    }
 
-	public interface HasUpdateHandlers {
+    public interface HasUpdateHandlers {
 
         HandlerRegistration addUpdateHandler(UpdateHandler handler);
 
-	}
+    }
 
 }

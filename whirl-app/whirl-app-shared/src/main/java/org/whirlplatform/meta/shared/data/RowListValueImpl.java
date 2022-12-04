@@ -16,10 +16,10 @@ public class RowListValueImpl extends DataValueImpl implements RowListValue {
         throw new UnsupportedOperationException();
     }
 
-//	@Override
-//	public List<RowValue> getValue() {
-//		return rowList;
-//	}
+//    @Override
+//    public List<RowValue> getValue() {
+//        return rowList;
+//    }
 
     public void addRowValue(RowValue row) {
         rowList.add(row);
@@ -29,22 +29,22 @@ public class RowListValueImpl extends DataValueImpl implements RowListValue {
         return rowList.contains(row);
     }
 
-    public void setRowList(List<RowValue> rowList) {
-        this.rowList = rowList;
-    }
-
     public List<RowValue> getRowList() {
         return rowList;
     }
 
-    @Override
-    public void setCheckable(boolean checkable) {
-        this.checkable = checkable;
+    public void setRowList(List<RowValue> rowList) {
+        this.rowList = rowList;
     }
 
     @Override
     public boolean isCheckable() {
         return checkable;
+    }
+
+    @Override
+    public void setCheckable(boolean checkable) {
+        this.checkable = checkable;
     }
 
     @Override

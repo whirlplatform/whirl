@@ -1,12 +1,11 @@
 package org.whirlplatform.component.client.event;
 
+import java.util.List;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.List;
 
 @JsType(name = "Context")
 public class JavaScriptContext {

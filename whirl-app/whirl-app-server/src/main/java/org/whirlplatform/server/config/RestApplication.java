@@ -1,6 +1,7 @@
 package org.whirlplatform.server.config;
 
 import com.google.inject.Injector;
+import javax.inject.Inject;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -14,8 +15,6 @@ import org.whirlplatform.rpc.server.JsonParamConverterProvider;
 import org.whirlplatform.rpc.server.ObjectMapperContextResolver;
 import org.whirlplatform.rpc.server.RestExceptionMapper;
 
-import javax.inject.Inject;
-
 public class RestApplication extends ResourceConfig {
 
     @Inject
@@ -26,8 +25,10 @@ public class RestApplication extends ResourceConfig {
             public void onStartup(Container container) {
                 ServletContainer sContainer = (ServletContainer) container;
                 GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
-                GuiceIntoHK2Bridge guiceBridge = serviceLocator.getService(GuiceIntoHK2Bridge.class);
-                Injector injector = (Injector) sContainer.getServletContext().getAttribute(Injector.class.getName());
+                GuiceIntoHK2Bridge guiceBridge =
+                        serviceLocator.getService(GuiceIntoHK2Bridge.class);
+                Injector injector = (Injector) sContainer.getServletContext()
+                        .getAttribute(Injector.class.getName());
                 guiceBridge.bridgeGuiceInjector(injector);
             }
 
@@ -45,7 +46,7 @@ public class RestApplication extends ResourceConfig {
         register(JsonParamConverterProvider.class);
         register(RestExceptionMapper.class);
         register(ObjectMapperContextResolver.class);
-//		register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.FINE,
-//				Verbosity.PAYLOAD_ANY, 20000));
+//        register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.FINE,
+//                Verbosity.PAYLOAD_ANY, 20000));
     }
 }

@@ -1,5 +1,8 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import org.apache.empire.db.DBDatabase;
 import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
@@ -11,11 +14,8 @@ import org.whirlplatform.server.driver.multibase.fetch.FileFetcher;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-import java.sql.Blob;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class OraclePlainFileFetcher extends AbstractFetcher implements FileFetcher<PlainTableElement> {
+public class OraclePlainFileFetcher extends AbstractFetcher
+        implements FileFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainFileFetcher.class);
 
     public OraclePlainFileFetcher(final ConnectionWrapper connection) {
@@ -58,7 +58,8 @@ public class OraclePlainFileFetcher extends AbstractFetcher implements FileFetch
         final String columnName = table.getColumn(column).getColumnName();
         final String fullName = createTableFullName(table);
         final String idColumnName = table.getIdColumn().getColumnName();
-        String result = String.format(SELECT, columnName, columnName, fullName, idColumnName, rowId);
+        String result =
+                String.format(SELECT, columnName, columnName, fullName, idColumnName, rowId);
         return result;
     }
 }

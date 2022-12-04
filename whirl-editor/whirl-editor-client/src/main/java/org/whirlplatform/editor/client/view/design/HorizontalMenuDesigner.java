@@ -18,11 +18,13 @@ public class HorizontalMenuDesigner extends IndexContainerDesigner {
     }
 
     @Override
-    protected void initRootDropTarget(final ComponentElement element, final ComponentBuilder builder) {
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
         new HorizontalMenuDropTarget((MenuBar) builder.getComponent()) {
             @Override
             protected void onDragDrop(DndDropEvent event) {
-                HorizontalMenuDesigner.super.onRootDrop(element, builder, event.getData(), getIndex());
+                HorizontalMenuDesigner.super.onRootDrop(element, builder, event.getData(),
+                        getIndex());
                 super.onDragDrop(event);
             }
         };
@@ -33,8 +35,9 @@ public class HorizontalMenuDesigner extends IndexContainerDesigner {
                                              Object locationData) {
         int index = locationData == null ? -1 : (Integer) locationData;
         if (index >= 0) {
-            fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+            fireComponentPropertyChangeEvent(
+                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
         }
     }
 

@@ -1,5 +1,9 @@
 package org.whirlplatform.editor.client.tree.part;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import org.whirlplatform.editor.client.meta.NewDynamicTableElement;
 import org.whirlplatform.editor.client.meta.NewTableElement;
 import org.whirlplatform.editor.client.tree.AppTree;
@@ -13,27 +17,12 @@ import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-
 public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
-
-    class SchemaFolders {
-        private DummyPlainTables plainTables;
-        private DummyDynamicTables dynamicTables;
-
-        private SchemaFolders(SchemaElement schema) {
-            final String shemaId = schema.getId();
-            plainTables = new DummyPlainTables(shemaId);
-            dynamicTables = new DummyDynamicTables(shemaId);
-        }
-    }
 
     private SchemaFolders folders;
 
-    public AppTreeSchemaPart(AppTree appTree, AppTreePresenter treePresenter, SchemaElement schema) {
+    public AppTreeSchemaPart(AppTree appTree, AppTreePresenter treePresenter,
+                             SchemaElement schema) {
         super(appTree, treePresenter, schema);
         this.folders = new SchemaFolders(schema);
     }
@@ -75,12 +64,14 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
 
     @Override
     public boolean isDeleting(AbstractElement element) {
-        return element instanceof AbstractTableElement && handledElement.getTables().contains(element);
+        return element instanceof AbstractTableElement &&
+                handledElement.getTables().contains(element);
     }
 
     @Override
     public boolean hasRights(AbstractElement element) {
-        return element == handledElement || element == folders.plainTables || element == folders.dynamicTables;
+        return element == handledElement || element == folders.plainTables ||
+                element == folders.dynamicTables;
     }
 
     @Override
@@ -104,13 +95,15 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
                 && handledElement.getTables().contains(element)) {
             removeElement(element);
             addChildElement(folders.plainTables, element);
-            putTreePart(element, new AppTreePlainTablePart(appTree, treePresenter, (PlainTableElement) element));
+            putTreePart(element,
+                    new AppTreePlainTablePart(appTree, treePresenter, (PlainTableElement) element));
             return true;
         } else if (parent == handledElement && element instanceof DynamicTableElement
                 && handledElement.getTables().contains(element)) {
             removeElement(element);
             addChildElement(folders.dynamicTables, element);
-            putTreePart(element, new AppTreeDynamicTablePart(appTree, treePresenter, (DynamicTableElement) element));
+            putTreePart(element, new AppTreeDynamicTablePart(appTree, treePresenter,
+                    (DynamicTableElement) element));
             return true;
         }
         return false;
@@ -118,7 +111,8 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
 
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
-        if (element instanceof AbstractTableElement && handledElement.getTables().contains(element)) {
+        if (element instanceof AbstractTableElement &&
+                handledElement.getTables().contains(element)) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -152,7 +146,8 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
             }
             if (!tables.isEmpty()) {
                 treePresenter.riseEditRights(tables, Collections.unmodifiableCollection(Arrays
-                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW, RightType.RESTRICT)));
+                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
+                                RightType.RESTRICT)));
             }
         }
         return false;
@@ -170,5 +165,16 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
 
     @Override
     public void clear() {
+    }
+
+    class SchemaFolders {
+        private DummyPlainTables plainTables;
+        private DummyDynamicTables dynamicTables;
+
+        private SchemaFolders(SchemaElement schema) {
+            final String shemaId = schema.getId();
+            plainTables = new DummyPlainTables(shemaId);
+            dynamicTables = new DummyDynamicTables(shemaId);
+        }
     }
 }

@@ -5,23 +5,16 @@ import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.sencha.gxt.dnd.core.client.DragSource;
 import com.sencha.gxt.widget.core.client.Component;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.main.ComponentPreferences;
 import org.whirlplatform.editor.client.view.PalleteView;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Presenter(view = PalleteView.class)
 public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteView, EditorEventBus> {
-
-    public interface IPalleteView extends IsWidget {
-
-        Component addComponentType(ComponentType type);
-
-    }
 
     public PalletePresenter() {
         super();
@@ -30,7 +23,8 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
     @Override
     public void bind() {
         List<ComponentType> types = Arrays.stream(ComponentType.values()).
-                filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v)).collect(Collectors.toList());
+                filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v))
+                .collect(Collectors.toList());
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
             initDND(c, t);
@@ -44,6 +38,12 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
 
     public void onBuildApp() {
         eventBus.addFirstRightComponent(view);
+    }
+
+    public interface IPalleteView extends IsWidget {
+
+        Component addComponentType(ComponentType type);
+
     }
 
 }

@@ -1,15 +1,19 @@
 package org.whirlplatform.integration.db;
 
-import org.apache.commons.lang3.StringUtils;
-import org.whirlplatform.integration.grid.GridTestRowModel;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.whirlplatform.integration.grid.GridTestRowModel;
 
 public class GridDataExtractor {
     private final String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
@@ -41,7 +45,8 @@ public class GridDataExtractor {
     }
 
     private Map<Integer, GridTestRowModel> extractDbData() {
-        try (Connection connection = DriverManager.getConnection(config.getJdbcURL(), config.getJdbcUser(),
+        try (Connection connection = DriverManager.getConnection(config.getJdbcURL(),
+                config.getJdbcUser(),
                 config.getJdbcPwd())) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(queryString);
@@ -67,7 +72,8 @@ public class GridDataExtractor {
                     } else {
                         String value = resultSet.getString(i);
                         if (value != null) {
-                            resultValue = ("NUMBER".equals(typeName)) ? value.replace(".", ",") : value;
+                            resultValue =
+                                    ("NUMBER".equals(typeName)) ? value.replace(".", ",") : value;
                         }
                     }
                     rowModel.addValue(metaData.getColumnName(i), resultValue);
@@ -81,7 +87,8 @@ public class GridDataExtractor {
     }
 
     public void execute(final String query) {
-        try (Connection connection = DriverManager.getConnection(config.getJdbcURL(), config.getJdbcUser(),
+        try (Connection connection = DriverManager.getConnection(config.getJdbcURL(),
+                config.getJdbcUser(),
                 config.getJdbcPwd())) {
             Statement statement = connection.createStatement();
             statement.execute(query);

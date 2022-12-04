@@ -20,6 +20,7 @@ import com.sencha.gxt.widget.core.client.form.FormPanel;
 import com.sencha.gxt.widget.core.client.form.FormPanel.Encoding;
 import com.sencha.gxt.widget.core.client.form.FormPanel.Method;
 import com.sencha.gxt.widget.core.client.form.Radio;
+import java.util.Collections;
 import org.whirlplatform.component.client.ParameterHelper;
 import org.whirlplatform.component.client.resource.ApplicationBundle;
 import org.whirlplatform.component.client.utils.InfoHelper;
@@ -30,19 +31,11 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
-import java.util.Collections;
-
 public class GridExportImport {
 
-    public enum ExpImpType {
-        EXPORT_CSV, EXPORT_PDF, EXPORT_XLS, EXPORT_XLS2000, IMPORT_CSV, IMPORT_XLS
-    }
-
     private int windowWidth = 400;
-
     private LoadConfigProvider configProvider;
     private ParameterHelper paramHelper;
-
     public GridExportImport(LoadConfigProvider configProvider,
                             ParameterHelper paramHelper) {
         this.configProvider = configProvider;
@@ -97,7 +90,6 @@ public class GridExportImport {
 
         return export;
     }
-
 
     private FormPanel createExportForm(TextButton execute,
                                        ClassMetadata metadata, ExpImpType exportType, String title,
@@ -314,8 +306,13 @@ public class GridExportImport {
                 };
 
                 DataServiceAsync.Util.getDataService(callback).saveLoadConfig(SessionToken.get(),
-                        configProvider.getLoadConfig(paramHelper.getValueList(Collections.emptyList())));
+                        configProvider.getLoadConfig(
+                                paramHelper.getValueList(Collections.emptyList())));
             }
         });
+    }
+
+    public enum ExpImpType {
+        EXPORT_CSV, EXPORT_PDF, EXPORT_XLS, EXPORT_XLS2000, IMPORT_CSV, IMPORT_XLS
     }
 }

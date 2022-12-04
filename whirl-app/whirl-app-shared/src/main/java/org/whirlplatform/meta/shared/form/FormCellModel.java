@@ -1,9 +1,8 @@
 package org.whirlplatform.meta.shared.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.whirlplatform.meta.shared.component.ComponentModel;
-
 import java.io.Serializable;
+import org.whirlplatform.meta.shared.component.ComponentModel;
 
 @SuppressWarnings("serial")
 public class FormCellModel implements Serializable, Cloneable {

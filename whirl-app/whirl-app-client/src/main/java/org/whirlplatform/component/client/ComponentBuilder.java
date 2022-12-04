@@ -2,7 +2,11 @@ package org.whirlplatform.component.client;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.AttachEvent.Handler;
-import com.google.gwt.event.shared.*;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.util.Format;
 import com.sencha.gxt.core.client.util.Util;
@@ -13,10 +17,23 @@ import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutD
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.menu.Menu;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.base.ContextMenuItemBuilder;
-import org.whirlplatform.component.client.event.*;
+import org.whirlplatform.component.client.event.AttachEvent;
+import org.whirlplatform.component.client.event.BlurEvent;
+import org.whirlplatform.component.client.event.CreateEvent;
+import org.whirlplatform.component.client.event.DetachEvent;
+import org.whirlplatform.component.client.event.FocusEvent;
+import org.whirlplatform.component.client.event.HideEvent;
+import org.whirlplatform.component.client.event.ShowEvent;
 import org.whirlplatform.component.client.form.GridLayoutData;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.selenium.LocatorAware;
@@ -25,17 +42,17 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.*;
-
 /**
  * Абстрактный класс - построитель компонента
  * <p>
- * Базовый класс всех построителей компонентов, все компоненты должны его
- * расширять.
+ * Базовый класс всех построителей компонентов, все компоненты должны его расширять.
  */
 @JsType(name = "Component", namespace = "Whirl")
-public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers, DetachEvent.HasDetachHandlers,
-        FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers, ShowEvent.HasShowHandlers, HideEvent.HasHideHandlers, HasLayoutData,
+public abstract class ComponentBuilder
+        implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers,
+        DetachEvent.HasDetachHandlers,
+        FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers,
+        ShowEvent.HasShowHandlers, HideEvent.HasHideHandlers, HasLayoutData,
         CloseProvider, TitleProvider, HasCode {
 
     @JsIgnore
@@ -43,30 +60,21 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
 
     @JsIgnore
     public static final String DEFAULT_CODE = "code";
-    private String id;
-
     protected Component componentInstance;
-    private boolean created = false;
-
     protected ComponentBuilder parentBuilder;
-
     protected Map<String, DataValue> builderProperties = new FastMap<DataValue>();
     protected Set<String> replaceableProperties = new HashSet<String>();
-
-    private boolean hidden = false;
-
-    private String code = DEFAULT_CODE;
-
-    private boolean refreshable = true;
-
     protected String contextMenuId;
-
+    protected List<ContextMenuItemBuilder> contextMenuItems =
+            new ArrayList<ContextMenuItemBuilder>();
+    private String id;
+    private boolean created = false;
+    private boolean hidden = false;
+    private String code = DEFAULT_CODE;
+    private boolean refreshable = true;
     private boolean closable = true;
     private String title;
-
     private HandlerManager handlerManager;
-
-    protected List<ContextMenuItemBuilder> contextMenuItems = new ArrayList<ContextMenuItemBuilder>();
 
     @JsIgnore
     public ComponentBuilder(Map<String, DataValue> builderProperties) {
@@ -325,38 +333,42 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
             }
 
         });
-        componentInstance.addShowHandler(new com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler() {
+        componentInstance.addShowHandler(
+                new com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler() {
 
-            @Override
-            public void onShow(com.sencha.gxt.widget.core.client.event.ShowEvent event) {
-                fireEvent(new ShowEvent());
-            }
+                    @Override
+                    public void onShow(com.sencha.gxt.widget.core.client.event.ShowEvent event) {
+                        fireEvent(new ShowEvent());
+                    }
 
-        });
-        componentInstance.addHideHandler(new com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler() {
+                });
+        componentInstance.addHideHandler(
+                new com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler() {
 
-            @Override
-            public void onHide(com.sencha.gxt.widget.core.client.event.HideEvent event) {
-                fireEvent(new HideEvent());
-            }
+                    @Override
+                    public void onHide(com.sencha.gxt.widget.core.client.event.HideEvent event) {
+                        fireEvent(new HideEvent());
+                    }
 
-        });
-        componentInstance.addFocusHandler(new com.sencha.gxt.widget.core.client.event.FocusEvent.FocusHandler() {
+                });
+        componentInstance.addFocusHandler(
+                new com.sencha.gxt.widget.core.client.event.FocusEvent.FocusHandler() {
 
-            @Override
-            public void onFocus(com.sencha.gxt.widget.core.client.event.FocusEvent event) {
-                fireEvent(new FocusEvent());
-            }
+                    @Override
+                    public void onFocus(com.sencha.gxt.widget.core.client.event.FocusEvent event) {
+                        fireEvent(new FocusEvent());
+                    }
 
-        });
-        componentInstance.addBlurHandler(new com.sencha.gxt.widget.core.client.event.BlurEvent.BlurHandler() {
+                });
+        componentInstance.addBlurHandler(
+                new com.sencha.gxt.widget.core.client.event.BlurEvent.BlurHandler() {
 
-            @Override
-            public void onBlur(com.sencha.gxt.widget.core.client.event.BlurEvent event) {
-                fireEvent(new BlurEvent());
-            }
+                    @Override
+                    public void onBlur(com.sencha.gxt.widget.core.client.event.BlurEvent event) {
+                        fireEvent(new BlurEvent());
+                    }
 
-        });
+                });
     }
 
     /**
@@ -580,7 +592,8 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
      * @return < H extends EventHandler >
      */
     @JsIgnore
-    public final <H extends EventHandler> HandlerRegistration addHandler(final H handler, GwtEvent.Type<H> type) {
+    public final <H extends EventHandler> HandlerRegistration addHandler(final H handler,
+                                                                         GwtEvent.Type<H> type) {
         return ensureHandler().addHandler(type, handler);
     }
 
@@ -807,11 +820,6 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
         return getRealComponent();
     }
 
-    public static class LocatorParams {
-        public static String PARAMETER_ID = "id";
-        public static String PARAMETER_CODE = "code";
-    }
-
     @JsIgnore
     @Override
     public void fillLocatorDefaults(Locator locator, Element element) {
@@ -834,9 +842,8 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     }
 
     /**
-     * По-умолчанию возвращает обёрточный элемент по любому локатору. Вообще
-     * говоря, если этот метод вызван, то локатор уже содержит идентификатор
-     * билдера. Иначе сюда не попадём.
+     * По-умолчанию возвращает обёрточный элемент по любому локатору. Вообще говоря, если этот метод
+     * вызван, то локатор уже содержит идентификатор билдера. Иначе сюда не попадём.
      */
     @JsIgnore
     public Element getElementByLocator(Locator locator) {
@@ -860,14 +867,21 @@ public abstract class ComponentBuilder implements HasHandlers, AttachEvent.HasAt
     private boolean checkLocatorParameter(String parameter, Locator locator) {
         if (locator.hasParameter(LocatorParams.PARAMETER_ID)) {
             final String value = locator.getParameter(parameter);
-            if (LocatorParams.PARAMETER_ID.equals(parameter) && !Util.isEmptyString(id) && id.equals(value)) {
+            if (LocatorParams.PARAMETER_ID.equals(parameter) && !Util.isEmptyString(id) &&
+                    id.equals(value)) {
                 return true;
             }
         }
         if (locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
             final String value = locator.getParameter(parameter);
-            return LocatorParams.PARAMETER_CODE.equals(parameter) && !Util.isEmptyString(code) && code.equals(value);
+            return LocatorParams.PARAMETER_CODE.equals(parameter) && !Util.isEmptyString(code) &&
+                    code.equals(value);
         }
         return false;
+    }
+
+    public static class LocatorParams {
+        public static String PARAMETER_ID = "id";
+        public static String PARAMETER_CODE = "code";
     }
 }

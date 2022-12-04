@@ -1,5 +1,7 @@
 package org.whirlplatform.editor.client.tree.part;
 
+import java.util.Arrays;
+import java.util.Collections;
 import org.whirlplatform.editor.client.meta.NewTableElement;
 import org.whirlplatform.editor.client.tree.AppTree;
 import org.whirlplatform.editor.client.tree.AppTreePresenter;
@@ -9,22 +11,12 @@ import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement> {
-
-    class TableFolders {
-        private DummyTableClones clones;
-
-        private TableFolders(PlainTableElement table) {
-            clones = new DummyTableClones(table.getId());
-        }
-    }
 
     private TableFolders folders;
 
-    public AppTreePlainTablePart(AppTree appTree, AppTreePresenter treePresenter, PlainTableElement table) {
+    public AppTreePlainTablePart(AppTree appTree, AppTreePresenter treePresenter,
+                                 PlainTableElement table) {
         super(appTree, treePresenter, table);
         folders = new TableFolders(table);
     }
@@ -64,7 +56,8 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
 
     @Override
     public boolean isAdding(AbstractElement element) {
-        return !isReference() && element == folders.clones && handledElement instanceof PlainTableElement;
+        return !isReference() && element == folders.clones &&
+                handledElement instanceof PlainTableElement;
     }
 
     @Override
@@ -81,19 +74,22 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isEditing(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement && handledElement.getClones().contains(element)));
+                || (element instanceof PlainTableElement &&
+                handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean isDeleting(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement && handledElement.getClones().contains(element)));
+                || (element instanceof PlainTableElement &&
+                handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean hasRights(AbstractElement element) {
         return element == handledElement
-                || (element instanceof PlainTableElement && handledElement.getClones().contains(element));
+                || (element instanceof PlainTableElement &&
+                handledElement.getClones().contains(element));
     }
 
     @Override
@@ -150,8 +146,9 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
         if (element == handledElement || (element instanceof PlainTableElement
                 && handledElement.getClones().contains(element))) {
             treePresenter.riseEditRights(Collections.singleton(element),
-                    Collections.unmodifiableCollection(Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
-                            RightType.VIEW, RightType.RESTRICT)));
+                    Collections.unmodifiableCollection(
+                            Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
+                                    RightType.VIEW, RightType.RESTRICT)));
         }
         return false;
     }
@@ -175,6 +172,15 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isReference(AbstractElement element) {
         return isReference()
-                && (handledElement == element || (element instanceof PlainTableElement && handledElement.getClones().contains(element)));
+                && (handledElement == element || (element instanceof PlainTableElement &&
+                handledElement.getClones().contains(element)));
+    }
+
+    class TableFolders {
+        private DummyTableClones clones;
+
+        private TableFolders(PlainTableElement table) {
+            clones = new DummyTableClones(table.getId());
+        }
     }
 }

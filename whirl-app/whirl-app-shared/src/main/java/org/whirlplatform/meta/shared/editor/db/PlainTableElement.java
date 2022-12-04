@@ -1,8 +1,6 @@
 package org.whirlplatform.meta.shared.editor.db;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.whirlplatform.meta.shared.editor.ElementVisitor;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 @SuppressWarnings("serial")
 public class PlainTableElement extends DatabaseTableElement {

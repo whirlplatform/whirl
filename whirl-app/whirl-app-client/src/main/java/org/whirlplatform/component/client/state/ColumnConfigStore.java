@@ -7,12 +7,11 @@ import com.sencha.gxt.widget.core.client.event.ColumnWidthChangeEvent.ColumnWidt
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnHiddenChangeEvent;
 import com.sencha.gxt.widget.core.client.grid.ColumnHiddenChangeEvent.ColumnHiddenChangeHandler;
-import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.storage.client.StorageHelper;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.storage.client.StorageHelper;
 
 public class ColumnConfigStore implements ColumnHiddenChangeHandler, ColumnWidthChangeHandler,
         ColumnMoveHandler {

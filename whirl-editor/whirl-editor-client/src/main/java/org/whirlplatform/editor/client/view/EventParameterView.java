@@ -10,8 +10,15 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.form.*;
+import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.ComboBox;
+import com.sencha.gxt.widget.core.client.form.DateField;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
+import com.sencha.gxt.widget.core.client.form.TextField;
+import java.util.Arrays;
+import java.util.Date;
 import org.whirlplatform.editor.client.presenter.EventParameterPresenter;
 import org.whirlplatform.editor.client.presenter.EventParameterPresenter.IEventParameterView;
 import org.whirlplatform.editor.client.util.ComponentComboBox;
@@ -20,9 +27,6 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
-
-import java.util.Arrays;
-import java.util.Date;
 
 public class EventParameterView extends ContentPanel implements
         IEventParameterView {
@@ -275,19 +279,14 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public void setType(ParameterType type) {
-        this.type.setValue(type);
-        changeTypeVizibility(type);
-    }
-
-    @Override
     public ParameterType getType() {
         return type.getValue();
     }
 
     @Override
-    public void setCode(String code) {
-        this.code.setValue(code);
+    public void setType(ParameterType type) {
+        this.type.setValue(type);
+        changeTypeVizibility(type);
     }
 
     @Override
@@ -296,13 +295,18 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public void setComponent(ComponentElement element) {
-        component.setValue(element);
+    public void setCode(String code) {
+        this.code.setValue(code);
     }
 
     @Override
     public ComponentElement getComponent() {
         return component.getValue();
+    }
+
+    @Override
+    public void setComponent(ComponentElement element) {
+        component.setValue(element);
     }
 
     @Override
@@ -316,13 +320,18 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
+    public String getStorageCode() {
+        return storageCode.getValue();
+    }
+
+    @Override
     public void setStorageCode(String storageName) {
         storageCode.setValue(storageName);
     }
 
     @Override
-    public String getStorageCode() {
-        return storageCode.getValue();
+    public DataType getDataType() {
+        return dataType.getValue();
     }
 
     @Override
@@ -332,8 +341,8 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public DataType getDataType() {
-        return dataType.getValue();
+    public String getString() {
+        return string.getValue();
     }
 
     @Override
@@ -342,8 +351,8 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public String getString() {
-        return string.getValue();
+    public Double getNumber() {
+        return number.getValue();
     }
 
     @Override
@@ -352,8 +361,8 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public Double getNumber() {
-        return number.getValue();
+    public Date getDate() {
+        return date.getValue();
     }
 
     @Override
@@ -362,18 +371,13 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public Date getDate() {
-        return date.getValue();
+    public Boolean getBoolean() {
+        return bool.getValue();
     }
 
     @Override
     public void setBoolean(Boolean value) {
         bool.setValue(value);
-    }
-
-    @Override
-    public Boolean getBoolean() {
-        return bool.getValue();
     }
 
     @Override
@@ -393,14 +397,14 @@ public class EventParameterView extends ContentPanel implements
     }
 
     @Override
-    public void setPresenter(EventParameterPresenter presenter) {
-        this.presenter = presenter;
-        // initUI();
+    public EventParameterPresenter getPresenter() {
+        return presenter;
     }
 
     @Override
-    public EventParameterPresenter getPresenter() {
-        return presenter;
+    public void setPresenter(EventParameterPresenter presenter) {
+        this.presenter = presenter;
+        // initUI();
     }
 
     @Override

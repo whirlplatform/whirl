@@ -13,20 +13,20 @@ public class NewEventParameterElement extends NewElement {
         super();
     }
 
-    public void setComponentId(String componentId) {
-        this.componentId = componentId;
-    }
-
     public String getComponentId() {
         return componentId;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
     }
 
     public int getIndex() {
         return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override

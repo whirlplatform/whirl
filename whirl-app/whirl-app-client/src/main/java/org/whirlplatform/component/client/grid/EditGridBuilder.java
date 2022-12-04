@@ -48,6 +48,13 @@ import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent;
 import com.sencha.gxt.widget.core.client.selection.SelectionChangedEvent.SelectionChangedHandler;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -109,83 +116,59 @@ import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Редактируемый грид
  */
 @JsType(name = "EditGrid", namespace = "Whirl")
-public class EditGridBuilder extends ComponentBuilder implements Clearable, Validatable, TitleProvider,
-        ListParameter<RowListValue>, org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers, org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers, InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
-        DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState, RowDoubleClickEvent.HasRowDoubleClickHandlers {
+public class EditGridBuilder extends ComponentBuilder
+        implements Clearable, Validatable, TitleProvider,
+        ListParameter<RowListValue>,
+        org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers,
+        org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers,
+        InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
+        DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState,
+        RowDoubleClickEvent.HasRowDoubleClickHandlers {
 
+    protected StorageWrapper<RowListValue> stateStore;
+    protected StateStore<RowListValue> selectionStateStore;
+    protected boolean saveState;
+    protected boolean restoreState;
     private LoadHandler<ClassLoadConfig, LoadData<RowModelData>> handler;
-
     private String classId;
     private boolean loading = false;
-
     private ClassMetadata metadata;
     private ClassStore<RowModelData, ClassLoadConfig> store;
     private ClassAction action;
     private ColumnModelHelper columnModel;
     private EditGridToolBar toolbar;
     private SortPanel sortPanel;
-
     private Grid<RowModelData> grid;
     private GridEditing<RowModelData> editing;
     private GridPagingToolBar paginator;
-
     private VerticalLayoutContainer wrapper;
-
     private ErrorHandler errorSupport;
-
     private boolean required;
     private int maxRows;
     private String maxRowsMessage;
     private String forceInvalidText;
-
     private boolean loadAll;
     private SelectionMode selectionMode;
     private boolean reloadMetadata;
     private String whereSql;
-
     private boolean showPagingToolbar;
-
     private boolean showButtonsData;
-
     private boolean showButtonsFind;
-
     private boolean showButtonsExport;
-
     private boolean showButtonsProcess;
-
     private boolean showButtonsRefresh;
-
     private boolean hideButtonsGroup;
-
     private FilterPanel filterPanel;
-
     private boolean skipInitialLoad;
-
     private boolean haveFile;
-
     private ParameterHelper paramHelper;
-
     private AbstractMetadataStateStore<ArrayList<FilterValue>> filterStateStore;
     private AbstractMetadataStateStore<ArrayList<SortValue>> sortStateStore;
     private AbstractMetadataStateStore<PageConfig> pageStateStore;
-
-    protected StorageWrapper<RowListValue> stateStore;
-    protected StateStore<RowListValue> selectionStateStore;
-    protected boolean saveState;
-    protected boolean restoreState;
-
     private int defaultRowsPerPage = 0;
 
     private boolean showLoadMask;
@@ -386,7 +369,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                 paramHelper.addJsonParameters(value.getString());
                 return true;
             }
-        } else if (name.equalsIgnoreCase(PropertyType.SkipInitialLoad.getCode()) && value.getBoolean() != null) {
+        } else if (name.equalsIgnoreCase(PropertyType.SkipInitialLoad.getCode()) &&
+                value.getBoolean() != null) {
             if (value != null) {
                 skipInitialLoad = value.getBoolean();
                 return true;
@@ -452,8 +436,9 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
             }
 
         };
-        DataServiceAsync.Util.getDataService(callback).getTableConfig(SessionToken.get(), classId, whereSql,
-                paramHelper.getValues(parameters));
+        DataServiceAsync.Util.getDataService(callback)
+                .getTableConfig(SessionToken.get(), classId, whereSql,
+                        paramHelper.getValues(parameters));
     }
 
     /**
@@ -487,7 +472,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      */
     private void setCheckable(boolean checkable) {
         if (checkable) {
-            grid.setSelectionModel(new CheckBoxSelectionModel<RowModelData>(new IdentityValueProvider<RowModelData>()));
+            grid.setSelectionModel(new CheckBoxSelectionModel<RowModelData>(
+                    new IdentityValueProvider<RowModelData>()));
 
         } else {
             grid.setSelectionModel(new GridSelectionModel<RowModelData>());
@@ -499,7 +485,7 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     /**
      * Получение сущности грида
      *
-     * @return Grid<        RowModelData        >
+     * @return Grid<RowModelData>
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -531,12 +517,14 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
             columnConfigStore = new ColumnConfigStore(StateScope.LOCAL, metadata, getId());
         }
 
-        store = new ClassStore<RowModelData, ClassLoadConfig>(metadata, new TableClassProxy(metadata));
+        store = new ClassStore<RowModelData, ClassLoadConfig>(metadata,
+                new TableClassProxy(metadata));
         store.getLoader().addLoadHandler(handler);
         columnModel = new ColumnModelHelper(metadata, store, cellToolTip, columnConfigStore);
 
         if (grid.getSelectionModel() instanceof CheckBoxSelectionModel) {
-            CheckBoxSelectionModel<RowModelData> sm = (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
+            CheckBoxSelectionModel<RowModelData> sm =
+                    (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
             columnModel.setFirstColumn(sm.getColumn());
         }
 
@@ -551,7 +539,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
             store.addStoreRecordChangeHandler(new StoreRecordChangeHandler<RowModelData>() {
                 @Override
                 public void onRecordChange(StoreRecordChangeEvent<RowModelData> event) {
-                    Iterator<Change<RowModelData, ?>> iter = event.getRecord().getChanges().iterator();
+                    Iterator<Change<RowModelData, ?>> iter =
+                            event.getRecord().getChanges().iterator();
                     while (iter.hasNext()) {
                         Change<RowModelData, ?> c = iter.next();
                         // event.getRecord().getModel().setChanged((String)
@@ -719,14 +708,16 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         if (toolbar != null) {
             toolbar.removeFromParent();
         }
-        toolbar = new EditGridToolBar(metadata, hideButtonsGroup, showButtonsData, showButtonsFind, showButtonsExport,
+        toolbar = new EditGridToolBar(metadata, hideButtonsGroup, showButtonsData, showButtonsFind,
+                showButtonsExport,
                 showButtonsProcess, showButtonsRefresh, this, paramHelper, getId());
         toolbar.addViewHandler(new SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 for (RowModelData m : grid.getSelectionModel().getSelectedItems()) {
                     final FieldFormWindow fieldForm = openFieldPanel(m, true, "view-" + m.getId());
-                    fieldForm.setHeading(AppMessage.Util.MESSAGE.viewRecord() + metadata.getTitle());
+                    fieldForm.setHeading(
+                            AppMessage.Util.MESSAGE.viewRecord() + metadata.getTitle());
                 }
             }
         });
@@ -738,7 +729,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                     @Override
                     public void execute() {
                         if (fieldForm.checkUpload()) {
-                            insertRecord(fieldForm, toRowModelData(fieldForm, new RowModelDataImpl(), false));
+                            insertRecord(fieldForm,
+                                    toRowModelData(fieldForm, new RowModelDataImpl(), false));
                         }
                     }
                 };
@@ -771,7 +763,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                                 AppMessage.Util.MESSAGE.infoNotEditable());
                         continue;
                     }
-                    final FieldFormWindow fieldForm = openFieldPanel(m, false, "update-" + m.getId());
+                    final FieldFormWindow fieldForm =
+                            openFieldPanel(m, false, "update-" + m.getId());
                     final Command updateCommand = new Command() {
                         @Override
                         public void execute() {
@@ -786,18 +779,20 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                             if (!fieldForm.isValid()) {
                                 return;
                             }
-                            showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(), new SelectHandler() {
-                                @Override
-                                public void onSelect(SelectEvent event) {
-                                    fieldForm.setUploadCommand(updateCommand);
-                                    if (!haveFile) {
-                                        updateCommand.execute();
-                                    }
-                                }
-                            }, "update-" + m.getId());
+                            showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(),
+                                    new SelectHandler() {
+                                        @Override
+                                        public void onSelect(SelectEvent event) {
+                                            fieldForm.setUploadCommand(updateCommand);
+                                            if (!haveFile) {
+                                                updateCommand.execute();
+                                            }
+                                        }
+                                    }, "update-" + m.getId());
                         }
                     });
-                    fieldForm.setHeading(AppMessage.Util.MESSAGE.editRecord() + metadata.getTitle());
+                    fieldForm.setHeading(
+                            AppMessage.Util.MESSAGE.editRecord() + metadata.getTitle());
                 }
             }
 
@@ -811,7 +806,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                         @Override
                         public void execute() {
                             if (fieldForm.checkUpload()) {
-                                insertRecord(fieldForm, toRowModelData(fieldForm, new RowModelDataImpl(), false));
+                                insertRecord(fieldForm,
+                                        toRowModelData(fieldForm, new RowModelDataImpl(), false));
                             }
                         }
                     };
@@ -821,18 +817,20 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                             if (!fieldForm.isValid()) {
                                 return;
                             }
-                            showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(), new SelectHandler() {
-                                @Override
-                                public void onSelect(SelectEvent event) {
-                                    fieldForm.setUploadCommand(copyCommand);
-                                    if (!haveFile) {
-                                        copyCommand.execute();
-                                    }
-                                }
-                            }, "copy-" + m.getId());
+                            showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(),
+                                    new SelectHandler() {
+                                        @Override
+                                        public void onSelect(SelectEvent event) {
+                                            fieldForm.setUploadCommand(copyCommand);
+                                            if (!haveFile) {
+                                                copyCommand.execute();
+                                            }
+                                        }
+                                    }, "copy-" + m.getId());
                         }
                     });
-                    fieldForm.setHeading(AppMessage.Util.MESSAGE.copyRecord() + metadata.getTitle());
+                    fieldForm.setHeading(
+                            AppMessage.Util.MESSAGE.copyRecord() + metadata.getTitle());
                 }
             }
         });
@@ -842,7 +840,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                 // удаление записей
                 showConfirmation(AppMessage.Util.MESSAGE.confirmDelete(), new SelectHandler() {
                     @Override
-                    public void onSelect(com.sencha.gxt.widget.core.client.event.SelectEvent event) {
+                    public void onSelect(
+                            com.sencha.gxt.widget.core.client.event.SelectEvent event) {
                         List<RowModelData> models = new ArrayList<RowModelData>();
                         for (RowModelData m : grid.getSelectionModel().getSelectedItems()) {
                             if (!m.isDeletable()) {
@@ -888,17 +887,18 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     @SuppressWarnings("unchecked")
     private void showConfirmation(String confirmText, SelectHandler handler, String idSuffix) {
         final String gridCode = getCode();
-        boolean useId = (gridCode == null || "".equals(gridCode) || ComponentBuilder.DEFAULT_CODE.equals(gridCode));
+        boolean useId = (gridCode == null || "".equals(gridCode) ||
+                ComponentBuilder.DEFAULT_CODE.equals(gridCode));
         final String id = ((useId) ? getId() : gridCode) + "-" + idSuffix;
-        Dialog dialog = DialogManager.createDialog(id, AppMessage.Util.MESSAGE.confirm(), confirmText,
-                new Pair<PredefinedButton, SelectHandler>(PredefinedButton.YES, handler),
-                new Pair<PredefinedButton, SelectHandler>(PredefinedButton.NO, null));
+        Dialog dialog =
+                DialogManager.createDialog(id, AppMessage.Util.MESSAGE.confirm(), confirmText,
+                        new Pair<PredefinedButton, SelectHandler>(PredefinedButton.YES, handler),
+                        new Pair<PredefinedButton, SelectHandler>(PredefinedButton.NO, null));
         dialog.show();
     }
 
     /**
      * Инициализация фильтра грида.
-     *
      */
     private void initFilter(ClassMetadata meta) {
         if ((filterPanel == null || reloadMetadata) && showButtonsFind) {
@@ -923,7 +923,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                 @Override
                 public void onSearch(SearchEvent event) {
                     ClassLoadConfig config = getLoadConfig(Collections.emptyList());
-                    filterStateStore.save(getId() + "/filter", new ArrayList<FilterValue>(config.getFilters()));
+                    filterStateStore.save(getId() + "/filter",
+                            new ArrayList<FilterValue>(config.getFilters()));
                     load(false);
                 }
             });
@@ -945,7 +946,6 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     /**
      * Инициализация панели сортировки в гриде.
-     *
      */
     private void initSortPanel(ClassMetadata meta) {
         if (sortPanel == null && showButtonsFind) {
@@ -955,7 +955,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                 @Override
                 public void onSort(SortEvent event) {
                     ClassLoadConfig config = getLoadConfig(Collections.emptyList());
-                    sortStateStore.save(getId() + "/sort", new ArrayList<SortValue>(config.getSorts()));
+                    sortStateStore.save(getId() + "/sort",
+                            new ArrayList<SortValue>(config.getSorts()));
                     grid.getStore().clearSortInfo();
                     load();
                 }
@@ -1026,7 +1027,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      * @param changedOnly - boolean
      * @return RowModelData
      */
-    private RowModelData toRowModelData(FieldFormWindow panel, RowModelData model, boolean changedOnly) {
+    private RowModelData toRowModelData(FieldFormWindow panel, RowModelData model,
+                                        boolean changedOnly) {
         for (FieldMetadata f : metadata.getFields()) {
             if (!f.isEdit() || (changedOnly && !panel.isChanged(f))) {
                 continue;
@@ -1099,7 +1101,6 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     /**
      * Удалить запись из грида.
-     *
      */
     // private void deleteRecord(RowModelData model) {
     // action.delete(Collections.singletonList(model), true);
@@ -1290,13 +1291,14 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      */
     @JsIgnore
     private void initSelectHandler() {
-        grid.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
-            @Override
-            public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
-                saveState();
-                fireEvent(new org.whirlplatform.component.client.event.SelectEvent());
-            }
-        });
+        grid.getSelectionModel()
+                .addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
+                    @Override
+                    public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
+                        saveState();
+                        fireEvent(new org.whirlplatform.component.client.event.SelectEvent());
+                    }
+                });
     }
 
     /**
@@ -1336,20 +1338,26 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     @JsIgnore
     @Override
-    public void setSaveState(boolean save) {
-        this.saveState = save;
+    public boolean isSaveState() {
+        return saveState;
     }
 
     @JsIgnore
     @Override
-    public boolean isSaveState() {
-        return saveState;
+    public void setSaveState(boolean save) {
+        this.saveState = save;
     }
 
     @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
+    }
+
+    @JsIgnore
+    @Override
+    public StateScope getStateScope() {
+        return getStateStore().getScope();
     }
 
     @JsIgnore
@@ -1372,12 +1380,6 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     @JsIgnore
     @Override
-    public StateScope getStateScope() {
-        return getStateStore().getScope();
-    }
-
-    @JsIgnore
-    @Override
     public void saveState() {
         RowListValue v = getFieldValue();
         if (saveState && !Util.isEmptyString(getCode())) {
@@ -1395,7 +1397,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
-            selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+            selectionStateStore =
+                    new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
@@ -1422,7 +1425,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      */
     @JsIgnore
     @Override
-    public HandlerRegistration addLoadHandler(org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
+    public HandlerRegistration addLoadHandler(
+            org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
         return addHandler(handler, org.whirlplatform.component.client.event.LoadEvent.getType());
     }
 
@@ -1477,7 +1481,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
 
     @JsIgnore
     @Override
-    public HandlerRegistration addRowDoubleClickHandler(RowDoubleClickEvent.RowDoubleClickHandler handler) {
+    public HandlerRegistration addRowDoubleClickHandler(
+            RowDoubleClickEvent.RowDoubleClickHandler handler) {
         return addHandler(handler, RowDoubleClickEvent.getType());
     }
 
@@ -1493,23 +1498,6 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
     @Override
     public Widget getWrapper() {
         return wrapper;
-    }
-
-    public static class LocatorParams {
-        public static String TYPE_COLUMN = "Column";
-        public static String TYPE_HEADER = "Header";
-
-        public static String TYPE_ROW = "Row";
-        public static String TYPE_CHECK = "Check";
-        public static String TYPE_CELL = "Cell";
-
-        public static String PARAMETER_ID = "id";
-        public static String PARAMETER_COLUMN_INDEX = "colIndex";
-        public static String PARAMETER_COLUMN_NAME = "colName";
-        public static String PARAMETER_INDEX = "index";
-        public static String PARAMETER_LABEL = "label";
-
-        public static String TYPE_PAGING_BAR = "PagingBar";
     }
 
     private Element getRowElementByLocator(Locator locator) {
@@ -1574,21 +1562,26 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                     && grid.getSelectionModel() instanceof CheckBoxSelectionModel) {
                 // ищем чекбокс строки если у нас CheckBoxSelectionModel с чек
                 // боксами и найдена строка
-                CheckBoxSelectionModel<RowModelData> sm = (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
+                CheckBoxSelectionModel<RowModelData> sm =
+                        (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
                 // достаем элемент чекбокса по стилю из внешнего вида
                 if (sm.getAppearance() instanceof CheckBoxColumnDefaultAppearance) {
                     return grid.getView().getRow(row).<XElement>cast().selectNode(
-                            "." + ((CheckBoxColumnDefaultAppearance) sm.getAppearance()).getStyle().rowChecker()); //TODO
+                            "." + ((CheckBoxColumnDefaultAppearance) sm.getAppearance()).getStyle()
+                                    .rowChecker()); //TODO
                 }
             } else if (LocatorParams.TYPE_CELL.equals(innerPart.getType())) {
-                if (innerPart.hasParameter(LocatorParams.PARAMETER_COLUMN_NAME)) { //в приоритете поиск ячейки по названию столбца.
+                if (innerPart.hasParameter(
+                        LocatorParams.PARAMETER_COLUMN_NAME)) { //в приоритете поиск ячейки по названию столбца.
                     // достаем елемент ячейки по колонке
                     String columnName = innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_NAME);
                     return getCellByColumnName(row, columnName);
                 } else if (innerPart.hasParameter(LocatorParams.PARAMETER_COLUMN_INDEX)) {
                     return grid.getView().getCell(store.indexOf(row),
-                            Integer.parseInt(innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX)));
-                } else if (innerPart.hasParameter(LocatorParams.PARAMETER_LABEL)) { //по тексту ищем в последнюю очередь.
+                            Integer.parseInt(
+                                    innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX)));
+                } else if (innerPart.hasParameter(
+                        LocatorParams.PARAMETER_LABEL)) { //по тексту ищем в последнюю очередь.
                     String label = innerPart.getParameter(LocatorParams.PARAMETER_LABEL);
                     if (!Util.isEmptyString(label)) {
                         for (String columnName : row.getPropertyNames()) {
@@ -1611,7 +1604,6 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         }
         return null;
     }
-
 
     @JsIgnore
     public Element getCellByColumnName(RowModelData row, String columnName) {
@@ -1718,9 +1710,11 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
                     int rowInd = gridView.findRowIndex(element);
                     int colInd = gridView.findCellIndex(element, null);
                     fillOutRowLocatorParameters(part, element, new GridCell(rowInd, colInd));
-                    CheckBoxSelectionModel<RowModelData> sm = (CheckBoxSelectionModel<RowModelData>) grid
-                            .getSelectionModel();
-                    CheckBoxColumnDefaultAppearance appearance = ((CheckBoxColumnDefaultAppearance) sm.getAppearance());
+                    CheckBoxSelectionModel<RowModelData> sm =
+                            (CheckBoxSelectionModel<RowModelData>) grid
+                                    .getSelectionModel();
+                    CheckBoxColumnDefaultAppearance appearance =
+                            ((CheckBoxColumnDefaultAppearance) sm.getAppearance());
                     Locator endPointPart = null;
                     if (appearance.isRowChecker(element.cast())) {
                         endPointPart = new Locator(LocatorParams.TYPE_CHECK);
@@ -1823,7 +1817,8 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
         return null;
     }
 
-    protected void fillOutRowLocatorParameters(Locator rowLocator, Element element, GridCell gridCell) {
+    protected void fillOutRowLocatorParameters(Locator rowLocator, Element element,
+                                               GridCell gridCell) {
         int rowInd = gridCell.getRow();
         int colInd = gridCell.getCol();
         RowModelData rowMd = grid.getStore().get(rowInd);
@@ -1890,5 +1885,22 @@ public class EditGridBuilder extends ComponentBuilder implements Clearable, Vali
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+    }
+
+    public static class LocatorParams {
+        public static String TYPE_COLUMN = "Column";
+        public static String TYPE_HEADER = "Header";
+
+        public static String TYPE_ROW = "Row";
+        public static String TYPE_CHECK = "Check";
+        public static String TYPE_CELL = "Cell";
+
+        public static String PARAMETER_ID = "id";
+        public static String PARAMETER_COLUMN_INDEX = "colIndex";
+        public static String PARAMETER_COLUMN_NAME = "colName";
+        public static String PARAMETER_INDEX = "index";
+        public static String PARAMETER_LABEL = "label";
+
+        public static String TYPE_PAGING_BAR = "PagingBar";
     }
 }

@@ -2,233 +2,243 @@ package org.whirlplatform.component.client.window;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.Window;
-import com.sencha.gxt.widget.core.client.event.*;
+import com.sencha.gxt.widget.core.client.event.ActivateEvent;
 import com.sencha.gxt.widget.core.client.event.ActivateEvent.ActivateHandler;
+import com.sencha.gxt.widget.core.client.event.DeactivateEvent;
 import com.sencha.gxt.widget.core.client.event.DeactivateEvent.DeactivateHandler;
+import com.sencha.gxt.widget.core.client.event.HideEvent;
 import com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler;
+import com.sencha.gxt.widget.core.client.event.MinimizeEvent;
 import com.sencha.gxt.widget.core.client.event.MinimizeEvent.MinimizeHandler;
+import com.sencha.gxt.widget.core.client.event.ShowEvent;
 import com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class WindowManager {
 
-	private static WindowManager _instance;
+    private static WindowManager _instance;
+    private DesktopLayout layout = new CascadeDesktopLayout();
+    private Window activeWindow;
+    private Map<Window, WindowBuilder> builders = new HashMap<Window, WindowBuilder>();
+    private Map<Window, WindowDescription> windows = new LinkedHashMap<Window, WindowDescription>();
+    private Set<TaskBar> taskBars = new HashSet<TaskBar>();
+    private WindowHandler handler;
 
-	public static WindowManager get() {
-		if (_instance == null) {
-			_instance = new WindowManager();
-		}
-		return _instance;
-	}
+    public static WindowManager get() {
+        if (_instance == null) {
+            _instance = new WindowManager();
+        }
+        return _instance;
+    }
 
-	private class WindowHandler implements ActivateHandler<Window>,
-			DeactivateHandler<Window>, MinimizeHandler, HideHandler,
-			ShowHandler {
+    private WindowHandler ensureHandler() {
+        if (handler == null) {
+            handler = new WindowHandler();
+        }
+        return handler;
+    }
 
-		@Override
-		public void onActivate(ActivateEvent<Window> event) {
-			markActive((Window) event.getSource());
-		}
+    public void add(WindowBuilder builder) {
+        Window w = builder.getRealComponent();
+        builders.put(w, builder);
+        add(w);
+    }
 
-		@Override
-		public void onDeactivate(DeactivateEvent<Window> event) {
-			markInactive((Window) event.getSource());
-		}
+    public void add(Window window) {
+        if (contains(window)) {
+            return;
+        }
+        windows.put(window, new WindowDescription());
+        getWindowDescription(window).addHandlerRegistration(
+                window.addActivateHandler(ensureHandler()));
+        getWindowDescription(window).addHandlerRegistration(
+                window.addDeactivateHandler(ensureHandler()));
+        getWindowDescription(window).addHandlerRegistration(
+                window.addMinimizeHandler(ensureHandler()));
+        getWindowDescription(window).addHandlerRegistration(
+                window.addHideHandler(ensureHandler()));
+        getWindowDescription(window).addHandlerRegistration(
+                window.addShowHandler(ensureHandler()));
+        syncTaskBars();
+    }
 
-		@Override
-		public void onHide(HideEvent event) {
-			hideWindow((Window) event.getSource());
-		}
+    private void remove(Window window) {
+        windows.remove(window);
+        builders.remove(window);
+    }
 
-		@Override
-		public void onMinimize(MinimizeEvent event) {
-			minimizeWindow((Window) event.getSource());
-		}
+    private boolean contains(Window window) {
+        return windows.containsKey(window);
+    }
 
-		@Override
-		public void onShow(ShowEvent event) {
-			showWindow((Window) event.getSource());
-		}
-	}
+    public boolean isMinimized(Window window) {
+        return getWindowDescription(window).isMinimized();
+    }
 
-	private class WindowDescription {
+    private void setMinimized(Window window, boolean minimized) {
+        getWindowDescription(window).setMinimized(minimized);
+    }
 
-		private boolean isMinimized;
-		private List<HandlerRegistration> handlerRegistrations = new LinkedList<HandlerRegistration>();
-		private boolean minimizingNow;
+    private WindowDescription getWindowDescription(Window window) {
+        if (!windows.containsKey(window)) {
+            throw new IllegalArgumentException("No such window registered");
+        }
+        return windows.get(window);
+    }
 
-		public void setMinimized(boolean minimized) {
-			this.isMinimized = minimized;
-		}
+    public void removeWindow(Window window) {
+        if (contains(window)) {
+            getWindowDescription(window).removeHandlerRegistrations();
+            remove(window);
+            if (activeWindow == window) {
+                activeWindow = null;
+            }
+            syncTaskBars();
+        }
+    }
 
-		public boolean isMinimized() {
-			return isMinimized;
-		}
+    private void markActive(Window window) {
+        if (activeWindow != null && activeWindow != window) {
+            markInactive(activeWindow);
+        }
+        syncTaskBars();
+        setMinimized(window, false);
+    }
 
-		public void addHandlerRegistration(HandlerRegistration registration) {
-			handlerRegistrations.add(registration);
-		}
+    private void markInactive(Window window) {
+        if (window == activeWindow) {
+            activeWindow = null;
+            syncTaskBars();
+        }
+    }
 
-		public void removeHandlerRegistrations() {
-			for (HandlerRegistration handlerRegistration : handlerRegistrations) {
-				handlerRegistration.removeHandler();
-			}
-			handlerRegistrations.clear();
-		}
+    private void hideWindow(Window window) {
+        if (getWindowDescription(window).isMinimizingNow()) {
+            markInactive(window);
+            getWindowDescription(window).setMinimizingNow(false);
+            return;
+        }
+        removeWindow(window);
+    }
 
-		public void setMinimizingNow(boolean minimizingNow) {
-			this.minimizingNow = minimizingNow;
-		}
-		
-		public boolean isMinimizingNow() {
-			return minimizingNow;
-		}
-	}
+    private void minimizeWindow(Window window) {
+        setMinimized(window, true);
+        getWindowDescription(window).setMinimizingNow(true);
+        window.hide();
+    }
 
-	private DesktopLayout layout = new CascadeDesktopLayout();
-	private Window activeWindow;
-	private Map<Window, WindowBuilder> builders = new HashMap<Window, WindowBuilder>();
-	private Map<Window, WindowDescription> windows = new LinkedHashMap<Window, WindowDescription>();
-	private Set<TaskBar> taskBars = new HashSet<TaskBar>();
-	private WindowHandler handler;
+    public void showWindow(Window window) {
+        setMinimized(window, false);
+        window.show();
+        syncTaskBars();
+    }
 
-	private WindowHandler ensureHandler() {
-		if (handler == null) {
-			handler = new WindowHandler();
-		}
-		return handler;
-	}
+    public void registerTaskBar(TaskBar taskBar) {
+        if (taskBars.contains(taskBar)) {
+            throw new IllegalArgumentException("Task bar already registered");
+        }
+        taskBars.add(taskBar);
+    }
 
-	public void add(WindowBuilder builder) {
-		Window w = builder.getRealComponent();
-		builders.put(w, builder);
-		add(w);
-	}
+    public void unregisterTaskBar(TaskBar taskBar) {
+        if (!taskBars.contains(taskBar)) {
+            throw new IllegalArgumentException("No such task bar registered");
+        }
+        taskBars.remove(taskBar);
+    }
 
-	public void add(Window window) {
-		if (contains(window)) {
-			return;
-		}
-		windows.put(window, new WindowDescription());
-		getWindowDescription(window).addHandlerRegistration(
-				window.addActivateHandler(ensureHandler()));
-		getWindowDescription(window).addHandlerRegistration(
-				window.addDeactivateHandler(ensureHandler()));
-		getWindowDescription(window).addHandlerRegistration(
-				window.addMinimizeHandler(ensureHandler()));
-		getWindowDescription(window).addHandlerRegistration(
-				window.addHideHandler(ensureHandler()));
-		getWindowDescription(window).addHandlerRegistration(
-				window.addShowHandler(ensureHandler()));
-		syncTaskBars();
-	}
+    private void syncTaskBars() {
+        for (TaskBar b : taskBars) {
+            b.syncWindows(windows.keySet());
+            b.setActive(activeWindow);
+        }
+    }
 
-	private void remove(Window window) {
-		windows.remove(window);
-		builders.remove(window);
-	}
+    public Window getActive() {
+        return activeWindow;
+    }
 
-	private boolean contains(Window window) {
-		return windows.containsKey(window);
-	}
+    public List<WindowBuilder> getBuilders() {
+        return new ArrayList<WindowBuilder>(builders.values());
+    }
 
-	public boolean isMinimized(Window window) {
-		return getWindowDescription(window).isMinimized();
-	}
+    public boolean containsWindow(Window w) {
+        return windows.containsKey(w);
+    }
 
-	private void setMinimized(Window window, boolean minimized) {
-		getWindowDescription(window).setMinimized(minimized);
-	}
+    public Set<Window> getWindows() {
+        return this.windows.keySet();
+    }
 
-	private WindowDescription getWindowDescription(Window window) {
-		if (!windows.containsKey(window)) {
-			throw new IllegalArgumentException("No such window registered");
-		}
-		return windows.get(window);
-	}
+    private class WindowHandler implements ActivateHandler<Window>,
+            DeactivateHandler<Window>, MinimizeHandler, HideHandler,
+            ShowHandler {
 
-	public void removeWindow(Window window) {
-		if (contains(window)) {
-			getWindowDescription(window).removeHandlerRegistrations();
-			remove(window);
-			if (activeWindow == window) {
-				activeWindow = null;
-			}
-			syncTaskBars();
-		}
-	}
+        @Override
+        public void onActivate(ActivateEvent<Window> event) {
+            markActive((Window) event.getSource());
+        }
 
-	private void markActive(Window window) {
-		if (activeWindow != null && activeWindow != window) {
-			markInactive(activeWindow);
-		}
-		syncTaskBars();
-		setMinimized(window, false);
-	}
+        @Override
+        public void onDeactivate(DeactivateEvent<Window> event) {
+            markInactive((Window) event.getSource());
+        }
 
-	private void markInactive(Window window) {
-		if (window == activeWindow) {
-			activeWindow = null;
-			syncTaskBars();
-		}
-	}
+        @Override
+        public void onHide(HideEvent event) {
+            hideWindow((Window) event.getSource());
+        }
 
-	private void hideWindow(Window window) {
-		if (getWindowDescription(window).isMinimizingNow()) {
-			markInactive(window);
-			getWindowDescription(window).setMinimizingNow(false);
-			return;
-		}
-		removeWindow(window);
-	}
+        @Override
+        public void onMinimize(MinimizeEvent event) {
+            minimizeWindow((Window) event.getSource());
+        }
 
-	private void minimizeWindow(Window window) {
-		setMinimized(window, true);
-		getWindowDescription(window).setMinimizingNow(true);
-		window.hide();
-	}
+        @Override
+        public void onShow(ShowEvent event) {
+            showWindow((Window) event.getSource());
+        }
+    }
 
-	public void showWindow(Window window) {
-		setMinimized(window, false);
-		window.show();
-		syncTaskBars();
-	}
+    private class WindowDescription {
 
-	public void registerTaskBar(TaskBar taskBar) {
-		if (taskBars.contains(taskBar)) {
-			throw new IllegalArgumentException("Task bar already registered");
-		}
-		taskBars.add(taskBar);
-	}
+        private boolean isMinimized;
+        private List<HandlerRegistration> handlerRegistrations =
+                new LinkedList<HandlerRegistration>();
+        private boolean minimizingNow;
 
-	public void unregisterTaskBar(TaskBar taskBar) {
-		if (!taskBars.contains(taskBar)) {
-			throw new IllegalArgumentException("No such task bar registered");
-		}
-		taskBars.remove(taskBar);
-	}
+        public boolean isMinimized() {
+            return isMinimized;
+        }
 
-	private void syncTaskBars() {
-		for (TaskBar b : taskBars) {
-			b.syncWindows(windows.keySet());
-			b.setActive(activeWindow);
-		}
-	}
+        public void setMinimized(boolean minimized) {
+            this.isMinimized = minimized;
+        }
 
-	public Window getActive() {
-		return activeWindow;
-	}
+        public void addHandlerRegistration(HandlerRegistration registration) {
+            handlerRegistrations.add(registration);
+        }
 
-	public List<WindowBuilder> getBuilders() {
-		return new ArrayList<WindowBuilder>(builders.values());
-	}
+        public void removeHandlerRegistrations() {
+            for (HandlerRegistration handlerRegistration : handlerRegistrations) {
+                handlerRegistration.removeHandler();
+            }
+            handlerRegistrations.clear();
+        }
 
-	public boolean containsWindow(Window w) {
-		return windows.containsKey(w);
-	}
-	
-	public  Set<Window> getWindows(){
-		return this.windows.keySet();
-	}
+        public boolean isMinimizingNow() {
+            return minimizingNow;
+        }
+
+        public void setMinimizingNow(boolean minimizingNow) {
+            this.minimizingNow = minimizingNow;
+        }
+    }
 }

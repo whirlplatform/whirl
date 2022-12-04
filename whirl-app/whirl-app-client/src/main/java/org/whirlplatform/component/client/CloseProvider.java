@@ -2,8 +2,8 @@ package org.whirlplatform.component.client;
 
 public interface CloseProvider {
 
-	boolean isClosable();
+    boolean isClosable();
 
-	void setClosable(boolean closable);
+    void setClosable(boolean closable);
 
 }

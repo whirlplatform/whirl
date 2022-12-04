@@ -9,13 +9,12 @@ import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.List;
 import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.selenium.LocatorAware;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
-
-import java.util.List;
 
 public class FieldFormWindow extends Window implements LocatorAware {
 
@@ -44,7 +43,8 @@ public class FieldFormWindow extends Window implements LocatorAware {
                 hide();
             }
         });
-        int height = getHeader().getOffsetHeight() + fieldPanel.getOffsetHeight() + getButtonBar().getOffsetHeight();
+        int height = getHeader().getOffsetHeight() + fieldPanel.getOffsetHeight() +
+                getButtonBar().getOffsetHeight();
         int maxHeight = (int) Math.round(RootPanel.get().getOffsetHeight() * MAX_HEIGHT_PERCENT);
         height = (maxHeight < height) ? height : maxHeight;
         setHeight(height);
@@ -83,22 +83,15 @@ public class FieldFormWindow extends Window implements LocatorAware {
         return fieldPanel.checkUpload();
     }
 
-    public void setCode(final String code) {
-        this.code = code;
-    }
-
     public String getCode() {
         return this.code;
     }
 
-    // Selenium
-
-    static class LocatorParams {
-        public static String PARAMETER_CODE = "code";
-        public static String TYPE_FIELD_FORM = "FieldForm";
-        public static String TYPE_SAVE_BUTTON = "SaveButton";
-        public static String TYPE_CLOSE_BUTTON = "CloseButton";
+    public void setCode(final String code) {
+        this.code = code;
     }
+
+    // Selenium
 
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -144,7 +137,8 @@ public class FieldFormWindow extends Window implements LocatorAware {
     }
 
     private boolean isAcceptable(final Locator locator) {
-        if (locator == null || locator.getPart() == null || !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
+        if (locator == null || locator.getPart() == null ||
+                !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
             return false;
         }
         boolean typeIsOk = locator.typeEquals(LocatorParams.TYPE_FIELD_FORM);
@@ -154,5 +148,12 @@ public class FieldFormWindow extends Window implements LocatorAware {
 
     private XElement getTextButtonElement(final TextButton button) {
         return (button != null) ? button.getCell().getFocusElement(button.getElement()) : null;
+    }
+
+    static class LocatorParams {
+        public static String PARAMETER_CODE = "code";
+        public static String TYPE_FIELD_FORM = "FieldForm";
+        public static String TYPE_SAVE_BUTTON = "SaveButton";
+        public static String TYPE_CLOSE_BUTTON = "CloseButton";
     }
 }

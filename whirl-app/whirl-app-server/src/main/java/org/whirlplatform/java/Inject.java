@@ -5,14 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ ElementType.FIELD, ElementType.TYPE })
+@Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Inject {
 
-	String name() default "";
+    String name() default "";
 
-	boolean singleton() default false;
+    boolean singleton() default false;
 
-	Scope scope() default Scope.SESSION;
+    Scope scope() default Scope.SESSION;
 
 }

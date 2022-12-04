@@ -13,9 +13,13 @@ import org.whirlplatform.component.client.event.ShowEvent.ShowHandler;
 import org.whirlplatform.component.client.event.UpdateEvent.UpdateHandler;
 import org.whirlplatform.meta.shared.EventResult;
 
-public interface EventHelper extends AttachHandler, ChangeHandler, ClickEvent.ClickHandler, CreateEvent.CreateHandler, DeleteEvent.DeleteHandler,
-        DetachEvent.DetachHandler, DoubleClickEvent.DoubleClickHandler, InsertEvent.InsertHandler, KeyPressEvent.KeyPressHandler, LoadHandler, SelectHandler, ShowHandler,
-        HideEvent.HideHandler, TimeEvent.TimeHandler, UpdateHandler, FocusHandler, BlurEvent.BlurHandler, RefreshHandler, RowDoubleClickHandler {
+public interface EventHelper
+        extends AttachHandler, ChangeHandler, ClickEvent.ClickHandler, CreateEvent.CreateHandler,
+        DeleteEvent.DeleteHandler,
+        DetachEvent.DetachHandler, DoubleClickEvent.DoubleClickHandler, InsertEvent.InsertHandler,
+        KeyPressEvent.KeyPressHandler, LoadHandler, SelectHandler, ShowHandler,
+        HideEvent.HideHandler, TimeEvent.TimeHandler, UpdateHandler, FocusHandler,
+        BlurEvent.BlurHandler, RefreshHandler, RowDoubleClickHandler {
 
     void onEvent(Object source);
 

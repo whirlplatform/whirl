@@ -1,19 +1,5 @@
 package org.whirlplatform.server.report;
 
-import org.whirlplatform.meta.shared.AppConstant;
-import org.whirlplatform.meta.shared.component.ComponentModel;
-import org.whirlplatform.meta.shared.component.ComponentType;
-import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.component.ReportDataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.server.db.ConnectException;
-import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.form.*;
-import org.whirlplatform.server.login.ApplicationUser;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -23,6 +9,23 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import org.whirlplatform.meta.shared.AppConstant;
+import org.whirlplatform.meta.shared.component.ComponentModel;
+import org.whirlplatform.meta.shared.component.ComponentType;
+import org.whirlplatform.meta.shared.component.PropertyType;
+import org.whirlplatform.meta.shared.component.ReportDataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.server.db.ConnectException;
+import org.whirlplatform.server.db.ConnectionProvider;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.FormWriter;
+import org.whirlplatform.server.form.RowElementWrapper;
+import org.whirlplatform.server.login.ApplicationUser;
 
 public class HTMLReportWriter extends FormWriter {
 
@@ -42,7 +45,8 @@ public class HTMLReportWriter extends FormWriter {
         XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
         outputFactory.setProperty("escapeCharacters", false);
         try {
-            xmlStream = outputFactory.createXMLStreamWriter(new OutputStreamWriter(stream, "UTF-8"));
+            xmlStream =
+                    outputFactory.createXMLStreamWriter(new OutputStreamWriter(stream, "UTF-8"));
 
             writeHeader();
             prepareForm();
@@ -105,8 +109,10 @@ public class HTMLReportWriter extends FormWriter {
 
         String click = "document.getElementById('button-table').style.visibility='hidden';"
                 + "var prtContent = document.getElementById('" + form.getId() + "');"
-                + "var WinPrint = window.open('','','left=-100,top=-100,width=1,height=1,toolbar=0,scrollbars=0,status=0');"
-                + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();" + "WinPrint.focus();"
+                +
+                "var WinPrint = window.open('','','left=-100,top=-100,width=1,height=1,toolbar=0,scrollbars=0,status=0');"
+                + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();" +
+                "WinPrint.focus();"
                 + "WinPrint.print();" + "WinPrint.close();"
                 + "document.getElementById('button-table').style.visibility='visible';";
         xmlStream.writeAttribute("onclick", click);
@@ -158,7 +164,8 @@ public class HTMLReportWriter extends FormWriter {
     private void writeTableStyle() throws XMLStreamException {
         String style;
         if (form.isGrid()) {
-            style = "border-left: 1px solid; border-top: 1px solid;	border-collapse: collapse; border-spacing: 0; table-layout: fixed";
+            style =
+                    "border-left: 1px solid; border-top: 1px solid;    border-collapse: collapse; border-spacing: 0; table-layout: fixed";
         } else {
             style = "border: 0px none " + form.getGridColor()
                     + "; border-collapse: collapse; border-spacing: 0; table-layout: fixed;";
@@ -239,10 +246,12 @@ public class HTMLReportWriter extends FormWriter {
             style.append("background-color: " + cell.getBackgroundColor() + "; ");
         }
         if (form.isGrid()) {
-            style.append("	border-right: 1px solid; border-bottom: 1px solid; border-color: " + gridColor + "; ");
+            style.append("    border-right: 1px solid; border-bottom: 1px solid; border-color: " +
+                    gridColor + "; ");
         }
         if (cell.getBorderBottom() > 0) {
-            style.append("border-bottom: " + cell.getBorderBottom() + "px solid " + gridColor + "; ");
+            style.append(
+                    "border-bottom: " + cell.getBorderBottom() + "px solid " + gridColor + "; ");
         }
         if (cell.getBorderTop() > 0) {
             style.append("border-top: " + cell.getBorderTop() + "px solid " + gridColor + "; ");
@@ -258,19 +267,26 @@ public class HTMLReportWriter extends FormWriter {
             if (cell.getComponent().getType() == ComponentType.LabelType
                     || cell.getComponent().getType() == ComponentType.HtmlType) {
                 if (component.getValue(PropertyType.Color.getCode()) != null) {
-                    style.append("color: " + component.getValue(PropertyType.Color.getCode()) + "; ");
+                    style.append(
+                            "color: " + component.getValue(PropertyType.Color.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontWeight.getCode()) != null) {
-                    style.append("font-weight: " + component.getValue(PropertyType.FontWeight.getCode()) + "; ");
+                    style.append("font-weight: " +
+                            component.getValue(PropertyType.FontWeight.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontSize.getCode()) != null) {
-                    style.append("font-size: " + component.getValue(PropertyType.FontSize.getCode()) + "; ");
+                    style.append(
+                            "font-size: " + component.getValue(PropertyType.FontSize.getCode()) +
+                                    "; ");
                 }
                 if (component.getValue(PropertyType.FontStyle.getCode()) != null) {
-                    style.append("font-style: " + component.getValue(PropertyType.FontStyle.getCode()) + "; ");
+                    style.append(
+                            "font-style: " + component.getValue(PropertyType.FontStyle.getCode()) +
+                                    "; ");
                 }
                 if (component.getValue(PropertyType.FontFamily.getCode()) != null) {
-                    style.append("font-family: " + component.getValue(PropertyType.FontFamily.getCode()) + "; ");
+                    style.append("font-family: " +
+                            component.getValue(PropertyType.FontFamily.getCode()) + "; ");
                 }
             }
         }
@@ -289,7 +305,8 @@ public class HTMLReportWriter extends FormWriter {
     }
 
     private void writeComponentProperties(ComponentModel component) throws XMLStreamException {
-        if (ComponentType.LabelType == component.getType() || ComponentType.HtmlType == component.getType()) {
+        if (ComponentType.LabelType == component.getType() ||
+                ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                     : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null
@@ -310,7 +327,8 @@ public class HTMLReportWriter extends FormWriter {
             if (ReportDataType.NUMBER.name().equals(type)) {
                 try {
                     DecimalFormat nf = new DecimalFormat(fmt);
-                    xmlStream.writeCharacters(nf.format(Double.parseDouble(valueStr.replace(",", "."))));
+                    xmlStream.writeCharacters(
+                            nf.format(Double.parseDouble(valueStr.replace(",", "."))));
 
                 } catch (NumberFormatException e) {
                     // xmlStream.writeCharacters("");

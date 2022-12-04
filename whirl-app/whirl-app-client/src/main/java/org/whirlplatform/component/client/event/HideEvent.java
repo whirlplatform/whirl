@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.HideEvent.HideHandler;
 
 public class HideEvent extends GwtEvent<HideHandler> {
 
-	private static Type<HideHandler> TYPE;
+    private static Type<HideHandler> TYPE;
 
-	public static Type<HideHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<HideHandler>() {
-				@Override
-				public String toString() {
-					return "HideHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<HideHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<HideHandler>() {
+                @Override
+                public String toString() {
+                    return "HideHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<HideHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<HideHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(HideHandler handler) {
-		handler.onHide(this);
-	}
+    @Override
+    protected void dispatch(HideHandler handler) {
+        handler.onHide(this);
+    }
 
-	public interface HideHandler extends EventHandler {
+    public interface HideHandler extends EventHandler {
 
-		void onHide(HideEvent event);
+        void onHide(HideEvent event);
 
-	}
+    }
 
-	public interface HasHideHandlers {
+    public interface HasHideHandlers {
 
         HandlerRegistration addHideHandler(HideHandler handler);
 
-	}
+    }
 
 }

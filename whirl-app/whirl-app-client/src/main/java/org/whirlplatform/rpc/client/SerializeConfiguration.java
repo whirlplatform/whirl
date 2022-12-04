@@ -1,7 +1,6 @@
 package org.whirlplatform.rpc.client;
 
 import com.github.nmorel.gwtjackson.client.AbstractConfiguration;
-
 import java.util.Date;
 
 public class SerializeConfiguration extends AbstractConfiguration {

@@ -10,17 +10,23 @@ import com.sencha.gxt.widget.core.client.grid.CheckBoxSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.editor.client.tree.visitor.VisitableTreeElement;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.merge.ChangeUnit;
 import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.editor.*;
-
-import java.util.*;
+import org.whirlplatform.meta.shared.editor.AbstractCondition;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.RightElement;
 
 /**
  * Простой контейнер для отображения изменений при сравнении приложений
- *
  */
 public class ChangeUnitsContainer extends SimpleContainer {
     private static final String ADDED = EditorMessage.Util.MESSAGE.compare_apps_added();
@@ -128,7 +134,8 @@ public class ChangeUnitsContainer extends SimpleContainer {
                 if (object == null) {
                     return "";
                 }
-                Object valueObject = (object.getRightValue() == null) ? object.getLeftValue() : object.getRightValue();
+                Object valueObject = (object.getRightValue() == null) ? object.getLeftValue() :
+                        object.getRightValue();
                 return decipher(valueObject);
             }
         };
@@ -205,7 +212,8 @@ public class ChangeUnitsContainer extends SimpleContainer {
     }
 
     private String decipherRightElement(final RightElement object) {
-        return buildDisplayName("Right", object.getType().toString(), object.getCondition().getValue().toString());
+        return buildDisplayName("Right", object.getType().toString(),
+                object.getCondition().getValue().toString());
     }
 
     private String decipherPropertyValue(final PropertyValue object) {
@@ -243,7 +251,8 @@ public class ChangeUnitsContainer extends SimpleContainer {
         return buildDisplayName(ctx.getClassName(), ctx.getDisplayName(), "");
     }
 
-    private String buildDisplayName(final String className, final String first, final String second) {
+    private String buildDisplayName(final String className, final String first,
+                                    final String second) {
         StringBuilder sb = new StringBuilder(className);
         if (first != null && !"".equals(first)) {
             sb.append(" (").append(first);

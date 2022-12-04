@@ -13,6 +13,13 @@
     <name>whirl-editor-client</name>
     <packaging>gwt-app</packaging>
 
+    <properties>
+        <project.rootdir>${project.basedir}/../..</project.rootdir>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <dependencies>
         <!-- Whirl -->
         <dependency>

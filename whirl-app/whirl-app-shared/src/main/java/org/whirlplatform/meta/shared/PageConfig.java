@@ -14,28 +14,28 @@ public class PageConfig implements Serializable {
     public PageConfig() {
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
     public int getPage() {
         return page;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public int getRows() {
         return rows;
     }
 
-    public void setRowsPerPage(int rowsPerPage) {
-        this.rowsPerPage = rowsPerPage;
+    public void setRows(int rows) {
+        this.rows = rows;
     }
 
     public int getRowsPerPage() {
         return rowsPerPage;
+    }
+
+    public void setRowsPerPage(int rowsPerPage) {
+        this.rowsPerPage = rowsPerPage;
     }
 
 }

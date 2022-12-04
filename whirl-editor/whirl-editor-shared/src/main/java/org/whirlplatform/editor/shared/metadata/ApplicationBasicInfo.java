@@ -1,11 +1,10 @@
 package org.whirlplatform.editor.shared.metadata;
 
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.version.VersionUtil;
-
-import java.io.Serializable;
 
 public class ApplicationBasicInfo implements Serializable {
     private static final long serialVersionUID = -5896849717828598945L;

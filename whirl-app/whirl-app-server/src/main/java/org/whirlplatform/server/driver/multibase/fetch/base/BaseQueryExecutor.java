@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.sql.ResultSet;
+import java.util.Map;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -11,9 +13,6 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.QueryMessage;
 import org.whirlplatform.server.monitor.RunningEvent;
-
-import java.sql.ResultSet;
-import java.util.Map;
 
 public class BaseQueryExecutor extends AbstractQueryExecutor {
 
@@ -31,7 +30,8 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
 
         QueryMessage msg = new QueryMessage(connection.getUser(), query);
 
-        RunningEvent ev = new RunningEvent(RunningEvent.Type.DBEVENT, "", query, connection.getUser().getLogin()) {
+        RunningEvent ev = new RunningEvent(RunningEvent.Type.DBEVENT, "", query,
+                connection.getUser().getLogin()) {
 
             @Override
             public void onStop() {
@@ -39,17 +39,22 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
             }
         };
         try (Profile p = new ProfileImpl(msg, ev)) {
-            ResultSet resultSet = connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+            ResultSet resultSet =
+                    connection.getDatabaseDriver().executeQuery(query, null, false, connection);
             if (resultSet.next()) {
-                Map<String, DataValue> resultValues = collectResultSetValue(connection.getDatabaseDriver(),
-                        resultSet);
+                Map<String, DataValue> resultValues =
+                        collectResultSetValue(connection.getDatabaseDriver(),
+                                resultSet);
                 if (resultSet.next()) {
-                    _log.warn("Query should return only 1 row. More than 1 rows returned.\n" + query + " params =" + params + '\n' + ", sql: " + sql);
+                    _log.warn(
+                            "Query should return only 1 row. More than 1 rows returned.\n" + query +
+                                    " params =" + params + '\n' + ", sql: " + sql);
                     throw new CustomException("Query should return 1 row.");
                 }
                 return resultValues;
             }
-            _log.warn("Query should return only 1 row. 0 rows returned.\n" + query + " params =" + params + '\n' + ", sql: " + sql);
+            _log.warn("Query should return only 1 row. 0 rows returned.\n" + query + " params =" +
+                    params + '\n' + ", sql: " + sql);
             throw new CustomException("Query should return 1 row.");
         } catch (Exception e) {
             String err = query + " params =" + params + '\t' + e + ", sql: " + sql;

@@ -8,6 +8,8 @@ import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent;
 import com.sencha.gxt.data.shared.event.StoreDataChangeEvent.StoreDataChangeHandler;
 import com.sencha.gxt.widget.core.client.Component;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -26,12 +28,17 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.RowModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Чек-бокс группа
@@ -51,23 +58,19 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     private boolean saveState;
     private boolean restoreState;
     private ParameterHelper paramHelper;
+    private LabelProvider<ListModelData> labelProvider;
+    private ValueProvider<RowModelData, Boolean> valueProvider;
+    private ClassStore<ListModelData, ClassLoadConfig> store;
+    private CheckBoxList list;
 
     @JsConstructor
     public CheckGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
-
     @JsIgnore
     public CheckGroupBuilder() {
         this(Collections.emptyMap());
     }
-
-    private LabelProvider<ListModelData> labelProvider;
-
-    private ValueProvider<RowModelData, Boolean> valueProvider;
-
-    private ClassStore<ListModelData, ClassLoadConfig> store;
-    private CheckBoxList list;
 
     /**
      * Получить тип CheckGroup
@@ -119,7 +122,8 @@ public class CheckGroupBuilder extends ComponentBuilder implements
 
         Orientation orientation = Orientation.VERTICAL;
         DataValue orientationDataValue = builderProperties.get(PropertyType.Orientation.getCode());
-        if (orientationDataValue != null && Orientation.HORIZONTAL.toString().equalsIgnoreCase(orientationDataValue.getString())) {
+        if (orientationDataValue != null && Orientation.HORIZONTAL.toString()
+                .equalsIgnoreCase(orientationDataValue.getString())) {
             orientation = Orientation.HORIZONTAL;
         }
         list = new CheckBoxList(orientation, labelProvider, valueProvider);
@@ -198,7 +202,8 @@ public class CheckGroupBuilder extends ComponentBuilder implements
             metadata.addField(new FieldMetadata(checkColumn, DataType.BOOLEAN,
                     null));
         }
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata, new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
+                new ListClassProxy(metadata));
         checkedRegistration = store
                 .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
                     @Override
@@ -294,21 +299,27 @@ public class CheckGroupBuilder extends ComponentBuilder implements
 
     @JsIgnore
     @Override
+    public boolean isSaveState() {
+        return saveState;
+    }
+
+    @JsIgnore
+    @Override
     public void setSaveState(boolean save) {
         this.saveState = save;
 
     }
 
     @JsIgnore
-    @Override
-    public boolean isSaveState() {
-        return saveState;
-    }
-
-    @JsIgnore
     public void setRestoreState(boolean restore) {
         this.restoreState = restore;
 
+    }
+
+    @JsIgnore
+    @Override
+    public StateScope getStateScope() {
+        return getStateStore().getScope();
     }
 
     @JsIgnore
@@ -328,12 +339,6 @@ public class CheckGroupBuilder extends ComponentBuilder implements
                     break;
             }
         }
-    }
-
-    @JsIgnore
-    @Override
-    public StateScope getStateScope() {
-        return getStateStore().getScope();
     }
 
     @JsIgnore
@@ -409,8 +414,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

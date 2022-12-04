@@ -27,7 +27,8 @@ public class VWTTestData extends DBView {
     public DBCommandExpr createCommand() {
         TestTableSet db = (TestTableSet) getDatabase();
         DBCommand command = db.createCommand();
-        command.select(db.T_TEST_DATA.DFOBJ, db.T_TEST_DATA.DFNUMBER, db.T_TEST_DATA.DFSTRING.as("LIST_DFNAME"),
+        command.select(db.T_TEST_DATA.DFOBJ, db.T_TEST_DATA.DFNUMBER,
+                db.T_TEST_DATA.DFSTRING.as("LIST_DFNAME"),
                 db.T_TEST_DATA.DFPARENT);
         command.orderBy(LIST_DFNAME);
         return command;

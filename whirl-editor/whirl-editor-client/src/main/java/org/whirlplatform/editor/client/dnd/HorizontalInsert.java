@@ -16,106 +16,106 @@ import com.sencha.gxt.widget.core.client.Component;
 
 public class HorizontalInsert extends Component {
 
-	public static class DefaultHorizontalInsertAppearance implements
-			HorizontalInsertAppearance {
+    private static HorizontalInsert instance;
+    private HorizontalInsertAppearance appearance;
 
-		public interface HorizontalInsertResources extends ClientBundle {
+    HorizontalInsert() {
+        this.appearance = GWT.create(DefaultHorizontalInsertAppearance.class);
 
-			ImageResource top();
+        SafeHtmlBuilder sb = new SafeHtmlBuilder();
+        appearance.render(sb);
 
-			@ImageOptions(repeatStyle = RepeatStyle.Vertical)
-			ImageResource center();
+        setElement(XDOM.create(sb.toSafeHtml()));
 
-			ImageResource bottom();
+        setShadow(false);
+        hide();
+    }
 
-			@Source("HorizontalInsert.gss")
-			HorizontalInsertStyle style();
+    public static HorizontalInsert get() {
+        if (instance == null) {
+            instance = new HorizontalInsert();
+        }
+        return instance;
+    }
 
-		}
+    public void show(Element c) {
+        c.insertBefore(getElement(), null);
+        show();
+    }
 
-		public interface HorizontalInsertStyle extends CssResource {
+    @Override
+    protected void onHide() {
+        super.onHide();
+        getElement().removeFromParent();
+    }
 
-			String bar();
+    @Override
+    protected void onShow() {
+        super.onShow();
+        if (!getElement().isConnected()) {
+            Document.get().getBody().insertBefore(getElement(), null);
+        }
+    }
 
-			String top();
+    public interface HorizontalInsertAppearance {
+        void render(SafeHtmlBuilder sb);
+    }
 
-			String center();
+    public static class DefaultHorizontalInsertAppearance implements
+            HorizontalInsertAppearance {
 
-			String bottom();
+        private HorizontalInsertStyle style;
+        private Template template;
 
-		}
-
-		public interface Template extends XTemplates {
-			@XTemplate(source = "HorizontalInsert.html")
-			SafeHtml render(HorizontalInsertStyle style);
-		}
-
-		private HorizontalInsertStyle style;
-		private Template template;
-
-		public DefaultHorizontalInsertAppearance() {
+        public DefaultHorizontalInsertAppearance() {
             this(GWT
-					.create(HorizontalInsertResources.class));
-		}
+                    .create(HorizontalInsertResources.class));
+        }
 
-		public DefaultHorizontalInsertAppearance(
-				HorizontalInsertResources resources) {
-			this.style = resources.style();
-			this.style.ensureInjected();
+        public DefaultHorizontalInsertAppearance(
+                HorizontalInsertResources resources) {
+            this.style = resources.style();
+            this.style.ensureInjected();
 
-			this.template = GWT.create(Template.class);
-		}
+            this.template = GWT.create(Template.class);
+        }
 
-		@Override
-		public void render(SafeHtmlBuilder sb) {
-			sb.append(template.render(style));
-		}
+        @Override
+        public void render(SafeHtmlBuilder sb) {
+            sb.append(template.render(style));
+        }
 
-	}
+        public interface HorizontalInsertResources extends ClientBundle {
 
-	public interface HorizontalInsertAppearance {
-		void render(SafeHtmlBuilder sb);
-	}
+            ImageResource top();
 
-	private HorizontalInsertAppearance appearance;
-	private static HorizontalInsert instance;
+            @ImageOptions(repeatStyle = RepeatStyle.Vertical)
+            ImageResource center();
 
-	public static HorizontalInsert get() {
-		if (instance == null) {
-			instance = new HorizontalInsert();
-		}
-		return instance;
-	}
+            ImageResource bottom();
 
-	HorizontalInsert() {
-		this.appearance = GWT.create(DefaultHorizontalInsertAppearance.class);
+            @Source("HorizontalInsert.gss")
+            HorizontalInsertStyle style();
 
-		SafeHtmlBuilder sb = new SafeHtmlBuilder();
-		appearance.render(sb);
+        }
 
-		setElement(XDOM.create(sb.toSafeHtml()));
+        public interface HorizontalInsertStyle extends CssResource {
 
-		setShadow(false);
-		hide();
-	}
+            String bar();
 
-	public void show(Element c) {
-		c.insertBefore(getElement(), null);
-		show();
-	}
+            String top();
 
-	@Override
-	protected void onHide() {
-		super.onHide();
-		getElement().removeFromParent();
-	}
+            String center();
 
-	@Override
-	protected void onShow() {
-		super.onShow();
-		if (!getElement().isConnected()) {
-			Document.get().getBody().insertBefore(getElement(), null);
-		}
-	}
+            String bottom();
+
+        }
+
+        public interface Template extends XTemplates {
+            @XTemplate(source = "HorizontalInsert.html")
+            SafeHtml render(HorizontalInsertStyle style);
+        }
+
+    }
 
 }

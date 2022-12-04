@@ -1,13 +1,51 @@
 package org.whirlplatform.server.driver.multibase;
 
 import com.google.inject.Singleton;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
+import javax.inject.Inject;
 import org.apache.empire.db.DBReader;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ApplicationData;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.DataModifyConfig;
+import org.whirlplatform.meta.shared.EventMetadata;
+import org.whirlplatform.meta.shared.EventResult;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
+import org.whirlplatform.meta.shared.LoadData;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
 import org.whirlplatform.meta.shared.form.FormCellModel;
@@ -21,7 +59,11 @@ import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.AbstractConnector;
 import org.whirlplatform.server.expimp.CSVExporter;
 import org.whirlplatform.server.expimp.XLSExporter;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ClientFormWriter;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.global.SrvConstant;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
@@ -33,15 +75,6 @@ import org.whirlplatform.server.metadata.container.MetadataContainer;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.utils.ApplicationReference;
 
-import javax.inject.Inject;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BiFunction;
-
 @Singleton
 public class MultibaseConnector extends AbstractConnector {
 
@@ -52,7 +85,8 @@ public class MultibaseConnector extends AbstractConnector {
     private MetadataProvider metadataProvider;
 
     @Inject
-    public MultibaseConnector(MetadataContainer metadataContainer, MetadataProvider metadataProvider,
+    public MultibaseConnector(MetadataContainer metadataContainer,
+                              MetadataProvider metadataProvider,
                               ConnectionProvider connectionProvider) {
         super(connectionProvider);
         this.metadataContainer = metadataContainer;
@@ -66,8 +100,9 @@ public class MultibaseConnector extends AbstractConnector {
     @Override
     public ApplicationData getApplication(String applicationCode, Version version) {
         try {
-            ApplicationElement application = metadataContainer.getApplication(applicationCode, version).get()
-                    .getApplication();
+            ApplicationElement application =
+                    metadataContainer.getApplication(applicationCode, version).get()
+                            .getApplication();
             ApplicationData data = new ApplicationData();
             data.setName(application.getName());
             data.setApplicationCode(application.getCode());
@@ -93,21 +128,23 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public ApplicationData getApplication(String applicationCode, Version version, ApplicationUser user) {
+    public ApplicationData getApplication(String applicationCode, Version version,
+                                          ApplicationUser user) {
         try {
             if (applicationCode == null) { // && !user.isGuest()
                 // TODO message about empty application code
                 throw new CustomException(ExceptionType.WRONGAPP,
-                                          I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
             }
-    
+
             ApplicationData data = getApplication(applicationCode, version);
             if (user.isGuest() && !data.isGuest()) {
                 return null;
             }
-    
-            AtomicReference<ApplicationReference> appRef = metadataContainer.getApplication(applicationCode, version);
-    
+
+            AtomicReference<ApplicationReference> appRef =
+                    metadataContainer.getApplication(applicationCode, version);
+
             checkApplicationAllowed(appRef.get().getApplication(), user);
 
             user.setApplication(appRef);
@@ -116,8 +153,9 @@ public class MultibaseConnector extends AbstractConnector {
             ApplicationElement application = user.getApplication();
             for (EventElement element : application.getFreeEvents()) {
                 if (isEventAvailable(element, Collections.emptyList(), user)) {
-                    data.addEvent(element.getHandlerType(), EventElement.eventElementToMetadata(element,
-                            applicationLocale(application, user.getLocaleElement())));
+                    data.addEvent(element.getHandlerType(),
+                            EventElement.eventElementToMetadata(element,
+                                    applicationLocale(application, user.getLocaleElement())));
                 }
             }
             return data;
@@ -164,17 +202,20 @@ public class MultibaseConnector extends AbstractConnector {
                 }
             }
         }
-        throw new CustomException(I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorAppAccess());
+        throw new CustomException(
+                I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorAppAccess());
     }
 
     @Override
-    public ComponentModel getComponents(String componentId, List<DataValue> params, ApplicationUser user) {
+    public ComponentModel getComponents(String componentId, List<DataValue> params,
+                                        ApplicationUser user) {
         ComponentModel model = null;
         ApplicationElement app = user.getApplication();
 
         for (ComponentElement c : app.getAvailableComponents()) {
             if (c.getId().equals(componentId)) {
-                model = componentElementsToModels(c, params, applicationLocale(app, user.getLocaleElement()), user);
+                model = componentElementsToModels(c, params,
+                        applicationLocale(app, user.getLocaleElement()), user);
                 break;
             }
         }
@@ -200,13 +241,15 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public ClassMetadata getClassMetadata(String classId, Map<String, DataValue> params, ApplicationUser user) {
+    public ClassMetadata getClassMetadata(String classId, Map<String, DataValue> params,
+                                          ApplicationUser user) {
         AbstractTableElement table = findTableElement(classId, user);
         assertTrue(table != null, "Table definition not found: ID = " + classId + "");
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createMetadataFetcher(table).getClassMetadata(table, params);
+            return conn.getDataSourceDriver().createMetadataFetcher(table)
+                    .getClassMetadata(table, params);
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -214,7 +257,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public LoadData<ListModelData> getListClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
+    public LoadData<ListModelData> getListClassData(ClassMetadata metadata,
+                                                    ClassLoadConfig loadConfig,
                                                     ApplicationUser user) {
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
@@ -234,7 +278,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public LoadData<RowModelData> getTableClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
+    public LoadData<RowModelData> getTableClassData(ClassMetadata metadata,
+                                                    ClassLoadConfig loadConfig,
                                                     ApplicationUser user) {
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
@@ -245,8 +290,9 @@ public class MultibaseConnector extends AbstractConnector {
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createTableFetcher(table).getTableData(metadata, table,
-                    decode(loadConfig, user));
+            return conn.getDataSourceDriver().createTableFetcher(table)
+                    .getTableData(metadata, table,
+                            decode(loadConfig, user));
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -254,7 +300,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public List<RowModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig,
+    public List<RowModelData> getTreeClassData(ClassMetadata metadata,
+                                               TreeClassLoadConfig loadConfig,
                                                ApplicationUser user) {
 
         if (metadata.getClassId() == null) {
@@ -281,14 +328,16 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public RowModelData insert(ClassMetadata metadata, DataModifyConfig config, ApplicationUser user) {
+    public RowModelData insert(ClassMetadata metadata, DataModifyConfig config,
+                               ApplicationUser user) {
 
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createDataChanger(table).insert(metadata, config, table);
+            return conn.getDataSourceDriver().createDataChanger(table)
+                    .insert(metadata, config, table);
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -296,7 +345,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public RowModelData update(ClassMetadata metadata, DataModifyConfig config, ApplicationUser user) {
+    public RowModelData update(ClassMetadata metadata, DataModifyConfig config,
+                               ApplicationUser user) {
         RowModelData model = config.getModels().get(0);
         // не редактируемые записи не трогаем.
         if (model == null || !model.isEditable()) {
@@ -308,7 +358,8 @@ public class MultibaseConnector extends AbstractConnector {
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createDataChanger(table).update(metadata, config, table);
+            return conn.getDataSourceDriver().createDataChanger(table)
+                    .update(metadata, config, table);
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -329,7 +380,8 @@ public class MultibaseConnector extends AbstractConnector {
         }
     }
 
-    public FormModel getForm(String formId, List<DataValue> params, ApplicationUser user) throws CustomException {
+    public FormModel getForm(String formId, List<DataValue> params, ApplicationUser user)
+            throws CustomException {
         try (ClientFormWriter writer = new ClientFormWriter(connectionProvider,
                 getFormRepresent(formId, params, user), params, user)) {
             writer.write(null);
@@ -354,7 +406,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public FormElementWrapper getFormRepresent(String formId, List<DataValue> params, ApplicationUser user) {
+    public FormElementWrapper getFormRepresent(String formId, List<DataValue> params,
+                                               ApplicationUser user) {
         FormElement element = null;
         for (ComponentElement comp : user.getApplication().getAvailableComponents()) {
             if (formId.equals(comp.getId())) {
@@ -382,9 +435,13 @@ public class MultibaseConnector extends AbstractConnector {
             ComponentModel model = componentElementsToModels(child, params,
                     applicationLocale(user.getApplication(), user.getLocaleElement()), user);
             Integer row = (model.getValue(PropertyType.LayoutDataFormRow.getCode()) == null ? 0
-                    : model.getValue(PropertyType.LayoutDataFormRow.getCode()).getDouble().intValue());
-            Integer column = (model.getValue(PropertyType.LayoutDataFormColumn.getCode()) == null ? 0
-                    : model.getValue(PropertyType.LayoutDataFormColumn.getCode()).getDouble().intValue());
+                    : model.getValue(PropertyType.LayoutDataFormRow.getCode()).getDouble()
+                    .intValue());
+            Integer column =
+                    (model.getValue(PropertyType.LayoutDataFormColumn.getCode()) == null ? 0
+                            :
+                            model.getValue(PropertyType.LayoutDataFormColumn.getCode()).getDouble()
+                                    .intValue());
             CellElementWrapper cell = form.getCell(row, column);
             cell.setComponentElement(child);
             cell.setComponent(model);
@@ -408,7 +465,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public void exportXLS(ClassMetadata metadata, boolean columnHeader, boolean xlsx, ClassLoadConfig loadConfig,
+    public void exportXLS(ClassMetadata metadata, boolean columnHeader, boolean xlsx,
+                          ClassLoadConfig loadConfig,
                           OutputStream output, ApplicationUser user) {
         DBReader reader = null;
 
@@ -417,8 +475,9 @@ public class MultibaseConnector extends AbstractConnector {
 
         try (ConnectionWrapper conn = aliasConnection(
                 ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            reader = conn.getDataSourceDriver().createDataFetcher(table).getTableReader(metadata, table,
-                    decode(loadConfig, user));
+            reader = conn.getDataSourceDriver().createDataFetcher(table)
+                    .getTableReader(metadata, table,
+                            decode(loadConfig, user));
 
             XLSExporter exporter = new XLSExporter(metadata, reader);
             exporter.setColumnHeader(columnHeader);
@@ -430,7 +489,8 @@ public class MultibaseConnector extends AbstractConnector {
             throw new CustomException("Error while loading table data: " + metadata.getTitle());
         } catch (IOException e) {
             _log.error("Error while exporting table: " + metadata.getTitle() + " to xls", e);
-            throw new CustomException("Error while exporting table: " + metadata.getTitle() + " to xls");
+            throw new CustomException(
+                    "Error while exporting table: " + metadata.getTitle() + " to xls");
         } finally {
             if (reader != null) {
                 reader.close();
@@ -439,7 +499,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public void exportCSV(ClassMetadata metadata, boolean columnHeader, ClassLoadConfig loadConfig, OutputStream output,
+    public void exportCSV(ClassMetadata metadata, boolean columnHeader, ClassLoadConfig loadConfig,
+                          OutputStream output,
                           ApplicationUser user) {
 
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
@@ -447,8 +508,9 @@ public class MultibaseConnector extends AbstractConnector {
 
         DBReader reader = null;
         try (ConnectionWrapper conn = aliasConnection((DatabaseTableElement) table, user)) {
-            reader = conn.getDataSourceDriver().createDataFetcher(table).getTableReader(metadata, table,
-                    decode(loadConfig, user));
+            reader = conn.getDataSourceDriver().createDataFetcher(table)
+                    .getTableReader(metadata, table,
+                            decode(loadConfig, user));
 
             CSVExporter exporter = new CSVExporter(metadata, reader);
             exporter.setColumnHeader(columnHeader);
@@ -456,7 +518,8 @@ public class MultibaseConnector extends AbstractConnector {
             output.flush();
         } catch (IOException e) {
             _log.error("Error while exporting table: " + metadata.getTitle() + " to xls", e);
-            throw new CustomException("Error while exporting table: " + metadata.getTitle() + " to xls");
+            throw new CustomException(
+                    "Error while exporting table: " + metadata.getTitle() + " to xls");
         } catch (SQLException e) {
             _log.error("Error while loading table data: " + metadata.getTitle(), e);
             throw new CustomException("Error while loading table data: " + metadata.getTitle());
@@ -481,11 +544,13 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public Map<PropertyType, PropertyValue> getReportProperties(String codeOrId, boolean isCode, ApplicationUser user) {
+    public Map<PropertyType, PropertyValue> getReportProperties(String codeOrId, boolean isCode,
+                                                                ApplicationUser user) {
         for (ComponentElement comp : user.getApplication().getAvailableComponents()) {
             if (isCode
                     ? codeOrId.equals(comp.getProperty(PropertyType.Code)
-                    .getValue(applicationLocale(user.getApplication(), user.getLocaleElement())).getString())
+                    .getValue(applicationLocale(user.getApplication(), user.getLocaleElement()))
+                    .getString())
                     : codeOrId.equals(comp.getId())) {
                 ReportElement report = (ReportElement) comp;
                 Map<PropertyType, PropertyValue> props = new HashMap<PropertyType, PropertyValue>(
@@ -503,7 +568,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public EventMetadata getNextEvent(EventMetadata event, String nextEventCode, ApplicationUser user) {
+    public EventMetadata getNextEvent(EventMetadata event, String nextEventCode,
+                                      ApplicationUser user) {
         EventMetadata result = null;
         ApplicationElement appElem = user.getApplication();
         EventElement foundEvent = appElem.findNextEventElement(event.getId(), nextEventCode);
@@ -556,7 +622,8 @@ public class MultibaseConnector extends AbstractConnector {
     // }
 
     @Override
-    public EventResult executeDBFunction(EventMetadata event, List<DataValue> params, ApplicationUser user) {
+    public EventResult executeDBFunction(EventMetadata event, List<DataValue> params,
+                                         ApplicationUser user) {
         return executeDB(event, params, user,
                 (eventConnection, holder) ->
                         eventConnection.getDataSourceDriver().createEventExecutor()
@@ -564,7 +631,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public EventResult executeSQL(EventMetadata event, List<DataValue> params, ApplicationUser user) {
+    public EventResult executeSQL(EventMetadata event, List<DataValue> params,
+                                  ApplicationUser user) {
         return executeDB(event, params, user,
                 (eventConnection, holder) ->
                         eventConnection.getDataSourceDriver().createEventExecutor()
@@ -576,13 +644,16 @@ public class MultibaseConnector extends AbstractConnector {
         EventElement eventElement = user.getApplication().findEventElementById(event.getId());
         if (eventElement != null) {
             List<DataValue> splittedParameters = splitParameters(params);
-            String alias = eventElement.getDataSource() != null ? eventElement.getDataSource().getAlias()
-                    : SrvConstant.DEFAULT_CONNECTION;
+            String alias =
+                    eventElement.getDataSource() != null ? eventElement.getDataSource().getAlias()
+                            : SrvConstant.DEFAULT_CONNECTION;
             try (ConnectionWrapper eventConnection = aliasConnection(alias, user)) {
-                return func.apply(eventConnection, new AbstractMap.SimpleEntry<>(eventElement, splittedParameters));
+                return func.apply(eventConnection,
+                        new AbstractMap.SimpleEntry<>(eventElement, splittedParameters));
             } catch (SQLException e) {
                 _log.error("Error while loading event data: " + eventElement.getName(), e);
-                throw new CustomException("Error while loading event data: " + eventElement.getName());
+                throw new CustomException(
+                        "Error while loading event data: " + eventElement.getName());
             }
         } else {
             throw new CustomException("Event not found.");
@@ -616,11 +687,13 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public FileValue downloadFileFromTable(String tableId, String column, String rowId, ApplicationUser user) {
+    public FileValue downloadFileFromTable(String tableId, String column, String rowId,
+                                           ApplicationUser user) {
         AbstractTableElement table = findTableElement(tableId, user);
         assertTrue(table != null, "DataSource not found");
         try (ConnectionWrapper conn = aliasConnection((DatabaseTableElement) table, user)) {
-            return conn.getDataSourceDriver().createFileFetcher(table).downloadFileFromTable(table, column, rowId);
+            return conn.getDataSourceDriver().createFileFetcher(table)
+                    .downloadFileFromTable(table, column, rowId);
         } catch (SQLException e) {
             _log.error("Error while loading file", e);
             throw new CustomException("Error while loading file");
@@ -685,7 +758,7 @@ public class MultibaseConnector extends AbstractConnector {
         if (config.getWhereSql() != null) {
             config.setWhereSql(user.getEncryptor().decrypt(config.getWhereSql()));
         }
-        if(config.getLabelExpression() != null) {
+        if (config.getLabelExpression() != null) {
             config.setLabelExpression(user.getEncryptor().decrypt(config.getLabelExpression()));
         }
         return config;

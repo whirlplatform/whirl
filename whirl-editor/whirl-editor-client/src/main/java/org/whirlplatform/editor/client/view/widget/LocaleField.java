@@ -10,7 +10,6 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 
 /**
  * Locale input control
- *
  */
 public class LocaleField extends HBoxLayoutContainer {
     private final String LANGUAGE_LABEL = EditorMessage.Util.MESSAGE.language();

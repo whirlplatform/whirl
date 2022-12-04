@@ -1,10 +1,9 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
+import java.util.Map;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
-
-import java.util.Map;
 
 /**
  * Формирует метаданные таблицы базы данных

@@ -1,13 +1,12 @@
 package org.whirlplatform.integration.event;
 
+import java.util.Arrays;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Location;
 import org.jboss.arquillian.protocol.servlet.arq514hack.descriptors.impl.web.Strings;
 import org.openqa.selenium.WebElement;
 import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
-
-import java.util.Arrays;
 
 @Location("app?role=events_test2")
 public class EventsTest2Page extends AbstractPage {

@@ -7,14 +7,13 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import java.util.Collection;
 import org.whirlplatform.editor.client.component.PropertyValueField;
 import org.whirlplatform.editor.client.presenter.ContextMenuItemPresenter;
 import org.whirlplatform.editor.client.presenter.ContextMenuItemPresenter.IContextMenuItemView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
-
-import java.util.Collection;
 
 public class ContextMenuItemView extends ContentPanel implements IContextMenuItemView {
 
@@ -42,14 +41,10 @@ public class ContextMenuItemView extends ContentPanel implements IContextMenuIte
                 10, 0, 10)));
 
         imageUrlField = new TextField();
-        imageUrlLabel = new FieldLabel(imageUrlField, EditorMessage.Util.MESSAGE.context_menu_item_image());
+        imageUrlLabel =
+                new FieldLabel(imageUrlField, EditorMessage.Util.MESSAGE.context_menu_item_image());
         container.add(imageUrlLabel, new VerticalLayoutData(1, -1, new Margins(10,
                 10, 0, 10)));
-    }
-
-    @Override
-    public void setPresenter(ContextMenuItemPresenter presenter) {
-        this.presenter = presenter;
     }
 
     @Override
@@ -58,8 +53,8 @@ public class ContextMenuItemView extends ContentPanel implements IContextMenuIte
     }
 
     @Override
-    public void setLabel(PropertyValue label) {
-        labelField.setPropertyValue(label);
+    public void setPresenter(ContextMenuItemPresenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -68,13 +63,18 @@ public class ContextMenuItemView extends ContentPanel implements IContextMenuIte
     }
 
     @Override
-    public void setImageUrl(String imageUrl) {
-        imageUrlField.setValue(imageUrl);
+    public void setLabel(PropertyValue label) {
+        labelField.setPropertyValue(label);
     }
 
     @Override
     public String getImageUrl() {
         return imageUrlField.getValue();
+    }
+
+    @Override
+    public void setImageUrl(String imageUrl) {
+        imageUrlField.setValue(imageUrl);
     }
 
     @Override

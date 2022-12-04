@@ -1,13 +1,16 @@
 package org.whirlplatform.meta.shared.editor;
 
 import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public interface ElementVisitor<T extends VisitContext> {
-
-    interface VisitContext {
-
-    }
 
     // component
     void visit(T ctx, AbstractElement element);
@@ -58,5 +61,9 @@ public interface ElementVisitor<T extends VisitContext> {
     void visit(T ctx, DynamicTableElement element);
 
     void visit(T ctx, ContextMenuItemElement element);
+
+    interface VisitContext {
+
+    }
 
 }

@@ -15,13 +15,6 @@ import org.whirlplatform.meta.shared.ClientUser;
 @Presenter(view = LoginView.class)
 public class LoginPresenter extends
         BasePresenter<LoginPresenter.ILoginView, EditorEventBus> {
-    public interface ILoginView extends IsWidget,
-            ReverseViewInterface<LoginPresenter> {
-        void setButtonEnabled(boolean enabled);
-
-        void clear();
-    }
-
     public void onStart() {
         EditorDataService.Util.getDataService().getUser(
                 new AsyncCallback<ClientUser>() {
@@ -73,5 +66,12 @@ public class LoginPresenter extends
     public void onShowLoginPanel() {
         view.clear();
         ((Window) view).show();
+    }
+
+    public interface ILoginView extends IsWidget,
+            ReverseViewInterface<LoginPresenter> {
+        void setButtonEnabled(boolean enabled);
+
+        void clear();
     }
 }

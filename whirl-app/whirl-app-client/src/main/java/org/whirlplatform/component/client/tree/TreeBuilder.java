@@ -37,11 +37,22 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.Clearable;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.HasState;
+import org.whirlplatform.component.client.ListParameter;
+import org.whirlplatform.component.client.ParameterHelper;
+import org.whirlplatform.component.client.Validatable;
 import org.whirlplatform.component.client.data.ClassKeyProvider;
 import org.whirlplatform.component.client.event.ChangeEvent;
 import org.whirlplatform.component.client.event.SelectEvent;
@@ -56,21 +67,27 @@ import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
-import java.util.*;
-
 /**
  * Дерево
  */
 @JsType(name = "Tree", namespace = "Whirl")
 public class TreeBuilder extends ComponentBuilder
-        implements Clearable, ListParameter<RowListValue>, Validatable, SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
+        implements Clearable, ListParameter<RowListValue>, Validatable,
+        SelectEvent.HasSelectHandlers, ChangeEvent.HasChangeHandlers, HasState {
 
     protected TreeStore<ListModelData> store;
     /**
@@ -294,7 +311,8 @@ public class TreeBuilder extends ComponentBuilder
 
     private void setDataSourceId(String dataSourceId) {
         this.dataSourceId = dataSourceId;
-        selectionStateStore = new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, getClassMetadata());
+        selectionStateStore =
+                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, getClassMetadata());
     }
 
     protected TreeLoader<ListModelData> initLoader(final TreeStore<ListModelData> store) {
@@ -361,19 +379,22 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected RpcProxy<ListModelData, List<ListModelData>> createProxy() {
-        RpcProxy<ListModelData, List<ListModelData>> proxy = new RpcProxy<ListModelData, List<ListModelData>>() {
-            @Override
-            public void load(final ListModelData parent, final AsyncCallback<List<ListModelData>> callback) {
-                Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+        RpcProxy<ListModelData, List<ListModelData>> proxy =
+                new RpcProxy<ListModelData, List<ListModelData>>() {
                     @Override
-                    public void execute() {
-                        DataServiceAsync.Util.getDataService(callback).getTreeClassData(SessionToken.get(),
-                                getClassMetadata(), getLoadConfig(parent));
-                        lastParameters = Collections.emptyList();
+                    public void load(final ListModelData parent,
+                                     final AsyncCallback<List<ListModelData>> callback) {
+                        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+                            @Override
+                            public void execute() {
+                                DataServiceAsync.Util.getDataService(callback)
+                                        .getTreeClassData(SessionToken.get(),
+                                                getClassMetadata(), getLoadConfig(parent));
+                                lastParameters = Collections.emptyList();
+                            }
+                        });
                     }
-                });
-            }
-        };
+                };
         return proxy;
     }
 
@@ -394,17 +415,18 @@ public class TreeBuilder extends ComponentBuilder
         tree.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         // Будет работать при нажатии чекбокса?
-        tree.getSelectionModel().addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
-            @Override
-            public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
-                if (saveState) {
-                    saveCurrentTask.delay(100);
-                } else {
-                    fireEvent(new SelectEvent());
-                    fireEvent(new ChangeEvent());
-                }
-            }
-        });
+        tree.getSelectionModel()
+                .addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
+                    @Override
+                    public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
+                        if (saveState) {
+                            saveCurrentTask.delay(100);
+                        } else {
+                            fireEvent(new SelectEvent());
+                            fireEvent(new ChangeEvent());
+                        }
+                    }
+                });
 
         tree.addValueChangeHandler(new ValueChangeHandler<ListModelData>() {
             @Override
@@ -423,7 +445,8 @@ public class TreeBuilder extends ComponentBuilder
         // вызывается select, и событие отрабатывает несколько раз
         AbstractCell<String> cell = new AbstractCell<String>() {
             @Override
-            public void render(com.google.gwt.cell.client.Cell.Context context, String value, SafeHtmlBuilder sb) {
+            public void render(com.google.gwt.cell.client.Cell.Context context, String value,
+                               SafeHtmlBuilder sb) {
                 String q = tree.getSearchText();
                 ListModelData model = store.findModelWithKey((String) context.getKey());
                 String style = model.getStyle(labelExpression);
@@ -433,7 +456,8 @@ public class TreeBuilder extends ComponentBuilder
                 result.append("<span title=\"" + data + "\"");
                 result.append(" style=\"");
                 // серым отображаются элементы не найденный в поиске
-                if (isQuery() && !(!Util.isEmptyString(value) && value.toLowerCase().contains(q.toLowerCase()))) {
+                if (isQuery() && !(!Util.isEmptyString(value) &&
+                        value.toLowerCase().contains(q.toLowerCase()))) {
                     result.append("color: darkgray;");
                 }
                 if (!Util.isEmptyString(style)) {
@@ -793,15 +817,18 @@ public class TreeBuilder extends ComponentBuilder
                 .getInputElement(tree.getSearchField().getElement()).isOrHasChild(element)) {
             part = new Locator(LocatorParams.TYPE_SEARCH_FIELD);
             part.setPart(new Locator(LocatorParams.TYPE_INPUT));
-        } else if (tree.getSearchButton() != null && tree.getSearchButton().getElement().isOrHasChild(element)) {
+        } else if (tree.getSearchButton() != null &&
+                tree.getSearchButton().getElement().isOrHasChild(element)) {
             part = new Locator(LocatorParams.TYPE_SEARCH_BUTTON);
         } else {
             Tree.TreeNode<ListModelData> itemNode = tree.findNode(element);
             if (itemNode != null) {
                 part = new Locator(LocatorParams.TYPE_ITEM);
                 part.setParameter(LocatorParams.PARAMETER_ID, itemNode.getModelId());
-                part.setParameter(LocatorParams.PARAMETER_INDEX, String.valueOf(store.indexOf(itemNode.getModel())));
-                part.setParameter(LocatorParams.PARAMETER_LABEL, valueProvider.getValue(itemNode.getModel()));
+                part.setParameter(LocatorParams.PARAMETER_INDEX,
+                        String.valueOf(store.indexOf(itemNode.getModel())));
+                part.setParameter(LocatorParams.PARAMETER_LABEL,
+                        valueProvider.getValue(itemNode.getModel()));
                 TreeView<ListModelData> view = tree.getView();
                 if (view.getCheckElement(itemNode).isOrHasChild(element)) {
                     part.setPart(new Locator(LocatorParams.TYPE_CHECK));
@@ -828,10 +855,14 @@ public class TreeBuilder extends ComponentBuilder
 
         Locator part = locator.getPart();
         if (part != null) {
-            if (LocatorParams.TYPE_SEARCH_FIELD.equals(part.getType()) && tree.getSearchField() != null
-                    && part.getPart() != null && LocatorParams.TYPE_INPUT.equals(part.getPart().getType())) {
-                return tree.getSearchField().getCell().getInputElement(tree.getSearchField().getElement());
-            } else if (LocatorParams.TYPE_SEARCH_BUTTON.equals(part.getType()) && tree.getSearchButton() != null) {
+            if (LocatorParams.TYPE_SEARCH_FIELD.equals(part.getType()) &&
+                    tree.getSearchField() != null
+                    && part.getPart() != null &&
+                    LocatorParams.TYPE_INPUT.equals(part.getPart().getType())) {
+                return tree.getSearchField().getCell()
+                        .getInputElement(tree.getSearchField().getElement());
+            } else if (LocatorParams.TYPE_SEARCH_BUTTON.equals(part.getType()) &&
+                    tree.getSearchButton() != null) {
                 return tree.getSearchButton().getElement();
             } else if (LocatorParams.TYPE_ITEM.equals(part.getType())) {
                 ListModelData model = null;
@@ -841,7 +872,8 @@ public class TreeBuilder extends ComponentBuilder
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
                         && !Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     for (ListModelData m : store.getAll()) {
-                        if (part.getParameter(LocatorParams.PARAMETER_LABEL).equals(valueProvider.getValue(model))) {
+                        if (part.getParameter(LocatorParams.PARAMETER_LABEL)
+                                .equals(valueProvider.getValue(model))) {
                             model = m;
                             break;
                         }

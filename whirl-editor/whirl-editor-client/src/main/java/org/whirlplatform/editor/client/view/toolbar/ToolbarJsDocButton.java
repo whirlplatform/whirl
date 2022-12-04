@@ -18,7 +18,7 @@ public class ToolbarJsDocButton extends AbstractContextTextButton<ToolBarPresent
 
     @Override
     protected SelectEvent.SelectHandler createSelectHandler() {
-        return event -> Window.open( API_DOC, "_blank", "");
+        return event -> Window.open(API_DOC, "_blank", "");
     }
 
     @Override

@@ -11,6 +11,9 @@ import com.sencha.gxt.widget.core.client.container.Container;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.component.client.event.ClickEvent;
@@ -18,28 +21,14 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 public class HorizontalMenuItemBuilder extends ComponentBuilder implements
         ClickEvent.HasClickHandlers, Containable {
-
-    public class ComponentHorizontalMenuItem extends Container {
-
-        public ComponentHorizontalMenuItem() {
-            setElement(menuItem.getElement());
-        }
-
-    }
 
     private ComponentHorizontalMenuItem wrapper;
     private String imageUrl;
     private String html;
-
     private Menu menu;
     private MenuItem menuItem;
-
     private List<ComponentBuilder> children;
 
     public HorizontalMenuItemBuilder(Map<String, DataValue> builderProperties) {
@@ -92,22 +81,22 @@ public class HorizontalMenuItemBuilder extends ComponentBuilder implements
         return super.setProperty(name, value);
     }
 
+    public String getHtml() {
+        return html;
+    }
+
     public void setHtml(String html) {
         this.html = html;
         menuItem.setHTML(html);
     }
 
-    public String getHtml() {
-        return html;
+    public String getImage() {
+        return imageUrl;
     }
 
     public void setImage(String url) {
         imageUrl = url;
         menuItem.setIcon(getImageResource(url));
-    }
-
-    public String getImage() {
-        return imageUrl;
     }
 
     private ImageResource getImageResource(String imageUrl) {
@@ -174,6 +163,14 @@ public class HorizontalMenuItemBuilder extends ComponentBuilder implements
     @SuppressWarnings("unchecked")
     protected ComponentHorizontalMenuItem getRealComponent() {
         return wrapper;
+    }
+
+    public class ComponentHorizontalMenuItem extends Container {
+
+        public ComponentHorizontalMenuItem() {
+            setElement(menuItem.getElement());
+        }
+
     }
 
 }

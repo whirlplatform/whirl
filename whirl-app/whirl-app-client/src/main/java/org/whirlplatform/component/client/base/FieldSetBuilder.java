@@ -9,6 +9,8 @@ import com.sencha.gxt.widget.core.client.event.CollapseEvent.CollapseHandler;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent.ExpandHandler;
 import com.sencha.gxt.widget.core.client.form.FieldSet;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -18,9 +20,6 @@ import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * Набор полей
@@ -107,21 +106,21 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
     }
 
     /**
-     * Устанавливает увеличения или свертывания поля.
-     *
-     * @param expand - boolean, true для расширения набора полей
-     */
-    public void setExpanded(boolean expand) {
-        ((FieldSet) container).setExpanded(expand);
-    }
-
-    /**
      * Возвращает установленное значение увеличения или свертывания поля.
      *
      * @return - boolean, true для расширения набора полей
      */
     public boolean isExpanded() {
         return ((FieldSet) container).isExpanded();
+    }
+
+    /**
+     * Устанавливает увеличения или свертывания поля.
+     *
+     * @param expand - boolean, true для расширения набора полей
+     */
+    public void setExpanded(boolean expand) {
+        ((FieldSet) container).setExpanded(expand);
     }
 
     @Override
@@ -206,8 +205,7 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

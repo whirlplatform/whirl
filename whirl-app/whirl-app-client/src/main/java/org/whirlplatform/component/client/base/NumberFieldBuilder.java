@@ -8,6 +8,8 @@ import com.sencha.gxt.widget.core.client.form.NumberField;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
 import com.sencha.gxt.widget.core.client.form.validator.MaxNumberValidator;
 import com.sencha.gxt.widget.core.client.form.validator.MinNumberValidator;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -22,14 +24,12 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Числовое поле ввода
  */
 @JsType(name = "NumberField", namespace = "Whirl")
-public class NumberFieldBuilder extends AbstractFieldBuilder implements NativeParameter<Double>, Parameter<DataValue> {
+public class NumberFieldBuilder extends AbstractFieldBuilder
+        implements NativeParameter<Double>, Parameter<DataValue> {
 
     private NumberField<Double> field;
     // private MaxLengthValidator maxLengthValidator;
@@ -275,10 +275,6 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
         }
     }
 
-    private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-    }
-
     @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -392,5 +388,9 @@ public class NumberFieldBuilder extends AbstractFieldBuilder implements NativePa
     @Override
     public void setReadOnly(boolean readOnly) {
         super.setReadOnly(readOnly);
+    }
+
+    private static class LocatorParams {
+        private static String TYPE_INPUT = "Input";
     }
 }

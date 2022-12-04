@@ -24,7 +24,8 @@ public class TabPanelDesigner extends ComponentDesigner {
     }
 
     @Override
-    protected void initRootDropTarget(final ComponentElement element, final ComponentBuilder builder) {
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
         new TabPanelDropTarget((TabPanel) builder.getComponent()) {
             @Override
             protected void onDragDrop(DndDropEvent event) {
@@ -46,12 +47,14 @@ public class TabPanelDesigner extends ComponentDesigner {
                 }
                 int i = idx.intValue();
                 if (i >= index) {
-                    fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(e, PropertyType.LayoutDataIndex,
-                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+                    fireComponentPropertyChangeEvent(
+                            new ComponentPropertyChangeEvent(e, PropertyType.LayoutDataIndex,
+                                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
                 }
             }
-            fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+            fireComponentPropertyChangeEvent(
+                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
         }
     }
 

@@ -1,16 +1,15 @@
 package org.whirlplatform.editor.shared.visitor;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.EventElement;
-
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
-import static org.junit.Assert.assertEquals;
 
 public class SearchGraphVisitorTest {
 
@@ -139,10 +138,12 @@ public class SearchGraphVisitorTest {
     public void searchElementVisitorTest() {
         SearchGraphVisitor visitor = new SearchGraphVisitor();
 
-        ComponentElement findedComponent = visitor.search(application, thirdSecondComponent.getId());
+        ComponentElement findedComponent =
+                visitor.search(application, thirdSecondComponent.getId());
         assertEquals("Component not found", thirdSecondComponent, findedComponent);
 
-        EventElement findedEvent = visitor.search(application, rootFirstSecondESecondEFirstEvent.getId());
+        EventElement findedEvent =
+                visitor.search(application, rootFirstSecondESecondEFirstEvent.getId());
         assertEquals("Event not found", rootFirstSecondESecondEFirstEvent, findedEvent);
 
     }

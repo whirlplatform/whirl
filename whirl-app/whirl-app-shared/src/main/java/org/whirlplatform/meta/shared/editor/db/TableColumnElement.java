@@ -1,13 +1,12 @@
 package org.whirlplatform.meta.shared.editor.db;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
-
-import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class TableColumnElement extends AbstractElement implements Cloneable {
@@ -224,15 +223,15 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
     public void setConfigColumn(String configColumn) {
         this.configColumn = configColumn;
     }
-    
+
     public String getLabelExpression() {
         return labelExpression;
     }
-    
+
     public void setLabelExpression(String labelExpression) {
         this.labelExpression = labelExpression;
     }
-    
+
     @Deprecated
     public TableColumnElement clone() {
         TableColumnElement clone = new TableColumnElement();

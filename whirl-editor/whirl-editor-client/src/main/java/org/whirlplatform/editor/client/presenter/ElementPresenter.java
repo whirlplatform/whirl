@@ -6,5 +6,5 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  *
  */
 public interface ElementPresenter {
-	void onOpenElement(AbstractElement element);
+    void onOpenElement(AbstractElement element);
 }

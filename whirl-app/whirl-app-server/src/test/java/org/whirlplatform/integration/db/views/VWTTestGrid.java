@@ -33,7 +33,8 @@ public class VWTTestGrid extends DBView {
     public DBCommandExpr createCommand() {
         TestTableSet db = (TestTableSet) getDatabase();
         DBCommand command = db.createCommand();
-        command.select(db.T_TEST_GRID.DFOBJ, db.T_TEST_GRID.DFSTRING, db.T_TEST_GRID.DFNUM, db.T_TEST_GRID.DFDATE,
+        command.select(db.T_TEST_GRID.DFOBJ, db.T_TEST_GRID.DFSTRING, db.T_TEST_GRID.DFNUM,
+                db.T_TEST_GRID.DFDATE,
                 db.T_TEST_GRID.DFBOOLEAN, db.T_TEST_GRID.DFLIST);
         command.select(db.T_TEST_GRID_LIST.LIST_DFNAME.as("DFLISTDFNAME"));
         command.where(db.T_TEST_GRID_LIST.DFOBJ.is(db.T_TEST_GRID.DFLIST));

@@ -1,6 +1,9 @@
 package org.whirlplatform.editor.client.tree.visitor;
 
 import com.sencha.gxt.data.shared.TreeStore;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppGroups;
 import org.whirlplatform.editor.client.tree.dummy.DummyAppLocales;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
@@ -17,11 +20,8 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
+ *
  */
 public class ChangesSorterVisitContext implements VisitContext {
     private final Map<String, String> parents;
@@ -78,7 +78,8 @@ public class ChangesSorterVisitContext implements VisitContext {
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends AbstractElement> void collectRightCollections(Collection<RightCollectionElement> source) {
+    private <T extends AbstractElement> void collectRightCollections(
+            Collection<RightCollectionElement> source) {
         for (RightCollectionElement rightsCollection : source) {
             T parent = (T) rightsCollection.getElement();
             this.collectElementIdToMap(parents, parent, rightsCollection);
@@ -119,8 +120,9 @@ public class ChangesSorterVisitContext implements VisitContext {
         }
     }
 
-    private <T extends AbstractElement, E extends AbstractElement> void collectElementIdToMap(Map<String, String> map,
-                                                                                              T parent, E element) {
+    private <T extends AbstractElement, E extends AbstractElement> void collectElementIdToMap(
+            Map<String, String> map,
+            T parent, E element) {
         if (element != null) {
             if (map.containsKey(element.getId())) {
                 duplicatedIdWarning(element);
@@ -136,16 +138,16 @@ public class ChangesSorterVisitContext implements VisitContext {
         System.out.println(sb.toString());
     }
 
-//	private void parentWarning(final AbstractElement element) {
-//		StringBuilder sb = new StringBuilder("*** Warning! *** Parent was not located for ");
-//		sb.append(element.getClass().getSimpleName());
-//		System.out.println(sb.toString());
-//	}
+//    private void parentWarning(final AbstractElement element) {
+//        StringBuilder sb = new StringBuilder("*** Warning! *** Parent was not located for ");
+//        sb.append(element.getClass().getSimpleName());
+//        System.out.println(sb.toString());
+//    }
 
     public <E extends AbstractElement> String getParentId(final E element) {
         final String id = element.getId();
         if (!parents.containsKey(id)) {
-//			parentWarning(element);
+//            parentWarning(element);
             return null;
         }
         return parents.get(id);

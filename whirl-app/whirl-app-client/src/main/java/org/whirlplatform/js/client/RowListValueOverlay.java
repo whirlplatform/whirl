@@ -5,14 +5,15 @@ import org.whirlplatform.meta.shared.data.RowValue;
 
 
 /**
- * Список метаданных о строках списка или таблицы {@link RowValueOverlay RowValue} с методами доступа и манипуляции ими
+ * Список метаданных о строках списка или таблицы {@link RowValueOverlay RowValue} с методами
+ * доступа и манипуляции ими
  */
 public abstract class RowListValueOverlay {
 
 
     /**
-     * Получить список объектов, хранящих служебную информацию о строках грида {@link RowValueOverlay RowValue}[]
-     * Значений отдельных ячеек здесь нет.
+     * Получить список объектов, хранящих служебную информацию о строках грида
+     * {@link RowValueOverlay RowValue}[] Значений отдельных ячеек здесь нет.
      *
      * @return Список метаданных о строках грида {@link RowValueOverlay RowValue}[]
      */

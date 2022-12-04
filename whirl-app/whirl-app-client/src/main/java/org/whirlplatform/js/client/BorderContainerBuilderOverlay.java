@@ -8,9 +8,8 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 
 /**
- * Контейнер может содержать вложенные контейнеры, выровненные по его границам
- * (северный-NORTH, южный-SOUTH, западный-WEST, восточный-EAST)
- *
+ * Контейнер может содержать вложенные контейнеры, выровненные по его границам (северный-NORTH,
+ * южный-SOUTH, западный-WEST, восточный-EAST)
  */
 public abstract class BorderContainerBuilderOverlay {
 
@@ -20,60 +19,16 @@ public abstract class BorderContainerBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-
-    /**
-     * Управляет доступностью контейнера и вложенных компонентов для действий пользователя.
-     * В случае enabled = false компоненты остаются видимыми, но недоступными для действий пользователя
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    /**
-     * Метод позволяет управлять видимостью компонента
-     * Скрытые компоненты не занимают места в DOM-дереве браузера
-     *
-     * @param hidden Скрыть компонент (hidden = true), либо показать(hidden = false)
-     */
-    public abstract void setHidden(boolean hidden);
-
-    public abstract boolean isHidden();
-
-    /**
-     * Устанавливает значение DOM-атрибута компонента class = "styleName".
-     * Пример: setStyleName("wide-container-class no-bordered") -> <div ... class="wide-container-class no-bordered" ... >...</div>
-     *
-     * @param styleName
-     */
-    public abstract void setStyleName(String styleName);
-
-    /**
      * Устанавливает компонент(builder) в западную(слева) часть контейнера
      *
      * @param builder билдер компонента, который помещаем в западную часть BorderContainer
      */
     public static void setChildWest(BorderContainerBuilder instance,
                                     ComponentBuilder builder) {
-        builder.setProperty(PropertyType.LayoutDataLocation.getCode(), new DataValueImpl(DataType.STRING, "West"));
+        builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
+                new DataValueImpl(DataType.STRING, "West"));
         instance.addChild(builder);
     }
-
 
     /**
      * Устанавливает компонент(builder) в восточную(справа) часть контейнера
@@ -82,7 +37,8 @@ public abstract class BorderContainerBuilderOverlay {
      */
     public static void setChildEast(BorderContainerBuilder instance,
                                     ComponentBuilder builder) {
-        builder.setProperty(PropertyType.LayoutDataLocation.getCode(), new DataValueImpl(DataType.STRING, "East"));
+        builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
+                new DataValueImpl(DataType.STRING, "East"));
         instance.addChild(builder);
     }
 
@@ -93,7 +49,8 @@ public abstract class BorderContainerBuilderOverlay {
      */
     public static void setChildNorth(BorderContainerBuilder instance,
                                      ComponentBuilder builder) {
-        builder.setProperty(PropertyType.LayoutDataLocation.getCode(), new DataValueImpl(DataType.STRING, "North"));
+        builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
+                new DataValueImpl(DataType.STRING, "North"));
         instance.addChild(builder);
     }
 
@@ -104,7 +61,8 @@ public abstract class BorderContainerBuilderOverlay {
      */
     public static void setChildSouth(BorderContainerBuilder instance,
                                      ComponentBuilder builder) {
-        builder.setProperty(PropertyType.LayoutDataLocation.getCode(), new DataValueImpl(DataType.STRING, "South"));
+        builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
+                new DataValueImpl(DataType.STRING, "South"));
         instance.addChild(builder);
     }
 
@@ -125,17 +83,59 @@ public abstract class BorderContainerBuilderOverlay {
         instance.clearContainer();
     }
 
-    public abstract ComponentBuilder[] getChildren();
+    public static ComponentBuilder getParent(BorderContainerBuilder instance) {
+        return instance.getParentBuilder();
+    }
 
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    /**
+     * Управляет доступностью контейнера и вложенных компонентов для действий пользователя. В случае
+     * enabled = false компоненты остаются видимыми, но недоступными для действий пользователя
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    public abstract boolean isHidden();
+
+    /**
+     * Метод позволяет управлять видимостью компонента Скрытые компоненты не занимают места в
+     * DOM-дереве браузера
+     *
+     * @param hidden Скрыть компонент (hidden = true), либо показать(hidden = false)
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
+     * Устанавливает значение DOM-атрибута компонента class = "styleName". Пример:
+     * setStyleName("wide-container-class no-bordered") -> <div ... class="wide-container-class
+     * no-bordered" ... >...</div>
+     *
+     * @param styleName
+     */
+    public abstract void setStyleName(String styleName);
+
+    public abstract ComponentBuilder[] getChildren();
 
     /**
      * Выполняет принудительную перерисовку контейнера и вложенных компонентов.
      */
     public abstract void forceLayout();
-
-    public static ComponentBuilder getParent(BorderContainerBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     public abstract int getChildrenCount();
 

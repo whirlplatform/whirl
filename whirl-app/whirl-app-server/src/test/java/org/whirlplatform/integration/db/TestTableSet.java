@@ -26,14 +26,14 @@ public class TestTableSet extends DBDatabase {
     public final VTTestData V_T_TEST_DATA = new VTTestData(this);
 
 
+    private TestTableSet() {
+    }
+
     public static TestTableSet get() {
         if (instance == null) {
             instance = new TestTableSet();
         }
         return instance;
-    }
-
-    private TestTableSet() {
     }
 
 }

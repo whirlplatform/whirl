@@ -15,68 +15,68 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
  *
  */
 public interface AppTree extends AppTreeBase {
-	/*
-	 * Additional element properties
-	 */
-	boolean isPasting(AbstractElement parent);
+    /*
+     * Additional element properties
+     */
+    boolean isPasting(AbstractElement parent);
 
-	boolean hasChild(AbstractElement parent, AbstractElement child, boolean deep);
+    boolean hasChild(AbstractElement parent, AbstractElement child, boolean deep);
 
-	/*
-	 * Element selectors
-	 */
-	AbstractElement getSelectedElement();
+    /*
+     * Element selectors
+     */
+    AbstractElement getSelectedElement();
 
-	TreeNode<AbstractElement> getSelectedNode();
+    TreeNode<AbstractElement> getSelectedNode();
 
-	void setExpanded(AbstractElement element, boolean expanded);
+    void setExpanded(AbstractElement element, boolean expanded);
 
-	void selectElement(AbstractElement element);
+    void selectElement(AbstractElement element);
 
-	/*
-	 * Additional element methods
-	 */
-	boolean doCopyElement(AbstractElement element);
+    /*
+     * Additional element methods
+     */
+    boolean doCopyElement(AbstractElement element);
 
-	boolean doPasteElement(AbstractElement parent);
+    boolean doPasteElement(AbstractElement parent);
 
-	void doOpenElement(AbstractElement element);
+    void doOpenElement(AbstractElement element);
 
-	boolean renameSelectedElement();
+    boolean renameSelectedElement();
 
-	void refresh(AbstractElement element);
+    void refresh(AbstractElement element);
 
-	/*
-	 * Tree parts management
-	 */
-	void putTreePart(AbstractElement element, AppTreePart<? extends AbstractElement> treePart);
+    /*
+     * Tree parts management
+     */
+    void putTreePart(AbstractElement element, AppTreePart<? extends AbstractElement> treePart);
 
-	/*
-	 * Tree state
-	 */
-	void setState(TreeState state);
+    TreeState getState();
 
-	TreeState getState();
+    /*
+     * Tree state
+     */
+    void setState(TreeState state);
 
-	/*
-	 * Application management
-	 */
-	void loadApplication(ApplicationElement application, Version version, AppTreePresenter handler);
+    /*
+     * Application management
+     */
+    void loadApplication(ApplicationElement application, Version version, AppTreePresenter handler);
 
-	ApplicationElement getApplication();
+    ApplicationElement getApplication();
 
-	Version getVersion();
+    Version getVersion();
 
-	void setContextMenu(Menu contextMenu);
+    void setContextMenu(Menu contextMenu);
 
-	/*
-	 * Other
-	 */
-	Widget asWidget();
+    /*
+     * Other
+     */
+    Widget asWidget();
 
-	void setCell(Cell<String> cell);
+    void setCell(Cell<String> cell);
 
-	TreeStore<AbstractElement> getStore();
+    TreeStore<AbstractElement> getStore();
 
-	void clearAll();
+    void clearAll();
 }

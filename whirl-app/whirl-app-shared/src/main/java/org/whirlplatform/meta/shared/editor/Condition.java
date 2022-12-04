@@ -4,6 +4,6 @@ import org.whirlplatform.meta.shared.editor.condition.ConditionSolver;
 
 public interface Condition {
 
-	void accept(ConditionSolver solver);
+    void accept(ConditionSolver solver);
 
 }

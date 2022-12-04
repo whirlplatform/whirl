@@ -6,6 +6,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.sencha.gxt.dnd.core.client.DndDragMoveEvent.DndDragMoveHandler;
+import java.util.Collection;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.ApplicationTreeView;
 import org.whirlplatform.editor.shared.TreeState;
@@ -16,30 +17,13 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.RightType;
 
-import java.util.Collection;
-
 @Presenter(view = ApplicationTreeView.class)
 public class ApplicationTreePresenter extends
-        BasePresenter<ApplicationTreePresenter.IApplicationTreeView, EditorEventBus> implements AppTreePresenter {
-
-    public interface IApplicationTreeView extends IsWidget {
-
-        void addDragMoveHandler(DndDragMoveHandler handler);
-
-        void selectTreeElement(AbstractElement element);
-
-        TreeState getState();
-
-        void setState(TreeState state);
-
-        AppTree getTree();
-
-        void loadApplication(ApplicationElement application, Version version);
-    }
+        BasePresenter<ApplicationTreePresenter.IApplicationTreeView, EditorEventBus>
+        implements AppTreePresenter {
 
     /**
-     * Позволяет определить, элемент был выбран кликом по дереву или из
-     * DesignPresenter
+     * Позволяет определить, элемент был выбран кликом по дереву или из DesignPresenter
      */
     private boolean externalSelection;
 
@@ -130,7 +114,8 @@ public class ApplicationTreePresenter extends
     }
 
     @Override
-    public void riseRemoveElement(AbstractElement parent, AbstractElement element, boolean showDialog) {
+    public void riseRemoveElement(AbstractElement parent, AbstractElement element,
+                                  boolean showDialog) {
         eventBus.removeElement(parent, element, showDialog);
     }
 
@@ -140,7 +125,8 @@ public class ApplicationTreePresenter extends
     }
 
     @Override
-    public void riseEditRights(Collection<? extends AbstractElement> elements, Collection<RightType> rightTypes) {
+    public void riseEditRights(Collection<? extends AbstractElement> elements,
+                               Collection<RightType> rightTypes) {
         eventBus.editRights(elements, rightTypes);
     }
 
@@ -155,7 +141,23 @@ public class ApplicationTreePresenter extends
     }
 
     @Override
-    public void riseShowOpenApplicationsCallback(Callback<ApplicationStoreData, Throwable> callback) {
+    public void riseShowOpenApplicationsCallback(
+            Callback<ApplicationStoreData, Throwable> callback) {
         eventBus.showOpenApplicationsCallback(callback);
+    }
+
+    public interface IApplicationTreeView extends IsWidget {
+
+        void addDragMoveHandler(DndDragMoveHandler handler);
+
+        void selectTreeElement(AbstractElement element);
+
+        TreeState getState();
+
+        void setState(TreeState state);
+
+        AppTree getTree();
+
+        void loadApplication(ApplicationElement application, Version version);
     }
 }

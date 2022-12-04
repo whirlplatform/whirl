@@ -14,6 +14,7 @@ public class BooleanConditionTest {
         Assert.assertTrue("BooleanCondition clone value was not copied", clone.getValue());
         clone.setValue(false);
         Assert.assertFalse("BooleanCondition clone value was not set", clone.getValue());
-        Assert.assertTrue("BooleanCondition origin value depends on clone value", origin.getValue());
+        Assert.assertTrue("BooleanCondition origin value depends on clone value",
+                origin.getValue());
     }
 }

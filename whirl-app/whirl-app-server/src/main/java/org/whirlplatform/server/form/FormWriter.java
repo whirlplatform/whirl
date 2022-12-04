@@ -1,5 +1,20 @@
 package org.whirlplatform.server.form;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.empire.commons.ObjectUtils;
 import org.apache.empire.commons.StringUtils;
@@ -9,7 +24,11 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -26,33 +45,15 @@ import org.whirlplatform.server.log.impl.QueryMessage;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.monitor.RunningEvent;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Map.Entry;
-
 public abstract class FormWriter extends AbstractQueryExecutor {
-    Logger _log = LoggerFactory.getLogger(FormWriter.class);
-
-    private SimpleDateFormat sdf = new SimpleDateFormat(AppConstant.DATE_FORMAT_LONGEST);
-
-    private DecimalFormat decimalFmt = new DecimalFormat("#");
-
     protected ConnectionProvider connectionProvider;
-
     protected FormElementWrapper form;
-
     protected Map<String, DataValue> startParams;
-
     protected ApplicationUser user;
-
     protected boolean refresh;
-
+    Logger _log = LoggerFactory.getLogger(FormWriter.class);
+    private SimpleDateFormat sdf = new SimpleDateFormat(AppConstant.DATE_FORMAT_LONGEST);
+    private DecimalFormat decimalFmt = new DecimalFormat("#");
     private boolean maxRowsReached = false;
 
     protected FormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
@@ -70,40 +71,46 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
 
-
     /**
-     * Выполняет предзапрос на форме. Предзапрос должен лежать в диапазоне
-     * -1:-1.
+     * Выполняет предзапрос на форме. Предзапрос должен лежать в диапазоне -1:-1.
      *
      * @throws ConnectException
      * @throws SQLException
      */
     protected void prepareForm() throws ConnectException, SQLException {
         Sql sql = form.getBeforeSql();
-        if (sql != null && sql.getDataSourceAlias() != null && !sql.getDataSourceAlias().isEmpty()) {
-            try (ConnectionWrapper connection = connectionProvider.getConnection(sql.getDataSourceAlias(), user)) {
+        if (sql != null && sql.getDataSourceAlias() != null &&
+                !sql.getDataSourceAlias().isEmpty()) {
+            try (ConnectionWrapper connection = connectionProvider.getConnection(
+                    sql.getDataSourceAlias(), user)) {
 
                 Map<String, DataValue> params = new HashMap<String, DataValue>();
                 addParams(params, startParams);
 
-                String query = prepareSql(connection.getDatabaseDriver(), sql.getSql(), startParams);
+                String query =
+                        prepareSql(connection.getDatabaseDriver(), sql.getSql(), startParams);
 
-                ResultSet resultSet = connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+                ResultSet resultSet =
+                        connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 if (resultSet.next()) {
-                    Map<String, DataValue> resultValues = collectResultSetValue(connection.getDatabaseDriver(),
-                            resultSet);
+                    Map<String, DataValue> resultValues =
+                            collectResultSetValue(connection.getDatabaseDriver(),
+                                    resultSet);
 
                     addResultPramsWhilePrepare(resultValues, startParams);
-                    Map<Integer, RowElementWrapper> rows = form.getSubRowsInclude(0, form.getRows());
+                    Map<Integer, RowElementWrapper> rows =
+                            form.getSubRowsInclude(0, form.getRows());
                     for (RowElementWrapper row : rows.values()) {
-                        changeRowValues(row, dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                        changeRowValues(row,
+                                dataValuesToString(connection.getDatabaseDriver(), resultValues));
                     }
                 }
             }
         }
     }
 
-    private Map<String, String> dataValuesToString(DBDatabaseDriver driver, Map<String, DataValue> data) {
+    private Map<String, String> dataValuesToString(DBDatabaseDriver driver,
+                                                   Map<String, DataValue> data) {
         Map<String, String> result = new HashMap<String, String>();
         if (data != null) {
             for (Entry<String, DataValue> e : data.entrySet()) {
@@ -116,8 +123,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 } else if (DataType.NUMBER == e.getValue().getType()) {
                     // Чтобы числа записывались в нормальном формате, а не в
                     // 0.#E
-//					DecimalFormat formatter = new DecimalFormat("#");
-//					formatter.setMaximumFractionDigits(17);
+//                    DecimalFormat formatter = new DecimalFormat("#");
+//                    formatter.setMaximumFractionDigits(17);
                     try {
                         result.put(e.getKey(), decimalFmt.format(e.getValue().getDouble()));
                     } catch (IllegalArgumentException | NullPointerException ex) {
@@ -131,7 +138,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         return result;
     }
 
-    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest, Map<String, DataValue> params) {
+    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest,
+                                              Map<String, DataValue> params) {
 
     }
 
@@ -166,7 +174,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             properties.addAll(others);
         }
 
-        component.setValue("Type", new DataValueImpl(DataType.STRING, component.getType().toString()));
+        component.setValue("Type",
+                new DataValueImpl(DataType.STRING, component.getType().toString()));
 
         Iterator<String> iter = properties.iterator();
         while (iter.hasNext()) {
@@ -178,7 +187,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             String result = changeParameter(p, original, params);
 
             if (PropertyType.parse(p, component.getType()).getType() == DataType.BOOLEAN) {
-                component.setValue(p, new DataValueImpl(DataType.BOOLEAN, ObjectUtils.getBoolean(result)));
+                component.setValue(p,
+                        new DataValueImpl(DataType.BOOLEAN, ObjectUtils.getBoolean(result)));
             } else if (PropertyType.parse(p, component.getType()).getType() == DataType.DATE) {
                 Date date = null;
                 if (!StringUtils.isEmpty(result)) {
@@ -210,7 +220,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем
-        if (component.getType() == ComponentType.FormBuilderType || component.getType() == ComponentType.ReportType) {
+        if (component.getType() == ComponentType.FormBuilderType ||
+                component.getType() == ComponentType.ReportType) {
             return;
         }
         for (ComponentModel child : component.getChildren()) {
@@ -220,7 +231,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
     protected String changeParameter(String property, String value, Map<String, String> params) {
         String result = replace(value, params);
-        if (!StringUtils.isEmpty(result) && PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
+        if (!StringUtils.isEmpty(result) &&
+                PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
             for (AbstractTableElement t : user.getApplication().getAvailableTables()) {
                 if (result.trim().equals(t.getCode())) {
                     result = t.getId();
@@ -243,9 +255,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
     /**
-     * Из исходной карты параметров делает новую, где все ключи приведены к
-     * верхнему регистру, добавлен pfuser, pfip, все ключи, состоящие только из
-     * цифр, слева дополнены приставкой PF
+     * Из исходной карты параметров делает новую, где все ключи приведены к верхнему регистру,
+     * добавлен pfuser, pfip, все ключи, состоящие только из цифр, слева дополнены приставкой PF
      *
      * @param paramMap исходная карта параметров
      * @return новая карта параметров
@@ -321,7 +332,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         if (from == null || to == null || from.getBottom().equals(to.getTop())) {
             return;
         }
-        Map<Integer, RowElementWrapper> rows = form.getSubRowsExclude(from.getBottom().getRow(), to.getTop().getRow());
+        Map<Integer, RowElementWrapper> rows =
+                form.getSubRowsExclude(from.getBottom().getRow(), to.getTop().getRow());
         writeNonSqlRows(rows);
     }
 
@@ -350,7 +362,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
      * @throws ConnectException
      * @throws IOException
      */
-    private void executeSql(Map<String, ConnectionWrapper> connMap, Sql sql, Map<String, DataValue> params)
+    private void executeSql(Map<String, ConnectionWrapper> connMap, Sql sql,
+                            Map<String, DataValue> params)
             throws SQLException, ConnectException, IOException {
         ConnectionWrapper connection = connMap.get(sql.getDataSourceAlias());
 
@@ -365,23 +378,26 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
             QueryMessage msg = new QueryMessage(user, query);
 
-            RunningEvent ev = new RunningEvent(RunningEvent.Type.FORMREQUEST, "", query, user.getLogin()) {
+            RunningEvent ev =
+                    new RunningEvent(RunningEvent.Type.FORMREQUEST, "", query, user.getLogin()) {
 
-                @Override
-                public void onStop() {
-                    // Есть возможность остановить только для Oracle
-                }
-            };
+                        @Override
+                        public void onStop() {
+                            // Есть возможность остановить только для Oracle
+                        }
+                    };
             try (Profile p = new ProfileImpl(msg, ev)) {
-                ResultSet resultSet = connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+                ResultSet resultSet =
+                        connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 boolean hasResult = false;
                 while (resultSet.next()) {
                     if (isMaxRowsReached()) {
                         break;
                     }
                     hasResult = true;
-                    Map<String, DataValue> resultValues = collectResultSetValue(connection.getDatabaseDriver(),
-                            resultSet);
+                    Map<String, DataValue> resultValues =
+                            collectResultSetValue(connection.getDatabaseDriver(),
+                                    resultSet);
 
                     addParams(resultValues, params);
 
@@ -397,17 +413,21 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                             // первого
                             // подзапроса
                             if (firstSubSql) {
-                                Map<Integer, RowElementWrapper> rows = form.getSubRowsInclude(sql.getTop().getRow(), s
-                                        .getTop().getRow() - 1);
-                                output(rows, dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                                Map<Integer, RowElementWrapper> rows =
+                                        form.getSubRowsInclude(sql.getTop().getRow(), s
+                                                .getTop().getRow() - 1);
+                                output(rows, dataValuesToString(connection.getDatabaseDriver(),
+                                        resultValues));
                                 firstSubSql = false;
                             }
 
                             // выводим строки между подзапросами
                             if (lastSubSql != null) {
-                                Map<Integer, RowElementWrapper> rows = form.getSubRowsExclude(lastSubSql.getBottom()
-                                        .getRow(), s.getTop().getRow());
-                                output(rows, dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                                Map<Integer, RowElementWrapper> rows =
+                                        form.getSubRowsExclude(lastSubSql.getBottom()
+                                                .getRow(), s.getTop().getRow());
+                                output(rows, dataValuesToString(connection.getDatabaseDriver(),
+                                        resultValues));
                             }
 
                             // выполняем подзапрос
@@ -418,14 +438,18 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                         // выводим строки от окончания последнего подзапроса до
                         // окончания основного запроса
                         if (lastSubSql != null) {
-                            Map<Integer, RowElementWrapper> rows = form.getSubRowsExclude(lastSubSql.getBottom()
-                                    .getRow(), sql.getBottom().getRow() + 1);
-                            output(rows, dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                            Map<Integer, RowElementWrapper> rows =
+                                    form.getSubRowsExclude(lastSubSql.getBottom()
+                                            .getRow(), sql.getBottom().getRow() + 1);
+                            output(rows, dataValuesToString(connection.getDatabaseDriver(),
+                                    resultValues));
                         }
                     } else {
-                        Map<Integer, RowElementWrapper> rows = form.getSubRowsInclude(sql.getTop().getRow(), sql
-                                .getBottom().getRow());
-                        output(rows, dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                        Map<Integer, RowElementWrapper> rows =
+                                form.getSubRowsInclude(sql.getTop().getRow(), sql
+                                        .getBottom().getRow());
+                        output(rows,
+                                dataValuesToString(connection.getDatabaseDriver(), resultValues));
                     }
 
                     Thread.yield();
@@ -445,15 +469,16 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         }
     }
 
-    protected void output(Map<Integer, RowElementWrapper> rows, Map<String, String> resultValues) throws IOException {
+    protected void output(Map<Integer, RowElementWrapper> rows, Map<String, String> resultValues)
+            throws IOException {
         if (rows == null || rows.isEmpty()) {
             return;
         }
         Map<String, String> rowValues = new HashMap<String, String>();
-//		Map<String, String> sqlValues = new HashMap<String, String>();
+//        Map<String, String> sqlValues = new HashMap<String, String>();
 
         rowValues.putAll(resultValues);
-//		sqlValues.putAll(resultValues);
+//        sqlValues.putAll(resultValues);
 
         // выводим данные по строкам
         for (Integer i : rows.keySet()) {
@@ -515,7 +540,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         this.refresh = refresh;
     }
 
-    public abstract void write(OutputStream stream) throws IOException, SQLException, ConnectException;
+    public abstract void write(OutputStream stream)
+            throws IOException, SQLException, ConnectException;
 
     public abstract void close() throws IOException;
 

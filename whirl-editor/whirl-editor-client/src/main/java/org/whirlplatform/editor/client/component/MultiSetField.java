@@ -7,11 +7,10 @@ import com.sencha.gxt.widget.core.client.event.BlurEvent;
 import com.sencha.gxt.widget.core.client.event.BlurEvent.BlurHandler;
 import com.sencha.gxt.widget.core.client.form.TriggerField;
 import com.sencha.gxt.widget.core.client.menu.Item;
-import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellResources;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellResources;
 
 public class MultiSetField<T> extends TriggerField<String> {
 
@@ -83,15 +82,15 @@ public class MultiSetField<T> extends TriggerField<String> {
         return getCell().addSelectionHandler(handler);
     }
 
+    public T getCurrentKey() {
+        return getCell().getCurrentKey();
+    }
+
     public void setCurrentKey(T key) {
         if (getCell().getKeys().contains(key)) {
             setNewKey(key);
             getCell().setCurrentKey(key);
         }
-    }
-
-    public T getCurrentKey() {
-        return getCell().getCurrentKey();
     }
 
     public String getValue(T key) {

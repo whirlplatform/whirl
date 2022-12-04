@@ -11,16 +11,9 @@ import org.whirlplatform.rpc.shared.SessionToken;
 
 public class Events {
 
-    public interface EventClosure {
-
-        void success(EventCallbackResult result);
-
-        void fail(String err);
-
-    }
-
     public static void execute(final String eventCode,
-                               final EventParameterImpl[] params, final EventClosure successFunction,
+                               final EventParameterImpl[] params,
+                               final EventClosure successFunction,
                                final EventClosure failFunction) {
         DataServiceAsync.Util.getDataService(new AsyncCallback<EventMetadata>() {
 
@@ -56,5 +49,13 @@ public class Events {
             }
 
         }).getFreeEvent(SessionToken.get(), eventCode);
+    }
+
+    public interface EventClosure {
+
+        void success(EventCallbackResult result);
+
+        void fail(String err);
+
     }
 }

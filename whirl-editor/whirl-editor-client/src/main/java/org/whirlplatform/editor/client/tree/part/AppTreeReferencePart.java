@@ -10,7 +10,8 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 
 public class AppTreeReferencePart extends AbstractAppTreePart<ApplicationElement> {
 
-    AppTreeReferencePart(AppTree appTree, AppTreePresenter treePresenter, ApplicationElement application) {
+    AppTreeReferencePart(AppTree appTree, AppTreePresenter treePresenter,
+                         ApplicationElement application) {
         super(appTree, treePresenter, application);
         setReference(true);
     }
@@ -80,8 +81,9 @@ public class AppTreeReferencePart extends AbstractAppTreePart<ApplicationElement
                 && handledElement.getApplicationTables().contains(element)) {
             removeElement(element);
             addChildElement(handledElement, element);
-            AppTreeDynamicTablePart dynamicTableHandler = new AppTreeDynamicTablePart(appTree, treePresenter,
-                    (DynamicTableElement) element);
+            AppTreeDynamicTablePart dynamicTableHandler =
+                    new AppTreeDynamicTablePart(appTree, treePresenter,
+                            (DynamicTableElement) element);
             dynamicTableHandler.setReference(true);
             putTreePart(element, dynamicTableHandler);
             return true;

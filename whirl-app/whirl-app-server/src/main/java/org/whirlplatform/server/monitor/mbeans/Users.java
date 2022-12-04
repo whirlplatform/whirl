@@ -1,10 +1,9 @@
 package org.whirlplatform.server.monitor.mbeans;
 
-import org.whirlplatform.server.login.ApplicationUser;
-import org.whirlplatform.server.session.SessionManager;
-
 import java.util.HashSet;
 import java.util.Set;
+import org.whirlplatform.server.login.ApplicationUser;
+import org.whirlplatform.server.session.SessionManager;
 
 public class Users implements UsersMBean {
 
@@ -73,7 +72,8 @@ public class Users implements UsersMBean {
             throw new IllegalArgumentException("Application code should not be null");
         }
 
-        Set<ApplicationUser> users = new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
+        Set<ApplicationUser> users =
+                new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
         for (ApplicationUser u : users) {
             if (u.getApplication() != null && appCode.equals(u.getApplication().getCode())) {
                 SessionManager.unregisterUser(u);

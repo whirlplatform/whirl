@@ -1,4 +1,5 @@
 package org.whirlplatform.editor.client.view;
+
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
@@ -14,10 +15,8 @@ import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
-import org.whirlplatform.editor.client.presenter.AppShowIconsPresenter;
-
 import java.util.List;
-import java.util.logging.Logger;
+import org.whirlplatform.editor.client.presenter.AppShowIconsPresenter;
 
 public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IAppShowIconsView {
 
@@ -47,9 +46,11 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
             public String getValue(String object) {
                 return object;
             }
+
             @Override
             public void setValue(String object, String value) {
             }
+
             @Override
             public String getPath() {
                 return null;
@@ -61,8 +62,9 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
             public SafeHtml render(String object) {
                 int sep = object.lastIndexOf("/");
                 String html = "<div style='width: 50%; overflow: hidden; white-space: nowrap;'>" +
-                        "<img src=" + object + " style='width: 5%; display: inline-block; overflow: hidden; " +
-                        "vertical-align: middle;'> " + object.substring(sep+1) + "</div>" +
+                        "<img src=" + object +
+                        " style='width: 5%; display: inline-block; overflow: hidden; " +
+                        "vertical-align: middle;'> " + object.substring(sep + 1) + "</div>" +
                         "</div>";
                 return SafeHtmlUtils.fromSafeConstant(html);
             }
@@ -74,7 +76,7 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         buildUI();
     }
 
-    private  static native void copyToClipboard(String text)/*-{
+    private static native void copyToClipboard(String text)/*-{
         navigator.clipboard.writeText(text).then(function() {
             console.log('Async: Copying to clipboard was successful!');
         }, function(err) {
@@ -84,7 +86,8 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
 
     public void buildUI() {
 
-        BorderLayoutContainer.BorderLayoutData centerData = new BorderLayoutContainer.BorderLayoutData();
+        BorderLayoutContainer.BorderLayoutData centerData =
+                new BorderLayoutContainer.BorderLayoutData();
         centerData.setMargins(new Margins(0, 0, 0, 0));
 
         BorderLayoutContainer con = new BorderLayoutContainer();

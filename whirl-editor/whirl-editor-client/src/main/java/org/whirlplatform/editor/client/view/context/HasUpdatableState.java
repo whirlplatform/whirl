@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.client.view.context;
 
 /**
- * Декларирует что состояние элемента имплементирующего данный интерфейс может
- * изменятся с помощью вызова метода updateState
- *
+ * Декларирует что состояние элемента имплементирующего данный интерфейс может изменятся с помощью
+ * вызова метода updateState
  */
 public interface HasUpdatableState {
 

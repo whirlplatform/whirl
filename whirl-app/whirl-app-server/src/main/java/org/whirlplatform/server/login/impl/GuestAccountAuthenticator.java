@@ -5,9 +5,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.login.LoginData;
 
 /**
- * Авторизация гостевых пользователей. Все пользователи изначально являются
- * гостевыми.
- *
+ * Авторизация гостевых пользователей. Все пользователи изначально являются гостевыми.
  */
 public class GuestAccountAuthenticator implements AccountAuthenticator {
 

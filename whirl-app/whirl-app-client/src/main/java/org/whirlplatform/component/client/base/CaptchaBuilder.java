@@ -23,6 +23,8 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.form.error.SideErrorHandler;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -38,19 +40,15 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Каптча
  */
 @JsType(name = "Captcha", namespace = "Whirl")
 public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable {
 
-    private static final int CAPTCHA_LENGTH = 6;
     public static final String CAPTCHA_KEY = "cid";
     public static final String KEY_CAPTCHA_CORRECT = "captcha_correct";
-
+    private static final int CAPTCHA_LENGTH = 6;
     private VerticalLayoutContainer container;
     private SimpleContainer space;
     private Image captchaImg;
@@ -214,7 +212,8 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
             key = String.valueOf(Math.round((Math.random() * 10000)));
         }
         // отправить на сервер идентификатор капчи и введенное значение
-        url = GWT.getHostPageBaseURL() + "captcha.png?" + CAPTCHA_KEY + "=" + key + getDimensionsURLPart() + "&l="
+        url = GWT.getHostPageBaseURL() + "captcha.png?" + CAPTCHA_KEY + "=" + key +
+                getDimensionsURLPart() + "&l="
                 + CAPTCHA_LENGTH;
         // Браузер, похоже, кэширует картинки с одинаковыми адресами,
         // предотвратить это
@@ -421,8 +420,7 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

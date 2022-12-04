@@ -7,50 +7,51 @@ import com.sencha.gxt.widget.core.client.menu.MenuItem;
 import org.whirlplatform.editor.client.tree.AppTree;
 
 /**
- * Базовая реализация Пункта меню для Меню дерева приложения. Инкапсулирует
- * ссылку на дерево приложения.
+ * Базовая реализация Пункта меню для Меню дерева приложения. Инкапсулирует ссылку на дерево
+ * приложения.
  */
-public abstract class AbstractAppTreeMenuItem<T extends AppTree> extends MenuItem implements AppTreeMenuItem<T> {
-	private T appTree;
+public abstract class AbstractAppTreeMenuItem<T extends AppTree> extends MenuItem
+        implements AppTreeMenuItem<T> {
+    private T appTree;
 
-	public AbstractAppTreeMenuItem() {
-		super();
-		this.setText(getItemTitle());
-		this.addSelectionHandler(createSelectionHandler());
-		this.setIcon(getItemIcon());
-	}
+    public AbstractAppTreeMenuItem() {
+        super();
+        this.setText(getItemTitle());
+        this.addSelectionHandler(createSelectionHandler());
+        this.setIcon(getItemIcon());
+    }
 
-	public AbstractAppTreeMenuItem(final T appTree) {
-		this();
-		this.appTree = appTree;
-	}
+    public AbstractAppTreeMenuItem(final T appTree) {
+        this();
+        this.appTree = appTree;
+    }
 
-	@Override
-	public abstract void updateState();
+    @Override
+    public abstract void updateState();
 
-	@Override
-	public void setAppTree(final T appTree) {
-		this.appTree = appTree;
-	}
+    protected T getAppTree() {
+        return appTree;
+    }
 
-	protected T getAppTree() {
-		return appTree;
-	}
+    @Override
+    public void setAppTree(final T appTree) {
+        this.appTree = appTree;
+    }
 
-	/**
-	 * Функция этого пункта меню
-	 * 
-	 * @return Обработчик выбора
-	 */
-	protected abstract SelectionHandler<Item> createSelectionHandler();
+    /**
+     * Функция этого пункта меню
+     *
+     * @return Обработчик выбора
+     */
+    protected abstract SelectionHandler<Item> createSelectionHandler();
 
-	/**
-	 * @return Текст пункта меню
-	 */
-	protected abstract String getItemTitle();
+    /**
+     * @return Текст пункта меню
+     */
+    protected abstract String getItemTitle();
 
-	/**
-	 * @return Иконка для пункта меню
-	 */
-	protected abstract ImageResource getItemIcon();
+    /**
+     * @return Иконка для пункта меню
+     */
+    protected abstract ImageResource getItemIcon();
 }

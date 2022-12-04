@@ -1,15 +1,20 @@
 package org.whirlplatform.server.session;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpSession;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import javax.servlet.http.HttpSession;
-import java.io.Serializable;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionManager implements Serializable {
 
@@ -19,20 +24,22 @@ public class SessionManager implements Serializable {
 
     private static final String TOKEN_MANAGER = "TOKEN_MANAGER";
 
-    private static final long SESSION_TIME = Long.parseLong(System.getProperty(PROPERTY_WHIRL_TOKEN_SESSION_TIME, "120000"));
+    private static final long SESSION_TIME =
+            Long.parseLong(System.getProperty(PROPERTY_WHIRL_TOKEN_SESSION_TIME, "120000"));
 
     private static final long UNREGISTER_TIME = 6000;
-
-    private boolean changed = false;
-
     // глобальное хранилище сессий. Добавляются и удаляются листенером
     // SessionListener
     private final static Set<HttpSession> sessions = Collections
             .newSetFromMap(new ConcurrentHashMap<HttpSession, Boolean>());
-
     private final Map<SessionToken, Date> touch = new ConcurrentHashMap<SessionToken, Date>();
+    private final Map<SessionToken, ApplicationUser> userToken =
+            new ConcurrentHashMap<SessionToken, ApplicationUser>();
+    private boolean changed = false;
 
-    private final Map<SessionToken, ApplicationUser> userToken = new ConcurrentHashMap<SessionToken, ApplicationUser>();
+    private SessionManager() {
+
+    }
 
     // вызывается из SessionListener
     public static void attachSession(HttpSession session) {
@@ -44,21 +51,8 @@ public class SessionManager implements Serializable {
         sessions.remove(session);
     }
 
-    public boolean isChanged() {
-        return this.changed;
-    }
-
-    public void setUnchanged() {
-        this.changed = false;
-    }
-
-    public void setChanged() {
-        this.changed = true;
-    }
-
     /**
-     * Доступ к классу {@link SessionManager} должен осуществляться
-     * синхронизированно.
+     * Доступ к классу {@link SessionManager} должен осуществляться синхронизированно.
      *
      * @return екземпляр {@link SessionManager}
      */
@@ -85,8 +79,109 @@ public class SessionManager implements Serializable {
         return sessionManager;
     }
 
-    private SessionManager() {
+    /*
+     * Цикл по всем доступным сессиям. Из каждой сессии получаю sessionManager.
+     * И с его помощью извлекаю всех пользователей этой сессии. Накапливаю
+     * пользователей в отдельном множестве и возвращаю его. Аналог функции-члену
+     * класса SessionManager getAllUsers, однако, не требует создания экземпляра
+     * SessionManager
+     */
+    public static Set<ApplicationUser> getUsersFromAllSessions() {
+        Iterator<HttpSession> sesIter = sessions.iterator();
+        Set<ApplicationUser> allUsers = new HashSet<ApplicationUser>();
+        while (sesIter.hasNext()) {
+            HttpSession ses = sesIter.next();
+            SessionManager manager = SessionManager.get(ses);
+            allUsers.addAll(manager.getAllUsers());
+        }
+        return allUsers;
+    }
 
+    public static void tryKillUnusedSessions() {
+        Iterator<HttpSession> sesIter = sessions.iterator();
+        while (sesIter.hasNext()) {
+            HttpSession ses = sesIter.next();
+            SessionManager manager = SessionManager.get(ses);
+            manager.kill();
+        }
+    }
+
+    public static void unregisterUser(ApplicationUser user) {
+        Iterator<HttpSession> sesIter = sessions.iterator();
+        while (sesIter.hasNext()) {
+            HttpSession ses = sesIter.next();
+            SessionManager manager = SessionManager.get(ses);
+
+            Iterator<SessionToken> tokenIter = manager.userToken.keySet()
+                    .iterator();
+            while (tokenIter.hasNext()) {
+                SessionToken t = tokenIter.next();
+                ApplicationUser u = manager.userToken.get(t);
+                if (u.equals(user)) {
+                    // Нужна синхронизация по manager?
+                    manager.unregisterToken(t);
+                    manager.setChanged();
+                }
+            }
+        }
+    }
+
+    public static void unregisterUser(String login) {
+        if (login == null || login.isEmpty()) {
+            return;
+        }
+
+        Iterator<HttpSession> sesIter = sessions.iterator();
+        while (sesIter.hasNext()) {
+            HttpSession ses = sesIter.next();
+            SessionManager manager = SessionManager.get(ses);
+
+            Iterator<SessionToken> tokenIter = manager.userToken.keySet()
+                    .iterator();
+            while (tokenIter.hasNext()) {
+                SessionToken t = tokenIter.next();
+                ApplicationUser u = manager.userToken.get(t);
+                if (u.getLogin().equalsIgnoreCase(login)) {
+                    // Нужна синхронизация по manager?
+                    manager.unregisterToken(t);
+                    manager.setChanged();
+                }
+            }
+        }
+    }
+
+    /* Эта процедура нужна лишь для тестовых целей. В продакшн не добавлять. */
+    public static boolean checkTokenId(String tokenId) { // удалить. нельзя
+        // оставлять такую
+        // дыру
+
+        Iterator<HttpSession> siter = sessions.iterator();
+        while (siter.hasNext()) {
+            HttpSession ses = siter.next();
+            SessionManager mgr = SessionManager.get(ses);
+            Iterator<SessionToken> iter = mgr.userToken.keySet().iterator();
+            while (iter.hasNext()) {
+                SessionToken t = iter.next();
+                String tid = t.getTokenId().trim();
+
+                if (null != tokenId && tokenId.trim().equalsIgnoreCase(tid)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isChanged() {
+        return this.changed;
+    }
+
+    public void setUnchanged() {
+        this.changed = false;
+    }
+
+    public void setChanged() {
+        this.changed = true;
     }
 
     // думаю, этот метод лучше назвать unregisterToken
@@ -164,7 +259,8 @@ public class SessionManager implements Serializable {
             ApplicationUser user = userToken.get(token);
             if (user == null) {
                 throw new CustomException(
-                        I18NMessage.getMessage(I18NMessage.getRequestLocale()).alert_sessionExpired(), true);
+                        I18NMessage.getMessage(I18NMessage.getRequestLocale())
+                                .alert_sessionExpired(), true);
             }
             return user;
         }
@@ -254,77 +350,6 @@ public class SessionManager implements Serializable {
         }
     }
 
-    /*
-     * Цикл по всем доступным сессиям. Из каждой сессии получаю sessionManager.
-     * И с его помощью извлекаю всех пользователей этой сессии. Накапливаю
-     * пользователей в отдельном множестве и возвращаю его. Аналог функции-члену
-     * класса SessionManager getAllUsers, однако, не требует создания экземпляра
-     * SessionManager
-     */
-    public static Set<ApplicationUser> getUsersFromAllSessions() {
-        Iterator<HttpSession> sesIter = sessions.iterator();
-        Set<ApplicationUser> allUsers = new HashSet<ApplicationUser>();
-        while (sesIter.hasNext()) {
-            HttpSession ses = sesIter.next();
-            SessionManager manager = SessionManager.get(ses);
-            allUsers.addAll(manager.getAllUsers());
-        }
-        return allUsers;
-    }
-
-    public static void tryKillUnusedSessions() {
-        Iterator<HttpSession> sesIter = sessions.iterator();
-        while (sesIter.hasNext()) {
-            HttpSession ses = sesIter.next();
-            SessionManager manager = SessionManager.get(ses);
-            manager.kill();
-        }
-    }
-
-    public static void unregisterUser(ApplicationUser user) {
-        Iterator<HttpSession> sesIter = sessions.iterator();
-        while (sesIter.hasNext()) {
-            HttpSession ses = sesIter.next();
-            SessionManager manager = SessionManager.get(ses);
-
-            Iterator<SessionToken> tokenIter = manager.userToken.keySet()
-                    .iterator();
-            while (tokenIter.hasNext()) {
-                SessionToken t = tokenIter.next();
-                ApplicationUser u = manager.userToken.get(t);
-                if (u.equals(user)) {
-                    // Нужна синхронизация по manager?
-                    manager.unregisterToken(t);
-                    manager.setChanged();
-                }
-            }
-        }
-    }
-
-    public static void unregisterUser(String login) {
-        if (login == null || login.isEmpty()) {
-            return;
-        }
-
-        Iterator<HttpSession> sesIter = sessions.iterator();
-        while (sesIter.hasNext()) {
-            HttpSession ses = sesIter.next();
-            SessionManager manager = SessionManager.get(ses);
-
-            Iterator<SessionToken> tokenIter = manager.userToken.keySet()
-                    .iterator();
-            while (tokenIter.hasNext()) {
-                SessionToken t = tokenIter.next();
-                ApplicationUser u = manager.userToken.get(t);
-                if (u.getLogin().equalsIgnoreCase(login)) {
-                    // Нужна синхронизация по manager?
-                    manager.unregisterToken(t);
-                    manager.setChanged();
-                }
-            }
-        }
-    }
-
     public void kill() {
         synchronized (this) {
             Iterator<SessionToken> iter = userToken.keySet().iterator();
@@ -352,28 +377,6 @@ public class SessionManager implements Serializable {
                 userToken.remove(e.getKey());
             }
         }
-    }
-
-    /* Эта процедура нужна лишь для тестовых целей. В продакшн не добавлять. */
-    public static boolean checkTokenId(String tokenId) { // удалить. нельзя
-        // оставлять такую
-        // дыру
-
-        Iterator<HttpSession> siter = sessions.iterator();
-        while (siter.hasNext()) {
-            HttpSession ses = siter.next();
-            SessionManager mgr = SessionManager.get(ses);
-            Iterator<SessionToken> iter = mgr.userToken.keySet().iterator();
-            while (iter.hasNext()) {
-                SessionToken t = iter.next();
-                String tid = t.getTokenId().trim();
-
-                if (null != tokenId && tokenId.trim().equalsIgnoreCase(tid)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /*

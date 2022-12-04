@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -18,10 +20,8 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BasePlainTableFetcher extends BasePlainDataFetcher implements TableFetcher<PlainTableElement> {
+public class BasePlainTableFetcher extends BasePlainDataFetcher
+        implements TableFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
     private static Logger _log = LoggerFactory.getLogger(BasePlainTableFetcher.class);
 
@@ -30,15 +30,18 @@ public class BasePlainTableFetcher extends BasePlainDataFetcher implements Table
     }
 
     @Override
-    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+    public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
+                                               ClassLoadConfig loadConfig) {
+        PlainTableFetcherHelper temp =
+                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp);
     }
 
-    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(ClassMetadata metadata,
-                                                                                      PlainTableElement table,
-                                                                                      ClassLoadConfig loadConfig,
-                                                                                      H temp) {
+    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(
+            ClassMetadata metadata,
+            PlainTableElement table,
+            ClassLoadConfig loadConfig,
+            H temp) {
         List<RowModelData> result = new ArrayList<RowModelData>();
         temp.prepare(metadata, table, loadConfig);
 

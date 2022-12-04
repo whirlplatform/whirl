@@ -3,6 +3,10 @@ package org.whirlplatform.component.client.tree;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.SimpleContainer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -14,11 +18,6 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Элемент меню дерева
  */
@@ -26,17 +25,8 @@ import java.util.Map;
 public class TreeMenuItemBuilder extends ComponentBuilder implements
         ClickEvent.HasClickHandlers, Containable {
 
-    public class ComponentMenuItem extends Component {
-
-        public ComponentMenuItem() {
-            // TODO Auto-generated constructor stub
-        }
-
-    }
-
     private String imageUrl;
     private ComponentMenuItem menuItem;
-
     private List<ComponentBuilder> children;
 
     @JsConstructor
@@ -77,7 +67,6 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
     }
 
     /**
-     *
      * @return
      */
     public String getImage() {
@@ -207,5 +196,13 @@ public class TreeMenuItemBuilder extends ComponentBuilder implements
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
+    }
+
+    public class ComponentMenuItem extends Component {
+
+        public ComponentMenuItem() {
+            // TODO Auto-generated constructor stub
+        }
+
     }
 }

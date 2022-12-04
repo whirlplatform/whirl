@@ -1,18 +1,17 @@
 package org.whirlplatform.server.compiler;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.jci.stores.ResourceStore;
 import org.apache.commons.lang.StringUtils;
 import org.xeustechnologies.jcl.JarClassLoader;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CompilationData {
 
+    private static Map<String, String> sourceCache = new HashMap<>();
     private ResourceStore resourceStore;
     private ClassLoader mainClassLoader;
     private JarClassLoader applicationClassLoader;
-    private static Map<String, String> sourceCache = new HashMap<>();
 
     public CompilationData(ResourceStore resourceStore,
                            ClassLoader mainClassLoader, JarClassLoader applicationClassLoader) {

@@ -1,7 +1,6 @@
 package org.whirlplatform.meta.shared;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -21,12 +20,12 @@ public class FileValue implements Serializable, Cloneable {
     public FileValue() {
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isSaveName() {
@@ -37,12 +36,12 @@ public class FileValue implements Serializable, Cloneable {
         this.saveName = save;
     }
 
-    public void setTempId(String tempId) {
-        this.tempId = tempId;
-    }
-
     public String getTempId() {
         return tempId;
+    }
+
+    public void setTempId(String tempId) {
+        this.tempId = tempId;
     }
 
     public Object getInputStream() {

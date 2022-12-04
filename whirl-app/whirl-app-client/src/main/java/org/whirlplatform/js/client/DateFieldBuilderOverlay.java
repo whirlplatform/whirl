@@ -2,11 +2,10 @@ package org.whirlplatform.js.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsDate;
+import java.util.Date;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.date.DateFieldBuilder;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
-
-import java.util.Date;
 
 public abstract class DateFieldBuilderOverlay {
 
@@ -15,68 +14,6 @@ public abstract class DateFieldBuilderOverlay {
         instance.create();
         return instance;
     }
-
-    /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на поле даты
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
-
-    /**
-     * Получить код поля даты
-     *
-     * @return String
-     */
-    public abstract String getCode();
-
-    /**
-     * Установить активность поля даты
-     *
-     * @param enabled - boolean
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    /**
-     * Получить информачию об активности поля даты
-     *
-     * @return boolean
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Установить скрытость поля даты
-     *
-     * @param hidden - boolean
-     */
-    public abstract void setHidden(boolean hidden);
-
-    /**
-     * Получить информацию о скрытости поля даты
-     *
-     * @return boolean
-     */
-    public abstract boolean isHidden();
-
-    /**
-     * Установить стиль на поле даты
-     *
-     * @param styleName - String, название стиля
-     */
-    public abstract void setStyleName(String styleName);
 
     /**
      * Проверка на null значения поля даты
@@ -101,7 +38,8 @@ public abstract class DateFieldBuilderOverlay {
     }
 
     /**
-     * Получить значение поля даты (вернёт то же значение, что и t.getDataValue().{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()} )
+     * Получить значение поля даты (вернёт то же значение, что и
+     * t.getDataValue().{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()} )
      *
      * @return javascript: Date
      */
@@ -116,13 +54,78 @@ public abstract class DateFieldBuilderOverlay {
         return jsDate;
     }
 
+    /**
+     * Получение родителя поля даты
+     *
+     * @param instance - DateFieldBuilder
+     * @return ComponentBuilder
+     */
+    public static ComponentBuilder getParent(DateFieldBuilder instance) {
+        return instance.getParentBuilder();
+    }
 
     /**
-     * Получить текстовое представление значения поля
+     * Указать текст всплывающей подсказки поля даты
+     *
+     * @param toolTip
+     */
+    public static void setToolTip(DateFieldBuilder instance, String toolTip) {
+        instance.getComponent().setToolTip(toolTip);
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    /**
+     * Получить код поля даты
      *
      * @return String
      */
-    public abstract String getText();
+    public abstract String getCode();
+
+    /**
+     * Установить код на поле даты
+     *
+     * @param name - String, код
+     */
+    public abstract void setCode(String name);
+
+    /**
+     * Получить информачию об активности поля даты
+     *
+     * @return boolean
+     */
+    public abstract boolean isEnabled();
+
+    /**
+     * Установить активность поля даты
+     *
+     * @param enabled - boolean
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Получить информацию о скрытости поля даты
+     *
+     * @return boolean
+     */
+    public abstract boolean isHidden();
+
+    /**
+     * Установить скрытость поля даты
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
 
 
     /**
@@ -141,11 +144,18 @@ public abstract class DateFieldBuilderOverlay {
 //    }
 
     /**
-     * Установка свойства "Обязателен для заполнения" для поля даты
+     * Установить стиль на поле даты
      *
-     * @param required - boolean
+     * @param styleName - String, название стиля
      */
-    public abstract void setRequired(boolean required);
+    public abstract void setStyleName(String styleName);
+
+    /**
+     * Получить текстовое представление значения поля
+     *
+     * @return String
+     */
+    public abstract String getText();
 
     /**
      * Получить информацию о свойстве "Обязателен для заполнения" у поля даты
@@ -155,14 +165,11 @@ public abstract class DateFieldBuilderOverlay {
     public abstract boolean isRequired();
 
     /**
-     * Получение родителя поля даты
+     * Установка свойства "Обязателен для заполнения" для поля даты
      *
-     * @param instance - DateFieldBuilder
-     * @return ComponentBuilder
+     * @param required - boolean
      */
-    public static ComponentBuilder getParent(DateFieldBuilder instance) {
-        return instance.getParentBuilder();
-    }
+    public abstract void setRequired(boolean required);
 
     /**
      * Очистить поле даты
@@ -193,13 +200,4 @@ public abstract class DateFieldBuilderOverlay {
      * @return boolean
      */
     public abstract boolean isValid(boolean invalidate);
-
-    /**
-     * Указать текст всплывающей подсказки поля даты
-     *
-     * @param toolTip
-     */
-    public static void setToolTip(DateFieldBuilder instance, String toolTip) {
-        instance.getComponent().setToolTip(toolTip);
-    }
 }

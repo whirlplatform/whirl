@@ -1,15 +1,14 @@
 package org.whirlplatform.server.metadata.store;
 
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.List;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.meta.shared.editor.FileElementCategory;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
 
 public interface MetadataStore {
 
@@ -27,18 +26,23 @@ public interface MetadataStore {
 
     List<ApplicationStoreData> all() throws MetadataStoreException;
 
-    void saveApplicationDataFiles(String appCode, Version appVersion, Collection<FileElement> dataFiles)
+    void saveApplicationDataFiles(String appCode, Version appVersion,
+                                  Collection<FileElement> dataFiles)
             throws MetadataStoreException;
 
-    List<FileElement> getApplicationDataFiles(String appCode, Version appVersion) throws MetadataStoreException;
+    List<FileElement> getApplicationDataFiles(String appCode, Version appVersion)
+            throws MetadataStoreException;
 
-    InputStream getApplicationFileInputStream(String appCode, Version appVersion, FileElementCategory category,
+    InputStream getApplicationFileInputStream(String appCode, Version appVersion,
+                                              FileElementCategory category,
                                               String fileName) throws MetadataStoreException;
 
-    void saveApplicationAs(ApplicationElement application, Version oldVersion, Version newVersion, ApplicationUser user)
+    void saveApplicationAs(ApplicationElement application, Version oldVersion, Version newVersion,
+                           ApplicationUser user)
             throws MetadataStoreException;
 
-    void copyFileElements(ApplicationStoreData source, ApplicationStoreData destination, List<FileElement> toCopy)
+    void copyFileElements(ApplicationStoreData source, ApplicationStoreData destination,
+                          List<FileElement> toCopy)
             throws MetadataStoreException;
 
     /**

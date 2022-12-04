@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import org.whirlplatform.meta.shared.data.DataValue;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.whirlplatform.meta.shared.data.DataValue;
 
 @SuppressWarnings("serial")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -47,15 +46,15 @@ public class ClassLoadConfig implements Serializable {
 
     private String labelExpression;
 
+    public ClassLoadConfig() {
+    }
+
     public String getLabelExpression() {
         return this.labelExpression;
     }
 
     public void setLabelExpression(String newLabelExpression) {
         this.labelExpression = newLabelExpression;
-    }
-
-    public ClassLoadConfig() {
     }
 
     public int getPageNum() {

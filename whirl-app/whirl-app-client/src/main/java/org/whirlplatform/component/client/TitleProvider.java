@@ -2,8 +2,8 @@ package org.whirlplatform.component.client;
 
 public interface TitleProvider {
 
-	String getTitle();
+    String getTitle();
 
-	void setTitle(String title);
+    void setTitle(String title);
 
 }

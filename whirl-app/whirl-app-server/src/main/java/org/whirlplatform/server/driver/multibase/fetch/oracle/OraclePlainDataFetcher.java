@@ -2,6 +2,7 @@ package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
+import java.util.Map;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumnExpr;
@@ -9,7 +10,12 @@ import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBQuery;
 import org.apache.empire.db.DBReader;
 import org.apache.empire.db.expr.column.DBFuncExpr;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.SortType;
+import org.whirlplatform.meta.shared.SortValue;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
@@ -21,18 +27,20 @@ import org.whirlplatform.server.driver.multibase.fetch.base.AbstractPlainDataFet
 import org.whirlplatform.server.driver.multibase.fetch.base.PlainTableFetcherHelper;
 import org.whirlplatform.server.global.SrvConstant;
 
-import java.util.Map;
+public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
+        implements DataFetcher<PlainTableElement> {
 
-public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
-
-    public OraclePlainDataFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver datasourceDriver) {
+    public OraclePlainDataFetcher(ConnectionWrapper connectionWrapper,
+                                  DataSourceDriver datasourceDriver) {
         super(connectionWrapper, datasourceDriver);
     }
 
     // Добавить логгирование?
     @Override
-    public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+    public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table,
+                                   ClassLoadConfig loadConfig) {
+        PlainTableFetcherHelper temp =
+                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
         DBReader reader = new DBReader();
@@ -84,7 +92,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
      * @return
      */
     // TODO: Как-то переделать без лишнего дублирования кода
-    protected DBCommand createSimpleSelectCommand(PlainTableElement table, ClassLoadConfig loadConfig,
+    protected DBCommand createSimpleSelectCommand(PlainTableElement table,
+                                                  ClassLoadConfig loadConfig,
                                                   PlainTableFetcherHelper temp) {
 
         boolean all = loadConfig.isAll();
@@ -110,8 +119,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
             subCommand.addWhereConstraints(temp.where);
         }
 
-        DBColumnExpr rowNumber = new DBFuncExpr(orderListExpr, "ROW_NUMBER() OVER (ORDER BY ?)", null, null, false,
-                DataType.INTEGER).as("rn");
+        DBColumnExpr rowNumber =
+                new DBFuncExpr(orderListExpr, "ROW_NUMBER() OVER (ORDER BY ?)", null, null, false,
+                        DataType.INTEGER).as("rn");
         subCommand.select(rowNumber);
 
 //        if (!all) {
@@ -119,7 +129,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
 //        }
 
         DBQuery subQuery = new DBQuery(subCommand);
-        //		subQuery.setAlias("a");
+        //        subQuery.setAlias("a");
 
         rowNumber = subQuery.findQueryColumn(rowNumber);
 
@@ -128,8 +138,10 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
         topCommand.orderBy(rowNumber.asc());
 
         if (!all) {
-            topCommand.where(rowNumber.isBetween(1 + (loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage(),
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) + loadConfig.getRowsPerPage()));
+            topCommand.where(rowNumber.isBetween(
+                    1 + (loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage(),
+                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) +
+                            loadConfig.getRowsPerPage()));
         }
 
         addFunctionFields(topCommand, table, loadConfig, temp);
@@ -139,13 +151,15 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
         return topCommand;
     }
 
-    private void addFunctionFields(DBCommand cmd, PlainTableElement table, ClassLoadConfig loadConfig,
+    private void addFunctionFields(DBCommand cmd, PlainTableElement table,
+                                   ClassLoadConfig loadConfig,
                                    PlainTableFetcherHelper temp) {
         for (TableColumnElement c : table.getColumns()) {
             String function = c.getFunction();
             if (!StringUtils.isEmpty(function)) {
                 String expr = resolveValue(function, loadConfig.getParameters());
-                cmd.select(temp.dbDatabase.getValueExpr(expr, DataType.UNKNOWN).as(c.getColumnName()));
+                cmd.select(
+                        temp.dbDatabase.getValueExpr(expr, DataType.UNKNOWN).as(c.getColumnName()));
             }
         }
     }
@@ -159,7 +173,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
             for (SortValue s : loadConfig.getSorts()) {
                 // Если тип поля - список, сортировать по строке
                 if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType() ||
-                    org.whirlplatform.meta.shared.data.DataType.FILE == s.getField().getType()) {
+                        org.whirlplatform.meta.shared.data.DataType.FILE ==
+                                s.getField().getType()) {
                     orderString.append(s.getField().getLabelExpression());
                 } else {
                     orderString.append(s.getField().getName());
@@ -176,7 +191,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
             for (TableColumnElement column : table.getSortedColumns()) {
                 if (column.isDefaultOrder() && column != table.getDeleteColumn()) {
                     if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType() ||
-                        org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
+                            org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
                         orderString.append(column.getLabelExpression());
                     } else {
                         orderString.append(column.getColumnName());
@@ -199,7 +214,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
                                        RowModelData model) {
         if (col.getConfigColumn() != null) {
             setModelValue(model, field, reader);
-            model.setStyle(field.getName(), reader.getString(reader.getFieldIndex(col.getConfigColumn())));
+            model.setStyle(field.getName(),
+                    reader.getString(reader.getFieldIndex(col.getConfigColumn())));
             return;
         }
         int colInd = reader.getFieldIndex(field.getName());
@@ -219,8 +235,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher implements 
         }
         model.setStyle(field.getName(), formattedMap.get(SrvConstant.STYLE));
         if (field.getType() == org.whirlplatform.meta.shared.data.DataType.DATE && value != null) {
-            DateTimeFormat fmt = new DateTimeFormat("dd.MM.yyyy hh:mm:ss", new DefaultDateTimeFormatInfo()) {
-            };
+            DateTimeFormat fmt =
+                    new DateTimeFormat("dd.MM.yyyy hh:mm:ss", new DefaultDateTimeFormatInfo()) {
+                    };
             model.set(field.getName(), fmt.parse(value));
         } else {
             model.set(field.getName(), convertValueFromString(value, objValue, field.getType()));

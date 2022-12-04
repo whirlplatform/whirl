@@ -1,5 +1,15 @@
 package org.whirlplatform.server.servlet;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.io.IOUtils;
@@ -9,17 +19,6 @@ import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.server.metadata.container.ContainerException;
 import org.whirlplatform.server.metadata.container.MetadataContainer;
 import org.whirlplatform.server.utils.ApplicationReference;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Singleton
 public class ResourceServlet extends HttpServlet {

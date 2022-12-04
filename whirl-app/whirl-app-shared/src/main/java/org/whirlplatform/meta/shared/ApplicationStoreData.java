@@ -1,9 +1,8 @@
 package org.whirlplatform.meta.shared;
 
+import java.io.Serializable;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.version.VersionUtil;
-
-import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class ApplicationStoreData implements Serializable {
@@ -36,36 +35,36 @@ public class ApplicationStoreData implements Serializable {
         this.modified = data.modified;
     }
 
-    public void setId(final String id) {
-        this.id = id;
-    }
-
     public String getId() {
         return id;
     }
 
-    public void setCode(final String code) {
-        this.code = code;
+    public void setId(final String id) {
+        this.id = id;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setVersion(final Version version) {
-        this.version = version;
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public Version getVersion() {
         return version;
+    }
+
+    public void setVersion(final Version version) {
+        this.version = version;
     }
 
     public long getModified() {

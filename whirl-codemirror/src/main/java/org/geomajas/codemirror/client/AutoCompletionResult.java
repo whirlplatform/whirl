@@ -2,14 +2,14 @@ package org.geomajas.codemirror.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 /**
- * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
+ * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date:
+ * 18/03/2014
  */
 public class AutoCompletionResult implements Serializable, IsSerializable {
 
@@ -28,16 +28,16 @@ public class AutoCompletionResult implements Serializable, IsSerializable {
         this.fromPosition = checkNotNull(fromPosition);
     }
 
+    public static AutoCompletionResult emptyResult() {
+        return EMPTY_RESULT;
+    }
+
     public EditorPosition getFromPosition() {
         return fromPosition;
     }
 
     public List<AutoCompletionChoice> getChoices() {
         return new ArrayList<AutoCompletionChoice>(choices);
-    }
-
-    public static AutoCompletionResult emptyResult() {
-        return EMPTY_RESULT;
     }
 
     @Override
@@ -47,10 +47,10 @@ public class AutoCompletionResult implements Serializable, IsSerializable {
 
     @Override
     public boolean equals(Object o) {
-        if(o == this) {
+        if (o == this) {
             return true;
         }
-        if(!(o instanceof AutoCompletionResult)) {
+        if (!(o instanceof AutoCompletionResult)) {
             return false;
         }
         AutoCompletionResult other = (AutoCompletionResult) o;

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
+import java.util.logging.Logger;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.util.HRefUtil;
@@ -18,9 +19,6 @@ import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 /**
  * Основная панель инструментов
  */
@@ -28,15 +26,6 @@ import java.util.logging.Logger;
 public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarView, EditorEventBus> {
 
     private final static Logger logger = Logger.getLogger(ToolBarPresenter.class.getName());
-    public interface IToolBarView extends IsWidget, ReverseViewInterface<ToolBarPresenter> {
-
-        void updateButtonState();
-
-        void showNoAppLoadedWarning();
-
-        void buildUi();
-    }
-
     private ApplicationElement currentApplication;
     private Version currentVersion;
 
@@ -112,7 +101,8 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
     }
 
     public void runPackageCreation() {
-        final ApplicationStoreData data = new ApplicationStoreData(currentApplication, currentVersion);
+        final ApplicationStoreData data =
+                new ApplicationStoreData(currentApplication, currentVersion);
         EditorDataService.Util.getDataService().createPackage(data, new AsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
@@ -133,5 +123,14 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
 
     public void showIconsPanel() {
         eventBus.showIconsPanel();
+    }
+
+    public interface IToolBarView extends IsWidget, ReverseViewInterface<ToolBarPresenter> {
+
+        void updateButtonState();
+
+        void showNoAppLoadedWarning();
+
+        void buildUi();
     }
 }

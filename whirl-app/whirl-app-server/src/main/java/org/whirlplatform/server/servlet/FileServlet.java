@@ -2,14 +2,30 @@ package org.whirlplatform.server.servlet;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.util.IOUtils;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.AppConstant;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.DataModifyConfig;
 import org.whirlplatform.meta.shared.DataModifyConfig.DataModifyType;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.data.RowModelDataImpl;
@@ -22,39 +38,28 @@ import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.session.SessionManager;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 @Singleton
 public class FileServlet extends HttpServlet {
 
+    public static final String SESSION_FILE_MAP = "SESSION_FILE_MAP";
     /**
      *
      */
     private static final long serialVersionUID = 7432737718917945930L;
-
     private Logger _log = LoggerFactory.getLogger(FileServlet.class);
-
     private String tokenId;
-
-    public static final String SESSION_FILE_MAP = "SESSION_FILE_MAP";
-
     private Connector _connector;
 
     @Inject
     public FileServlet(Connector connector) {
         super();
         this._connector = connector;
+    }
+
+    public static String encodeFileName(String fileName) throws Exception {
+        fileName = fileName.replaceAll(" ", "_");
+        fileName = "UTF-8''" + URLEncoder.encode(fileName, "UTF8");
+        return fileName;
     }
 
     private Connector connector() {
@@ -225,12 +230,6 @@ public class FileServlet extends HttpServlet {
             session.setAttribute(SESSION_FILE_MAP, map);
         }
         map.put(key, new FileUpload(file, saveName));
-    }
-
-    public static String encodeFileName(String fileName) throws Exception {
-        fileName = fileName.replaceAll(" ", "_");
-        fileName = "UTF-8''" + URLEncoder.encode(fileName, "UTF8");
-        return fileName;
     }
 
     public class FileUpload {

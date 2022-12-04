@@ -2,7 +2,6 @@ package org.whirlplatform.component.client.hotkey;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Event;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,8 @@ public class HotKeyManager {
 
     private static HotKeyManager _instance;
 
-    private Map<HotKeyHandler, HandlerRegistration> registrations = new HashMap<HotKeyHandler, HandlerRegistration>();
+    private Map<HotKeyHandler, HandlerRegistration> registrations =
+            new HashMap<HotKeyHandler, HandlerRegistration>();
 
     private HotKeyManager() {
     }

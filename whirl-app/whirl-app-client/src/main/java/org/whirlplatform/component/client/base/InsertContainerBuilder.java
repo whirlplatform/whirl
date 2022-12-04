@@ -1,13 +1,12 @@
 package org.whirlplatform.component.client.base;
 
 import com.sencha.gxt.widget.core.client.container.InsertResizeContainer;
-import org.whirlplatform.component.client.ComponentBuilder;
-import org.whirlplatform.component.client.Containable;
-import org.whirlplatform.meta.shared.data.DataValue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.Containable;
+import org.whirlplatform.meta.shared.data.DataValue;
 
 public abstract class InsertContainerBuilder extends ComponentBuilder implements
         Containable {

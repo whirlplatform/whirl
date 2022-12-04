@@ -1,7 +1,5 @@
 /**
- * Sencha GXT 3.1.1 - Sencha for GWT
- * Copyright(c) 2007-2014, Sencha, Inc.
- * licensing@sencha.com
+ * Sencha GXT 3.1.1 - Sencha for GWT Copyright(c) 2007-2014, Sencha, Inc. licensing@sencha.com
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
@@ -14,7 +12,8 @@ import org.whirlplatform.component.client.window.DesktopLayout.RequestType;
 
 public abstract class LimitedDesktopLayout {
 
-    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element, Iterable<Window> windows,
+    public void layoutDesktop(Window requestWindow, RequestType requestType, Element element,
+                              Iterable<Window> windows,
                               int containerWidth, int containerHeight) {
 
         int maxWidth = getPercent(containerWidth, DesktopLayout.PREFERRED_MAX_WIDTH_PCT);
@@ -45,7 +44,8 @@ public abstract class LimitedDesktopLayout {
 
     }
 
-    protected abstract void layoutWindow(Window window, int containerWidth, int containerHeight, int width, int height);
+    protected abstract void layoutWindow(Window window, int containerWidth, int containerHeight,
+                                         int width, int height);
 
     private int getPercent(int value, int percent) {
         return (value * percent) / 100;

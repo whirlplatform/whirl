@@ -10,6 +10,19 @@ public abstract class SimpleHtmlEditorBuilderOverlay {
         return instance;
     }
 
+    public static boolean isEmpty(SimpleHtmlEditorBuilder instance) {
+        return instance.getValue() == null;
+    }
+
+    public static ComponentBuilder getParent(SimpleHtmlEditorBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
     /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
@@ -17,30 +30,19 @@ public abstract class SimpleHtmlEditorBuilderOverlay {
      */
     public abstract void setDomId(String domId);
 
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     */
-    public abstract String getDomId();
+    public abstract String getCode();
 
     public abstract void setCode(String name);
 
-    public abstract String getCode();
+    public abstract boolean isEnabled();
 
     public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
 
     public abstract void setHidden(boolean hidden);
 
     public abstract void isHidden();
 
     public abstract void setStyleName(String styleName);
-
-    public static boolean isEmpty(SimpleHtmlEditorBuilder instance) {
-        return instance.getValue() == null;
-    }
-
-    public abstract void setValue(String value);
 
     public abstract String getValue();
 
@@ -53,9 +55,7 @@ public abstract class SimpleHtmlEditorBuilderOverlay {
 //        instance.setFieldValue(value);
 //    }
 
-    public static ComponentBuilder getParent(SimpleHtmlEditorBuilder instance) {
-        return instance.getParentBuilder();
-    }
+    public abstract void setValue(String value);
 
     public abstract void focus();
 

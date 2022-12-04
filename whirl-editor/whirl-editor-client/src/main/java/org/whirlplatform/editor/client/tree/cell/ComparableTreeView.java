@@ -9,14 +9,18 @@ import com.sencha.gxt.widget.core.client.tree.TreeView;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 public abstract class ComparableTreeView extends TreeView<AbstractElement> {
-	@Override
-	public SafeHtml getTemplate(AbstractElement m, String id, SafeHtml text, ImageResource icon, boolean checkable,
-			CheckState checked, Joint joint, int level, TreeViewRenderMode renderMode) {
-		SafeHtmlBuilder sb = new SafeHtmlBuilder();
-		tree.getAppearance().renderNode(sb, id, text, tree.getStyle(), icon, isCheckable(m, checkable), checked, joint,
-				level, renderMode);
-		return sb.toSafeHtml();
-	}
+    @Override
+    public SafeHtml getTemplate(AbstractElement m, String id, SafeHtml text, ImageResource icon,
+                                boolean checkable,
+                                CheckState checked, Joint joint, int level,
+                                TreeViewRenderMode renderMode) {
+        SafeHtmlBuilder sb = new SafeHtmlBuilder();
+        tree.getAppearance()
+                .renderNode(sb, id, text, tree.getStyle(), icon, isCheckable(m, checkable), checked,
+                        joint,
+                        level, renderMode);
+        return sb.toSafeHtml();
+    }
 
-	public abstract boolean isCheckable(AbstractElement element, boolean defaultValue);
+    public abstract boolean isCheckable(AbstractElement element, boolean defaultValue);
 }

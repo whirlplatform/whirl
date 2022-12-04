@@ -12,43 +12,43 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Права
  */
 public class RightsAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rights();
-	private final static ImageResource ICON = ComponentBundle.INSTANCE.access();
+    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rights();
+    private final static ImageResource ICON = ComponentBundle.INSTANCE.access();
 
-	public RightsAppTreeMenuItem() {
-		super();
-	}
+    public RightsAppTreeMenuItem() {
+        super();
+    }
 
-	public RightsAppTreeMenuItem(final AppTree tree) {
-		super(tree);
-	}
+    public RightsAppTreeMenuItem(final AppTree tree) {
+        super(tree);
+    }
 
-	@Override
-	public void updateState() {
-		if (getAppTree() != null) {
-			setEnabled(getAppTree().hasRights(getAppTree().getSelectedElement()));
-		} else {
-			setEnabled(false);
-		}
-	}
+    @Override
+    public void updateState() {
+        if (getAppTree() != null) {
+            setEnabled(getAppTree().hasRights(getAppTree().getSelectedElement()));
+        } else {
+            setEnabled(false);
+        }
+    }
 
-	@Override
-	protected SelectionHandler<Item> createSelectionHandler() {
-		return new SelectionHandler<Item>() {
-			@Override
-			public void onSelection(SelectionEvent<Item> event) {
-				getAppTree().doEditElementRights(getAppTree().getSelectedElement());
-			}
-		};
-	}
+    @Override
+    protected SelectionHandler<Item> createSelectionHandler() {
+        return new SelectionHandler<Item>() {
+            @Override
+            public void onSelection(SelectionEvent<Item> event) {
+                getAppTree().doEditElementRights(getAppTree().getSelectedElement());
+            }
+        };
+    }
 
-	@Override
-	protected String getItemTitle() {
-		return TITLE;
-	}
+    @Override
+    protected String getItemTitle() {
+        return TITLE;
+    }
 
-	@Override
-	protected ImageResource getItemIcon() {
-		return ICON;
-	}
+    @Override
+    protected ImageResource getItemIcon() {
+        return ICON;
+    }
 }

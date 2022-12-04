@@ -9,7 +9,8 @@ import org.whirlplatform.server.evolution.EvolutionManager;
 public class DummyEvolutionManager implements EvolutionManager {
 
     @Override
-    public void applyApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
+    public void applyApplicationEvolution(String alias, String scriptPath)
+            throws EvolutionException {
         // do nothing
     }
 

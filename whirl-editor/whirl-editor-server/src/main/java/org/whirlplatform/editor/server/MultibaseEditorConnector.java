@@ -1,7 +1,21 @@
 package org.whirlplatform.editor.server;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.inject.Inject;
 import org.apache.empire.commons.ObjectUtils;
-import org.apache.empire.db.*;
+import org.apache.empire.db.DBCmpType;
+import org.apache.empire.db.DBColumn;
+import org.apache.empire.db.DBCommand;
+import org.apache.empire.db.DBDatabase;
+import org.apache.empire.db.DBReader;
+import org.apache.empire.db.DBTable;
+import org.apache.empire.db.DBTableColumn;
+import org.apache.empire.db.DBView;
 import org.apache.empire.db.DBView.DBViewColumn;
 import org.apache.empire.exceptions.InvalidArgumentException;
 import org.whirlplatform.editor.server.db.retrive.DBDatabaseRetriver;
@@ -10,7 +24,12 @@ import org.whirlplatform.editor.server.i18n.EditorI18NMessage;
 import org.whirlplatform.editor.server.templates.TemplateStore;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
-import org.whirlplatform.editor.shared.merge.*;
+import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
+import org.whirlplatform.editor.shared.merge.ChangeType;
+import org.whirlplatform.editor.shared.merge.ChangeUnit;
+import org.whirlplatform.editor.shared.merge.Differ;
+import org.whirlplatform.editor.shared.merge.MergeException;
+import org.whirlplatform.editor.shared.merge.Merger;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
 import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.editor.shared.util.EditorHelper;
@@ -38,10 +57,6 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.MetadataStoreException;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
-import java.util.*;
-
 public class MultibaseEditorConnector implements EditorConnector {
     private static Logger _log = LoggerFactory.getLogger(MultibaseEditorConnector.class);
 
@@ -52,7 +67,8 @@ public class MultibaseEditorConnector implements EditorConnector {
     private TemplateStore templateStore;
 
     @Inject
-    public MultibaseEditorConnector(EditorDatabaseConnector editorDbConnector, MetadataStore metadataStore,
+    public MultibaseEditorConnector(EditorDatabaseConnector editorDbConnector,
+                                    MetadataStore metadataStore,
                                     Differ differ, Merger merger, TemplateStore templateStore) {
         this.editorDbConnector = editorDbConnector;
         this.metadataStore = metadataStore;
@@ -62,7 +78,8 @@ public class MultibaseEditorConnector implements EditorConnector {
     }
 
     @Override
-    public ApplicationElement newApplication(ApplicationBasicInfo appInfo, ApplicationUser user) throws RPCException {
+    public ApplicationElement newApplication(ApplicationBasicInfo appInfo, ApplicationUser user)
+            throws RPCException {
         if (appInfo.getCode() == null) {
             throw new RPCException("Code cannot be null");
         }
@@ -72,7 +89,8 @@ public class MultibaseEditorConnector implements EditorConnector {
                     if (VersionUtil.stringEquals(d.getVersion(), appInfo.getVersion())) {
                         StringBuffer sb = new StringBuffer("The application");
                         sb.append(" code: '").append(appInfo.getCode()).append("'");
-                        sb.append(" version: '").append(appInfo.getVersion().toString()).append("'");
+                        sb.append(" version: '").append(appInfo.getVersion().toString())
+                                .append("'");
                         sb.append(" already exists!");
                         throw new RPCException(sb.toString());
                     }
@@ -89,13 +107,15 @@ public class MultibaseEditorConnector implements EditorConnector {
         application.setCode(appInfo.getCode());
         application.setTitle(new PropertyValue(DataType.STRING, appLocale, appInfo.getTitle()));
         application.setEnabled(true);
-        application.setRootComponent(EditorHelper.newComponentElement(ComponentType.BorderContainerType, appLocale));
+        application.setRootComponent(
+                EditorHelper.newComponentElement(ComponentType.BorderContainerType, appLocale));
         application.setDefaultLocale(appLocale);
         application.setVersion(appInfo.getVersion().toString());
         return application;
     }
 
-    public Collection<ApplicationStoreData> getApplicationList(ApplicationUser user) throws RPCException {
+    public Collection<ApplicationStoreData> getApplicationList(ApplicationUser user)
+            throws RPCException {
         try {
             return metadataStore.all();
         } catch (MetadataStoreException e) {
@@ -104,10 +124,12 @@ public class MultibaseEditorConnector implements EditorConnector {
 
     }
 
-    public ApplicationElement loadApplication(ApplicationStoreData applicationData, ApplicationUser user)
+    public ApplicationElement loadApplication(ApplicationStoreData applicationData,
+                                              ApplicationUser user)
             throws RPCException {
         try {
-            return metadataStore.loadApplication(applicationData.getCode(), applicationData.getVersion());
+            return metadataStore.loadApplication(applicationData.getCode(),
+                    applicationData.getVersion());
         } catch (MetadataStoreException e) {
             _log.error(e);
             throw new RPCException(e.getMessage());
@@ -120,7 +142,8 @@ public class MultibaseEditorConnector implements EditorConnector {
     }
 
     @Override
-    public Collection<RowModelData> getTableImportList(DataSourceElement datasource, SchemaElement schema,
+    public Collection<RowModelData> getTableImportList(DataSourceElement datasource,
+                                                       SchemaElement schema,
                                                        ApplicationUser user) throws RPCException {
         HashSet<RowModelData> result = new HashSet<RowModelData>();
 
@@ -132,7 +155,8 @@ public class MultibaseEditorConnector implements EditorConnector {
                 String tableNameWhirl = r.get("tableName");
                 String viewNameWhirl = r.get("viewName");
                 String listNameWhirl = r.get("listName");
-                if (tableName.equalsIgnoreCase(tableNameWhirl) || tableName.equalsIgnoreCase(viewNameWhirl)
+                if (tableName.equalsIgnoreCase(tableNameWhirl) ||
+                        tableName.equalsIgnoreCase(viewNameWhirl)
                         || tableName.equalsIgnoreCase(listNameWhirl)) {
                     exclude = true;
                     break;
@@ -147,8 +171,11 @@ public class MultibaseEditorConnector implements EditorConnector {
     }
 
     private Collection<RowModelData> getTableImportListDatabase(DataSourceElement datasource,
-                                                                final SchemaElement schema, ApplicationUser user) throws RPCException {
-        try (ConnectionWrapper conn = editorDbConnector.aliasConnection(datasource.getAlias(), user)) {
+                                                                final SchemaElement schema,
+                                                                ApplicationUser user)
+            throws RPCException {
+        try (ConnectionWrapper conn = editorDbConnector.aliasConnection(datasource.getAlias(),
+                user)) {
             HashSet<RowModelData> result = new HashSet<RowModelData>();
 
             DBRetriverConfig config = new DBRetriverConfig();
@@ -188,8 +215,12 @@ public class MultibaseEditorConnector implements EditorConnector {
     }
 
     @Override
-    public Collection<PlainTableElement> importTables(DataSourceElement datasource, SchemaElement schema,
-                                                      Collection<RowModelData> models, ApplicationUser user, ApplicationElement application) throws RPCException {
+    public Collection<PlainTableElement> importTables(DataSourceElement datasource,
+                                                      SchemaElement schema,
+                                                      Collection<RowModelData> models,
+                                                      ApplicationUser user,
+                                                      ApplicationElement application)
+            throws RPCException {
         Set<PlainTableElement> result = new HashSet<PlainTableElement>();
         for (RowModelData m : models) {
             importTableDatabase(result, datasource, schema, m, user, application);
@@ -197,11 +228,14 @@ public class MultibaseEditorConnector implements EditorConnector {
         return result;
     }
 
-    private void importTableDatabase(Collection<PlainTableElement> result, DataSourceElement datasource,
-                                     final SchemaElement schema, final RowModelData model, ApplicationUser user, ApplicationElement application)
+    private void importTableDatabase(Collection<PlainTableElement> result,
+                                     DataSourceElement datasource,
+                                     final SchemaElement schema, final RowModelData model,
+                                     ApplicationUser user, ApplicationElement application)
             throws RPCException {
 
-        try (ConnectionWrapper conn = editorDbConnector.aliasConnection(datasource.getAlias(), user)) {
+        try (ConnectionWrapper conn = editorDbConnector.aliasConnection(datasource.getAlias(),
+                user)) {
 
             String tableName = model.get("tableName");
 
@@ -217,8 +251,9 @@ public class MultibaseEditorConnector implements EditorConnector {
                 PlainTableElement table = new PlainTableElement();
                 table.setId(getNextId());
                 table.setName(tableInfo.getName());
-                PropertyValue title = new PropertyValue(DataType.STRING, application.getDefaultLocale(),
-                        tableInfo.getComment());
+                PropertyValue title =
+                        new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                                tableInfo.getComment());
                 table.setTitle(title);
                 table.setTableName(tableInfo.getName());
 
@@ -241,7 +276,8 @@ public class MultibaseEditorConnector implements EditorConnector {
                 table.setId(getNextId());
                 table.setName(viewInfo.getName());
                 table.setTitle(
-                        new PropertyValue(DataType.STRING, application.getDefaultLocale(), viewInfo.getComment()));
+                        new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                                viewInfo.getComment()));
                 table.setTableName(viewInfo.getName());
 
                 if (viewInfo.getKeyColumns() != null) {
@@ -271,9 +307,11 @@ public class MultibaseEditorConnector implements EditorConnector {
         column.setName(columnInfo.getName());
         if (columnInfo.getComment() != null) {
             column.setTitle(
-                    new PropertyValue(DataType.STRING, application.getDefaultLocale(), columnInfo.getComment()));
+                    new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                            columnInfo.getComment()));
         } else {
-            column.setTitle(new PropertyValue(DataType.STRING, application.getDefaultLocale(), columnInfo.getName()));
+            column.setTitle(new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                    columnInfo.getName()));
         }
         column.setColumnName(columnInfo.getName());
         column.setIndex(tableInfo.getColumnIndex(columnInfo));
@@ -282,7 +320,8 @@ public class MultibaseEditorConnector implements EditorConnector {
             try {
                 if (!ObjectUtils.isEmpty(columnInfo.getDefaultValue())) {
                     column.setDefaultValue(tableInfo.getDatabase().getDriver()
-                            .getValueString(columnInfo.getDefaultValue(), columnInfo.getDataType()));
+                            .getValueString(columnInfo.getDefaultValue(),
+                                    columnInfo.getDataType()));
                 }
             } catch (InvalidArgumentException e) {
                 _log.warn(e);
@@ -295,15 +334,18 @@ public class MultibaseEditorConnector implements EditorConnector {
         return column;
     }
 
-    private TableColumnElement parseColumn(DBView viewInfo, DBViewColumn columnInfo, ApplicationElement application) {
+    private TableColumnElement parseColumn(DBView viewInfo, DBViewColumn columnInfo,
+                                           ApplicationElement application) {
         TableColumnElement column = new TableColumnElement();
         column.setId(getNextId());
         column.setName(columnInfo.getName());
         if (columnInfo.getComment() != null) {
             column.setTitle(
-                    new PropertyValue(DataType.STRING, application.getDefaultLocale(), columnInfo.getComment()));
+                    new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                            columnInfo.getComment()));
         } else {
-            column.setTitle(new PropertyValue(DataType.STRING, application.getDefaultLocale(), columnInfo.getName()));
+            column.setTitle(new PropertyValue(DataType.STRING, application.getDefaultLocale(),
+                    columnInfo.getName()));
         }
         column.setColumnName(columnInfo.getName());
         column.setIndex(viewInfo.getColumnIndex(columnInfo));
@@ -350,7 +392,8 @@ public class MultibaseEditorConnector implements EditorConnector {
 
             DBCommand command = db.createCommand();
             command.select(db.WHIRL_USER_GROUPS.GROUP_CODE);
-            command.where(db.WHIRL_USER_GROUPS.R_WHIRL_USERS.is(userId).and(db.WHIRL_USER_GROUPS.GROUP_CODE.is(appCode))
+            command.where(db.WHIRL_USER_GROUPS.R_WHIRL_USERS.is(userId)
+                    .and(db.WHIRL_USER_GROUPS.GROUP_CODE.is(appCode))
                     .and(db.WHIRL_USER_GROUPS.DELETED.cmp(DBCmpType.NULL, null)));
 
             DBReader reader = new DBReader();
@@ -386,13 +429,15 @@ public class MultibaseEditorConnector implements EditorConnector {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void saveApplication(ApplicationElement application, Version version, ApplicationUser user)
+    public void saveApplication(ApplicationElement application, Version version,
+                                ApplicationUser user)
             throws RPCException {
         try {
             ApplicationIdHelper.initIdsOf(application);
             metadataStore.saveApplication(application, version, user);
         } catch (MetadataStoreException e) {
-            String message = "Application save error: " + (application != null ? application.getCode() : "null");
+            String message = "Application save error: " +
+                    (application != null ? application.getCode() : "null");
             _log.error(message, e);
             throw new RPCException(message);
         }
@@ -400,23 +445,28 @@ public class MultibaseEditorConnector implements EditorConnector {
 
     @Override
     @SuppressWarnings("deprecation")
-    public void saveApplicationAs(ApplicationElement application, Version oldVersion, Version newVersion,
+    public void saveApplicationAs(ApplicationElement application, Version oldVersion,
+                                  Version newVersion,
                                   ApplicationUser user) throws RPCException {
         try {
             ApplicationIdHelper.initIdsOf(application);
             metadataStore.saveApplicationAs(application, oldVersion, newVersion, user);
         } catch (MetadataStoreException e) {
-            String message = "Application save error: " + (application != null ? application.getCode() : "null");
+            String message = "Application save error: " +
+                    (application != null ? application.getCode() : "null");
             _log.error(message, e);
             throw new RPCException(message);
         }
     }
 
     @Override
-    public ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData right) throws RPCException {
+    public ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData right)
+            throws RPCException {
         try {
-            ApplicationElement appLeft = metadataStore.loadApplication(left.getCode(), left.getVersion());
-            ApplicationElement appRight = metadataStore.loadApplication(right.getCode(), right.getVersion());
+            ApplicationElement appLeft =
+                    metadataStore.loadApplication(left.getCode(), left.getVersion());
+            ApplicationElement appRight =
+                    metadataStore.loadApplication(right.getCode(), right.getVersion());
             return differ.diff(appLeft, appRight);
         } catch (MetadataStoreException e) {
             _log.error(e.getMessage(), e);
@@ -451,7 +501,8 @@ public class MultibaseEditorConnector implements EditorConnector {
     private List<FileElement> extractFileElementsToCopy(ApplicationsDiff diff) {
         List<FileElement> result = new ArrayList<>();
         for (ChangeUnit unit : diff.getChanges()) {
-            if ((unit.getType() == ChangeType.Add) && (unit.getRightValue() instanceof FileElement)) {
+            if ((unit.getType() == ChangeType.Add) &&
+                    (unit.getRightValue() instanceof FileElement)) {
                 result.add((FileElement) unit.getRightValue());
             }
         }

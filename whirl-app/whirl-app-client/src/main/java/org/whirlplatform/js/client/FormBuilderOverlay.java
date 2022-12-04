@@ -17,61 +17,6 @@ public abstract class FormBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    public abstract void setHidden(boolean hidden);
-
-    public abstract boolean isHidden();
-
-    public abstract void setStyleName(String styleName);
-
-    /**
-     * Перезагрузить форму, обновить содержимое
-     */
-    public abstract void load();
-
-    /**
-     * Перезагрузить форму, используя параметры.
-     * Эти параметры будут использоваться для выполнения SQL-запросов в свойствах вроде whereSQL формы.
-     *
-     * @param parameters список параметров  {@link DataValueOverlay DataValue}
-     */
-////    public static void loadParameters(FormBuilder instance,
-//                                      DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
-
-////    public abstract void refresh();
-
-    /**
-     * Перезагрузить компоненты формы, зависящие от выполнения запросов SQL на форме.
-     *
-     * @param parameters - массив параметров для выполнения запросов на форме
-     */
-////    public static void refreshParameters(FormBuilder instance,
-//                                         DataValue[] parameters) {
-//        instance.refresh(Arrays.asList(parameters));
-//    }
-
-    /**
      * Установить дочерний компонент в ячейку формы, используя набор параметров ячейки формы data
      *
      * @param row     - строка, куда происходит добавление компонента
@@ -103,15 +48,69 @@ public abstract class FormBuilderOverlay {
         instance.removeChild(builder);
     }
 
+    public static ComponentBuilder getParent(FormBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Перезагрузить форму, используя параметры.
+     * Эти параметры будут использоваться для выполнения SQL-запросов в свойствах вроде whereSQL формы.
+     *
+     * @param parameters список параметров  {@link DataValueOverlay DataValue}
+     */
+////    public static void loadParameters(FormBuilder instance,
+//                                      DataValue[] parameters) {
+//        instance.load(Arrays.asList(parameters));
+//    }
+
+////    public abstract void refresh();
+
+    /**
+     * Перезагрузить компоненты формы, зависящие от выполнения запросов SQL на форме.
+     *
+     * @param parameters - массив параметров для выполнения запросов на форме
+     */
+////    public static void refreshParameters(FormBuilder instance,
+//                                         DataValue[] parameters) {
+//        instance.refresh(Arrays.asList(parameters));
+//    }
+
+    public abstract boolean isHidden();
+
+    public abstract void setHidden(boolean hidden);
+
+    public abstract void setStyleName(String styleName);
+
+    /**
+     * Перезагрузить форму, обновить содержимое
+     */
+    public abstract void load();
+
     public abstract ComponentBuilder[] getChildren();
 
     public abstract void forceLayout();
 
     public abstract ComponentBuilder getChild(int row, int column);
-
-    public static ComponentBuilder getParent(FormBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     public abstract int getChildrenCount();
 

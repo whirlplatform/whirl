@@ -2,6 +2,18 @@ package org.whirlplatform.server.servlet;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.math.NumberUtils;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -25,21 +37,12 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.ReportMessage;
 import org.whirlplatform.server.login.ApplicationUser;
-import org.whirlplatform.server.report.*;
+import org.whirlplatform.server.report.CSVReportWriter;
+import org.whirlplatform.server.report.HTMLReportWriter;
+import org.whirlplatform.server.report.Report;
+import org.whirlplatform.server.report.XLSReportWriter;
+import org.whirlplatform.server.report.XLSXReportWriter;
 import org.whirlplatform.server.session.SessionManager;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 @Singleton
 public class ReportServlet extends HttpServlet {
@@ -98,7 +101,8 @@ public class ReportServlet extends HttpServlet {
 
             List<DataValue> params = loadParameters(report, user, request.getSession());
 
-            FormElementWrapper form = connector().getFormRepresent(report.getFormId(), params, user);
+            FormElementWrapper form =
+                    connector().getFormRepresent(report.getFormId(), params, user);
             if (form == null) {
                 throw new CustomException("Wrong form id");
             }
@@ -120,53 +124,68 @@ public class ReportServlet extends HttpServlet {
         }
     }
 
-    private void writeXLSX(Report report, FormElementWrapper form, ApplicationUser user, HttpServletResponse response,
-                           Collection<DataValue> params) throws IOException, SQLException, ConnectException {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + form.getName() + ".xlsx\"");
+    private void writeXLSX(Report report, FormElementWrapper form, ApplicationUser user,
+                           HttpServletResponse response,
+                           Collection<DataValue> params)
+            throws IOException, SQLException, ConnectException {
+        response.setContentType(
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition",
+                "attachment; filename=\"" + form.getName() + ".xlsx\"");
         // + getReportName(report, user) + ".xlsx\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             FormWriter writer = new XLSXReportWriter(connectionProvider, report, form, params, user)) {
+             FormWriter writer = new XLSXReportWriter(connectionProvider, report, form, params,
+                     user)) {
             writer.write(response.getOutputStream());
         }
     }
 
-    private void writeXLS(Report report, FormElementWrapper form, ApplicationUser user, HttpServletResponse response,
-                          Collection<DataValue> params) throws IOException, SQLException, ConnectException {
+    private void writeXLS(Report report, FormElementWrapper form, ApplicationUser user,
+                          HttpServletResponse response,
+                          Collection<DataValue> params)
+            throws IOException, SQLException, ConnectException {
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + form.getName() + ".xls\"");
+        response.setHeader("Content-Disposition",
+                "attachment; filename=\"" + form.getName() + ".xls\"");
         // + getReportName(report, user) + ".xls\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             FormWriter writer = new XLSReportWriter(connectionProvider, report, form, params, user)) {
+             FormWriter writer = new XLSReportWriter(connectionProvider, report, form, params,
+                     user)) {
             writer.write(response.getOutputStream());
         }
     }
 
-    private void writeHTML(Report report, FormElementWrapper form, ApplicationUser user, HttpServletResponse response,
-                           Collection<DataValue> params) throws IOException, SQLException, ConnectException {
+    private void writeHTML(Report report, FormElementWrapper form, ApplicationUser user,
+                           HttpServletResponse response,
+                           Collection<DataValue> params)
+            throws IOException, SQLException, ConnectException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
-             HTMLReportWriter writer = new HTMLReportWriter(connectionProvider, form, params, user)) {
+             HTMLReportWriter writer = new HTMLReportWriter(connectionProvider, form, params,
+                     user)) {
             writer.setPrint(report.isPrint());
             writer.write(response.getOutputStream());
         }
     }
 
-    private void writeCSV(Report report, FormElementWrapper form, ApplicationUser user, HttpServletResponse response,
-                          Collection<DataValue> params) throws IOException, SQLException, ConnectException {
+    private void writeCSV(Report report, FormElementWrapper form, ApplicationUser user,
+                          HttpServletResponse response,
+                          Collection<DataValue> params)
+            throws IOException, SQLException, ConnectException {
         response.setContentType("text/csv");
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + form.getName() + ".csv\"");
+        response.setHeader("Content-Disposition",
+                "attachment; filename=\"" + form.getName() + ".csv\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
@@ -181,7 +200,8 @@ public class ReportServlet extends HttpServlet {
 
         Map<PropertyType, PropertyValue> props = connector().getReportProperties(rpt, false, user);
 
-        LocaleElement locale = new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
+        LocaleElement locale =
+                new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
 
         PropertyValue propPrint = props.get(PropertyType.Print);
         if (propPrint != null) {
@@ -200,7 +220,8 @@ public class ReportServlet extends HttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    private List<DataValue> loadParameters(Report report, ApplicationUser user, HttpSession session) {
+    private List<DataValue> loadParameters(Report report, ApplicationUser user,
+                                           HttpSession session) {
         List<DataValue> result = new ArrayList<DataValue>();
 
         // Если сохраненные значения есть в контексте - достаем из контекста

@@ -27,12 +27,12 @@ public class RightElement implements Serializable, Cloneable {
         this.type = type;
     }
 
-    public void setCondition(AbstractCondition<?> condition) {
-        this.condition = condition;
-    }
-
     public AbstractCondition<?> getCondition() {
         return condition;
+    }
+
+    public void setCondition(AbstractCondition<?> condition) {
+        this.condition = condition;
     }
 
     @Override

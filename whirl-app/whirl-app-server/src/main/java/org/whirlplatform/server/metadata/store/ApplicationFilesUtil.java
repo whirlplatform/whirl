@@ -1,17 +1,30 @@
 package org.whirlplatform.server.metadata.store;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.NonWritableChannelException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.FileElement;
 import org.whirlplatform.meta.shared.editor.FileElement.InputStreamProvider;
 import org.whirlplatform.meta.shared.editor.FileElementCategory;
-
-import java.io.*;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.nio.channels.NonWritableChannelException;
-import java.nio.file.*;
-import java.util.*;
 
 
 public class ApplicationFilesUtil {
@@ -19,10 +32,9 @@ public class ApplicationFilesUtil {
     public static final int WAIT_FOR_UNLOCK_IN_SECONDS = 600;
 
     /**
-     * Блокирует доступ к текстовому файлу и заменяет его содержимое на content.
-     * После записи блокировка снимается. Если файл уже заблокирован, каждую
-     * секунду проверяет не освободился ли он в течении 10 минут. Если не
-     * освободился, то бросает исключение IOException.
+     * Блокирует доступ к текстовому файлу и заменяет его содержимое на content. После записи
+     * блокировка снимается. Если файл уже заблокирован, каждую секунду проверяет не освободился ли
+     * он в течении 10 минут. Если не освободился, то бросает исключение IOException.
      *
      * @param file    - путь к файлу
      * @param content - содержимое файла
@@ -33,7 +45,8 @@ public class ApplicationFilesUtil {
             try (FileChannel channel = output.getChannel()) {
                 try (FileLock lock = getFileLock(channel, false, WAIT_FOR_UNLOCK_IN_SECONDS)) {
                     if (lock == null) {
-                        throw new IOException(String.format("Timeout writing file unlocking '%s'", file.toString()));
+                        throw new IOException(String.format("Timeout writing file unlocking '%s'",
+                                file.toString()));
                     }
                     byte[] bytesToSave = content.getBytes("UTF-8");
                     output.write(bytesToSave);
@@ -41,15 +54,15 @@ public class ApplicationFilesUtil {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new IOException(String.format("The file for writing is not found: '%s'", file.toString()));
+            throw new IOException(
+                    String.format("The file for writing is not found: '%s'", file.toString()));
         }
     }
 
     /**
-     * Блокирует доступ к текстовому файлу и читает его содержимое. После чтения
-     * блокировка снимается. Если файл уже заблокирован, каждую секунду
-     * проверяет не освободился ли он в течении 10 минут. Если не освободился,
-     * то бросает исключение IOException.
+     * Блокирует доступ к текстовому файлу и читает его содержимое. После чтения блокировка
+     * снимается. Если файл уже заблокирован, каждую секунду проверяет не освободился ли он в
+     * течении 10 минут. Если не освободился, то бросает исключение IOException.
      *
      * @param file - путь к файлу
      * @return Содержимое файла в виде строки
@@ -61,19 +74,22 @@ public class ApplicationFilesUtil {
             try (FileChannel channel = input.getChannel()) {
                 try (FileLock lock = getFileLock(channel, true, WAIT_FOR_UNLOCK_IN_SECONDS)) {
                     if (lock == null) {
-                        throw new IOException(String.format("Timeout reading file unlocking '%s'", file.toString()));
+                        throw new IOException(String.format("Timeout reading file unlocking '%s'",
+                                file.toString()));
                     }
                     result = IOUtils.toString(input, "UTF-8");
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new IOException(String.format("The file for reading is not found: '%s'", file.toString()));
+            throw new IOException(
+                    String.format("The file for reading is not found: '%s'", file.toString()));
         }
         return result;
     }
 
     @SuppressWarnings("resource")
-    private static FileLock getFileLock(final FileChannel channel, boolean shared, int waitForAvailabilityInSeconds)
+    private static FileLock getFileLock(final FileChannel channel, boolean shared,
+                                        int waitForAvailabilityInSeconds)
             throws IOException {
         FileLock result = null;
         try {
@@ -94,7 +110,8 @@ public class ApplicationFilesUtil {
         return result;
     }
 
-    public static Map<FileElement, Exception> saveApplicationFiles(Path newAppPath, ApplicationElement application) {
+    public static Map<FileElement, Exception> saveApplicationFiles(Path newAppPath,
+                                                                   ApplicationElement application) {
         Map<FileElement, Exception> errors = new HashMap<>();
         for (final FileElement file : application.getJavaScriptFiles()) {
             saveApplicationFile(newAppPath, FileElementCategory.JAVASCRIPT, file, errors);
@@ -109,12 +126,14 @@ public class ApplicationFilesUtil {
             saveApplicationFile(newAppPath, FileElementCategory.IMAGE, file, errors);
         }
         if (application.getStaticFile() != null) {
-            saveApplicationFile(newAppPath, FileElementCategory.STATIC, application.getStaticFile(), errors);
+            saveApplicationFile(newAppPath, FileElementCategory.STATIC, application.getStaticFile(),
+                    errors);
         }
         return errors;
     }
 
-    public static void saveApplicationFile(Path newAppPath, FileElementCategory category, FileElement file,
+    public static void saveApplicationFile(Path newAppPath, FileElementCategory category,
+                                           FileElement file,
                                            Map<FileElement, Exception> errors) {
         try (InputStream is = (InputStream) file.getInputStream()) {
             if (is == null) {
@@ -131,8 +150,9 @@ public class ApplicationFilesUtil {
         }
     }
 
-    public static Map<FileElement, Exception> saveApplicationDataFiles(Collection<FileElement> dataFiles,
-                                                                       Path applicationPath) {
+    public static Map<FileElement, Exception> saveApplicationDataFiles(
+            Collection<FileElement> dataFiles,
+            Path applicationPath) {
         Map<FileElement, Exception> errors = new HashMap<>();
         for (final FileElement file : dataFiles) {
             saveApplicationFile(applicationPath, FileElementCategory.DATA, file, errors);
@@ -140,7 +160,8 @@ public class ApplicationFilesUtil {
         return errors;
     }
 
-    public static List<FileElement> getApplicationDataFiles(final Path applicationPath) throws IOException {
+    public static List<FileElement> getApplicationDataFiles(final Path applicationPath)
+            throws IOException {
         List<FileElement> result = new ArrayList<>();
         Path dir = buildFolderPath(applicationPath, FileElementCategory.DATA);
         if (!Files.exists(dir)) {
@@ -156,7 +177,8 @@ public class ApplicationFilesUtil {
         return result;
     }
 
-    private static FileElement createDataFileElement(final Path filePath, final Path applicationPath) {
+    private static FileElement createDataFileElement(final Path filePath,
+                                                     final Path applicationPath) {
         FileElement result = new FileElement();
         result.setFileName(filePath.getFileName().toString());
         result.setCategory(FileElementCategory.DATA);
@@ -164,7 +186,8 @@ public class ApplicationFilesUtil {
         return result;
     }
 
-    public static void saveApplicationFilesAs(Path oldAppPath, Path newAppPath, ApplicationElement application) {
+    public static void saveApplicationFilesAs(Path oldAppPath, Path newAppPath,
+                                              ApplicationElement application) {
         loadApplicationFiles(oldAppPath, application);
         try {
             List<FileElement> dataFiles = getApplicationDataFiles(oldAppPath);
@@ -184,7 +207,8 @@ public class ApplicationFilesUtil {
         }
     }
 
-    private static void updateInputStream(final Path applicationPath, Collection<FileElement> files) {
+    private static void updateInputStream(final Path applicationPath,
+                                          Collection<FileElement> files) {
         for (final FileElement file : files) {
             updateInputStream(applicationPath, file);
         }
@@ -223,12 +247,14 @@ public class ApplicationFilesUtil {
      *
      * @throws IOException
      */
-    public static void copyApplicationFile(final String srcAppRoot, final FileElement srcFile, final String dstAppRoot)
+    public static void copyApplicationFile(final String srcAppRoot, final FileElement srcFile,
+                                           final String dstAppRoot)
             throws IOException {
         copyApplicationFile(Paths.get(srcAppRoot), srcFile, Paths.get(dstAppRoot));
     }
 
-    public static void copyApplicationFile(final Path srcAppPath, final FileElement srcFile, final Path dstAppPath)
+    public static void copyApplicationFile(final Path srcAppPath, final FileElement srcFile,
+                                           final Path dstAppPath)
             throws IOException {
         Path targetDir = createFolderPath(dstAppPath, srcFile.getCategory());
         Path targetFile = targetDir.resolve(srcFile.getFileName());
@@ -263,7 +289,8 @@ public class ApplicationFilesUtil {
      * @return
      * @throws IOException
      */
-    public static Path createFolderPath(final String appRoot, final FileElementCategory category) throws IOException {
+    public static Path createFolderPath(final String appRoot, final FileElementCategory category)
+            throws IOException {
         return createFolderPath(Paths.get(appRoot), category);
     }
 
@@ -275,7 +302,8 @@ public class ApplicationFilesUtil {
      * @return
      * @throws IOException
      */
-    public static Path createFolderPath(final Path appPath, final FileElementCategory category) throws IOException {
+    public static Path createFolderPath(final Path appPath, final FileElementCategory category)
+            throws IOException {
         Path result = appPath.resolve(buildCategoryRelativePath(category));
         if (!Files.exists(result)) {
             Files.createDirectories(result);
@@ -302,7 +330,8 @@ public class ApplicationFilesUtil {
         return Paths.get(category.toString());
     }
 
-    public static InputStream getInputStream(final Path applicationPath, final FileElementCategory category,
+    public static InputStream getInputStream(final Path applicationPath,
+                                             final FileElementCategory category,
                                              final String fileName) throws IOException {
         Path filePath = buildFolderPath(applicationPath, category).resolve(fileName);
         if (!Files.exists(filePath)) {

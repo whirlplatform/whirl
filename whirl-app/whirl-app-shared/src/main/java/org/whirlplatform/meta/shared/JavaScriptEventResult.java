@@ -1,10 +1,9 @@
 package org.whirlplatform.meta.shared;
 
 import com.google.gwt.user.client.Command;
-import org.whirlplatform.meta.shared.data.EventParameter;
-
 import java.util.Map;
 import java.util.TreeMap;
+import org.whirlplatform.meta.shared.data.EventParameter;
 
 public class JavaScriptEventResult implements EventResult {
 
@@ -25,13 +24,13 @@ public class JavaScriptEventResult implements EventResult {
     }
 
     @Override
-    public void setNextEvent(EventMetadata event) {
-        this.nextEvent = event;
+    public EventMetadata getNextEvent() {
+        return nextEvent;
     }
 
     @Override
-    public EventMetadata getNextEvent() {
-        return nextEvent;
+    public void setNextEvent(EventMetadata event) {
+        this.nextEvent = event;
     }
 
     @Override
@@ -40,18 +39,13 @@ public class JavaScriptEventResult implements EventResult {
     }
 
     @Override
-    public void setNextEventCode(String nextEventCode) {
-        this.nextEventCode = nextEventCode;
-    }
-
-    @Override
     public String getNextEventCode() {
         return nextEventCode;
     }
 
     @Override
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNextEventCode(String nextEventCode) {
+        this.nextEventCode = nextEventCode;
     }
 
     @Override
@@ -60,8 +54,8 @@ public class JavaScriptEventResult implements EventResult {
     }
 
     @Override
-    public void setMessage(String message) {
-        this.message = message;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -70,13 +64,18 @@ public class JavaScriptEventResult implements EventResult {
     }
 
     @Override
-    public void setMessageType(String type) {
-        this.messageType = type;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override
     public String getMessageType() {
         return messageType;
+    }
+
+    @Override
+    public void setMessageType(String type) {
+        this.messageType = type;
     }
 
     @Override

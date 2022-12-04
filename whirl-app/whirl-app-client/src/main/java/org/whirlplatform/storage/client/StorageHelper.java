@@ -7,6 +7,10 @@ import com.seanchenxi.gwt.storage.client.StorageKeyFactory;
 import com.seanchenxi.gwt.storage.client.StorageQuotaExceededException;
 import com.seanchenxi.gwt.storage.client.serializer.StorageSerializer;
 import com.sencha.gxt.core.client.util.Util;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import org.whirlplatform.component.client.BuilderManager;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ApplicationData;
@@ -15,180 +19,174 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 public class StorageHelper {
 
-	/*
-	 * TODO это фейковый сервис для создания сериализаторова GWT-RPC	
-	 */
-	@SuppressWarnings("unused")
-	private static DataServiceStubAsync dataService = GWT.create(DataServiceStub.class);
-
     private static final String KEY_PREFIX = "whirl";
+    /*
+     * TODO это фейковый сервис для создания сериализаторова GWT-RPC
+     */
+    @SuppressWarnings("unused")
+    private static DataServiceStubAsync dataService = GWT.create(DataServiceStub.class);
 
-	public interface StorageWrapper<T> {
+    private static String getKey(String code) {
+        ApplicationData application = BuilderManager.getApplicationData();
+        assert application != null : "Application should be loaded to use StorageHelper";
+        ClientUser user = ClientUser.getCurrentUser();
+        assert user != null : "You should be authorized to use StorageHelper";
+        return "/" + KEY_PREFIX + "/" + application.getApplicationCode() + "/"
+                + user.getLogin() + "/" + code;
+    }
 
-		boolean put(String code, T value);
+    public static <T extends Serializable> StorageWrapper<T> local() {
+        StorageExt storage = StorageExt.getLocalStorage();
+        return new StorageExtWrapper<T>(storage, StateScope.LOCAL);
+    }
 
-		T get(String code);
+    public static <T extends Serializable> StorageWrapper<T> session() {
+        StorageExt storage = StorageExt.getSessionStorage();
+        return new StorageExtWrapper<T>(storage, StateScope.LOCAL);
+    }
 
-		void remove(String code);
+    public static <T extends Serializable> StorageWrapper<T> memory() {
+        return new MemoryStorageWrapper<T>();
+    }
 
-		void clear();
+    public static DataValue findStorageValue(String code) {
+        DataValue data = StorageHelper.<DataValue>memory().get(code);
+        if (data == null) {
+            data = StorageHelper.<DataValue>session().get(code);
+        }
+        if (data == null) {
+            data = StorageHelper.<DataValue>local().get(code);
+        }
+        if (data == null) {
+            data = new DataValueImpl(DataType.STRING);
+        }
+        return data;
+    }
 
-		StateScope getScope();
+    public interface StorageWrapper<T> {
 
-	}
+        boolean put(String code, T value);
 
-	private static class StorageExtWrapper<T extends Serializable> implements
-			StorageWrapper<T> {
+        T get(String code);
 
-		private StorageExt storage;
-		private StateScope scope;
+        void remove(String code);
 
-		public StorageExtWrapper(StorageExt storage, StateScope scope) {
-			this.storage = storage;
-			this.scope = scope;
-		}
+        void clear();
 
-		@Override
-		public boolean put(String code, T value) {
-			assert !Util.isEmptyString(code) : "Code can not be empty to save in store";
-			try {
-				storage.put(StorageKeyFactory.serializableKey(getKey(code)),
-						value);
-				return true;
-			} catch (StorageQuotaExceededException | SerializationException e) {
-				return false;
-			}
-		}
+        StateScope getScope();
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public T get(String code) {
-			try {
-				return (T) storage.get(StorageKeyFactory
-						.serializableKey(getKey(code)));
-			} catch (Exception e) {
-				return null;
-			}
-		}
+    }
 
-		@Override
-		public void remove(String code) {
-			storage.remove(StorageKeyFactory.serializableKey(getKey(code)));
-		}
+    private static class StorageExtWrapper<T extends Serializable> implements
+            StorageWrapper<T> {
 
-		@Override
-		public void clear() {
-			String prefix = getKey("");
-			for (int i = 0; storage.size() < i; i++) {
-				String code = storage.key(i);
-				if (code.startsWith(prefix)) {
-					storage.remove(StorageKeyFactory
-							.serializableKey(getKey(code)));
-				}
-			}
-		}
+        private StorageExt storage;
+        private StateScope scope;
 
-		@Override
-		public StateScope getScope() {
-			return scope;
-		}
+        public StorageExtWrapper(StorageExt storage, StateScope scope) {
+            this.storage = storage;
+            this.scope = scope;
+        }
 
-	}
+        @Override
+        public boolean put(String code, T value) {
+            assert !Util.isEmptyString(code) : "Code can not be empty to save in store";
+            try {
+                storage.put(StorageKeyFactory.serializableKey(getKey(code)),
+                        value);
+                return true;
+            } catch (StorageQuotaExceededException | SerializationException e) {
+                return false;
+            }
+        }
 
-	private static class MemoryStorageWrapper<T extends Serializable>
-			implements StorageWrapper<T> {
+        @SuppressWarnings("unchecked")
+        @Override
+        public T get(String code) {
+            try {
+                return (T) storage.get(StorageKeyFactory
+                        .serializableKey(getKey(code)));
+            } catch (Exception e) {
+                return null;
+            }
+        }
 
-		private static final StorageSerializer TYPE_SERIALIZER = GWT
-				.create(StorageSerializer.class);
-		private static Map<String, String> store = new HashMap<String, String>();
+        @Override
+        public void remove(String code) {
+            storage.remove(StorageKeyFactory.serializableKey(getKey(code)));
+        }
 
-		@Override
-		public boolean put(String code, T value) {
-			assert !Util.isEmptyString(code) : "Code can not be empty to save in store";
-			try {
-				String v = TYPE_SERIALIZER.serialize(Serializable.class, value);
-				store.put(getKey(code), v);
-				return true;
-			} catch (Exception e) {
-				return false;
-			}
-		}
+        @Override
+        public void clear() {
+            String prefix = getKey("");
+            for (int i = 0; storage.size() < i; i++) {
+                String code = storage.key(i);
+                if (code.startsWith(prefix)) {
+                    storage.remove(StorageKeyFactory
+                            .serializableKey(getKey(code)));
+                }
+            }
+        }
 
-		@Override
-		public T get(String code) {
-			try {
-				String v = store.get(getKey(code));
-				return TYPE_SERIALIZER.deserialize(Serializable.class, v);
-			} catch (Exception e) {
-				return null;
-			}
-		}
+        @Override
+        public StateScope getScope() {
+            return scope;
+        }
 
-		@Override
-		public void remove(String code) {
-			store.remove(getKey(code));
-		}
+    }
 
-		@Override
-		public void clear() {
-			String prefix = getKey("");
-			Iterator<String> iter = store.keySet().iterator();
-			while (iter.hasNext()) {
-				String code = iter.next();
-				if (code.startsWith(prefix)) {
-					iter.remove();
-				}
-			}
-		}
+    private static class MemoryStorageWrapper<T extends Serializable>
+            implements StorageWrapper<T> {
 
-		@Override
-		public StateScope getScope() {
-			return StateScope.MEMORY;
-		}
+        private static final StorageSerializer TYPE_SERIALIZER = GWT
+                .create(StorageSerializer.class);
+        private static Map<String, String> store = new HashMap<String, String>();
 
-	}
+        @Override
+        public boolean put(String code, T value) {
+            assert !Util.isEmptyString(code) : "Code can not be empty to save in store";
+            try {
+                String v = TYPE_SERIALIZER.serialize(Serializable.class, value);
+                store.put(getKey(code), v);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
 
-	private static String getKey(String code) {
-		ApplicationData application = BuilderManager.getApplicationData();
-		assert application != null : "Application should be loaded to use StorageHelper";
-		ClientUser user = ClientUser.getCurrentUser();
-		assert user != null : "You should be authorized to use StorageHelper";
-		return "/" + KEY_PREFIX + "/" + application.getApplicationCode() + "/"
-				+ user.getLogin() + "/" + code;
-	}
+        @Override
+        public T get(String code) {
+            try {
+                String v = store.get(getKey(code));
+                return TYPE_SERIALIZER.deserialize(Serializable.class, v);
+            } catch (Exception e) {
+                return null;
+            }
+        }
 
-	public static <T extends Serializable> StorageWrapper<T> local() {
-		StorageExt storage = StorageExt.getLocalStorage();
-		return new StorageExtWrapper<T>(storage, StateScope.LOCAL);
-	}
+        @Override
+        public void remove(String code) {
+            store.remove(getKey(code));
+        }
 
-	public static <T extends Serializable> StorageWrapper<T> session() {
-		StorageExt storage = StorageExt.getSessionStorage();
-		return new StorageExtWrapper<T>(storage, StateScope.LOCAL);
-	}
+        @Override
+        public void clear() {
+            String prefix = getKey("");
+            Iterator<String> iter = store.keySet().iterator();
+            while (iter.hasNext()) {
+                String code = iter.next();
+                if (code.startsWith(prefix)) {
+                    iter.remove();
+                }
+            }
+        }
 
-	public static <T extends Serializable> StorageWrapper<T> memory() {
-		return new MemoryStorageWrapper<T>();
-	}
-	
-	public static DataValue findStorageValue(String code) {
-		DataValue data = StorageHelper.<DataValue> memory().get(code);
-		if (data == null) {
-			data = StorageHelper.<DataValue> session().get(code);
-		}
-		if (data == null) {
-			data = StorageHelper.<DataValue> local().get(code);
-		}
-		if (data == null) {
-			data = new DataValueImpl(DataType.STRING);
-		}
-		return data;
-	}
+        @Override
+        public StateScope getScope() {
+            return StateScope.MEMORY;
+        }
+
+    }
 }

@@ -1,13 +1,12 @@
 package org.whirlplatform.editor.shared.merge;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
-
-import java.io.Serializable;
-import java.util.Date;
 
 @SuppressWarnings("serial")
 public class ChangeValue implements Serializable {

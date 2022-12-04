@@ -1,7 +1,6 @@
 package org.whirlplatform.editor.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-
 import java.io.Serializable;
 
 /**
@@ -9,14 +8,12 @@ import java.io.Serializable;
  */
 public class RPCException extends Exception implements Serializable, IsSerializable {
 
+    public final static String errType = "err";
+    public final static String infoType = "info";
     /**
      *
      */
     private static final long serialVersionUID = 2508549663359435651L;
-
-    public final static String errType = "err";
-    public final static String infoType = "info";
-
     /**
      * Тип
      */
@@ -37,13 +34,6 @@ public class RPCException extends Exception implements Serializable, IsSerializa
         this.isSessionExpired = sessionExpired;
     }
 
-    private void getErrorType(String msg) {
-        if (msg != null && msg.contains("ORA-209"))
-            type = infoType;
-        else
-            type = errType;
-    }
-
     public static String getMsg(String msg) {
         if (msg == null)
             return "";
@@ -55,6 +45,13 @@ public class RPCException extends Exception implements Serializable, IsSerializa
                 message = message.substring(start + 10, stop);
         }
         return message;
+    }
+
+    private void getErrorType(String msg) {
+        if (msg != null && msg.contains("ORA-209"))
+            type = infoType;
+        else
+            type = errType;
     }
 
     public String getType() {

@@ -3,7 +3,11 @@ package org.whirlplatform.editor.client.presenter;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.*;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.dom.client.TableCellElement;
+import com.google.gwt.dom.client.TableElement;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -35,14 +39,27 @@ import com.sencha.gxt.widget.core.client.event.ResizeEndEvent;
 import com.sencha.gxt.widget.core.client.event.ResizeEndEvent.ResizeEndHandler;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.menu.MenuBar;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.ComponentTypeUtil;
 import org.whirlplatform.component.client.Containable;
-import org.whirlplatform.component.client.base.*;
+import org.whirlplatform.component.client.base.BorderContainerBuilder;
+import org.whirlplatform.component.client.base.HBoxContainerBuilder;
+import org.whirlplatform.component.client.base.HorizontalContainerBuilder;
+import org.whirlplatform.component.client.base.ImageBuilder;
+import org.whirlplatform.component.client.base.TabPanelBuilder;
+import org.whirlplatform.component.client.base.TimerBuilder;
+import org.whirlplatform.component.client.base.VBoxContainerBuilder;
+import org.whirlplatform.component.client.base.VerticalContainerBuilder;
 import org.whirlplatform.component.client.form.FormBuilder;
 import org.whirlplatform.component.client.form.GridLayoutContainer;
 import org.whirlplatform.component.client.form.GridLayoutContainer.Cell;
-import org.whirlplatform.component.client.grid.EditGridBuilder;
 import org.whirlplatform.component.client.hotkey.HotKeyBuilder;
 import org.whirlplatform.component.client.tree.HorizontalMenuBuilder;
 import org.whirlplatform.component.client.tree.TreeMenuBuilder;
@@ -53,8 +70,17 @@ import org.whirlplatform.editor.client.component.surface.DefaultSurfaceAppearanc
 import org.whirlplatform.editor.client.component.surface.GrayBorderSurfaceResources;
 import org.whirlplatform.editor.client.component.surface.Surface;
 import org.whirlplatform.editor.client.component.surface.Surface.SurfaceAppearance;
-import org.whirlplatform.editor.client.dnd.*;
+import org.whirlplatform.editor.client.dnd.BorderLayoutDropTarget;
+import org.whirlplatform.editor.client.dnd.ContainerDropTarget;
+import org.whirlplatform.editor.client.dnd.GridLayoutDropTarget;
+import org.whirlplatform.editor.client.dnd.HorizontalLayoutDropTarget;
+import org.whirlplatform.editor.client.dnd.HorizontalMenuDropTarget;
+import org.whirlplatform.editor.client.dnd.MouseSelectionEvent;
 import org.whirlplatform.editor.client.dnd.MouseSelectionEvent.MouseSelectionHandler;
+import org.whirlplatform.editor.client.dnd.MouseSelectionWrapper;
+import org.whirlplatform.editor.client.dnd.TabPanelDropTarget;
+import org.whirlplatform.editor.client.dnd.TreeMenuDropTarget;
+import org.whirlplatform.editor.client.dnd.VerticalLayoutDropTarget;
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.image.EditorBundle;
 import org.whirlplatform.editor.client.meta.NewPropertyElement;
@@ -62,9 +88,6 @@ import org.whirlplatform.editor.client.meta.NullFreeComponentElement;
 import org.whirlplatform.editor.client.util.EditorHelper;
 import org.whirlplatform.editor.client.view.DesignView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
-import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
-import org.whirlplatform.meta.shared.TableConfig;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -72,11 +95,17 @@ import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.FormElement;
-import org.whirlplatform.meta.shared.editor.*;
-
-import java.util.*;
-import java.util.Map.Entry;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
 
 //TODO здесь все очень сложно и много в одном месте. большую часть этого кода надо перенести в DesignView
 //причем необходимо создать иерархию с общей реализацией и отделные наследники под функционал компонента
@@ -84,49 +113,28 @@ import java.util.Map.Entry;
 @Presenter(view = DesignView.class)
 public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, EditorEventBus> {
 
-    public interface IDesignView extends IsWidget {
-
-        void setRootComponent(ComponentBuilder builder, double width, double height);
-
-        void addResizeEndHandler(ResizeEndHandler handler);
-
-        void clearSizes();
-
-        Component getContainer();
-
-        HandlerRegistration addResizeHandler(ResizeHandler handler);
-
-        void setShowHidden(boolean showHidden);
-    }
-
     private static final double DEFAULT_COMPONENT_WIDTH = 600;
     private static final double DEFAULT_COMPONENT_HEIGHT = 350;
-
     private ApplicationElement currentApplication;
-
     private ComponentElement rootElement;
     private ComponentBuilder rootBuilder;
-    private Map<ComponentElement, ComponentBuilder> builders = new HashMap<ComponentElement, ComponentBuilder>();
-
+    private Map<ComponentElement, ComponentBuilder> builders =
+            new HashMap<ComponentElement, ComponentBuilder>();
     /**
      * Компонент, выделенный по клику мышкой
      */
     private ComponentElement selectedElement;
-
     /**
      * Список компонентов, выделенных с помощью селектора
      */
     private List<ComponentElement> selectedElements = new ArrayList<ComponentElement>();
-
     /**
      * Список ячеек, выделенных с помощью селектора
      */
     private List<CellRangeElement> selectedCells = new ArrayList<CellRangeElement>();
     private Map<Element, Surface> selectedSurface = new HashMap<Element, Surface>();
     private Map<Element, Surface> gridSurface = new HashMap<Element, Surface>();
-
     private boolean showHidden;
-
     private MouseSelectionWrapper selector;
     private MouseSelectionHandler selectionHandler = new MouseSelectionHandler() {
 
@@ -134,25 +142,29 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         public void onMouseSelection(MouseSelectionEvent event) {
             if (event.isSelect()) {
                 setSelection(
-                        new Rectangle(event.getClientX(), event.getClientY(), event.getWidth(), event.getHeight()));
+                        new Rectangle(event.getClientX(), event.getClientY(), event.getWidth(),
+                                event.getHeight()));
             } else {
                 clearSelection();
             }
         }
     };
-
     // Вынес сюда, чтобы не создавался новый handler при каждом изменении
     private ResizeEndHandler viewResizeEndHandler = new ResizeEndHandler() {
         @Override
         public void onResizeEnd(ResizeEndEvent event) {
             int width = event.getTarget().getOffsetWidth();
             int height = event.getTarget().getOffsetHeight();
-            rootBuilder.setProperty(PropertyType.Height.getCode(), new DataValueImpl(DataType.NUMBER, height));
-            rootBuilder.setProperty(PropertyType.Width.getCode(), new DataValueImpl(DataType.NUMBER, width));
+            rootBuilder.setProperty(PropertyType.Height.getCode(),
+                    new DataValueImpl(DataType.NUMBER, height));
+            rootBuilder.setProperty(PropertyType.Width.getCode(),
+                    new DataValueImpl(DataType.NUMBER, width));
             eventBus.addElement(rootElement,
-                    new NewPropertyElement(PropertyType.Width, currentApplication.getDefaultLocale(), width));
+                    new NewPropertyElement(PropertyType.Width,
+                            currentApplication.getDefaultLocale(), width));
             eventBus.addElement(rootElement,
-                    new NewPropertyElement(PropertyType.Height, currentApplication.getDefaultLocale(), height));
+                    new NewPropertyElement(PropertyType.Height,
+                            currentApplication.getDefaultLocale(), height));
             eventBus.syncComponentPropertyToElement(rootElement);
 
             if (ComponentType.FormBuilderType.equals(rootBuilder.getType())) {
@@ -197,14 +209,16 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     }
 
     private double designWidth() {
-        Double v = rootElement.getProperty(PropertyType.Width).getValue(currentApplication.getDefaultLocale())
+        Double v = rootElement.getProperty(PropertyType.Width)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble();
         if (v == null) {
             v = 1.0;
         }
         if (v == 0 && rootBuilder instanceof Containable && rootElement.getChildren().size() == 1) {
             ComponentElement child = (ComponentElement) rootElement.getChildren().toArray()[0];
-            Double childWidth = child.getProperty(PropertyType.Width).getValue(currentApplication.getDefaultLocale())
+            Double childWidth = child.getProperty(PropertyType.Width)
+                    .getValue(currentApplication.getDefaultLocale())
                     .getDouble();
             if (childWidth != null) {
                 v = childWidth;
@@ -217,14 +231,16 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     }
 
     private double designHeight() {
-        Double v = rootElement.getProperty(PropertyType.Height).getValue(currentApplication.getDefaultLocale())
+        Double v = rootElement.getProperty(PropertyType.Height)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble();
         if (v == null) {
             v = 1.0;
         }
         if (v == 0 && rootBuilder instanceof Containable && rootElement.getChildren().size() == 1) {
             ComponentElement child = (ComponentElement) rootElement.getChildren().toArray()[0];
-            Double childHeight = child.getProperty(PropertyType.Height).getValue(currentApplication.getDefaultLocale())
+            Double childHeight = child.getProperty(PropertyType.Height)
+                    .getValue(currentApplication.getDefaultLocale())
                     .getDouble();
             if (childHeight != null) {
                 v = childHeight;
@@ -240,7 +256,6 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         selectedElement = null;
         reloadElement(element);
     }
-
 
     public void reloadElement(AbstractElement element) {
         reloadElement(element, true);
@@ -335,7 +350,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                         for (int c = 0; c < table.getCellCount(r); c++) {
                             Element e = table.getCellFormatter().getElement(r, c);
                             Surface s = new Surface(new DefaultSurfaceAppearance(
-                                    GWT.<BlueDottedSurfaceResources>create(BlueDottedSurfaceResources.class)));
+                                    GWT.<BlueDottedSurfaceResources>create(
+                                            BlueDottedSurfaceResources.class)));
                             s.show(e, true);
                             gridSurface.put(e, s);
                         }
@@ -360,15 +376,17 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     private void initDND(final ComponentElement element, final ComponentBuilder builder) {
         if (builder instanceof BorderContainerBuilder) {
             @SuppressWarnings("unused")
-            BorderLayoutDropTarget target = new BorderLayoutDropTarget((BorderLayoutContainer) builder.getComponent()) {
-                protected void onDragDrop(DndDropEvent event) {
-                    onDrop(element, builder, event.getData(), getLocation());
-                    super.onDragDrop(event);
-                    repaint();
-                }
+            BorderLayoutDropTarget target =
+                    new BorderLayoutDropTarget((BorderLayoutContainer) builder.getComponent()) {
+                        protected void onDragDrop(DndDropEvent event) {
+                            onDrop(element, builder, event.getData(), getLocation());
+                            super.onDragDrop(event);
+                            repaint();
+                        }
 
-            };
-        } else if (builder instanceof HorizontalContainerBuilder || builder instanceof HBoxContainerBuilder) {
+                    };
+        } else if (builder instanceof HorizontalContainerBuilder ||
+                builder instanceof HBoxContainerBuilder) {
             HorizontalLayoutDropTarget target = new HorizontalLayoutDropTarget(
                     (InsertResizeContainer) builder.getComponent()) {
                 protected void onDragDrop(DndDropEvent event) {
@@ -379,7 +397,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
             };
             target.setFeedback(Feedback.BOTH);
-        } else if (builder instanceof VerticalContainerBuilder || builder instanceof VBoxContainerBuilder) {
+        } else if (builder instanceof VerticalContainerBuilder ||
+                builder instanceof VBoxContainerBuilder) {
             VerticalLayoutDropTarget target = new VerticalLayoutDropTarget(
                     (InsertResizeContainer) builder.getComponent()) {
                 protected void onDragDrop(DndDropEvent event) {
@@ -392,14 +411,15 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             target.setFeedback(Feedback.BOTH);
         } else if (builder instanceof FormBuilder) {
             @SuppressWarnings("unused")
-            GridLayoutDropTarget target = new GridLayoutDropTarget((GridLayoutContainer) builder.getComponent()) {
-                protected void onDragDrop(DndDropEvent event) {
-                    onDrop(element, builder, event.getData(), getCell());
-                    super.onDragDrop(event);
-                    repaint();
-                }
+            GridLayoutDropTarget target =
+                    new GridLayoutDropTarget((GridLayoutContainer) builder.getComponent()) {
+                        protected void onDragDrop(DndDropEvent event) {
+                            onDrop(element, builder, event.getData(), getCell());
+                            super.onDragDrop(event);
+                            repaint();
+                        }
 
-            };
+                    };
         } else if (builder instanceof TabPanelBuilder) {
             @SuppressWarnings("unused")
             TabPanelDropTarget target = new TabPanelDropTarget((TabPanel) builder.getComponent()) {
@@ -412,35 +432,38 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             };
         } else if (builder instanceof TreeMenuBuilder) {
             @SuppressWarnings("unused")
-            TreeMenuDropTarget target = new TreeMenuDropTarget(((TreeMenuBuilder) builder).getTree()) {
-                @Override
-                protected void onDragDrop(DndDropEvent event) {
-                    onDrop(element, builder, event.getData(), getIndex());
-                    super.onDragDrop(event);
-                    repaint();
-                }
+            TreeMenuDropTarget target =
+                    new TreeMenuDropTarget(((TreeMenuBuilder) builder).getTree()) {
+                        @Override
+                        protected void onDragDrop(DndDropEvent event) {
+                            onDrop(element, builder, event.getData(), getIndex());
+                            super.onDragDrop(event);
+                            repaint();
+                        }
 
-            };
+                    };
         } else if (builder instanceof HorizontalMenuBuilder) {
             @SuppressWarnings("unused")
-            HorizontalMenuDropTarget target = new HorizontalMenuDropTarget((MenuBar) builder.getComponent()) {
-                @Override
-                protected void onDragDrop(DndDropEvent event) {
-                    onDrop(element, builder, event.getData(), getIndex());
-                    super.onDragDrop(event);
-                    repaint();
-                }
-            };
+            HorizontalMenuDropTarget target =
+                    new HorizontalMenuDropTarget((MenuBar) builder.getComponent()) {
+                        @Override
+                        protected void onDragDrop(DndDropEvent event) {
+                            onDrop(element, builder, event.getData(), getIndex());
+                            super.onDragDrop(event);
+                            repaint();
+                        }
+                    };
         } else if (builder instanceof Containable) {
             @SuppressWarnings("unused")
-            ContainerDropTarget target = new ContainerDropTarget((Container) builder.getComponent()) {
-                protected void onDragDrop(DndDropEvent event) {
-                    onDrop(element, builder, event.getData(), null);
-                    super.onDragDrop(event);
-                    repaint();
-                }
+            ContainerDropTarget target =
+                    new ContainerDropTarget((Container) builder.getComponent()) {
+                        protected void onDragDrop(DndDropEvent event) {
+                            onDrop(element, builder, event.getData(), null);
+                            super.onDragDrop(event);
+                            repaint();
+                        }
 
-            };
+                    };
         }
     }
 
@@ -512,7 +535,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
     private void setBuilderSelected(Element el, boolean selected) {
         Surface surface = setElementSelected(el,
-                new DefaultSurfaceAppearance(GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
+                new DefaultSurfaceAppearance(
+                        GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
                 selected);
         if (surface != null) {
             surface.getElement().getStyle().setZIndex(2);
@@ -525,7 +549,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
      * @param element  DOM-элемент
      * @param selected Установить или снять выделение
      */
-    private Surface setElementSelected(Element element, SurfaceAppearance appearance, boolean selected) {
+    private Surface setElementSelected(Element element, SurfaceAppearance appearance,
+                                       boolean selected) {
         Surface surface;
         if (selected) {
             surface = selectedSurface.get(element);
@@ -565,8 +590,7 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     }
 
     /**
-     * Изменение стиля для выделенных селектором компонентов (
-     * {@link #selectedElements})
+     * Изменение стиля для выделенных селектором компонентов ( {@link #selectedElements})
      *
      * @param rectangle Координаты селектора
      */
@@ -584,7 +608,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // границе, rectangle.contains
             // вернет false
 
-            if (rectangle.contains(p1) && rectangle.contains(p2) && rootElement.getChildren().contains(e)) {
+            if (rectangle.contains(p1) && rectangle.contains(p2) &&
+                    rootElement.getChildren().contains(e)) {
                 selectedElements.add(e);
                 setBuilderSelected(el, true);
             }
@@ -619,7 +644,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     }
 
     private void setCellSelected(Element el, boolean selected) {
-        Surface surface = setElementSelected(el, GWT.<DefaultSurfaceAppearance>create(DefaultSurfaceAppearance.class),
+        Surface surface = setElementSelected(el,
+                GWT.<DefaultSurfaceAppearance>create(DefaultSurfaceAppearance.class),
                 selected);
         if (surface != null) {
             surface.getElement().getStyle().setZIndex(1);
@@ -704,17 +730,20 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         source.setData(element);
     }
 
-    private void onDrop(ComponentElement parentElement, ComponentBuilder parentBuilder, Object dropData,
+    private void onDrop(ComponentElement parentElement, ComponentBuilder parentBuilder,
+                        Object dropData,
                         Object locationData) {
         ComponentElement element = null;
         if (dropData instanceof ComponentElement) {
             element = (ComponentElement) dropData;
             setLocationData(parentElement, element, locationData);
         } else if (dropData instanceof ComponentType) {
-            element = EditorHelper.newComponentElement((ComponentType) dropData, currentApplication.getDefaultLocale());
+            element = EditorHelper.newComponentElement((ComponentType) dropData,
+                    currentApplication.getDefaultLocale());
             setLocationData(parentElement, element, locationData);
         }
-        if (element.getType() == ComponentType.TabItemType && parentElement.getType() != ComponentType.TabPanelType) {
+        if (element.getType() == ComponentType.TabItemType &&
+                parentElement.getType() != ComponentType.TabPanelType) {
             return;
         }
         if (element.getType() == ComponentType.HorizontalMenuItemType) {
@@ -729,7 +758,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         addChildComponent(parentElement, element);
     }
 
-    private void setLocationData(ComponentElement parentElement, ComponentElement element, Object locationData) {
+    private void setLocationData(ComponentElement parentElement, ComponentElement element,
+                                 Object locationData) {
         if (parentElement.getType() == ComponentType.BorderContainerType) {
             eventBus.addElement(element, new NewPropertyElement(PropertyType.LayoutDataLocation,
                     currentApplication.getDefaultLocale(), locationData));
@@ -749,7 +779,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             int index = locationData == null ? -1 : (Integer) locationData;
             if (index >= 0) {
                 for (ComponentElement ce : parentElement.getChildren()) {
-                    Double idx = ce.getProperty(PropertyType.LayoutDataIndex).getValue(currentApplication.getDefaultLocale()).getDouble();
+                    Double idx = ce.getProperty(PropertyType.LayoutDataIndex)
+                            .getValue(currentApplication.getDefaultLocale()).getDouble();
                     if (idx == null) {
                         continue;
                     }
@@ -771,8 +802,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             }
             int column = cell.getColumn();
             if (column >= 0) {
-                eventBus.addElement(element, new NewPropertyElement(PropertyType.LayoutDataFormColumn,
-                        currentApplication.getDefaultLocale(), column));
+                eventBus.addElement(element,
+                        new NewPropertyElement(PropertyType.LayoutDataFormColumn,
+                                currentApplication.getDefaultLocale(), column));
             }
         }
     }
@@ -795,7 +827,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         }
     }
 
-    private void setUIProperties(ComponentBuilder builder, Map<PropertyType, PropertyValue> properties) {
+    private void setUIProperties(ComponentBuilder builder,
+                                 Map<PropertyType, PropertyValue> properties) {
         for (Entry<PropertyType, PropertyValue> entry : properties.entrySet()) {
             String name = entry.getKey().getCode();
             DataType type = entry.getKey().getType();
@@ -836,8 +869,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // }
             // }
 
-            if (rowsValue != null && rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() != null && colsValue != null
-                    && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() != null) {
+            if (rowsValue != null &&
+                    rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
+                            null && colsValue != null
+                    && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
+                    null) {
                 int rows = rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                 int cols = colsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                 for (int i = 0; i < rows; i++) {
@@ -856,8 +892,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     ((FormBuilder) builder).setRowHeight(m.getRow(), height);
                 }
             } else {
-                if (rowsValue != null && rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() != null) {
-                    int rows = rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
+                if (rowsValue != null &&
+                        rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
+                                null) {
+                    int rows =
+                            rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                     double height = 1.0 / rows;
                     List<RowElement> rowsHeight = new ArrayList<RowElement>();
                     for (int i = 0; i < rows; i++) {
@@ -877,8 +916,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     ((FormBuilder) builder).setColumnWidth(m.getColumn(), width);
                 }
             } else {
-                if (colsValue != null && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() != null) {
-                    int cols = colsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
+                if (colsValue != null &&
+                        colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
+                                null) {
+                    int cols =
+                            colsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                     double width = 1.0 / cols;
                     List<ColumnElement> columnsWidth = new ArrayList<ColumnElement>();
                     for (int i = 0; i < cols; i++) {
@@ -892,7 +934,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     ((FormElement) element).setColumnsWidth(columnsWidth);
                 }
             }
-            for (Entry<CellRowCol, CellElement> entry : ((FormElement) element).getCells().entrySet()) {
+            for (Entry<CellRowCol, CellElement> entry : ((FormElement) element).getCells()
+                    .entrySet()) {
                 int row = entry.getKey().getRow();
                 int column = entry.getKey().getCol();
                 int rowSpan = entry.getValue().getRowSpan();
@@ -911,16 +954,20 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                 }
 
                 if (borderTop > 0) {
-                    ((FormBuilder) builder).setCellBorderTop(row, column, borderTop, borderTopColor);
+                    ((FormBuilder) builder).setCellBorderTop(row, column, borderTop,
+                            borderTopColor);
                 }
                 if (borderRight > 0) {
-                    ((FormBuilder) builder).setCellBorderRight(row, column, borderRight, borderRightColor);
+                    ((FormBuilder) builder).setCellBorderRight(row, column, borderRight,
+                            borderRightColor);
                 }
                 if (borderBottom > 0) {
-                    ((FormBuilder) builder).setCellBorderBottom(row, column, borderBottom, borderBottomColor);
+                    ((FormBuilder) builder).setCellBorderBottom(row, column, borderBottom,
+                            borderBottomColor);
                 }
                 if (borderLeft > 0) {
-                    ((FormBuilder) builder).setCellBorderLeft(row, column, borderLeft, borderLeftColor);
+                    ((FormBuilder) builder).setCellBorderLeft(row, column, borderLeft,
+                            borderLeftColor);
                 }
                 if (color != null && !color.isEmpty()) {
                     ((FormBuilder) builder).setCellColor(row, column, color);
@@ -931,7 +978,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // // Нужно ли?
             ((FormBuilder) builder).setPaddingInCells(1);
         } else if (ComponentType.ImageType.equals(element.getType())) {
-            ((ImageBuilder) builder).setDefaultImage(ComponentBundle.INSTANCE.simpleImage().getSafeUri().asString());
+            ((ImageBuilder) builder).setDefaultImage(
+                    ComponentBundle.INSTANCE.simpleImage().getSafeUri().asString());
         } else if (ComponentType.TimerType.equals(element.getType())) {
             ((TimerBuilder) builder).setIcon(EditorBundle.INSTANCE.timerSmall());
         } else if (ComponentType.HotKeyType.equals(element.getType())) {
@@ -998,7 +1046,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         }
     }
 
-    public void onSyncComponentPropertyToUI(ComponentElement element, String name, DataValue value) {
+    public void onSyncComponentPropertyToUI(ComponentElement element, String name,
+                                            DataValue value) {
         if (element.equals(rootElement)) {
             setUIProperty(rootBuilder, name, value);
         } else {
@@ -1039,12 +1088,12 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
     /**
      * Выделение группы ячеек и находящихся на них компонентов
-     *
      */
     private void selectGroupCell() {
         FlexTable table = getFormTable(rootBuilder.getComponent());
         for (CellRangeElement model : selectedCells) {
-            if (model.getTop() >= table.getRowCount() || model.getLeft() >= table.getCellCount(model.getTop())) {
+            if (model.getTop() >= table.getRowCount() ||
+                    model.getLeft() >= table.getCellCount(model.getTop())) {
                 continue;
             }
             Element el = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft());
@@ -1076,7 +1125,7 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     /**
      * Выделение группы ячеек и находящихся на них компонентов
      *
-     * @param model    Модель данных
+     * @param model Модель данных
      */
     public void onSelectGroupCell(AbstractElement model) {
         clearSelection();
@@ -1085,7 +1134,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         if (model instanceof RequestElement) {
             int top = ((RequestElement) model).getTop();
             int bottom = ((RequestElement) model).getBottom();
-            int columns = rootElement.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+            int columns = rootElement.getProperty(PropertyType.Columns)
+                    .getValue(currentApplication.getDefaultLocale())
                     .getDouble().intValue();
 
             for (int i = top; i <= bottom; i++) {
@@ -1093,7 +1143,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     GridLayoutContainer.Cell cell = container.getTablePositionByGrid(i, j);
                     if (cell != null) {
                         selectedCells.add(
-                                new CellRangeElement(cell.getRow(), cell.getColumn(), cell.getRow(), cell.getColumn()));
+                                new CellRangeElement(cell.getRow(), cell.getColumn(), cell.getRow(),
+                                        cell.getColumn()));
                     }
                 }
             }
@@ -1109,7 +1160,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     GridLayoutContainer.Cell cell = container.getTablePositionByGrid(i, j);
                     if (cell != null) {
                         selectedCells.add(
-                                new CellRangeElement(cell.getRow(), cell.getColumn(), cell.getRow(), cell.getColumn()));
+                                new CellRangeElement(cell.getRow(), cell.getColumn(), cell.getRow(),
+                                        cell.getColumn()));
                     }
                 }
             }
@@ -1134,7 +1186,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             if (cellIndexes != null) {
                 int tableRow = cellIndexes.getRow();
                 int tableColumn = cellIndexes.getColumn();
-                selectedCells.add(new CellRangeElement(tableRow, tableColumn, tableRow, tableColumn));
+                selectedCells.add(
+                        new CellRangeElement(tableRow, tableColumn, tableRow, tableColumn));
             }
         }
         selectGroupCell();
@@ -1151,13 +1204,15 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
         GridLayoutContainer container = (GridLayoutContainer) rootBuilder.getComponent();
 
-        int columns = rootElement.getProperty(PropertyType.Columns).getValue(null).getDouble().intValue();
+        int columns =
+                rootElement.getProperty(PropertyType.Columns).getValue(null).getDouble().intValue();
         for (int i = 0; i < columns; i++) {
             Cell cellIndexes = container.getTablePositionByGrid(row, i);
             if (cellIndexes != null) {
                 int tableRow = cellIndexes.getRow();
                 int tableColumn = cellIndexes.getColumn();
-                selectedCells.add(new CellRangeElement(tableRow, tableColumn, tableRow, tableColumn));
+                selectedCells.add(
+                        new CellRangeElement(tableRow, tableColumn, tableRow, tableColumn));
             }
         }
 
@@ -1173,10 +1228,12 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         Component comp = rootBuilder.getComponent();
         if (comp instanceof GridLayoutContainer) {
             ((GridLayoutContainer) comp).insertRow(index);
-            int rows = rootElement.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
+            int rows = rootElement.getProperty(PropertyType.Rows)
+                    .getValue(currentApplication.getDefaultLocale())
                     .getDouble().intValue();
             eventBus.addElement(rootElement,
-                    new NewPropertyElement(PropertyType.Rows, currentApplication.getDefaultLocale(), ++rows));
+                    new NewPropertyElement(PropertyType.Rows, currentApplication.getDefaultLocale(),
+                            ++rows));
         }
         eventBus.syncComponentPropertyToElement(rootElement);
     }
@@ -1190,10 +1247,12 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         Component comp = rootBuilder.getComponent();
         if (comp instanceof GridLayoutContainer) {
             ((GridLayoutContainer) comp).insertColumn(index);
-            int cols = rootElement.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+            int cols = rootElement.getProperty(PropertyType.Columns)
+                    .getValue(currentApplication.getDefaultLocale())
                     .getDouble().intValue();
             eventBus.addElement(rootElement,
-                    new NewPropertyElement(PropertyType.Columns, currentApplication.getDefaultLocale(), ++cols));
+                    new NewPropertyElement(PropertyType.Columns,
+                            currentApplication.getDefaultLocale(), ++cols));
         }
         eventBus.syncComponentPropertyToElement(rootElement);
     }
@@ -1204,9 +1263,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
      * @param index Индекс удаляемой строки
      */
     public void onDeleteRow(int index) {
-        int rows = rootElement.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
+        int rows = rootElement.getProperty(PropertyType.Rows)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
-        int cols = rootElement.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+        int cols = rootElement.getProperty(PropertyType.Columns)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
         // if (index < rows && rows > 1) {
         CellElement next;
@@ -1247,9 +1308,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
      * @param index Индекс удаляемой колонки
      */
     public void onDeleteColumn(int index) {
-        int rows = rootElement.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
+        int rows = rootElement.getProperty(PropertyType.Rows)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
-        int cols = rootElement.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+        int cols = rootElement.getProperty(PropertyType.Columns)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
 
         // if (index < cols && cols > 1) {
@@ -1269,8 +1332,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                 int compCol = comp.getProperty(PropertyType.LayoutDataFormColumn)
                         .getValue(currentApplication.getDefaultLocale()).getDouble().intValue();
                 if (compCol > index) {
-                    eventBus.addElement(comp, new NewPropertyElement(PropertyType.LayoutDataFormColumn,
-                            currentApplication.getDefaultLocale(), --compCol));
+                    eventBus.addElement(comp,
+                            new NewPropertyElement(PropertyType.LayoutDataFormColumn,
+                                    currentApplication.getDefaultLocale(), --compCol));
                 } else if (compCol == index) {
                     // перемещаем компоненты, расположенные на удаляемых
                     // ячейках в
@@ -1291,8 +1355,10 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             if (model != null) {
                 int row = model.getTop();
                 int col = model.getLeft();
-                int bottomSpan = ((FormElement) rootElement).findCellElement(model.getBottom(), col).getRowSpan();
-                int rightSpan = ((FormElement) rootElement).findCellElement(row, model.getRight()).getColSpan();
+                int bottomSpan = ((FormElement) rootElement).findCellElement(model.getBottom(), col)
+                        .getRowSpan();
+                int rightSpan = ((FormElement) rootElement).findCellElement(row, model.getRight())
+                        .getColSpan();
 
                 if (selectedElements.size() > 1) {
                     InfoHelper.error("selected-elements", EditorMessage.Util.MESSAGE.error(),
@@ -1300,15 +1366,19 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     return;
                 } else if (selectedElements.size() == 1) {
                     ComponentElement comp = selectedElements.get(0);
-                    if (comp.getProperty(PropertyType.LayoutDataFormRow).getValue(currentApplication.getDefaultLocale())
+                    if (comp.getProperty(PropertyType.LayoutDataFormRow)
+                            .getValue(currentApplication.getDefaultLocale())
                             .getDouble().intValue() != row) {
                         comp.setProperty(PropertyType.LayoutDataFormRow,
-                                new PropertyValue(DataType.NUMBER, currentApplication.getDefaultLocale(), row));
+                                new PropertyValue(DataType.NUMBER,
+                                        currentApplication.getDefaultLocale(), row));
                     }
                     if (comp.getProperty(PropertyType.LayoutDataFormColumn)
-                            .getValue(currentApplication.getDefaultLocale()).getDouble().intValue() != col) {
+                            .getValue(currentApplication.getDefaultLocale()).getDouble()
+                            .intValue() != col) {
                         comp.setProperty(PropertyType.LayoutDataFormColumn,
-                                new PropertyValue(DataType.NUMBER, currentApplication.getDefaultLocale(), col));
+                                new PropertyValue(DataType.NUMBER,
+                                        currentApplication.getDefaultLocale(), col));
                     }
                 }
 
@@ -1362,9 +1432,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         CellRangeElement model = getSelectedCellsArea();
         // Может ли быть не formElement?
         FormElement form = (FormElement) rootElement;
-        int rows = form.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
-                .getDouble().intValue();
-        int cols = form.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+        int rows =
+                form.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
+                        .getDouble().intValue();
+        int cols = form.getProperty(PropertyType.Columns)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
 
         // int index = rows;
@@ -1385,8 +1457,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     int compRow = comp.getProperty(PropertyType.LayoutDataFormRow)
                             .getValue(currentApplication.getDefaultLocale()).getDouble().intValue();
                     if (compRow >= model.getTop()) {
-                        eventBus.addElement(comp, new NewPropertyElement(PropertyType.LayoutDataFormRow,
-                                currentApplication.getDefaultLocale(), ++compRow));
+                        eventBus.addElement(comp,
+                                new NewPropertyElement(PropertyType.LayoutDataFormRow,
+                                        currentApplication.getDefaultLocale(), ++compRow));
                     }
                 }
             }
@@ -1398,9 +1471,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     public void onAddColumn() {
         CellRangeElement model = getSelectedCellsArea();
         FormElement form = (FormElement) rootElement;
-        int rows = form.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
-                .getDouble().intValue();
-        int cols = form.getProperty(PropertyType.Columns).getValue(currentApplication.getDefaultLocale())
+        int rows =
+                form.getProperty(PropertyType.Rows).getValue(currentApplication.getDefaultLocale())
+                        .getDouble().intValue();
+        int cols = form.getProperty(PropertyType.Columns)
+                .getValue(currentApplication.getDefaultLocale())
                 .getDouble().intValue();
 
         // int index = cols;
@@ -1422,8 +1497,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     int compCol = comp.getProperty(PropertyType.LayoutDataFormColumn)
                             .getValue(currentApplication.getDefaultLocale()).getDouble().intValue();
                     if (compCol >= model.getLeft()) {
-                        eventBus.addElement(comp, new NewPropertyElement(PropertyType.LayoutDataFormColumn,
-                                currentApplication.getDefaultLocale(), ++compCol));
+                        eventBus.addElement(comp,
+                                new NewPropertyElement(PropertyType.LayoutDataFormColumn,
+                                        currentApplication.getDefaultLocale(), ++compCol));
                     }
                 }
             }
@@ -1453,7 +1529,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                 clearSelection();
                 repaint();
             } else {
-                Info.display(EditorMessage.Util.MESSAGE.warn(), EditorMessage.Util.MESSAGE.warn_need_to_split());
+                Info.display(EditorMessage.Util.MESSAGE.warn(),
+                        EditorMessage.Util.MESSAGE.warn_need_to_split());
             }
         }
     }
@@ -1470,8 +1547,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                             .getValue(currentApplication.getDefaultLocale()).getDouble().intValue();
                     if (colNum < cols && cols > 1) {
                         eventBus.deleteColumn(colNum);
-                        eventBus.addElement(rootElement, new NewPropertyElement(PropertyType.Columns,
-                                currentApplication.getDefaultLocale(), --cols));
+                        eventBus.addElement(rootElement,
+                                new NewPropertyElement(PropertyType.Columns,
+                                        currentApplication.getDefaultLocale(), --cols));
                     }
                 }
 
@@ -1479,7 +1557,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                 clearSelection();
                 repaint();
             } else {
-                Info.display(EditorMessage.Util.MESSAGE.warn(), EditorMessage.Util.MESSAGE.warn_need_to_split());
+                Info.display(EditorMessage.Util.MESSAGE.warn(),
+                        EditorMessage.Util.MESSAGE.warn_need_to_split());
             }
         }
     }
@@ -1556,9 +1635,12 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     continue;
                 }
                 int top = cellIndexes.getRow() > m.getTop() ? cellIndexes.getRow() : m.getTop();
-                int right = cellIndexes.getColumn() > m.getRight() ? cellIndexes.getColumn() : m.getRight();
-                int bottom = cellIndexes.getRow() > m.getBottom() ? cellIndexes.getRow() : m.getBottom();
-                int left = cellIndexes.getColumn() > m.getLeft() ? cellIndexes.getColumn() : m.getLeft();
+                int right = cellIndexes.getColumn() > m.getRight() ? cellIndexes.getColumn() :
+                        m.getRight();
+                int bottom =
+                        cellIndexes.getRow() > m.getBottom() ? cellIndexes.getRow() : m.getBottom();
+                int left = cellIndexes.getColumn() > m.getLeft() ? cellIndexes.getColumn() :
+                        m.getLeft();
 
                 if (model.getTop() < 0 || model.getTop() > cellIndexes.getRow()) {
                     model.setTop(top);
@@ -1589,7 +1671,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // int topTmp = table.getFlexCellFormatter()
             // .getElement(topCell.getRow(), topCell.getColumn())
             // .getAbsoluteTop();
-            int topTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft()).getAbsoluteTop() + 1;
+            int topTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft())
+                    .getAbsoluteTop() + 1;
             if (topTmp < top) {
                 top = topTmp;
             }
@@ -1598,7 +1681,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // int botTmp = table.getFlexCellFormatter()
             // .getElement(bottomCell.getRow(), bottomCell.getColumn())
             // .getAbsoluteBottom();
-            int botTmp = table.getFlexCellFormatter().getElement(model.getBottom(), model.getLeft()).getAbsoluteBottom()
+            int botTmp = table.getFlexCellFormatter().getElement(model.getBottom(), model.getLeft())
+                    .getAbsoluteBottom()
                     - 1;
             if (botTmp > bottom) {
                 bottom = botTmp;
@@ -1633,7 +1717,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // int leftTmp = table.getFlexCellFormatter()
             // .getElement(leftCell.getRow(), leftCell.getColumn())
             // .getAbsoluteLeft();
-            int leftTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft()).getAbsoluteLeft()
+            int leftTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft())
+                    .getAbsoluteLeft()
                     + 1;
             if (leftTmp < left) {
                 left = leftTmp;
@@ -1643,7 +1728,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // int rightTmp = table.getFlexCellFormatter()
             // .getElement(rightCell.getRow(), rightCell.getColumn())
             // .getAbsoluteRight();
-            int rightTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getRight()).getAbsoluteRight()
+            int rightTmp = table.getFlexCellFormatter().getElement(model.getTop(), model.getRight())
+                    .getAbsoluteRight()
                     - 1;
             if (rightTmp > right) {
                 right = rightTmp;
@@ -1675,7 +1761,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
         eventBus.addElement(parentElement, element);
     }
 
-    private void removeChildComponent(ComponentElement rootElement, ComponentElement selectedElement) {
+    private void removeChildComponent(ComponentElement rootElement,
+                                      ComponentElement selectedElement) {
         eventBus.removeElement(rootElement, selectedElement, true);
     }
 
@@ -1706,5 +1793,20 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             }
         }
         refreshFormGrid(rootBuilder);
+    }
+
+    public interface IDesignView extends IsWidget {
+
+        void setRootComponent(ComponentBuilder builder, double width, double height);
+
+        void addResizeEndHandler(ResizeEndHandler handler);
+
+        void clearSizes();
+
+        Component getContainer();
+
+        HandlerRegistration addResizeHandler(ResizeHandler handler);
+
+        void setShowHidden(boolean showHidden);
     }
 }

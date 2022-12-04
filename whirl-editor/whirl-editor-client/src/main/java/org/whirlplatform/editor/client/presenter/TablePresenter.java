@@ -9,6 +9,9 @@ import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.meta.NewTableColumnElement;
@@ -23,10 +26,6 @@ import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 @Presenter(view = TableView.class)
 public class TablePresenter extends BasePresenter<TablePresenter.ITableView, EditorEventBus>
@@ -69,14 +68,16 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
                         viewElement.setId(RandomUUID.uuid());
                         table.setView(viewElement);
                     }
-                    viewElement.setName(EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
+                    viewElement.setName(
+                            EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
                     viewElement.setViewName(view.getViewName());
 //                    viewElement.setSource(view.getViewSource());
                 }
 
                 eventBus.syncServerApplication();
 
-                InfoHelper.display(EditorMessage.Util.MESSAGE.success(), EditorMessage.Util.MESSAGE.info_table_saved());
+                InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
+                        EditorMessage.Util.MESSAGE.info_table_saved());
             }
         });
         panel.addButton(saveButton);
@@ -94,24 +95,27 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
     }
 
     public void newColumn() {
-        eventBus.addElementCallback(table, new NewTableColumnElement(), new Callback<AbstractElement, Throwable>() {
+        eventBus.addElementCallback(table, new NewTableColumnElement(),
+                new Callback<AbstractElement, Throwable>() {
 
-            @Override
-            public void onFailure(Throwable reason) {
-                InfoHelper.throwInfo("add-event", reason);
-            }
+                    @Override
+                    public void onFailure(Throwable reason) {
+                        InfoHelper.throwInfo("add-event", reason);
+                    }
 
-            @Override
-            public void onSuccess(AbstractElement result) {
-                ((TableColumnElement) result).setIndex(view.getColumns().size());
-                view.addColumn((TableColumnElement) result);
-            }
-        });
+                    @Override
+                    public void onSuccess(AbstractElement result) {
+                        ((TableColumnElement) result).setIndex(view.getColumns().size());
+                        view.addColumn((TableColumnElement) result);
+                    }
+                });
     }
 
     public void onEditRightsElement() {
-        eventBus.editRights(Collections.unmodifiableCollection(table.getColumns()), Collections.unmodifiableCollection(
-                Arrays.asList(/* RightType.ADD, RightType.DELETE, */RightType.EDIT, RightType.VIEW)));
+        eventBus.editRights(Collections.unmodifiableCollection(table.getColumns()),
+                Collections.unmodifiableCollection(
+                        Arrays.asList(/* RightType.ADD, RightType.DELETE, */RightType.EDIT,
+                                RightType.VIEW)));
     }
 
     public void onSynchronizeCloneFields() {
@@ -153,7 +157,9 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
             public void onFailure(Throwable reason) {
             }
         });
-        view.setHeaderText(EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - " + table.getName());
+        view.setHeaderText(
+                EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - " +
+                        table.getName());
         view.setTableTitle(table.getTitle());
         view.setCode(table.getCode());
         view.setEmptyRow(table.isEmptyRow());

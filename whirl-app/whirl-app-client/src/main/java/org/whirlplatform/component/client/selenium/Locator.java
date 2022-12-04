@@ -4,12 +4,11 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.sencha.gxt.core.client.util.Util;
-import org.whirlplatform.meta.shared.component.ComponentType;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.whirlplatform.meta.shared.component.ComponentType;
 
 /**
  * Формат локатора имеет следующий вид:<br>
@@ -18,7 +17,6 @@ import java.util.Map;
  * </code>
  * <br>
  * Типы указываются в CamelCase, параметры в lowerCamelCase.
- *
  */
 public class Locator {
 
@@ -37,33 +35,6 @@ public class Locator {
 
     public Locator(ComponentType componentType) {
         this(componentType.getType());
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setParameter(String parameter, String value) {
-        if (Util.isEmptyString(parameter)) {
-            throw new IllegalArgumentException();
-        }
-        params.put(parameter, value);
-    }
-
-    public boolean hasParameter(String parameter) {
-        return params.containsKey(parameter);
-    }
-
-    public String getParameter(String parameter) {
-        return params.get(parameter);
-    }
-
-    public void setPart(Locator part) {
-        this.part = part;
-    }
-
-    public Locator getPart() {
-        return part;
     }
 
     /**
@@ -94,28 +65,6 @@ public class Locator {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(type);
-        if (!params.isEmpty()) {
-            result.append("(");
-            boolean first = true;
-            for (String key : params.keySet()) {
-                if (!first) {
-                    result.append("&");
-                }
-                result.append(key).append('=').append(escape(params.get(key)));
-                first = false;
-            }
-            result.append(")");
-        }
-        if (part != null) {
-            result.append("[").append(part.toString()).append("]");
-        }
-        return result.toString();
-    }
-
     public static Locator parse(String locatorString) {
         if (Util.isEmptyString(locatorString)) {
             throw new IllegalArgumentException("Locator string can not be empty");
@@ -130,7 +79,8 @@ public class Locator {
 
         int firstOpenBracket = locatorString.indexOf("[");
         List<String> paramsString = getBalancedSubstrings(
-                firstOpenBracket == -1 ? locatorString : locatorString.substring(0, firstOpenBracket), '(', ')', false);
+                firstOpenBracket == -1 ? locatorString :
+                        locatorString.substring(0, firstOpenBracket), '(', ')', false);
         if (paramsString.size() == 1) {
             result.params = parseParams(paramsString.get(0));
         }
@@ -155,7 +105,8 @@ public class Locator {
     // не будем долго думать как распарсить сбалансированно из скобок - вытащим
     // из интернета
     // https://stackoverflow.com/questions/33188095/match-contents-within-square-brackets-including-nested-square-brackets
-    private static List<String> getBalancedSubstrings(String s, Character markStart, Character markEnd,
+    private static List<String> getBalancedSubstrings(String s, Character markStart,
+                                                      Character markEnd,
                                                       boolean includeMarkers) {
         List<String> subTreeList = new ArrayList<String>();
         int level = 0;
@@ -195,6 +146,55 @@ public class Locator {
             }
         }
         return map;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setParameter(String parameter, String value) {
+        if (Util.isEmptyString(parameter)) {
+            throw new IllegalArgumentException();
+        }
+        params.put(parameter, value);
+    }
+
+    public boolean hasParameter(String parameter) {
+        return params.containsKey(parameter);
+    }
+
+    public String getParameter(String parameter) {
+        return params.get(parameter);
+    }
+
+    public Locator getPart() {
+        return part;
+    }
+
+    public void setPart(Locator part) {
+        this.part = part;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(type);
+        if (!params.isEmpty()) {
+            result.append("(");
+            boolean first = true;
+            for (String key : params.keySet()) {
+                if (!first) {
+                    result.append("&");
+                }
+                result.append(key).append('=').append(escape(params.get(key)));
+                first = false;
+            }
+            result.append(")");
+        }
+        if (part != null) {
+            result.append("[").append(part.toString()).append("]");
+        }
+        return result.toString();
     }
 
     /**

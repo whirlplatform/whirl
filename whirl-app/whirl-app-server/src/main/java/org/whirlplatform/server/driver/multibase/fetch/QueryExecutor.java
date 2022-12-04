@@ -1,9 +1,8 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
-import org.whirlplatform.meta.shared.data.DataValue;
-
 import java.io.Closeable;
 import java.util.Map;
+import org.whirlplatform.meta.shared.data.DataValue;
 
 /**
  * Выполняет запрос в базе данных.

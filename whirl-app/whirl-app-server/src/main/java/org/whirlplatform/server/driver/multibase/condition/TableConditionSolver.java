@@ -2,6 +2,16 @@ package org.whirlplatform.server.driver.multibase.condition;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.apache.empire.db.derby.DBDatabaseDriverDerby;
@@ -9,7 +19,12 @@ import org.apache.empire.db.oracle.DBDatabaseDriverOracle;
 import org.apache.empire.exceptions.EmpireException;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.BooleanCondition;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RightElement;
+import org.whirlplatform.meta.shared.editor.RightType;
+import org.whirlplatform.meta.shared.editor.SQLCondition;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
@@ -18,11 +33,6 @@ import org.whirlplatform.server.db.NamedParamResolver;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.Map.Entry;
 
 @SuppressWarnings("serial")
 public class TableConditionSolver extends AbstractConditionSolver {
@@ -52,10 +62,14 @@ public class TableConditionSolver extends AbstractConditionSolver {
     private Set<SQLCondition> sqlDeleteConditions = new HashSet<SQLCondition>();
     // private Set<SQLCondition> sqlRestrictConditions = new
     // HashSet<SQLCondition>();
-    private Multimap<TableColumnElement, SQLCondition> sqlColumnViewConditions = HashMultimap.create();
-    private Multimap<TableColumnElement, SQLCondition> sqlColumnEditConditions = HashMultimap.create();
-    private Map<TableColumnElement, Boolean> columnView = new HashMap<TableColumnElement, Boolean>();
-    private Map<TableColumnElement, Boolean> columnEdit = new HashMap<TableColumnElement, Boolean>();
+    private Multimap<TableColumnElement, SQLCondition> sqlColumnViewConditions =
+            HashMultimap.create();
+    private Multimap<TableColumnElement, SQLCondition> sqlColumnEditConditions =
+            HashMultimap.create();
+    private Map<TableColumnElement, Boolean> columnView =
+            new HashMap<TableColumnElement, Boolean>();
+    private Map<TableColumnElement, Boolean> columnEdit =
+            new HashMap<TableColumnElement, Boolean>();
 
     private Set<String> sqlColumnTableInsert = new HashSet<String>();
     private Set<String> sqlColumnTableUpdate = new HashSet<String>();
@@ -64,7 +78,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
     private Multimap<TableColumnElement, String> sqlColumnColumnEdit = HashMultimap.create();
 
     public TableConditionSolver(AbstractTableElement table, ApplicationElement application,
-                                Map<String, DataValue> params, ApplicationUser user, ConnectionWrapper connection) {
+                                Map<String, DataValue> params, ApplicationUser user,
+                                ConnectionWrapper connection) {
         this.table = table;
         this.application = application;
         this.connection = connection;
@@ -314,7 +329,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 Set<RightElement> rights = new HashSet<RightElement>();
                 RightCollectionElement right = application.getTableColumnRights(c);
                 for (String g : user.getGroups()) {
-                    rights.addAll(filter(right.getGroupRights(application.getGroup(g)), currentType));
+                    rights.addAll(
+                            filter(right.getGroupRights(application.getGroup(g)), currentType));
                 }
                 // если нет прав на группы, то берем права по приложению
                 if (rights.isEmpty()) {
@@ -341,7 +357,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 Set<RightElement> rights = new HashSet<RightElement>();
                 RightCollectionElement right = application.getTableColumnRights(c);
                 for (String g : user.getGroups()) {
-                    rights.addAll(filter(right.getGroupRights(application.getGroup(g)), currentType));
+                    rights.addAll(
+                            filter(right.getGroupRights(application.getGroup(g)), currentType));
                 }
                 // если нет прав на группы, то берем права по приложению
                 if (rights.isEmpty()) {
@@ -366,7 +383,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
         setColumnAllowance(column, allowed, columnEdit);
     }
 
-    private void setColumnAllowance(TableColumnElement column, boolean allowed, Map<TableColumnElement, Boolean> map) {
+    private void setColumnAllowance(TableColumnElement column, boolean allowed,
+                                    Map<TableColumnElement, Boolean> map) {
         Boolean v = map.get(column);
         if (v == null) {
             v = allowed;
@@ -377,7 +395,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
     }
 
     private void checkSqlConditions() throws SQLException {
-        if (sqlInsertConditions.isEmpty() && sqlUpdateConditions.isEmpty() && sqlDeleteConditions.isEmpty()
+        if (sqlInsertConditions.isEmpty() && sqlUpdateConditions.isEmpty() &&
+                sqlDeleteConditions.isEmpty()
                 && sqlColumnViewConditions.isEmpty() && sqlColumnEditConditions.isEmpty()) {
             return;
         }
@@ -392,16 +411,19 @@ public class TableConditionSolver extends AbstractConditionSolver {
 
         // запросы для вычисления доступов по таблице
         if (!insert) {
-            sqlColumnTableInsert.addAll(createConditionSubQueries("TI_", ((PlainTableElement) table).getTableName(),
-                    sqlInsertConditions, subColumns, subQueries, false));
+            sqlColumnTableInsert.addAll(
+                    createConditionSubQueries("TI_", ((PlainTableElement) table).getTableName(),
+                            sqlInsertConditions, subColumns, subQueries, false));
         }
         if (!update) {
-            sqlColumnTableUpdate.addAll(createConditionSubQueries("TU_", ((PlainTableElement) table).getTableName(),
-                    sqlUpdateConditions, subColumns, subQueries, false));
+            sqlColumnTableUpdate.addAll(
+                    createConditionSubQueries("TU_", ((PlainTableElement) table).getTableName(),
+                            sqlUpdateConditions, subColumns, subQueries, false));
         }
         if (!delete) {
-            sqlColumnTableDelete.addAll(createConditionSubQueries("TD_", ((PlainTableElement) table).getTableName(),
-                    sqlDeleteConditions, subColumns, subQueries, false));
+            sqlColumnTableDelete.addAll(
+                    createConditionSubQueries("TD_", ((PlainTableElement) table).getTableName(),
+                            sqlDeleteConditions, subColumns, subQueries, false));
         }
 
         // запросы для вычисления доступов по колонкам
@@ -427,7 +449,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
         String query = makeQuery(subQueries);
         _log.info(query);
 
-        try (ResultSet rs = connection.getDatabaseDriver().executeQuery(query, null, false, connection)) {
+        try (ResultSet rs = connection.getDatabaseDriver()
+                .executeQuery(query, null, false, connection)) {
             if (rs.next()) {
                 // достаем вычисленные значения
                 // таблица
@@ -444,12 +467,14 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 // колонки
                 for (TableColumnElement col : sqlColumnColumnView.keySet()) {
                     for (String dbCol : sqlColumnColumnView.get(col)) {
-                        setColumnViewAllowance(col, getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
+                        setColumnViewAllowance(col,
+                                getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
                     }
                 }
                 for (TableColumnElement col : sqlColumnColumnEdit.keySet()) {
                     for (String dbCol : sqlColumnColumnEdit.get(col)) {
-                        setColumnEditAllowance(col, getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
+                        setColumnEditAllowance(col,
+                                getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
                     }
                 }
             }
@@ -457,14 +482,17 @@ public class TableConditionSolver extends AbstractConditionSolver {
     }
 
     private Collection<String> createConditionSubQueries(String columnPrefix, String objectName,
-                                                         Collection<SQLCondition> list, List<String> subColumns, List<String> subQueries, boolean column) {
+                                                         Collection<SQLCondition> list,
+                                                         List<String> subColumns,
+                                                         List<String> subQueries, boolean column) {
         Set<String> result = new HashSet<String>();
         DBDatabaseDriver driver = connection.getDatabaseDriver();
         int index = 0;
         for (SQLCondition condition : list) {
             String columnName = columnPrefix + objectName + index;
             String resolvedValue = resolveValue(driver, condition.getValue(), objectName, column);
-            String q = "(" + resolvedValue + ")" + driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
+            String q = "(" + resolvedValue + ")" +
+                    driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
             subColumns.add(columnName);
             subQueries.add(q);
             result.add(columnName);
@@ -519,15 +547,18 @@ public class TableConditionSolver extends AbstractConditionSolver {
     // }
     // }
 
-    protected String resolveValue(DBDatabaseDriver driver, String value, String objectName, boolean column) {
+    protected String resolveValue(DBDatabaseDriver driver, String value, String objectName,
+                                  boolean column) {
         if (value == null) {
             return null;
         }
-        NamedParamResolver resolver = new NamedParamResolver(driver, value, processParams(params, objectName, column));
+        NamedParamResolver resolver =
+                new NamedParamResolver(driver, value, processParams(params, objectName, column));
         return resolver.getResultSql();
     }
 
-    protected Map<String, DataValue> processParams(Map<String, DataValue> paramMap, String objectName, boolean column) {
+    protected Map<String, DataValue> processParams(Map<String, DataValue> paramMap,
+                                                   String objectName, boolean column) {
         ApplicationUser user = connection.getUser();
         Map<String, DataValue> result = new HashMap<String, DataValue>();
 

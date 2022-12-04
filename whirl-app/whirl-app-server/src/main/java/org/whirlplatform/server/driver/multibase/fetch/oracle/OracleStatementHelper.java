@@ -1,13 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.server.db.ConnectionWrapper;
-import org.whirlplatform.server.driver.multibase.fetch.AbstractFetcher;
-import org.whirlplatform.server.driver.multibase.fetch.ParamsUtil;
-import org.whirlplatform.server.login.ApplicationUser;
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.server.db.ConnectionWrapper;
+import org.whirlplatform.server.driver.multibase.fetch.AbstractFetcher;
+import org.whirlplatform.server.driver.multibase.fetch.ParamsUtil;
+import org.whirlplatform.server.login.ApplicationUser;
 
 public class OracleStatementHelper extends AbstractFetcher {
 
@@ -28,7 +27,8 @@ public class OracleStatementHelper extends AbstractFetcher {
         super(connection);
     }
 
-    public void setStatementParams(CallableStatement stmt, List<String> paramNames, Map<String, DataValue> params)
+    public void setStatementParams(CallableStatement stmt, List<String> paramNames,
+                                   Map<String, DataValue> params)
             throws SQLException, IOException {
         List<DataValue> paramsDataValue = new ArrayList<DataValue>();
         for (String paramName : paramNames) {
@@ -123,7 +123,8 @@ public class OracleStatementHelper extends AbstractFetcher {
     private Clob createTemporaryClob() throws SQLException {
         CallableStatement cst = null;
         try {
-            cst = getConnection().prepareCall("{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
+            cst = getConnection().prepareCall(
+                    "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
             cst.registerOutParameter(1, Types.CLOB);
             cst.execute();
             return cst.getClob(1);

@@ -13,33 +13,6 @@ public abstract class SimpleContainerBuilderOverlay {
         return instance;
     }
 
-    /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    public abstract void setCode(String name);
-
-    public abstract String getCode();
-
-    public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
-
-    public abstract void setHidden(boolean hidden);
-
-    public abstract boolean isHidden();
-
-    public abstract void setStyleName(String styleName);
-
     public static void setChild(SimpleContainerBuilder instance,
                                 ComponentBuilder builder) {
         instance.addChild(builder);
@@ -54,13 +27,39 @@ public abstract class SimpleContainerBuilderOverlay {
         instance.removeChild(builder);
     }
 
-    public abstract ComponentBuilder[] getChildren();
-
-    public abstract void forceLayout();
-
     public static ComponentBuilder getParent(SimpleContainerBuilder instance) {
         return instance.getParentBuilder();
     }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    public abstract String getCode();
+
+    public abstract void setCode(String name);
+
+    public abstract boolean isEnabled();
+
+    public abstract void setEnabled(boolean enabled);
+
+    public abstract boolean isHidden();
+
+    public abstract void setHidden(boolean hidden);
+
+    public abstract void setStyleName(String styleName);
+
+    public abstract ComponentBuilder[] getChildren();
+
+    public abstract void forceLayout();
 
     public abstract int getChildrenCount();
 

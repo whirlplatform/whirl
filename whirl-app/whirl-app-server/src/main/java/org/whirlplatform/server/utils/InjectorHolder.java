@@ -5,10 +5,10 @@
 //
 //public class InjectorHolder {
 //
-//	@Inject
-//	private static Injector injector;
-//	
-//	public static Injector getInjector() {
-//		return injector;
-//	}
+//    @Inject
+//    private static Injector injector;
+//    
+//    public static Injector getInjector() {
+//        return injector;
+//    }
 //}

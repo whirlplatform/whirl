@@ -1,5 +1,8 @@
 package org.whirlplatform.integration.page.event;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.javascript.Dependency;
 import org.jboss.arquillian.graphene.javascript.JavaScript;
@@ -11,10 +14,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Location("app?role=arquillian_event_test")
 public class JSEventsTestPage extends AbstractPage {
@@ -33,24 +32,26 @@ public class JSEventsTestPage extends AbstractPage {
 
     @FindByWhirl("whirl:ButtonBuilder(code=btn_click_event_emitter)")
     private WebElement buttonClickEventEmitter;
-
-    @JavaScript("window.JsTest")
-    @Dependency(sources = "org/whirlplatform/integration/page/event/js-events-routines.js")
-    public interface JsTest {
-        String executeEvent(String eventCode, Object data, String type);
-
-        String getMultiComboBoxValues(String multiComboBoxCode);
-    }
-
     @JavaScript
     private JsTest jsTest;
+
+    public static void main(String[] args) throws JSONException {
+        String test = "[\"some value 1\",\"another value2\",\"and other value 3\"]";
+        JSONArray jsonarray = new JSONArray(test);
+
+        for (int i = 0; i < jsonarray.length(); i++) {
+            Object o = jsonarray.get(i);
+        }
+
+    }
 
     /**
      * Ожидаю готовность сразу всех элементов.
      */
     public void waitWhenComponentsReady() {
         Graphene.waitGui().pollingEvery(2, TimeUnit.SECONDS)
-                .until(input -> !numberFieldComponent.getAttribute("value").equals("") && checkBoxComponent.isSelected()
+                .until(input -> !numberFieldComponent.getAttribute("value").equals("") &&
+                        checkBoxComponent.isSelected()
                         && !dateFieldComponent.getAttribute("value").equals("")
                         && !textFieldComponent.getAttribute("value").equals(""));
     }
@@ -78,9 +79,8 @@ public class JSEventsTestPage extends AbstractPage {
     }
 
     /**
-     * при выполнении события создаётся компонент с
-     * id=arquillian_whirl_js_event_lock, при завершении этот компонент удаляется
-     * из dom. поэтому здесь я проверяю его наличие.
+     * при выполнении события создаётся компонент с id=arquillian_whirl_js_event_lock, при
+     * завершении этот компонент удаляется из dom. поэтому здесь я проверяю его наличие.
      */
     public void waitForEventComplete() {
         // я не уверен что эта техника работает так как ожидается, т.к. иногда ждёт
@@ -115,13 +115,11 @@ public class JSEventsTestPage extends AbstractPage {
         return values;
     }
 
-    public static void main(String[] args) throws JSONException {
-        String test = "[\"some value 1\",\"another value2\",\"and other value 3\"]";
-        JSONArray jsonarray = new JSONArray(test);
+    @JavaScript("window.JsTest")
+    @Dependency(sources = "org/whirlplatform/integration/page/event/js-events-routines.js")
+    public interface JsTest {
+        String executeEvent(String eventCode, Object data, String type);
 
-        for (int i = 0; i < jsonarray.length(); i++) {
-            Object o = jsonarray.get(i);
-        }
-
+        String getMultiComboBoxValues(String multiComboBoxCode);
     }
 }

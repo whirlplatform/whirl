@@ -13,6 +13,28 @@ public abstract class ComboBoxBuilderOverlay {
         return instance;
     }
 
+    public static boolean isEmpty(ComboBoxBuilder instance) {
+        return instance.getValue() == null;
+    }
+
+    public static ComponentBuilder getParent(ComboBoxBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Установить текст всплывающей подсказки
+     *
+     * @param toolTip
+     */
+    public static void setToolTip(ComboBoxBuilder instance, String toolTip) {
+        instance.getComponent().setToolTip(toolTip);
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
     /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
@@ -20,19 +42,13 @@ public abstract class ComboBoxBuilderOverlay {
      */
     public abstract void setDomId(String domId);
 
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
+    public abstract String getCode();
 
     public abstract void setCode(String name);
 
-    public abstract String getCode();
+    public abstract boolean isEnabled();
 
     public abstract void setEnabled(boolean enabled);
-
-    public abstract boolean isEnabled();
 
     public abstract void setHidden(boolean hidden);
 
@@ -40,30 +56,11 @@ public abstract class ComboBoxBuilderOverlay {
 
     public abstract void setStyleName(String styleName);
 
-
     /**
-     * Очистить текущее значение комбобокса. Значения, отображаемые в выпадающем списке остаются доступными для выбора.
+     * Очистить текущее значение комбобокса. Значения, отображаемые в выпадающем списке остаются
+     * доступными для выбора.
      */
     public abstract void clear();
-
-    public static boolean isEmpty(ComboBoxBuilder instance) {
-        return instance.getValue() == null;
-    }
-
-    /**
-     * Получить значение компонента в формате {@link ListModelDataOverlay ListModelData}.
-     * (Аналогичный результат можно получить при помощи comboboxBuilder.getDataValue().{@link DataValueOverlay#getListValue(DataValueImpl) getListValue()} )
-     *
-     * @return {@link ListModelDataOverlay ListModelData}
-     */
-    public abstract ListModelData getValue();
-
-    /**
-     * Установить значение компонента в формате {@link ListModelDataOverlay ListModelData} .
-     *
-     * @param {@link ListModelDataOverlay model}
-     */
-    public abstract void setValue(ListModelData model);
 
     /**
      * Получить текущее значение комбобокса.
@@ -85,22 +82,35 @@ public abstract class ComboBoxBuilderOverlay {
 //    }
 
     /**
+     * Получить значение компонента в формате {@link ListModelDataOverlay ListModelData}.
+     * (Аналогичный результат можно получить при помощи
+     * comboboxBuilder.getDataValue().{@link DataValueOverlay#getListValue(DataValueImpl)
+     * getListValue()} )
+     *
+     * @return {@link ListModelDataOverlay ListModelData}
+     */
+    public abstract ListModelData getValue();
+
+    /**
+     * Установить значение компонента в формате {@link ListModelDataOverlay ListModelData} .
+     *
+     * @param {@link ListModelDataOverlay model}
+     */
+    public abstract void setValue(ListModelData model);
+
+    /**
      * Получить текст, отображаемый в области ввода комбобокса
      *
      * @return
      */
     public abstract String getText();
 
+    public abstract boolean isRequired();
+
     /**
      * Сделать компонент обязательным для заполнения
      */
     public abstract void setRequired(boolean required);
-
-    public abstract boolean isRequired();
-
-    public static ComponentBuilder getParent(ComboBoxBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Пометить комбобокс как невалидный и пометить компонент красным маркером с подсказкой message
@@ -110,7 +120,8 @@ public abstract class ComboBoxBuilderOverlay {
     public abstract void markInvalid(String message);
 
     /**
-     * Очистить информацию о невалидности компонента. Убрать все светящиеся красные подсказки об ошибках с компонента.
+     * Очистить информацию о невалидности компонента. Убрать все светящиеся красные подсказки об
+     * ошибках с компонента.
      */
     public abstract void clearInvalid();
 
@@ -126,13 +137,4 @@ public abstract class ComboBoxBuilderOverlay {
      * @return boolean
      */
     public abstract boolean isValid(boolean invalidate);
-
-    /**
-     * Установить текст всплывающей подсказки
-     *
-     * @param toolTip
-     */
-    public static void setToolTip(ComboBoxBuilder instance, String toolTip) {
-        instance.getComponent().setToolTip(toolTip);
-    }
 }

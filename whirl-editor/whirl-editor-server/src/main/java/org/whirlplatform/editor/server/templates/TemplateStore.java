@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.server.templates;
 
+import java.util.List;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.editor.shared.templates.BaseTemplate;
-
-import java.util.List;
 
 public interface TemplateStore {
 

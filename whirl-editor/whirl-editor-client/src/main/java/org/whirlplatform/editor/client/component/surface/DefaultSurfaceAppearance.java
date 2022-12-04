@@ -10,15 +10,8 @@ import org.whirlplatform.editor.client.component.surface.Surface.SurfaceStyle;
 
 public class DefaultSurfaceAppearance implements SurfaceAppearance {
 
-    public interface DefaultSurfaceResources extends SurfaceResources,
-            ClientBundle {
-        @Source("Surface.gss")
-        SurfaceStyle style();
-    }
-
     private SurfaceResources resource;
     private DefaultTemplate template;
-
     public DefaultSurfaceAppearance() {
         this(
                 GWT.<DefaultSurfaceResources>create(DefaultSurfaceResources.class));
@@ -34,6 +27,12 @@ public class DefaultSurfaceAppearance implements SurfaceAppearance {
     @Override
     public void render(SafeHtmlBuilder sb) {
         sb.append(template.render(resource.style()));
+    }
+
+    public interface DefaultSurfaceResources extends SurfaceResources,
+            ClientBundle {
+        @Source("Surface.gss")
+        SurfaceStyle style();
     }
 
 }

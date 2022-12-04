@@ -3,8 +3,7 @@ package org.whirlplatform.meta.shared.editor;
 import java.io.Serializable;
 
 /**
- * Enumerates all possible file element categories which the application can
- * hold.
+ * Enumerates all possible file element categories which the application can hold.
  *
  * @author bedritckiy_mr
  */

@@ -22,6 +22,13 @@ import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.editing.GridEditing;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.whirlplatform.component.client.AbstractFieldBuilder;
 import org.whirlplatform.component.client.data.RowModelDataValueProvider;
 import org.whirlplatform.component.client.selenium.Locator;
@@ -37,328 +44,333 @@ import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class ColumnModelHelper implements LocatorAware {
 
-	private ClassMetadata metadata;
+    private ClassMetadata metadata;
 
-	private ColumnModel<RowModelData> columnModel;
+    private ColumnModel<RowModelData> columnModel;
 
-	private GridEditing<RowModelData> editing;
+    private GridEditing<RowModelData> editing;
 
-	private ColumnConfig<RowModelData, ?> firstColumn;
+    private ColumnConfig<RowModelData, ?> firstColumn;
 
-	private Store<RowModelData> store;
+    private Store<RowModelData> store;
 
-	private boolean showCell;
+    private boolean showCell;
 
-	private ColumnConfigStore columnConfigStore;
+    private ColumnConfigStore columnConfigStore;
 
-	private Map<ColumnConfig<RowModelData, ?>, AbstractFieldBuilder> builders = new HashMap<>();
+    private Map<ColumnConfig<RowModelData, ?>, AbstractFieldBuilder> builders = new HashMap<>();
 
-	public ColumnModelHelper(ClassMetadata metadata, Store<RowModelData> store, boolean showCell,
-			ColumnConfigStore columnConfigStore) {
-		this.metadata = metadata;
-		this.store = store;
-		this.showCell = showCell;
-		this.columnConfigStore = columnConfigStore;
-	}
+    public ColumnModelHelper(ClassMetadata metadata, Store<RowModelData> store, boolean showCell,
+                             ColumnConfigStore columnConfigStore) {
+        this.metadata = metadata;
+        this.store = store;
+        this.showCell = showCell;
+        this.columnConfigStore = columnConfigStore;
+    }
 
-	// Вынести в отдельный метод установку стиля
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ColumnModel<RowModelData> build() {
-		List<ColumnConfig<RowModelData, ?>> configs = new ArrayList<ColumnConfig<RowModelData, ?>>();
+    // Вынести в отдельный метод установку стиля
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public ColumnModel<RowModelData> build() {
+        List<ColumnConfig<RowModelData, ?>> configs =
+                new ArrayList<ColumnConfig<RowModelData, ?>>();
 
-		if (firstColumn != null) {
-			configs.add(firstColumn);
-		}
+        if (firstColumn != null) {
+            configs.add(firstColumn);
+        }
 
-		for (final FieldMetadata field : metadata.getFields()) {
-			if (!field.isView()) {
-				continue;
-			}
+        for (final FieldMetadata field : metadata.getFields()) {
+            if (!field.isView()) {
+                continue;
+            }
 
-			int width = field.getWidth();
-			if (width <= 0) {
-				if (field.getLength() > 0) {
-					width = StringMetrics.getWidth(field.getLength(), "13px");
-				} else {
-					width = StringMetrics.getWidth(field.getLabel(), "13px");
-				}
-			}
+            int width = field.getWidth();
+            if (width <= 0) {
+                if (field.getLength() > 0) {
+                    width = StringMetrics.getWidth(field.getLength(), "13px");
+                } else {
+                    width = StringMetrics.getWidth(field.getLabel(), "13px");
+                }
+            }
 
-			final ColumnConfig<RowModelData, Object> columnConfig = new ColumnConfig<RowModelData, Object>(
-					new RowModelDataValueProvider<Object>(field.getName()), width,
-					SafeHtmlUtils.fromTrustedString(field.getLabel()));
+            final ColumnConfig<RowModelData, Object> columnConfig =
+                    new ColumnConfig<RowModelData, Object>(
+                            new RowModelDataValueProvider<Object>(field.getName()), width,
+                            SafeHtmlUtils.fromTrustedString(field.getLabel()));
 
-			columnConfig.setHidden(field.isHidden());
-			
-			if (!field.isEdit()) {
-				SafeStylesBuilder style = new SafeStylesBuilder();
-				style.trustedBackgroundColor("#F0F0F0");
-				columnConfig.setColumnStyle(style.toSafeStyles());
-			}
+            columnConfig.setHidden(field.isHidden());
 
-			// TODO вообще нужна своя реализация Cell
-			if (DataType.BOOLEAN == field.getType()) {
-				CheckBoxCell cell = new CheckBoxCell();
-				if (!field.isEdit()) {
-					cell.disable(null);
-				}
-				columnConfig.setCell((Cell) cell);
-			} else if (DataType.FILE == field.getType()) {
-				AbstractCell<FileValue> cell = new AbstractCell<FileValue>(BrowserEvents.CLICK) {
+            if (!field.isEdit()) {
+                SafeStylesBuilder style = new SafeStylesBuilder();
+                style.trustedBackgroundColor("#F0F0F0");
+                columnConfig.setColumnStyle(style.toSafeStyles());
+            }
 
-					@Override
-					public void render(com.google.gwt.cell.client.Cell.Context context, FileValue value,
-							SafeHtmlBuilder sb) {
-						if (value == null || Util.isEmptyString(value.getName())) {
-							return;
-						}
-						String link = new String("<span title=\"" + value.getName()
-								+ "\" style=\"cursor: pointer; text-decoration: underline; color: #1936A1;\">"
-								+ value.getName() + "</span>");
-						sb.appendHtmlConstant(link);
-					}
+            // TODO вообще нужна своя реализация Cell
+            if (DataType.BOOLEAN == field.getType()) {
+                CheckBoxCell cell = new CheckBoxCell();
+                if (!field.isEdit()) {
+                    cell.disable(null);
+                }
+                columnConfig.setCell((Cell) cell);
+            } else if (DataType.FILE == field.getType()) {
+                AbstractCell<FileValue> cell = new AbstractCell<FileValue>(BrowserEvents.CLICK) {
 
-					@Override
-					public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context, Element parent,
-							FileValue value, NativeEvent event, ValueUpdater<FileValue> valueUpdater) {
-						if (Util.isEmptyString(value.getName())) {
-							return;
-						}
-						if (NativeEvent.BUTTON_LEFT == event.getButton()) {
-							RowModelData model = store.findModelWithKey((String) context.getKey());
-							if (model != null) {
-								String url = FileLinkHelper.getTableFileLinkById(metadata.getClassId(), field.getName(),
-										model.getId());
+                    @Override
+                    public void render(com.google.gwt.cell.client.Cell.Context context,
+                                       FileValue value,
+                                       SafeHtmlBuilder sb) {
+                        if (value == null || Util.isEmptyString(value.getName())) {
+                            return;
+                        }
+                        String link = new String("<span title=\"" + value.getName()
+                                +
+                                "\" style=\"cursor: pointer; text-decoration: underline; color: #1936A1;\">"
+                                + value.getName() + "</span>");
+                        sb.appendHtmlConstant(link);
+                    }
 
-								com.google.gwt.user.client.Window.open(url, "_blank", null);
-							}
-						}
-						super.onBrowserEvent(context, parent, value, event, valueUpdater);
-					}
-				};
-				columnConfig.setCell((Cell) cell);
-			} else if (DataType.DATE == field.getType()) {
-				final DateTimeFormat format;
-				if (field.getDataFormat() == null || field.getDataFormat().isEmpty()) {
-					format = AppConstant.getDateFormatLong();
-				} else {
-					format = DateTimeFormat.getFormat(field.getDataFormat());
-				}
-				DateCell cell = new DateCell(format) {
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Date value,
-								SafeHtmlBuilder sb) {
-							if (value != null) {
-								sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-										.render(format.format(value, null)).asString()));
-							}
-						}
-					};
-				columnConfig.setCell((Cell) cell);
-			} else {
-				// Можно просто ListModelData наследовать от Comparable
-				if (DataType.LIST == field.getType()) {
-					columnConfig.setComparator(new Comparator<Object>() {
-						@Override
-						public int compare(Object o1, Object o2) {
-							if (o1 instanceof ListModelData && o2 instanceof ListModelData) {
-								String s1 = ((ListModelData) o1).getLabel();
-								String s2 = ((ListModelData) o2).getLabel();
-								if (s1 == null) {
-									return -1;
-								} else if (s2 == null) {
-									return 1;
-								}
-								return s1.compareToIgnoreCase(s2);
-							} else {
-								// По идее такого не может быть. Может
-								// выкидывать ошибку?
-								return 0;
-							}
-						}
-					});
-					AbstractCell<Object> cell = new AbstractCell<Object>() {
+                    @Override
+                    public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
+                                               Element parent,
+                                               FileValue value, NativeEvent event,
+                                               ValueUpdater<FileValue> valueUpdater) {
+                        if (Util.isEmptyString(value.getName())) {
+                            return;
+                        }
+                        if (NativeEvent.BUTTON_LEFT == event.getButton()) {
+                            RowModelData model = store.findModelWithKey((String) context.getKey());
+                            if (model != null) {
+                                String url =
+                                        FileLinkHelper.getTableFileLinkById(metadata.getClassId(),
+                                                field.getName(),
+                                                model.getId());
 
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Object value,
-								SafeHtmlBuilder sb) {
-							if (value != null && value.toString() != null) {
-								sb.appendHtmlConstant(addQTip(SafeHtmlUtils.htmlEscape(value.toString())));
-							}
-						}
-					};
-					columnConfig.setCell(cell);
-				} else if (DataType.NUMBER == field.getType()) {
-					final NumberFormat format;
-					if (field.getDataFormat() != null && !field.getDataFormat().isEmpty()) {
-						format = NumberFormat.getFormat(field.getDataFormat());
-					} else {
-						format = NumberFormat.getFormat("#0.#");
-					}
-					
-					NumberCell cell = new NumberCell<Number>(format) {
-							@Override
-							public void render(Cell.Context context, Number value, SafeHtmlBuilder sb) {
-								if (value != null) {
-									sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-											.render(format.format(value)).asString()));
-								}
+                                com.google.gwt.user.client.Window.open(url, "_blank", null);
                             }
-                        };
-					
-					columnConfig.setCell(cell);
-				}
-				
-				if (DataType.STRING == field.getType()) {
+                        }
+                        super.onBrowserEvent(context, parent, value, event, valueUpdater);
+                    }
+                };
+                columnConfig.setCell((Cell) cell);
+            } else if (DataType.DATE == field.getType()) {
+                final DateTimeFormat format;
+                if (field.getDataFormat() == null || field.getDataFormat().isEmpty()) {
+                    format = AppConstant.getDateFormatLong();
+                } else {
+                    format = DateTimeFormat.getFormat(field.getDataFormat());
+                }
+                DateCell cell = new DateCell(format) {
+                    @Override
+                    public void render(com.google.gwt.cell.client.Cell.Context context, Date value,
+                                       SafeHtmlBuilder sb) {
+                        if (value != null) {
+                            sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
+                                    .render(format.format(value, null)).asString()));
+                        }
+                    }
+                };
+                columnConfig.setCell((Cell) cell);
+            } else {
+                // Можно просто ListModelData наследовать от Comparable
+                if (DataType.LIST == field.getType()) {
+                    columnConfig.setComparator(new Comparator<Object>() {
+                        @Override
+                        public int compare(Object o1, Object o2) {
+                            if (o1 instanceof ListModelData && o2 instanceof ListModelData) {
+                                String s1 = ((ListModelData) o1).getLabel();
+                                String s2 = ((ListModelData) o2).getLabel();
+                                if (s1 == null) {
+                                    return -1;
+                                } else if (s2 == null) {
+                                    return 1;
+                                }
+                                return s1.compareToIgnoreCase(s2);
+                            } else {
+                                // По идее такого не может быть. Может
+                                // выкидывать ошибку?
+                                return 0;
+                            }
+                        }
+                    });
+                    AbstractCell<Object> cell = new AbstractCell<Object>() {
 
-					AbstractCell<Object> cell = new AbstractCell<Object>() {
+                        @Override
+                        public void render(com.google.gwt.cell.client.Cell.Context context,
+                                           Object value,
+                                           SafeHtmlBuilder sb) {
+                            if (value != null && value.toString() != null) {
+                                sb.appendHtmlConstant(
+                                        addQTip(SafeHtmlUtils.htmlEscape(value.toString())));
+                            }
+                        }
+                    };
+                    columnConfig.setCell(cell);
+                } else if (DataType.NUMBER == field.getType()) {
+                    final NumberFormat format;
+                    if (field.getDataFormat() != null && !field.getDataFormat().isEmpty()) {
+                        format = NumberFormat.getFormat(field.getDataFormat());
+                    } else {
+                        format = NumberFormat.getFormat("#0.#");
+                    }
 
-						@Override
-						public void render(com.google.gwt.cell.client.Cell.Context context, Object value,
-								SafeHtmlBuilder sb) {
-							if (value != null && value instanceof String) {
-								sb.appendHtmlConstant(addQTip(SafeHtmlUtils.htmlEscape((String) value)));
-							}
-						}
-					};
-					columnConfig.setCell(cell);
-				}
-			}
-			configs.add(columnConfig);
-		}
+                    NumberCell cell = new NumberCell<Number>(format) {
+                        @Override
+                        public void render(Cell.Context context, Number value, SafeHtmlBuilder sb) {
+                            if (value != null) {
+                                sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
+                                        .render(format.format(value)).asString()));
+                            }
+                        }
+                    };
 
-		// Восстановление пользовательских настроек
-		if (columnConfigStore != null) {
-			for (ColumnConfig<RowModelData, ?> c : configs) {
-				Integer w = columnConfigStore.getWidth(c.getPath());
-				if (w != null) {
-					c.setWidth(w);
-				}
-				Boolean hid = columnConfigStore.isHidden(c.getPath());
-				if (hid != null) {
-					c.setHidden(hid);
-				}
-			}
-			final List<String> cols = columnConfigStore.getPositions();
-			if (cols != null) {
-				Collections.sort(configs, new Comparator<ColumnConfig>() {
-					@Override
-					public int compare(ColumnConfig o1, ColumnConfig o2) {
-						int ind1 = cols.indexOf(o1.getPath());
-						int ind2 = cols.indexOf(o2.getPath());
-						if (ind1 == -1 || ind2 == -1) {
-							return 0;
-						} else {
-							return ind1 - ind2;
-						}
-					}
-				});
-			}
-		}
-		columnModel = new ColumnModel<RowModelData>(configs);
-		return columnModel;
-	}
+                    columnConfig.setCell(cell);
+                }
 
-	public void setFirstColumn(ColumnConfig<RowModelData, ?> column) {
-		this.firstColumn = column;
-	}
+                if (DataType.STRING == field.getType()) {
 
-	public void setClassMetadata(ClassMetadata metadata) {
-		this.metadata = metadata;
-	}
+                    AbstractCell<Object> cell = new AbstractCell<Object>() {
 
-	public void setEditing(GridEditing<RowModelData> editing) {
-		this.editing = editing;
-		rebuildEditing();
-	}
+                        @Override
+                        public void render(com.google.gwt.cell.client.Cell.Context context,
+                                           Object value,
+                                           SafeHtmlBuilder sb) {
+                            if (value != null && value instanceof String) {
+                                sb.appendHtmlConstant(
+                                        addQTip(SafeHtmlUtils.htmlEscape((String) value)));
+                            }
+                        }
+                    };
+                    columnConfig.setCell(cell);
+                }
+            }
+            configs.add(columnConfig);
+        }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void rebuildEditing() {
-		if (!metadata.isUpdatable()) {
-			return;
-		}
-		for (ColumnConfig<RowModelData, ?> config : columnModel.getColumns()) {
-			if (config == firstColumn) {
-				continue;
-			}
-			FieldMetadata field = metadata.getField(config.getPath());
-			if (!field.isEdit()) {
-				continue;
-			}
+        // Восстановление пользовательских настроек
+        if (columnConfigStore != null) {
+            for (ColumnConfig<RowModelData, ?> c : configs) {
+                Integer w = columnConfigStore.getWidth(c.getPath());
+                if (w != null) {
+                    c.setWidth(w);
+                }
+                Boolean hid = columnConfigStore.isHidden(c.getPath());
+                if (hid != null) {
+                    c.setHidden(hid);
+                }
+            }
+            final List<String> cols = columnConfigStore.getPositions();
+            if (cols != null) {
+                Collections.sort(configs, new Comparator<ColumnConfig>() {
+                    @Override
+                    public int compare(ColumnConfig o1, ColumnConfig o2) {
+                        int ind1 = cols.indexOf(o1.getPath());
+                        int ind2 = cols.indexOf(o2.getPath());
+                        if (ind1 == -1 || ind2 == -1) {
+                            return 0;
+                        } else {
+                            return ind1 - ind2;
+                        }
+                    }
+                });
+            }
+        }
+        columnModel = new ColumnModel<RowModelData>(configs);
+        return columnModel;
+    }
 
-			AbstractFieldBuilder builder = FieldMetadataHelper.build(field);
-			if (builder == null) {
-				continue;
-			}
-			Component component = builder.create();
-			builders.put(config, builder);
-			if (component instanceof IsField<?>) {
-				editing.addEditor((ColumnConfig) config, (IsField<?>) component);
-			}
-		}
-	}
+    public void setFirstColumn(ColumnConfig<RowModelData, ?> column) {
+        this.firstColumn = column;
+    }
 
-	private String addQTip(String value) {
-		if (showCell) {
-			return "<span qtip=\"" + value + "\">" + value + "</span>";
-		} else {
-			return value;
-		}
-	}
+    public void setClassMetadata(ClassMetadata metadata) {
+        this.metadata = metadata;
+    }
 
-	/*
-	 * Selenium
-	 */
+    public void setEditing(GridEditing<RowModelData> editing) {
+        this.editing = editing;
+        rebuildEditing();
+    }
 
-	public static class LocatorParams {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void rebuildEditing() {
+        if (!metadata.isUpdatable()) {
+            return;
+        }
+        for (ColumnConfig<RowModelData, ?> config : columnModel.getColumns()) {
+            if (config == firstColumn) {
+                continue;
+            }
+            FieldMetadata field = metadata.getField(config.getPath());
+            if (!field.isEdit()) {
+                continue;
+            }
 
-		public static String TYPE_CELL_EDITING = "CellEditing";
-	}
+            AbstractFieldBuilder builder = FieldMetadataHelper.build(field);
+            if (builder == null) {
+                continue;
+            }
+            Component component = builder.create();
+            builders.put(config, builder);
+            if (component instanceof IsField<?>) {
+                editing.addEditor((ColumnConfig) config, (IsField<?>) component);
+            }
+        }
+    }
 
-	@Override
-	public Locator getLocatorByElement(Element element) {
-		Locator result = null;
-		for (AbstractFieldBuilder builder : builders.values()) {
-			Locator part = builder.getLocatorByElement(element);
-			if (part != null) {
-				result = new Locator(LocatorParams.TYPE_CELL_EDITING);
-				result.setPart(part);
-				break;
-			}
-		}
-		return result;
-	}
+    private String addQTip(String value) {
+        if (showCell) {
+            return "<span qtip=\"" + value + "\">" + value + "</span>";
+        } else {
+            return value;
+        }
+    }
 
-	@Override
-	public void fillLocatorDefaults(Locator locator, Element element) {
-	}
+    /*
+     * Selenium
+     */
 
-	@Override
-	public Element getElementByLocator(Locator locator) {
-		Element result = null;
-		if (isLocatorAcceptable(locator)) {
-			Locator builderLocator = locator.getPart();
-			for (AbstractFieldBuilder builder : builders.values()) {
-				result = builder.getElementByLocator(builderLocator);
-				if (result != null) {
-					break;
-				}
-			}
-		}
-		return result;
-	}
+    @Override
+    public Locator getLocatorByElement(Element element) {
+        Locator result = null;
+        for (AbstractFieldBuilder builder : builders.values()) {
+            Locator part = builder.getLocatorByElement(element);
+            if (part != null) {
+                result = new Locator(LocatorParams.TYPE_CELL_EDITING);
+                result.setPart(part);
+                break;
+            }
+        }
+        return result;
+    }
 
-	private boolean isLocatorAcceptable(Locator locator) {
-		return (locator != null && locator.typeEquals(LocatorParams.TYPE_CELL_EDITING) && locator.getPart() != null);
-	}
+    @Override
+    public void fillLocatorDefaults(Locator locator, Element element) {
+    }
+
+    @Override
+    public Element getElementByLocator(Locator locator) {
+        Element result = null;
+        if (isLocatorAcceptable(locator)) {
+            Locator builderLocator = locator.getPart();
+            for (AbstractFieldBuilder builder : builders.values()) {
+                result = builder.getElementByLocator(builderLocator);
+                if (result != null) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean isLocatorAcceptable(Locator locator) {
+        return (locator != null && locator.typeEquals(LocatorParams.TYPE_CELL_EDITING) &&
+                locator.getPart() != null);
+    }
+
+    public static class LocatorParams {
+
+        public static String TYPE_CELL_EDITING = "CellEditing";
+    }
 }

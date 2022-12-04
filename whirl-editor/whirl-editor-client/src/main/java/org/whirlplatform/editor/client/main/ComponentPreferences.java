@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.client.main;
 
-import org.whirlplatform.meta.shared.component.ComponentType;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.whirlplatform.meta.shared.component.ComponentType;
 
 /**
  * @author Pavel Semenov

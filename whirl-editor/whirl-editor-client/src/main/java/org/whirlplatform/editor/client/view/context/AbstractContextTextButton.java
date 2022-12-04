@@ -5,8 +5,7 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 /**
- * Базовая реализация Контекстной кнопки. Предполагается что при наследовании
- * будут реализованы:
+ * Базовая реализация Контекстной кнопки. Предполагается что при наследовании будут реализованы:
  * <li>метод описывающий поведение при нажатии</li>
  * <li>метод изменяющий состояние</li>
  * <li>методы внешнего представления - источник для иконки, текста, всплывающей
@@ -15,7 +14,8 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
  *
  * @param <C> - класс или интерфейс контекста
  */
-public abstract class AbstractContextTextButton<C> extends TextButton implements ContextTextButton<C> {
+public abstract class AbstractContextTextButton<C> extends TextButton
+        implements ContextTextButton<C> {
     private C context;
 
     public AbstractContextTextButton() {
@@ -43,13 +43,13 @@ public abstract class AbstractContextTextButton<C> extends TextButton implements
     }
 
     @Override
-    public void setContext(final C context) {
-        this.context = context;
+    public C getContext() {
+        return context;
     }
 
     @Override
-    public C getContext() {
-        return context;
+    public void setContext(final C context) {
+        this.context = context;
     }
 
     @Override

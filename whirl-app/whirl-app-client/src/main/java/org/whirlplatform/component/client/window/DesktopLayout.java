@@ -1,7 +1,5 @@
 /**
- * Sencha GXT 3.1.1 - Sencha for GWT
- * Copyright(c) 2007-2014, Sencha, Inc.
- * licensing@sencha.com
+ * Sencha GXT 3.1.1 - Sencha for GWT Copyright(c) 2007-2014, Sencha, Inc. licensing@sencha.com
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
@@ -11,10 +9,6 @@ import com.google.gwt.dom.client.Element;
 import com.sencha.gxt.widget.core.client.Window;
 
 public interface DesktopLayout {
-
-    enum RequestType {
-        OPEN, HIDE, SHOW, LAYOUT
-    }
 
     int PREFERRED_WIDTH = 400;
     int PREFERRED_HEIGHT = 400;
@@ -34,7 +28,12 @@ public interface DesktopLayout {
      * @param width         the desktop width
      * @param height        the desktop height
      */
-    void layoutDesktop(Window requestWindow, RequestType requestType, Element element, Iterable<Window> windows,
+    void layoutDesktop(Window requestWindow, RequestType requestType, Element element,
+                       Iterable<Window> windows,
                        int width, int height);
+
+    enum RequestType {
+        OPEN, HIDE, SHOW, LAYOUT
+    }
 
 }

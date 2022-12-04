@@ -4,6 +4,8 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Image;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.WidgetComponent;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -15,14 +17,12 @@ import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Простая картинка
  */
 @JsType(name = "Image", namespace = "Whirl")
-public class ImageBuilder extends ComponentBuilder implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+public class ImageBuilder extends ComponentBuilder
+        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
     private Image image;
 
@@ -203,8 +203,7 @@ public class ImageBuilder extends ComponentBuilder implements ClickEvent.HasClic
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     @Override
     public void setEnabled(boolean enabled) {

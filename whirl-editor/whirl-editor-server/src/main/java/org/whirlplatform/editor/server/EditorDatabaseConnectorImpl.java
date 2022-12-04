@@ -1,5 +1,7 @@
 package org.whirlplatform.editor.server;
 
+import java.sql.SQLException;
+import javax.inject.Inject;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.server.db.ConnectException;
@@ -11,9 +13,6 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
 
-import javax.inject.Inject;
-import java.sql.SQLException;
-
 /**
  * Отвечает за соединение к базе данных, MetadataDatabase
  */
@@ -23,7 +22,8 @@ public class EditorDatabaseConnectorImpl implements EditorDatabaseConnector {
     private MetadataDatabase metadataDatabase;
 
     @Inject
-    public EditorDatabaseConnectorImpl(ConnectionProvider connectionProvider, MetadataDatabase metadataDatabase) {
+    public EditorDatabaseConnectorImpl(ConnectionProvider connectionProvider,
+                                       MetadataDatabase metadataDatabase) {
         this.connectionProvider = connectionProvider;
         this.metadataDatabase = metadataDatabase;
     }
@@ -57,7 +57,8 @@ public class EditorDatabaseConnectorImpl implements EditorDatabaseConnector {
     }
 
     @Override
-    public ConnectionWrapper aliasConnection(String alias, ApplicationUser user) throws RPCException {
+    public ConnectionWrapper aliasConnection(String alias, ApplicationUser user)
+            throws RPCException {
         try {
             return connectionProvider.getConnection(alias, user);
         } catch (ConnectException e) {

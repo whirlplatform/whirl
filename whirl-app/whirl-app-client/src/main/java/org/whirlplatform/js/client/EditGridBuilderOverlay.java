@@ -19,24 +19,26 @@ public abstract class EditGridBuilderOverlay {
     }
 
     /**
+     * Получение родителя грида
+     *
+     * @param instance - EditGridBuilder
+     * @return ComponentBuilder
+     */
+    public static ComponentBuilder getParent(EditGridBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установка кода гриду
-     *
-     * @param name - Strinng, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получение кода у грида
@@ -46,11 +48,11 @@ public abstract class EditGridBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установка активности грида
+     * Установка кода гриду
      *
-     * @param enabled - boolean
+     * @param name - Strinng, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получение информации об активности грида
@@ -60,11 +62,11 @@ public abstract class EditGridBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установка скрытости грида
+     * Установка активности грида
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получение информации об скрытости грида
@@ -74,16 +76,18 @@ public abstract class EditGridBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установка скрытости грида
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Изменить css атрибут class компонента
      *
      * @param styleName - String
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Перечитать данные для грида и обновить компонент
-     */
-    public abstract void load();
 
     /**
      * @param parameters
@@ -100,14 +104,9 @@ public abstract class EditGridBuilderOverlay {
 //    }
 
     /**
-     * Получение родителя грида
-     *
-     * @param instance - EditGridBuilder
-     * @return ComponentBuilder
+     * Перечитать данные для грида и обновить компонент
      */
-    public static ComponentBuilder getParent(EditGridBuilder instance) {
-        return instance.getParentBuilder();
-    }
+    public abstract void load();
 
     /**
      * Получить значения всех строк грида

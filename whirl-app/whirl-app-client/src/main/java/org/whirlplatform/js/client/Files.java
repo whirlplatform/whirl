@@ -8,8 +8,8 @@ import org.whirlplatform.component.client.utils.FileLinkHelper;
 public class Files {
 
     /**
-     * Получить ссылку на содержимое файла, хранящегося в таблице tableCode
-     * в строке с идентификатором rowId и столбце column
+     * Получить ссылку на содержимое файла, хранящегося в таблице tableCode в строке с
+     * идентификатором rowId и столбце column
      *
      * @param tableCode - код таблицы из редактора форм
      * @param column    - название столбца типа BLOB

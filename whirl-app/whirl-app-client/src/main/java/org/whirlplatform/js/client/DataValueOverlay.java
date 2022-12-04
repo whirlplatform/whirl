@@ -1,16 +1,14 @@
 package org.whirlplatform.js.client;
 
 import com.google.gwt.core.client.JavaScriptException;
+import java.util.Date;
 import org.whirlplatform.component.client.utils.LogHelper;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
-import java.util.Date;
-
 /**
- * Объект может хранить значение одного из следующих типов: STRING, NUMBER,
- * LIST, DATE, BOOLEAN
+ * Объект может хранить значение одного из следующих типов: STRING, NUMBER, LIST, DATE, BOOLEAN
  */
 //@Export("DataValue")
 //@ExportPackage("Whirl")
@@ -28,8 +26,7 @@ public abstract class DataValueOverlay {
     }
 
     /**
-     * Если значение имеет строковой тип - то вернуть его. Иначе сгенерировать
-     * исключение.
+     * Если значение имеет строковой тип - то вернуть его. Иначе сгенерировать исключение.
      *
      * @throws JavaScriptException
      */
@@ -42,13 +39,13 @@ public abstract class DataValueOverlay {
         if (instance.getType() == DataType.STRING) {
             return instance.getString();
         } else {
-            throw LogHelper.getAndLogException("getString error. Type of value: " + instance.getType().name());
+            throw LogHelper.getAndLogException(
+                    "getString error. Type of value: " + instance.getType().name());
         }
     }
 
     /**
-     * Если значение имеет числовой тип - то вернуть его. Иначе сгенерировать
-     * исключение.
+     * Если значение имеет числовой тип - то вернуть его. Иначе сгенерировать исключение.
      *
      * @throws JavaScriptException
      */
@@ -56,13 +53,13 @@ public abstract class DataValueOverlay {
         if (instance.getType() == DataType.NUMBER) {
             return instance.getDouble();
         } else {
-            throw LogHelper.getAndLogException("getNumber error. Type of value: " + instance.getType().name());
+            throw LogHelper.getAndLogException(
+                    "getNumber error. Type of value: " + instance.getType().name());
         }
     }
 
     /**
-     * Если значение имеет тип boolean - то вернуть его. Иначе сгенерировать
-     * исключение.
+     * Если значение имеет тип boolean - то вернуть его. Иначе сгенерировать исключение.
      *
      * @throws JavaScriptException
      */
@@ -70,13 +67,13 @@ public abstract class DataValueOverlay {
         if (instance.getType() == DataType.BOOLEAN) {
             return instance.getBoolean();
         } else {
-            throw LogHelper.getAndLogException("getBoolean error. Type of value: " + instance.getType().name());
+            throw LogHelper.getAndLogException(
+                    "getBoolean error. Type of value: " + instance.getType().name());
         }
     }
 
     /**
-     * Вернёт дату либо сгенерирует исключение, если хранимое значение не
-     * является датой
+     * Вернёт дату либо сгенерирует исключение, если хранимое значение не является датой
      *
      * @throws JavaScriptException
      */
@@ -84,14 +81,14 @@ public abstract class DataValueOverlay {
         if (instance.getType() == DataType.DATE) {
             return instance.getDate();
         } else {
-            throw LogHelper.getAndLogException("getDate error. Type of value: " + instance.getType().name());
+            throw LogHelper.getAndLogException(
+                    "getDate error. Type of value: " + instance.getType().name());
         }
     }
 
     /**
-     * Если значение является элементом списка
-     * {@link ListModelDataOverlay ListModelData} ,
-     * то вернёт его. Иначе сгенерирует исключение.
+     * Если значение является элементом списка {@link ListModelDataOverlay ListModelData} , то
+     * вернёт его. Иначе сгенерирует исключение.
      *
      * @throws JavaScriptException
      */
@@ -99,7 +96,8 @@ public abstract class DataValueOverlay {
         if (instance.getType() == DataType.LIST) {
             return instance.getListModelData();
         } else {
-            throw LogHelper.getAndLogException("getList error. Type of value: " + instance.getType().name());
+            throw LogHelper.getAndLogException(
+                    "getList error. Type of value: " + instance.getType().name());
         }
     }
 
@@ -128,8 +126,7 @@ public abstract class DataValueOverlay {
 //    }
 
     /**
-     * Узнать тип хранимого значения. Это будет одно из (STRING, NUMBER, LIST,
-     * DATE, BOOLEAN)
+     * Узнать тип хранимого значения. Это будет одно из (STRING, NUMBER, LIST, DATE, BOOLEAN)
      *
      * @return String
      */

@@ -10,22 +10,23 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 
 public class VBoxContainerDesigner extends ComponentDesigner {
 
-	public VBoxContainerDesigner(LocaleElement defaultLocale,
-			ComponentElement element) {
-		super(defaultLocale, element);
-	}
+    public VBoxContainerDesigner(LocaleElement defaultLocale,
+                                 ComponentElement element) {
+        super(defaultLocale, element);
+    }
 
-	@Override
-	protected void initRootDropTarget(final ComponentElement element,
-			final ComponentBuilder builder) {
-		VerticalLayoutDropTarget target = new VerticalLayoutDropTarget(
-				(InsertResizeContainer) builder.getComponent()) {
-			protected void onDragDrop(DndDropEvent event) {
-				VBoxContainerDesigner.super.onRootDrop(element, builder, event.getData(), getIndex());
-				super.onDragDrop(event);
+    @Override
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
+        VerticalLayoutDropTarget target = new VerticalLayoutDropTarget(
+                (InsertResizeContainer) builder.getComponent()) {
+            protected void onDragDrop(DndDropEvent event) {
+                VBoxContainerDesigner.super.onRootDrop(element, builder, event.getData(),
+                        getIndex());
+                super.onDragDrop(event);
             }
         };
-		target.setFeedback(Feedback.BOTH);
-	}
-	
+        target.setFeedback(Feedback.BOTH);
+    }
+
 }

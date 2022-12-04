@@ -6,10 +6,6 @@ import com.google.gwt.i18n.client.Messages;
 
 public interface EditorMessage extends Messages {
 
-    class Util {
-        public static EditorMessage MESSAGE = GWT.create(EditorMessage.class);
-    }
-
     String select_icon();
 
     String login_submit();
@@ -495,7 +491,7 @@ public interface EditorMessage extends Messages {
     String table_column_datatype();
 
     String table_column_list_table();
-    
+
     String table_column_label();
 
     String table_column_size();
@@ -634,7 +630,6 @@ public interface EditorMessage extends Messages {
 
     String design_panel_events();
 
-
     String templ_save();
 
     String templ_enter_name();
@@ -654,4 +649,8 @@ public interface EditorMessage extends Messages {
     String templ_success_delete();
 
     String templ_success_save_with_name();
+
+    class Util {
+        public static EditorMessage MESSAGE = GWT.create(EditorMessage.class);
+    }
 }

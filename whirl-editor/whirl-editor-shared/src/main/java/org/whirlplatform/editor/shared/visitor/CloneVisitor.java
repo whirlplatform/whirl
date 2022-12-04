@@ -1,18 +1,42 @@
 package org.whirlplatform.editor.shared.visitor;
 
-import org.whirlplatform.editor.shared.visitor.CloneVisitor.CopyContext;
-import org.whirlplatform.meta.shared.FieldMetadata;
-import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.component.RandomUUID;
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
-
-import javax.annotation.concurrent.NotThreadSafe;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.annotation.concurrent.NotThreadSafe;
+import org.whirlplatform.editor.shared.visitor.CloneVisitor.CopyContext;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.component.PropertyType;
+import org.whirlplatform.meta.shared.component.RandomUUID;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.CellRowCol;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.ElementVisitor;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 /**
  * @param <T>
@@ -20,49 +44,12 @@ import java.util.Map.Entry;
 @NotThreadSafe
 public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyContext> {
 
-    /**
-     * Контекст копирвоания
-     *
-     */
-    static class CopyContext implements ElementVisitor.VisitContext {
-
-        /**
-         * Означает, что создается корень копии.
-         */
-        boolean root = false;
-
-        /**
-         * Копия вышелжещого элемента-родителя. Если создается кортневая копия, то
-         * родитель будет пустым.
-         */
-        AbstractElement parentCopy;
-
-        AbstractElement parentSource;
-
-        CopyContext() {
-            this(false);
-        }
-
-        CopyContext(boolean root) {
-            this.root = root;
-        }
-
-        CopyContext(AbstractElement parentCopy, AbstractElement parentSource) {
-            this(false);
-            this.parentCopy = parentCopy;
-            this.parentSource = parentSource;
-        }
-
-    }
-
     private T element;
     private T copy;
     private boolean copyId = false;
     private boolean userReferences = false;
-
     private Map<AbstractElement, AbstractElement> map = new IdentityHashMap<>();
     private List<Runnable> finalizations = new ArrayList<>();
-
     /**
      * @param element element to copy
      */
@@ -118,7 +105,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
 
     }
 
-    private void copyAbstractElementProperties(CopyContext ctx, AbstractElement src, AbstractElement dest) {
+    private void copyAbstractElementProperties(CopyContext ctx, AbstractElement src,
+                                               AbstractElement dest) {
         if (copyId) {
             dest.setId(src.getId());
         } else {
@@ -170,9 +158,11 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         dest.setBackgroundColor(src.getBackgroundColor());
 
         if (ctx.parentCopy instanceof FormElement) {
-            for (Entry<CellRowCol, CellElement> e : ((FormElement) ctx.parentSource).getCells().entrySet()) {
+            for (Entry<CellRowCol, CellElement> e : ((FormElement) ctx.parentSource).getCells()
+                    .entrySet()) {
                 if (e.getValue().getId().equals(src.getId())) {
-                    ((FormElement) ctx.parentCopy).addCellElement(e.getKey().getRow(), e.getKey().getCol(), dest);
+                    ((FormElement) ctx.parentCopy).addCellElement(e.getKey().getRow(),
+                            e.getKey().getCol(), dest);
                     break;
                 }
             }
@@ -185,7 +175,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
 
     }
 
-    private void copyCellRangeElementProperties(CopyContext ctx, CellRangeElement src, CellRangeElement dest) {
+    private void copyCellRangeElementProperties(CopyContext ctx, CellRangeElement src,
+                                                CellRangeElement dest) {
         copyAbstractElementProperties(ctx, src, dest);
         // private int top;
         dest.setTop(src.getTop());
@@ -208,7 +199,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         map.put(element, dest);
     }
 
-    private void copyColumnElementProperties(CopyContext ctx, ColumnElement src, ColumnElement dest) {
+    private void copyColumnElementProperties(CopyContext ctx, ColumnElement src,
+                                             ColumnElement dest) {
         copyAbstractElementProperties(ctx, src, dest);
         // private int col;
         dest.setColumn(src.getColumn());
@@ -231,7 +223,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         map.put(element, dest);
     }
 
-    private void copyComponentElementProperties(CopyContext ctx, ComponentElement src, ComponentElement dest) {
+    private void copyComponentElementProperties(CopyContext ctx, ComponentElement src,
+                                                ComponentElement dest) {
         copyAbstractElementProperties(ctx, src, dest);
         // private ComponentType type;
         dest.setType(src.getType());
@@ -292,7 +285,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         map.put(element, dest);
     }
 
-    private void copyEventElementProperties(CopyContext ctx, final EventElement src, final EventElement dest) {
+    private void copyEventElementProperties(CopyContext ctx, final EventElement src,
+                                            final EventElement dest) {
         copyAbstractElementProperties(ctx, src, dest);
         // private EventType type;
         dest.setType(src.getType());
@@ -446,7 +440,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         map.put(element, dest);
     }
 
-    private void copyReportElementProperties(CopyContext ctx, ReportElement src, ReportElement dest) {
+    private void copyReportElementProperties(CopyContext ctx, ReportElement src,
+                                             ReportElement dest) {
         copyComponentElementProperties(ctx, src, dest);
         for (FieldMetadata f : src.getFields()) {
             dest.addField(f.clone());
@@ -464,7 +459,8 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         map.put(element, dest);
     }
 
-    private void copyRequestElementProperties(CopyContext ctx, final RequestElement src, final RequestElement dest) {
+    private void copyRequestElementProperties(CopyContext ctx, final RequestElement src,
+                                              final RequestElement dest) {
         copyCellRangeElementProperties(ctx, src, dest);
         // private DataSourceElement datasource;
         finalization(new Runnable() {
@@ -697,6 +693,40 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
         dest.setDeleteFunction(src.getDeleteFunction());
         // String insertFunction;
         dest.setInsertFunction(src.getInsertFunction());
+    }
+
+    /**
+     * Контекст копирвоания
+     */
+    static class CopyContext implements ElementVisitor.VisitContext {
+
+        /**
+         * Означает, что создается корень копии.
+         */
+        boolean root = false;
+
+        /**
+         * Копия вышелжещого элемента-родителя. Если создается кортневая копия, то родитель будет
+         * пустым.
+         */
+        AbstractElement parentCopy;
+
+        AbstractElement parentSource;
+
+        CopyContext() {
+            this(false);
+        }
+
+        CopyContext(boolean root) {
+            this.root = root;
+        }
+
+        CopyContext(AbstractElement parentCopy, AbstractElement parentSource) {
+            this(false);
+            this.parentCopy = parentCopy;
+            this.parentSource = parentSource;
+        }
+
     }
 
 }

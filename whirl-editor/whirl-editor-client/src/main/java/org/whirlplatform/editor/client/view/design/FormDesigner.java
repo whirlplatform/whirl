@@ -1,7 +1,11 @@
 package org.whirlplatform.editor.client.view.design;
 
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.*;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.dom.client.TableCellElement;
+import com.google.gwt.dom.client.TableElement;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -26,6 +30,13 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.info.Info;
 import com.sencha.gxt.widget.core.client.toolbar.SeparatorToolItem;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.form.GridLayoutContainer;
 import org.whirlplatform.component.client.form.GridLayoutContainer.Cell;
@@ -42,11 +53,12 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.editor.*;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.FormElement;
-
-import java.util.*;
-import java.util.Map.Entry;
+import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 public class FormDesigner extends ComponentDesigner {
 
@@ -501,8 +513,7 @@ public class FormDesigner extends ComponentDesigner {
     }
 
     /**
-     * Изменение стиля для выделенных селектором компонентов (
-     * {@link #selectedElements})
+     * Изменение стиля для выделенных селектором компонентов ( {@link #selectedElements})
      *
      * @param rectangle Координаты селектора
      */

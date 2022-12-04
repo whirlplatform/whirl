@@ -1,5 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
+import java.sql.Timestamp;
 import org.apache.empire.commons.StringUtils;
 import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -7,13 +8,12 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.server.db.ConnectionWrapper;
 
-import java.sql.Timestamp;
-
 public class AbstractMultiFetcher extends AbstractFetcher {
 
     private final DataSourceDriver datasourceDriver;
 
-    public AbstractMultiFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver datasourceDriver) {
+    public AbstractMultiFetcher(ConnectionWrapper connectionWrapper,
+                                DataSourceDriver datasourceDriver) {
         super(connectionWrapper);
         this.datasourceDriver = datasourceDriver;
     }

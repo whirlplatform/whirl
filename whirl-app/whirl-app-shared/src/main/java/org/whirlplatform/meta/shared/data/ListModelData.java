@@ -2,13 +2,6 @@ package org.whirlplatform.meta.shared.data;
 
 public interface ListModelData extends RowModelData {
 
-    void setLabel(String label);
-
-    String getLabel();
-
-    @Override
-    ListModelData clone();
-
     static org.whirlplatform.meta.shared.data.ListModelData fromRowModelData(
             org.whirlplatform.meta.shared.data.RowModelData model) {
         ListModelData result = new ListModelDataImpl();
@@ -23,5 +16,12 @@ public interface ListModelData extends RowModelData {
         }
         return result;
     }
+
+    String getLabel();
+
+    void setLabel(String label);
+
+    @Override
+    ListModelData clone();
 
 }

@@ -15,17 +15,15 @@ import org.whirlplatform.meta.shared.version.VersionUtil;
 
 /**
  * Vsersion/branch input control
- *
  */
 public class VersionField extends HBoxLayoutContainer {
+    protected final TextField fieldValue;
+    protected final Radio radioBranch;
+    protected final Radio radioVersion;
     private final String BRANCH_LABEL = EditorMessage.Util.MESSAGE.branch();
     private final String VERSION_LABEL = EditorMessage.Util.MESSAGE.version();
     private final String BRANCH_HINT = "";
     private final String VERSION_HINT = "x.y.z";
-
-    protected final TextField fieldValue;
-    protected final Radio radioBranch;
-    protected final Radio radioVersion;
 
     public VersionField() {
         super();
@@ -41,6 +39,10 @@ public class VersionField extends HBoxLayoutContainer {
 
     public String getStringValue() {
         return fieldValue.getValue();
+    }
+
+    public Version getValue() {
+        return VersionUtil.createVersion(getStringValue());
     }
 
     public void setValue(final Version version) {
@@ -59,10 +61,6 @@ public class VersionField extends HBoxLayoutContainer {
             fieldValue.setValue(value);
             fieldValue.validate();
         }
-    }
-
-    public Version getValue() {
-        return VersionUtil.createVersion(getStringValue());
     }
 
     public boolean isValid() {

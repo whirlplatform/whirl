@@ -1,10 +1,9 @@
 package org.whirlplatform.server.log.impl;
 
+import java.util.List;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.editor.EventElement;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.util.List;
 
 public class DBFunctionMessage extends AbstractMessage {
 
@@ -21,7 +20,8 @@ public class DBFunctionMessage extends AbstractMessage {
     @Override
     public String getMessage() {
         StringBuilder builder = new StringBuilder();
-        builder.append("{\"type\": \"dbFunction\", \"function\": \"").append(event.getFunction()).append("\", ");
+        builder.append("{\"type\": \"dbFunction\", \"function\": \"").append(event.getFunction())
+                .append("\", ");
         builder.append("\"params\": ").append(getParamsString()).append("}");
         return getFullLogMessage(builder.toString());
     }
@@ -30,12 +30,12 @@ public class DBFunctionMessage extends AbstractMessage {
         return event.getFunction();
     }
 
-    public void setError(String error) {
-        this.error = error;
-    }
-
     public String getError() {
         return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getParamsString() {

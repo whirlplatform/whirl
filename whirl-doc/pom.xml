@@ -8,10 +8,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>whirl-build-tools</artifactId>
+    <artifactId>whirl-doc</artifactId>
 
     <properties>
+        <project.rootdir>${project.basedir}/..</project.rootdir>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>

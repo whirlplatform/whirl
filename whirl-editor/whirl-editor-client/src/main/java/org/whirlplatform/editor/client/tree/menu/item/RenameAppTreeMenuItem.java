@@ -12,43 +12,43 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Переименовать
  */
 public class RenameAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rename();
-	private final static ImageResource ICON = ComponentBundle.INSTANCE.rename();
+    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rename();
+    private final static ImageResource ICON = ComponentBundle.INSTANCE.rename();
 
-	public RenameAppTreeMenuItem() {
-		super();
-	}
+    public RenameAppTreeMenuItem() {
+        super();
+    }
 
-	public RenameAppTreeMenuItem(final AppTree appTree) {
-		super(appTree);
-	}
+    public RenameAppTreeMenuItem(final AppTree appTree) {
+        super(appTree);
+    }
 
-	@Override
-	public void updateState() {
-		if (getAppTree() != null) {
-			setEnabled(getAppTree().isRenaming(getAppTree().getSelectedElement()));
-		} else {
-			setEnabled(false);
-		}
-	}
+    @Override
+    public void updateState() {
+        if (getAppTree() != null) {
+            setEnabled(getAppTree().isRenaming(getAppTree().getSelectedElement()));
+        } else {
+            setEnabled(false);
+        }
+    }
 
-	@Override
-	protected SelectionHandler<Item> createSelectionHandler() {
-		return new SelectionHandler<Item>() {
-			@Override
-			public void onSelection(SelectionEvent<Item> event) {
-				getAppTree().renameSelectedElement();
-			}
-		};
-	}
+    @Override
+    protected SelectionHandler<Item> createSelectionHandler() {
+        return new SelectionHandler<Item>() {
+            @Override
+            public void onSelection(SelectionEvent<Item> event) {
+                getAppTree().renameSelectedElement();
+            }
+        };
+    }
 
-	@Override
-	protected String getItemTitle() {
-		return TITLE;
-	}
+    @Override
+    protected String getItemTitle() {
+        return TITLE;
+    }
 
-	@Override
-	protected ImageResource getItemIcon() {
-		return ICON;
-	}
+    @Override
+    protected ImageResource getItemIcon() {
+        return ICON;
+    }
 }

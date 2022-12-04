@@ -1,12 +1,11 @@
 package org.whirlplatform.component.client.grid;
 
+import java.util.List;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 
-import java.util.List;
-
 public interface LoadConfigProvider {
 
-	ClassLoadConfig getLoadConfig(List<DataValue> parameters);
+    ClassLoadConfig getLoadConfig(List<DataValue> parameters);
 
 }

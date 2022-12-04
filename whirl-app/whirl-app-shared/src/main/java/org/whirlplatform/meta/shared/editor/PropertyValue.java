@@ -1,15 +1,14 @@
 package org.whirlplatform.meta.shared.editor;
 
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 @SuppressWarnings("serial")
 public class PropertyValue implements Serializable, Cloneable {
@@ -19,7 +18,8 @@ public class PropertyValue implements Serializable, Cloneable {
     private DataType type;
     private LocaleElement defaultLocale;
     private Map<LocaleElement, DataValue> values = new HashMap<LocaleElement, DataValue>();
-    private Map<LocaleElement, DataValue> replaceableValues = new HashMap<LocaleElement, DataValue>();
+    private Map<LocaleElement, DataValue> replaceableValues =
+            new HashMap<LocaleElement, DataValue>();
 
     public PropertyValue() {
     }
@@ -93,12 +93,12 @@ public class PropertyValue implements Serializable, Cloneable {
         }
     }
 
-    public void setDefaultLocale(LocaleElement defaultLocale) {
-        this.defaultLocale = defaultLocale;
-    }
-
     public LocaleElement getDefaultLocale() {
         return defaultLocale;
+    }
+
+    public void setDefaultLocale(LocaleElement defaultLocale) {
+        this.defaultLocale = defaultLocale;
     }
 
     public Collection<LocaleElement> getLocales() {

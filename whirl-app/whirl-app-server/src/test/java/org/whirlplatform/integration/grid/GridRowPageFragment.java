@@ -10,15 +10,22 @@ import org.openqa.selenium.interactions.Actions;
 import org.whirlplatform.selenium.ByWhirl;
 
 public class GridRowPageFragment extends AbstractGridPart {
-    private final String PARAMETER_INDEX = "index"; //TODO EditGridBuilder.LocatorParams.PARAMETER_INDEX;
+    private final String PARAMETER_INDEX = "index";
+    //TODO EditGridBuilder.LocatorParams.PARAMETER_INDEX;
     private final String PARAMETER_ID = "id"; //TODO EditGridBuilder.LocatorParams.PARAMETER_ID;
 
-    private final String EDITING_NUMBER = "%s[Row(%s)[CellEditing[NumberFieldBuilder(code=%s)[Input]]]]";
-    private final String EDITING_TEXT = "%s[Row(%s)[CellEditing[TextFieldBuilder(code=%s)[Input]]]]";
-    private final String EDITING_DATE = "%s[Row(%s)[CellEditing[DateFieldBuilder(code=%s)[Input]]]]";
-    private final String EDITING_COMBO = "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Input]]]]";
-    private final String COMBO_TRIGGER = "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Trigger]]]]";
-    private final String COMBO_ITEM = "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Item(id=%s)]]]]";
+    private final String EDITING_NUMBER =
+            "%s[Row(%s)[CellEditing[NumberFieldBuilder(code=%s)[Input]]]]";
+    private final String EDITING_TEXT =
+            "%s[Row(%s)[CellEditing[TextFieldBuilder(code=%s)[Input]]]]";
+    private final String EDITING_DATE =
+            "%s[Row(%s)[CellEditing[DateFieldBuilder(code=%s)[Input]]]]";
+    private final String EDITING_COMBO =
+            "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Input]]]]";
+    private final String COMBO_TRIGGER =
+            "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Trigger]]]]";
+    private final String COMBO_ITEM =
+            "%s[Row(%s)[CellEditing[ComboBoxBuilder(code=%s)[Item(id=%s)]]]]";
     private final String ROW_CELL = "%s[Row(%s)[Cell(column=%s)]]";
     private final String ROW_CHECK = "%s[Row(%s)[Check]]";
 
@@ -74,7 +81,8 @@ public class GridRowPageFragment extends AbstractGridPart {
                 checkbox.click();
             }
         } else {
-            throw new IllegalArgumentException(String.format("The column '%s' is not a checkbox", columnCode));
+            throw new IllegalArgumentException(
+                    String.format("The column '%s' is not a checkbox", columnCode));
         }
     }
 
@@ -102,13 +110,16 @@ public class GridRowPageFragment extends AbstractGridPart {
         WebElement trigger = findInlineField(COMBO_TRIGGER, columnCode);
         Graphene.waitGui().until().element(trigger).is().visible();
         trigger.click();
-        String itemLocator = String.format(COMBO_ITEM, getGridStringLocator(), getRowParameter(), columnCode, itemId);
+        String itemLocator =
+                String.format(COMBO_ITEM, getGridStringLocator(), getRowParameter(), columnCode,
+                        itemId);
         Graphene.waitGui().until().element(new ByWhirl(itemLocator)).is().visible();
         WebElement item = findElementByWhirl(itemLocator);
         item.click();
     }
 
-    private void setInlineFieldValue(final String template, final String columnCode, final String value) {
+    private void setInlineFieldValue(final String template, final String columnCode,
+                                     final String value) {
         doubleClick(columnCode);
         WebElement field = findInlineField(template, columnCode);
         Graphene.waitGui().until().element(field).is().visible();
@@ -130,7 +141,8 @@ public class GridRowPageFragment extends AbstractGridPart {
         boolean isId = PARAMETER_ID.equals(rowParameterName);
         boolean isIndex = PARAMETER_INDEX.equals(rowParameterName);
         if (!isId && !isIndex) {
-            throw new IllegalArgumentException(String.format("Unknown row parameter: '%s'", rowParameterName));
+            throw new IllegalArgumentException(
+                    String.format("Unknown row parameter: '%s'", rowParameterName));
         }
         return String.format("%s=%s", rowParameterName, rowParameterValue);
     }
@@ -147,7 +159,8 @@ public class GridRowPageFragment extends AbstractGridPart {
         if (StringUtils.isEmpty(columnCode)) {
             throw new IllegalArgumentException("The column code is empty");
         }
-        final String locator = String.format(ROW_CELL, getGridStringLocator(), getRowParameter(), columnCode);
+        final String locator =
+                String.format(ROW_CELL, getGridStringLocator(), getRowParameter(), columnCode);
         WebElement result = findElementByWhirl(locator);
         return result;
     }
@@ -162,7 +175,8 @@ public class GridRowPageFragment extends AbstractGridPart {
         if (StringUtils.isEmpty(columnCode)) {
             throw new IllegalArgumentException("The column code of the field is empty");
         }
-        final String locator = String.format(template, getGridStringLocator(), getRowParameter(), columnCode);
+        final String locator =
+                String.format(template, getGridStringLocator(), getRowParameter(), columnCode);
         WebElement result = findElementByWhirl(locator);
         return result;
     }

@@ -82,6 +82,7 @@ We are using GWT for developing frontend side
 with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
 Command to start frontend in dev mode is:
+
 ```bash
 cd whirl-app
 mvn gwt:codeserver -pl whirl-app-client -am
@@ -93,12 +94,14 @@ demand.
 ### Application editor - whirl-editor
 
 Commands to start backend:
+
 ```bash
 cd whirl-editor
 mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
 
 Commands to start frontend:
+
 ```bash
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
@@ -109,13 +112,16 @@ Editor will be accessible at http://localhost:8091/editor/.
 ### Release preparation
 
 Command to set new version in all pom.xml files is:
+
 ```bash
 mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 ```
 
 ## Database Naming Conventions
 
-Example: function which takes two parameters (message and type of the window) and show a window depends on that parameters. 
+Example: function which takes two parameters (message and type of the window) and show a window depends on that
+parameters.
+
 ```bash 
 CREATE OR REPLACE FUNCTION whirl_admin.show_message(p_message_text text, p_message_type text)
  RETURNS text
@@ -137,22 +143,26 @@ $function$
 ```
 
 Incoming parameters of the function
+
 ```bash
 p_message_text text
 ```
 
 Variables in the body of the function
+
 ```bash
 v_parameter_type  varchar(4000);
 ```
 
 Links to the other tables (name of the column in the other table)
+
 ```bash
 r_whirl_users
 ```
 
 ## License
 
-Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving [GPL v3](LICENSE) license.
+Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving [GPL v3](LICENSE)
+license.
 
 [GPL v3 license text](LICENSE)

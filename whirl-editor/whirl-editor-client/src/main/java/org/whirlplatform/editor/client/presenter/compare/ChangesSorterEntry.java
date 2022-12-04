@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.client.presenter.compare;
 
-import org.whirlplatform.editor.shared.merge.ChangeUnit;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.whirlplatform.editor.shared.merge.ChangeUnit;
 
 /**
  *

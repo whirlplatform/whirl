@@ -8,6 +8,13 @@
     </parent>
     <artifactId>whirl-codemirror</artifactId>
 
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
     <dependencies>
 		<dependency>
 			<groupId>com.google.gwt</groupId>

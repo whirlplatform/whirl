@@ -21,82 +21,6 @@ public abstract class CheckBoxBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установка кода CheckBox
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
-
-    /**
-     * Получение кода CheckBox
-     *
-     * @return String
-     */
-    public abstract String getCode();
-
-    /**
-     * Установка активности CheckBox
-     *
-     * @param enabled - boolean
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    /**
-     * Получение информации об активности CheckBox
-     *
-     * @return boolean
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Установка скрытности CheckBox
-     *
-     * @param hidden - boolean
-     */
-    public abstract void setHidden(boolean hidden);
-
-    /**
-     * Получение информации о скрытности CheckBox
-     *
-     * @return boolean
-     */
-    public abstract boolean isHidden();
-
-    /**
-     * Установка стиля CheckBox
-     *
-     * @param styleName - String, название стиля
-     */
-    public abstract void setStyleName(String styleName);
-
-    /**
-     * Установить надпись для CheckBox, которая будет отображена рядом с ним
-     *
-     * @param label - String, отображаемый текст
-     */
-    public abstract void setBoxLabel(String label);
-
-    /**
-     * Получить значение подписи CheckBox
-     *
-     * @return String
-     */
-    public abstract String getBoxLabel();
-
-    /**
      * Проверка на null значения CheckBox
      *
      * @param instance - RadioBuilder
@@ -127,11 +51,89 @@ public abstract class CheckBoxBuilderOverlay {
     }
 
     /**
-     * Установка свойства "Обязателен для заполнения" для CheckBox
+     * Получение родительского компонента CheckBox
      *
-     * @param required - boolean
+     * @param instance - CheckBoxBuilder
+     * @return ComponentBuilder, компонент
      */
-    public abstract void setRequired(boolean required);
+    public static ComponentBuilder getParent(CheckBoxBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    /**
+     * Получение кода CheckBox
+     *
+     * @return String
+     */
+    public abstract String getCode();
+
+    /**
+     * Установка кода CheckBox
+     *
+     * @param name - String, код
+     */
+    public abstract void setCode(String name);
+
+    /**
+     * Получение информации об активности CheckBox
+     *
+     * @return boolean
+     */
+    public abstract boolean isEnabled();
+
+    /**
+     * Установка активности CheckBox
+     *
+     * @param enabled - boolean
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Получение информации о скрытности CheckBox
+     *
+     * @return boolean
+     */
+    public abstract boolean isHidden();
+
+    /**
+     * Установка скрытности CheckBox
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
+     * Установка стиля CheckBox
+     *
+     * @param styleName - String, название стиля
+     */
+    public abstract void setStyleName(String styleName);
+
+    /**
+     * Получить значение подписи CheckBox
+     *
+     * @return String
+     */
+    public abstract String getBoxLabel();
+
+    /**
+     * Установить надпись для CheckBox, которая будет отображена рядом с ним
+     *
+     * @param label - String, отображаемый текст
+     */
+    public abstract void setBoxLabel(String label);
 
     /**
      * Получить информацию о свойстве "Обязателен для заполнения" у CheckBox
@@ -141,19 +143,16 @@ public abstract class CheckBoxBuilderOverlay {
     public abstract boolean isRequired();
 
     /**
+     * Установка свойства "Обязателен для заполнения" для CheckBox
+     *
+     * @param required - boolean
+     */
+    public abstract void setRequired(boolean required);
+
+    /**
      * Очистка значения CheckBox
      */
     public abstract void clear();
-
-    /**
-     * Получение родительского компонента CheckBox
-     *
-     * @param instance - CheckBoxBuilder
-     * @return ComponentBuilder, компонент
-     */
-    public static ComponentBuilder getParent(CheckBoxBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на CheckBox

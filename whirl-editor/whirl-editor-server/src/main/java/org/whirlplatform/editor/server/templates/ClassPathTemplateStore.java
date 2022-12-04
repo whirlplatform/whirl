@@ -1,6 +1,12 @@
 package org.whirlplatform.editor.server.templates;
 
 import com.google.inject.Inject;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -14,13 +20,6 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.metadata.store.XMLApplicationImporter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 public class ClassPathTemplateStore implements TemplateStore {
 
     private final Set<String> eventTemplates;
@@ -30,8 +29,9 @@ public class ClassPathTemplateStore implements TemplateStore {
 
     @Inject
     public ClassPathTemplateStore() {
-        reflections = new Reflections(TemplateStore.class.getPackage().getName() + "." + PACKAGE_EVENTS,
-                new ResourcesScanner());
+        reflections =
+                new Reflections(TemplateStore.class.getPackage().getName() + "." + PACKAGE_EVENTS,
+                        new ResourcesScanner());
         eventTemplates = reflections.getResources(Pattern.compile(".*\\.wrt"));
     }
 

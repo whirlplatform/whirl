@@ -1,6 +1,7 @@
 package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
+import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.combo.TreeComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
@@ -9,15 +10,14 @@ import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
-import java.util.Map;
-
 
 class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
 
     private FieldMetadata tableField;
 
 
-    public TableTreeComboBoxBuilder(FieldMetadata tableField, Map<String, DataValue> builderProperties) {
+    public TableTreeComboBoxBuilder(FieldMetadata tableField,
+                                    Map<String, DataValue> builderProperties) {
         super(builderProperties);
         this.tableField = tableField;
     }
@@ -225,13 +225,13 @@ class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public ListModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public void setValue(ListModelData value) {
         throw new UnsupportedOperationException();
     }
 

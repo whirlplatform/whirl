@@ -12,44 +12,44 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Удалить
  */
 public class DeleteAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-	private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_remove();
-	private final static ImageResource ICON = ComponentBundle.INSTANCE.cross();
+    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_remove();
+    private final static ImageResource ICON = ComponentBundle.INSTANCE.cross();
 
-	public DeleteAppTreeMenuItem() {
-		super();
-	}
+    public DeleteAppTreeMenuItem() {
+        super();
+    }
 
-	public DeleteAppTreeMenuItem(final AppTree tree) {
-		super(tree);
-		setIcon(ComponentBundle.INSTANCE.cross());
-	}
+    public DeleteAppTreeMenuItem(final AppTree tree) {
+        super(tree);
+        setIcon(ComponentBundle.INSTANCE.cross());
+    }
 
-	@Override
-	public void updateState() {
-		if (getAppTree() != null) {
-			setEnabled(getAppTree().isDeleting(getAppTree().getSelectedElement()));
-		} else {
-			setEnabled(false);
-		}
-	}
+    @Override
+    public void updateState() {
+        if (getAppTree() != null) {
+            setEnabled(getAppTree().isDeleting(getAppTree().getSelectedElement()));
+        } else {
+            setEnabled(false);
+        }
+    }
 
-	@Override
-	protected SelectionHandler<Item> createSelectionHandler() {
-		return new SelectionHandler<Item>() {
-			@Override
-			public void onSelection(SelectionEvent<Item> event) {
-				getAppTree().doRemoveElement(null, getAppTree().getSelectedElement());
-			}
-		};
-	}
+    @Override
+    protected SelectionHandler<Item> createSelectionHandler() {
+        return new SelectionHandler<Item>() {
+            @Override
+            public void onSelection(SelectionEvent<Item> event) {
+                getAppTree().doRemoveElement(null, getAppTree().getSelectedElement());
+            }
+        };
+    }
 
-	@Override
-	protected String getItemTitle() {
-		return TITLE;
-	}
+    @Override
+    protected String getItemTitle() {
+        return TITLE;
+    }
 
-	@Override
-	protected ImageResource getItemIcon() {
-		return ICON;
-	}
+    @Override
+    protected ImageResource getItemIcon() {
+        return ICON;
+    }
 }

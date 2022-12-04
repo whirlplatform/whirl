@@ -10,6 +10,8 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
+import java.util.Collection;
+import java.util.Map;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.view.RightEditView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
@@ -18,23 +20,9 @@ import org.whirlplatform.meta.shared.editor.GroupElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
 import org.whirlplatform.meta.shared.editor.RightType;
 
-import java.util.Collection;
-import java.util.Map;
-
 @Presenter(view = RightEditView.class)
 public class RightEditPresenter extends
         BasePresenter<RightEditPresenter.IRightEditView, EditorEventBus> {
-
-    public interface IRightEditView extends IsWidget {
-
-        void initialize(Collection<? extends AbstractElement> elements,
-                        Collection<GroupElement> groups, Collection<RightType> types);
-
-        void setRight(AbstractElement element, RightCollectionElement right);
-
-        Map<AbstractElement, RightCollectionElement> getRights();
-
-    }
 
     private Window w = new Window();
 
@@ -119,6 +107,17 @@ public class RightEditPresenter extends
         container.add(view.asWidget());
         w.setWidget(container);
         w.show();
+    }
+
+    public interface IRightEditView extends IsWidget {
+
+        void initialize(Collection<? extends AbstractElement> elements,
+                        Collection<GroupElement> groups, Collection<RightType> types);
+
+        void setRight(AbstractElement element, RightCollectionElement right);
+
+        Map<AbstractElement, RightCollectionElement> getRights();
+
     }
 
 }

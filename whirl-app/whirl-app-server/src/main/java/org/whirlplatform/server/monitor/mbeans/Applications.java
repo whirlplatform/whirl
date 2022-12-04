@@ -1,13 +1,12 @@
 package org.whirlplatform.server.monitor.mbeans;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.session.SessionManager;
 import org.whirlplatform.server.utils.ContextUtil;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Applications implements ApplicationsMBean {
 
@@ -87,7 +86,8 @@ public class Applications implements ApplicationsMBean {
         }
         blockedApps.remove(appCode);
 
-        Set<ApplicationUser> users = new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
+        Set<ApplicationUser> users =
+                new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
         for (ApplicationUser u : users) {
             if (u.getApplication() != null && appCode.equals(u.getApplication().getCode())) {
                 SessionManager.unregisterUser(u);

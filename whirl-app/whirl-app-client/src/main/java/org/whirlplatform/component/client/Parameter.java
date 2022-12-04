@@ -4,8 +4,8 @@ import org.whirlplatform.meta.shared.data.DataValue;
 
 public interface Parameter<T extends DataValue> {
 
-	T getFieldValue();
+    T getFieldValue();
 
-	void setFieldValue(T value);
+    void setFieldValue(T value);
 
 }

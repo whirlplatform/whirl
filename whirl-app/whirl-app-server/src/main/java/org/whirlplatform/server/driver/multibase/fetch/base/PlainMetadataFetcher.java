@@ -1,5 +1,9 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -16,12 +20,8 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.login.ApplicationUser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Map;
-
-public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFetcher<PlainTableElement> {
+public class PlainMetadataFetcher extends AbstractFetcher
+        implements MetadataFetcher<PlainTableElement> {
     protected static Logger _log = LoggerFactory.getLogger(PlainMetadataFetcher.class);
 
     public PlainMetadataFetcher(ConnectionWrapper connectionWrapper) {
@@ -40,7 +40,8 @@ public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFet
         result.setTitle(table.getTitle().getValue(user.getLocaleElement()).getString());
 
         TableConditionSolver tableCondition;
-        tableCondition = new TableConditionSolver(table, user.getApplication(), params, user, getConnection());
+        tableCondition = new TableConditionSolver(table, user.getApplication(), params, user,
+                getConnection());
         tableCondition.allowed();
 
         result.setViewable(tableCondition.isViewable());
@@ -54,7 +55,8 @@ public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFet
                 return o1.getIndex() - o2.getIndex();
             }
         };
-        ArrayList<TableColumnElement> columns = new ArrayList<TableColumnElement>(table.getColumns());
+        ArrayList<TableColumnElement> columns =
+                new ArrayList<TableColumnElement>(table.getColumns());
 
         Collections.sort(columns, comparator);
         LocaleElement userLocale = user.getLocaleElement();
@@ -82,11 +84,12 @@ public class PlainMetadataFetcher extends AbstractFetcher implements MetadataFet
             fieldMetadata.setRequired(columnElement.isNotNull());
             fieldMetadata.setDataFormat(columnElement.getDataFormat());
             fieldMetadata.setRegEx(columnElement.getRegex());
-            fieldMetadata.setRegExError(columnElement.getRegexMessage().getValue(userLocale).getString());
+            fieldMetadata.setRegExError(
+                    columnElement.getRegexMessage().getValue(userLocale).getString());
             fieldMetadata.setHidden(columnElement.isHidden());
             // TODO field.setEvent();
             fieldMetadata.setLabelExpression(columnElement.getLabelExpression());
-            
+
             if (table.getIdColumn() == columnElement) {
                 result.setIdField(fieldMetadata);
             }

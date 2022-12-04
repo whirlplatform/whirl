@@ -1,5 +1,7 @@
 package org.whirlplatform.integration.grid;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Location;
 import org.openqa.selenium.By;
@@ -9,14 +11,12 @@ import org.whirlplatform.integration.AbstractPage;
 import org.whirlplatform.integration.graphene.FindByWhirl;
 import org.whirlplatform.selenium.ByWhirl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Location("main?role=it_grid_edit")
 public class GridEditingTestPage extends AbstractPage {
     private final String GRID_CODE = "grid";
     private final String GRID_LIST_CODE = "grid_list";
-    private final String GRID_LIST_CELL_LOCATOR = "whirl:EditGrid(code=%s)[Row(index=%d)[Cell(column=%s)]]";
+    private final String GRID_LIST_CELL_LOCATOR =
+            "whirl:EditGrid(code=%s)[Row(index=%d)[Cell(column=%s)]]";
 
     @FindByWhirl("whirl:EditGrid(code=" + GRID_CODE + ")")
     protected WebElement grid;
@@ -158,15 +158,18 @@ public class GridEditingTestPage extends AbstractPage {
         return result;
     }
 
-    private String findListDfobj(final String gridCode, final String columnName, final String columnValue) {
+    private String findListDfobj(final String gridCode, final String columnName,
+                                 final String columnValue) {
         int rowIndex = 0;
         String result = "";
         try {
             while (true) {
-                final String locator = String.format(GRID_LIST_CELL_LOCATOR, gridCode, rowIndex, columnName);
+                final String locator =
+                        String.format(GRID_LIST_CELL_LOCATOR, gridCode, rowIndex, columnName);
                 final WebElement cell = webDriver.findElement(new ByWhirl(locator));
                 if (columnValue.equals(cell.getText())) {
-                    final String dfobjLocator = String.format(GRID_LIST_CELL_LOCATOR, gridCode, rowIndex, "DFOBJ");
+                    final String dfobjLocator =
+                            String.format(GRID_LIST_CELL_LOCATOR, gridCode, rowIndex, "DFOBJ");
                     final WebElement dfobjCell = webDriver.findElement(new ByWhirl(dfobjLocator));
                     result = dfobjCell.getText();
                     break;

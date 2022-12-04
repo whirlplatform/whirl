@@ -9,6 +9,8 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
 import com.sencha.gxt.widget.core.client.form.Field;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
+import java.util.Collections;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -27,15 +29,13 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
-import java.util.Collections;
-import java.util.Map;
-
 /**
  * Чек-бокс поле.
  */
 @JsType(namespace = "Whirl", name = "CheckBox")
 public class CheckBoxBuilder extends AbstractFieldBuilder
-        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, NativeParameter<Boolean>, Parameter<DataValue> {
+        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, NativeParameter<Boolean>,
+        Parameter<DataValue> {
 
     private CheckBox checkBox;
 
@@ -68,9 +68,11 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
         required = false;
         CheckBoxCell cell = new CheckBoxCell() {
             @Override
-            public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context, Element parent, Boolean value,
+            public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
+                                       Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
-                if (isReadOnly() && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                if (isReadOnly() &&
+                        !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -172,7 +174,8 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      */
     public void markInvalid(String msg) {
         checkBox.getErrorSupport().markInvalid(
-                Collections.singletonList(new DefaultEditorError(checkBox, msg, checkBox.getValue())));
+                Collections.singletonList(
+                        new DefaultEditorError(checkBox, msg, checkBox.getValue())));
     }
 
     /**
@@ -261,12 +264,6 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
 
     // Arquillian
 
-    private static class LocatorParams {
-
-        private static String TYPE_INPUT = "Input";
-
-    }
-
     @JsIgnore
     @Override
     public Locator getLocatorByElement(Element element) {
@@ -329,8 +326,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
@@ -380,6 +376,12 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
+    }
+
+    private static class LocatorParams {
+
+        private static String TYPE_INPUT = "Input";
+
     }
 
 

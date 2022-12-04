@@ -2,6 +2,7 @@ package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.combo.MultiComboBoxBuilder;
 import org.whirlplatform.component.client.state.StateScope;
@@ -11,15 +12,13 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
 
-import java.util.Map;
-
-
 class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelData>> {
 
     private FieldMetadata tableField;
 
 
-    public TableMultiComboBoxBuilder(FieldMetadata tableField, Map<String, DataValue> builderProperties) {
+    public TableMultiComboBoxBuilder(FieldMetadata tableField,
+                                     Map<String, DataValue> builderProperties) {
         super(builderProperties);
         this.tableField = tableField;
     }
@@ -85,14 +84,14 @@ class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelD
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
-        super.setValue(value);
+    public ListModelData getValue() {
+        return super.getValue();
     }
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
-        return super.getValue();
+    public void setValue(ListModelData value) {
+        super.setValue(value);
     }
 
     /**

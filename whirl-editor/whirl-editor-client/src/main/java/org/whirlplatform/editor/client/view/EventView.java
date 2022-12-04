@@ -11,10 +11,35 @@ import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.form.*;
+import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.ComboBox;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
+import com.sencha.gxt.widget.core.client.form.TextField;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.geomajas.codemirror.client.Config;
 import org.geomajas.codemirror.client.widget.CodeMirrorPanel;
-import org.whirlplatform.component.client.event.*;
+import org.whirlplatform.component.client.event.AttachEvent;
+import org.whirlplatform.component.client.event.BlurEvent;
+import org.whirlplatform.component.client.event.ChangeEvent;
+import org.whirlplatform.component.client.event.ClickEvent;
+import org.whirlplatform.component.client.event.CreateEvent;
+import org.whirlplatform.component.client.event.DeleteEvent;
+import org.whirlplatform.component.client.event.DetachEvent;
+import org.whirlplatform.component.client.event.DoubleClickEvent;
+import org.whirlplatform.component.client.event.FocusEvent;
+import org.whirlplatform.component.client.event.HideEvent;
+import org.whirlplatform.component.client.event.InsertEvent;
+import org.whirlplatform.component.client.event.KeyPressEvent;
+import org.whirlplatform.component.client.event.LoadEvent;
+import org.whirlplatform.component.client.event.RefreshEvent;
+import org.whirlplatform.component.client.event.RowDoubleClickEvent;
+import org.whirlplatform.component.client.event.SelectEvent;
+import org.whirlplatform.component.client.event.ShowEvent;
+import org.whirlplatform.component.client.event.TimeEvent;
+import org.whirlplatform.component.client.event.UpdateEvent;
 import org.whirlplatform.editor.client.component.PropertyValueField;
 import org.whirlplatform.editor.client.presenter.EventPresenter;
 import org.whirlplatform.editor.client.presenter.EventPresenter.IEventView;
@@ -28,10 +53,6 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class EventView extends ContentPanel implements IEventView {
 
@@ -93,7 +114,8 @@ public class EventView extends ContentPanel implements IEventView {
                     }
                 });
         store.addAll(Arrays.stream(EventType.values())
-                .filter(eventType -> !EventType.Java.equals(eventType)).collect(Collectors.toList()));
+                .filter(eventType -> !EventType.Java.equals(eventType))
+                .collect(Collectors.toList()));
 
         ComboBox<EventType> result = new ComboBox<EventType>(store,
                 new LabelProvider<EventType>() {
@@ -256,13 +278,13 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public void setPresenter(EventPresenter presenter) {
-        this.presenter = presenter;
+    public EventPresenter getPresenter() {
+        return presenter;
     }
 
     @Override
-    public EventPresenter getPresenter() {
-        return presenter;
+    public void setPresenter(EventPresenter presenter) {
+        this.presenter = presenter;
     }
 
     private void hideAll() {
@@ -325,13 +347,18 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
+    public String getCode() {
+        return code.getValue();
+    }
+
+    @Override
     public void setCode(String code) {
         this.code.setValue(code);
     }
 
     @Override
-    public String getCode() {
-        return code.getValue();
+    public EventType getType() {
+        return type.getValue();
     }
 
     @Override
@@ -341,18 +368,13 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public EventType getType() {
-        return type.getValue();
+    public String getHandlerType() {
+        return handlerType.getValue();
     }
 
     @Override
     public void setHandlerType(String handlerType) {
         this.handlerType.setValue(handlerType);
-    }
-
-    @Override
-    public String getHandlerType() {
-        return handlerType.getValue();
     }
 
     @Override
@@ -376,13 +398,13 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public void setConfirmText(PropertyValue text) {
-        confirmText.setPropertyValue(text);
+    public PropertyValue getConfirmText() {
+        return confirmText.getPropertyValue();
     }
 
     @Override
-    public PropertyValue getConfirmText() {
-        return confirmText.getPropertyValue();
+    public void setConfirmText(PropertyValue text) {
+        confirmText.setPropertyValue(text);
     }
 
     @Override
@@ -396,18 +418,13 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public void setWaitText(PropertyValue text) {
-        waitText.setPropertyValue(text);
-    }
-
-    @Override
     public PropertyValue getWaitText() {
         return waitText.getPropertyValue();
     }
 
     @Override
-    public void setSchema(String schema) {
-        this.schema.setValue(schema);
+    public void setWaitText(PropertyValue text) {
+        waitText.setPropertyValue(text);
     }
 
     @Override
@@ -416,13 +433,23 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public void setFunction(String function) {
-        this.function.setValue(function);
+    public void setSchema(String schema) {
+        this.schema.setValue(schema);
     }
 
     @Override
     public String getFunction() {
         return function.getValue();
+    }
+
+    @Override
+    public void setFunction(String function) {
+        this.function.setValue(function);
+    }
+
+    @Override
+    public String getSource() {
+        return source.getValue();
     }
 
     @Override
@@ -433,8 +460,8 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public String getSource() {
-        return source.getValue();
+    public ComponentElement getComponent() {
+        return component.getValue();
     }
 
     @Override
@@ -443,8 +470,8 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public ComponentElement getComponent() {
-        return component.getValue();
+    public ComponentElement getTargetComponent() {
+        return targetComponent.getValue();
     }
 
     @Override
@@ -453,18 +480,13 @@ public class EventView extends ContentPanel implements IEventView {
     }
 
     @Override
-    public ComponentElement getTargetComponent() {
-        return targetComponent.getValue();
+    public DataSourceElement getDataSource() {
+        return dataSource.getValue();
     }
 
     @Override
     public void setDataSource(DataSourceElement element) {
         dataSource.setValue(element);
-    }
-
-    @Override
-    public DataSourceElement getDataSource() {
-        return dataSource.getValue();
     }
 
     @Override

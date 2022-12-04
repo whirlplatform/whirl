@@ -9,8 +9,43 @@ import com.google.gwt.user.client.ui.HTML;
 import com.sencha.gxt.widget.core.client.Dialog;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.container.ResizeContainer;
-import org.whirlplatform.component.client.*;
-import org.whirlplatform.component.client.event.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
+import org.whirlplatform.component.client.BuilderManager;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.Containable;
+import org.whirlplatform.component.client.ContainerHelper;
+import org.whirlplatform.component.client.ListParameter;
+import org.whirlplatform.component.client.Parameter;
+import org.whirlplatform.component.client.Prepareable;
+import org.whirlplatform.component.client.Validatable;
+import org.whirlplatform.component.client.event.AttachEvent;
+import org.whirlplatform.component.client.event.BlurEvent;
+import org.whirlplatform.component.client.event.ChangeEvent;
+import org.whirlplatform.component.client.event.ClickEvent;
+import org.whirlplatform.component.client.event.CreateEvent;
+import org.whirlplatform.component.client.event.DeleteEvent;
+import org.whirlplatform.component.client.event.DetachEvent;
+import org.whirlplatform.component.client.event.DoubleClickEvent;
+import org.whirlplatform.component.client.event.EventCallbackResult;
+import org.whirlplatform.component.client.event.EventHelper;
+import org.whirlplatform.component.client.event.FocusEvent;
+import org.whirlplatform.component.client.event.HideEvent;
+import org.whirlplatform.component.client.event.InsertEvent;
+import org.whirlplatform.component.client.event.JavaScriptContext;
+import org.whirlplatform.component.client.event.KeyPressEvent;
+import org.whirlplatform.component.client.event.LoadEvent;
+import org.whirlplatform.component.client.event.RefreshEvent;
+import org.whirlplatform.component.client.event.RowDoubleClickEvent;
+import org.whirlplatform.component.client.event.SelectEvent;
+import org.whirlplatform.component.client.event.ShowEvent;
+import org.whirlplatform.component.client.event.TimeEvent;
+import org.whirlplatform.component.client.event.UpdateEvent;
 import org.whirlplatform.component.client.report.ReportBuilder;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.component.client.utils.ProgressHelper;
@@ -21,16 +56,16 @@ import org.whirlplatform.meta.shared.EventType;
 import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.EventParameter;
+import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.ListHolder;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.storage.client.StorageHelper;
-
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 public class EventHelperImpl implements EventHelper {
 
@@ -183,7 +218,8 @@ public class EventHelperImpl implements EventHelper {
                 if (afterEventCallback != null) {
                     EventCallbackResult callbackResult = new EventCallbackResult();
                     List<EventParameter> list = new ArrayList<>(result.getParametersMap().values());
-                    Map<EventParameter, ComponentBuilder> components = new HashMap<EventParameter, ComponentBuilder>();
+                    Map<EventParameter, ComponentBuilder> components =
+                            new HashMap<EventParameter, ComponentBuilder>();
                     findComponents(list, components, null, null, null);
 
                     callbackResult.setParameters(convertParameters(list, components));
@@ -237,7 +273,8 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
-    private void onNextEventReceived(EventMetadata nextEvent, EventResult eventResult, Command command,
+    private void onNextEventReceived(EventMetadata nextEvent, EventResult eventResult,
+                                     Command command,
                                      AsyncCallback<Void> callback) {
         if (nextEvent == null) {
             if (!eventResult.isReady()) {
@@ -295,7 +332,8 @@ public class EventHelperImpl implements EventHelper {
 
     private void componentExecute(ComponentBuilder source, final ComponentBuilder component,
                                   List<DataValue> parameters) {
-        if (ComponentType.ReportType == component.getType() && !((ReportBuilder) component).isShowReportParams()) {
+        if (ComponentType.ReportType == component.getType() &&
+                !((ReportBuilder) component).isShowReportParams()) {
             return;
         }
 
@@ -319,7 +357,8 @@ public class EventHelperImpl implements EventHelper {
             }
         }
 
-        ComponentBuilder targetComponent = BuilderManager.findBuilder(metadata.getTargetComponentId(), false);
+        ComponentBuilder targetComponent =
+                BuilderManager.findBuilder(metadata.getTargetComponentId(), false);
         if (targetComponent instanceof Containable) {
             ((Containable) targetComponent).addChild(component);
         } else if (component.getType() == ComponentType.WindowType) {
@@ -376,8 +415,8 @@ public class EventHelperImpl implements EventHelper {
     }
 
     private native JavaScriptEventResult javaScriptExecute(String func, JavaScriptContext context) /*-{
-		return $wnd[func](context);
-	}-*/;
+        return $wnd[func](context);
+    }-*/;
 
     private native boolean checkFunctionExists(String func) /*-{
         return $wnd[func] != undefined;
@@ -385,11 +424,13 @@ public class EventHelperImpl implements EventHelper {
 
     private void attachScript(String functionName, String script) {
         if (!checkFunctionExists(functionName)) {
-            ScriptInjector.fromString(script).setWindow(ScriptInjector.TOP_WINDOW).setRemoveTag(false).inject();
+            ScriptInjector.fromString(script).setWindow(ScriptInjector.TOP_WINDOW)
+                    .setRemoveTag(false).inject();
         }
     }
 
-    private void findComponents(List<EventParameter> parameters, Map<EventParameter, ComponentBuilder> components,
+    private void findComponents(List<EventParameter> parameters,
+                                Map<EventParameter, ComponentBuilder> components,
                                 Map<EventParameter, Parameter<?>> componentParameters,
                                 Map<EventParameter, Validatable> componentValidatables,
                                 Map<EventParameter, Prepareable> componentPreparables) {
@@ -419,7 +460,8 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
-    private void initByComponentBuilder(final EventParameter parameter, final ComponentBuilder component) {
+    private void initByComponentBuilder(final EventParameter parameter,
+                                        final ComponentBuilder component) {
         if (component != null) {
             if (parameter.getType() == ParameterType.COMPONENT) {
                 parameter.setComponentId(component.getId());
@@ -439,7 +481,8 @@ public class EventHelperImpl implements EventHelper {
         final Map<EventParameter, Parameter<?>> componentParameters = new HashMap<>();
         final Map<EventParameter, Validatable> componentValidatables = new HashMap<>();
         final Map<EventParameter, Prepareable> componentPreparables = new HashMap<>();
-        findComponents(parameters, components, componentParameters, componentValidatables, componentPreparables);
+        findComponents(parameters, components, componentParameters, componentValidatables,
+                componentPreparables);
 
         // сначала все проверяем
         boolean valid = true;
@@ -489,7 +532,8 @@ public class EventHelperImpl implements EventHelper {
         List<DataValue> result = new ArrayList<DataValue>();
         for (EventParameter v : parameters) {
             DataValue data;
-            boolean isCompParam = v.getType() == ParameterType.COMPONENTCODE || v.getType() == ParameterType.COMPONENT;
+            boolean isCompParam = v.getType() == ParameterType.COMPONENTCODE ||
+                    v.getType() == ParameterType.COMPONENT;
             if (isCompParam /*TODO && components.get(v) != null - определится зачем это условие*/) {
                 data = getDataValue(components.get(v));
             } else if (v.getType() == ParameterType.STORAGE) {

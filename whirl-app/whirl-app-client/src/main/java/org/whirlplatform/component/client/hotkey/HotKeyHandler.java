@@ -9,10 +9,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.ModalPanel;
+import java.util.Iterator;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.KeyPressEvent;
-
-import java.util.Iterator;
 
 public class HotKeyHandler implements NativePreviewHandler {
 

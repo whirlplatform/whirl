@@ -1,8 +1,46 @@
 package org.whirlplatform.editor.client.tree.visitor;
 
-import org.whirlplatform.editor.client.tree.dummy.*;
-import org.whirlplatform.meta.shared.editor.*;
-import org.whirlplatform.meta.shared.editor.db.*;
+import org.whirlplatform.editor.client.tree.dummy.AbstractDummyElement;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppComponents;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppDataSources;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppEvents;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppFreeComponents;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppGroups;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppLocales;
+import org.whirlplatform.editor.client.tree.dummy.DummyAppReferences;
+import org.whirlplatform.editor.client.tree.dummy.DummyComponentEvents;
+import org.whirlplatform.editor.client.tree.dummy.DummyDynamicTables;
+import org.whirlplatform.editor.client.tree.dummy.DummyEventParameters;
+import org.whirlplatform.editor.client.tree.dummy.DummyEventSubEvents;
+import org.whirlplatform.editor.client.tree.dummy.DummyMenuItemEvents;
+import org.whirlplatform.editor.client.tree.dummy.DummyMenuItems;
+import org.whirlplatform.editor.client.tree.dummy.DummyPlainTables;
+import org.whirlplatform.editor.client.tree.dummy.DummySchemas;
+import org.whirlplatform.editor.client.tree.dummy.DummyTableClones;
+import org.whirlplatform.meta.shared.editor.AbstractElement;
+import org.whirlplatform.meta.shared.editor.ApplicationElement;
+import org.whirlplatform.meta.shared.editor.CellElement;
+import org.whirlplatform.meta.shared.editor.CellRangeElement;
+import org.whirlplatform.meta.shared.editor.ColumnElement;
+import org.whirlplatform.meta.shared.editor.ComponentElement;
+import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
+import org.whirlplatform.meta.shared.editor.EventElement;
+import org.whirlplatform.meta.shared.editor.EventParameterElement;
+import org.whirlplatform.meta.shared.editor.FileElement;
+import org.whirlplatform.meta.shared.editor.FormElement;
+import org.whirlplatform.meta.shared.editor.GroupElement;
+import org.whirlplatform.meta.shared.editor.ReportElement;
+import org.whirlplatform.meta.shared.editor.RequestElement;
+import org.whirlplatform.meta.shared.editor.RightCollectionElement;
+import org.whirlplatform.meta.shared.editor.RowElement;
+import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
+import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
+import org.whirlplatform.meta.shared.editor.db.DatabaseTableElement;
+import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
+import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
+import org.whirlplatform.meta.shared.editor.db.SchemaElement;
+import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
+import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 /**
  *

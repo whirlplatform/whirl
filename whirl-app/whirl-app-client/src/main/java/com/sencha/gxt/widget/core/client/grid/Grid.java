@@ -22,79 +22,91 @@ import com.sencha.gxt.core.client.gestures.TouchData;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
-import com.sencha.gxt.data.shared.loader.*;
+import com.sencha.gxt.data.shared.loader.BeforeLoadEvent;
+import com.sencha.gxt.data.shared.loader.ListLoadConfig;
+import com.sencha.gxt.data.shared.loader.ListLoadResult;
+import com.sencha.gxt.data.shared.loader.ListLoader;
+import com.sencha.gxt.data.shared.loader.LoadEvent;
+import com.sencha.gxt.data.shared.loader.LoadExceptionEvent;
+import com.sencha.gxt.data.shared.loader.LoaderHandler;
 import com.sencha.gxt.dnd.core.client.GridDragSource;
 import com.sencha.gxt.dnd.core.client.GridDropTarget;
 import com.sencha.gxt.messages.client.DefaultMessages;
 import com.sencha.gxt.widget.core.client.Component;
-import com.sencha.gxt.widget.core.client.event.*;
+import com.sencha.gxt.widget.core.client.event.BodyScrollEvent;
 import com.sencha.gxt.widget.core.client.event.BodyScrollEvent.BodyScrollHandler;
 import com.sencha.gxt.widget.core.client.event.BodyScrollEvent.HasBodyScrollHandlers;
+import com.sencha.gxt.widget.core.client.event.CellClickEvent;
 import com.sencha.gxt.widget.core.client.event.CellClickEvent.CellClickHandler;
 import com.sencha.gxt.widget.core.client.event.CellClickEvent.HasCellClickHandlers;
+import com.sencha.gxt.widget.core.client.event.CellDoubleClickEvent;
 import com.sencha.gxt.widget.core.client.event.CellDoubleClickEvent.CellDoubleClickHandler;
 import com.sencha.gxt.widget.core.client.event.CellDoubleClickEvent.HasCellDoubleClickHandlers;
+import com.sencha.gxt.widget.core.client.event.CellMouseDownEvent;
 import com.sencha.gxt.widget.core.client.event.CellMouseDownEvent.CellMouseDownHandler;
 import com.sencha.gxt.widget.core.client.event.CellMouseDownEvent.HasCellMouseDownHandlers;
+import com.sencha.gxt.widget.core.client.event.HeaderClickEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderClickEvent.HasHeaderClickHandlers;
 import com.sencha.gxt.widget.core.client.event.HeaderClickEvent.HeaderClickHandler;
+import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent.HasHeaderContextMenuHandlers;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent.HeaderContextMenuHandler;
+import com.sencha.gxt.widget.core.client.event.HeaderDoubleClickEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderDoubleClickEvent.HasHeaderDoubleClickHandlers;
 import com.sencha.gxt.widget.core.client.event.HeaderDoubleClickEvent.HeaderDoubleClickHandler;
+import com.sencha.gxt.widget.core.client.event.HeaderMouseDownEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderMouseDownEvent.HasHeaderMouseDownHandlers;
 import com.sencha.gxt.widget.core.client.event.HeaderMouseDownEvent.HeaderMouseDownHandler;
+import com.sencha.gxt.widget.core.client.event.ReconfigureEvent;
 import com.sencha.gxt.widget.core.client.event.ReconfigureEvent.HasReconfigureHandlers;
 import com.sencha.gxt.widget.core.client.event.ReconfigureEvent.ReconfigureHandler;
+import com.sencha.gxt.widget.core.client.event.RefreshEvent;
 import com.sencha.gxt.widget.core.client.event.RefreshEvent.HasRefreshHandlers;
 import com.sencha.gxt.widget.core.client.event.RefreshEvent.RefreshHandler;
+import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.HasRowClickHandlers;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent.RowClickHandler;
+import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent;
 import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent.HasRowDoubleClickHandlers;
 import com.sencha.gxt.widget.core.client.event.RowDoubleClickEvent.RowDoubleClickHandler;
+import com.sencha.gxt.widget.core.client.event.RowMouseDownEvent;
 import com.sencha.gxt.widget.core.client.event.RowMouseDownEvent.HasRowMouseDownHandlers;
 import com.sencha.gxt.widget.core.client.event.RowMouseDownEvent.RowMouseDownHandler;
+import com.sencha.gxt.widget.core.client.event.SortChangeEvent;
 import com.sencha.gxt.widget.core.client.event.SortChangeEvent.HasSortChangeHandlers;
 import com.sencha.gxt.widget.core.client.event.SortChangeEvent.SortChangeHandler;
+import com.sencha.gxt.widget.core.client.event.ViewReadyEvent;
 import com.sencha.gxt.widget.core.client.event.ViewReadyEvent.HasViewReadyHandlers;
 import com.sencha.gxt.widget.core.client.event.ViewReadyEvent.ViewReadyHandler;
 import com.sencha.gxt.widget.core.client.grid.editing.GridInlineEditing;
-
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A {@link Grid} provides support for displaying and editing two-dimensional
- * tables of cells. The grid gets its data from a {@link ListStore} and its
- * column definitions from a {@link ColumnModel}. Each model in the store is
- * rendered as a row in the grid. The fields in the model provide the data for
- * each column in the row. Any updates to the store are automatically pushed to
- * the grid. This includes inserting, removing, sorting and filtering.
+ * A {@link Grid} provides support for displaying and editing two-dimensional tables of cells. The
+ * grid gets its data from a {@link ListStore} and its column definitions from a
+ * {@link ColumnModel}. Each model in the store is rendered as a row in the grid. The fields in the
+ * model provide the data for each column in the row. Any updates to the store are automatically
+ * pushed to the grid. This includes inserting, removing, sorting and filtering.
  * <p/>
- * In GXT version 3, {@link ModelKeyProvider}s and {@link ValueProvider}s
- * provide the interface between your data model and the list store and
- * {@link ColumnConfig} classes. This enables a grid to work with data of any
- * object type.
+ * In GXT version 3, {@link ModelKeyProvider}s and {@link ValueProvider}s provide the interface
+ * between your data model and the list store and {@link ColumnConfig} classes. This enables a grid
+ * to work with data of any object type.
  * <p/>
- * You can provide your own implementation of these interfaces, or you can use a
- * Sencha supplied generator to create them for you automatically. A generator
- * runs at compile time to create a Java class that is compiled to JavaScript.
- * The Sencha supplied generator can create classes for interfaces that extend
- * the {@link PropertyAccess} interface. The generator transparently creates the
- * class at compile time and the {@link GWT#create(Class)} method returns an
- * instance of that class at run time. The generated class is managed by GWT and
- * GXT and you generally do not need to worry about what the class is called,
- * where it is located, or other similar details.
+ * You can provide your own implementation of these interfaces, or you can use a Sencha supplied
+ * generator to create them for you automatically. A generator runs at compile time to create a Java
+ * class that is compiled to JavaScript. The Sencha supplied generator can create classes for
+ * interfaces that extend the {@link PropertyAccess} interface. The generator transparently creates
+ * the class at compile time and the {@link GWT#create(Class)} method returns an instance of that
+ * class at run time. The generated class is managed by GWT and GXT and you generally do not need to
+ * worry about what the class is called, where it is located, or other similar details.
  * <p/>
- * Each grid has a {@link GridView}. The grid view provides many options for
- * customizing the grid's appearance (e.g. striping, mouse-over tracking, empty
- * text). To set these options, get the current grid view using
- * {@link Grid#getView()} and then set the desired option on the grid view.
+ * Each grid has a {@link GridView}. The grid view provides many options for customizing the grid's
+ * appearance (e.g. striping, mouse-over tracking, empty text). To set these options, get the
+ * current grid view using {@link Grid#getView()} and then set the desired option on the grid view.
  * <p/>
- * To customize the appearance of a column in a grid, provide a cell
- * implementation using {@link ColumnConfig#setCell(Cell)}.
- * <p />
- * Grids support several ways to manage column widths:
+ * To customize the appearance of a column in a grid, provide a cell implementation using
+ * {@link ColumnConfig#setCell(Cell)}. <p /> Grids support several ways to manage column widths:
  * <ol>
  * <li>The most basic approach is to simply give pixel widths to each column.
  * Columns widths will match the specified values.</li>
@@ -215,38 +227,39 @@ import java.util.Set;
  * @see GridInlineEditing
  * @see CellSelectionModel
  */
-public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortChangeHandlers, HasRowClickHandlers,
-        HasRowDoubleClickHandlers, HasRowMouseDownHandlers, HasCellClickHandlers, HasCellDoubleClickHandlers,
-        HasCellMouseDownHandlers, HasHeaderClickHandlers, HasHeaderDoubleClickHandlers, HasHeaderContextMenuHandlers,
-        HasHeaderMouseDownHandlers, HasRefreshHandlers, HasReconfigureHandlers, HasBodyScrollHandlers {
+public class Grid<M> extends Component
+        implements HasViewReadyHandlers, HasSortChangeHandlers, HasRowClickHandlers,
+        HasRowDoubleClickHandlers, HasRowMouseDownHandlers, HasCellClickHandlers,
+        HasCellDoubleClickHandlers,
+        HasCellMouseDownHandlers, HasHeaderClickHandlers, HasHeaderDoubleClickHandlers,
+        HasHeaderContextMenuHandlers,
+        HasHeaderMouseDownHandlers, HasRefreshHandlers, HasReconfigureHandlers,
+        HasBodyScrollHandlers {
 
     /**
-     * The current column model for this grid. Should be considered read-only in
-     * derived classes unless the class is tightly integrated with the grid's
-     * construction and reconfiguration process.
+     * The current column model for this grid. Should be considered read-only in derived classes
+     * unless the class is tightly integrated with the grid's construction and reconfiguration
+     * process.
      */
     protected ColumnModel<M> cm;
     /**
-     * The current selection model for this grid. Should be considered read-only
-     * in derived classes unless the class is tightly integrated with the grid's
-     * construction and reconfiguration process.
+     * The current selection model for this grid. Should be considered read-only in derived classes
+     * unless the class is tightly integrated with the grid's construction and reconfiguration
+     * process.
      */
     protected GridSelectionModel<M> sm;
     /**
-     * The current store for this grid. Should be considered read-only in derived
-     * classes unless the class is tightly integrated with the grid's construction
-     * and reconfiguration process.
+     * The current store for this grid. Should be considered read-only in derived classes unless the
+     * class is tightly integrated with the grid's construction and reconfiguration process.
      */
     protected ListStore<M> store;
     /**
-     * The current view for this grid. Should be considered read-only in derived
-     * classes unless the class is tightly integrated with the grid's construction
-     * and reconfiguration process.
+     * The current view for this grid. Should be considered read-only in derived classes unless the
+     * class is tightly integrated with the grid's construction and reconfiguration process.
      */
     protected GridView<M> view;
     /**
-     * The current view for this grid. Should be considered read-only in derived
-     * classes.
+     * The current view for this grid. Should be considered read-only in derived classes.
      */
     protected boolean viewReady;
     private ListLoader<?, ?> loader;
@@ -256,30 +269,31 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     private int lazyRowRender = 10;
     private HandlerRegistration loaderRegistration;
     private boolean loadMask;
-    private LoaderHandler<ListLoadConfig, ListLoadResult<?>> loadHandler = new LoaderHandler<ListLoadConfig, ListLoadResult<?>>() {
-        @Override
-        public void onBeforeLoad(final BeforeLoadEvent<ListLoadConfig> event) {
-            Grid.this.onLoaderBeforeLoad();
-            Scheduler.get().scheduleFinally(new ScheduledCommand() {
+    private LoaderHandler<ListLoadConfig, ListLoadResult<?>> loadHandler =
+            new LoaderHandler<ListLoadConfig, ListLoadResult<?>>() {
                 @Override
-                public void execute() {
-                    if (event.isCancelled()) {
-                        Grid.this.onLoadLoader();
-                    }
+                public void onBeforeLoad(final BeforeLoadEvent<ListLoadConfig> event) {
+                    Grid.this.onLoaderBeforeLoad();
+                    Scheduler.get().scheduleFinally(new ScheduledCommand() {
+                        @Override
+                        public void execute() {
+                            if (event.isCancelled()) {
+                                Grid.this.onLoadLoader();
+                            }
+                        }
+                    });
                 }
-            });
-        }
 
-        @Override
-        public void onLoad(LoadEvent<ListLoadConfig, ListLoadResult<?>> event) {
-            Grid.this.onLoadLoader();
-        }
+                @Override
+                public void onLoad(LoadEvent<ListLoadConfig, ListLoadResult<?>> event) {
+                    Grid.this.onLoadLoader();
+                }
 
-        @Override
-        public void onLoadException(LoadExceptionEvent<ListLoadConfig> event) {
-            Grid.this.onLoaderLoadException();
-        }
-    };
+                @Override
+                public void onLoadException(LoadExceptionEvent<ListLoadConfig> event) {
+                    Grid.this.onLoaderLoadException();
+                }
+            };
 
     /**
      * Creates a new grid with the given data store and column model.
@@ -456,8 +470,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Sets the time in ms after the row gets rendered (defaults to 10). 0 means
-     * that the rows get rendered as soon as the grid gets rendered.
+     * Sets the time in ms after the row gets rendered (defaults to 10). 0 means that the rows get
+     * rendered as soon as the grid gets rendered.
      *
      * @param lazyRowRender the time in ms after the rows get rendered.
      */
@@ -614,8 +628,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Sets whether a load mask should be displayed during load operations
-     * (defaults to false).
+     * Sets whether a load mask should be displayed during load operations (defaults to false).
      *
      * @param loadMask true to show a mask
      */
@@ -677,8 +690,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Reconfigures the grid to use a different Store and Column Model. The View
-     * will be bound to the new objects and refreshed.
+     * Reconfigures the grid to use a different Store and Column Model. The View will be bound to
+     * the new objects and refreshed.
      *
      * @param store the new store
      * @param cm    the new column model
@@ -719,14 +732,13 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Navigate in the requested direction to the next selectable cell, given the
-     * row, column and step.
+     * Navigate in the requested direction to the next selectable cell, given the row, column and
+     * step.
      *
      * @param row      the starting row index
      * @param col      the starting column index
      * @param step     the step size and direction
-     * @param callback a callback that determines whether the given cell is
-     *                 selectable
+     * @param callback a callback that determines whether the given cell is selectable
      * @return the next cell or <code>null</code> if no cell matches the criteria
      */
     public GridCell walkCells(int row, int col, int step, Callback callback) {
@@ -776,8 +788,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Invoked after the view element is first attached, performs the final steps
-     * before the grid is completely initialized.
+     * Invoked after the view element is first attached, performs the final steps before the grid is
+     * completely initialized.
      */
     protected void afterRenderView() {
         view.afterRender();
@@ -812,8 +824,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Fires an event to the cell specified by the given record data model and
-     * column.
+     * Fires an event to the cell specified by the given record data model and column.
      *
      * @param event      the event to fire
      * @param eventType  the type of event
@@ -822,7 +833,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
      * @param context    the context of the cell (row, column and key)
      * @param column     the column containing the cell
      */
-    protected <N> Cell<?> fireEventToCell(Event event, String eventType, Element cellParent, final M m, Context context,
+    protected <N> Cell<?> fireEventToCell(Event event, String eventType, Element cellParent,
+                                          final M m, Context context,
                                           final ColumnConfig<M, N> column) {
         Cell<N> cell = column.getCell();
         if (cell != null && cellConsumesEventType(cell, eventType)) {
@@ -863,8 +875,10 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
         ColumnConfig<M, ?> config = cm.getColumn(colIndex);
         Element cellParent = getView().getCell(rowIndex, colIndex);
         if (value != null && config != null && cellParent != null) {
-            Context context = new Context(rowIndex, colIndex, getStore().getKeyProvider().getKey(value));
-            return fireEventToCell(event, event.getType(), cellParent.getFirstChildElement(), value, context, config);
+            Context context =
+                    new Context(rowIndex, colIndex, getStore().getKeyProvider().getKey(value));
+            return fireEventToCell(event, event.getType(), cellParent.getFirstChildElement(), value,
+                    context, config);
         }
         return null;
     }
@@ -898,8 +912,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Invoked after the view has been rendered, may be overridden to perform any
-     * activities that require a rendered view.
+     * Invoked after the view has been rendered, may be overridden to perform any activities that
+     * require a rendered view.
      */
     protected void onAfterRenderView() {
         view.onAfterRenderView();
@@ -914,8 +928,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Handles the browser click event. Propagates the event to the cell and row
-     * if possible.
+     * Handles the browser click event. Propagates the event to the cell and row if possible.
      *
      * @param e the click event
      */
@@ -938,8 +951,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Handles the browser double click event. Propagates the event to the cell
-     * and row if possible.
+     * Handles the browser double click event. Propagates the event to the cell and row if
+     * possible.
      *
      * @param e the double click event
      */
@@ -962,8 +975,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Invoked before the loader loads new data, displays the Loading... mask if
-     * it is enabled.
+     * Invoked before the loader loads new data, displays the Loading... mask if it is enabled.
      */
     protected void onLoaderBeforeLoad() {
         if (isLoadMask()) {
@@ -972,8 +984,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Invoked if the loader encounters an exception, cancels the Loading... mask
-     * if it is enabled.
+     * Invoked if the loader encounters an exception, cancels the Loading... mask if it is enabled.
      */
     protected void onLoaderLoadException() {
         if (isLoadMask()) {
@@ -982,8 +993,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Invoked after the loader loads new data, cancels the Loading... mask if it
-     * is enabled.
+     * Invoked after the loader loads new data, cancels the Loading... mask if it is enabled.
      */
     protected void onLoadLoader() {
         if (isLoadMask()) {
@@ -992,8 +1002,7 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Handles the browser mouse down event. Propagates the event to the cell and
-     * row if possible.
+     * Handles the browser mouse down event. Propagates the event to the cell and row if possible.
      *
      * @param e the mouse down event
      */
@@ -1048,9 +1057,9 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * Provides a mechanism by which other components can report whether a cell is
-     * selectable. This decouples components that need to know if a cell is
-     * selectable from components that know if a cell is selectable.
+     * Provides a mechanism by which other components can report whether a cell is selectable. This
+     * decouples components that need to know if a cell is selectable from components that know if a
+     * cell is selectable.
      */
     public static interface Callback {
 
@@ -1064,8 +1073,8 @@ public class Grid<M> extends Component implements HasViewReadyHandlers, HasSortC
     }
 
     /**
-     * A reference to a cell in the grid that can be used for a variety of
-     * purposes, including, for example, whether it is active or selected.
+     * A reference to a cell in the grid that can be used for a variety of purposes, including, for
+     * example, whether it is active or selected.
      */
     public static class GridCell {
         private final int col;

@@ -1,5 +1,14 @@
 package org.whirlplatform.server.expimp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Clob;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBReader;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -21,16 +30,6 @@ import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Clob;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class XLSExporter extends Exporter {
 
@@ -133,7 +132,8 @@ public class XLSExporter extends Exporter {
                 RichTextString text = new HSSFRichTextString(
                         "ВНИМАНИЕ! Количество строк данного отчета больше "
                                 + MAX_ROWS
-                                + ", отчет сформирован не полностью. Воспользоуйтесь другим форматом отчета для получения полных данных.");
+                                +
+                                ", отчет сформирован не полностью. Воспользоуйтесь другим форматом отчета для получения полных данных.");
                 HSSFFont font = (HSSFFont) workbook.createFont();
                 font.setColor(IndexedColors.RED.getIndex());
                 text.applyFont(font);

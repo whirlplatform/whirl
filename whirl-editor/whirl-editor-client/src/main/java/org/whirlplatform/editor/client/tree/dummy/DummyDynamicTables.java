@@ -10,34 +10,34 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  */
 @SuppressWarnings("serial")
 public class DummyDynamicTables extends AbstractDummyElement {
-	private static final String ID_PREFIX = "dummy-schema-dynamicTables-";
-	private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_schema_dynamic_tables();
+    private static final String ID_PREFIX = "dummy-schema-dynamicTables-";
+    private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_schema_dynamic_tables();
 
-	public DummyDynamicTables() {
-		super();
-	}
+    public DummyDynamicTables() {
+        super();
+    }
 
-	public DummyDynamicTables(final String id) {
-		super(id);
-	}
+    public DummyDynamicTables(final String id) {
+        super(id);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, ElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
-		visitor.visit(ctx, this);
-	}
+    @Override
+    public <T extends VisitContext> void accept(T ctx, TreeElementVisitor<T> visitor) {
+        visitor.visit(ctx, this);
+    }
 
-	@Override
-	public String getIdPrefix() {
-		return ID_PREFIX;
-	}
+    @Override
+    public String getIdPrefix() {
+        return ID_PREFIX;
+    }
 
-	@Override
-	public String getTitle() {
-		return TITLE;
-	}
+    @Override
+    public String getTitle() {
+        return TITLE;
+    }
 }

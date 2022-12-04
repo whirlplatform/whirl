@@ -1,17 +1,16 @@
 package org.whirlplatform.server.session;
 
+import java.util.HashMap;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 import org.apache.commons.fileupload.FileItem;
 import org.whirlplatform.server.servlet.FileServlet;
 import org.whirlplatform.server.servlet.FileServlet.FileUpload;
 
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
-import java.util.HashMap;
-
 public class SessionListener implements HttpSessionListener {
 
-//	private static Logger _log = Logger.getLogger(SessionListener.class.getName());
+//    private static Logger _log = Logger.getLogger(SessionListener.class.getName());
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {

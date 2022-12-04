@@ -5,6 +5,17 @@ import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.jci.ReloadingClassLoader;
 import org.apache.commons.jci.stores.MemoryResourceStore;
 import org.apache.commons.lang.StringUtils;
@@ -26,29 +37,22 @@ import org.whirlplatform.server.utils.ApplicationReference;
 import org.xeustechnologies.jcl.JarClassLoader;
 import org.xeustechnologies.jcl.exception.JclException;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
- * Контейнер хранит текущие рабочие экземпляры приложения, которые на данный
- * момент выполняются. При подгрузке приложения инициализирует зависимые
- * библиотеки.
+ * Контейнер хранит текущие рабочие экземпляры приложения, которые на данный момент выполняются. При
+ * подгрузке приложения инициализирует зависимые библиотеки.
  */
 @Singleton
 public class DefaultMetadataContainer implements MetadataContainer {
 
-    private static Logger _log = LoggerFactory.getLogger(DefaultMetadataContainer.class);
-
     private static final Version NULL_VERSION = Version.create(0, 0, Integer.MAX_VALUE);
-
-    private MetadataStore metadataStore;
-
     private static final int DEFAULT_CACHE_TIMEOUT_SECONDS = 10;
     private static final int LAST_ACCESS_TIMEOUT_MINUTES = 60;
+    private static Logger _log = LoggerFactory.getLogger(DefaultMetadataContainer.class);
+    private MetadataStore metadataStore;
     private Timer reloadTimer = new Timer(true);
     private int cacheTimeout;
-    private Table<String, Version, AtomicReference<ApplicationReference>> cache = HashBasedTable.create();
+    private Table<String, Version, AtomicReference<ApplicationReference>> cache =
+            HashBasedTable.create();
     private Table<String, Version, Date> lastAccessTime = HashBasedTable.create();
 
     private ExecutorService executorService;
@@ -73,40 +77,6 @@ public class DefaultMetadataContainer implements MetadataContainer {
         }
     }
 
-    class ApplicationLoadCallable implements Callable<Void> {
-        private String code;
-        private Version version;
-
-        public ApplicationLoadCallable(String code, Version version) {
-            super();
-            this.code = code;
-            this.version = version;
-        }
-
-        @Override
-        public Void call() {
-            try {
-                ApplicationElement app = metadataStore.loadApplication(code, version);
-                ApplicationReference appRef = new ApplicationReference(app, initCompilationData(app));
-                cache.get(code, assureNotNull(version)).set(appRef);
-            } catch (Exception e) {
-                _log.warn(String.format("Application '%s [%s]' reload problem: ", code, version), e);
-            }
-            return null;
-        }
-    }
-
-    private ExecutorService getExecutorService() {
-        if (executorService == null) {
-            synchronized (this) {
-                if (executorService == null) {
-                    executorService = Executors.newFixedThreadPool(2);
-                }
-            }
-        }
-        return executorService;
-    }
-
     private TimerTask reloadTask() {
         return new TimerTask() {
             @Override
@@ -125,7 +95,8 @@ public class DefaultMetadataContainer implements MetadataContainer {
                         continue;
                     }
 
-                    ApplicationLoadCallable callable = new ApplicationLoadCallable(c.getRowKey(), version);
+                    ApplicationLoadCallable callable =
+                            new ApplicationLoadCallable(c.getRowKey(), version);
                     calls.add(callable);
                 }
 
@@ -144,6 +115,22 @@ public class DefaultMetadataContainer implements MetadataContainer {
         };
     }
 
+    private ExecutorService getExecutorService() {
+        if (executorService == null) {
+            synchronized (this) {
+                if (executorService == null) {
+                    executorService = Executors.newFixedThreadPool(2);
+                }
+            }
+        }
+        return executorService;
+    }
+
+    private void putCache(String code, Version version,
+                          AtomicReference<ApplicationReference> reference) {
+        cache.put(code, assureNotNull(version), reference);
+    }
+
     private long cacheTimeoutMillis() {
         return cacheTimeout * 1000;
     }
@@ -156,8 +143,16 @@ public class DefaultMetadataContainer implements MetadataContainer {
         return version == null ? NULL_VERSION : version;
     }
 
-    private void putCache(String code, Version version, AtomicReference<ApplicationReference> reference) {
-        cache.put(code, assureNotNull(version), reference);
+    private AtomicReference<ApplicationReference> initialLoadApplication(String code,
+                                                                         Version version)
+            throws MetadataStoreException, EvolutionException {
+        ApplicationElement application = metadataStore.loadApplication(code, version);
+        CompilationData compilation = initCompilationData(application);
+        AtomicReference<ApplicationReference> result =
+                new AtomicReference<>(new ApplicationReference(application, compilation));
+        applyDatabaseEvolutions(application, code, version);
+        putCache(code, version, result);
+        return result;
     }
 
     private AtomicReference<ApplicationReference> getCache(String code, Version version) {
@@ -183,17 +178,10 @@ public class DefaultMetadataContainer implements MetadataContainer {
         }
     }
 
-    private AtomicReference<ApplicationReference> initialLoadApplication(String code, Version version) throws MetadataStoreException, EvolutionException {
-        ApplicationElement application = metadataStore.loadApplication(code, version);
-        CompilationData compilation = initCompilationData(application);
-        AtomicReference<ApplicationReference> result = new AtomicReference<>(new ApplicationReference(application, compilation));
-        applyDatabaseEvolutions(application, code, version);
-        putCache(code, version, result);
-        return result;
-    }
-
-    private void reloadApplication(ApplicationElement app, String code, Version version) throws EvolutionException {
-        _log.info(String.format("Reloading the application %s[%s], id=%s", app.getCode(), app.getVersion(),
+    private void reloadApplication(ApplicationElement app, String code, Version version)
+            throws EvolutionException {
+        _log.info(String.format("Reloading the application %s[%s], id=%s", app.getCode(),
+                app.getVersion(),
                 app.getId()));
         ApplicationReference reference = new ApplicationReference(app, initCompilationData(app));
         _log.info(String.format("Updating the application cache: code=%s, version=%s", code,
@@ -202,19 +190,22 @@ public class DefaultMetadataContainer implements MetadataContainer {
         getCache(code, version).set(reference);
     }
 
-    private void applyDatabaseEvolutions(ApplicationElement application, String code, Version version) throws EvolutionException {
+    private void applyDatabaseEvolutions(ApplicationElement application, String code,
+                                         Version version) throws EvolutionException {
         if (metadataStore.getLastVersion(code).compareTo(version) == 0) {
             for (DataSourceElement dataSource : application.getDataSources()) {
                 if (dataSource.getEvolution() == null) {
                     continue;
                 }
-                evolutionManager.applyApplicationEvolution(dataSource.getAlias(), dataSource.getEvolution().getInputStreamProvider().path());
+                evolutionManager.applyApplicationEvolution(dataSource.getAlias(),
+                        dataSource.getEvolution().getInputStreamProvider().path());
             }
         }
     }
 
     @Override
-    public AtomicReference<ApplicationReference> getApplication(String code, Version originalVersion)
+    public AtomicReference<ApplicationReference> getApplication(String code,
+                                                                Version originalVersion)
             throws ContainerException {
         try {
             Version version = originalVersion;
@@ -234,31 +225,22 @@ public class DefaultMetadataContainer implements MetadataContainer {
                     }
                 }
             } else {
-                _log.info(String.format("The application %s[%s] was loaded from the cache", code, strVersion));
+                _log.info(String.format("The application %s[%s] was loaded from the cache", code,
+                        strVersion));
             }
             lastAccessTime.put(code, assureNotNull(version), new Date());
             return result;
         } catch (MetadataStoreException | EvolutionException e) {
-            final String message = String.format("Cannot load the application '%s' from container", code);
+            final String message =
+                    String.format("Cannot load the application '%s' from container", code);
             _log.error(message, e);
             throw new ContainerException(message, e);
         }
     }
 
-    private CompilationData initCompilationData(ApplicationElement application) {
-        JarClassLoader applicationClassLoader = new JarClassLoader();
-        initApplicationClassLoader(applicationClassLoader, application);
-        ReloadingClassLoader mainClassLoader = new ReloadingClassLoader(applicationClassLoader);
-
-        MemoryResourceStore store = new MemoryResourceStore();
-        mainClassLoader.addResourceStore(store);
-
-        CompilationData data = new CompilationData(store, mainClassLoader, applicationClassLoader);
-        return data;
-    }
-
     @SuppressWarnings("deprecation")
-    private void initApplicationClassLoader(JarClassLoader applicationClassLoader, ApplicationElement application) {
+    private void initApplicationClassLoader(JarClassLoader applicationClassLoader,
+                                            ApplicationElement application) {
         applicationClassLoader.getParentLoader().setEnabled(true);
         applicationClassLoader.getSystemLoader().setEnabled(true);
         applicationClassLoader.getLocalLoader().setOrder(0);
@@ -298,6 +280,43 @@ public class DefaultMetadataContainer implements MetadataContainer {
                 final String WARN = "The Jar file '%s' of application '%s' not loaded";
                 _log.warn(String.format(WARN, f.getFileName(), application.getCode()), e);
             }
+        }
+    }
+
+    private CompilationData initCompilationData(ApplicationElement application) {
+        JarClassLoader applicationClassLoader = new JarClassLoader();
+        initApplicationClassLoader(applicationClassLoader, application);
+        ReloadingClassLoader mainClassLoader = new ReloadingClassLoader(applicationClassLoader);
+
+        MemoryResourceStore store = new MemoryResourceStore();
+        mainClassLoader.addResourceStore(store);
+
+        CompilationData data = new CompilationData(store, mainClassLoader, applicationClassLoader);
+        return data;
+    }
+
+    class ApplicationLoadCallable implements Callable<Void> {
+        private String code;
+        private Version version;
+
+        public ApplicationLoadCallable(String code, Version version) {
+            super();
+            this.code = code;
+            this.version = version;
+        }
+
+        @Override
+        public Void call() {
+            try {
+                ApplicationElement app = metadataStore.loadApplication(code, version);
+                ApplicationReference appRef =
+                        new ApplicationReference(app, initCompilationData(app));
+                cache.get(code, assureNotNull(version)).set(appRef);
+            } catch (Exception e) {
+                _log.warn(String.format("Application '%s [%s]' reload problem: ", code, version),
+                        e);
+            }
+            return null;
         }
     }
 }

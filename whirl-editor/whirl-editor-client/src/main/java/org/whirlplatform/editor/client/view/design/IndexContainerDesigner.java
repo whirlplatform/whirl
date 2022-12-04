@@ -17,8 +17,9 @@ public class IndexContainerDesigner extends ComponentDesigner {
                                              Object locationData) {
         int index = (locationData == null) ? -1 : (Integer) locationData;
         if (index >= 0) {
-            fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+            fireComponentPropertyChangeEvent(
+                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
         }
     }
 }

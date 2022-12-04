@@ -6,8 +6,8 @@ import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
 /**
- * Базовая реализация Контекстного пункта меню. Предполагается что при
- * наследовании будут реализованы:
+ * Базовая реализация Контекстного пункта меню. Предполагается что при наследовании будут
+ * реализованы:
  * <li>метод описывающий поведение при нажатии</li>
  * <li>метод изменяющий состояние пункта</li>
  * <li>методы внешнего представления - источник для иконки, текста</li>
@@ -30,13 +30,13 @@ public abstract class AbstractContextMenuItem<C> extends MenuItem implements Con
     }
 
     @Override
-    public void setContext(C context) {
-        this.context = context;
+    public C getContext() {
+        return context;
     }
 
     @Override
-    public C getContext() {
-        return context;
+    public void setContext(C context) {
+        this.context = context;
     }
 
     @Override

@@ -15,30 +15,45 @@
  */
 package org.whirlplatform.jsdoc;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import jsinterop.annotations.*;
-import org.apache.commons.lang.StringUtils;
-import org.whirlplatform.component.client.annotation.EsParam;
-import org.whirlplatform.component.client.annotation.EsReturn;
-
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.lang.model.element.*;
-import javax.lang.model.util.ElementFilter;
-import java.util.*;
-import java.util.function.Predicate;
-
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
 import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
+import javax.lang.model.util.ElementFilter;
+import jsinterop.annotations.JsConstructor;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
+import org.apache.commons.lang.StringUtils;
+import org.whirlplatform.component.client.annotation.EsParam;
+import org.whirlplatform.component.client.annotation.EsReturn;
+
 @SupportedAnnotationTypes("jsinterop.annotations.JsType")
-@SuppressWarnings({"HardCodedStringLiteral", "Guava", "ResultOfMethodCallIgnored", "SpellCheckingInspection",
+@SuppressWarnings({"HardCodedStringLiteral", "Guava", "ResultOfMethodCallIgnored",
+        "SpellCheckingInspection",
         "DuplicateStringLiteralInspection"})
 public class EsDocProcessor extends AbstractProcessor {
 
@@ -74,8 +89,10 @@ public class EsDocProcessor extends AbstractProcessor {
                 continue;
             }
 
-            EsDocProcessor.Type type = new EsDocProcessor.Type(namespace(packageElement, typeElement), typeName(typeElement),
-                    comment(typeElement, ""));
+            EsDocProcessor.Type type =
+                    new EsDocProcessor.Type(namespace(packageElement, typeElement),
+                            typeName(typeElement),
+                            comment(typeElement, ""));
             types.put(type.getNamespace(), type);
             debug("Discovered JsType [%s]", type);
 
@@ -99,7 +116,8 @@ public class EsDocProcessor extends AbstractProcessor {
                     .forEach(e -> {
                         boolean setter = !e.getModifiers().contains(Modifier.FINAL);
                         type.addProperty(
-                                new EsDocProcessor.Property(propertyName(e), comment(e, PADDING), true, setter, _static(e)));
+                                new EsDocProcessor.Property(propertyName(e), comment(e, PADDING),
+                                        true, setter, _static(e)));
                     });
 
             // Properties - Methods (only getters are supported)
@@ -107,14 +125,16 @@ public class EsDocProcessor extends AbstractProcessor {
                     .stream()
                     .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null))
                     .forEach(e -> type.addProperty(
-                            new Property(propertyName(e), comment(e, PADDING), true, false, _static(e))));
+                            new Property(propertyName(e), comment(e, PADDING), true, false,
+                                    _static(e))));
 
             // Methods
             ElementFilter.methodsIn(elements)
                     .stream()
                     .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) == null))
                     .forEach(e -> type.addMethod(
-                            new EsDocProcessor.Method(methodName(e), parameters(e), comment(e, PADDING), _static(e))));
+                            new EsDocProcessor.Method(methodName(e), parameters(e),
+                                    comment(e, PADDING), _static(e))));
         }
 
         if (!types.isEmpty()) {
@@ -155,49 +175,58 @@ public class EsDocProcessor extends AbstractProcessor {
         if (comment != null) {
 
             // process comment line by line
-            List<String> lines = stream(Splitter.on('\n').trimResults().split(comment).spliterator(), false)
+            List<String> lines =
+                    stream(Splitter.on('\n').trimResults().split(comment).spliterator(), false)
 
-                    // not supported by ESDoc
-                    .filter(line -> !(line.contains("@author") || line.contains("@version")))
+                            // not supported by ESDoc
+                            .filter(line -> !(line.contains("@author") ||
+                                    line.contains("@version")))
 
-                    // process @param and @return in methods
-                    .map(line -> {
-                        String result = line;
-                        if (element instanceof ExecutableElement) {
-                            ExecutableElement method = (ExecutableElement) element;
+                            // process @param and @return in methods
+                            .map(line -> {
+                                String result = line;
+                                if (element instanceof ExecutableElement) {
+                                    ExecutableElement method = (ExecutableElement) element;
 
-                            if (line.startsWith(PARAM_TAG)) {
-                                String paramType;
-                                String lineWithoutParam = line.substring(PARAM_TAG.length());
-                                VariableElement parameter = getParameter(method, parameters.size());
-                                if (parameter != null) {
-                                    EsParam esParam = parameter.getAnnotation(EsParam.class);
-                                    if (esParam != null) {
-                                        paramType = esParam.value();
-                                    } else {
-                                        paramType = simpleName(parameter.asType().toString());
+                                    if (line.startsWith(PARAM_TAG)) {
+                                        String paramType;
+                                        String lineWithoutParam =
+                                                line.substring(PARAM_TAG.length());
+                                        VariableElement parameter =
+                                                getParameter(method, parameters.size());
+                                        if (parameter != null) {
+                                            EsParam esParam =
+                                                    parameter.getAnnotation(EsParam.class);
+                                            if (esParam != null) {
+                                                paramType = esParam.value();
+                                            } else {
+                                                paramType =
+                                                        simpleName(parameter.asType().toString());
+                                            }
+                                            result = PARAM_TAG + " {" + paramType + "}" +
+                                                    lineWithoutParam;
+                                        }
+                                        parameters.add(line); // parameters++
+
+                                    } else if (line.startsWith(RETURN_TAG)) {
+                                        String returnType;
+                                        EsReturn esReturn = method.getAnnotation(EsReturn.class);
+                                        if (esReturn != null) {
+                                            returnType = esReturn.value();
+                                        } else {
+                                            returnType =
+                                                    simpleName(method.getReturnType().toString());
+                                        }
+                                        result = RETURN_TAG + " {" + returnType + "}" +
+                                                line.substring(RETURN_TAG.length());
                                     }
-                                    result = PARAM_TAG + " {" + paramType + "}" + lineWithoutParam;
                                 }
-                                parameters.add(line); // parameters++
+                                return result;
+                            })
 
-                            } else if (line.startsWith(RETURN_TAG)) {
-                                String returnType;
-                                EsReturn esReturn = method.getAnnotation(EsReturn.class);
-                                if (esReturn != null) {
-                                    returnType = esReturn.value();
-                                } else {
-                                    returnType = simpleName(method.getReturnType().toString());
-                                }
-                                result = RETURN_TAG + " {" + returnType + "}" + line.substring(RETURN_TAG.length());
-                            }
-                        }
-                        return result;
-                    })
-
-                    // format comment and collect into list
-                    .map(line -> padding + " * " + line)
-                    .collect(toList());
+                            // format comment and collect into list
+                            .map(line -> padding + " * " + line)
+                            .collect(toList());
 
             // remove trailing empty lines
             List<String> reversed = Lists.reverse(lines);
@@ -253,7 +282,8 @@ public class EsDocProcessor extends AbstractProcessor {
     private String typeName(Element element) {
         JsType annotation = element.getAnnotation(JsType.class);
         if (annotation != null) {
-            return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() : annotation.name();
+            return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() :
+                    annotation.name();
         } else {
             return element.getSimpleName().toString();
         }
@@ -281,7 +311,8 @@ public class EsDocProcessor extends AbstractProcessor {
     private String methodName(Element element) {
         JsMethod annotation = element.getAnnotation(JsMethod.class);
         if (annotation != null) {
-            return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() : annotation.name();
+            return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() :
+                    annotation.name();
         } else {
             return element.getSimpleName().toString();
         }

@@ -1,13 +1,12 @@
 package org.whirlplatform.meta.shared.editor;
 
-import org.whirlplatform.meta.shared.component.ComponentType;
-import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.whirlplatform.meta.shared.component.ComponentType;
+import org.whirlplatform.meta.shared.component.PropertyType;
+import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 @SuppressWarnings("serial")
 public class FormElement extends ComponentElement {
@@ -54,28 +53,28 @@ public class FormElement extends ComponentElement {
         return c.getValue(c.getDefaultLocale()).getDouble().intValue();
     }
 
-    public void setRowRequests(List<RequestElement> requests) {
-        this.rowRequests = requests;
-    }
-
-    public void setRowsHeight(List<RowElement> rowsHeight) {
-        this.rowsHeight = rowsHeight;
-    }
-
-    public void setColumnsWidth(List<ColumnElement> columnsWidth) {
-        this.columnsWidth = columnsWidth;
-    }
-
     public List<RequestElement> getRowRequests() {
         return rowRequests;
+    }
+
+    public void setRowRequests(List<RequestElement> requests) {
+        this.rowRequests = requests;
     }
 
     public List<RowElement> getRowsHeight() {
         return rowsHeight;
     }
 
+    public void setRowsHeight(List<RowElement> rowsHeight) {
+        this.rowsHeight = rowsHeight;
+    }
+
     public List<ColumnElement> getColumnsWidth() {
         return columnsWidth;
+    }
+
+    public void setColumnsWidth(List<ColumnElement> columnsWidth) {
+        this.columnsWidth = columnsWidth;
     }
 
     public CellElement addCellElement(int row, int column, CellElement model) {

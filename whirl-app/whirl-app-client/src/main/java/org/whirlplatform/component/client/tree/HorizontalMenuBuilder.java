@@ -5,6 +5,11 @@ import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuBar;
 import com.sencha.gxt.widget.core.client.menu.MenuBarItem;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -15,8 +20,6 @@ import org.whirlplatform.component.client.base.InsertContainerBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.data.DataValue;
-
-import java.util.*;
 
 /**
  * Горизонтальное меню
@@ -51,9 +54,9 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
                 if (item != null) {
                     Menu m = item.getMenu();
                     // TODO Если пустое, не открываем
-//					if (m.getChildren().size() > 0) {
+//                    if (m.getChildren().size() > 0) {
                     toggle(item);
-//					}
+//                    }
                     // Выполнение события
                     for (ComponentBuilder child : children) {
                         HorizontalMenuItemBuilder builder = (HorizontalMenuItemBuilder) child;
@@ -186,8 +189,7 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
     /**
      * Устанавливает включенное состояние компонента.
      *
-     * @param enabled true - для включения компонента,
-     *                false - для отключения компонента
+     * @param enabled true - для включения компонента, false - для отключения компонента
      */
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);

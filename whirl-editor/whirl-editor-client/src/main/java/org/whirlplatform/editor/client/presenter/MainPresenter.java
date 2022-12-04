@@ -12,12 +12,12 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 @Presenter(view = MainView.class)
 public class MainPresenter extends BasePresenter<MainPresenter.IMainView, EditorEventBus> {
 
-    public void onChangeFirstLeftComponent(IsWidget component) {
-        getView().setFirstLeftComponent(component);
-    }
-
     public MainPresenter() {
         super();
+    }
+
+    public void onChangeFirstLeftComponent(IsWidget component) {
+        getView().setFirstLeftComponent(component);
     }
 
     public void onCloseElementView() {
@@ -40,27 +40,6 @@ public class MainPresenter extends BasePresenter<MainPresenter.IMainView, Editor
 
     public void onChangeTopComponent(IsWidget component) {
         getView().setTopComponent(component);
-    }
-
-    public interface IMainView {
-
-        void setTopComponent(IsWidget component);
-
-        void setFirstLeftComponent(IsWidget component);
-
-        void setSecondLeftComponent(IsWidget component);
-
-        void addFirstRightComponent(IsWidget component);
-
-        void addSecondRightComponent(IsWidget comonent);
-
-        void addThirdRightComponent(IsWidget comonent);
-
-        void setSecondRightComponent(IsWidget component);
-
-        void setCenterComponent(IsWidget component);
-
-        void initUi();
     }
 
     public void onChangeSecondLeftComponent(IsWidget component) {
@@ -94,5 +73,26 @@ public class MainPresenter extends BasePresenter<MainPresenter.IMainView, Editor
     }
 
     public void onInitHistory() {
+    }
+
+    public interface IMainView {
+
+        void setTopComponent(IsWidget component);
+
+        void setFirstLeftComponent(IsWidget component);
+
+        void setSecondLeftComponent(IsWidget component);
+
+        void addFirstRightComponent(IsWidget component);
+
+        void addSecondRightComponent(IsWidget comonent);
+
+        void addThirdRightComponent(IsWidget comonent);
+
+        void setSecondRightComponent(IsWidget component);
+
+        void setCenterComponent(IsWidget component);
+
+        void initUi();
     }
 }

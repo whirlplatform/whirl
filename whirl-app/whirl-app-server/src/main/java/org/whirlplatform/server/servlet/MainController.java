@@ -2,14 +2,13 @@ package org.whirlplatform.server.servlet;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.whirlplatform.server.config.Configuration;
-import org.whirlplatform.server.driver.Connector;
-
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.whirlplatform.server.config.Configuration;
+import org.whirlplatform.server.driver.Connector;
 
 @Singleton
 public class MainController extends HttpServlet {

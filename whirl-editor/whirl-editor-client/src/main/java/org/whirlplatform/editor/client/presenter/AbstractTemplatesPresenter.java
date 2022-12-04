@@ -3,13 +3,12 @@ package org.whirlplatform.editor.client.presenter;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.presenter.BasePresenter;
+import java.util.List;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.shared.EditorDataService;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.templates.BaseTemplate;
-
-import java.util.List;
 
 public abstract class AbstractTemplatesPresenter
         extends BasePresenter<AbstractTemplatesPresenter.IComponentTemplatesView, EditorEventBus> {
@@ -22,13 +21,15 @@ public abstract class AbstractTemplatesPresenter
             @Override
             public void onSuccess(String result) {
                 InfoHelper.info("template-rename", EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + " <b> " + result + " </b> ");
+                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + " <b> " +
+                                result + " </b> ");
                 deleteTemplate(oldTemplate, false);
             }
 
             @Override
             public void onFailure(Throwable caught) {
-                InfoHelper.error("template-rename-error", EditorMessage.Util.MESSAGE.error(), caught.getLocalizedMessage());
+                InfoHelper.error("template-rename-error", EditorMessage.Util.MESSAGE.error(),
+                        caught.getLocalizedMessage());
             }
         });
     }
@@ -40,7 +41,8 @@ public abstract class AbstractTemplatesPresenter
             public void onSuccess(Void result) {
                 loadTemplates();
                 if (showMessage) {
-                    InfoHelper.info("template-delete", EditorMessage.Util.MESSAGE.success(), EditorMessage.Util.MESSAGE.templ_success_delete());
+                    InfoHelper.info("template-delete", EditorMessage.Util.MESSAGE.success(),
+                            EditorMessage.Util.MESSAGE.templ_success_delete());
                 }
             }
 
@@ -57,7 +59,8 @@ public abstract class AbstractTemplatesPresenter
             @Override
             public void onSuccess(String result) {
                 InfoHelper.info("template-save", EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + "<b> " + result + " </b>");
+                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + "<b> " +
+                                result + " </b>");
                 if (reload) {
                     loadTemplates();
                 }
@@ -65,7 +68,8 @@ public abstract class AbstractTemplatesPresenter
 
             @Override
             public void onFailure(Throwable caught) {
-                InfoHelper.error("template-save-error", EditorMessage.Util.MESSAGE.error(), caught.getLocalizedMessage());
+                InfoHelper.error("template-save-error", EditorMessage.Util.MESSAGE.error(),
+                        caught.getLocalizedMessage());
             }
         });
     }

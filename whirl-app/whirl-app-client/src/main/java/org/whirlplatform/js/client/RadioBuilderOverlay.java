@@ -22,96 +22,6 @@ public abstract class RadioBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на радиокнопку
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
-
-    /**
-     * Получить код радиокнопки
-     *
-     * @return String
-     */
-    public abstract String getCode();
-
-    /**
-     * Установить активность радиокноки
-     *
-     * @param enabled - boolean
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    /**
-     * Получить информачию об активности радиокнопки
-     *
-     * @return boolean
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Установить скрытость радиокнопки
-     *
-     * @param hidden - boolean
-     */
-    public abstract void setHidden(boolean hidden);
-
-    /**
-     * Получить информацию о скрытости радиокнопки
-     *
-     * @return boolean
-     */
-    public abstract boolean isHidden();
-
-    /**
-     * Установить стиль на радиокнопку
-     *
-     * @param styleName - String, название стиля
-     */
-    public abstract void setStyleName(String styleName);
-
-    /**
-     * Установить подпись для радиокнопки
-     *
-     * @param label - String
-     */
-    public abstract void setBoxLabel(String label);
-
-    /**
-     * Получить значение подписи радиокнопки
-     *
-     * @return String
-     */
-    public abstract String getBoxLabel();
-
-    /**
-     * Установить имя радиогруппы
-     *
-     * @param groupName - String
-     */
-    public abstract void setGroupName(String groupName);
-
-    /**
-     * Получить имя радиогруппы
-     *
-     * @return String
-     */
-    public abstract String getGroupName();
-
-    /**
      * Проверка на null значения радиокнопки
      *
      * @param instance - RadioBuilder
@@ -153,11 +63,103 @@ public abstract class RadioBuilderOverlay {
     }
 
     /**
-     * Установка свойства "Обязателен для заполнения" для радиокнопки
+     * Получение родителя радиокнопки
      *
-     * @param required - boolean
+     * @param instance - RadioBuilder
+     * @return ComponentBuilder
      */
-    public abstract void setRequired(boolean required);
+    public static ComponentBuilder getParent(RadioBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    /**
+     * Получить код радиокнопки
+     *
+     * @return String
+     */
+    public abstract String getCode();
+
+    /**
+     * Установить код на радиокнопку
+     *
+     * @param name - String, код
+     */
+    public abstract void setCode(String name);
+
+    /**
+     * Получить информачию об активности радиокнопки
+     *
+     * @return boolean
+     */
+    public abstract boolean isEnabled();
+
+    /**
+     * Установить активность радиокноки
+     *
+     * @param enabled - boolean
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Получить информацию о скрытости радиокнопки
+     *
+     * @return boolean
+     */
+    public abstract boolean isHidden();
+
+    /**
+     * Установить скрытость радиокнопки
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
+     * Установить стиль на радиокнопку
+     *
+     * @param styleName - String, название стиля
+     */
+    public abstract void setStyleName(String styleName);
+
+    /**
+     * Получить значение подписи радиокнопки
+     *
+     * @return String
+     */
+    public abstract String getBoxLabel();
+
+    /**
+     * Установить подпись для радиокнопки
+     *
+     * @param label - String
+     */
+    public abstract void setBoxLabel(String label);
+
+    /**
+     * Получить имя радиогруппы
+     *
+     * @return String
+     */
+    public abstract String getGroupName();
+
+    /**
+     * Установить имя радиогруппы
+     *
+     * @param groupName - String
+     */
+    public abstract void setGroupName(String groupName);
 
     /**
      * Получить информацию о свойстве "Обязателен для заполнения" у радиокнопки
@@ -167,19 +169,16 @@ public abstract class RadioBuilderOverlay {
     public abstract boolean isRequired();
 
     /**
+     * Установка свойства "Обязателен для заполнения" для радиокнопки
+     *
+     * @param required - boolean
+     */
+    public abstract void setRequired(boolean required);
+
+    /**
      * Очистка значения радиокнопки
      */
     public abstract void clear();
-
-    /**
-     * Получение родителя радиокнопки
-     *
-     * @param instance - RadioBuilder
-     * @return ComponentBuilder
-     */
-    public static ComponentBuilder getParent(RadioBuilder instance) {
-        return instance.getParentBuilder();
-    }
 
     /**
      * Установить фокус на радиокнопку

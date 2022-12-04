@@ -7,6 +7,8 @@ import com.mvp4g.client.annotation.Presenter;
 import com.mvp4g.client.presenter.BasePresenter;
 import com.mvp4g.client.view.ReverseViewInterface;
 import com.sencha.gxt.widget.core.client.info.Info;
+import java.util.Collection;
+import java.util.List;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.tree.AppTreePresenter;
@@ -22,41 +24,13 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.RightType;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
  * Сравнение приложений
- *
  */
 @Presenter(view = CompareApplicationsView.class)
 public class CompareApplicationsPresenter
         extends BasePresenter<CompareApplicationsPresenter.ICompareApplicationsView, EditorEventBus>
         implements AppTreePresenter {
-
-    public interface ICompareApplicationsView extends IsWidget, ReverseViewInterface<CompareApplicationsPresenter> {
-        void show();
-
-        void showComparisonResult(int number);
-
-        void clearAll();
-
-        void changeState(ComparisonState state);
-
-        List<ChangeUnit> getCheckedChanges();
-
-        void loadLeftApplication(ApplicationElement application, Version version);
-
-        void loadRightApplication(ApplicationElement application, Version version);
-
-        void setChanges(List<ChangeUnit> changes);
-
-        void showException(Throwable caught);
-    }
-
-    public enum ComparisonState {
-        Start, LeftLoaded, RightLoaded, Initialised, Compared, Merged, ComparedAfterMerge, Finish
-    }
 
     private ComparisonState currentState;
     private ComparableAppTree currentTree;
@@ -65,33 +39,6 @@ public class CompareApplicationsPresenter
     private Version leftVersion;
     private Version rightVersion;
     private ApplicationsDiff appDiff;
-
-    // Entry point
-    public void onStartCompareApplications() {
-        changeState(ComparisonState.Start);
-    }
-
-    public void onStartCompareApplication(ApplicationElement application, Version version) {
-        onStartCompareApplications();
-        onOpenLeftApplication(application, version);
-    }
-
-    public void setCurrentTree(ComparableAppTree currentTree) {
-        this.currentTree = currentTree;
-    }
-
-    public ComparableAppTree getCurrentTree() {
-        return currentTree;
-    }
-
-    private void clearAll() {
-        currentTree = null;
-        leftApp = null;
-        rightApp = null;
-        leftVersion = null;
-        rightVersion = null;
-        appDiff = null;
-    }
 
     private void changeState(ComparisonState state) {
         if (this.currentState != state) {
@@ -145,7 +92,8 @@ public class CompareApplicationsPresenter
                     }
                     break;
                 case Merged:
-                    if (currentState == ComparisonState.Compared || currentState == ComparisonState.ComparedAfterMerge) {
+                    if (currentState == ComparisonState.Compared ||
+                            currentState == ComparisonState.ComparedAfterMerge) {
                         currentState = state;
                         view.loadLeftApplication(leftApp, leftVersion);
                         view.setChanges(appDiff.getChanges());
@@ -171,6 +119,70 @@ public class CompareApplicationsPresenter
                     break;
             }
         }
+    }
+
+    // Entry point
+    public void onStartCompareApplications() {
+        changeState(ComparisonState.Start);
+    }
+
+    public void onStartCompareApplication(ApplicationElement application, Version version) {
+        onStartCompareApplications();
+        onOpenLeftApplication(application, version);
+    }
+
+    public ComparableAppTree getCurrentTree() {
+        return currentTree;
+    }
+
+    public void setCurrentTree(ComparableAppTree currentTree) {
+        this.currentTree = currentTree;
+    }
+
+    private void clearAll() {
+        currentTree = null;
+        leftApp = null;
+        rightApp = null;
+        leftVersion = null;
+        rightVersion = null;
+        appDiff = null;
+    }
+
+    public void mergeApplications() {
+        if (currentState != ComparisonState.Compared &&
+                currentState != ComparisonState.ComparedAfterMerge) {
+            return;
+        }
+        if (appDiff.getChanges().size() == 0) {
+            //TODO i18n
+            InfoHelper.info("merge-impossible", "Merge impossible!", "No changes detected!");
+            return;
+        }
+        List<ChangeUnit> changes = view.getCheckedChanges();
+        if (changes.size() == 0) {
+            //TODO i18n
+            InfoHelper.info("merge-impossible", "Merge impossible!",
+                    "You should select at least one element.");
+            return;
+        }
+        ApplicationsDiff diff = new ApplicationsDiff(changes, leftApp, rightApp);
+        diff.setLeftStoreData(createAppStoreData(leftApp, leftVersion));
+        diff.setRightStoreData(createAppStoreData(rightApp, rightVersion));
+        EditorDataService.Util.getDataService()
+                .merge(diff, new AsyncCallback<ApplicationElement>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        appDiff = null;
+                        changeState(ComparisonState.Initialised);
+                        view.showException(caught);
+                    }
+
+                    @Override
+                    public void onSuccess(ApplicationElement result) {
+                        leftApp = result;
+                        changeState(ComparisonState.Merged);
+                    }
+                });
     }
 
     private void showWrongStateChange(ComparisonState state) {
@@ -215,38 +227,27 @@ public class CompareApplicationsPresenter
         changeState(ComparisonState.Finish);
     }
 
-    public void mergeApplications() {
-        if (currentState != ComparisonState.Compared && currentState != ComparisonState.ComparedAfterMerge) {
+    public void compareApplications() {
+        if (!comparisonAllowed()) {
             return;
         }
-        if (appDiff.getChanges().size() == 0) {
-            //TODO i18n
-            InfoHelper.info("merge-impossible", "Merge impossible!", "No changes detected!");
-            return;
-        }
-        List<ChangeUnit> changes = view.getCheckedChanges();
-        if (changes.size() == 0) {
-            //TODO i18n
-            InfoHelper.info("merge-impossible", "Merge impossible!", "You should select at least one element.");
-            return;
-        }
-        ApplicationsDiff diff = new ApplicationsDiff(changes, leftApp, rightApp);
-        diff.setLeftStoreData(createAppStoreData(leftApp, leftVersion));
-        diff.setRightStoreData(createAppStoreData(rightApp, rightVersion));
-        EditorDataService.Util.getDataService().merge(diff, new AsyncCallback<ApplicationElement>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                appDiff = null;
-                changeState(ComparisonState.Initialised);
-                view.showException(caught);
-            }
+        EditorDataService.Util.getDataService()
+                .diff(leftApp, rightApp, new AsyncCallback<ApplicationsDiff>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        appDiff = null;
+                        view.showException(caught);
+                    }
 
-            @Override
-            public void onSuccess(ApplicationElement result) {
-                leftApp = result;
-                changeState(ComparisonState.Merged);
-            }
-        });
+                    @Override
+                    public void onSuccess(ApplicationsDiff result) {
+                        int numberOfChanges = result.getChanges().size();
+                        appDiff = result;
+                        view.setChanges(result.getChanges());
+                        changeState(ComparisonState.Compared);
+                        view.showComparisonResult(numberOfChanges);
+                    }
+                });
     }
 
     private boolean comparisonAllowed() {
@@ -254,33 +255,18 @@ public class CompareApplicationsPresenter
                 && currentState != ComparisonState.RightLoaded);
     }
 
-    public void compareApplications() {
-        if (!comparisonAllowed()) {
-            return;
-        }
-        EditorDataService.Util.getDataService().diff(leftApp, rightApp, new AsyncCallback<ApplicationsDiff>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                appDiff = null;
-                view.showException(caught);
-            }
-
-            @Override
-            public void onSuccess(ApplicationsDiff result) {
-                int numberOfChanges = result.getChanges().size();
-                appDiff = result;
-                view.setChanges(result.getChanges());
-                changeState(ComparisonState.Compared);
-                view.showComparisonResult(numberOfChanges);
-            }
-        });
-    }
-
-    private ApplicationStoreData createAppStoreData(final ApplicationElement app, final Version version) {
+    private ApplicationStoreData createAppStoreData(final ApplicationElement app,
+                                                    final Version version) {
         ApplicationStoreData result = new ApplicationStoreData(app.getId(), app.getName());
         result.setCode(app.getCode());
         result.setVersion(version);
         return result;
+    }
+
+    @Override
+    public void riseRemoveElement(AbstractElement parent, AbstractElement element,
+                                  boolean showDialog) {
+        Info.display("Oops!", "riseRemoveElement - Illegal operation");
     }
 
     public void onOpenLeftApplication(ApplicationElement application, Version version) {
@@ -313,13 +299,15 @@ public class CompareApplicationsPresenter
     }
 
     @Override
-    public void riseRemoveElement(AbstractElement parent, AbstractElement element, boolean showDialog) {
-        Info.display("Oops!", "riseRemoveElement - Illegal operation");
+    public void riseEditRights(Collection<? extends AbstractElement> elements,
+                               Collection<RightType> rightTypes) {
+        Info.display("Oops!", "riseEditRights - Illegal operation");
     }
 
     @Override
-    public void riseEditRights(Collection<? extends AbstractElement> elements, Collection<RightType> rightTypes) {
-        Info.display("Oops!", "riseEditRights - Illegal operation");
+    public void riseShowOpenApplicationsCallback(
+            Callback<ApplicationStoreData, Throwable> callback) {
+        Info.display("Oops!", "riseShowOpenApplicationsCallback - Illegal operation");
     }
 
     @Override
@@ -332,8 +320,28 @@ public class CompareApplicationsPresenter
         Info.display("Oops!", "riseCloseOpenApplication - Illegal operation");
     }
 
-    @Override
-    public void riseShowOpenApplicationsCallback(Callback<ApplicationStoreData, Throwable> callback) {
-        Info.display("Oops!", "riseShowOpenApplicationsCallback - Illegal operation");
+    public enum ComparisonState {
+        Start, LeftLoaded, RightLoaded, Initialised, Compared, Merged, ComparedAfterMerge, Finish
+    }
+
+    public interface ICompareApplicationsView
+            extends IsWidget, ReverseViewInterface<CompareApplicationsPresenter> {
+        void show();
+
+        void showComparisonResult(int number);
+
+        void clearAll();
+
+        void changeState(ComparisonState state);
+
+        List<ChangeUnit> getCheckedChanges();
+
+        void loadLeftApplication(ApplicationElement application, Version version);
+
+        void loadRightApplication(ApplicationElement application, Version version);
+
+        void setChanges(List<ChangeUnit> changes);
+
+        void showException(Throwable caught);
     }
 }

@@ -31,8 +31,7 @@ import org.whirlplatform.meta.shared.editor.db.ViewElement;
 public class ApplicationIdHelper {
 
     /**
-     * Подмена временных ID на постоянные должна исчезнуть с введенеим
-     * {@link RandomUUID}
+     * Подмена временных ID на постоянные должна исчезнуть с введенеим {@link RandomUUID}
      *
      * @param application
      */
@@ -126,7 +125,8 @@ public class ApplicationIdHelper {
     }
 
     @Deprecated
-    private static void initDataSourceId(ApplicationElement application, DataSourceElement datasource) {
+    private static void initDataSourceId(ApplicationElement application,
+                                         DataSourceElement datasource) {
         if (datasource == null) {
             return;
         }
@@ -157,14 +157,16 @@ public class ApplicationIdHelper {
     }
 
     @Deprecated
-    private static void refreshTableId(ApplicationElement application, String tempTableId, String tableId) {
+    private static void refreshTableId(ApplicationElement application, String tempTableId,
+                                       String tableId) {
         // обновляем ссылки на таблицы в компонентах
         for (ComponentElement c : application.getAvailableComponents()) {
             if (ComponentProperties.getProperties(c.getType()).contains(PropertyType.DataSource)) {
                 PropertyValue v = c.getProperty(PropertyType.DataSource);
                 if (v != null && v.getValue(v.getDefaultLocale()) != null) {
                     DataValue d = v.getValue(v.getDefaultLocale());
-                    if (d.getType() == DataType.LIST && tempTableId.equals(d.getListModelData().getId())) {
+                    if (d.getType() == DataType.LIST &&
+                            tempTableId.equals(d.getListModelData().getId())) {
                         d.getListModelData().setId(tableId);
                     }
                 }

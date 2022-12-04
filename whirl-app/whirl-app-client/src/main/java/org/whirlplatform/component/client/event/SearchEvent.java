@@ -7,40 +7,40 @@ import org.whirlplatform.component.client.event.SearchEvent.SearchHandler;
 
 public class SearchEvent extends GwtEvent<SearchHandler> {
 
-	private static Type<SearchHandler> TYPE;
+    private static Type<SearchHandler> TYPE;
 
-	public static Type<SearchHandler> getType() {
-		if (TYPE == null) {
-			TYPE = new Type<SearchHandler>() {
-				@Override
-				public String toString() {
-					return "SearchHandler";
-				}
-			};
-		}
-		return TYPE;
-	}
+    public static Type<SearchHandler> getType() {
+        if (TYPE == null) {
+            TYPE = new Type<SearchHandler>() {
+                @Override
+                public String toString() {
+                    return "SearchHandler";
+                }
+            };
+        }
+        return TYPE;
+    }
 
-	@Override
-	public Type<SearchHandler> getAssociatedType() {
-		return TYPE;
-	}
+    @Override
+    public Type<SearchHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	@Override
-	protected void dispatch(SearchHandler handler) {
-		handler.onSearch(this);
-	}
+    @Override
+    protected void dispatch(SearchHandler handler) {
+        handler.onSearch(this);
+    }
 
-	public interface SearchHandler extends EventHandler {
+    public interface SearchHandler extends EventHandler {
 
-		void onSearch(SearchEvent event);
+        void onSearch(SearchEvent event);
 
-	}
+    }
 
-	public interface HasSearchHandlers {
+    public interface HasSearchHandlers {
 
         HandlerRegistration addSearchHandler(SearchHandler handler);
 
-	}
+    }
 
 }

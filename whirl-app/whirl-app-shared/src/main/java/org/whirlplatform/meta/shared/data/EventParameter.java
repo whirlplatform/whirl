@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,25 +16,25 @@ public interface EventParameter extends Serializable {
 
     ParameterType getType();
 
-    void setComponentId(String componentId);
-
     String getComponentId();
 
-    void setComponentCode(String componentCode);
+    void setComponentId(String componentId);
 
     String getComponentCode();
 
-    void setStorageCode(String storageCode);
+    void setComponentCode(String componentCode);
 
     String getStorageCode();
 
-    void setData(DataValue data);
+    void setStorageCode(String storageCode);
 
     void setDataWithCode(DataValue data);
 
     DataValue getData();
 
-    void setCode(String code);
+    void setData(DataValue data);
 
     String getCode();
+
+    void setCode(String code);
 }

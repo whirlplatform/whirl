@@ -30,6 +30,8 @@ import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 import com.sencha.gxt.widget.core.client.grid.editing.ClicksToEdit;
 import com.sencha.gxt.widget.core.client.grid.editing.GridInlineEditing;
 import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
+import java.util.ArrayList;
+import java.util.List;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.image.EditorBundle;
@@ -39,11 +41,9 @@ import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.editor.shared.visitor.CloneVisitor;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class AbstractTemplatesView extends ContentPanel
-        implements AbstractTemplatesPresenter.IComponentTemplatesView, ReverseViewInterface<AbstractTemplatesPresenter> {
+        implements AbstractTemplatesPresenter.IComponentTemplatesView,
+        ReverseViewInterface<AbstractTemplatesPresenter> {
 
     private static final ComponentProperties properties = GWT.create(ComponentProperties.class);
     private AbstractTemplatesPresenter presenter;
@@ -80,10 +80,12 @@ public abstract class AbstractTemplatesView extends ContentPanel
 
     private void createGrid() {
         IdentityValueProvider<BaseTemplate> identity = new IdentityValueProvider<>();
-        CheckBoxSelectionModel<BaseTemplate> selectionModel = new CheckBoxSelectionModel<>(identity);
+        CheckBoxSelectionModel<BaseTemplate> selectionModel =
+                new CheckBoxSelectionModel<>(identity);
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
         ColumnConfig<BaseTemplate, String> config = new ColumnConfig<>(properties.name());
-        config.setColumnStyle(SafeStylesUtils.fromTrustedString("font-weight: bold; font-size: 12px; height: 20px;"));
+        config.setColumnStyle(SafeStylesUtils.fromTrustedString(
+                "font-weight: bold; font-size: 12px; height: 20px;"));
         List<ColumnConfig<BaseTemplate, ?>> list = new ArrayList<>();
         list.add(selectionModel.getColumn());
         list.add(config);
@@ -163,8 +165,10 @@ public abstract class AbstractTemplatesView extends ContentPanel
             public void onSelect(SelectEvent event) {
                 BaseTemplate template = getGrid().getSelectionModel().getSelectedItem();
 
-                ConfirmMessageBox messageBox = new ConfirmMessageBox(EditorMessage.Util.MESSAGE.templ_delete(),
-                        EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> " + template.getName() + " </b> ?");
+                ConfirmMessageBox messageBox =
+                        new ConfirmMessageBox(EditorMessage.Util.MESSAGE.templ_delete(),
+                                EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> " +
+                                        template.getName() + " </b> ?");
                 messageBox.getButton(PredefinedButton.YES).addSelectHandler(new SelectHandler() {
 
                     @Override

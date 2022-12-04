@@ -7,11 +7,21 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.messages.client.DefaultMessages;
 import com.sencha.gxt.widget.core.client.Component;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.*;
+import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.component.client.Containable;
+import org.whirlplatform.component.client.ContainerHelper;
+import org.whirlplatform.component.client.HasCreateParameters;
+import org.whirlplatform.component.client.ParameterHelper;
 import org.whirlplatform.component.client.event.LoadEvent;
 import org.whirlplatform.component.client.event.RefreshEvent;
 import org.whirlplatform.component.client.utils.InfoHelper;
@@ -26,9 +36,6 @@ import org.whirlplatform.meta.shared.form.FormRowModel;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.ListHolder;
 import org.whirlplatform.rpc.shared.SessionToken;
-
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * Форма
@@ -159,8 +166,9 @@ public class FormBuilder extends ComponentBuilder implements Containable,
         Scheduler.get().scheduleDeferred(new ScheduledCommand() {
             @Override
             public void execute() {
-                DataServiceAsync.Util.getDataService(loadCallback).getForm(SessionToken.get(), getId(),
-                        new ListHolder(parameters));
+                DataServiceAsync.Util.getDataService(loadCallback)
+                        .getForm(SessionToken.get(), getId(),
+                                new ListHolder(parameters));
             }
         });
     }
@@ -177,8 +185,9 @@ public class FormBuilder extends ComponentBuilder implements Containable,
         Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
             @Override
             public boolean execute() {
-                DataServiceAsync.Util.getDataService(refreshCallback).getForm(SessionToken.get(), getId(),
-                        new ListHolder(parameters));
+                DataServiceAsync.Util.getDataService(refreshCallback)
+                        .getForm(SessionToken.get(), getId(),
+                                new ListHolder(parameters));
                 return false;
             }
         }, 0);
@@ -189,7 +198,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             return;
         }
         clearContainer();
-//		container.clearCellGroupings();
+//        container.clearCellGroupings();
         container.clearSpans();
 
         // размеры
@@ -235,12 +244,12 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             }
         }
 
-//		for (CellGroupModel group : form.getGroups()) {
-//			container.setCellGrouping(
-//					new Region(group.getTop(), group.getRight(), group
-//							.getBottom(), group.getLeft()), group.getTitle(),
-//					true);
-//		}
+//        for (CellGroupModel group : form.getGroups()) {
+//            container.setCellGrouping(
+//                    new Region(group.getTop(), group.getRight(), group
+//                            .getBottom(), group.getLeft()), group.getTitle(),
+//                    true);
+//        }
         decorator.setPaddingInCells(1);
         container.doLayout();
         container.unmask();

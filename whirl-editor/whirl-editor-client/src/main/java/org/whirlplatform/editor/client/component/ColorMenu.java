@@ -7,6 +7,7 @@ import com.sencha.gxt.widget.core.client.menu.Menu;
 
 public class ColorMenu extends Menu {
 
+    protected ColorPalette palette;
     private String[] colors = new String[]{"E9967A", "B22222", "FFB6C1",
             "DB7093", "FF6347", "FFD700", "FFFACD", "FFDAB9", "BDB76B",
             "EE82EE", "FF00FF", "9400D3", "800080", "7B68EE", "7CFC00",
@@ -15,7 +16,6 @@ public class ColorMenu extends Menu {
             "FFEBCD", "DEB887", "F4A460", "D2691E", "A52A2A", "F0FFF0",
             "F0F8FF", "F5F5DC", "FFFFF0", "FFE4E1", "C0C0C0", "778899",
             "000000", "FFFFFF"};
-
     private String[] labels = new String[]{"Dark Salmon", "Fire Brick",
             "Light Pink", "Pale Violet Red", "Tomato", "Gold", "Lemon Chiffon",
             "Peach Puff", "Dark Khaki", "Violet", "Magenta", "Dark Violet",
@@ -26,8 +26,6 @@ public class ColorMenu extends Menu {
             "Sandy Brown", "Chocolate", "Brown", "Honeydew", "Alice Blue",
             "Beige", "Ivory", "Misty Rose", "Silver", "Light Slate Gray",
             "Black", "White"};
-
-    protected ColorPalette palette;
 
     public ColorMenu() {
         palette = new ColorPalette(colors, labels);
@@ -53,12 +51,12 @@ public class ColorMenu extends Menu {
         return palette.getValue();
     }
 
-    public ColorPalette getPalette() {
-        return palette;
-    }
-
     public void setColor(String color) {
         palette.setValue(color);
+    }
+
+    public ColorPalette getPalette() {
+        return palette;
     }
 
     protected void onValueChanged(ValueChangeEvent<String> event) {

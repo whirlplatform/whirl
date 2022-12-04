@@ -4,11 +4,10 @@ import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.whirlplatform.meta.shared.AppConstant;
-
+import java.text.SimpleDateFormat;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
-import java.text.SimpleDateFormat;
+import org.whirlplatform.meta.shared.AppConstant;
 
 @Provider
 public class ObjectMapperContextResolver implements ContextResolver<ObjectMapper> {

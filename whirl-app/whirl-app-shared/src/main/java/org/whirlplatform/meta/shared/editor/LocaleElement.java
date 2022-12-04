@@ -16,6 +16,27 @@ public class LocaleElement implements Serializable, Cloneable {
         this.country = country;
     }
 
+    public static LocaleElement valueOf(String string) {
+
+        if (string == null || string.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        String language = null;
+        String country = null;
+        if ((string.length() == 2 || string.indexOf("_") == 2) &&
+                Character.isLetter(string.charAt(0))
+                && Character.isLetter(string.charAt(1))) {
+            //language = string.toLowerCase();
+            language = string.toLowerCase().substring(0, 2);
+        } else {
+            throw new IllegalArgumentException();
+        }
+        if (string.length() == 5) {
+            country = string.substring(3, 5);
+        }
+        return new LocaleElement(language, country);
+    }
+
     public String getLanguage() {
         return language;
     }
@@ -69,26 +90,6 @@ public class LocaleElement implements Serializable, Cloneable {
     public String asString() {
         return language
                 + ((country == null || country.isEmpty()) ? "" : "_" + country);
-    }
-
-    public static LocaleElement valueOf(String string) {
-
-        if (string == null || string.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        String language = null;
-        String country = null;
-        if ((string.length() == 2 || string.indexOf("_") == 2) && Character.isLetter(string.charAt(0))
-                && Character.isLetter(string.charAt(1))) {
-            //language = string.toLowerCase();
-            language = string.toLowerCase().substring(0, 2);
-        } else {
-            throw new IllegalArgumentException();
-        }
-        if (string.length() == 5) {
-            country = string.substring(3, 5);
-        }
-        return new LocaleElement(language, country);
     }
 
     @Override

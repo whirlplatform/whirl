@@ -3,7 +3,6 @@ package org.whirlplatform.meta.shared;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,25 +13,23 @@ import java.util.List;
  * This class is an implementation of the full <em>semantic version 2.0.0</em>
  * <a href="http://semver.org/">specification</a>. Instances can be obtained
  * using the static overloads of the <em>create</em> method or by
- * {@link #parseVersion(String) parsing} a String. This class implements
- * {@link Comparable} to compare two versions by following the specifications
- * linked to above. The {@link #equals(Object)} method conforms to the result of
- * {@link #compareTo(Version)}, {@link #hashCode()} is implemented
- * appropriately. Neither method considers the {@link #getBuildMetaData() build
- * meta data} field for comparison.
+ * {@link #parseVersion(String) parsing} a String. This class implements {@link Comparable} to
+ * compare two versions by following the specifications linked to above. The {@link #equals(Object)}
+ * method conforms to the result of {@link #compareTo(Version)}, {@link #hashCode()} is implemented
+ * appropriately. Neither method considers the {@link #getBuildMetaData() build meta data} field for
+ * comparison.
  *
  * <p>
- * Instances of this class are immutable and thus thread safe. This also means
- * that all methods taking an array or other kind of modifiable objects as
- * input, will first make a copy before using it as internal state.
+ * Instances of this class are immutable and thus thread safe. This also means that all methods
+ * taking an array or other kind of modifiable objects as input, will first make a copy before using
+ * it as internal state.
  * </p>
  *
  * <p>
- * Note that unless stated otherwise, none of the public methods of this class
- * accept <code>null</code> values. Most methods will throw an
- * {@link IllegalArgumentException} when encountering a <code>null</code>
- * argument. However, to comply with the {@link Comparable} contract, the
- * comparison methods will throw a {@link NullPointerException} instead.
+ * Note that unless stated otherwise, none of the public methods of this class accept
+ * <code>null</code> values. Most methods will throw an {@link IllegalArgumentException} when
+ * encountering a <code>null</code> argument. However, to comply with the {@link Comparable}
+ * contract, the comparison methods will throw a {@link NullPointerException} instead.
  * </p>
  *
  * @author Simon Taddiken
@@ -42,42 +39,8 @@ import java.util.List;
 public final class Version implements Comparable<Version>, Serializable {
 
     /**
-     * Conforms to all Version implementations since 0.6.0
-     */
-    private static final long serialVersionUID = 6034927062401119911L;
-
-    private static final String[] EMPTY_ARRAY = new String[0];
-
-    /**
-     * Semantic Version Specification to which this class complies.
-     *
-     * @since 0.2.0
-     */
-    public static final Version COMPLIANCE = Version.create(2, 0, 0);
-
-    /**
-     * This exception indicates that a version- or a part of a version string
-     * could not be parsed according to the semantic version specification.
-     *
-     * @author Simon Taddiken
-     */
-    public static class VersionFormatException extends RuntimeException {
-
-        private static final long serialVersionUID = 1L;
-
-        /**
-         * Creates a new VersionFormatException with the given message.
-         *
-         * @param message The exception message.
-         */
-        private VersionFormatException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * Comparator for natural version ordering. See
-     * {@link #compare(Version, Version)} for more information.
+     * Comparator for natural version ordering. See {@link #compare(Version, Version)} for more
+     * information.
      *
      * @since 0.2.0
      */
@@ -87,14 +50,12 @@ public final class Version implements Comparable<Version>, Serializable {
             return Version.compare(o1, o2);
         }
     };
-
     /**
-     * Comparator for ordering versions with additionally considering the build
-     * meta data field when comparing versions.
+     * Comparator for ordering versions with additionally considering the build meta data field when
+     * comparing versions.
      *
      * <p>
-     * Note: this comparator imposes orderings that are inconsistent with
-     * equals.
+     * Note: this comparator imposes orderings that are inconsistent with equals.
      * </p>
      *
      * @since 0.3.0
@@ -106,10 +67,19 @@ public final class Version implements Comparable<Version>, Serializable {
             return compareWithBuildMetaData(o1, o2);
         }
     };
-
+    /**
+     * Conforms to all Version implementations since 0.6.0
+     */
+    private static final long serialVersionUID = 6034927062401119911L;
+    private static final String[] EMPTY_ARRAY = new String[0];
+    /**
+     * Semantic Version Specification to which this class complies.
+     *
+     * @since 0.2.0
+     */
+    public static final Version COMPLIANCE = Version.create(2, 0, 0);
     private static final int TO_STRING_ESTIMATE = 16;
     private static final int HASH_PRIME = 31;
-
     // state machine states for parsing a version string
     private static final int STATE_MAJOR_INIT = 0;
     private static final int STATE_MAJOR_LEADING_ZERO = 1;
@@ -122,26 +92,20 @@ public final class Version implements Comparable<Version>, Serializable {
     private static final int STATE_PATCH_DEFAULT = 8;
     private static final int STATE_PRERELEASE_INIT = 9;
     private static final int STATE_BUILDMD_INIT = 10;
-
     private static final int STATE_PART_INIT = 0;
     private static final int STATE_PART_LEADING_ZERO = 1;
     private static final int STATE_PART_NUMERIC = 2;
     private static final int STATE_PART_DEFAULT = 3;
-
     private static final int DECIMAL = 10;
-
     private static final int EOS = -1;
     private static final int FAILURE = -2;
-
     private int major;
     private int minor;
     private int patch;
     private String[] preReleaseParts;
     private String[] buildMetaDataParts;
-
     // store hash code once it has been calculated
     private volatile int hash;
-
     private String branch;
 
     protected Version() {
@@ -156,18 +120,6 @@ public final class Version implements Comparable<Version>, Serializable {
         this.patch = patch;
         this.preReleaseParts = preRelease;
         this.buildMetaDataParts = buildMd;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
-    public boolean isBranch() {
-        return branch != null && !branch.isEmpty();
     }
 
     private static Version parse(String s, boolean verifyOnly) {
@@ -524,385 +476,12 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Creates a new Version from this one, replacing only the major part with
-     * the given one. All other parts will remain the same as in this Version.
-     *
-     * @param newMajor The new major version.
-     * @return A new Version.
-     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
-     * @since 1.1.0
-     */
-    public Version withMajor(int newMajor) {
-        return new Version(newMajor, this.minor, this.patch,
-                this.preReleaseParts, this.buildMetaDataParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the minor part with
-     * the given one. All other parts will remain the same as in this Version.
-     *
-     * @param newMinor The new minor version.
-     * @return A new Version.
-     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
-     * @since 1.1.0
-     */
-    public Version withMinor(int newMinor) {
-        return new Version(this.major, newMinor, this.patch,
-                this.preReleaseParts, this.buildMetaDataParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the patch part with
-     * the given one. All other parts will remain the same as in this Version.
-     *
-     * @param newPatch The new patch version.
-     * @return A new Version.
-     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
-     * @since 1.1.0
-     */
-    public Version withPatch(int newPatch) {
-        return new Version(this.major, this.minor, newPatch,
-                this.preReleaseParts, this.buildMetaDataParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the pre-release part
-     * with the given String. All other parts will remain the same as in this
-     * Version. You can remove the pre-release part by passing an empty String.
-     *
-     * @param newPreRelease The new pre-release identifier.
-     * @return A new Version.
-     * @throws VersionFormatException   If the given String is not a valid pre-release identifier.
-     * @throws IllegalArgumentException If preRelease is null.
-     * @since 1.1.0
-     */
-    public Version withPreRelease(String newPreRelease) {
-        require(newPreRelease != null, "newPreRelease is null");
-        final String[] newPreReleaseParts = parsePreRelease(newPreRelease);
-        return new Version(this.major, this.minor, this.patch,
-                newPreReleaseParts, this.buildMetaDataParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the pre-release part
-     * with the given array. All other parts will remain the same as in this
-     * Version. You can remove the pre-release part by passing an empty array.
-     * <p>
-     * The passed array will be copied to not allow external modification to the
-     * new Version's inner state.
-     * </p>
-     *
-     * @param newPreRelease the new pre release parts.
-     * @return A new Version.
-     * @throws VersionFormatException   If the any element of the given array is not a valid pre
-     *                                  release identifier part.
-     * @throws IllegalArgumentException If newPreRelease is null.
-     * @since 1.2.0
-     */
-    public Version withPreRelease(String[] newPreRelease) {
-        require(newPreRelease != null, "newPreRelease is null");
-        final String[] newPreReleaseParts = verifyAndCopyArray(newPreRelease,
-                false);
-        return new Version(this.major, this.minor, this.patch,
-                newPreReleaseParts, this.buildMetaDataParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the build-meta-data
-     * part with the given String. All other parts will remain the same as in
-     * this Version. You can remove the build-meta-data part by passing an empty
-     * String.
-     *
-     * @param newBuildMetaData The new build meta data identifier.
-     * @return A new Version.
-     * @throws VersionFormatException   If the given String is not a valid build-meta-data
-     *                                  identifier.
-     * @throws IllegalArgumentException If newBuildMetaData is null.
-     * @since 1.1.0
-     */
-    public Version withBuildMetaData(String newBuildMetaData) {
-        require(newBuildMetaData != null, "newBuildMetaData is null");
-        final String[] newBuildMdParts = parseBuildMd(newBuildMetaData);
-        return new Version(this.major, this.minor, this.patch,
-                this.preReleaseParts, newBuildMdParts);
-    }
-
-    /**
-     * Creates a new Version from this one, replacing only the build-meta-data
-     * part with the given array. All other parts will remain the same as in
-     * this Version. You can remove the build-meta-data part by passing an empty
-     * array.
-     * <p>
-     * The passed array will be copied to not allow external modification to the
-     * new Version's inner state.
-     * </p>
-     *
-     * @param newBuildMetaData the new build meta data parts.
-     * @return A new Version.
-     * @throws VersionFormatException   If the any element of the given array is not a valid build
-     *                                  meta data identifier part.
-     * @throws IllegalArgumentException If newBuildMetaData is null.
-     * @since 1.2.0
-     */
-    public Version withBuildMetaData(String[] newBuildMetaData) {
-        require(newBuildMetaData != null, "newBuildMetaData is null");
-        final String[] newParts = verifyAndCopyArray(newBuildMetaData, true);
-        return new Version(this.major, this.minor, this.patch,
-                this.preReleaseParts, newParts);
-    }
-
-    private String[] verifyAndCopyArray(String parts[], boolean allowLeading0) {
-        final String[] result = new String[parts.length];
-        final StringBuilder b = new StringBuilder();
-        for (int i = 0; i < parts.length; ++i) {
-            final String part = parts[i];
-            result[i] = part;
-            parseIDPart(part.toCharArray(), 0, false, allowLeading0, false,
-                    false, b, "");
-        }
-        return result;
-    }
-
-    /**
-     * Given this Version, returns the next major Version. That is, the major
-     * part is incremented by 1 and the remaining parts are set to 0. This also
-     * drops the pre-release and build-meta-data.
-     *
-     * @return The incremented version.
-     * @see #nextMajor(String)
-     * @see #nextMajor(String[])
-     * @since 1.2.0
-     */
-    public Version nextMajor() {
-        return new Version(this.major + 1, 0, 0, EMPTY_ARRAY, EMPTY_ARRAY);
-    }
-
-    /**
-     * Given this Version, returns the next major Version. That is, the major
-     * part is incremented by 1 and the remaining parts are set to 0. The
-     * pre-release part will be set to the given identifier and the
-     * build-meta-data is dropped.
-     *
-     * @param newPrelease The pre-release part for the resulting Version.
-     * @return The incremented version.
-     * @throws VersionFormatException   If the given String is not a valid pre-release identifier.
-     * @throws IllegalArgumentException If newPreRelease is null.
-     * @see #nextMajor()
-     * @see #nextMajor(String[])
-     * @since 1.2.0
-     */
-    public Version nextMajor(String newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] preReleaseParts = parsePreRelease(newPrelease);
-        return new Version(this.major + 1, 0, 0, preReleaseParts, EMPTY_ARRAY);
-    }
-
-    /**
-     * Given this Version, returns the next major Version. That is, the major
-     * part is incremented by 1 and the remaining parts are set to 0. The
-     * pre-release part will be set to the given identifier and the
-     * build-meta-data is dropped.
-     *
-     * @param newPrelease The pre-release part for the resulting Version.
-     * @return The incremented version.
-     * @throws VersionFormatException   If the any element of the given array is not a valid pre
-     *                                  release identifier part.
-     * @throws IllegalArgumentException If newPreRelease is null.
-     * @see #nextMajor()
-     * @see #nextMajor(String)
-     * @since 1.2.0
-     */
-    public Version nextMajor(String[] newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
-                false);
-        return new Version(this.major + 1, 0, 0, newPreReleaseParts,
-                EMPTY_ARRAY);
-    }
-
-    public Version nextMinor() {
-        return new Version(this.major, this.minor + 1, 0, EMPTY_ARRAY,
-                EMPTY_ARRAY);
-    }
-
-    public Version nextMinor(String newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] preReleaseParts = parsePreRelease(newPrelease);
-        return new Version(this.major, this.minor + 1, 0, preReleaseParts,
-                EMPTY_ARRAY);
-    }
-
-    public Version nextMinor(String[] newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
-                false);
-        return new Version(this.major, this.minor + 1, 0, newPreReleaseParts,
-                EMPTY_ARRAY);
-    }
-
-    public Version nextPatch() {
-        return new Version(this.major, this.minor, this.patch + 1, EMPTY_ARRAY,
-                EMPTY_ARRAY);
-    }
-
-    public Version nextPatch(String newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] preReleaseParts = parsePreRelease(newPrelease);
-        return new Version(this.major, this.minor, this.patch + 1,
-                preReleaseParts, EMPTY_ARRAY);
-    }
-
-    public Version nextPatch(String[] newPrelease) {
-        require(newPrelease != null, "newPreRelease is null");
-        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
-                false);
-        return new Version(this.major, this.minor, this.patch + 1,
-                newPreReleaseParts, EMPTY_ARRAY);
-    }
-
-    /**
-     * Derives a new Version instance from this one by only incrementing the
-     * pre-release identifier. The build-meta-data will be dropped, all other
-     * fields remain the same.
+     * Tries to parse the given String as a semantic version and returns whether the String is
+     * properly formatted according to the semantic version specification.
      *
      * <p>
-     * The incrementation of the pre-release identifier behaves as follows:
-     * <ul>
-     * <li>In case the identifier is currently empty, it becomes "1" in the
-     * result.</li>
-     * <li>If the identifier's last part is numeric, that last part will be
-     * incremented in the result.</li>
-     * <li>If the last part is not numeric, the identifier is interpreted as
-     * {@code identifier.0} which becomes {@code identifier.1} after increment.
-     * </ul>
-     * Examples:
-     *
-     * <table>
-     * <tr>
-     * <th>Version</th>
-     * <th>After increment</th>
-     * </tr>
-     * <tr>
-     * <td>1.2.3</td>
-     * <td>1.2.3-1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3+build.meta.data</td>
-     * <td>1.2.3-1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3-foo</td>
-     * <td>1.2.3-foo.1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3-foo.1</td>
-     * <td>1.2.3-foo.2</td>
-     * </tr>
-     * </table>
-     * </p>
-     *
-     * @return The incremented Version.
-     * @since 1.2.0
-     */
-    public Version nextPreRelease() {
-        final String[] newPreReleaseParts = incrementIdentifier(
-                this.preReleaseParts);
-        return new Version(this.major, this.minor, this.patch,
-                newPreReleaseParts, EMPTY_ARRAY);
-    }
-
-    /**
-     * Derives a new Version instance from this one by only incrementing the
-     * build-meta-data identifier. All other fields remain the same.
-     *
-     * <p>
-     * The incrementation of the build-meta-data identifier behaves as follows:
-     * <ul>
-     * <li>In case the identifier is currently empty, it becomes "1" in the
-     * result.</li>
-     * <li>If the identifier's last part is numeric, that last part will be
-     * incremented in the result. <b>Leading 0's will be removed</b>.</li>
-     * <li>If the last part is not numeric, the identifier is interpreted as
-     * {@code identifier.0} which becomes {@code identifier.1} after increment.
-     * </ul>
-     * Examples:
-     *
-     * <table>
-     * <tr>
-     * <th>Version</th>
-     * <th>After increment</th>
-     * </tr>
-     * <tr>
-     * <td>1.2.3</td>
-     * <td>1.2.3+1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3-pre.release</td>
-     * <td>1.2.3-pre.release+1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3+foo</td>
-     * <td>1.2.3+foo.1</td>
-     * </tr>
-     * <tr>
-     * <td>1.2.3+foo.1</td>
-     * <td>1.2.3+foo.2</td>
-     * </tr>
-     * </table>
-     * </p>
-     *
-     * @return The incremented Version.
-     * @since 1.2.0
-     */
-    public Version nextBuildMetaData() {
-        final String[] newBuildMetaData = incrementIdentifier(
-                this.buildMetaDataParts);
-        return new Version(this.major, this.minor, this.patch,
-                this.preReleaseParts, newBuildMetaData);
-    }
-
-    private String[] incrementIdentifier(String[] parts) {
-        if (parts.length == 0) {
-            return new String[]{"1"};
-        }
-        final int lastIdx = parts.length - 1;
-        final String lastPart = parts[lastIdx];
-
-        int num = isNumeric(lastPart);
-        int newLength = parts.length;
-        if (num >= 0) {
-            num += 1;
-        } else {
-            newLength += 1;
-            num = 1;
-        }
-        final String[] result = arrayCopyOf(parts, newLength); // Arrays.copyOf
-        result[newLength - 1] = String.valueOf(num);
-        return result;
-    }
-
-    /**
-     * GWT 2.7 doesn't support Arrays.copyOf(String[], int)
-     *
-     * @param original
-     * @param newLength
-     * @return
-     */
-    private String[] arrayCopyOf(String[] original, int newLength) {
-        String[] copy = new String[newLength];
-        System.arraycopy(original, 0, copy, 0,
-                Math.min(original.length, newLength));
-        return copy;
-    }
-
-    /**
-     * Tries to parse the given String as a semantic version and returns whether
-     * the String is properly formatted according to the semantic version
-     * specification.
-     *
-     * <p>
-     * Note: this method does not throw an exception upon <code>null</code>
-     * input, but returns <code>false</code> instead.
+     * Note: this method does not throw an exception upon <code>null</code> input, but returns
+     * <code>false</code> instead.
      * </p>
      *
      * @param version The String to check.
@@ -915,15 +494,14 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns whether the given String is a valid pre-release identifier. That
-     * is, this method returns <code>true</code> if, and only if the
-     * {@code preRelease} parameter is either the empty string or properly
-     * formatted as a pre-release identifier according to the semantic version
-     * specification.
+     * Returns whether the given String is a valid pre-release identifier. That is, this method
+     * returns <code>true</code> if, and only if the {@code preRelease} parameter is either the
+     * empty string or properly formatted as a pre-release identifier according to the semantic
+     * version specification.
      *
      * <p>
-     * Note: this method does not throw an exception upon <code>null</code>
-     * input, but returns <code>false</code> instead.
+     * Note: this method does not throw an exception upon <code>null</code> input, but returns
+     * <code>false</code> instead.
      * </p>
      *
      * @param preRelease The String to check.
@@ -942,15 +520,14 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns whether the given String is a valid build meta data identifier.
-     * That is, this method returns <code>true</code> if, and only if the
-     * {@code buildMetaData} parameter is either the empty string or properly
-     * formatted as a build meta data identifier according to the semantic
+     * Returns whether the given String is a valid build meta data identifier. That is, this method
+     * returns <code>true</code> if, and only if the {@code buildMetaData} parameter is either the
+     * empty string or properly formatted as a build meta data identifier according to the semantic
      * version specification.
      *
      * <p>
-     * Note: this method does not throw an exception upon <code>null</code>
-     * input, but returns <code>false</code> instead.
+     * Note: this method does not throw an exception upon <code>null</code> input, but returns
+     * <code>false</code> instead.
      * </p>
      *
      * @param buildMetaData The String to check.
@@ -969,9 +546,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns the greater of the two given versions by comparing them using
-     * their natural ordering. If both versions are equal, then the first
-     * argument is returned.
+     * Returns the greater of the two given versions by comparing them using their natural ordering.
+     * If both versions are equal, then the first argument is returned.
      *
      * @param v1 The first version.
      * @param v2 The second version.
@@ -986,9 +562,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns the lower of the two given versions by comparing them using their
-     * natural ordering. If both versions are equal, then the first argument is
-     * returned.
+     * Returns the lower of the two given versions by comparing them using their natural ordering.
+     * If both versions are equal, then the first argument is returned.
      *
      * @param v1 The first version.
      * @param v2 The second version.
@@ -1003,35 +578,31 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Compares two versions, following the <em>semantic version</em>
-     * specification. Here is a quote from <a href="http://semver.org/">semantic
-     * version 2.0.0 specification</a>:
+     * Compares two versions, following the <em>semantic version</em> specification. Here is a quote
+     * from <a href="http://semver.org/">semantic version 2.0.0 specification</a>:
      *
      * <p>
      * <em> Precedence refers to how versions are compared to each other when
-     * ordered. Precedence MUST be calculated by separating the version into
-     * major, minor, patch and pre-release identifiers in that order (Build
-     * metadata does not figure into precedence). Precedence is determined by
-     * the first difference when comparing each of these identifiers from left
-     * to right as follows: Major, minor, and patch versions are always compared
-     * numerically. Example: 1.0.0 &lt; 2.0.0 &lt; 2.1.0 &lt; 2.1.1. When major,
-     * minor, and patch are equal, a pre-release version has lower precedence
-     * than a normal version. Example: 1.0.0-alpha &lt; 1.0.0. Precedence for
-     * two pre-release versions with the same major, minor, and patch version
-     * MUST be determined by comparing each dot separated identifier from left
-     * to right until a difference is found as follows: identifiers consisting
-     * of only digits are compared numerically and identifiers with letters or
-     * hyphens are compared lexically in ASCII sort order. Numeric identifiers
-     * always have lower precedence than non-numeric identifiers. A larger set
-     * of pre-release fields has a higher precedence than a smaller set, if all
-     * of the preceding identifiers are equal. Example: 1.0.0-alpha &lt;
-     * 1.0.0-alpha.1 &lt; 1.0.0-alpha.beta &lt; 1.0.0-beta &lt; 1.0.0-beta.2
-     * &lt; 1.0.0-beta.11 &lt; 1.0.0-rc.1 &lt; 1.0.0. </em>
+     * ordered. Precedence MUST be calculated by separating the version into major, minor, patch and
+     * pre-release identifiers in that order (Build metadata does not figure into precedence).
+     * Precedence is determined by the first difference when comparing each of these identifiers
+     * from left to right as follows: Major, minor, and patch versions are always compared
+     * numerically. Example: 1.0.0 &lt; 2.0.0 &lt; 2.1.0 &lt; 2.1.1. When major, minor, and patch
+     * are equal, a pre-release version has lower precedence than a normal version. Example:
+     * 1.0.0-alpha &lt; 1.0.0. Precedence for two pre-release versions with the same major, minor,
+     * and patch version MUST be determined by comparing each dot separated identifier from left to
+     * right until a difference is found as follows: identifiers consisting of only digits are
+     * compared numerically and identifiers with letters or hyphens are compared lexically in ASCII
+     * sort order. Numeric identifiers always have lower precedence than non-numeric identifiers. A
+     * larger set of pre-release fields has a higher precedence than a smaller set, if all of the
+     * preceding identifiers are equal. Example: 1.0.0-alpha &lt; 1.0.0-alpha.1 &lt;
+     * 1.0.0-alpha.beta &lt; 1.0.0-beta &lt; 1.0.0-beta.2 &lt; 1.0.0-beta.11 &lt; 1.0.0-rc.1 &lt;
+     * 1.0.0. </em>
      * </p>
      *
      * <p>
-     * This method fulfills the general contract for Java's {@link Comparator
-     * Comparators} and {@link Comparable Comparables}.
+     * This method fulfills the general contract for Java's {@link Comparator Comparators} and
+     * {@link Comparable Comparables}.
      * </p>
      *
      * @param v1 The first version for comparison.
@@ -1052,19 +623,18 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Compares two Versions with additionally considering the build meta data
-     * field if all other parts are equal. Note: This is <em>not</em> part of
-     * the semantic version specification.
+     * Compares two Versions with additionally considering the build meta data field if all other
+     * parts are equal. Note: This is <em>not</em> part of the semantic version specification.
      *
      * <p>
-     * Comparison of the build meta data parts happens exactly as for pre
-     * release identifiers. Considering of build meta data first kicks in if
-     * both versions are equal when using their natural order.
+     * Comparison of the build meta data parts happens exactly as for pre release identifiers.
+     * Considering of build meta data first kicks in if both versions are equal when using their
+     * natural order.
      * </p>
      *
      * <p>
-     * This method fulfills the general contract for Java's {@link Comparator
-     * Comparators} and {@link Comparable Comparables}.
+     * This method fulfills the general contract for Java's {@link Comparator Comparators} and
+     * {@link Comparable Comparables}.
      * </p>
      *
      * @param v1 The first version for comparison.
@@ -1168,8 +738,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Determines whether s is a positive number. If it is, the number is
-     * returned, otherwise the result is -1.
+     * Determines whether s is a positive number. If it is, the number is returned, otherwise the
+     * result is -1.
      *
      * @param s The String to check.
      * @return The positive number (incl. 0) if s a number, or -1 if it is not.
@@ -1223,13 +793,11 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Creates a new Version from the provided components. Neither value of
-     * {@code major, minor} or {@code patch} must be lower than 0 and at least
-     * one must be greater than zero. {@code preRelease} or
-     * {@code buildMetaData} may be the empty String. In this case, the created
-     * {@code Version} will have no pre release resp. build meta data field. If
-     * those parameters are not empty, they must conform to the semantic version
-     * specification.
+     * Creates a new Version from the provided components. Neither value of {@code major, minor} or
+     * {@code patch} must be lower than 0 and at least one must be greater than zero.
+     * {@code preRelease} or {@code buildMetaData} may be the empty String. In this case, the
+     * created {@code Version} will have no pre release resp. build meta data field. If those
+     * parameters are not empty, they must conform to the semantic version specification.
      *
      * @param major         The major version.
      * @param minor         The minor version.
@@ -1248,20 +816,19 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Creates a new Version from the provided components. The version's build
-     * meta data field will be empty. Neither value of {@code major, minor} or
-     * {@code patch} must be lower than 0 and at least one must be greater than
-     * zero. {@code preRelease} may be the empty String. In this case, the
-     * created version will have no pre release field. If it is not empty, it
-     * must conform to the specifications of the semantic version.
+     * Creates a new Version from the provided components. The version's build meta data field will
+     * be empty. Neither value of {@code major, minor} or {@code patch} must be lower than 0 and at
+     * least one must be greater than zero. {@code preRelease} may be the empty String. In this
+     * case, the created version will have no pre release field. If it is not empty, it must conform
+     * to the specifications of the semantic version.
      *
      * @param major      The major version.
      * @param minor      The minor version.
      * @param patch      The patch version.
      * @param preRelease The pre release version or the empty string.
      * @return The version instance.
-     * @throws VersionFormatException If {@code preRelease} is not empty and does not conform to
-     *                                the semantic versioning specification
+     * @throws VersionFormatException If {@code preRelease} is not empty and does not conform to the
+     *                                semantic versioning specification
      */
     public static final Version create(int major, int minor, int patch,
                                        String preRelease) {
@@ -1282,9 +849,9 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Creates a new Version from the three provided components. The version's
-     * pre release and build meta data fields will be empty. Neither value must
-     * be lower than 0 and at least one must be greater than zero
+     * Creates a new Version from the three provided components. The version's pre release and build
+     * meta data fields will be empty. Neither value must be lower than 0 and at least one must be
+     * greater than zero
      *
      * @param major The major version.
      * @param minor The minor version.
@@ -1309,9 +876,9 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Tries to parse branch or version strings. If branchString is not null
-     * then returns the branch. If branchVersion is null and versionString
-     * presented then tries to parse versionString. Else returns null.
+     * Tries to parse branch or version strings. If branchString is not null then returns the
+     * branch. If branchVersion is null and versionString presented then tries to parse
+     * versionString. Else returns null.
      *
      * @param branchString  The branch String to parse
      * @param versionString The version String to parse
@@ -1329,9 +896,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Tries to parse the provided String as a semantic version. If the string
-     * does not conform to the semantic version specification, a
-     * {@link VersionFormatException} will be thrown.
+     * Tries to parse the provided String as a semantic version. If the string does not conform to
+     * the semantic version specification, a {@link VersionFormatException} will be thrown.
      *
      * @param versionString The String to parse.
      * @return The parsed version.
@@ -1344,15 +910,14 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Tries to parse the provided String as a semantic version. If
-     * {@code allowPreRelease} is <code>false</code>, the String must have
-     * neither a pre-release nor a build meta data part. Thus the given String
-     * must have the format {@code X.Y.Z} where at least one part must be
+     * Tries to parse the provided String as a semantic version. If {@code allowPreRelease} is
+     * <code>false</code>, the String must have neither a pre-release nor a build meta data part.
+     * Thus the given String must have the format {@code X.Y.Z} where at least one part must be
      * greater than zero.
      *
      * <p>
-     * If {@code allowPreRelease} is <code>true</code>, the String is parsed
-     * according to the normal semantic version specification.
+     * If {@code allowPreRelease} is <code>true</code>, the String is parsed according to the normal
+     * semantic version specification.
      * </p>
      *
      * @param versionString   The String to parse.
@@ -1373,9 +938,411 @@ public final class Version implements Comparable<Version>, Serializable {
         return version;
     }
 
+    private static String join(String[] parts) {
+        if (parts.length == 0) {
+            return "";
+        }
+        final StringBuilder b = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            final String part = parts[i];
+            b.append(part);
+            if (i < parts.length - 1) {
+                b.append(".");
+            }
+        }
+        return b.toString();
+    }
+
+    private static String[] copyCase(String[] source, boolean toUpper) {
+        final String[] result = new String[source.length];
+        for (int i = 0; i < source.length; i++) {
+            final String string = source[i];
+            result[i] = toUpper ? string.toUpperCase() : string.toLowerCase();
+        }
+        return result;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public boolean isBranch() {
+        return branch != null && !branch.isEmpty();
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
     /**
-     * Returns the lower of this version and the given version according to its
-     * natural ordering. If versions are equal, {@code this} is returned.
+     * Creates a new Version from this one, replacing only the major part with the given one. All
+     * other parts will remain the same as in this Version.
+     *
+     * @param newMajor The new major version.
+     * @return A new Version.
+     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
+     * @since 1.1.0
+     */
+    public Version withMajor(int newMajor) {
+        return new Version(newMajor, this.minor, this.patch,
+                this.preReleaseParts, this.buildMetaDataParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the minor part with the given one. All
+     * other parts will remain the same as in this Version.
+     *
+     * @param newMinor The new minor version.
+     * @return A new Version.
+     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
+     * @since 1.1.0
+     */
+    public Version withMinor(int newMinor) {
+        return new Version(this.major, newMinor, this.patch,
+                this.preReleaseParts, this.buildMetaDataParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the patch part with the given one. All
+     * other parts will remain the same as in this Version.
+     *
+     * @param newPatch The new patch version.
+     * @return A new Version.
+     * @throws IllegalArgumentException If all fields in the resulting Version are 0.
+     * @since 1.1.0
+     */
+    public Version withPatch(int newPatch) {
+        return new Version(this.major, this.minor, newPatch,
+                this.preReleaseParts, this.buildMetaDataParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the pre-release part with the given
+     * String. All other parts will remain the same as in this Version. You can remove the
+     * pre-release part by passing an empty String.
+     *
+     * @param newPreRelease The new pre-release identifier.
+     * @return A new Version.
+     * @throws VersionFormatException   If the given String is not a valid pre-release identifier.
+     * @throws IllegalArgumentException If preRelease is null.
+     * @since 1.1.0
+     */
+    public Version withPreRelease(String newPreRelease) {
+        require(newPreRelease != null, "newPreRelease is null");
+        final String[] newPreReleaseParts = parsePreRelease(newPreRelease);
+        return new Version(this.major, this.minor, this.patch,
+                newPreReleaseParts, this.buildMetaDataParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the pre-release part with the given
+     * array. All other parts will remain the same as in this Version. You can remove the
+     * pre-release part by passing an empty array.
+     * <p>
+     * The passed array will be copied to not allow external modification to the new Version's inner
+     * state.
+     * </p>
+     *
+     * @param newPreRelease the new pre release parts.
+     * @return A new Version.
+     * @throws VersionFormatException   If the any element of the given array is not a valid pre
+     *                                  release identifier part.
+     * @throws IllegalArgumentException If newPreRelease is null.
+     * @since 1.2.0
+     */
+    public Version withPreRelease(String[] newPreRelease) {
+        require(newPreRelease != null, "newPreRelease is null");
+        final String[] newPreReleaseParts = verifyAndCopyArray(newPreRelease,
+                false);
+        return new Version(this.major, this.minor, this.patch,
+                newPreReleaseParts, this.buildMetaDataParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the build-meta-data part with the given
+     * String. All other parts will remain the same as in this Version. You can remove the
+     * build-meta-data part by passing an empty String.
+     *
+     * @param newBuildMetaData The new build meta data identifier.
+     * @return A new Version.
+     * @throws VersionFormatException   If the given String is not a valid build-meta-data
+     *                                  identifier.
+     * @throws IllegalArgumentException If newBuildMetaData is null.
+     * @since 1.1.0
+     */
+    public Version withBuildMetaData(String newBuildMetaData) {
+        require(newBuildMetaData != null, "newBuildMetaData is null");
+        final String[] newBuildMdParts = parseBuildMd(newBuildMetaData);
+        return new Version(this.major, this.minor, this.patch,
+                this.preReleaseParts, newBuildMdParts);
+    }
+
+    /**
+     * Creates a new Version from this one, replacing only the build-meta-data part with the given
+     * array. All other parts will remain the same as in this Version. You can remove the
+     * build-meta-data part by passing an empty array.
+     * <p>
+     * The passed array will be copied to not allow external modification to the new Version's inner
+     * state.
+     * </p>
+     *
+     * @param newBuildMetaData the new build meta data parts.
+     * @return A new Version.
+     * @throws VersionFormatException   If the any element of the given array is not a valid build
+     *                                  meta data identifier part.
+     * @throws IllegalArgumentException If newBuildMetaData is null.
+     * @since 1.2.0
+     */
+    public Version withBuildMetaData(String[] newBuildMetaData) {
+        require(newBuildMetaData != null, "newBuildMetaData is null");
+        final String[] newParts = verifyAndCopyArray(newBuildMetaData, true);
+        return new Version(this.major, this.minor, this.patch,
+                this.preReleaseParts, newParts);
+    }
+
+    private String[] verifyAndCopyArray(String parts[], boolean allowLeading0) {
+        final String[] result = new String[parts.length];
+        final StringBuilder b = new StringBuilder();
+        for (int i = 0; i < parts.length; ++i) {
+            final String part = parts[i];
+            result[i] = part;
+            parseIDPart(part.toCharArray(), 0, false, allowLeading0, false,
+                    false, b, "");
+        }
+        return result;
+    }
+
+    /**
+     * Given this Version, returns the next major Version. That is, the major part is incremented by
+     * 1 and the remaining parts are set to 0. This also drops the pre-release and build-meta-data.
+     *
+     * @return The incremented version.
+     * @see #nextMajor(String)
+     * @see #nextMajor(String[])
+     * @since 1.2.0
+     */
+    public Version nextMajor() {
+        return new Version(this.major + 1, 0, 0, EMPTY_ARRAY, EMPTY_ARRAY);
+    }
+
+    /**
+     * Given this Version, returns the next major Version. That is, the major part is incremented by
+     * 1 and the remaining parts are set to 0. The pre-release part will be set to the given
+     * identifier and the build-meta-data is dropped.
+     *
+     * @param newPrelease The pre-release part for the resulting Version.
+     * @return The incremented version.
+     * @throws VersionFormatException   If the given String is not a valid pre-release identifier.
+     * @throws IllegalArgumentException If newPreRelease is null.
+     * @see #nextMajor()
+     * @see #nextMajor(String[])
+     * @since 1.2.0
+     */
+    public Version nextMajor(String newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] preReleaseParts = parsePreRelease(newPrelease);
+        return new Version(this.major + 1, 0, 0, preReleaseParts, EMPTY_ARRAY);
+    }
+
+    /**
+     * Given this Version, returns the next major Version. That is, the major part is incremented by
+     * 1 and the remaining parts are set to 0. The pre-release part will be set to the given
+     * identifier and the build-meta-data is dropped.
+     *
+     * @param newPrelease The pre-release part for the resulting Version.
+     * @return The incremented version.
+     * @throws VersionFormatException   If the any element of the given array is not a valid pre
+     *                                  release identifier part.
+     * @throws IllegalArgumentException If newPreRelease is null.
+     * @see #nextMajor()
+     * @see #nextMajor(String)
+     * @since 1.2.0
+     */
+    public Version nextMajor(String[] newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
+                false);
+        return new Version(this.major + 1, 0, 0, newPreReleaseParts,
+                EMPTY_ARRAY);
+    }
+
+    public Version nextMinor() {
+        return new Version(this.major, this.minor + 1, 0, EMPTY_ARRAY,
+                EMPTY_ARRAY);
+    }
+
+    public Version nextMinor(String newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] preReleaseParts = parsePreRelease(newPrelease);
+        return new Version(this.major, this.minor + 1, 0, preReleaseParts,
+                EMPTY_ARRAY);
+    }
+
+    public Version nextMinor(String[] newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
+                false);
+        return new Version(this.major, this.minor + 1, 0, newPreReleaseParts,
+                EMPTY_ARRAY);
+    }
+
+    public Version nextPatch() {
+        return new Version(this.major, this.minor, this.patch + 1, EMPTY_ARRAY,
+                EMPTY_ARRAY);
+    }
+
+    public Version nextPatch(String newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] preReleaseParts = parsePreRelease(newPrelease);
+        return new Version(this.major, this.minor, this.patch + 1,
+                preReleaseParts, EMPTY_ARRAY);
+    }
+
+    public Version nextPatch(String[] newPrelease) {
+        require(newPrelease != null, "newPreRelease is null");
+        final String[] newPreReleaseParts = verifyAndCopyArray(newPrelease,
+                false);
+        return new Version(this.major, this.minor, this.patch + 1,
+                newPreReleaseParts, EMPTY_ARRAY);
+    }
+
+    /**
+     * Derives a new Version instance from this one by only incrementing the pre-release identifier.
+     * The build-meta-data will be dropped, all other fields remain the same.
+     *
+     * <p>
+     * The incrementation of the pre-release identifier behaves as follows:
+     * <ul>
+     * <li>In case the identifier is currently empty, it becomes "1" in the
+     * result.</li>
+     * <li>If the identifier's last part is numeric, that last part will be
+     * incremented in the result.</li>
+     * <li>If the last part is not numeric, the identifier is interpreted as
+     * {@code identifier.0} which becomes {@code identifier.1} after increment.
+     * </ul>
+     * Examples:
+     *
+     * <table>
+     * <tr>
+     * <th>Version</th>
+     * <th>After increment</th>
+     * </tr>
+     * <tr>
+     * <td>1.2.3</td>
+     * <td>1.2.3-1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3+build.meta.data</td>
+     * <td>1.2.3-1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3-foo</td>
+     * <td>1.2.3-foo.1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3-foo.1</td>
+     * <td>1.2.3-foo.2</td>
+     * </tr>
+     * </table>
+     * </p>
+     *
+     * @return The incremented Version.
+     * @since 1.2.0
+     */
+    public Version nextPreRelease() {
+        final String[] newPreReleaseParts = incrementIdentifier(
+                this.preReleaseParts);
+        return new Version(this.major, this.minor, this.patch,
+                newPreReleaseParts, EMPTY_ARRAY);
+    }
+
+    /**
+     * Derives a new Version instance from this one by only incrementing the build-meta-data
+     * identifier. All other fields remain the same.
+     *
+     * <p>
+     * The incrementation of the build-meta-data identifier behaves as follows:
+     * <ul>
+     * <li>In case the identifier is currently empty, it becomes "1" in the
+     * result.</li>
+     * <li>If the identifier's last part is numeric, that last part will be
+     * incremented in the result. <b>Leading 0's will be removed</b>.</li>
+     * <li>If the last part is not numeric, the identifier is interpreted as
+     * {@code identifier.0} which becomes {@code identifier.1} after increment.
+     * </ul>
+     * Examples:
+     *
+     * <table>
+     * <tr>
+     * <th>Version</th>
+     * <th>After increment</th>
+     * </tr>
+     * <tr>
+     * <td>1.2.3</td>
+     * <td>1.2.3+1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3-pre.release</td>
+     * <td>1.2.3-pre.release+1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3+foo</td>
+     * <td>1.2.3+foo.1</td>
+     * </tr>
+     * <tr>
+     * <td>1.2.3+foo.1</td>
+     * <td>1.2.3+foo.2</td>
+     * </tr>
+     * </table>
+     * </p>
+     *
+     * @return The incremented Version.
+     * @since 1.2.0
+     */
+    public Version nextBuildMetaData() {
+        final String[] newBuildMetaData = incrementIdentifier(
+                this.buildMetaDataParts);
+        return new Version(this.major, this.minor, this.patch,
+                this.preReleaseParts, newBuildMetaData);
+    }
+
+    private String[] incrementIdentifier(String[] parts) {
+        if (parts.length == 0) {
+            return new String[]{"1"};
+        }
+        final int lastIdx = parts.length - 1;
+        final String lastPart = parts[lastIdx];
+
+        int num = isNumeric(lastPart);
+        int newLength = parts.length;
+        if (num >= 0) {
+            num += 1;
+        } else {
+            newLength += 1;
+            num = 1;
+        }
+        final String[] result = arrayCopyOf(parts, newLength); // Arrays.copyOf
+        result[newLength - 1] = String.valueOf(num);
+        return result;
+    }
+
+    /**
+     * GWT 2.7 doesn't support Arrays.copyOf(String[], int)
+     *
+     * @param original
+     * @param newLength
+     * @return
+     */
+    private String[] arrayCopyOf(String[] original, int newLength) {
+        String[] copy = new String[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                Math.min(original.length, newLength));
+        return copy;
+    }
+
+    /**
+     * Returns the lower of this version and the given version according to its natural ordering. If
+     * versions are equal, {@code this} is returned.
      *
      * @param other The version to compare with.
      * @return The lower version.
@@ -1388,8 +1355,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns the greater of this version and the given version according to
-     * its natural ordering. If versions are equal, {@code this} is returned.
+     * Returns the greater of this version and the given version according to its natural ordering.
+     * If versions are equal, {@code this} is returned.
      *
      * @param other The version to compare with.
      * @return The greater version.
@@ -1429,12 +1396,10 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Gets the pre release identifier parts of this version as array. Modifying
-     * the resulting array will have no influence on the internal state of this
-     * object.
+     * Gets the pre release identifier parts of this version as array. Modifying the resulting array
+     * will have no influence on the internal state of this object.
      *
-     * @return Pre release version as array. Array is empty if this version has
-     * no pre release part.
+     * @return Pre release version as array. Array is empty if this version has no pre release part.
      */
     public String[] getPreReleaseParts() {
         if (this.preReleaseParts.length == 0) {
@@ -1444,59 +1409,41 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Gets the pre release identifier of this version. If this version has no
-     * such identifier, an empty string is returned.
+     * Gets the pre release identifier of this version. If this version has no such identifier, an
+     * empty string is returned.
      *
      * <p>
-     * Note: This method will always reconstruct a new String by joining the
-     * single identifier parts.
+     * Note: This method will always reconstruct a new String by joining the single identifier
+     * parts.
      * </p>
      *
-     * @return This version's pre release identifier or an empty String if this
-     * version has no such identifier.
+     * @return This version's pre release identifier or an empty String if this version has no such
+     * identifier.
      */
     public String getPreRelease() {
         return join(this.preReleaseParts);
     }
 
     /**
-     * Gets this version's build meta data. If this version has no build meta
-     * data, the returned string is empty.
+     * Gets this version's build meta data. If this version has no build meta data, the returned
+     * string is empty.
      *
      * <p>
-     * Note: This method will always reconstruct a new String by joining the
-     * single identifier parts.
+     * Note: This method will always reconstruct a new String by joining the single identifier
+     * parts.
      * </p>
      *
-     * @return The build meta data or an empty String if this version has no
-     * build meta data.
+     * @return The build meta data or an empty String if this version has no build meta data.
      */
     public String getBuildMetaData() {
         return join(this.buildMetaDataParts);
     }
 
-    private static String join(String[] parts) {
-        if (parts.length == 0) {
-            return "";
-        }
-        final StringBuilder b = new StringBuilder();
-        for (int i = 0; i < parts.length; i++) {
-            final String part = parts[i];
-            b.append(part);
-            if (i < parts.length - 1) {
-                b.append(".");
-            }
-        }
-        return b.toString();
-    }
-
     /**
-     * Gets the build meta data identifier parts of this version as array.
-     * Modifying the resulting array will have no influence on the internal
-     * state of this object.
+     * Gets the build meta data identifier parts of this version as array. Modifying the resulting
+     * array will have no influence on the internal state of this object.
      *
-     * @return Build meta data as array. Array is empty if this version has no
-     * build meta data part.
+     * @return Build meta data as array. Array is empty if this version has no build meta data part.
      */
     public String[] getBuildMetaDataParts() {
         if (this.buildMetaDataParts.length == 0) {
@@ -1534,8 +1481,8 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Creates a String representation of this version by joining its parts
-     * together as by the semantic version specification.
+     * Creates a String representation of this version by joining its parts together as by the
+     * semantic version specification.
      *
      * @return The version as a String.
      */
@@ -1560,9 +1507,9 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * The hash code for a version instance is computed from the fields
-     * {@link #getMajor() major}, {@link #getMinor() minor}, {@link #getPatch()
-     * patch} and {@link #getPreRelease() pre-release}.
+     * The hash code for a version instance is computed from the fields {@link #getMajor() major},
+     * {@link #getMinor() minor}, {@link #getPatch() patch} and
+     * {@link #getPreRelease() pre-release}.
      *
      * @return A hash code for this object.
      */
@@ -1584,10 +1531,9 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Determines whether this version is equal to the passed object. This is
-     * the case if the passed object is an instance of Version and this version
-     * {@link #compareTo(Version) compared} to the provided one yields 0. Thus,
-     * this method ignores the {@link #getBuildMetaData()} field.
+     * Determines whether this version is equal to the passed object. This is the case if the passed
+     * object is an instance of Version and this version {@link #compareTo(Version) compared} to the
+     * provided one yields 0. Thus, this method ignores the {@link #getBuildMetaData()} field.
      *
      * @param obj the object to compare with.
      * @return <code>true</code> iff {@code obj} is an instance of
@@ -1600,9 +1546,9 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Determines whether this version is equal to the passed object (as
-     * determined by {@link #equals(Object)} and additionally considers the
-     * build meta data part of both versions for equality.
+     * Determines whether this version is equal to the passed object (as determined by
+     * {@link #equals(Object)} and additionally considers the build meta data part of both versions
+     * for equality.
      *
      * @param obj The object to compare with.
      * @return <code>true</code> iff {@code this.equals(obj)} and
@@ -1619,14 +1565,12 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Compares this version to the provided one, following the <em>semantic
-     * versioning</em> specification. See {@link #compare(Version, Version)} for
-     * more information.
+     * Compares this version to the provided one, following the <em>semantic versioning</em>
+     * specification. See {@link #compare(Version, Version)} for more information.
      *
      * @param other The version to compare to.
-     * @return A value lower than 0 if this &lt; other, a value greater than 0
-     * if this &gt; other and 0 if this == other. The absolute value of
-     * the result has no semantical interpretation.
+     * @return A value lower than 0 if this &lt; other, a value greater than 0 if this &gt; other
+     * and 0 if this == other. The absolute value of the result has no semantical interpretation.
      */
     @Override
     public int compareTo(Version other) {
@@ -1634,21 +1578,19 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Compares this version to the provided one. Unlike the
-     * {@link #compareTo(Version)} method, this one additionally considers the
-     * build meta data field of both versions, if all other parts are equal.
-     * Note: This is <em>not</em> part of the semantic version specification.
+     * Compares this version to the provided one. Unlike the {@link #compareTo(Version)} method,
+     * this one additionally considers the build meta data field of both versions, if all other
+     * parts are equal. Note: This is <em>not</em> part of the semantic version specification.
      *
      * <p>
-     * Comparison of the build meta data parts happens exactly as for pre
-     * release identifiers. Considering of build meta data first kicks in if
-     * both versions are equal when using their natural order.
+     * Comparison of the build meta data parts happens exactly as for pre release identifiers.
+     * Considering of build meta data first kicks in if both versions are equal when using their
+     * natural order.
      * </p>
      *
      * @param other The version to compare to.
-     * @return A value lower than 0 if this &lt; other, a value greater than 0
-     * if this &gt; other and 0 if this == other. The absolute value of
-     * the result has no semantical interpretation.
+     * @return A value lower than 0 if this &lt; other, a value greater than 0 if this &gt; other
+     * and 0 if this == other. The absolute value of the result has no semantical interpretation.
      * @since 0.3.0
      */
     public int compareToWithBuildMetaData(Version other) {
@@ -1656,8 +1598,7 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns a new Version where all identifiers are converted to upper case
-     * letters.
+     * Returns a new Version where all identifiers are converted to upper case letters.
      *
      * @return A new version with upper case identifiers.
      * @since 1.1.0
@@ -1669,8 +1610,7 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Returns a new Version where all identifiers are converted to lower case
-     * letters.
+     * Returns a new Version where all identifiers are converted to lower case letters.
      *
      * @return A new version with lower case identifiers.
      * @since 1.1.0
@@ -1681,22 +1621,12 @@ public final class Version implements Comparable<Version>, Serializable {
                 copyCase(this.buildMetaDataParts, false));
     }
 
-    private static String[] copyCase(String[] source, boolean toUpper) {
-        final String[] result = new String[source.length];
-        for (int i = 0; i < source.length; i++) {
-            final String string = source[i];
-            result[i] = toUpper ? string.toUpperCase() : string.toLowerCase();
-        }
-        return result;
-    }
-
     /**
-     * Tests whether this version is strictly greater than the given other
-     * version in terms of precedence. Does not consider the build meta data
-     * part.
+     * Tests whether this version is strictly greater than the given other version in terms of
+     * precedence. Does not consider the build meta data part.
      * <p>
-     * Convenience method for {@code this.compareTo(other) > 0} except that this
-     * method throws an {@link IllegalArgumentException} if other is null.
+     * Convenience method for {@code this.compareTo(other) > 0} except that this method throws an
+     * {@link IllegalArgumentException} if other is null.
      * </p>
      *
      * @param other The version to compare to.
@@ -1709,11 +1639,11 @@ public final class Version implements Comparable<Version>, Serializable {
     }
 
     /**
-     * Tests whether this version is strictly lower than the given other version
-     * in terms of precedence. Does not consider the build meta data part.
+     * Tests whether this version is strictly lower than the given other version in terms of
+     * precedence. Does not consider the build meta data part.
      * <p>
-     * Convenience method for {@code this.compareTo(other) < 0} except that this
-     * method throws an {@link IllegalArgumentException} if other is null.
+     * Convenience method for {@code this.compareTo(other) < 0} except that this method throws an
+     * {@link IllegalArgumentException} if other is null.
      * </p>
      *
      * @param other The version to compare to.
@@ -1723,6 +1653,26 @@ public final class Version implements Comparable<Version>, Serializable {
     public boolean isLowerThan(Version other) {
         require(other != null, "other must no be null");
         return compareTo(other) < 0;
+    }
+
+    /**
+     * This exception indicates that a version- or a part of a version string could not be parsed
+     * according to the semantic version specification.
+     *
+     * @author Simon Taddiken
+     */
+    public static class VersionFormatException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Creates a new VersionFormatException with the given message.
+         *
+         * @param message The exception message.
+         */
+        private VersionFormatException(String message) {
+            super(message);
+        }
     }
 
 }

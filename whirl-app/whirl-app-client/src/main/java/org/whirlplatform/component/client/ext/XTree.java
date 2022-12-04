@@ -28,23 +28,31 @@ import com.sencha.gxt.widget.core.client.event.CheckChangeEvent;
 import com.sencha.gxt.widget.core.client.event.CheckChangeEvent.CheckChangeHandler;
 import com.sencha.gxt.widget.core.client.form.TextField;
 import com.sencha.gxt.widget.core.client.tree.Tree;
+import java.util.ArrayList;
+import java.util.List;
 import org.whirlplatform.component.client.resource.ApplicationBundle;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Дерево для корректной работы с поиском. Обычное неправильно работало при
- * CheckCascade = TRI
+ * Дерево для корректной работы с поиском. Обычное неправильно работало при CheckCascade = TRI
  */
-public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasValueChangeHandlers<M> {
+public class XTree<M extends RowModelData, C> extends Tree<M, C>
+        implements HasValueChangeHandlers<M> {
 
     private Command searchCommand;
     private TextField searchField;
     private Image searchButton;
     private BaseEventPreview eventPreview;
     private boolean filtered;
+
+    public XTree(TreeStore<M> store, ValueProvider<? super M, C> valueProvider,
+                 TreeAppearance appearance) {
+        super(store, valueProvider, appearance);
+    }
+
+    public XTree(TreeStore<M> store, ValueProvider<? super M, C> valueProvider) {
+        super(store, valueProvider);
+    }
 
     private boolean onHideSearch(NativePreviewEvent pe) {
         XElement target = pe.getNativeEvent().getEventTarget().cast();
@@ -55,26 +63,19 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
         return true;
     }
 
-    private void showSearch() {
-        eventPreview.add();
-        RootPanel.get().add(searchField);
-        searchField.getElement().makePositionable(true);
-        searchField.setPosition(getAbsoluteLeft(), getAbsoluteTop());
-        searchField.setWidth(XTree.this.getElement().getWidth(false) - 25 - searchButton.getElement().getOffsetWidth());
-        searchField.focus();
-    }
-
     private void hideSearch() {
         RootPanel.get().remove(searchField);
         eventPreview.remove();
     }
 
-    public XTree(TreeStore<M> store, ValueProvider<? super M, C> valueProvider) {
-        super(store, valueProvider);
-    }
-
-    public XTree(TreeStore<M> store, ValueProvider<? super M, C> valueProvider, TreeAppearance appearance) {
-        super(store, valueProvider, appearance);
+    private void showSearch() {
+        eventPreview.add();
+        RootPanel.get().add(searchField);
+        searchField.getElement().makePositionable(true);
+        searchField.setPosition(getAbsoluteLeft(), getAbsoluteTop());
+        searchField.setWidth(XTree.this.getElement().getWidth(false) - 25 -
+                searchButton.getElement().getOffsetWidth());
+        searchField.focus();
     }
 
     /**
@@ -162,69 +163,69 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
         hideSearch();
     }
 
-//	@Override
-//	protected void onTriCheckCascade(M model, com.sencha.gxt.widget.core.client.tree.Tree.CheckState checked) {
-//		if (checked == CheckState.CHECKED) {
+//    @Override
+//    protected void onTriCheckCascade(M model, com.sencha.gxt.widget.core.client.tree.Tree.CheckState checked) {
+//        if (checked == CheckState.CHECKED) {
 //
-//			List<M> children = store.getAllChildren(model);
-//			cascade = false;// TODO 
-//			for (M child : children) {
-//				TreeNode<M> n = findNode(child);
-//				if (n != null) {
-//					setChecked(child, checked);
-//				}
-//			}
+//            List<M> children = store.getAllChildren(model);
+//            cascade = false;// TODO 
+//            for (M child : children) {
+//                TreeNode<M> n = findNode(child);
+//                if (n != null) {
+//                    setChecked(child, checked);
+//                }
+//            }
 //
-//			M parent = store.getParent(model);
-//			while (parent != null) {
-//				boolean allChildrenChecked = true;
-//				for (M child : store.getAllChildren(parent)) {
-//					TreeNode<M> n = findNode(child);
-//					if (n != null) {
-//						if (!isChecked(child)) {
-//							allChildrenChecked = false;
-//						}
-//					}
-//				}
+//            M parent = store.getParent(model);
+//            while (parent != null) {
+//                boolean allChildrenChecked = true;
+//                for (M child : store.getAllChildren(parent)) {
+//                    TreeNode<M> n = findNode(child);
+//                    if (n != null) {
+//                        if (!isChecked(child)) {
+//                            allChildrenChecked = false;
+//                        }
+//                    }
+//                }
 //
-//				if (!allChildrenChecked || model.getLevelCount() > store.getChildCount(parent)) {
-//					setChecked(parent, CheckState.PARTIAL);
-//				} else {
-//					setChecked(parent, CheckState.CHECKED);
-//				}
+//                if (!allChildrenChecked || model.getLevelCount() > store.getChildCount(parent)) {
+//                    setChecked(parent, CheckState.PARTIAL);
+//                } else {
+//                    setChecked(parent, CheckState.CHECKED);
+//                }
 //
-//				parent = store.getParent(parent);
+//                parent = store.getParent(parent);
 //
-//			}
-//			cascade = true; //TODO
-//		} else if (checked == CheckState.UNCHECKED) {
-//			List<M> children = store.getAllChildren(model);
-//			cascade = false; //TODO
-//			for (M child : children) {
-//				setChecked(child, checked);
-//			}
+//            }
+//            cascade = true; //TODO
+//        } else if (checked == CheckState.UNCHECKED) {
+//            List<M> children = store.getAllChildren(model);
+//            cascade = false; //TODO
+//            for (M child : children) {
+//                setChecked(child, checked);
+//            }
 //
-//			M parent = store.getParent(model);
-//			while (parent != null) {
-//				boolean anyChildChecked = false;
-//				for (M child : store.getAllChildren(parent)) {
-//					if (isChecked(child)) {
-//						anyChildChecked = true;
-//					}
-//				}
+//            M parent = store.getParent(model);
+//            while (parent != null) {
+//                boolean anyChildChecked = false;
+//                for (M child : store.getAllChildren(parent)) {
+//                    if (isChecked(child)) {
+//                        anyChildChecked = true;
+//                    }
+//                }
 //
-//				if (anyChildChecked) {
-//					setChecked(parent, CheckState.PARTIAL);
-//				} else {
-//					setChecked(parent, CheckState.UNCHECKED);
-//				}
+//                if (anyChildChecked) {
+//                    setChecked(parent, CheckState.PARTIAL);
+//                } else {
+//                    setChecked(parent, CheckState.UNCHECKED);
+//                }
 //
-//				parent = store.getParent(parent);
-//			}
+//                parent = store.getParent(parent);
+//            }
 //
-//			cascade = true; //TODO
-//		}
-//	}
+//            cascade = true; //TODO
+//        }
+//    }
 
     public String getSearchText() {
         return searchField == null ? "" : searchField.getText();
@@ -238,6 +239,10 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
         return searchButton;
     }
 
+    public boolean isFiltered() {
+        return filtered;
+    }
+
     public void setFiltered(boolean filtered) {
         this.filtered = filtered;
         if (filtered) {
@@ -245,10 +250,6 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
         } else {
             searchButton.setResource(ApplicationBundle.INSTANCE.magnifier());
         }
-    }
-
-    public boolean isFiltered() {
-        return filtered;
     }
 
     public void setSingleSelectionCheckMode() {
@@ -313,7 +314,8 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
     }
 
     @Override
-    protected void onCheckClick(Event event, com.sencha.gxt.widget.core.client.tree.Tree.TreeNode<M> node) {
+    protected void onCheckClick(Event event,
+                                com.sencha.gxt.widget.core.client.tree.Tree.TreeNode<M> node) {
         super.onCheckClick(event, node);
         List<M> checked = getCheckedSelection();
         ValueChangeEvent.fire(this, checked.size() == 0 ? null : checked.get(0));
@@ -328,8 +330,8 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C> implements HasV
     }
 
     /**
-     * Чтобы срабатывал changeEvent при разворачивании ветки с выбранным
-     * элементом и checkStyle == child
+     * Чтобы срабатывал changeEvent при разворачивании ветки с выбранным элементом и checkStyle ==
+     * child
      */
     @Override
     protected void onDataChanged(StoreDataChangeEvent<M> event) {

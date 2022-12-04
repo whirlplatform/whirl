@@ -20,24 +20,26 @@ public abstract class LabelBuilderOverlay {
     }
 
     /**
+     * Получение родительского компонента
+     *
+     * @param instance - LabelBuilder
+     * @return ComponentBuilder, компонент
+     */
+    public static ComponentBuilder getParent(LabelBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
      * Устанавливает идентификатор элемента в DOM документа.
      *
      * @param domId
      */
     public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установка кода тексту
-     *
-     * @param name - Strinng, код
-     */
-    public abstract void setCode(String name);
 
     /**
      * Получение кода у текста
@@ -47,11 +49,11 @@ public abstract class LabelBuilderOverlay {
     public abstract String getCode();
 
     /**
-     * Установка активности текста
+     * Установка кода тексту
      *
-     * @param enabled - boolean
+     * @param name - Strinng, код
      */
-    public abstract void setEnabled(boolean enabled);
+    public abstract void setCode(String name);
 
     /**
      * Получение информации об активности текста
@@ -61,11 +63,11 @@ public abstract class LabelBuilderOverlay {
     public abstract boolean isEnabled();
 
     /**
-     * Установка скрытости текста
+     * Установка активности текста
      *
-     * @param hidden - boolean
+     * @param enabled - boolean
      */
-    public abstract void setHidden(boolean hidden);
+    public abstract void setEnabled(boolean enabled);
 
     /**
      * Получение инфформации об скрытости текста
@@ -75,18 +77,18 @@ public abstract class LabelBuilderOverlay {
     public abstract boolean isHidden();
 
     /**
+     * Установка скрытости текста
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
      * Установить стиль тексту
      *
      * @param styleName - String
      */
     public abstract void setStyleName(String styleName);
-
-    /**
-     * Установка текста
-     *
-     * @param value - Stirng, текст
-     */
-    public abstract void setHtml(String value);
 
     /**
      * Получение текста
@@ -96,14 +98,11 @@ public abstract class LabelBuilderOverlay {
     public abstract String getHtml();
 
     /**
-     * Получение родительского компонента
+     * Установка текста
      *
-     * @param instance - LabelBuilder
-     * @return ComponentBuilder, компонент
+     * @param value - Stirng, текст
      */
-    public static ComponentBuilder getParent(LabelBuilder instance) {
-        return instance.getParentBuilder();
-    }
+    public abstract void setHtml(String value);
 
     /**
      * Установить фокус на надпись

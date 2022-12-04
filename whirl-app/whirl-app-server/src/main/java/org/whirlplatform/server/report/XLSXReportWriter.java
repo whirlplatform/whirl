@@ -1,7 +1,24 @@
 
 package org.whirlplatform.server.report;
 
-import org.apache.poi.ss.usermodel.*;
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -18,20 +35,13 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.FormWriter;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.XPoint;
-
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 // TODO подумать как выстроить нормальную иерархию классов для форм
 public class XLSXReportWriter extends FormWriter {
@@ -53,7 +63,8 @@ public class XLSXReportWriter extends FormWriter {
     private CreationHelper helper;
 
     public XLSXReportWriter(ConnectionProvider connectionProvider, Report report,
-                            FormElementWrapper form, Collection<DataValue> startParams, ApplicationUser user) {
+                            FormElementWrapper form, Collection<DataValue> startParams,
+                            ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         this.report = report;
 
@@ -72,7 +83,8 @@ public class XLSXReportWriter extends FormWriter {
     }
 
     @Override
-    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest, Map<String, DataValue> params) {
+    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest,
+                                              Map<String, DataValue> params) {
         addParams(dest, params);
     }
 
@@ -112,7 +124,8 @@ public class XLSXReportWriter extends FormWriter {
 
                 if (c.getBackgroundColor() != null) {
                     String tmpColor = c.getBackgroundColor();
-                    tmpColor = tmpColor.startsWith("#") ? tmpColor.replace("#", "0x") : "0x".concat(tmpColor);
+                    tmpColor = tmpColor.startsWith("#") ? tmpColor.replace("#", "0x") :
+                            "0x".concat(tmpColor);
                     s.setFillForegroundColor(new XSSFColor(Color.decode(tmpColor)));
                 } else if (backgroud != null) {
                     s.setFillForegroundColor(new XSSFColor(backgroud));
@@ -163,16 +176,21 @@ public class XLSXReportWriter extends FormWriter {
                             font.setColor(IndexedColors.BLACK.getIndex());
                         }
 
-                        String weight = !component.containsValue(PropertyType.FontWeight.getCode()) ? null
-                                : component.getValue(PropertyType.FontWeight.getCode()).getString();
+                        String weight =
+                                !component.containsValue(PropertyType.FontWeight.getCode()) ? null
+                                        : component.getValue(PropertyType.FontWeight.getCode())
+                                        .getString();
                         if (weight != null) {
-                            if ("bold".equalsIgnoreCase(weight) || "bolder".equalsIgnoreCase(weight)) {
+                            if ("bold".equalsIgnoreCase(weight) ||
+                                    "bolder".equalsIgnoreCase(weight)) {
                                 font.setBold(true);
                             }
                         }
 
-                        String size = !component.containsValue(PropertyType.FontSize.getCode()) ? null
-                                : component.getValue(PropertyType.FontSize.getCode()).getString();
+                        String size =
+                                !component.containsValue(PropertyType.FontSize.getCode()) ? null
+                                        : component.getValue(PropertyType.FontSize.getCode())
+                                        .getString();
                         if (size != null) {
                             if (size.contains("px")) {
                                 try {
@@ -197,16 +215,20 @@ public class XLSXReportWriter extends FormWriter {
                             font.setFontHeightInPoints((short) 10);
                         }
 
-                        String style = !component.containsValue(PropertyType.FontStyle.getCode()) ? null
-                                : component.getValue(PropertyType.FontStyle.getCode()).getString();
+                        String style =
+                                !component.containsValue(PropertyType.FontStyle.getCode()) ? null
+                                        : component.getValue(PropertyType.FontStyle.getCode())
+                                        .getString();
                         if (style != null) {
                             if ("italic".equalsIgnoreCase(style)) {
                                 font.setItalic(true);
                             }
                         }
 
-                        String fontName = !component.containsValue(PropertyType.FontFamily.getCode()) ? null
-                                : component.getValue(PropertyType.FontFamily.getCode()).getString();
+                        String fontName =
+                                !component.containsValue(PropertyType.FontFamily.getCode()) ? null
+                                        : component.getValue(PropertyType.FontFamily.getCode())
+                                        .getString();
                         if (fontName != null) {
                             font.setFontName(fontName);
                         } else {
@@ -217,8 +239,10 @@ public class XLSXReportWriter extends FormWriter {
                     }
                     if (ComponentType.LabelType == c.getComponent().getType()
                             || ComponentType.HtmlType == c.getComponent().getType()) {
-                        String format = !c.getComponent().containsValue(PropertyType.ReportDataFormat.getCode()) ? null
-                                : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode()).getString();
+                        String format = !c.getComponent()
+                                .containsValue(PropertyType.ReportDataFormat.getCode()) ? null
+                                : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode())
+                                .getString();
                         if (format != null && !format.isEmpty()) {
                             s.setDataFormat(helper.createDataFormat().getFormat(format));
                         }
@@ -255,8 +279,9 @@ public class XLSXReportWriter extends FormWriter {
 
         if (rowSpan > 1 || colSpan > 1) {
             int col = cell.getColumn().getFinalCol();
-            sheet.addMergedRegion(new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
-                    col + cell.getColSpan() - 1));
+            sheet.addMergedRegion(
+                    new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
+                            col + cell.getColSpan() - 1));
         }
     }
 
@@ -294,7 +319,8 @@ public class XLSXReportWriter extends FormWriter {
         ComponentModel component = cell.getComponent();
         writeComponent(component);
 
-        CellStyle style = styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
+        CellStyle style =
+                styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
         currentCell.setCellStyle(style);
         // end cell
     }
@@ -305,14 +331,16 @@ public class XLSXReportWriter extends FormWriter {
             return;
         }
         if (component.hasValues()) {
-            component.setValue("Type", new DataValueImpl(DataType.STRING, component.getType().name()));
+            component.setValue("Type",
+                    new DataValueImpl(DataType.STRING, component.getType().name()));
             writeComponentProperties(component);
         }
         // end component
     }
 
     private void writeComponentProperties(ComponentModel component) {
-        if (ComponentType.LabelType == component.getType() || ComponentType.HtmlType == component.getType()) {
+        if (ComponentType.LabelType == component.getType() ||
+                ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                     : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null

@@ -20,6 +20,9 @@ import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.ComponentTypeUtil;
 import org.whirlplatform.component.client.Containable;
@@ -41,384 +44,380 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 public class ComponentDesigner extends AbstractDesigner {
 
-	private static final double DEFAULT_COMPONENT_WIDTH = 600;
-	private static final double DEFAULT_COMPONENT_HEIGHT = 350;
+    private static final double DEFAULT_COMPONENT_WIDTH = 600;
+    private static final double DEFAULT_COMPONENT_HEIGHT = 350;
 
-	protected ComponentBuilder rootBuilder;
-	protected Map<ComponentElement, ComponentBuilder> builders = new HashMap<>();
+    protected ComponentBuilder rootBuilder;
+    protected Map<ComponentElement, ComponentBuilder> builders = new HashMap<>();
 
-	protected ToolBar toolBar;
-	private TextButton delete;
+    protected ToolBar toolBar;
+    /**
+     * Компонент, выделенный по клику мышкой
+     */
+    protected ComponentElement selectedElement;
+    protected Map<Element, Surface> selectedSurface = new HashMap<>();
+    private TextButton delete;
+    private SimpleContainer container;
+    private Resizable resizable;
+    private FlowLayoutContainer outer;
+    private FlowLayoutContainer inner;
 
-	private SimpleContainer container;
-	private Resizable resizable;
-	private FlowLayoutContainer outer;
-	private FlowLayoutContainer inner;
+    public ComponentDesigner(LocaleElement defaultLocale, ComponentElement element) {
+        super(defaultLocale, element);
+        initUI();
+        initRootComponent(element);
+        setWidth((int) designWidth(element));
+        setHeight((int) designHeight(element));
+    }
 
-	/**
-	 * Компонент, выделенный по клику мышкой
-	 */
-	protected ComponentElement selectedElement;
-	protected Map<Element, Surface> selectedSurface = new HashMap<>();
+    protected void initUI() {
+        setBorders(true);
+        getElement().getStyle().setBackgroundColor("#FFFFFF");
 
-	public ComponentDesigner(LocaleElement defaultLocale, ComponentElement element) {
-		super(defaultLocale, element);
-		initUI();
-		initRootComponent(element);
-		setWidth((int) designWidth(element));
-		setHeight((int) designHeight(element));
-	}
+        initToolbar();
 
-	protected void initUI() {
-		setBorders(true);
-		getElement().getStyle().setBackgroundColor("#FFFFFF");
+        outer = new FlowLayoutContainer();
+        outer.setScrollMode(ScrollMode.ALWAYS);
 
-		initToolbar();
+        inner = new FlowLayoutContainer();
 
-		outer = new FlowLayoutContainer();
-		outer.setScrollMode(ScrollMode.ALWAYS);
+        container = new SimpleContainer();
+        container.setBorders(true);
+        container.setLayoutData(new MarginData(8));
+        setAllowTextSelection(false);
+        inner.add(container);
+        outer.add(inner);
+        add(outer);
 
-		inner = new FlowLayoutContainer();
+        resizable = new Resizable(container, Dir.E, Dir.SE, Dir.S);
 
-		container = new SimpleContainer();
-		container.setBorders(true);
-		container.setLayoutData(new MarginData(8));
-		setAllowTextSelection(false);
-		inner.add(container);
-		outer.add(inner);
-		add(outer);
+        resizable.setMinHeight(3);
+        resizable.setMinWidth(3);
+        resizable.setMaxHeight(25000);
+        resizable.setMaxWidth(25000);
+    }
 
-		resizable = new Resizable(container, Dir.E, Dir.SE, Dir.S);
+    protected void initToolbar() {
+        toolBar = new ToolBar();
+        toolBar.setHeight(26);
 
-		resizable.setMinHeight(3);
-		resizable.setMinWidth(3);
-		resizable.setMaxHeight(25000);
-		resizable.setMaxWidth(25000);
-	}
+        delete = new TextButton();
+        delete.setTitle(EditorMessage.Util.MESSAGE.design_remove());
+        delete.setIcon(EditorBundle.INSTANCE.cross());
+        delete.addSelectHandler(new SelectHandler() {
 
-	protected void initToolbar() {
-		toolBar = new ToolBar();
-		toolBar.setHeight(26);
+            @Override
+            public void onSelect(SelectEvent event) {
+                if (selectedElement != null) {
+                    fireRemoveComponentEvent(
+                            new RemoveComponentEvent(rootElement, selectedElement));
+                }
+            }
+        });
+        toolBar.add(delete);
 
-		delete = new TextButton();
-		delete.setTitle(EditorMessage.Util.MESSAGE.design_remove());
-		delete.setIcon(EditorBundle.INSTANCE.cross());
-		delete.addSelectHandler(new SelectHandler() {
+        add(toolBar);
+    }
 
-			@Override
-			public void onSelect(SelectEvent event) {
-				if (selectedElement != null) {
-					fireRemoveComponentEvent(new RemoveComponentEvent(rootElement, selectedElement));
-				}
-			}
-		});
-		toolBar.add(delete);
+    protected Container getDesignContainer() {
+        return inner;
+    }
 
-		add(toolBar);
-	}
+    private void initRootComponent(ComponentElement element) {
+        rootBuilder = createComponent(element, false);
 
-	protected Container getDesignContainer() {
-		return inner;
-	}
+        // rootBuilder.getComponent().getElement().applyStyles("border: dashed
+        // 1px red; position: relative;");
 
-	private void initRootComponent(ComponentElement element) {
-		rootBuilder = createComponent(element, false);
+        if (rootBuilder instanceof Containable) {
+            for (ComponentElement e : element.getChildren()) {
+                ComponentBuilder child = initChildComponent(e);
+                if (child == null) {
+                    continue;
+                }
+                ((Containable) rootBuilder).addChild(child);
+                builders.put(e, child);
+            }
+        }
 
-		// rootBuilder.getComponent().getElement().applyStyles("border: dashed
-		// 1px red; position: relative;");
+        bindRootComponent(rootElement, rootBuilder);
+        container.setWidget(rootBuilder.getComponent());
+    }
 
-		if (rootBuilder instanceof Containable) {
-			for (ComponentElement e : element.getChildren()) {
-				ComponentBuilder child = initChildComponent(e);
-				if (child == null) {
-					continue;
-				}
-				((Containable) rootBuilder).addChild(child);
-				builders.put(e, child);
-			}
-		}
+    protected void clearSelection() {
+        selectedElement = null;
+        setAllBuildersSelected(false);
+        fireSelectComponentEvent(new SelectComponentEvent());
+    }
 
-		bindRootComponent(rootElement, rootBuilder);
-		container.setWidget(rootBuilder.getComponent());
-	}
+    protected void repaint() {
+        builders.clear();
+        initRootComponent(rootElement);
+    }
 
-	protected void clearSelection() {
-		selectedElement = null;
-		setAllBuildersSelected(false);
-		fireSelectComponentEvent(new SelectComponentEvent());
-	}
+    /**
+     * Установка обработчиков событий DnD для селектора
+     *
+     * @param element Компонент
+     * @param builder Билдер компонента
+     */
+    protected DragSource initChildDragSource(ComponentElement element, ComponentBuilder builder) {
+        Widget component = builder.getComponent();
+        DragSource source = new DragSource(component);
+        source.setData(element);
+        return source;
+    }
 
-	protected void repaint() {
-		builders.clear();
-		initRootComponent(rootElement);
-	}
+    protected ComponentBuilder initChildComponent(ComponentElement element) {
+        ComponentBuilder child = createComponent(element, true);
+        if (child == null) {
+            return null;
+        }
+        DesignerHelper.setConstantComponentStyles(element, child);
 
-	/**
-	 * Установка обработчиков событий DnD для селектора
-	 * 
-	 * @param element
-	 *            Компонент
-	 * @param builder
-	 *            Билдер компонента
-	 */
-	protected DragSource initChildDragSource(ComponentElement element, ComponentBuilder builder) {
-		Widget component = builder.getComponent();
-		DragSource source = new DragSource(component);
-		source.setData(element);
-		return source;
-	}
+        ((Containable) rootBuilder).addChild(child);
+        initChildDragSource(element, child);
+        setBuilderZIndex(child);
 
-	protected ComponentBuilder initChildComponent(ComponentElement element) {
-		ComponentBuilder child = createComponent(element, true);
-		if (child == null) {
-			return null;
-		}
-		DesignerHelper.setConstantComponentStyles(element, child);
+        return child;
+    }
 
-		((Containable) rootBuilder).addChild(child);
-		initChildDragSource(element, child);
-		setBuilderZIndex(child);
+    private void setBuilderZIndex(ComponentBuilder builder) {
+        Component c = builder.getComponent();
+        if (c != null) {
+            c.getElement().getStyle().setZIndex(10);
+        }
+    }
 
-		return child;
-	}
+    protected void bindRootComponent(ComponentElement element, ComponentBuilder builder) {
+        initRootDropTarget(element, builder);
+        initRootEvents(element);
+    }
 
-	private void setBuilderZIndex(ComponentBuilder builder) {
-		Component c = builder.getComponent();
-		if (c != null) {
-			c.getElement().getStyle().setZIndex(10);
-		}
-	}
-
-	protected void bindRootComponent(ComponentElement element, ComponentBuilder builder) {
-		initRootDropTarget(element, builder);
-		initRootEvents(element);
-	}
-
-	protected void initRootDropTarget(final ComponentElement element, final ComponentBuilder builder) {
-		if (builder instanceof Containable) {
-			new ContainerDropTarget((Container) builder.getComponent()) {
-				protected void onDragDrop(DndDropEvent event) {
-					onRootDrop(element, builder, event.getData(), null);
-					super.onDragDrop(event);
+    protected void initRootDropTarget(final ComponentElement element,
+                                      final ComponentBuilder builder) {
+        if (builder instanceof Containable) {
+            new ContainerDropTarget((Container) builder.getComponent()) {
+                protected void onDragDrop(DndDropEvent event) {
+                    onRootDrop(element, builder, event.getData(), null);
+                    super.onDragDrop(event);
                 }
             };
-		}
-	}
+        }
+    }
 
-	protected void onRootDrop(ComponentElement rootElement, ComponentBuilder rootBuilder, Object dropData,
-			Object locationData) {
-		ComponentElement element = onRootDropCreate(dropData);
-		onRootDropSetLocationData(rootElement, element, locationData);
-		onRootDropAddChild(rootElement, element);
-	}
+    protected void onRootDrop(ComponentElement rootElement, ComponentBuilder rootBuilder,
+                              Object dropData,
+                              Object locationData) {
+        ComponentElement element = onRootDropCreate(dropData);
+        onRootDropSetLocationData(rootElement, element, locationData);
+        onRootDropAddChild(rootElement, element);
+    }
 
-	protected ComponentElement onRootDropCreate(Object dropData) {
-		ComponentElement element = null;
-		if (dropData instanceof ComponentElement) {
-			element = (ComponentElement) dropData;
-		} else if (dropData instanceof ComponentType) {
-			element = EditorHelper.newComponentElement((ComponentType) dropData, defaultLocale);
-		}
-		return element;
-	}
+    protected ComponentElement onRootDropCreate(Object dropData) {
+        ComponentElement element = null;
+        if (dropData instanceof ComponentElement) {
+            element = (ComponentElement) dropData;
+        } else if (dropData instanceof ComponentType) {
+            element = EditorHelper.newComponentElement((ComponentType) dropData, defaultLocale);
+        }
+        return element;
+    }
 
-	protected void onRootDropSetLocationData(ComponentElement rootElement, ComponentElement element,
-			Object locationData) {
-		// nothing
-	}
+    protected void onRootDropSetLocationData(ComponentElement rootElement, ComponentElement element,
+                                             Object locationData) {
+        // nothing
+    }
 
-	protected void onRootDropAddChild(ComponentElement parentElement, ComponentElement element) {
-		fireAddComponentEvent(new AddComponentEvent(parentElement, element));
-	}
+    protected void onRootDropAddChild(ComponentElement parentElement, ComponentElement element) {
+        fireAddComponentEvent(new AddComponentEvent(parentElement, element));
+    }
 
-	/**
-	 * Выделение компонента по клику мышкой
-	 * 
-	 * @param element
-	 *            Компонент
-	 */
-	private void initRootEvents(ComponentElement element) {
-		if (rootBuilder instanceof Containable) {
-			for (final ComponentElement e : element.getChildren()) {
-				final ComponentBuilder child = builders.get(e);
-				if (child == null) {
-					continue;
-				}
-				initChildEvents(e, child);
-			}
-		}
-	}
+    /**
+     * Выделение компонента по клику мышкой
+     *
+     * @param element Компонент
+     */
+    private void initRootEvents(ComponentElement element) {
+        if (rootBuilder instanceof Containable) {
+            for (final ComponentElement e : element.getChildren()) {
+                final ComponentBuilder child = builders.get(e);
+                if (child == null) {
+                    continue;
+                }
+                initChildEvents(e, child);
+            }
+        }
+    }
 
-	protected void initChildEvents(final ComponentElement element, final ComponentBuilder builder) {
-		Widget component;
-		if (builder instanceof FormBuilder) {
-			component = ((GridLayoutContainer) builder.getComponent()).getTable();
-		} else {
-			component = builder.getComponent();
-		}
-		component.addDomHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				onSelectComponent(element, builder);
-			}
-		}, ClickEvent.getType());
-	}
+    protected void initChildEvents(final ComponentElement element, final ComponentBuilder builder) {
+        Widget component;
+        if (builder instanceof FormBuilder) {
+            component = ((GridLayoutContainer) builder.getComponent()).getTable();
+        } else {
+            component = builder.getComponent();
+        }
+        component.addDomHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                onSelectComponent(element, builder);
+            }
+        }, ClickEvent.getType());
+    }
 
-	private void onSelectComponent(final ComponentElement element, final ComponentBuilder builder) {
-		// Снимаем выделение со всех компонентов
-		setAllBuildersSelected(false);
-		XElement el = builder.getComponent().getElement();
-		if (selectedElement != null) {
-			if (!selectedElement.equals(element)) {
-				selectedElement = element;
-				// Устанавливаем выделение на компонент
-				setBuilderSelected(el, true);
+    private void onSelectComponent(final ComponentElement element, final ComponentBuilder builder) {
+        // Снимаем выделение со всех компонентов
+        setAllBuildersSelected(false);
+        XElement el = builder.getComponent().getElement();
+        if (selectedElement != null) {
+            if (!selectedElement.equals(element)) {
+                selectedElement = element;
+                // Устанавливаем выделение на компонент
+                setBuilderSelected(el, true);
 
-				// Подгружаем свойства выделенного компонента
-				fireSelectComponentEvent(new SelectComponentEvent(element));
-			} else {
-				selectedElement = null;
-			}
-		} else {
-			selectedElement = element;
-			// Устанавливаем выделение на компонент
-			setBuilderSelected(el, true);
-			// Подгружаем свойства выделенного компонента
-			fireSelectComponentEvent(new SelectComponentEvent(element));
-		}
-	}
+                // Подгружаем свойства выделенного компонента
+                fireSelectComponentEvent(new SelectComponentEvent(element));
+            } else {
+                selectedElement = null;
+            }
+        } else {
+            selectedElement = element;
+            // Устанавливаем выделение на компонент
+            setBuilderSelected(el, true);
+            // Подгружаем свойства выделенного компонента
+            fireSelectComponentEvent(new SelectComponentEvent(element));
+        }
+    }
 
-	/**
-	 * Изменение стиля компонента при его выделении
-	 * 
-	 * @param selected
-	 *            Установить или снять выделение
-	 */
-	protected void setAllBuildersSelected(boolean selected) {
-		for (ComponentBuilder builder : builders.values()) {
-			XElement el = builder.getComponent().getElement();
-			setBuilderSelected(el, selected);
-		}
-	}
+    /**
+     * Изменение стиля компонента при его выделении
+     *
+     * @param selected Установить или снять выделение
+     */
+    protected void setAllBuildersSelected(boolean selected) {
+        for (ComponentBuilder builder : builders.values()) {
+            XElement el = builder.getComponent().getElement();
+            setBuilderSelected(el, selected);
+        }
+    }
 
-	protected void setBuilderSelected(Element el, boolean selected) {
-		Surface surface = setElementSelected(el,
-				new DefaultSurfaceAppearance(GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
-				selected);
-		if (surface != null) {
-			surface.getElement().getStyle().setZIndex(2);
-		}
-	}
+    protected void setBuilderSelected(Element el, boolean selected) {
+        Surface surface = setElementSelected(el,
+                new DefaultSurfaceAppearance(
+                        GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
+                selected);
+        if (surface != null) {
+            surface.getElement().getStyle().setZIndex(2);
+        }
+    }
 
-	/**
-	 * Изменение стиля компонента при его выделении
-	 * 
-	 * @param element
-	 *            DOM-элемент
-	 * @param selected
-	 *            Установить или снять выделение
-	 */
-	protected Surface setElementSelected(Element element, SurfaceAppearance appearance, boolean selected) {
-		Surface surface;
-		if (selected) {
-			surface = selectedSurface.get(element);
-			if (surface == null) {
-				surface = new Surface(appearance);
-				selectedSurface.put(element, surface);
-			}
-			surface.show(element, true);
-		} else {
-			surface = selectedSurface.get(element);
-			if (surface != null) {
-				surface.hide();
-			}
-			selectedSurface.remove(element);
-		}
-		return surface;
-	}
+    /**
+     * Изменение стиля компонента при его выделении
+     *
+     * @param element  DOM-элемент
+     * @param selected Установить или снять выделение
+     */
+    protected Surface setElementSelected(Element element, SurfaceAppearance appearance,
+                                         boolean selected) {
+        Surface surface;
+        if (selected) {
+            surface = selectedSurface.get(element);
+            if (surface == null) {
+                surface = new Surface(appearance);
+                selectedSurface.put(element, surface);
+            }
+            surface.show(element, true);
+        } else {
+            surface = selectedSurface.get(element);
+            if (surface != null) {
+                surface.hide();
+            }
+            selectedSurface.remove(element);
+        }
+        return surface;
+    }
 
-	protected ComponentType componentType(ComponentElement element) {
-		return element.getType();
-	}
+    protected ComponentType componentType(ComponentElement element) {
+        return element.getType();
+    }
 
-	protected ComponentBuilder createComponent(ComponentElement element, boolean createChildren) {
-		ComponentType type = componentType(element);
-		ComponentBuilder builder = ComponentTypeUtil.findBuilder(type);
-		if (builder == null) {
-			return null;
-		}
+    protected ComponentBuilder createComponent(ComponentElement element, boolean createChildren) {
+        ComponentType type = componentType(element);
+        ComponentBuilder builder = ComponentTypeUtil.findBuilder(type);
+        if (builder == null) {
+            return null;
+        }
 
-		setUIProperties(builder, element.getProperties());
-		DesignerHelper.setConstantComponentProperties(element, builder);
+        setUIProperties(builder, element.getProperties());
+        DesignerHelper.setConstantComponentProperties(element, builder);
 
-		if (createChildren && builder instanceof Containable) {
-			for (ComponentElement child : element.getChildren()) {
-				ComponentBuilder childBuilder = createComponent(child, true);
-				((Containable) builder).addChild(childBuilder);
+        if (createChildren && builder instanceof Containable) {
+            for (ComponentElement child : element.getChildren()) {
+                ComponentBuilder childBuilder = createComponent(child, true);
+                ((Containable) builder).addChild(childBuilder);
 
-				builders.put(child, childBuilder);
-			}
-		}
-		return builder;
-	}
+                builders.put(child, childBuilder);
+            }
+        }
+        return builder;
+    }
 
-	protected void setUIProperties(ComponentBuilder builder, Map<PropertyType, PropertyValue> properties) {
-		for (Entry<PropertyType, PropertyValue> entry : properties.entrySet()) {
-			String name = entry.getKey().getCode();
-			DataValue tmpVal = entry.getValue().getValue(null);
-			DataType type = (tmpVal == null) ? null : tmpVal.getType();
-			if (!entry.getValue().isReplaceable() || DataType.STRING.equals(type)) {
-				setUIProperty(builder, name, tmpVal);
-			}
-		}
-	}
+    protected void setUIProperties(ComponentBuilder builder,
+                                   Map<PropertyType, PropertyValue> properties) {
+        for (Entry<PropertyType, PropertyValue> entry : properties.entrySet()) {
+            String name = entry.getKey().getCode();
+            DataValue tmpVal = entry.getValue().getValue(null);
+            DataType type = (tmpVal == null) ? null : tmpVal.getType();
+            if (!entry.getValue().isReplaceable() || DataType.STRING.equals(type)) {
+                setUIProperty(builder, name, tmpVal);
+            }
+        }
+    }
 
-	private void setUIProperty(ComponentBuilder builder, String name, DataValue value) {
-		PropertyType type = PropertyType.parse(name, builder.getType());
-		if (type != null && type.isUI()) {
-			builder.setProperty(name, value);
-		}
-	}
+    private void setUIProperty(ComponentBuilder builder, String name, DataValue value) {
+        PropertyType type = PropertyType.parse(name, builder.getType());
+        if (type != null && type.isUI()) {
+            builder.setProperty(name, value);
+        }
+    }
 
-	protected double designWidth(ComponentElement element) {
-		Double v = element.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
-		if (v == null) {
-			v = 1.0;
-		}
-		if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
-			ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
-			Double childWidth = child.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
-			if (childWidth != null) {
-				v = childWidth;
-			}
-		}
-		if (v == 0) {
-			return DEFAULT_COMPONENT_WIDTH;
-		}
-		return v;
-	}
+    protected double designWidth(ComponentElement element) {
+        Double v = element.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
+        if (v == null) {
+            v = 1.0;
+        }
+        if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
+            ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
+            Double childWidth =
+                    child.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
+            if (childWidth != null) {
+                v = childWidth;
+            }
+        }
+        if (v == 0) {
+            return DEFAULT_COMPONENT_WIDTH;
+        }
+        return v;
+    }
 
-	protected double designHeight(ComponentElement element) {
-		Double v = element.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
-		if (v == null) {
-			v = 1.0;
-		}
-		if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
-			ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
-			Double childHeight = child.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
-			if (childHeight != null) {
-				v = childHeight;
-			}
-		}
-		if (v == 0) {
-			return DEFAULT_COMPONENT_HEIGHT;
-		}
-		return v;
-	}
+    protected double designHeight(ComponentElement element) {
+        Double v = element.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
+        if (v == null) {
+            v = 1.0;
+        }
+        if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
+            ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
+            Double childHeight =
+                    child.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
+            if (childHeight != null) {
+                v = childHeight;
+            }
+        }
+        if (v == 0) {
+            return DEFAULT_COMPONENT_HEIGHT;
+        }
+        return v;
+    }
 }

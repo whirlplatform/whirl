@@ -1,6 +1,19 @@
 package org.whirlplatform.server.driver;
 
-import org.whirlplatform.meta.shared.*;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Map;
+import org.whirlplatform.meta.shared.ApplicationData;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.DataModifyConfig;
+import org.whirlplatform.meta.shared.EventMetadata;
+import org.whirlplatform.meta.shared.EventResult;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.FileValue;
+import org.whirlplatform.meta.shared.LoadData;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -11,10 +24,6 @@ import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.form.FormModel;
 import org.whirlplatform.server.form.FormElementWrapper;
 import org.whirlplatform.server.login.ApplicationUser;
-
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
 
 public interface Connector {
 
@@ -27,22 +36,26 @@ public interface Connector {
     /**
      * Формирует метаданные таблицы базы данных
      */
-    ClassMetadata getClassMetadata(String classId, Map<String, DataValue> params, ApplicationUser user);
+    ClassMetadata getClassMetadata(String classId, Map<String, DataValue> params,
+                                   ApplicationUser user);
 
     /**
      * Собирает в БД данные для формирования строк списка
      */
-    LoadData<ListModelData> getListClassData(ClassMetadata metadata, ClassLoadConfig loadConfig, ApplicationUser user);
+    LoadData<ListModelData> getListClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
+                                             ApplicationUser user);
 
     /**
      * Собирает в БД данные для формирования строк грида
      */
-    LoadData<RowModelData> getTableClassData(ClassMetadata metadata, ClassLoadConfig loadConfig, ApplicationUser user);
+    LoadData<RowModelData> getTableClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
+                                             ApplicationUser user);
 
     /**
      * Собирает в БД данные для формирования строк дерева
      */
-    List<RowModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig, ApplicationUser user);
+    List<RowModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig,
+                                        ApplicationUser user);
 
     /**
      * Вставляет записи в таблицу
@@ -61,22 +74,27 @@ public interface Connector {
 
     FormModel getForm(String formId, List<DataValue> params, ApplicationUser user);
 
-    FormElementWrapper getFormRepresent(String formId, List<DataValue> params, ApplicationUser user);
+    FormElementWrapper getFormRepresent(String formId, List<DataValue> params,
+                                        ApplicationUser user);
 
-    void exportXLS(ClassMetadata metadata, boolean columnHeader, boolean xlsx, ClassLoadConfig loadConfig,
+    void exportXLS(ClassMetadata metadata, boolean columnHeader, boolean xlsx,
+                   ClassLoadConfig loadConfig,
                    OutputStream output, ApplicationUser user);
 
-    void exportCSV(ClassMetadata metadata, boolean columnHeader, ClassLoadConfig loadConfig, OutputStream output,
+    void exportCSV(ClassMetadata metadata, boolean columnHeader, ClassLoadConfig loadConfig,
+                   OutputStream output,
                    ApplicationUser user);
 
     List<FieldMetadata> getReportFields(String reportId, ApplicationUser user);
 
-    Map<PropertyType, PropertyValue> getReportProperties(String codeOrId, boolean isCode, ApplicationUser user);
+    Map<PropertyType, PropertyValue> getReportProperties(String codeOrId, boolean isCode,
+                                                         ApplicationUser user);
 
     /**
      * Выполняет заданную в событии процедуру в базе данных
      */
-    EventResult executeDBFunction(EventMetadata event, List<DataValue> params, ApplicationUser user);
+    EventResult executeDBFunction(EventMetadata event, List<DataValue> params,
+                                  ApplicationUser user);
 
     /**
      * Выполняет заданный в собитии запрос в БД.
@@ -96,13 +114,15 @@ public interface Connector {
     /**
      * Находит в цепочке выполняемых событий следующее за parentEvent событие по его коду
      */
-    EventMetadata getNextEvent(EventMetadata parentEvent, String nextEventCode, ApplicationUser user);
+    EventMetadata getNextEvent(EventMetadata parentEvent, String nextEventCode,
+                               ApplicationUser user);
 
 
     /**
      * Извлекает файл из базы данных
      */
-    FileValue downloadFileFromTable(String tableId, String column, String rowId, ApplicationUser user);
+    FileValue downloadFileFromTable(String tableId, String column, String rowId,
+                                    ApplicationUser user);
 
     /**
      * Поиск табличного элемента по id текущем приложении пользователя

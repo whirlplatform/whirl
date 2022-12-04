@@ -1,9 +1,8 @@
 package org.whirlplatform.editor.server.templates;
 
+import java.nio.file.Path;
 import org.whirlplatform.editor.shared.RPCException;
 import org.whirlplatform.editor.shared.templates.BaseTemplate;
-
-import java.nio.file.Path;
 
 public interface TemplateExporter {
 

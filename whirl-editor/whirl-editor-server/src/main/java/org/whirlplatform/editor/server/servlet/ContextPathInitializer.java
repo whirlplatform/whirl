@@ -8,19 +8,19 @@
 //
 //public class ContextPathInitializer implements ServletContextListener {
 //
-//	@Override
-//	public void contextDestroyed(ServletContextEvent paramServletContextEvent) {
+//    @Override
+//    public void contextDestroyed(ServletContextEvent paramServletContextEvent) {
 //
-//	}
+//    }
 //
-//	@Override
-//	public void contextInitialized(ServletContextEvent event) {
-//		String path = event.getServletContext().getContextPath();
-//		path = StringUtils.isEmpty(path) ? "ROOT" : path;
-//		System.setProperty("context.path", path);
+//    @Override
+//    public void contextInitialized(ServletContextEvent event) {
+//        String path = event.getServletContext().getContextPath();
+//        path = StringUtils.isEmpty(path) ? "ROOT" : path;
+//        System.setProperty("context.path", path);
 //
-//		PropertyConfigurator.configure(ContextPathInitializer.class
-//				.getResourceAsStream("/log4j.properties"));
-//	}
+//        PropertyConfigurator.configure(ContextPathInitializer.class
+//                .getResourceAsStream("/log4j.properties"));
+//    }
 //
 //}

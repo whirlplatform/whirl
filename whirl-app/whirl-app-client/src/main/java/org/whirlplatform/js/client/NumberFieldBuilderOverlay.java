@@ -21,68 +21,6 @@ public abstract class NumberFieldBuilderOverlay {
     }
 
     /**
-     * Устанавливает идентификатор элемента в DOM документа.
-     *
-     * @param domId
-     */
-    public abstract void setDomId(String domId);
-
-    /**
-     * Возвращает идентификатор элемента в DOM документа.
-     *
-     */
-    public abstract String getDomId();
-
-    /**
-     * Установить код на числовое поле
-     *
-     * @param name - String, код
-     */
-    public abstract void setCode(String name);
-
-    /**
-     * Получить код числового поля
-     *
-     * @return String
-     */
-    public abstract String getCode();
-
-    /**
-     * Установить активность числового поля
-     *
-     * @param enabled - boolean
-     */
-    public abstract void setEnabled(boolean enabled);
-
-    /**
-     * Получить информачию об активности числового поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isEnabled();
-
-    /**
-     * Установить скрытость числового поля
-     *
-     * @param hidden - boolean
-     */
-    public abstract void setHidden(boolean hidden);
-
-    /**
-     * Получить информацию о скрытости числового поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isHidden();
-
-    /**
-     * Установить стиль на числовое поле
-     *
-     * @param styleName - String, название стиля
-     */
-    public abstract void setStyleName(String styleName);
-
-    /**
      * Проверка на null значения числового поля
      *
      * @param instance - NumberFieldBuilder
@@ -115,6 +53,67 @@ public abstract class NumberFieldBuilderOverlay {
         return instance.getValue();
     }
 
+    /**
+     * Получение родителя числового поля
+     *
+     * @param instance - NumberFieldBuilder
+     * @return ComponentBuilder
+     */
+    public static ComponentBuilder getParent(NumberFieldBuilder instance) {
+        return instance.getParentBuilder();
+    }
+
+    public static void setToolTip(NumberFieldBuilder instance, String toolTip) {
+        instance.getComponent().setToolTip(toolTip);
+    }
+
+    /**
+     * Возвращает идентификатор элемента в DOM документа.
+     */
+    public abstract String getDomId();
+
+    /**
+     * Устанавливает идентификатор элемента в DOM документа.
+     *
+     * @param domId
+     */
+    public abstract void setDomId(String domId);
+
+    /**
+     * Получить код числового поля
+     *
+     * @return String
+     */
+    public abstract String getCode();
+
+    /**
+     * Установить код на числовое поле
+     *
+     * @param name - String, код
+     */
+    public abstract void setCode(String name);
+
+    /**
+     * Получить информачию об активности числового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isEnabled();
+
+    /**
+     * Установить активность числового поля
+     *
+     * @param enabled - boolean
+     */
+    public abstract void setEnabled(boolean enabled);
+
+    /**
+     * Получить информацию о скрытости числового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isHidden();
+
 ////    public static DataValue getDataValue(NumberFieldBuilder instance) {
 //        return instance.getFieldValue();
 //    }
@@ -122,6 +121,20 @@ public abstract class NumberFieldBuilderOverlay {
 ////    public static void setDataValue(NumberFieldBuilder instance, DataValue value) {
 //        instance.setFieldValue(value);
 //    }
+
+    /**
+     * Установить скрытость числового поля
+     *
+     * @param hidden - boolean
+     */
+    public abstract void setHidden(boolean hidden);
+
+    /**
+     * Установить стиль на числовое поле
+     *
+     * @param styleName - String, название стиля
+     */
+    public abstract void setStyleName(String styleName);
 
     public abstract String getText();
 
@@ -131,19 +144,18 @@ public abstract class NumberFieldBuilderOverlay {
     public abstract void clear();
 
     /**
+     * Получить информацию о свойстве "Обязателен для заполнения" у числового поля
+     *
+     * @return boolean
+     */
+    public abstract boolean isRequired();
+
+    /**
      * Установка свойства "Обязателен для заполнения" для числового поля
      *
      * @param required - boolean
      */
     public abstract void setRequired(boolean required);
-
-    /**
-     * Получить информацию о свойстве "Обязателен для заполнения" у числового
-     * поля
-     *
-     * @return boolean
-     */
-    public abstract boolean isRequired();
 
     /**
      * Установить формат числового поля
@@ -172,16 +184,6 @@ public abstract class NumberFieldBuilderOverlay {
     public abstract void clearInvalid();
 
     /**
-     * Получение родителя числового поля
-     *
-     * @param instance - NumberFieldBuilder
-     * @return ComponentBuilder
-     */
-    public static ComponentBuilder getParent(NumberFieldBuilder instance) {
-        return instance.getParentBuilder();
-    }
-
-    /**
      * Установить фокус на числовое поле
      */
     public abstract void focus();
@@ -193,8 +195,4 @@ public abstract class NumberFieldBuilderOverlay {
      * @return boolean
      */
     public abstract boolean isValid(boolean invalidate);
-
-    public static void setToolTip(NumberFieldBuilder instance, String toolTip) {
-        instance.getComponent().setToolTip(toolTip);
-    }
 }

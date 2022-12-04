@@ -19,63 +19,63 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
 public class ColumnComboBox extends ComboBox<TableColumnElement> {
 
-	public ColumnComboBox(ColumnStore store) {
-		super(store, new ElementLabelProvider<TableColumnElement>());
+    public ColumnComboBox(ColumnStore store) {
+        super(store, new ElementLabelProvider<TableColumnElement>());
 
-		setTriggerAction(TriggerAction.ALL);
-		setForceSelection(true);
-		addTriggerClickHandler(new TriggerClickHandler() {
-			@Override
-			public void onTriggerClick(TriggerClickEvent event) {
-				if (!isExpanded()) {
-					getStore().getLoader().load(getText());
-				}
-			}
-		});
-		addBeforeQueryHandler(new BeforeQueryHandler<TableColumnElement>() {
-			@Override
-			public void onBeforeQuery(BeforeQueryEvent<TableColumnElement> event) {
-				getStore().getLoader().load(event.getQuery());
-			}
-		});
-		DropTarget target = new DropTarget(this);
-		target.addDropHandler(new DndDropHandler() {
-			@Override
-			public void onDrop(DndDropEvent event) {
-				if (event.getData() instanceof TableColumnElement) {
-					setValue((TableColumnElement) event.getData());
-				}
-			}
-		});
-		target.addDragEnterHandler(new DndDragEnterHandler() {
-			@Override
-			public void onDragEnter(DndDragEnterEvent event) {
-				if (event.getDragSource().getData() instanceof TableColumnElement) {
-					event.getStatusProxy().setStatus(true);
-				}
-			}
-		});
-		target.addDragLeaveHandler(new DndDragLeaveHandler() {
-			@Override
-			public void onDragLeave(DndDragLeaveEvent event) {
-				event.getStatusProxy().setStatus(false);
-			}
-		});
+        setTriggerAction(TriggerAction.ALL);
+        setForceSelection(true);
+        addTriggerClickHandler(new TriggerClickHandler() {
+            @Override
+            public void onTriggerClick(TriggerClickEvent event) {
+                if (!isExpanded()) {
+                    getStore().getLoader().load(getText());
+                }
+            }
+        });
+        addBeforeQueryHandler(new BeforeQueryHandler<TableColumnElement>() {
+            @Override
+            public void onBeforeQuery(BeforeQueryEvent<TableColumnElement> event) {
+                getStore().getLoader().load(event.getQuery());
+            }
+        });
+        DropTarget target = new DropTarget(this);
+        target.addDropHandler(new DndDropHandler() {
+            @Override
+            public void onDrop(DndDropEvent event) {
+                if (event.getData() instanceof TableColumnElement) {
+                    setValue((TableColumnElement) event.getData());
+                }
+            }
+        });
+        target.addDragEnterHandler(new DndDragEnterHandler() {
+            @Override
+            public void onDragEnter(DndDragEnterEvent event) {
+                if (event.getDragSource().getData() instanceof TableColumnElement) {
+                    event.getStatusProxy().setStatus(true);
+                }
+            }
+        });
+        target.addDragLeaveHandler(new DndDragLeaveHandler() {
+            @Override
+            public void onDragLeave(DndDragLeaveEvent event) {
+                event.getStatusProxy().setStatus(false);
+            }
+        });
 
-		addSelectionHandler(new SelectionHandler<TableColumnElement>() {
+        addSelectionHandler(new SelectionHandler<TableColumnElement>() {
 
-			@Override
-			public void onSelection(SelectionEvent<TableColumnElement> event) {
-				if (event.getSelectedItem().getId().isEmpty()) {
-					ColumnComboBox.this.setValue(null);
-				}
-			}
-		});
-	}
+            @Override
+            public void onSelection(SelectionEvent<TableColumnElement> event) {
+                if (event.getSelectedItem().getId().isEmpty()) {
+                    ColumnComboBox.this.setValue(null);
+                }
+            }
+        });
+    }
 
-	@Override
-	public ColumnStore getStore() {
-		return (ColumnStore) super.getStore();
-	}
+    @Override
+    public ColumnStore getStore() {
+        return (ColumnStore) super.getStore();
+    }
 
 }

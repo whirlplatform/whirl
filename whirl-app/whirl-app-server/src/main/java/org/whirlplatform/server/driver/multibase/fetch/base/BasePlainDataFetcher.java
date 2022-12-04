@@ -1,19 +1,26 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
-import org.whirlplatform.meta.shared.*;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
+import org.whirlplatform.meta.shared.ClassMetadata;
+import org.whirlplatform.meta.shared.FieldMetadata;
+import org.whirlplatform.meta.shared.SortType;
+import org.whirlplatform.meta.shared.SortValue;
+import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
-public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements DataFetcher<PlainTableElement> {
+public class BasePlainDataFetcher extends AbstractPlainDataFetcher
+        implements DataFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
     private static Logger _log = LoggerFactory.getLogger(BasePlainDataFetcher.class);
 
@@ -50,8 +57,10 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
         command.select(temp.dbPrimaryKey);
         for (FieldMetadata f : temp.tableColumns.keySet()) {
             if (f.isView()) {
-                if(f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
-                    DBColumnExpr expression = temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN).as(f.getName() + LABEL_EXPRESSION_NAME);
+                if (f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+                    DBColumnExpr expression =
+                            temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN)
+                                    .as(f.getName() + LABEL_EXPRESSION_NAME);
                     command.select(expression);
                 }
                 command.select(temp.dbTable.getColumn(f.getName()));
@@ -62,7 +71,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
             command.orderBy(temp.dbPrimaryKey);
         } else {
             for (SortValue s : loadConfig.getSorts()) {
-                command.orderBy(temp.dbTable.getColumn(s.getField().getName()), s.getOrder() == SortType.DESC);
+                command.orderBy(temp.dbTable.getColumn(s.getField().getName()),
+                        s.getOrder() == SortType.DESC);
             }
         }
 
@@ -76,7 +86,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
 
         if (!all) {
             command.limitRows(
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) + loadConfig.getRowsPerPage());
+                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) +
+                            loadConfig.getRowsPerPage());
             command.skipRows((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage());
         }
 
@@ -87,8 +98,10 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher implements Da
     }
 
     @Override
-    public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig loadConfig) {
-        PlainTableFetcherHelper temp = new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+    public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table,
+                                   ClassLoadConfig loadConfig) {
+        PlainTableFetcherHelper temp =
+                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
         DBReader reader = createAndOpenReader(selectCmd);

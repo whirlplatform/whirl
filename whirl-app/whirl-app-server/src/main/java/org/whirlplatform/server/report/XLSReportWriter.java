@@ -1,11 +1,31 @@
 
 package org.whirlplatform.server.report;
 
+import java.awt.Color;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentModel;
@@ -19,18 +39,13 @@ import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
-import org.whirlplatform.server.form.*;
+import org.whirlplatform.server.form.CellElementWrapper;
+import org.whirlplatform.server.form.ColumnElementWrapper;
+import org.whirlplatform.server.form.FormElementWrapper;
+import org.whirlplatform.server.form.FormWriter;
+import org.whirlplatform.server.form.RowElementWrapper;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.XPoint;
-
-import java.awt.Color;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 // TODO подумать как выстроить нормальную иерархию классов для форм
 public class XLSReportWriter extends FormWriter {
@@ -55,7 +70,8 @@ public class XLSReportWriter extends FormWriter {
 
     private CreationHelper helper;
 
-    public XLSReportWriter(ConnectionProvider connectionProvider, Report report, FormElementWrapper form,
+    public XLSReportWriter(ConnectionProvider connectionProvider, Report report,
+                           FormElementWrapper form,
                            Collection<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         this.report = report;
@@ -89,10 +105,12 @@ public class XLSReportWriter extends FormWriter {
 
     private HSSFColor getHSSFColor(Color color) {
         HSSFPalette palette = workbook.getCustomPalette();
-        HSSFColor result = palette.findColor((byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue());
+        HSSFColor result = palette.findColor((byte) color.getRed(), (byte) color.getGreen(),
+                (byte) color.getBlue());
         if (result == null) {
             short idx = getFreeColorIndex();
-            palette.setColorAtIndex(idx, (byte) color.getRed(), (byte) color.getGreen(), (byte) color.getBlue());
+            palette.setColorAtIndex(idx, (byte) color.getRed(), (byte) color.getGreen(),
+                    (byte) color.getBlue());
             result = palette.getColor(idx);
         }
         findedColor.add(result.getIndex());
@@ -122,7 +140,8 @@ public class XLSReportWriter extends FormWriter {
 
                 if (c.getBackgroundColor() != null) {
                     String tmpColor = c.getBackgroundColor();
-                    tmpColor = tmpColor.startsWith("#") ? tmpColor.replace("#", "0x") : "0x".concat(tmpColor);
+                    tmpColor = tmpColor.startsWith("#") ? tmpColor.replace("#", "0x") :
+                            "0x".concat(tmpColor);
                     Color color = Color.decode(tmpColor);
                     s.setFillForegroundColor(getHSSFColor(color).getIndex());
                 } else if (backgroud != null) {
@@ -169,21 +188,27 @@ public class XLSReportWriter extends FormWriter {
                         String color = !component.containsValue(PropertyType.Color.getCode()) ? null
                                 : component.getValue(PropertyType.Color.getCode()).getString();
                         if (color != null) {
-                            font.setColor(getHSSFColor(Color.decode(color.replace("#", "0x"))).getIndex());
+                            font.setColor(getHSSFColor(
+                                    Color.decode(color.replace("#", "0x"))).getIndex());
                         } else {
                             font.setColor(getHSSFColor(Color.BLACK).getIndex());
                         }
 
-                        String weight = !component.containsValue(PropertyType.FontWeight.getCode()) ? null
-                                : component.getValue(PropertyType.FontWeight.getCode()).getString();
+                        String weight =
+                                !component.containsValue(PropertyType.FontWeight.getCode()) ? null
+                                        : component.getValue(PropertyType.FontWeight.getCode())
+                                        .getString();
                         if (weight != null) {
-                            if ("bold".equalsIgnoreCase(weight) || "bolder".equalsIgnoreCase(weight)) {
+                            if ("bold".equalsIgnoreCase(weight) ||
+                                    "bolder".equalsIgnoreCase(weight)) {
                                 font.setBold(true);
                             }
                         }
 
-                        String size = !component.containsValue(PropertyType.FontSize.getCode()) ? null
-                                : component.getValue(PropertyType.FontSize.getCode()).getString();
+                        String size =
+                                !component.containsValue(PropertyType.FontSize.getCode()) ? null
+                                        : component.getValue(PropertyType.FontSize.getCode())
+                                        .getString();
                         if (size != null) {
                             if (size.contains("px")) {
                                 try {
@@ -208,16 +233,20 @@ public class XLSReportWriter extends FormWriter {
                             font.setFontHeightInPoints((short) 10);
                         }
 
-                        String style = !component.containsValue(PropertyType.FontStyle.getCode()) ? null
-                                : component.getValue(PropertyType.FontStyle.getCode()).getString();
+                        String style =
+                                !component.containsValue(PropertyType.FontStyle.getCode()) ? null
+                                        : component.getValue(PropertyType.FontStyle.getCode())
+                                        .getString();
                         if (style != null) {
                             if ("italic".equalsIgnoreCase(style)) {
                                 font.setItalic(true);
                             }
                         }
 
-                        String fontName = !component.containsValue(PropertyType.FontFamily.getCode()) ? null
-                                : component.getValue(PropertyType.FontFamily.getCode()).getString();
+                        String fontName =
+                                !component.containsValue(PropertyType.FontFamily.getCode()) ? null
+                                        : component.getValue(PropertyType.FontFamily.getCode())
+                                        .getString();
                         if (fontName != null) {
                             font.setFontName(fontName);
                         } else {
@@ -228,8 +257,10 @@ public class XLSReportWriter extends FormWriter {
                     }
                     if (ComponentType.LabelType == c.getComponent().getType()
                             || ComponentType.HtmlType == c.getComponent().getType()) {
-                        String format = !c.getComponent().containsValue(PropertyType.ReportDataFormat.getCode()) ? null
-                                : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode()).getString();
+                        String format = !c.getComponent()
+                                .containsValue(PropertyType.ReportDataFormat.getCode()) ? null
+                                : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode())
+                                .getString();
                         if (format != null && !format.isEmpty()) {
                             s.setDataFormat(helper.createDataFormat().getFormat(format));
                         }
@@ -277,7 +308,8 @@ public class XLSReportWriter extends FormWriter {
         ComponentModel component = new ComponentModel(ComponentType.LabelType);
         Map<String, DataValue> values = new HashMap<String, DataValue>();
         String warning = "ВНИМАНИЕ! Количество строк данного отчета больше " + MAX_ROWS
-                + ", отчет сформирован не полностью. Воспользоуйтесь другим форматом отчета для получения полных данных.";
+                +
+                ", отчет сформирован не полностью. Воспользоуйтесь другим форматом отчета для получения полных данных.";
         values.put(PropertyType.Html.getCode(), new DataValueImpl(DataType.STRING, warning));
         component.setValues(values);
         cell.setComponent(component);
@@ -292,8 +324,9 @@ public class XLSReportWriter extends FormWriter {
 
         if (rowSpan > 1 || colSpan > 1) {
             int col = cell.getColumn().getFinalCol();
-            sheet.addMergedRegion(new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
-                    col + cell.getColSpan() - 1));
+            sheet.addMergedRegion(
+                    new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
+                            col + cell.getColSpan() - 1));
         }
     }
 
@@ -341,7 +374,8 @@ public class XLSReportWriter extends FormWriter {
         ComponentModel component = cell.getComponent();
         writeComponent(component);
 
-        CellStyle style = styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
+        CellStyle style =
+                styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
         currentCell.setCellStyle(style);
         // end cell
     }
@@ -358,7 +392,8 @@ public class XLSReportWriter extends FormWriter {
     }
 
     private void writeComponentProperties(ComponentModel component) {
-        if (ComponentType.LabelType == component.getType() || ComponentType.HtmlType == component.getType()) {
+        if (ComponentType.LabelType == component.getType() ||
+                ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                     : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null

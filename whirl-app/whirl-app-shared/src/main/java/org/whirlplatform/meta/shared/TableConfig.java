@@ -10,12 +10,12 @@ public class TableConfig implements Serializable {
     public TableConfig() {
     }
 
-    public void setMetadata(ClassMetadata metadata) {
-        this.metadata = metadata;
-    }
-
     public ClassMetadata getMetadata() {
         return metadata;
+    }
+
+    public void setMetadata(ClassMetadata metadata) {
+        this.metadata = metadata;
     }
 
 }
