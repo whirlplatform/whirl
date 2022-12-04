@@ -62,7 +62,7 @@ build:
 
 docker-develop:
   extends:
-    - docker
+    - .docker
   variables:
     IMAGE_TAG: "develop"
   rules:
@@ -82,7 +82,7 @@ docker-release:
 
 docker-release-latest:
   extends:
-    - docker
+    - .docker
   variables:
     IMAGE_TAG: "latest"
   rules:
