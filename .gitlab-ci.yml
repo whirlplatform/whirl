@@ -27,6 +27,8 @@ checkstyle:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'develop'
       when: always
   script:
+    - apt-get update
+    - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate checkstyle:check
   artifacts:
     paths:
