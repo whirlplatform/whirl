@@ -27,8 +27,6 @@ checkstyle:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'develop'
       when: always
   script:
-    - apt-get update
-    - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate checkstyle:check
   artifacts:
     paths:
@@ -40,11 +38,15 @@ checkstyle:
 build:
   stage: build
   script:
+    - apt-get update
+    - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 # Creating and pushing docker image.
 .docker:
   stage: docker
+  needs:
+    - build
   dependencies:
     - build
   image:
