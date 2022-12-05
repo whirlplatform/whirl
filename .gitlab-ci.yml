@@ -71,7 +71,7 @@ docker-develop:
     IMAGE_TAG: "develop"
   rules:
     # Run on develop branch not on merge requests.
-    - if: $CI_COMMIT_BRANCH == 'develop' && $CI_MERGE_REQUEST_IID == ''
+    - if: $CI_COMMIT_BRANCH == 'develop'
       when: always
 
 docker-release:
