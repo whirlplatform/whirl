@@ -21,10 +21,8 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
-import org.testcontainers.containers.FixedHostPortGenericContainer;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testcontainers.containers.*;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.utility.DockerImageName;
@@ -94,7 +92,11 @@ public class TestrcontainersRun {
             .withNetwork(net)
             .withNetworkAliases("node-chrome")
             .withEnv("HUB_HOST", "hub")
-            .dependsOn(selenium);
+//            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING,
+//                    Paths.get("C:/Users/Nastia/Documents").toFile())
+//            .withCapabilities(new ChromeOptions())
+            .dependsOn(selenium)
+            ;
 
     @Rule
     public FixedHostPortGenericContainer<?> sideex = new FixedHostPortGenericContainer<>("sideex/webservice")
@@ -103,12 +105,11 @@ public class TestrcontainersRun {
             .withFixedExposedPort(50000, 50000)
             .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
                     "/opt/sideex-webservice/serviceconfig.json")
-            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
-                    "/opt/sideex-webservice/tests/")
+//            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
+//                    "/opt/sideex-webservice/tests/")
             .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
                     .withStartupTimeout(Duration.ofMinutes(2)))
             .withEnv("TOMCAT_HOST", "tomcat")
-
             .dependsOn(nodeChrome);
 
 //    @Test
@@ -151,30 +152,18 @@ public class TestrcontainersRun {
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
-
-            URL resource = getClass().getClassLoader().getResource("tests/testcase4.zip");
-//            URL resource = getClass().getClassLoader().getResource("assertText_example.zip");
+            URL resource = getClass().getClassLoader().getResource("TestCasesZip.zip");
             File file = new File(resource.toURI());
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
 
-            tomcat.getTestHostIpAddress();
-            System.out.println("Tomcat: http://"+tomcat.getHost()+":"+tomcat.getMappedPort(8080));
-            System.out.println("Sideex: http://"+  sideex.getHost()+":"+ sideex.getMappedPort(50000)+"/sideex-webservice/");
-//            System.out.println("Selenium: http://"+selenium.getHost()+":"+selenium.getMappedPort(4444));
-//            System.out.println(sideex.execInContainer("wget", "-O", "-", "http://tomcat:8080/app?").getStdout());
-//            Thread.sleep(1000000);
-
             String url = "http://127.0.0.1:50000/sideex-webservice/";
-//            String url = "http://0.0.0.0:50000/sideex-webservice/";
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
             HttpEntity data = MultipartEntityBuilder.create().setMode(HttpMultipartMode.EXTENDED)
                     .addBinaryBody("file", file, ContentType.MULTIPART_FORM_DATA, file.getName())
                     .build();
             runTestSuitesPost.setEntity(data);
-
-//            Thread.sleep(10000);
 
             CloseableHttpResponse respons = httpclient.execute(runTestSuitesPost);
 
@@ -215,7 +204,7 @@ public class TestrcontainersRun {
                 else {
 
                     System.out.println(state);
-                    Thread.sleep(10000000);
+                    Thread.sleep(100000);
                     Map<String, String> formData = new HashMap<String, String>();
                     formData.put("token", token);
                     formData.put("file", "reports.zip");
