@@ -29,32 +29,47 @@ checkstyle:
   script:
     - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate checkstyle:check
   artifacts:
-    expose_as: "Checkstyle Report"
     paths:
       - target/site/*
     when: on_failure
     expire_in: 36 hours
 
 # Build everywhere.
-build:
+.build:
   stage: build
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+build:
+  extends:
+    - .build
+  rules:
+    # Run not on develop and master branches
+    - if: $CI_COMMIT_REF_NAME != 'develop' && $CI_COMMIT_REF_NAME != 'master'
+      when: always
+
+build-with-artifacts:
+  extends:
+    - .build
+  rules:
+    # Run on develop and master branches
+    - if: $CI_COMMIT_REF_NAME == 'develop' || $CI_COMMIT_REF_NAME == 'master'
+      when: always
   artifacts:
-    expose_as: "Packages"
     paths:
       - "**/*.war"
+    when: on_success
     expire_in: 36 hours
 
 # Creating and pushing docker image.
 .docker:
   stage: docker
   needs:
-    - build
+    - build-with-artifacts
   dependencies:
-    - build
+    - build-with-artifacts
   image:
     name: docker:20.10.21
     pull_policy: if-not-present
