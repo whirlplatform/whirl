@@ -152,7 +152,7 @@ public class TestrcontainersRun {
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
-            URL resource = getClass().getClassLoader().getResource("TestCasesZip.zip");
+            URL resource = getClass().getClassLoader().getResource("test-cases-zip.zip");
             File file = new File(resource.toURI());
             Map<String, File> fileParams = new HashMap<String, File>();
             fileParams.put(file.getName(), file);
@@ -181,8 +181,6 @@ public class TestrcontainersRun {
                 HttpGet getStateGet = new HttpGet(url + "getState?token="+token);
 
                 respons  = httpclient.execute(getStateGet);
-//            Thread.sleep(100000);
-
                 String stateSt = EntityUtils.toString(respons.getEntity());
                 System.out.println("Test status "+ stateSt);
 
@@ -204,7 +202,6 @@ public class TestrcontainersRun {
                 else {
 
                     System.out.println(state);
-                    Thread.sleep(100000);
                     Map<String, String> formData = new HashMap<String, String>();
                     formData.put("token", token);
                     formData.put("file", "reports.zip");
