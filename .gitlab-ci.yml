@@ -56,7 +56,7 @@ build:
     IMAGE_NAME: "whirl"
     IMAGE_TAG: "${CI_COMMIT_TAG}"
   script:
-    - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+    - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} docker.io
     - docker build -t otlichnosti/whirl:${IMAGE_TAG}-app --target app -f docker/Packaged.Dockerfile .
     - docker build -t otlichnosti/whirl:${IMAGE_TAG}-editor --target editor -f docker/Packaged.Dockerfile .
     - docker build -t otlichnosti/whirl:${IMAGE_TAG} --target all -f docker/Packaged.Dockerfile .
@@ -70,8 +70,8 @@ docker-develop:
   variables:
     IMAGE_TAG: "develop"
   rules:
-    # Run on develop branch.
-    - if: $CI_COMMIT_BRANCH == 'develop'
+    # Run on develop branch not on merge requests.
+    - if: $CI_COMMIT_BRANCH == 'develop' && $CI_MERGE_REQUEST_IID == ''
       when: always
 
 docker-release:
