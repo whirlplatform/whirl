@@ -1,0 +1,13 @@
+{
+    "webservice": {
+        "server": {
+            "port": 50000
+        },
+        "publicURL": {
+            "hostname": "127.0.0.1",
+            "port": 50000
+        },
+        "testJobsFolderPath": "test-jobs",
+        "testJobExpireTime": 24
+    }
+}

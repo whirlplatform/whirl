@@ -260,6 +260,47 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- TestContainers -->
+        <!-- https://mvnrepository.com/artifact/org.testcontainers/testcontainers -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>selenium</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.17.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- SideEx -->
+        <dependency>
+            <groupId>com.github.SideeX</groupId>
+            <artifactId>sideex-webservice-client-api-java</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <!-- Apache Http Client -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5-fluent</artifactId>
+            <version>5.2</version>
+        </dependency>
+
         <!-- Arquillian -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -342,6 +383,31 @@
         </resources>
 
         <plugins>
+
+            <!-- Zip archive -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>test-cases</finalName>
+                    <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
+                    <descriptors>
+                        <descriptor>${project.basedir}/src/test/resources/tests/assembly/zip-resource.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive-tests</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
