@@ -1,0 +1,47 @@
+{
+    "play": {
+        "mode": 2,
+        "entry": "",
+        "noLog": false,
+        "speed": 5,
+        "autoWaitTimeout":30,
+        "period": {
+            "time": -1,
+            "maxNum": -1
+        }
+    },
+    
+    "report": {
+        "type":"json",
+        "snapshot": 2,
+        "snapshotQuality": 2
+    },
+    
+    "webdriver": {
+        "configs": [
+            {
+                "serverUrl": "http://hub:4444",
+                "type": "selenium",
+                "browsers":[
+                    {
+                        "active": true,
+                        "capability": {
+                            "browserName": "chrome",
+                            "goog:chromeOptions": {
+                                "args": [
+                                    "headless",
+                                    "disable-gpu",
+                                    "window-size=1080,720",
+                                    "no-sandbox"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "webservice": {
+        "testJobExpireTime": 24
+    }
+}

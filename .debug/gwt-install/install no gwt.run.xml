@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="install no gwt" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="install-no-gwt" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -13,7 +13,6 @@
               <option value="clean" />
               <option value="install" />
               <option value="-Dgwt.skipCompilation=true" />
-              <option value="-Dmaven.test.skip" />
             </list>
           </option>
           <option name="pomFileName" />

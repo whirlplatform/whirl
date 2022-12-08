@@ -385,7 +385,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>test-cases-zip</finalName>
+                    <finalName>test-cases</finalName>
                     <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                     <descriptors>
                         <descriptor>${project.basedir}/src/test/resources/assembly/zip-resource.xml</descriptor>
@@ -394,7 +394,7 @@
                 <executions>
                     <execution>
                         <id>create-archive-tests</id>
-                        <phase>package</phase>
+                        <phase>pre-integration-test</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>

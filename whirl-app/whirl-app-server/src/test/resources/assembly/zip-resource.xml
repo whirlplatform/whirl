@@ -1,5 +1,5 @@
 <assembly>
-    <id>ZipResource</id>
+    <id>zip-resource</id>
     <baseDirectory>/</baseDirectory>
     <formats>
         <format>zip</format>
@@ -7,7 +7,7 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/src/test/resources/tests/testcases</directory>
+            <directory>${project.basedir}/src/test/resources/tests/test-cases</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
     </fileSets>

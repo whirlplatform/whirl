@@ -1,11 +1,8 @@
 package org.whirlplatform.integration;
 
 
-import liquibase.pro.packaged.S;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
-import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.entity.mime.HttpMultipartMode;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -13,31 +10,22 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.apache.hc.core5.http.message.BasicNameValuePair;
-import org.apache.http.client.methods.RequestBuilder;
 import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testcontainers.containers.*;
 import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TestrcontainersRun {
 
@@ -95,16 +83,15 @@ public class TestrcontainersRun {
 //            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING,
 //                    Paths.get("C:/Users/Nastia/Documents").toFile())
 //            .withCapabilities(new ChromeOptions())
-            .dependsOn(selenium)
-            ;
+            .dependsOn(selenium);
 
     @Rule
     public FixedHostPortGenericContainer<?> sideex = new FixedHostPortGenericContainer<>("sideex/webservice")
             .withNetwork(net)
             .withNetworkAliases("sideex")
             .withFixedExposedPort(50000, 50000)
-            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
-                    "/opt/sideex-webservice/serviceconfig.json")
+//            .withCopyToContainer(MountableFile.forClasspathResource("serviceconfig.json"),
+//                    "/opt/sideex-webservice/serviceconfig.json")
 //            .withCopyToContainer(MountableFile.forClasspathResource("tests/"),
 //                    "/opt/sideex-webservice/tests/")
             .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
@@ -145,16 +132,17 @@ public class TestrcontainersRun {
 
     @Test
     public void openSideex() {
-        try(CloseableHttpClient httpclient = HttpClients.createDefault()) {
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
 //            postgres.execInContainer("psql", "-U", "whirl", "-c",
 //                    "create extension if not exist hstore");
 
             postgres.execInContainer("psql", "-U", "whirl", "-c",
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
-            URL resource = getClass().getClassLoader().getResource("test-cases-zip.zip");
+            URL resource = getClass().getClassLoader().getResource("test-cases.zip");
+            System.out.println("Print URI: " + resource.toURI());
             File file = new File(resource.toURI());
-            Map<String, File> fileParams = new HashMap<String, File>();
+            Map<String, File> fileParams = new HashMap<>();
             fileParams.put(file.getName(), file);
 
             String url = "http://127.0.0.1:50000/sideex-webservice/";
@@ -173,16 +161,16 @@ public class TestrcontainersRun {
 
             JSONObject jsonRunSuite = new JSONObject(body);
             String token = jsonRunSuite.getString("token");
-            System.out.println("Json token: "+token);
+            System.out.println("Json token: " + token);
 
 
             boolean flag = false;
             while (!flag) {
-                HttpGet getStateGet = new HttpGet(url + "getState?token="+token);
+                HttpGet getStateGet = new HttpGet(url + "getState?token=" + token);
 
-                respons  = httpclient.execute(getStateGet);
+                respons = httpclient.execute(getStateGet);
                 String stateSt = EntityUtils.toString(respons.getEntity());
-                System.out.println("Test status "+ stateSt);
+                System.out.println("Test status " + stateSt);
 
                 JSONObject jsonState = new JSONObject(stateSt);
 
@@ -200,17 +188,43 @@ public class TestrcontainersRun {
                 }
                 //If test is complete
                 else {
-
                     System.out.println(state);
-                    Map<String, String> formData = new HashMap<String, String>();
-                    formData.put("token", token);
-                    formData.put("file", "reports.zip");
+//                    Thread.sleep(100000);
+
+//                    Map<String, String> formData = new HashMap<String, String>();
+//                    formData.put("token", token);
+//                    formData.put("file", "reports.zip");
 
                     //Download the test report
+                    String dowUrl = url + "downloadReports?token=" + token;
+                    HttpGet downloadGet = new HttpGet(dowUrl);
+                    String filePath = "reports.zip";
+                    respons = httpclient.execute(downloadGet);
+
+//                    respons.setHeaders("Content-Disposition","attachment; filename=\"" + filePath + "\"");
+
+//                    HttpEntity httpEntity = MultipartEntityBuilder.create()
+//                            .setMode(HttpMultipartMode.EXTENDED)
+//                            .setContentType(ContentType.APPLICATION_FORM_URLENCODED)
+//                            .build();
+                    HttpEntity httpEntity= respons.getEntity();
+
+                    if (httpEntity != null) {
+                        BufferedInputStream bis = new BufferedInputStream(httpEntity.getContent());
+
+                        BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(new File(filePath).toPath()));
+                        int inByte;
+                        while ((inByte = bis.read()) != -1) bos.write(inByte);
+                        bos.flush();
+                        bis.close();
+                        bos.close();
+                        System.out.println();
+                    }
+
 //                    wsClient.download(formData, "./reports.zip", 0);
 
-                    formData = new HashMap<String, String>();
-                    formData.put("token", token);
+//                    formData = new HashMap<String, String>();
+//                    formData.put("token", token);
                     //Download the logs
 //                    wsClient.download(formData, "./logs.zip", 1);
                     flag = true;
@@ -225,11 +239,5 @@ public class TestrcontainersRun {
         }
     }
 
-
-//    @Test
-//    public void openApplicationTest(){
-//        WebElement button = driver.findElement(By.xpath("//div[text()='Event']"));
-//        assertNotNull(button);
-//    }
-
 }
+
