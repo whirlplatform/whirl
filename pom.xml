@@ -153,24 +153,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
-                    <executions>
-                        <execution>
-                            <id>prepare-conf</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.build.directory}/conf</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>src/conf</directory>
-                                        <filtering>true</filtering>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -358,6 +340,12 @@
                 <version>21.7.0.0</version>
                 <scope>runtime</scope>
             </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.29</version>
+                <scope>runtime</scope>
+            </dependency>
 
             <!-- Logging -->
             <dependency>
@@ -438,28 +426,6 @@
 
 
     <profiles>
-
-        <!-- Oracle -->
-        <profile>
-            <id>jdbc-oracle</id>
-            <dependencies>
-
-            </dependencies>
-        </profile>
-
-        <!-- MySQL -->
-        <profile>
-            <id>jdbc-mysql</id>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>8.0.29</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-
         <!-- Configuration examples -->
         <!-- Start main configuration -->
         <profile>

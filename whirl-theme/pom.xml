@@ -27,8 +27,32 @@
 
     <build>
         <plugins>
+            <!-- Disable maven-compiler-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- Disable maven-resources-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- Disable maven-surefire-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <!-- First, download the PhantomJS bin that can run locally. See the profiles section for how the right version
-            is selected. If a local version is used instead, this isn't necessary, but each computer that runs this maven
+            is selected. If a local version is used in>stead, this isn't necessary, but each computer that runs this maven
             script will need a copy of phantom to correctly generate the theme. -->
             <plugin>
                 <groupId>com.googlecode.maven-download-plugin</groupId>
