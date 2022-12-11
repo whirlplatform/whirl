@@ -22,6 +22,7 @@ import org.testcontainers.utility.MountableFile;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
@@ -140,7 +141,7 @@ public class TestrcontainersRun {
                     "INSERT INTO whirl.WHIRL_USER_GROUPS (ID, DELETED, R_WHIRL_USERS, GROUP_CODE, NAME) VALUES (2, NULL, 1, 'whirl-showcase-user-group', '')");
 
             URL resource = getClass().getClassLoader().getResource("test-cases.zip");
-            System.out.println("Print URI: " + resource.toURI());
+//            System.out.println("Print URI: " + resource.toURI());
             File file = new File(resource.toURI());
             Map<String, File> fileParams = new HashMap<>();
             fileParams.put(file.getName(), file);
@@ -190,50 +191,15 @@ public class TestrcontainersRun {
                 else {
                     System.out.println(state);
 //                    Thread.sleep(100000);
-
-//                    Map<String, String> formData = new HashMap<String, String>();
-//                    formData.put("token", token);
-//                    formData.put("file", "reports.zip");
-
                     //Download the test report
-                    String dowUrl = url + "downloadReports?token=" + token;
-                    HttpGet downloadGet = new HttpGet(dowUrl);
-                    String filePath = "reports.zip";
-                    respons = httpclient.execute(downloadGet);
-
-//                    respons.setHeaders("Content-Disposition","attachment; filename=\"" + filePath + "\"");
-
-//                    HttpEntity httpEntity = MultipartEntityBuilder.create()
-//                            .setMode(HttpMultipartMode.EXTENDED)
-//                            .setContentType(ContentType.APPLICATION_FORM_URLENCODED)
-//                            .build();
-                    HttpEntity httpEntity= respons.getEntity();
-
-                    if (httpEntity != null) {
-                        BufferedInputStream bis = new BufferedInputStream(httpEntity.getContent());
-
-                        BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(new File(filePath).toPath()));
-                        int inByte;
-                        while ((inByte = bis.read()) != -1) bos.write(inByte);
-                        bos.flush();
-                        bis.close();
-                        bos.close();
-                        System.out.println();
-                    }
-
-//                    wsClient.download(formData, "./reports.zip", 0);
-
-//                    formData = new HashMap<String, String>();
-//                    formData.put("token", token);
-                    //Download the logs
-//                    wsClient.download(formData, "./logs.zip", 1);
+//                    String dowUrl = url + "downloadReports?token=" + token+"&file=reports.zip";
+                    JsonUtils jsonUtils = new JsonUtils(new URL("http://127.0.0.1:50000/sideex-webservice/"), token);
+                    System.out.println(jsonUtils.getLog());
+                    // формируется лог
+                    jsonUtils.close();
                     flag = true;
-
-                    //Delete the test case and report from the server
-//                    System.out.println(wsClient.deleteReport(token));
                 }
             }
-//            System.out.println(wsClient.runTestSuite(fileParams));
         } catch (Exception e) {
             e.printStackTrace();
         }

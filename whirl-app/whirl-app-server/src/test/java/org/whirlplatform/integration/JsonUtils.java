@@ -1,6 +1,12 @@
 package org.whirlplatform.integration;
 
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 import sun.misc.BASE64Decoder;
@@ -8,62 +14,75 @@ import sun.misc.BASE64Decoder;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-
-public class JsonUtils {
-    URL resource = getClass().getClassLoader().getResource("reports2.zip");
-
+public class JsonUtils implements AutoCloseable {
+    private URL resource;
     private String stringJson = new String();
+    private String token;
+    BufferedInputStream bis;
+    BufferedOutputStream bos;
+    ZipInputStream zin;
 
-    public JsonUtils() {
-        this.stringJson = stringJson;
+    public JsonUtils(URL resource, String token) {
+        this.resource = resource;
+        this.token = token;
+        // перенести скачивание + парсинг
     }
 
-    @Test
-    public void getLog() {
-
-        String jsonResult = parseUrl(resource);
-////        System.out.println(jsonResult);
+    //    @Test
+    public String getLog() throws IOException {
+        File zipFile = downloadZip();
+        parseUrl(zipFile);
         getImage();
-//        Map<JSONObject, List<JSONObject>> suitsMap = getSuits(jsonResult);
-////        suitsMap.forEach((jsonObject, jsonObjects) -> System.out.println(jsonObject.get("idText").toString()+ "\n"+jsonObjects.toString()));
-//        System.out.println(parseCurrentJsonLog());
+        return parseCurrentJsonLog();
     }
 
-    public String parseUrl(URL url) {
-        if (url == null) {
-            return "";
-        }
+
+    private File downloadZip() throws IOException {
+        String dowUrl = resource + "downloadReports?token=" + token + "&file=reports.zip";
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpGet downloadGet = new HttpGet(dowUrl);
+        File zipFile = new File("C:\\Projects\\whirl_\\whirl-app\\whirl-app-server\\reports.zip");
+
+        CloseableHttpResponse respons = httpclient.execute(downloadGet);
+        HttpEntity httpEntity = respons.getEntity();
+
+        bis = new BufferedInputStream(httpEntity.getContent());
+        bos = new BufferedOutputStream(Files.newOutputStream(zipFile.toPath()));
+        int inByte;
+        while ((inByte = bis.read()) != -1) bos.write(inByte);
+        bos.flush();
+        bis.close();
+        bos.close();
+
+        return zipFile;
+    }
+
+
+    private void parseUrl(File url) {
         StringBuilder inputLine = new StringBuilder();
 
-        try (ZipInputStream zin = new ZipInputStream(Files.newInputStream(Paths.get(url.toURI())))) {
-
+        try {
+            zin = new ZipInputStream(Files.newInputStream(Paths.get(url.toURI())));
             ZipEntry entry = zin.getNextEntry();
-            System.out.printf("File name: %s \t File size: %d \n", entry.getName(), entry.getSize());
-
-
+            assert entry != null;
             for (int c = zin.read(); c != -1; c = zin.read()) {
                 inputLine.append((char) c);
-
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         stringJson = inputLine.toString();
 
-        return stringJson;
     }
 
-
-
-    public String parseCurrentJsonLog() {
+    private String parseCurrentJsonLog() {
         JSONObject jsonObject = new JSONObject(stringJson);
         StringBuilder resultString = new StringBuilder();
 
@@ -132,89 +151,56 @@ public class JsonUtils {
         JSONObject jsonObject = new JSONObject(stringJson);
         JSONArray suites = jsonObject.getJSONArray("suites");
 
-        String suiteTitle="";
+        String suiteTitle = "";
 
-        for (int i = 0; i <suites.length() ; i++) {
+        for (int i = 0; i < suites.length(); i++) {
             if (suites.getJSONObject(i).get("idText").toString().equals(caseSuiteId)) {
                 suiteTitle = suites.getJSONObject(i).get("title").toString();
             }
         }
         return suiteTitle;
     }
-    public Map<JSONObject, List<JSONObject>> getSuits(String resultJson) {
+
+    private void getImage() {
+        String pathToImage = "C:\\\\Projects\\\\whirl_\\\\whirl-app\\\\whirl-app-server\\\\reportImage.jpg";
         JSONObject jsonObject = new JSONObject(stringJson);
-        JSONArray suites = jsonObject.getJSONArray("suites");
-        Map<JSONObject, List<JSONObject>> suitsMap = new HashMap<>();
 
-
-        JSONArray cases = jsonObject.getJSONArray("cases");
-
-
-        for (int i = 0; i < suites.length(); i++) {
-            String idSuit = suites.getJSONObject(i).get("idText").toString();
-            List<JSONObject> casesList = new ArrayList<>();
-
-            for (int j = 0; j < cases.length(); j++) {
-                String idSuitInCase = cases.getJSONObject(j).get("suiteIdText").toString();
-                if (idSuit.equals(idSuitInCase)) {
-                    casesList.add(cases.getJSONObject(j));
-                }
-
-            }
-            suitsMap.put(suites.getJSONObject(i), casesList);
+        String jobj = "";
+        // добавить  проверку if
+        try {
+            jobj = jsonObject.getJSONObject("snapshot").getJSONObject("image-1").getString("url");
+        } catch (JSONException e) {
+            System.out.println("No image");
         }
 
-        return suitsMap;
-    }
+//        System.out.println(jobj);
 
-    public void getFailedCase(String resultJson) {
+        String base64ImageString = jobj.replaceFirst("data:image/jpeg;base64,", "");
 
-        Map<JSONObject, List<JSONObject>> allSuites = new HashMap<>();
-        getSuits(resultJson);
-        StringBuilder stringBuilder = new StringBuilder();
-        List<JSONObject> casesList = new ArrayList<>();
-
-        Iterator<List<JSONObject>> iterator = allSuites.values().iterator();
-        while (iterator.hasNext()) {
-            casesList = iterator.next();
-
-            for (JSONObject js : casesList
-            ) {
-                if (js.getJSONObject("records").getString("status").equals("fail")) {
-                    stringBuilder.append(js.getJSONObject("records").toString());
-                    System.out.println(stringBuilder.toString());
-                }
-
-            }
-
-
-        }
-
-
-    }
-
-    public BufferedImage getImage() {
-        JSONObject jsonObject = new JSONObject(stringJson);
-        String jobj= jsonObject.getJSONObject("snapshot").getJSONObject("image-1").getString("url");
-        System.out.println(jobj);
-
-        String base64ImageString = jobj.replaceFirst("data:image/png;base64,", "");
+//        System.out.println(base64ImageString);
 
         BufferedImage image = null;
         byte[] imageByte;
         try {
+            bos = new BufferedOutputStream(Files.newOutputStream(Paths.get(pathToImage)));
             BASE64Decoder decoder = new BASE64Decoder();
             imageByte = decoder.decodeBuffer(base64ImageString);
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            bis.close();
+            bos.write(imageByte);
+            bos.flush();
+
+//            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+//            image = ImageIO.read(bis);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return image;
     }
 
 
-
-
+    @Override
+    public void close() throws Exception {
+        // удалить врременные файлы
+//        bis.close();
+//        bos.close();
+//        zin.close();
+    }
 }
