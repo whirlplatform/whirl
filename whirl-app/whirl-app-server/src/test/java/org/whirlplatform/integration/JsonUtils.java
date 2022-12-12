@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.misc.BASE64Decoder;
 
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,6 +11,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -23,6 +24,8 @@ public class JsonUtils implements AutoCloseable {
     private String stringJson;
     private final String token;
     private Path toPath;
+
+    private File tmpDir;
     private final JSONObject jsonObject;
 
     public JsonUtils(URL resource, String token) {
@@ -34,8 +37,8 @@ public class JsonUtils implements AutoCloseable {
     }
 
     public File createTempDirectory() throws IOException {
-        File tmpdir = new File(Files.createTempDirectory("tmpDir-").toFile().getAbsolutePath());
-        return tmpdir;
+        this.tmpDir = new File(Files.createTempDirectory("tmpDir-").toFile().getAbsolutePath());
+        return tmpDir;
     }
 
     public void unzip() {
@@ -61,8 +64,7 @@ public class JsonUtils implements AutoCloseable {
 
     private void parseJsonFile() {
         StringBuilder inputLine = new StringBuilder();
-        System.out.println(toPath.toAbsolutePath());
-        try ( BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(toPath))) {
+        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(toPath))) {
             for (int c = bis.read(); c != -1; c = bis.read()) {
                 inputLine.append((char) c);
             }
@@ -81,15 +83,15 @@ public class JsonUtils implements AutoCloseable {
 
     }
 
-    public Integer getCountSuitSuccess(){
+    public Integer getCountSuitSuccess() {
         return jsonObject.getInt("successSuiteNum");
     }
 
-    public Integer getCountSuitFailed(){
+    public Integer getCountSuitFailed() {
         return jsonObject.getInt("failureSuiteNum");
     }
 
-    public String getLog(){
+    public String getLog() {
         StringBuilder resultString = new StringBuilder();
         JSONArray logsArray = jsonObject.getJSONArray("logs");
         JSONObject logsData;
@@ -99,7 +101,7 @@ public class JsonUtils implements AutoCloseable {
             resultString.append(logsData.toString()).append("\n");
         }
 
-            return resultString.toString();
+        return resultString.toString();
     }
 
     public String getLogsErrorMassage() {
@@ -145,6 +147,9 @@ public class JsonUtils implements AutoCloseable {
                     resultString.append("Operation: ").append(recordObj.getString("name")).append("\n");
                     resultString.append("Target: ").append(recordObj.getString("target").trim()).append("\n");
                     resultString.append("Status: ").append(recordObj.getString("status")).append("\n");
+                    if (!recordObj.isNull("snapshot")) {
+                        resultString.append("Image name: ").append(recordObj.getString("snapshot")).append("\n");
+                    }
                 }
             }
         }
@@ -165,48 +170,73 @@ public class JsonUtils implements AutoCloseable {
         return suiteTitle;
     }
 
+    private Map<String, String> getImagesName() {
+        JSONArray cases = jsonObject.getJSONArray("cases");
+        JSONObject caseObj;
+        Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < cases.length(); i++) {
+            caseObj = (JSONObject) cases.get(i);
+            JSONArray records = caseObj.getJSONArray("records");
+
+            for (int j = 0; j < records.length(); j++) {
+                JSONObject recordObj = (JSONObject) records.get(j);
+
+                if (!recordObj.isNull("snapshot")) {
+                    String imageId = recordObj.getString("snapshot");
+                    map.put(imageId, caseObj.getString("title"));
+                }
+            }
+        }
+        return map;
+    }
+
     public Path getImage() {
+        Map<String, String> mapIm = getImagesName();
+
+        if (mapIm.isEmpty()) return null;
+
         Path pathToImage;
         try {
-            String tmpPath = toPath.toAbsolutePath().toString().replace(toPath.getFileName().toString(), "");
-            pathToImage = Paths.get(tmpPath).resolve("images");
+            pathToImage = tmpDir.toPath().resolve("images");
             Files.createDirectory(pathToImage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        String base64ImageString = "";
+        String base64ImageString;
         JSONObject snapshots = jsonObject.getJSONObject("snapshot");
-
-        if (snapshots.isNull("image-1")) return null;
-
         byte[] imageByte;
 
-        try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(pathToImage))) {
-            BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(base64ImageString);
-            bos.write(imageByte);
-            bos.flush();
+        for (Map.Entry<String, String> imId : mapIm.entrySet()) {
+            String p = String.format("%s-%s.jpeg", imId.getKey(), imId.getValue());
+            File file = new File(pathToImage.toString(), p);
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()))) {
+                BASE64Decoder decoder = new BASE64Decoder();
+                base64ImageString = snapshots.getJSONObject(imId.getKey()).getString("url");
+                base64ImageString = base64ImageString.replaceFirst("data:image/jpeg;base64,", "");
+                imageByte = decoder.decodeBuffer(base64ImageString);
+                bos.write(imageByte);
+                bos.flush();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return pathToImage;
     }
 
-
     @Override
     public void close() {
-        String tmpPath = toPath.toAbsolutePath().toString().replace(toPath.getFileName().toString(), "");
-        Path directory = Paths.get(tmpPath);
         try {
-            Files.walk(directory)
+            Files.walk(tmpDir.toPath())
                     .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(File::delete);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
