@@ -1,103 +1,108 @@
 package org.whirlplatform.integration;
 
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpEntity;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Test;
 import sun.misc.BASE64Decoder;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.file.*;
+import java.util.Comparator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static java.nio.file.StandardOpenOption.*;
+
+
 public class JsonUtils implements AutoCloseable {
-    private URL resource;
-    private String stringJson = new String();
-    private String token;
-    BufferedInputStream bis;
-    BufferedOutputStream bos;
-    ZipInputStream zin;
+    private final URL resource;
+    private String stringJson;
+    private final String token;
+    private Path toPath;
+    private final JSONObject jsonObject;
 
     public JsonUtils(URL resource, String token) {
         this.resource = resource;
         this.token = token;
-        // перенести скачивание + парсинг
+        unzip();
+        parseJsonFile();
+        this.jsonObject = new JSONObject(stringJson);
     }
 
-    //    @Test
-    public String getLog() throws IOException {
-        File zipFile = downloadZip();
-        parseUrl(zipFile);
-        getImage();
-        return parseCurrentJsonLog();
+    public File createTempDirectory() throws IOException {
+        File tmpdir = new File(Files.createTempDirectory("tmpDir-").toFile().getAbsolutePath());
+        return tmpdir;
     }
 
-
-    private File downloadZip() throws IOException {
-        String dowUrl = resource + "downloadReports?token=" + token + "&file=reports.zip";
-
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpGet downloadGet = new HttpGet(dowUrl);
-        File zipFile = new File("C:\\Projects\\whirl_\\whirl-app\\whirl-app-server\\reports.zip");
-
-        CloseableHttpResponse respons = httpclient.execute(downloadGet);
-        HttpEntity httpEntity = respons.getEntity();
-
-        bis = new BufferedInputStream(httpEntity.getContent());
-        bos = new BufferedOutputStream(Files.newOutputStream(zipFile.toPath()));
-        int inByte;
-        while ((inByte = bis.read()) != -1) bos.write(inByte);
-        bos.flush();
-        bis.close();
-        bos.close();
-
-        return zipFile;
-    }
-
-
-    private void parseUrl(File url) {
-        StringBuilder inputLine = new StringBuilder();
-
+    public void unzip() {
+        URL url;
         try {
-            zin = new ZipInputStream(Files.newInputStream(Paths.get(url.toURI())));
-            ZipEntry entry = zin.getNextEntry();
-            assert entry != null;
-            for (int c = zin.read(); c != -1; c = zin.read()) {
-                inputLine.append((char) c);
+            url = new URL(resource + "downloadReports?token=" + token + "&file=reports.zip");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        try (ZipInputStream zipInputStream = new ZipInputStream(Channels.newInputStream(Channels.newChannel(url.openStream())))) {
+            for (ZipEntry entry = zipInputStream.getNextEntry(); entry != null; entry = zipInputStream.getNextEntry()) {
+                toPath = createTempDirectory().toPath().resolve(entry.getName());
+                if (entry.isDirectory()) {
+                    Files.createDirectory(toPath);
+                } else try (FileChannel fileChannel = FileChannel.open(toPath, WRITE, CREATE)) {
+                    fileChannel.transferFrom(Channels.newChannel(zipInputStream), 0, Long.MAX_VALUE);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        stringJson = inputLine.toString();
+    }
+
+    private void parseJsonFile() {
+        StringBuilder inputLine = new StringBuilder();
+        System.out.println(toPath.toAbsolutePath());
+        try ( BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(toPath))) {
+            for (int c = bis.read(); c != -1; c = bis.read()) {
+                inputLine.append((char) c);
+            }
+            stringJson = inputLine.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Integer getCountCaseSuccess() {
+        return jsonObject.getInt("successCaseNum");
+    }
+
+    public Integer getCountCaseFailed() {
+        return jsonObject.getInt("failureCaseNum");
 
     }
 
-    private String parseCurrentJsonLog() {
-        JSONObject jsonObject = new JSONObject(stringJson);
+    public Integer getCountSuitSuccess(){
+        return jsonObject.getInt("successSuiteNum");
+    }
+
+    public Integer getCountSuitFailed(){
+        return jsonObject.getInt("failureSuiteNum");
+    }
+
+    public String getLog(){
         StringBuilder resultString = new StringBuilder();
+        JSONArray logsArray = jsonObject.getJSONArray("logs");
+        JSONObject logsData;
 
-        String failureCaseNum = jsonObject.get("failureCaseNum").toString();
-        String successCaseNum = jsonObject.get("successCaseNum").toString();
+        for (int i = 0; i < logsArray.length(); i++) {
+            logsData = (JSONObject) logsArray.get(i);
+            resultString.append(logsData.toString()).append("\n");
+        }
 
-        resultString.append("Failure case num: ").append(failureCaseNum).append("\n");
-        resultString.append("Success case num: ").append(successCaseNum).append("\n");
-        resultString.append(getLogsMassage(jsonObject));
-        resultString.append(getFailedOperation(jsonObject));
-
-        return resultString.toString();
+            return resultString.toString();
     }
 
-    private String getLogsMassage(JSONObject jsonObject) {
+    public String getLogsErrorMassage() {
         StringBuilder resultString = new StringBuilder();
         JSONArray logsArray = jsonObject.getJSONArray("logs");
         JSONObject logsData;
@@ -121,8 +126,7 @@ public class JsonUtils implements AutoCloseable {
         return resultString.toString();
     }
 
-    private String getFailedOperation(JSONObject jsonObject) {
-
+    public String getFailedOperation() {
         StringBuilder resultString = new StringBuilder();
         JSONArray cases = jsonObject.getJSONArray("cases");
         JSONObject caseObj;
@@ -161,46 +165,48 @@ public class JsonUtils implements AutoCloseable {
         return suiteTitle;
     }
 
-    private void getImage() {
-        String pathToImage = "C:\\\\Projects\\\\whirl_\\\\whirl-app\\\\whirl-app-server\\\\reportImage.jpg";
-        JSONObject jsonObject = new JSONObject(stringJson);
-
-        String jobj = "";
-        // добавить  проверку if
+    public Path getImage() {
+        Path pathToImage;
         try {
-            jobj = jsonObject.getJSONObject("snapshot").getJSONObject("image-1").getString("url");
-        } catch (JSONException e) {
-            System.out.println("No image");
+            String tmpPath = toPath.toAbsolutePath().toString().replace(toPath.getFileName().toString(), "");
+            pathToImage = Paths.get(tmpPath).resolve("images");
+            Files.createDirectory(pathToImage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-//        System.out.println(jobj);
+        String base64ImageString = "";
+        JSONObject snapshots = jsonObject.getJSONObject("snapshot");
 
-        String base64ImageString = jobj.replaceFirst("data:image/jpeg;base64,", "");
+        if (snapshots.isNull("image-1")) return null;
 
-//        System.out.println(base64ImageString);
-
-        BufferedImage image = null;
         byte[] imageByte;
-        try {
-            bos = new BufferedOutputStream(Files.newOutputStream(Paths.get(pathToImage)));
+
+        try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(pathToImage))) {
             BASE64Decoder decoder = new BASE64Decoder();
             imageByte = decoder.decodeBuffer(base64ImageString);
             bos.write(imageByte);
             bos.flush();
 
-//            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-//            image = ImageIO.read(bis);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return pathToImage;
     }
 
 
     @Override
-    public void close() throws Exception {
-        // удалить врременные файлы
-//        bis.close();
-//        bos.close();
-//        zin.close();
+    public void close() {
+        String tmpPath = toPath.toAbsolutePath().toString().replace(toPath.getFileName().toString(), "");
+        Path directory = Paths.get(tmpPath);
+        try {
+            Files.walk(directory)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
