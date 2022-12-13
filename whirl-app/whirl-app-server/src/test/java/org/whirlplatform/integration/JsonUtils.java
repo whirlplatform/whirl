@@ -1,7 +1,5 @@
 package org.whirlplatform.integration;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.misc.BASE64Decoder;
@@ -15,6 +13,7 @@ import java.nio.file.*;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -29,14 +28,24 @@ public class JsonUtils implements AutoCloseable {
     private Path toPath;
 
     private File tmpDir;
-    private final JSONObject jsonObject;
+    private final JSONObject jsonArray;
+
+    JSONObject countCaseSuccess;
+    JSONObject countCaseFailed;
+    JSONObject countSuitSuccess;
+    JSONObject countSuitFailed;
+    JSONArray logs;
+    JSONArray cases;
+    JSONArray suites;
+    JSONObject snapshots;
 
     public JsonUtils(URL resource, String token) {
         this.resource = resource;
         this.token = token;
         unzip();
         parseJsonFile();
-        this.jsonObject = new JSONObject(stringJson);
+        this.jsonArray = new JSONObject(stringJson);
+        parsJsonArray();
     }
 
     private File createTempDirectory() throws IOException {
@@ -66,46 +75,91 @@ public class JsonUtils implements AutoCloseable {
     }
 
     private void parseJsonFile() {
+        File file = new File("C:\\Users\\Nastia\\Downloads\\20221213 10-42-53.json");
         StringBuilder inputLine = new StringBuilder();
-        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(toPath))) {
+        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
             for (int c = bis.read(); c != -1; c = bis.read()) {
                 inputLine.append((char) c);
             }
             stringJson = inputLine.toString();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void parsJsonArray() {
+        AtomicReference<String> st = new AtomicReference<>("");
+
+        jsonArray.keySet().forEach(s -> st.set(s));
+        JSONArray browserArray = jsonArray.getJSONArray("chrome 94.0.4606.61");
+
+        System.out.println(browserArray.toString());
+
+
+        for (int i = 0; i < browserArray.length() ; i++) {
+            JSONObject tmpObj = browserArray.getJSONObject(i);
+            String obj = browserArray.get(i).toString();
+
+            switch (obj) {
+                case "successCaseNum":
+                   this.countCaseSuccess =  new JSONObject(browserArray.get(i));
+                   break;
+                case "failureCaseNum":
+                    this.countCaseFailed =  new JSONObject(browserArray.get(i));
+                    break;
+                case "successSuiteNum":
+                    this.countSuitSuccess =  new JSONObject(browserArray.get(i));
+                    break;
+                case "CountSuitFailed":
+                    this.countSuitFailed =  new JSONObject(browserArray.get(i));
+                    break;
+                case "logs":
+                    this.logs = new JSONArray(browserArray.get(i));
+                    break;
+                case "cases":
+                    this.cases = new JSONArray(browserArray.get(i));
+                    break;
+                case "suites":
+                    this.suites = new JSONArray(browserArray.get(i));
+                    break;
+                case "snapshot":
+                    this.snapshots = new JSONObject(browserArray.get(i));
+                    break;
+            }
+        }
+    }
+
     public Integer getCountCaseSuccess() {
-        return jsonObject.getInt("successCaseNum");
+        return countCaseSuccess.getInt("successCaseNum");
     }
 
     public Integer getCountCaseFailed() {
-        return jsonObject.getInt("failureCaseNum");
+        return countCaseFailed.getInt("failureCaseNum");
 
     }
 
     public Integer getCountSuitSuccess() {
-        return jsonObject.getInt("successSuiteNum");
+        return countSuitSuccess.getInt("successSuiteNum");
     }
 
     public Integer getCountSuitFailed() {
-        return jsonObject.getInt("failureSuiteNum");
+        return countSuitFailed.getInt("failureSuiteNum");
     }
 
     public String getLog() {
-        if (jsonObject.isNull("logs")) {
-            return null;
-        }
+
+//        if (logs.isNull("logs")) {
+//            return null;
+//        }
 
         StringBuilder resultString = new StringBuilder();
-        JSONArray logsArray = jsonObject.getJSONArray("logs");
+//        JSONArray logsArray = jsonArray.getJSONArray("logs");
 
         JSONObject logsData;
 
-        for (int i = 0; i < logsArray.length(); i++) {
-            logsData = (JSONObject) logsArray.get(i);
+        for (int i = 0; i < logs.length(); i++) {
+            logsData = (JSONObject) logs.get(i);
             resultString.append(logsData.toString()).append("\n");
         }
 
@@ -113,15 +167,15 @@ public class JsonUtils implements AutoCloseable {
     }
 
     public String getLogsErrorMassage() {
-        if (jsonObject.isNull("cases")) {
-            return null;
-        }
+//        if (cases.isNull("cases")) {
+//            return null;
+//        }
         StringBuilder resultString = new StringBuilder();
-        JSONArray logsArray = jsonObject.getJSONArray("logs");
+//        JSONArray logsArray = jsonArray.getJSONArray("logs");
         JSONObject logsData;
 
-        for (int i = 0; i < logsArray.length(); i++) {
-            logsData = (JSONObject) logsArray.get(i);
+        for (int i = 0; i < logs.length(); i++) {
+            logsData = (JSONObject) logs.get(i);
 
             if (logsData.getString("type").equals("info") &&
                     logsData.getString("message").contains("Playing test case")) {
@@ -140,12 +194,12 @@ public class JsonUtils implements AutoCloseable {
     }
 
     public String getFailedOperation() {
-        if (jsonObject.isNull("cases")) {
-            return null;
-        }
+//        if (cases.isNull("cases")) {
+//            return null;
+//        }
 
         StringBuilder resultString = new StringBuilder();
-        JSONArray cases = jsonObject.getJSONArray("cases");
+//        JSONArray cases = jsonArray.getJSONArray("cases");
         JSONObject caseObj;
 
         for (int i = 0; i < cases.length(); i++) {
@@ -172,7 +226,7 @@ public class JsonUtils implements AutoCloseable {
     }
 
     private String getSuiteTitle(String caseSuiteId) {
-        JSONArray suites = jsonObject.getJSONArray("suites");
+//        JSONArray suites = jsonArray.getJSONArray("suites");
 
         String suiteTitle = "";
 
@@ -186,11 +240,11 @@ public class JsonUtils implements AutoCloseable {
 
     private Map<String, String> getImagesName() {
 
-        if (jsonObject.isNull("cases")) {
-            return null;
-        }
+//        if (jsonArray.isNull("cases")) {
+//            return null;
+//        }
 
-        JSONArray cases = jsonObject.getJSONArray("cases");
+//        JSONArray cases = jsonArray.getJSONArray("cases");
         JSONObject caseObj;
         Map<String, String> map = new HashMap<>();
         for (int i = 0; i < cases.length(); i++) {
@@ -225,7 +279,7 @@ public class JsonUtils implements AutoCloseable {
         }
 
         String base64ImageString;
-        JSONObject snapshots = jsonObject.getJSONObject("snapshot");
+//        JSONObject snapshots = jsonArray.getJSONObject("snapshot");
         byte[] imageByte;
 
         for (Map.Entry<String, String> imId : mapIm.entrySet()) {

@@ -190,13 +190,20 @@ public class TestrcontainersRun {
                 //If test is complete
                 else {
                     System.out.println(state);
-//                    Thread.sleep(100000);
+//                    Thread.sleep(1000000);
                     //Download the test report
 //                    String dowUrl = url + "downloadReports?token=" + token+"&file=reports.zip";
                     JsonUtils jsonUtils = new JsonUtils(new URL("http://127.0.0.1:50000/sideex-webservice/"), token);
+                    System.out.println(jsonUtils.getCountCaseSuccess());
+                    System.out.println(jsonUtils.getLogsErrorMassage());
+                    System.out.println(jsonUtils.getFailedOperation());
                     System.out.println(jsonUtils.getLog());
+                    System.out.println(jsonUtils.getImage());
+                    System.out.println(jsonUtils.getCountSuitSuccess());
+                    System.out.println(jsonUtils.getCountCaseFailed());
+                    System.out.println(jsonUtils.getCountSuitFailed());
                     // формируется лог
-                    jsonUtils.close();
+//                    jsonUtils.close();
                     flag = true;
                 }
             }
