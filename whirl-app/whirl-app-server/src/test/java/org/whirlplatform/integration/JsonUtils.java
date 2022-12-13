@@ -21,30 +21,27 @@ import static java.nio.file.StandardOpenOption.*;
 
 
 public class JsonUtils implements AutoCloseable {
-
     private final URL resource;
     private String stringJson;
     private final String token;
     private Path toPath;
-
     private File tmpDir;
-    private final JSONObject jsonArray;
-
-    JSONObject countCaseSuccess;
-    JSONObject countCaseFailed;
-    JSONObject countSuitSuccess;
-    JSONObject countSuitFailed;
-    JSONArray logs;
-    JSONArray cases;
-    JSONArray suites;
-    JSONObject snapshots;
+    private final JSONObject jsonObject;
+    private Integer countCaseSuccess;
+    private Integer countCaseFailed;
+    private Integer countSuitSuccess;
+    private Integer countSuitFailed;
+    private JSONArray logs;
+    private JSONArray cases;
+    private JSONArray suites;
+    private JSONObject snapshots;
 
     public JsonUtils(URL resource, String token) {
         this.resource = resource;
         this.token = token;
         unzip();
         parseJsonFile();
-        this.jsonArray = new JSONObject(stringJson);
+        this.jsonObject = new JSONObject(stringJson);
         parsJsonArray();
     }
 
@@ -75,103 +72,69 @@ public class JsonUtils implements AutoCloseable {
     }
 
     private void parseJsonFile() {
-        File file = new File("C:\\Users\\Nastia\\Downloads\\20221213 10-42-53.json");
         StringBuilder inputLine = new StringBuilder();
-        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(file.toPath()))) {
+        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(toPath))) {
             for (int c = bis.read(); c != -1; c = bis.read()) {
                 inputLine.append((char) c);
             }
             stringJson = inputLine.toString();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void parsJsonArray() {
-        AtomicReference<String> st = new AtomicReference<>("");
-
-        jsonArray.keySet().forEach(s -> st.set(s));
-        JSONArray browserArray = jsonArray.getJSONArray("chrome 94.0.4606.61");
-
-        System.out.println(browserArray.toString());
-
-
-        for (int i = 0; i < browserArray.length() ; i++) {
-            JSONObject tmpObj = browserArray.getJSONObject(i);
-            String obj = browserArray.get(i).toString();
-
-            switch (obj) {
-                case "successCaseNum":
-                   this.countCaseSuccess =  new JSONObject(browserArray.get(i));
-                   break;
-                case "failureCaseNum":
-                    this.countCaseFailed =  new JSONObject(browserArray.get(i));
-                    break;
-                case "successSuiteNum":
-                    this.countSuitSuccess =  new JSONObject(browserArray.get(i));
-                    break;
-                case "CountSuitFailed":
-                    this.countSuitFailed =  new JSONObject(browserArray.get(i));
-                    break;
-                case "logs":
-                    this.logs = new JSONArray(browserArray.get(i));
-                    break;
-                case "cases":
-                    this.cases = new JSONArray(browserArray.get(i));
-                    break;
-                case "suites":
-                    this.suites = new JSONArray(browserArray.get(i));
-                    break;
-                case "snapshot":
-                    this.snapshots = new JSONObject(browserArray.get(i));
-                    break;
-            }
+        JSONArray browserArray = null;
+        for (String browserName : jsonObject.keySet()) {
+           browserArray = jsonObject.getJSONArray(browserName);
         }
+            for (int i = 0; i < browserArray.length(); i++) {
+                JSONObject tmpObj = (JSONObject) browserArray.get(i);
+
+                this.countCaseSuccess = tmpObj.getInt("successCaseNum");
+                this.countCaseFailed = tmpObj.getInt("failureCaseNum");
+                this.countSuitSuccess = tmpObj.getInt("successSuiteNum");
+                this.countSuitFailed = tmpObj.getInt("failureSuiteNum");
+
+                this.logs = tmpObj.getJSONArray("logs");
+                this.suites = tmpObj.getJSONArray("suites");
+                this.cases = tmpObj.getJSONArray("cases");
+
+                this.snapshots = tmpObj.getJSONObject("snapshot");
+
+            }
+
     }
 
     public Integer getCountCaseSuccess() {
-        return countCaseSuccess.getInt("successCaseNum");
+        return countCaseSuccess;
     }
 
     public Integer getCountCaseFailed() {
-        return countCaseFailed.getInt("failureCaseNum");
-
+        return countCaseFailed;
     }
 
     public Integer getCountSuitSuccess() {
-        return countSuitSuccess.getInt("successSuiteNum");
+        return countSuitSuccess;
     }
 
     public Integer getCountSuitFailed() {
-        return countSuitFailed.getInt("failureSuiteNum");
+        return countSuitFailed;
     }
 
     public String getLog() {
-
-//        if (logs.isNull("logs")) {
-//            return null;
-//        }
-
         StringBuilder resultString = new StringBuilder();
-//        JSONArray logsArray = jsonArray.getJSONArray("logs");
-
         JSONObject logsData;
 
         for (int i = 0; i < logs.length(); i++) {
             logsData = (JSONObject) logs.get(i);
             resultString.append(logsData.toString()).append("\n");
         }
-
         return resultString.toString();
     }
 
     public String getLogsErrorMassage() {
-//        if (cases.isNull("cases")) {
-//            return null;
-//        }
         StringBuilder resultString = new StringBuilder();
-//        JSONArray logsArray = jsonArray.getJSONArray("logs");
         JSONObject logsData;
 
         for (int i = 0; i < logs.length(); i++) {
@@ -194,10 +157,6 @@ public class JsonUtils implements AutoCloseable {
     }
 
     public String getFailedOperation() {
-//        if (cases.isNull("cases")) {
-//            return null;
-//        }
-
         StringBuilder resultString = new StringBuilder();
 //        JSONArray cases = jsonArray.getJSONArray("cases");
         JSONObject caseObj;
@@ -239,11 +198,6 @@ public class JsonUtils implements AutoCloseable {
     }
 
     private Map<String, String> getImagesName() {
-
-//        if (jsonArray.isNull("cases")) {
-//            return null;
-//        }
-
 //        JSONArray cases = jsonArray.getJSONArray("cases");
         JSONObject caseObj;
         Map<String, String> map = new HashMap<>();
@@ -283,13 +237,13 @@ public class JsonUtils implements AutoCloseable {
         byte[] imageByte;
 
         for (Map.Entry<String, String> imId : mapIm.entrySet()) {
-            String p = String.format("%s-%s.jpeg", imId.getKey(), imId.getValue());
+            String p = String.format("%s-%s.png", imId.getKey(), imId.getValue());
             File file = new File(pathToImage.toString(), p);
 
             try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()))) {
                 BASE64Decoder decoder = new BASE64Decoder();
                 base64ImageString = snapshots.getJSONObject(imId.getKey()).getString("url");
-                base64ImageString = base64ImageString.replaceFirst("data:image/jpeg;base64,", "");
+                base64ImageString = base64ImageString.replaceFirst("data:image/png;base64,", "");
                 imageByte = decoder.decodeBuffer(base64ImageString);
                 bos.write(imageByte);
                 bos.flush();
