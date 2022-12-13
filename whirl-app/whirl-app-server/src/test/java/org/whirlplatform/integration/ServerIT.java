@@ -14,7 +14,6 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.JSONObject;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
 import org.testcontainers.containers.GenericContainer;
@@ -108,7 +107,7 @@ public class ServerIT {
 
         URL resource = getClass().getClassLoader().getResource("test-cases.zip");
         makeConnection(resource);
-        //Thread.sleep(10000000);
+        Thread.sleep(10000000);
     }
 
     static void makeConnection(URL resource) throws URISyntaxException {
@@ -119,6 +118,7 @@ public class ServerIT {
 
             String port = sideex.getFirstMappedPort().toString();
             String url = "http://127.0.0.1:" + port + "/sideex-webservice/";
+            System.out.println("\nPort: " + port + "\n");
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
             HttpEntity data = MultipartEntityBuilder
@@ -184,6 +184,16 @@ public class ServerIT {
 
                 //Delete the test case and report from the server
                 //System.out.println(wsClient.deleteReport(token));
+
+                // here is nastya`s json
+                JsonUtils jsonUtils = new JsonUtils(new URL(url), token);
+                System.out.println(jsonUtils.getLog());
+                //System.out.println(jsonUtils.getCountCaseFailed());
+                // формируется лог
+                Thread.sleep(1000000000);
+                jsonUtils.close();
+
+
             }
         }
     }
