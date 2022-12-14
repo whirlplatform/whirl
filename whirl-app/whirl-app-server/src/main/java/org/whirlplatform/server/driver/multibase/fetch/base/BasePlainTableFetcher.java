@@ -2,6 +2,8 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -14,15 +16,13 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.TableFetcher;
-import org.whirlplatform.server.log.Logger;
-import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
 public class BasePlainTableFetcher extends BasePlainDataFetcher
         implements TableFetcher<PlainTableElement> {
-    @SuppressWarnings("unused")
+
     private static Logger _log = LoggerFactory.getLogger(BasePlainTableFetcher.class);
 
     public BasePlainTableFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
@@ -46,7 +46,7 @@ public class BasePlainTableFetcher extends BasePlainDataFetcher
         temp.prepare(metadata, table, loadConfig);
 
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
-        _log.info("Select command: " + selectCmd.getSelect());
+        _log.info("Fetch data from the table: " + selectCmd.getSelect());
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
         try (Profile p = new ProfileImpl(m)) {
 
