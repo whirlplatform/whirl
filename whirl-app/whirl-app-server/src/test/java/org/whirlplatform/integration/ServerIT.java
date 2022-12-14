@@ -118,7 +118,6 @@ public class ServerIT {
 
             String port = sideex.getFirstMappedPort().toString();
             String url = "http://127.0.0.1:" + port + "/sideex-webservice/";
-            System.out.println("\nPort: " + port + "\n");
 
             HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
             HttpEntity data = MultipartEntityBuilder
@@ -162,7 +161,7 @@ public class ServerIT {
             String state = jsonState.getJSONObject("webservice").getString("state");
             if (!state.equals("complete") && !state.equals("error")) {
                 System.out.println(state);
-                Thread.sleep(2000);
+                Thread.sleep(4000);
             } else if (state.equals("error")) {
                 System.out.println(state);
                 flag = true;
@@ -185,15 +184,12 @@ public class ServerIT {
                 //Delete the test case and report from the server
                 //System.out.println(wsClient.deleteReport(token));
 
-                // here is nastya`s json
                 JsonUtils jsonUtils = new JsonUtils(new URL(url), token);
-                System.out.println(jsonUtils.getLog());
-                //System.out.println(jsonUtils.getCountCaseFailed());
-                // формируется лог
-                Thread.sleep(1000000000);
+                System.out.println(jsonUtils.getLog() + "\n");
+
+                //Thread.sleep(1000000000);
+
                 jsonUtils.close();
-
-
             }
         }
     }
