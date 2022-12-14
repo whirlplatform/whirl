@@ -6,7 +6,7 @@
  * @param p_message         Тело сообщения - строковая переменная, без ограничений
  * @param p_message_type    Тип сообщения - строковая переменная с заданным по умолчанию типом 'INFO'
  *
- * @return p_result         Переданную переменную с новыми параметрами
+ * @return Переданную переменную с новыми параметрами
  */
 create or replace function set_message (
     p_result function_result,
