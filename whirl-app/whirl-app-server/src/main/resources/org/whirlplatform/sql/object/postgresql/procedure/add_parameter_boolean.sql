@@ -1,3 +1,12 @@
+/**
+ * Добавляет к переменной типа "function_result" значения "BOOLEAN" из переданных  переменных
+ *
+ * @param p_result          Переменная типа "function_result"
+ * @param p_code            Переменная типа "varchar" без ограничений
+ * @param p_value           Переменная типа "boolean" без ограничений
+ *
+ * @return Возвращает переданная переменная типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_boolean (
     p_result function_result,
     p_code varchar,

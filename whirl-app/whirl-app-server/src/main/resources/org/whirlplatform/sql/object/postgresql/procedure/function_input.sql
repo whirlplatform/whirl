@@ -2,6 +2,9 @@
 
 -- DROP TYPE whirl.function_input;
 
+/**
+ * @type row_list   ...
+ */
 CREATE TYPE whirl.function_input AS (
         parameter_value hstore,
         parameter_list_title hstore,

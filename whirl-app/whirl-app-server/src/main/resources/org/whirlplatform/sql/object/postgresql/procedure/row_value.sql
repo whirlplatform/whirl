@@ -1,5 +1,5 @@
 /**
- * @type row_value
+ * @type row_value  ....
  */
 CREATE TYPE row_value AS
 (

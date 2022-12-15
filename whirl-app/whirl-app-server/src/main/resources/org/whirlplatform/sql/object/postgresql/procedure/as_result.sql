@@ -1,3 +1,10 @@
+/**
+ * Создает текст заполненный значениями входящей переменной типа "function_result"
+ *
+ * @param p_result          Переменная типа "function_result"
+ *
+ * @return Возвращает текст со значением параметров входящей переменной
+ */
 CREATE OR REPLACE FUNCTION as_result(p_result function_result)
     RETURNS text
     LANGUAGE plpgsql

@@ -1,3 +1,13 @@
+/**
+ * Добавляет к переменной типа "function_result" значения "DATE" из переданных  переменных
+ * Формат даты 'DD.MM.YYYY HH24:MI:SS'
+ *
+ * @param p_result          Переменная типа "function_result"
+ * @param p_code            Переменная типа "varchar" без ограничений
+ * @param p_value           Переменная типа "timestamp" без ограничений
+ *
+ * @return Возвращает переданная переменная типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_date (
     p_result function_result,
     p_code varchar,

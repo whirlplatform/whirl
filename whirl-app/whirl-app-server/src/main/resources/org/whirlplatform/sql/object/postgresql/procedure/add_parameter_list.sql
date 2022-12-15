@@ -1,3 +1,13 @@
+/**
+ * Добавляет к переменной типа "function_result" значения "LIST" из переданных  переменных
+ *
+ * @param p_result          Переменная типа "function_result"
+ * @param p_code            Переменная типа "varchar" без ограничений
+ * @param p_list_title      Переменная типа "varchar" без ограничений
+ * @param p_list_value      Переменная типа "varchar" без ограничений
+ *
+ * @return Возвращает переданная переменная типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_list (
     p_result function_result,
     p_code varchar,

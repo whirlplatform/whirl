@@ -1,4 +1,11 @@
-CREATE OR REPLACE FUNCTION parse_row_list(pfvalue text)
+/**
+ * Парсит входящую переменную типа текст и заполняет поля переменной типа "row_value"
+ *
+ * @param p_value           Переменная типа текст без ограничений
+ *
+ * @return Возвращает текст с заполненной переменной типа "row_value"
+ */
+CREATE OR REPLACE FUNCTION parse_row_list(p_value text)
     RETURNS text
     LANGUAGE plpgsql
 AS $function$
@@ -11,11 +18,11 @@ declare
     v_els     varchar[];
 BEGIN
 
-    if pfvalue is null or trim(pfvalue) = '' then
+    if p_value is null or trim(p_value) = '' then
         return v_result;
     end if;
 
-    v_rows = string_to_array(pfvalue, ':');
+    v_rows = string_to_array(p_value, ':');
 
     for i in 1 .. (array_length(v_rows, 1)) loop
             v_els_str = v_rows[i];

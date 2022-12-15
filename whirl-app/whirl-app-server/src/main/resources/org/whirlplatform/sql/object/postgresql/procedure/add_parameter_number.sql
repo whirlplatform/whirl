@@ -1,3 +1,12 @@
+/**
+ * Добавляет к переменной типа "function_result" значения "NUMBER" из переданных  переменных
+ *
+ * @param p_result          Переменная типа "function_result"
+ * @param p_code            Переменная типа "varchar" без ограничений
+ * @param p_value           Переменная типа "numeric" без ограничений
+ *
+ * @return Возвращает переданная переменная типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_number (
     p_result function_result,
     p_code varchar,

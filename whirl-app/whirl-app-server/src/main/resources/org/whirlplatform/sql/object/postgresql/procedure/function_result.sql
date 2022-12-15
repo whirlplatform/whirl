@@ -2,6 +2,9 @@
 
 -- DROP TYPE whirl.function_result;
 
+/**
+ * @type row_list   ...
+ */
 CREATE TYPE whirl.function_result AS (
      title varchar(32767),
      message varchar(32767),

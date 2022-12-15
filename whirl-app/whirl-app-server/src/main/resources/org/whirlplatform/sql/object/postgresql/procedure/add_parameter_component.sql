@@ -1,3 +1,12 @@
+/**
+ * Добавляет к параметру "parameter_component" переменной типа "function_result" значения из переданных  переменных
+ *
+ * @param p_result          Переменная типа "function_result"
+ * @param p_code            Переменная типа "varchar" без ограничений
+ * @param p_component_code  Переменная типа "varchar" без ограничений
+ *
+ * @return Возвращает переданная переменная типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_component (
     p_result function_result,
     p_code varchar,
