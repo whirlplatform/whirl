@@ -1,3 +1,10 @@
+/**
+ * Парсит входящую переменную типа "character" и заполняет поля переменной типа "function_input"
+ *
+ * @param p_value           Переменная типа "character" без ограничений
+ *
+ * @return Возвращает переменную типа "function_input" с заполненной переменной
+ */
 CREATE OR REPLACE FUNCTION parse_function_input(p_input character varying)
  RETURNS function_input
  LANGUAGE plpgsql

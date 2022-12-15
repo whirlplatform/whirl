@@ -1,3 +1,10 @@
+/**
+ * Считает количество ключей в параметре "parameter_index" входящей переменной типа "function_input"
+ *
+ * @param p_input           Переменная типа "function_input"
+ *
+ * @return Возвращает количество ключей параметра "parameter_index"
+ */
 CREATE OR REPLACE FUNCTION get_parameters_count(p_input function_input)
  RETURNS numeric
  LANGUAGE plpgsql
