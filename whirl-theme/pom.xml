@@ -67,7 +67,7 @@
                         </goals>
                         <configuration>
                             <url>
-                                https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${phantomjs.version}-${platform}${archive}
+                                https://repo1.maven.org/maven2/com/github/klieber/phantomjs/${phantomjs.version}/phantomjs-${phantomjs.version}-${platform}${archive}
                             </url>
                             <outputDirectory>${basedir}/target/phantomjs</outputDirectory>
                         </configuration>

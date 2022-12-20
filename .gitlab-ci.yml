@@ -26,6 +26,7 @@ checkstyle:
     # Run on merge requests to develop branch
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'develop'
       when: always
+  allow_failure: true
   script:
     - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate checkstyle:check
   artifacts:
