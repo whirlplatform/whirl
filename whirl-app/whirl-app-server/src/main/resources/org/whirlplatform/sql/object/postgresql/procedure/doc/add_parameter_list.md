@@ -1,24 +1,27 @@
-/**
- * Добавляет параметр типа "LIST" к результату выполнения события
- *
- * @param p_result          Переменная результата выполнения события
- * @param p_code            Код параметра
- * @param p_list_title      Отображаемое значение(лейбл) элемента
- * @param p_list_value      Идентификатор элемента
- *
- * @return Переданную переменную типа "function_result" с новыми значениями
- */
-CREATE OR REPLACE FUNCTION add_parameter_list (
+# **ADD_PARAMETER_LIST Function**
+Добавляет параметр типа "LIST" к результату выполнения события
+
+### Parameters
+| Name         | Description                                                      |
+|--------------|------------------------------------------------------------------|
+| p_result     | Переменная результата выполнения события                         |
+| p_code       | Код параметра                                                    |
+| p_list_title | Отображаемое значение(лейбл) элемента                            |
+| p_list_value | Идентификатор элемента                                           |
+| *return*     | Переданную переменную типа "function_result" с новыми значениями |
+
+### Syntax
+     CREATE OR REPLACE FUNCTION add_parameter_list (
     p_result function_result,
     p_code varchar,
     p_list_title varchar,
     p_list_value varchar)
-RETURNS function_result
-AS
-$$
-DECLARE
+    RETURNS function_result
+    AS
+    $$
+    DECLARE
     v_index integer;
-BEGIN
+    BEGIN
     v_index := internal_next_index (p_result);
 
     IF (SELECT count (*)
@@ -54,6 +57,4 @@ BEGIN
     END IF;
 
     RETURN p_result;
-END;
-$$
-LANGUAGE plpgsql
+    END;

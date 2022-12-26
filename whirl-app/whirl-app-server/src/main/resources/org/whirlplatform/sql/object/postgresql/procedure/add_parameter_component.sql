@@ -1,3 +1,12 @@
+/**
+ * Добавляет параметр типа "varchar" к результату выполнения события
+ *
+ * @param p_result          Переменная результата выполнения события
+ * @param p_code            Код параметра
+ * @param p_component_code  Значение параметра
+ *
+ * @return Переданную переменную типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_component (
     p_result function_result,
     p_code varchar,

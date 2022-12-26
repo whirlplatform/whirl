@@ -1,3 +1,12 @@
+/**
+ * Добавляет параметр типа "boolean" к результату выполнения события
+ *
+ * @param p_result          Переменная результата выполнения события
+ * @param p_code            Код параметра
+ * @param p_value           Значение параметра
+ *
+ * @return  Переданную переменную типа "function_result" с новыми значениями
+ */
 CREATE OR REPLACE FUNCTION add_parameter_boolean (
     p_result function_result,
     p_code varchar,

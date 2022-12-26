@@ -1,24 +1,27 @@
-/**
- * Добавляет параметр типа "timestamp" к результату выполнения события.
- * Формат даты 'DD.MM.YYYY HH24:MI:SS'
- *
- * @param p_result          Переменная результата выполнения события
- * @param p_code            Код параметра
- * @param p_value           Значение параметра
- *
- * @return  Переданную переменную типа "function_result" с новыми значениями
- */
-CREATE OR REPLACE FUNCTION add_parameter_date (
+# **ADD_PARAMETER_DATE Function**
+Добавляет параметр типа "timestamp" к результату выполнения события. 
+Формат даты 'DD.MM.YYYY HH24:MI:SS'
+
+### Parameters
+| Name      | Description                                                      |
+|-----------|------------------------------------------------------------------|
+| p_result  | Переменная результата выполнения события                         |
+| p_code    | Код параметра                                                    |
+| p_value   | Значение параметра                                               |
+| *return*  | Переданную переменную типа "function_result" с новыми значениями |
+
+### Syntax
+    CREATE OR REPLACE FUNCTION add_parameter_date (
     p_result function_result,
     p_code varchar,
     p_value timestamp)
-RETURNS function_result
-AS
-$$
-DECLARE
+    RETURNS function_result
+    AS
+    $$
+    DECLARE
     v_index integer;
     v_value varchar;
-BEGIN
+    BEGIN
     v_index := internal_next_index (p_result);
 
     IF p_value IS NOT NULL
@@ -51,6 +54,5 @@ BEGIN
     END IF;
 
     RETURN p_result;
-END;
-$$
-LANGUAGE plpgsql
+    END;
+    

@@ -1,16 +1,19 @@
-/**
- * Функция формирует ответ возвращаемый в качестве результата выполнения события
- * Сериализует тип "function_result" в текстовое представление
- *
- * @param p_result          Переменная результата выполнения события
- *
- * @return Текст со значением параметров входящей переменной
- */
-CREATE OR REPLACE FUNCTION as_result(p_result function_result)
+# **AS_RESULT Function**
+Функция формирует ответ возвращаемый в качестве результата выполнения события 
+Сериализует тип "function_result" в текстовое представление
+
+### Parameters
+| Name      | Description                                        |
+|-----------|----------------------------------------------------|
+| p_result  | Переменная результата выполнения события           |
+| *return*  | Текст со значением параметров входящей переменной  |
+
+### Syntax
+     CREATE OR REPLACE FUNCTION as_result(p_result function_result)
     RETURNS text
     LANGUAGE plpgsql
-AS $function$
-DECLARE
+    AS $function$
+    DECLARE
     v_result          hstore;
     v_parameter_array hstore[];
     v_parameter       hstore;
@@ -19,7 +22,7 @@ DECLARE
     v_parameter_code  varchar(4000);
     v_parameter_type  varchar(4000);
     v_out             text;
-BEGIN
+    BEGIN
     v_result := ''::hstore;
 
     IF p_result.message IS NOT NULL
@@ -69,6 +72,4 @@ BEGIN
         END LOOP;
     v_out := to_json(v_result)::varchar;
     RETURN '{"result": ' || (case when v_out != '{}' then rtrim(v_out, '}') || ', ' else '' end) ||  '"parameters": ' || to_json (v_parameter_array) || '}}';
-END;
-$function$
-;
+    END;

@@ -1,22 +1,25 @@
-/**
- * Парсит входящую переменную типа текст и заполняет поля переменной типа "row_value"
- *
- * @param p_value           Переменная типа текст без ограничений
- *
- * @return Текст с заполненной переменной типа "row_value"
- */
-CREATE OR REPLACE FUNCTION parse_row_list(p_value text)
+# **PARSE_ROW_LIST Function**
+Парсит входящую переменную типа текст и заполняет поля переменной типа "row_value"
+
+### Parameters
+| Name     | Description                                     |
+|----------|-------------------------------------------------|
+| p_value  | Переменная типа текст без ограничений           |
+| *return* | Текст с заполненной переменной типа "row_value" |
+
+### Syntax
+     CREATE OR REPLACE FUNCTION parse_row_list(p_value text)
     RETURNS text
     LANGUAGE plpgsql
-AS $function$
-declare
+    AS $function$
+    declare
     v_result  row_list;
     v_row     row_value;
 
     v_rows    varchar[];
     v_els_str varchar(32767);
     v_els     varchar[];
-BEGIN
+    BEGIN
 
     if p_value is null or trim(p_value) = '' then
         return v_result;
@@ -37,6 +40,4 @@ BEGIN
         end loop;
 
     return v_result.list_name;
-END;
-$function$
-;
+    END;

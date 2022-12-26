@@ -1,23 +1,26 @@
-/**
- * Добавляет параметр типа "numeric" к результату выполнения события
- *
- * @param p_result          Переменная результата выполнения события
- * @param p_code            Код параметра
- * @param p_value           Значение параметра
- *
- * @return Переданную переменную типа "function_result" с новыми значениями
- */
-CREATE OR REPLACE FUNCTION add_parameter_number (
+# **ADD_PARAMETER_NUMBER Function**
+Добавляет параметр типа "numeric" к результату выполнения события
+
+### Parameters
+| Name      | Description                                                      |
+|-----------|------------------------------------------------------------------|
+| p_result  | Переменная результата выполнения события                         |
+| p_code    | Код параметра                                                    |
+| p_value   | Значение параметра                                               |
+| *return*  | Переданную переменную типа "function_result" с новыми значениями |
+
+### Syntax
+     CREATE OR REPLACE FUNCTION add_parameter_number (
     p_result function_result,
     p_code varchar,
     p_value numeric)
-RETURNS function_result
-AS
-$$
-DECLARE
+    RETURNS function_result
+    AS
+    $$
+    DECLARE
     v_index integer;
     v_value varchar;
-BEGIN
+    BEGIN
     v_index := internal_next_index (p_result);
 
     IF p_value IS NOT NULL
@@ -50,6 +53,5 @@ BEGIN
     END IF;
 
     RETURN p_result;
-END;
-$$
-LANGUAGE plpgsql
+    END;
+
