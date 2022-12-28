@@ -4,10 +4,10 @@ This folder contains docker configurations.
 Entire application stack can be run with docker compose by command:
 
 ```bash
-docker-compose --profile image up --build
+docker compose --profile image --project-name whirl up
 ```
 
-Thera are two profiles:
+Thera are three profiles:
 - `source` - runs application stack by building from source code of current project.
-- `prebuilt` - runs from prebuilt web archive located at GitHub's releases page.
-- `image` - runs from image from docker hub.
+- `packaged` - runs stack using current project's packaged war files.
+- `image` - runs from doker image.

@@ -2,6 +2,7 @@ stages:
   - validate
   - build
   - docker
+  - deploy
 
 default:
   image:
@@ -43,21 +44,17 @@ checkstyle:
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-build:
-  extends:
-    - .build
-  rules:
-    # Run not on develop and master branches
-    - if: $CI_COMMIT_REF_NAME != 'develop' && $CI_COMMIT_REF_NAME != 'master'
-      when: always
-
 build-with-artifacts:
   extends:
     - .build
   rules:
-    # Run on develop and master branches
-    - if: $CI_COMMIT_REF_NAME == 'develop' || $CI_COMMIT_REF_NAME == 'master'
-      when: always
+    # build on merge request
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # prevent double build on merge request and branch at the same time
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    # build on all branches
+    - if: $CI_COMMIT_BRANCH
   artifacts:
     paths:
       - "**/*.war"
@@ -115,3 +112,53 @@ docker-release-latest:
     # Run on tag.
     - if: $CI_COMMIT_TAG
       when: always
+
+# Deploy to dev server with docker compose.
+deploy-dev:
+  stage: deploy
+  needs:
+    - build-with-artifacts
+  dependencies:
+    - build-with-artifacts
+  image:
+    name: docker:20.10.21
+    pull_policy: if-not-present
+  rules:
+    # build on merge request
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    # prevent double build on merge request and branch at the same time
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    # build on all branches
+    - if: $CI_COMMIT_BRANCH
+      when: manual
+  allow_failure: true
+  before_script:
+    - command -v ssh-agent >/dev/null || apk add openssh-client
+    - eval $(ssh-agent -s)
+    - cat "${DEV_AUTHORIZED_KEY}" | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    # Create config folder on remote server.
+    - ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} 'mkdir -p ~/conf/dev'
+    # Copy confinguration files to remote server to folder ~/conf/dev
+    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${DEV_USER}@${DEV_HOST}:~/conf/dev
+    # Copy database initialization files to remote server to folder ~/conf/dev
+    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${DEV_USER}@${DEV_HOST}:~/conf/dev
+    # replace password="password" in ~/conf/dev/conf/postgresql/context.xml.default on remote server
+    - >-
+      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST}
+      "sed -i 's/password=\"password\"/password=\"${DEV_POSTGRES_PASSWORD}\"/g' ~/conf/dev/conf/postgresql/context.xml.default"
+    # replace PASSWORD 'password' in ~/conf/dev/db/postgresql/01-create-db.sh on remote server
+    - >-
+      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} "sed -i \"s/'password'/'${DEV_POSTGRES_PASSWORD}'/g\" ~/conf/dev/db/postgresql/01-create-db.sh"
+    - >-
+      docker --host "ssh://${DEV_USER}@${DEV_HOST}"
+      compose
+      --file ./docker/docker-compose.yml
+      --env-file ${DEV_ENV_FILE}
+      --profile packaged
+      --project-name whirl-develop
+      up --force-recreate --build --detach

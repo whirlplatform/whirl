@@ -1,6 +1,9 @@
+version: '3.7'
+
 services:
 
   source:
+    container_name: whirl
     profiles:
       - source
     build:
@@ -8,16 +11,17 @@ services:
       dockerfile: docker/Source.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
       target: all
     ports:
-      - 8090:8080
+      - ${WHIRL_PORT:-8090}:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
-      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+      - ${WHIRL_CONF:-./}conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ${WHIRL_WORK:-../.whirl-work}:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
     depends_on:
       - postgresql
 
   packaged:
+    container_name: whirl
     profiles:
       - packaged
     build:
@@ -25,55 +29,38 @@ services:
       dockerfile: docker/Packaged.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
       target: all
       args:
-        VERSION: 0.3.0-SNAPSHOT # For packaged only.
+        VERSION: ${VERSION:-0.3.0-SNAPSHOT} # For packaged only.
     ports:
-      - 8090:8080
+      - ${WHIRL_PORT:-8090}:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
-      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
-    links:
-      - postgresql:postgresql
-    depends_on:
-      - postgresql
-
-  prebuild:
-    profiles:
-      - prebuild
-    build:
-      context: ..
-      dockerfile: docker/Prebuild.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
-      target: all
-      args:
-        TAG: v0.2.0 # For prebuilt only.
-    ports:
-      - 8090:8080
-    volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
-      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+      - ${WHIRL_CONF:-./}conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ${WHIRL_WORK:-../.whirl-work}:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
     depends_on:
       - postgresql
 
   image:
+    container_name: whirl
     profiles:
       - image
-    image: otlichnosti/whirl:v0.3.0-all
+    image: otlichnosti/whirl:${TAG:-develop}
     ports:
-      - 8090:8080
+      - ${WHIRL_PORT:-8090}:8080
     volumes:
-      - ./conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
-      - ../.whirl-work:/usr/local/whirl # Whirl applications location.
+      - ${WHIRL_CONF:-./}conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
+      - ${WHIRL_WORK:-../.whirl-work}:/usr/local/whirl # Whirl applications location.
     links:
       - postgresql:postgresql
     depends_on:
       - postgresql
 
   postgresql:
+    container_name: postgres
     image: postgres
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT:-5432}:5432
     environment:
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     volumes:
-      - ./db/postgresql/:/docker-entrypoint-initdb.d/ # Database initialisation scripts.
+      - ${WHIRL_CONF:-./}db/postgresql/:/docker-entrypoint-initdb.d/ # Database initialisation scripts.
