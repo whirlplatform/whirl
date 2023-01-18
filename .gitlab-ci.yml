@@ -42,7 +42,7 @@ checkstyle:
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
-    - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -Dgwt.skipCompilation=true -B -V
 
 build-with-artifacts:
   extends:
