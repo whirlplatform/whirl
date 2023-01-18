@@ -15,6 +15,8 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <nodejs.version>10.24.1</nodejs.version>
     </properties>
 
     <dependencies>
@@ -49,24 +51,44 @@
                         <goals>
                             <goal>run</goal>
                         </goals>
+                        <configuration>
+                            <nodeJsVersion>${nodejs.version}</nodeJsVersion>
+                            <tasks>
+                                <nodeJsTask>
+                                    <workingDirectory>${project.build.directory}</workingDirectory>
+                                    <moduleName>npm</moduleName>
+                                    <executableName>npm-cli</executableName>
+                                    <arguments>
+                                        <argument>install</argument>
+                                        <argument>--save-dev</argument>
+                                        <argument>esdoc</argument>
+                                        <argument>esdoc-standard-plugin</argument>
+                                    </arguments>
+                                </nodeJsTask>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-jsdoc</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <nodeJsVersion>${nodejs.version}</nodeJsVersion>
+                            <tasks>
+                                <nodeJsTask>
+                                    <workingDirectory>${project.build.directory}</workingDirectory>
+                                    <arguments>
+                                        <argument>${project.build.directory}/node_modules/esdoc/out/src/ESDoc.js</argument>
+                                        <argument>-c</argument>
+                                        <argument>${project.basedir}/config/jsdoc/esdoc.json</argument>
+                                    </arguments>
+                                </nodeJsTask>
+                            </tasks>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <nodeJsVersion>10.24.1</nodeJsVersion>
-                    <tasks>
-                        <nodeJsTask>
-                            <workingDirectory>${project.build.directory}</workingDirectory>
-                            <moduleName>npm</moduleName>
-                            <executableName>npm-cli</executableName>
-                            <arguments>
-                                <argument>install</argument>
-                                <argument>--save-dev</argument>
-                                <argument>esdoc</argument>
-                                <argument>esdoc-standard-plugin</argument>
-                            </arguments>
-                        </nodeJsTask>
-                    </tasks>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -93,28 +115,6 @@
                                 <processor>org.whirlplatform.jsdoc.EsDocProcessor</processor>
                             </processors>
                             <outputDirectory>${project.build.directory}/generated-sources/jsdoc</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-jsdoc</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <workingDirectory>${project.build.directory}</workingDirectory>
-                            <executable>./node_modules/.bin/esdoc</executable>
-                            <arguments>
-                                <argument>-c</argument>
-                                <argument>${project.basedir}/config/jsdoc/esdoc.json</argument>
-                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
