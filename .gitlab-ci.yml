@@ -127,6 +127,7 @@ deploy-dev:
     # build on merge request
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: manual
+      allow_failure: true
     # prevent double build on merge request and branch at the same time
     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
       when: never

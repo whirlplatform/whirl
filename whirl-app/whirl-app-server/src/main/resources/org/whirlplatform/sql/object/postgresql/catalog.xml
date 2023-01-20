@@ -5,26 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="row_value" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/row_value.sql"
-                 relativeToChangelogFile="true"/>
-    </changeSet>
-
-    <changeSet id="row_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/row_list.sql"
-                 relativeToChangelogFile="true"/>
-    </changeSet>
-
-    <changeSet id="function_result" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/function_result.sql"
-                 relativeToChangelogFile="true"/>
-    </changeSet>
-
-    <changeSet id="function_input" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/function_input.sql"
-                 relativeToChangelogFile="true"/>
-    </changeSet>
-
     <changeSet author="whirl" id="internal_next_index" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="internal_next_index"
                          path="procedure/internal_next_index.sql"

@@ -21,6 +21,30 @@
             failOnError="true"
             dbms="postgresql">
 
+        <sqlFile dbms="postgresql"
+                 path="types/function_input.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
+        <sqlFile dbms="postgresql"
+                 path="types/function_result.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
+        <sqlFile dbms="postgresql"
+                 path="types/row_value.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
+        <sqlFile dbms="postgresql"
+                 path="types/row_list.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
         <createTable
                 tableName="WHIRL_USERS"
                 remarks="Stores user information">
@@ -208,6 +232,18 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
 
+            <sql>
+                DROP TYPE whirl.row_value;
+            </sql>
+            <sql>
+                DROP TYPE whirl.row_list;
+            </sql>
+            <sql>
+                DROP TYPE whirl.function_result;
+            </sql>
+            <sql>
+                DROP TYPE whirl.function_input;
+            </sql>
         </rollback>
     </changeSet>
 
