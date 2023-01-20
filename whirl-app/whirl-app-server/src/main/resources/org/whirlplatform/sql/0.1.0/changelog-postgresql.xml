@@ -178,6 +178,8 @@
                 referencedTableName="WHIRL_USERS"
                 referencedColumnNames="ID"/>
 
+        <addUniqueConstraint tableName="WHIRL_USERS" constraintName="UC_WHIRL_USERS" columnNames="LOGIN"/>
+
         <insert tableName="WHIRL_USERS">
             <column
                     name="DELETED"
@@ -202,6 +204,9 @@
                     type="datetime"
                     valueComputed="${date_now}"/>
         </insert>
+
+        <addUniqueConstraint tableName="WHIRL_USER_GROUPS" constraintName="UC_WHIRL_USER_GROUPS" columnNames="R_WHIRL_USERS, GROUP_CODE"/>
+
         <insert tableName="WHIRL_USER_GROUPS">
             <column
                     name="DELETED"
