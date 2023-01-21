@@ -28,8 +28,6 @@ services:
       context: ..
       dockerfile: docker/Packaged.Dockerfile # Download.Dockerfile uses prebuild WAR. To build from source change to Build.Dockerfile.
       target: all
-      args:
-        VERSION: ${VERSION:-0.3.0-SNAPSHOT} # For packaged only.
     ports:
       - ${WHIRL_PORT:-8090}:8080
     volumes:

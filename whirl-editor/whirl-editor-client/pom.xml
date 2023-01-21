@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.whirlplatform</groupId>
         <artifactId>whirl-editor</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>${revision}${sha1}${changelist}</version>
     </parent>
 
     <artifactId>whirl-editor-client</artifactId>
@@ -140,6 +140,7 @@
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
+                    <warName>${project.artifactId}</warName>
                     <moduleName>org.whirlplatform.editor.Editor</moduleName>
                     <moduleShortName>editor</moduleShortName>
                     <skipModule>true</skipModule>
@@ -153,9 +154,6 @@
                     </jvmArgs>
                 </configuration>
             </plugin>
-            <!-- <plugin> <artifactId>maven-source-plugin</artifactId> <executions>
-                <execution> <id>attach-sources</id> <phase>package</phase> <goals> <goal>jar-no-fork</goal>
-                </goals> </execution> </executions> </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -169,7 +167,7 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <classifier>client</classifier>
+                            <classifier>classes</classifier>
                         </configuration>
                     </execution>
                 </executions>

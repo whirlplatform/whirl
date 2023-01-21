@@ -1,12 +1,12 @@
 stages:
-  - validate
+  - check
   - build
   - docker
   - deploy
 
 default:
   image:
-    name: maven:3-jdk-8-slim
+    name: maven:3.8.6-openjdk-8-slim
     pull_policy: if-not-present
   cache:
     paths:
@@ -21,11 +21,11 @@ default:
 variables:
   MAVEN_OPTS: '-Dmaven.repo.local=.m2/repository'
 
-checkstyle:
-  stage: validate
+Check Checkstyle:
+  stage: check
   rules:
-    # Run on merge requests to develop branch
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'develop'
+    # Run on source event = merge requests
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
       when: always
   allow_failure: true
   script:
@@ -39,22 +39,39 @@ checkstyle:
 # Build everywhere.
 .build:
   stage: build
+  variables:
+    REVISION: "" # Should be set by the job.
+    CHANGELIST: "" # Should be set by the job.
+    SHA: "" # Should be set by the job.
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
-    - mvn $MAVEN_OPTS package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - mvn $MAVEN_OPTS -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-build-with-artifacts:
+Check Build:
+  extends: .build
+  rules:
+    # Run on source event = merge request
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
+      variables:
+        REVISION: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
+        CHANGELIST: "-SNAPSHOT"
+        SHA: ${CI_COMMIT_SHORT_SHA}
+  allow_failure: false
+
+Package:
   extends:
     - .build
   rules:
-    # build on merge request
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # prevent double build on merge request and branch at the same time
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      when: never
-    # build on all branches
+    # Build on all branches
     - if: $CI_COMMIT_BRANCH
+      when: always
+      variables:
+        REVISION: ${CI_COMMIT_BRANCH}
+        CHANGELIST: "-SNAPSHOT"
+        SHA: ${CI_COMMIT_SHORT_SHA}
+  allow_failure: false
   artifacts:
     paths:
       - "**/*.war"
@@ -65,15 +82,16 @@ build-with-artifacts:
 .docker:
   stage: docker
   needs:
-    - build-with-artifacts
-  dependencies:
-    - build-with-artifacts
+    - job: Package
+      artifacts: true
   image:
     name: docker:20.10.21
     pull_policy: if-not-present
   variables:
-    IMAGE_NAME: "whirl"
-    IMAGE_TAG: "${CI_COMMIT_TAG}"
+    IMAGE_TAG: "" # Should be set in the job
+    REVISON: "" # Should be set in the job
+    CHANGELIST: "" # Should be set in the job
+    SHA: "" # Should be set in the job
   script:
     - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} docker.io
     - docker build -t otlichnosti/whirl:${IMAGE_TAG}-app --target app -f docker/Packaged.Dockerfile .
@@ -83,58 +101,58 @@ build-with-artifacts:
     - docker push otlichnosti/whirl:${IMAGE_TAG}-editor
     - docker push otlichnosti/whirl:${IMAGE_TAG}
 
-docker-develop:
+Publish Docker Develop:
   extends:
     - .docker
-  variables:
-    IMAGE_TAG: "develop"
   rules:
     # Run on develop branch not on merge requests.
     - if: $CI_COMMIT_BRANCH == 'develop'
       when: always
+  variables:
+    IMAGE_TAG: "develop"
+    REVISION: "develop"
+    CHANGELIST: "-SNAPSHOT"
+    SHA: ${CI_COMMIT_SHORT_SHA}
 
-docker-release:
+Publish Docker Release TAG:
   extends:
     - .docker
+  rules:
+    # Run on tag.
+    - if: $CI_COMMIT_TAG
+      when: always
   variables:
     IMAGE_TAG: "${CI_COMMIT_TAG}"
-  rules:
-    # Run on tag.
-    - if: $CI_COMMIT_TAG
-      when: always
+    REVISION: "${CI_COMMIT_TAG}"
+    CHANGELIST: ""
+    SHA: ""
 
-docker-release-latest:
+Publish Docker Release LATEST:
   extends:
     - .docker
-  variables:
-    IMAGE_TAG: "latest"
   rules:
     # Run on tag.
     - if: $CI_COMMIT_TAG
       when: always
+  variables:
+    IMAGE_TAG: "latest"
+    REVISION: "${CI_COMMIT_TAG}"
+    CHANGELIST: ""
+    SHA: ""
 
 # Deploy to dev server with docker compose.
-deploy-dev:
+Deploy To DEV:
   stage: deploy
-  needs:
-    - build-with-artifacts
-  dependencies:
-    - build-with-artifacts
-  image:
-    name: docker:20.10.21
-    pull_policy: if-not-present
   rules:
-    # build on merge request
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: manual
-      allow_failure: true
-    # prevent double build on merge request and branch at the same time
-    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-      when: never
     # build on all branches
     - if: $CI_COMMIT_BRANCH
       when: manual
-  allow_failure: true
+  needs:
+    - job: Package
+      artifacts: true
+  image:
+    name: docker:20.10.21
+    pull_policy: if-not-present
   before_script:
     - command -v ssh-agent >/dev/null || apk add openssh-client
     - eval $(ssh-agent -s)
@@ -154,7 +172,8 @@ deploy-dev:
       "sed -i 's/password=\"password\"/password=\"${DEV_POSTGRES_PASSWORD}\"/g' ~/conf/dev/conf/postgresql/context.xml.default"
     # replace PASSWORD 'password' in ~/conf/dev/db/postgresql/01-create-db.sh on remote server
     - >-
-      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} "sed -i \"s/'password'/'${DEV_POSTGRES_PASSWORD}'/g\" ~/conf/dev/db/postgresql/01-create-db.sh"
+      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST}
+      "sed -i \"s/'password'/'${DEV_POSTGRES_PASSWORD}'/g\" ~/conf/dev/db/postgresql/01-create-db.sh"
     - >-
       docker --host "ssh://${DEV_USER}@${DEV_HOST}"
       compose

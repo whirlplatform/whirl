@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.whirlplatform</groupId>
         <artifactId>whirl-editor</artifactId>
-        <version>0.3.0-SNAPSHOT</version>
+        <version>${revision}${sha1}${changelist}</version>
     </parent>
 
     <artifactId>whirl-editor-server</artifactId>
@@ -194,6 +194,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
+                    <warName>${project.artifactId}</warName>
+                    <webappDirectory>${project.build.directory}/war</webappDirectory>
                     <webResources>
                         <resource>
                             <directory>${project.basedir}/../../whirl-jsdoc/target/docs/</directory>
