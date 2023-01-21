@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <nodejs.version>10.24.1</nodejs.version>
+        <nodejs.version>v18.13.0</nodejs.version>
     </properties>
 
     <dependencies>
@@ -40,52 +40,33 @@
 
     <build>
         <plugins>
+            <!-- Install nodejs with frontend-maven-plugin to target/nodejs -->
             <plugin>
-                <groupId>io.wcm.maven.plugins</groupId>
-                <artifactId>nodejs-maven-plugin</artifactId>
-                <version>3.0.6</version>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.12.1</version>
+                <configuration>
+                    <nodeVersion>${nodejs.version}</nodeVersion>
+                    <installDirectory>${project.build.directory}/nodejs</installDirectory>
+                    <workingDirectory>${project.build.directory}/nodejs</workingDirectory>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>generate-esdoc</id>
+                        <id>install node and npm</id>
                         <phase>initialize</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
-                        <configuration>
-                            <nodeJsVersion>${nodejs.version}</nodeJsVersion>
-                            <tasks>
-                                <nodeJsTask>
-                                    <workingDirectory>${project.build.directory}</workingDirectory>
-                                    <moduleName>npm</moduleName>
-                                    <executableName>npm-cli</executableName>
-                                    <arguments>
-                                        <argument>install</argument>
-                                        <argument>--save-dev</argument>
-                                        <argument>esdoc</argument>
-                                        <argument>esdoc-standard-plugin</argument>
-                                    </arguments>
-                                </nodeJsTask>
-                            </tasks>
-                        </configuration>
                     </execution>
+                    <!-- Install esdoc -->
                     <execution>
-                        <id>generate-jsdoc</id>
-                        <phase>prepare-package</phase>
+                        <id>install esdoc</id>
+                        <phase>initialize</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <nodeJsVersion>${nodejs.version}</nodeJsVersion>
-                            <tasks>
-                                <nodeJsTask>
-                                    <workingDirectory>${project.build.directory}</workingDirectory>
-                                    <arguments>
-                                        <argument>${project.build.directory}/node_modules/esdoc/out/src/ESDoc.js</argument>
-                                        <argument>-c</argument>
-                                        <argument>${project.basedir}/config/jsdoc/esdoc.json</argument>
-                                    </arguments>
-                                </nodeJsTask>
-                            </tasks>
+                            <arguments>install --save-dev esdoc esdoc-standard-plugin</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -115,6 +96,28 @@
                                 <processor>org.whirlplatform.jsdoc.EsDocProcessor</processor>
                             </processors>
                             <outputDirectory>${project.build.directory}/generated-sources/jsdoc</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>generate-jsdoc</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.build.directory}/nodejs</workingDirectory>
+                            <executable>node_modules/.bin/esdoc</executable>
+                            <arguments>
+                                <argument>-c</argument>
+                                <argument>${project.basedir}/config/jsdoc/esdoc.json</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                 </executions>
