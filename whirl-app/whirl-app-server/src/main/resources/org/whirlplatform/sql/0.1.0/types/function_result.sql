@@ -1,7 +1,3 @@
--- whirl.function_result definition
-
--- DROP TYPE whirl.function_result;
-
 /**
  * @type function_result   Результат выполнения события
  */

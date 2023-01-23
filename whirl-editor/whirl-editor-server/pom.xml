@@ -198,12 +198,16 @@
                     <webappDirectory>${project.build.directory}/war</webappDirectory>
                     <webResources>
                         <resource>
-                            <directory>${project.basedir}/../../whirl-jsdoc/target/docs/</directory>
+                            <directory>${project.basedir}/../../whirl-doc/target/docs/jsdoc/</directory>
                             <targetPath>/api/js/jsdoc</targetPath>
                         </resource>
                         <resource>
-                            <directory>${project.basedir}/../../whirl-jsdoc/target/generated-sources/jsdoc/Whirl/</directory>
+                            <directory>${project.basedir}/../../whirl-doc/target/generated-sources/jsdoc/Whirl/</directory>
                             <targetPath>/api/js/code</targetPath>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/../../whirl-doc/target/docs/dbdoc/</directory>
+                            <targetPath>/api/db/dbdoc</targetPath>
                         </resource>
                     </webResources>
                 </configuration>
@@ -232,7 +236,7 @@
                         <configuration>
                             <target>
                                 <echo message="Creating JS API docs directory"/>
-                                <mkdir dir="${project.basedir}/../../whirl-jsdoc/target/docs/"/>
+                                <mkdir dir="${project.basedir}/../../whirl-doc/target/docs/jsdoc/"/>
                             </target>
                         </configuration>
                         <goals>
@@ -245,7 +249,7 @@
                         <configuration>
                             <target>
                                 <echo message="Creating JS API code directory"/>
-                                <mkdir dir="${project.basedir}/../../whirl-jsdoc/target/generated-sources/jsdoc/Whirl/"/>
+                                <mkdir dir="${project.basedir}/../../whirl-doc/target/generated-sources/jsdoc/Whirl/"/>
                             </target>
                         </configuration>
                         <goals>

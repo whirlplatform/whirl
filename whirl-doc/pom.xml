@@ -39,6 +39,35 @@
     <build>
         <plugins>
             <plugin>
+            <groupId>com.ruleoftech</groupId>
+            <artifactId>markdown-page-generator-plugin</artifactId>
+            <version>2.4.0</version>
+            <executions>
+                <execution>
+                    <phase>process-resources</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <inputDirectory>${project.basedir}/src/main/resources/doc/database/</inputDirectory>
+                <outputDirectory>${project.basedir}/target/docs/dbdoc</outputDirectory>
+                <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
+                <inputEncoding>UTF-8</inputEncoding>
+                <outputEncoding>UTF-8</outputEncoding>
+                <headerHtmlFile>${project.basedir}/src/main/resources/doc/database/header.html</headerHtmlFile>
+                <inputFileExtensions>md, markdown</inputFileExtensions>
+                <attributes>
+                    <attribute>TableBlock|style="background: #DCDCDC; border-collapse: collapse;"</attribute>
+                    <attribute>TableBody|style="border: 1px solid black; padding: 4px;"</attribute>
+                    <attribute>TableCell|style="border: 1px solid black; padding: 2px;"</attribute>
+                    <attribute>Code|style="background:#D3D3D3"</attribute>
+                </attributes>
+            </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>io.wcm.maven.plugins</groupId>
                 <artifactId>nodejs-maven-plugin</artifactId>
                 <version>3.0.6</version>

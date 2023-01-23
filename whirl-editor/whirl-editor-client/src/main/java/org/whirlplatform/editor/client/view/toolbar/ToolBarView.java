@@ -13,6 +13,9 @@ import com.sencha.gxt.widget.core.client.form.FileUploadField;
 import com.sencha.gxt.widget.core.client.form.FormPanel;
 import com.sencha.gxt.widget.core.client.form.FormPanel.Encoding;
 import com.sencha.gxt.widget.core.client.form.FormPanel.Method;
+import com.sencha.gxt.widget.core.client.menu.Menu;
+import com.sencha.gxt.widget.core.client.menu.MenuItem;
+import com.sencha.gxt.widget.core.client.menu.SeparatorMenuItem;
 import com.sencha.gxt.widget.core.client.toolbar.FillToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.LabelToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.SeparatorToolItem;
@@ -24,6 +27,7 @@ import org.whirlplatform.editor.client.presenter.ToolBarPresenter.IToolBarView;
 import org.whirlplatform.editor.client.view.context.ContextTextButton;
 import org.whirlplatform.editor.client.view.widget.DisplayCurrentUserWidget;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
+
 
 /**
  * Основная панель инструментов.
@@ -76,13 +80,32 @@ public class ToolBarView extends ToolBar implements IToolBarView {
 //        add(compareButton.asTextButton());
         add(new SeparatorToolItem());
         add(new ToolBarShowIconsButton(getPresenter()));
-        add(new ToolbarJsDocButton(getPresenter()));
+        add(createHelpMenu());
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
         add(new LabelToolItem(SafeHtmlUtils.fromTrustedString("&nbsp;")));
         updateButtonState();
     }
 
+    public TextButton createHelpMenu(){
+        TextButton button = new TextButton();
+        MenuItem js = new MenuItem("JavaScript API");
+        js.setIcon(ComponentBundle.INSTANCE.helpJS());
+        MenuItem db = new MenuItem("Database API");
+        db.setIcon(ComponentBundle.INSTANCE.helpDB());
+        js.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/js/jsdoc", "_blank", ""));
+        db.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/db/dbdoc", "_blank", ""));
+        Menu m = new Menu();
+        m.add(js);
+        m.add(new SeparatorMenuItem());
+        m.add(db);
+
+        button.setMenu(m);
+        button.setIcon(ComponentBundle.INSTANCE.helpApi());
+        button.setToolTip(EditorMessage.Util.MESSAGE.help_js_api());
+
+        return button;
+    }
     private FormPanel createImportForm() {
         if (importForm == null) {
             importForm = new FormPanel();

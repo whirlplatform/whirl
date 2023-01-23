@@ -1,6 +1,6 @@
 {
   "source": "./generated-sources/jsdoc",
-  "destination": "./docs",
+  "destination": "./docs/jsdoc",
   "includes": [
     "\\.es6$"
   ],

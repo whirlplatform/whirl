@@ -6,6 +6,7 @@ import com.google.gwt.i18n.client.Messages;
 
 public interface EditorMessage extends Messages {
 
+    String help_db();
     String select_icon();
 
     String login_submit();

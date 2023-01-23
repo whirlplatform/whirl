@@ -8,6 +8,10 @@ public interface ComponentBundle extends ClientBundle {
 
     ComponentBundle INSTANCE = GWT.create(ComponentBundle.class);
 
+    @Source("database.png")
+    ImageResource helpDB();
+    @Source("help.png")
+    ImageResource helpJS();
     @Source("icon_selection.png")
     ImageResource iconSelection();
 

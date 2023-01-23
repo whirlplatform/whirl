@@ -1,7 +1,3 @@
--- whirl.function_input definition
-
--- DROP TYPE whirl.function_input;
-
 /**
  * @type function_input   Входные данные вызванного события
  */
