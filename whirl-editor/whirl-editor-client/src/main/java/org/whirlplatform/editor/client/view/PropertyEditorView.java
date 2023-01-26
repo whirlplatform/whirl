@@ -12,6 +12,8 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Label;
@@ -45,6 +47,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import com.sencha.gxt.widget.core.client.tips.ToolTip;
+import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.ClickEvent.ClickHandler;
 import org.whirlplatform.component.client.event.ClickEvent.HasClickHandlers;
@@ -289,6 +293,69 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             });
 
             createFields();
+
+            loaderPropertyTip();
+        }
+
+        public void loaderPropertyTip() {
+//            Map<String, String> map = new HashMap<>();
+//            map.put("border", "<!DOCTYPE html>" +
+//                "<html>" +
+//                "<head>" +
+//                "    <meta charset=\"UTF-8\">" +
+//                "    <title>Database documentation</title>" +
+//                "</head>" +
+//                "</html><p><a href=\"index.html\">Содержание</a></p>" +
+//                "<h1><strong>GET_PARAMETER_BOOLEAN Function</strong></h1>" +
+//                "<p>Возвращает значение параметра типа &quot;boolean&quot; по коду Если параметр по указанному коду
+//                " +
+//                "отсутствует, то возвращается null</p>" +
+//                "<h3>Parameters</h3>" +
+//                "<table style=\"background: #DCDCDC; border-collapse: collapse;\">" +
+//                "<thead>" +
+//                "<tr><th style=\"border: 1px solid black; padding: 2px;\"> Name     </th><th style=\"border: 1px " +
+//                "solid black; padding: 2px;\"> Description                                  </th></tr>" +
+//                "</thead>" +
+//                "<tbody style=\"border: 1px solid black; padding: 4px;\">" +
+//                "<tr><td style=\"border: 1px solid black; padding: 2px;\"> p_input  </td><td style=\"border: 1px " +
+//                "solid black; padding: 2px;\"> Переменная входных данных вызванного события </td></tr>" +
+//                "<tr><td style=\"border: 1px solid black; padding: 2px;\"> p_code   </td><td style=\"border: 1px " +
+//                "solid black; padding: 2px;\"> Код параметра                                </td></tr>" +
+//                "<tr><td style=\"border: 1px solid black; padding: 2px;\"> <em>return</em> </td><td style=\"border:
+//                " +
+//                "1px solid black; padding: 2px;\"> true/false                                   </td></tr>" +
+//                "</tbody>" +
+//                "</table>" +
+//                "<h3>Syntax</h3>" +
+//                "<pre><code> "+
+//                "</code></pre>");
+//            map.put("enabled", "Enabled");
+//            ToolTipConfig.ToolTipRenderer<Map<String, String>> renderer = new ToolTipConfig
+//            .ToolTipRenderer<Map<String, String>>() {
+//                @Override
+//                public SafeHtml renderToolTip(Map<String, String> data) {
+//                    String title = propertyType.getCode().toLowerCase();
+//                    String html = "Not found tip";
+//                    if (map.containsKey(title)) {
+//                        html = map.get(title);
+//                    }
+//                    return SafeHtmlUtils.fromSafeConstant(html);
+//                }
+//            };
+            ToolTipConfig tipConfig = new ToolTipConfig();
+//            tipConfig.setRenderer(renderer);
+            tipConfig.setRenderer(new ToolTipConfig.ToolTipRenderer<Object>() {
+                @Override
+                public SafeHtml renderToolTip(Object data) {
+                    String html = "Null";
+                    if (propertyType.getCode().equals("Enabled")) {
+                      html = "<iframe src=\"https://www.google.com\">My frame</iframe>";
+                    }
+                    return SafeHtmlUtils.fromSafeConstant(html);
+                }
+            });
+            ToolTip tip = new ToolTip(this,tipConfig);
+            add(tip);
         }
 
         public void clearField() {
