@@ -66,13 +66,13 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <warName>${project.artifactId}</warName>
                     <moduleName>org.whirlplatform.app.Application</moduleName>
                     <moduleShortName>application</moduleShortName>
                     <skipModule>true</skipModule>

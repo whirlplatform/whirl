@@ -135,12 +135,12 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
-                    <warName>${project.artifactId}</warName>
                     <moduleName>org.whirlplatform.editor.Editor</moduleName>
                     <moduleShortName>editor</moduleShortName>
                     <skipModule>true</skipModule>
