@@ -257,15 +257,14 @@ public class MultibaseEditorConnector implements EditorConnector {
                 table.setTitle(title);
                 table.setTableName(tableInfo.getName());
 
-                if (tableInfo.getKeyColumns() != null) {
-                    DBTableColumn columnInfo = (DBTableColumn) tableInfo.getKeyColumns()[0];
-                    TableColumnElement column = parseColumn(tableInfo, columnInfo, application);
-                    table.setIdColumn(column);
-                }
                 for (DBColumn c : tableInfo.getColumns()) {
                     DBTableColumn columnInfo = (DBTableColumn) c;
                     TableColumnElement column = parseColumn(tableInfo, columnInfo, application);
                     table.addColumn(column);
+                    if(tableInfo.getKeyColumns() != null
+                        && columnInfo.getName().equalsIgnoreCase(tableInfo.getKeyColumns()[0].getName())) {
+                        table.setIdColumn(column);
+                    }
                 }
                 result.add(table);
             }

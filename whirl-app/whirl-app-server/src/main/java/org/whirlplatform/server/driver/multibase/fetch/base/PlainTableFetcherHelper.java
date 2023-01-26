@@ -80,6 +80,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                                         .getIdColumnType(table)),
                         c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
+        } else {
+            System.out.println("");
         }
 
         // Добавление стилизованных колонок в дереве по новому алгоритму
