@@ -51,6 +51,7 @@ public class InjectServletConfig extends GuiceServletContextListener {
         initMBeans(servletContextEvent.getServletContext());
         initDatabase((Injector) servletContextEvent.getServletContext()
                 .getAttribute(Injector.class.getName()));
+
     }
 
     // Создание бинов для управления приложением

@@ -1,0 +1,266 @@
+{
+  "time": 1673509688095,
+  "version": {
+    "sideex": [
+      3,
+      7,
+      3
+    ],
+    "format": [
+      2,
+      0,
+      0
+    ]
+  },
+  "suites": [
+    {
+      "title": "2-grid-suite",
+      "description": "grid-suite",
+      "enableOnPlaying": true,
+      "cases": [
+        {
+          "title": "grid-case",
+          "description": "grid-case",
+          "enableOnPlaying": true,
+          "networkSpeed": 5.37,
+          "records": [
+            {
+              "name": "open",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "${HOSTNAME}/app?application=grid-test"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "waitForElementPresent",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "css=div.gwt-Label"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "10000"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "assertElement",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(//*[@type=\"checkbox\" and @checked=\"\"])"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[5]/div[1]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[5]/div[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.com-sencha-gxt-theme-base-client-field-CheckBoxDefaultAppearance-CheckBoxStyle-wrap"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3L4JKcnlFCAYYMwNGBB4oJCiAHIQALYIzLENUOkQKCjMUBh9MCgIWFAMEDCiVFKMCAMwsuMIMKNoC1IAZkfp7AcMCFAA1vlUMicQ8umQNDQIEEgQi-tLN3uGCoKDAhUyMHEPxoDXSGCg9EwWAA8kgZEhmGQAL6UeF0DrgCA9fqDfDDSijcaTfDTWbzRbLVbrGCbbYZeT-dJHLBSURIAQ7dIcvkCCAfL4-P6C4X89ig8H-BDpLlYLDIAAEtLmCyWKzWUnEAlECCk0yQnO5vNlq1lcCO4htAlB9AQ8syKAOSpVaoxlDdpJAsPhiOwqPRmJAOMaUBoGNwWFe6VxUBw8cTyageG4nSJvQGzDQWBo8malDBnym1zuDwanBQEAyCHYzDASA5DQEzCoMBeYAwMFMvhGVduTZalDhCLASLDyAjOJzxPz+DGsiVDROGDj1B7Jf7g5GYwmUxm2oZeuZrP2u3mBy5xxgZyVlwB1eBTxebzFn2+vyg-xHB5-SuQEHlXdcJ2DadQzROd8GxUJk2aeCCHVAhiCMYhTCMHCcNwPCcMjIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "assertText",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(test string 1)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell:nth-child(3) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3KoJKRQgGGDMYAgoYK1IaFiiZJQYEHigkKIAchAAtgjMsXVQ6RAoKMxQGGMwKAhYUAwQMKJUUowIEzAZ8ggws2gbUqId7CfpZ7cCEDQ0CBBIEJvnpwjP7FahUyFwQ6XSnSwyAABMtVutNttdvsYOIBKIEFJlkhzpdrrs7gSBHAruIiYDIM0gZkUKDwZDkHVqZN8HV0hgoPRMFgAPJIGRIZhkAC+vSgdAG4AgI3GLPA7BmYIhWBkVGYphmcwWSxWaw2Wx2ewODCOv0euIh+IBDyed1e70+3ygZttAmZdPSsN1CINyKkaPYGKxGBxF0tWBuhIBJIQZIBrXoLTAwJaHqZycyzFk0AA1rcMPIVRcMOykLgAMQAMyM1erAG46mlOqrmDAeiB2ZywNy+QLmKoQKL6uLBbgsPJwWKcGOJ+kxVA8NxQmLGvgCNCCCKgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "test string 1"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "assertText",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(11.01.2000 0...)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[6]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[6]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell.x-grid-cell-last:nth-child(6) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3LoJKRQgGGDMBMRGxKZGHR24XR11GBB4oJCiAHIQALYIzLF1UOkQKCjMUBjjMCgIWFAMEDCiVFKMCJMwGfIIMHNom1KiSAKn6ed3AhA0NAgQSBBbF2cIL3YKDAhUylwQ6XSaCwWGQAAIVmsNlsdnsDjBxAJRAgpCskBcrjc9vd2MSBHBruIyUDIGAEMDQfTwZDobCkHUGZlmHV0hgoPRMFgAPJIGTs-BkAC+lD5dEG4AgowmU3wYHYswhUKwMiozF8s3mi2Wq3Wm22u32hwYxz+TwJUKJgMezxJbw+Xx+UFtLoEnIJmoRJuR5rRUkx7GxuIw+MuDqwtxJ1IpCCpgOB9HpIMyKGZ6ThVGpuZghsalD9zFk0AA1ncMPJtZcMLykLgAMQAMyMnc7AG46mloTrmDAyJRefywIKRWLmLoQNL6lAaOKsPJITKoDhcKv14uoHhuKEN40JQQ4aY6cDgfcsKJTARTI+iK0iO1OkZuh-epKgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "11.01.2000 00:00:00"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "assertText",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(1)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[4]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[4]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell:nth-child(4) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3BYJKRQgGGDMBGSUGBB4oJCiAHIQALYIzLF1UOkQKCjMUBh9MCgIWFAMEDCiVFKMCAMwGfIIMKNoC1KiSAI76XunAhA0NAgQSBCL+7sI1+woYIWZBwjp6TQWCwyAABNNZvNFstVusYOIBKIEFJpkh9odjqszuwsQI4EdxLjPpAwAgvj8yX8AUCQUg6uTMsw6ukMFB6JgsAB5JAyOn4MgAX1aUDoHXAEB6-UG+DA7BG-0BWBkVGYqhGYwmUxmcwWSxWaw2DC2r0u6MBmI+Fyu2Nu90ezygJutAgZ6IV4O1UL1sKkCPYSJRGDRB3NWBO2KJ+IQhI+X3oZO+mRQVPS9MT0pAsmgAGtThh5EqDhgWUhcABiABmRirVYA3HU0kDlcwYC0QCy2WAOdzecwLCAhfURXysPIAcKcLhR+Oh1A8NxQsLGjKE18zlhRARQc0iEZiKYjIfD7hj4eB0A"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "1"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

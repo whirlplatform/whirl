@@ -7,3 +7,4 @@
 .project
 .classpath
 *.versionsBackup
+**/.flattened-pom.xml

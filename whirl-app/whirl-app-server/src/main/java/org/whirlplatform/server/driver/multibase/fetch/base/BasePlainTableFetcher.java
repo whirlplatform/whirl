@@ -46,7 +46,7 @@ public class BasePlainTableFetcher extends BasePlainDataFetcher
         temp.prepare(metadata, table, loadConfig);
 
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
-        _log.info("Fetch data from the table: " + selectCmd.getSelect());
+        _log.info("Table creation query: " + selectCmd.getSelect());
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
         try (Profile p = new ProfileImpl(m)) {
 

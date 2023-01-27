@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property
+            name="date_now"
+            value="now()"
+            dbms="postgresql"/>
+
+    <changeSet
+            id="whirl-combobox-test_0.1.0"
+            author="whirl"
+            failOnError="true"
+            dbms="postgresql">
+
+        <insert tableName="WHIRL_USER_GROUPS">
+            <column
+                    name="DELETED"
+                    type="boolean"/>
+            <column
+                    name="R_WHIRL_USERS"
+                    type="number"
+                    valueComputed="(SELECT U.ID FROM WHIRL_USERS U WHERE U.LOGIN = 'whirl-admin')"/>
+            <column
+                    name="GROUP_CODE"
+                    type="varchar(4000)"
+                    value="test-group"/>
+        </insert>
+
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS whirl_test
+        </sql>
+
+        <createTable tableName="COMBOBOX_TABLE" schemaName="WHIRL_TEST">
+            <column name="ID"
+                    type="bigint"
+                    autoIncrement="true">
+                <constraints
+                        primaryKey="true"
+                        nullable="false"
+                        primaryKeyName="PK_COMBOBOX_TABLE"/>
+            </column>
+            <column
+                    name="STRING"
+                    type="varchar(4000)"/>
+            <column
+                    name="NUMBER"
+                    type="numeric"/>
+            <column
+                    name="BOOLEAN"
+                    type="boolean"/>
+            <column
+                    name="DATE"
+                    type="date"/>
+        </createTable>
+
+        <insert tableName="COMBOBOX_TABLE" schemaName="WHIRL_TEST">
+            <column
+                    name="ID"
+                    type="bigint"
+                    value="1"/>
+            <column
+                    name="STRING"
+                    type="varchar(4000)"
+                    value="test string 1"/>
+            <column
+                    name="NUMBER"
+                    type="numeric"
+                    value="678"/>
+            <column
+                    name="BOOLEAN"
+                    type="boolean"
+                    value="true"/>
+            <column
+                    name="DATE"
+                    type="date"
+                    value="2000-01-11"/>
+        </insert>
+
+        <rollback>
+            <dropTable tableName="COMBOBOX_TABLE" schemaName="WHIRL_TEST"/>
+            <sql>
+                DROP SCHEMA whirl_test
+            </sql>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>
