@@ -2,7 +2,6 @@ package org.whirlplatform.server.evolution;
 
 import java.sql.SQLException;
 import javax.inject.Inject;
-import javax.xml.stream.events.Namespace;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -22,6 +21,7 @@ import org.whirlplatform.server.log.LoggerFactory;
 public class LiquibaseEvolutionManager implements EvolutionManager {
 
     private static Logger _log = LoggerFactory.getLogger(LiquibaseEvolutionManager.class);
+
     private ConnectionProvider connectionProvider;
     private Configuration configuration;
 
@@ -41,8 +41,6 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     @Override
     public void applyMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
         applyEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
-        // прямо тут можно запускать rollback
-        rollbackMetadataEvolution(alias, scriptPath);
     }
 
     private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
@@ -67,6 +65,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
         }
     }
 
+    /* Rollback functionality */
     @Override
     public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
         rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
@@ -91,7 +90,9 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
             Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
                 database);
 
-            liquibase.rollback(2000, scriptPath);
+            //liquibase.update(null, new LabelExpression());
+            liquibase.rollback((String) null, String.valueOf(new LabelExpression()));
+            //liquibase.rollback();
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
