@@ -77,9 +77,9 @@ public abstract class ComboBoxBuilderOverlay {
      * @param value {@link DataValueOverlay DataValue}
      * @return RowListValue
      */
-////    public static void setDataValue(ComboBoxBuilder instance, DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static void setDataValue(ComboBoxBuilder instance, DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Получить значение компонента в формате {@link ListModelDataOverlay ListModelData}.
@@ -94,7 +94,7 @@ public abstract class ComboBoxBuilderOverlay {
     /**
      * Установить значение компонента в формате {@link ListModelDataOverlay ListModelData} .
      *
-     * @param {@link ListModelDataOverlay model}
+     * @param model {@link ListModelDataOverlay ListModelData}
      */
     public abstract void setValue(ListModelData model);
 

@@ -24,6 +24,7 @@ public class FieldClearDecorator {
     private ValueBaseField<?> field;
     private Command command;
     private HandlerRegistration registration;
+
     public FieldClearDecorator(ValueBaseField<?> field, Command clearCommand) {
         this.field = field;
         this.command = clearCommand;

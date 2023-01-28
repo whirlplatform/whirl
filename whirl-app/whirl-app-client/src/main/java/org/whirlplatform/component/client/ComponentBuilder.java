@@ -48,7 +48,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  * Базовый класс всех построителей компонентов, все компоненты должны его расширять.
  */
 @JsType(name = "Component", namespace = "Whirl")
-public abstract class ComponentBuilder
+public abstract class ComponentBuilder//
         implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers,
         DetachEvent.HasDetachHandlers,
         FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers,
@@ -867,15 +867,15 @@ public abstract class ComponentBuilder
     private boolean checkLocatorParameter(String parameter, Locator locator) {
         if (locator.hasParameter(LocatorParams.PARAMETER_ID)) {
             final String value = locator.getParameter(parameter);
-            if (LocatorParams.PARAMETER_ID.equals(parameter) && !Util.isEmptyString(id) &&
-                    id.equals(value)) {
+            if (LocatorParams.PARAMETER_ID.equals(parameter) && !Util.isEmptyString(id)
+                    && id.equals(value)) {
                 return true;
             }
         }
         if (locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
             final String value = locator.getParameter(parameter);
-            return LocatorParams.PARAMETER_CODE.equals(parameter) && !Util.isEmptyString(code) &&
-                    code.equals(value);
+            return LocatorParams.PARAMETER_CODE.equals(parameter) && !Util.isEmptyString(code)
+                && code.equals(value);
         }
         return false;
     }

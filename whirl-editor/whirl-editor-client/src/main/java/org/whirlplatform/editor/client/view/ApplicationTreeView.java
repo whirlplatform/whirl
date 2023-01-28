@@ -44,8 +44,8 @@ public class ApplicationTreeView extends VBoxLayoutContainer
             @Override
             public void doOpenElement(AbstractElement element) {
                 if (!(element instanceof ComponentElement)
-                        || (element instanceof ComponentElement &&
-                        ((ComponentElement) element).getType().isContainer())) {
+                        || (element instanceof ComponentElement
+                        && ((ComponentElement) element).getType().isContainer())) {
                     //Если контейнер, то можно открыть для редактирования. Иначе - редактировать только свойства.
                     presenter.openElement(tree.getSelectedElement());
                 }
@@ -92,10 +92,10 @@ public class ApplicationTreeView extends VBoxLayoutContainer
                     protected void onDragStart(DndDragStartEvent event) {
                         super.onDragStart(event);
                         AbstractElement selectedItem = tree.getSelectedElement();
-                        if (selectedItem instanceof ComponentElement ||
-                                selectedItem instanceof EventParameterElement
-                                || selectedItem instanceof EventElement ||
-                                selectedItem instanceof ContextMenuItemElement) {
+                        if (selectedItem instanceof ComponentElement
+                                || selectedItem instanceof EventParameterElement
+                                || selectedItem instanceof EventElement
+                                || selectedItem instanceof ContextMenuItemElement) {
                             event.setData(tree.getSelectedElement());
                         } else {
                             event.setCancelled(true);

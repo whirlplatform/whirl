@@ -213,6 +213,7 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
                 try {
                     cis.close();
                 } catch (IOException ioe) {
+                    // ignore
                 }
             }
         }
@@ -254,8 +255,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
     private void syncFiles(Collection<FileElement> destFiles, Collection<FileElement> srcFiles) {
         for (FileElement destFile : destFiles) {
             for (FileElement srcFile : srcFiles) {
-                if (destFile.getId().equals(srcFile.getId()) &&
-                        destFile.getChecksum() == srcFile.getChecksum()) {
+                if (destFile.getId().equals(srcFile.getId())
+                        && destFile.getChecksum() == srcFile.getChecksum()) {
                     // TODO destFile.setInputStreamProvider(
                     // srcFile.getInputStreamProvider());
                 }
@@ -408,16 +409,16 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
 
             DynamicTableElement table = new DynamicTableElement(schema);
             table.setId(RandomUUID.uuid());
-            table.setName(getMessage().new_element_dynamic_table() + "DYNAMIC_TABLE_NEW_" +
-                    schema.getTables().size());
+            table.setName(getMessage().new_element_dynamic_table() + "DYNAMIC_TABLE_NEW_"
+                    + schema.getTables().size());
             table.setMetadataFunction("get_metadata");
             table.setDataFunction("get_data(:data_config, :data_count)");
             table.setInsertFunction("insert(:insert_config)");
             table.setUpdateFunction("update(:update_config)");
             table.setDeleteFunction("delete(:delete_config)");
             return table;
-        } else if (parent instanceof AbstractTableElement &&
-                element instanceof NewTableColumnElement) {
+        } else if (parent instanceof AbstractTableElement
+                && element instanceof NewTableColumnElement) {
             TableColumnElement column = new TableColumnElement();
             column.setId(RandomUUID.uuid());
             column.setTitle(new PropertyValue(DataType.STRING, defaultLocale,
@@ -482,13 +483,13 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             }
 
             return table;
-        } else if (parent instanceof ComponentElement &&
-                element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ComponentElement
+                && element instanceof NewContextMenuItemElement) {
             ComponentElement component = (ComponentElement) parent;
             ContextMenuItemElement item = new ContextMenuItemElement();
             item.setId(RandomUUID.uuid());
-            item.setName(getMessage().new_element_context_menu() +
-                    component.getContextMenuItems().size());
+            item.setName(getMessage().new_element_context_menu()
+                    + component.getContextMenuItems().size());
             return item;
         } else if (parent instanceof ContextMenuItemElement && element instanceof NewEventElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
@@ -498,8 +499,8 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             event.setName(getMessage().new_element_event() + item.getEvents().size());
             event.setHandlerType("AttachHandler");
             return event;
-        } else if (parent instanceof ContextMenuItemElement &&
-                element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ContextMenuItemElement
+                && element instanceof NewContextMenuItemElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
             ContextMenuItemElement child = new ContextMenuItemElement();
             child.setId(RandomUUID.uuid());

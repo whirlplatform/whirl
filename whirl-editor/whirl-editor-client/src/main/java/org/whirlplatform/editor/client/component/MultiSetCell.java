@@ -24,6 +24,7 @@ public class MultiSetCell<T> extends TriggerFieldCell<String> {
     private T currentKey;
     private Collection<T> keys;
     private AnchorAlignment alignment = new AnchorAlignment(Anchor.TOP_LEFT);
+
     public MultiSetCell() {
         this(
                 GWT.<MultiSetCellDefaultAppearance>create(MultiSetCellDefaultAppearance.class));

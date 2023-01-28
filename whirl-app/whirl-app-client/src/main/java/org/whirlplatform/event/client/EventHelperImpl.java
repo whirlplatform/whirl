@@ -332,8 +332,8 @@ public class EventHelperImpl implements EventHelper {
 
     private void componentExecute(ComponentBuilder source, final ComponentBuilder component,
                                   List<DataValue> parameters) {
-        if (ComponentType.ReportType == component.getType() &&
-                !((ReportBuilder) component).isShowReportParams()) {
+        if (ComponentType.ReportType == component.getType()
+                && !((ReportBuilder) component).isShowReportParams()) {
             return;
         }
 
@@ -532,8 +532,8 @@ public class EventHelperImpl implements EventHelper {
         List<DataValue> result = new ArrayList<DataValue>();
         for (EventParameter v : parameters) {
             DataValue data;
-            boolean isCompParam = v.getType() == ParameterType.COMPONENTCODE ||
-                    v.getType() == ParameterType.COMPONENT;
+            boolean isCompParam = v.getType() == ParameterType.COMPONENTCODE
+                    || v.getType() == ParameterType.COMPONENT;
             if (isCompParam /*TODO && components.get(v) != null - определится зачем это условие*/) {
                 data = getDataValue(components.get(v));
             } else if (v.getType() == ParameterType.STORAGE) {

@@ -59,7 +59,8 @@ public abstract class AbstractAppTree extends Tree<AbstractElement, String> impl
                     // контейнеры без элементов
                     @Override
                     public boolean hasChildren(AbstractElement item) {
-                        if (item instanceof ComponentElement &&
+                        if (item instanceof ComponentElement
+                            &&
                                 ((ComponentElement) item).getType().isContainer()) {
                             return true;
                         } else if (item instanceof ChildrenlessDummy) {
@@ -163,9 +164,11 @@ public abstract class AbstractAppTree extends Tree<AbstractElement, String> impl
     @Override
     public boolean doCopyElement(AbstractElement element) {
         boolean result;
-        if (element instanceof FormElement || element instanceof ReportElement ||
-                element instanceof ComponentElement
-                || element instanceof PlainTableElement || element instanceof EventElement
+        if (element instanceof FormElement
+                || element instanceof ReportElement
+                || element instanceof ComponentElement
+                || element instanceof PlainTableElement
+                || element instanceof EventElement
                 || element instanceof EventElement) {
             CloneVisitor<AbstractElement> cloner = new CloneVisitor<>(element, false, true);
             copy = cloner.copy();

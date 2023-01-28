@@ -146,10 +146,10 @@ public class MouseSelectionWrapper implements HasMouseSelectionHandlers {
         }
         int endX = event.getClientX();
         int endY = event.getClientY();
-        if (endX < widget.getAbsoluteLeft() ||
-                endX > widget.getAbsoluteLeft() + widget.getOffsetWidth()
-                || endY < widget.getAbsoluteTop() ||
-                endY > widget.getAbsoluteTop() + widget.getOffsetHeight()) {
+        if (endX < widget.getAbsoluteLeft()
+                || endX > widget.getAbsoluteLeft() + widget.getOffsetWidth()
+                || endY < widget.getAbsoluteTop()
+                || endY > widget.getAbsoluteTop() + widget.getOffsetHeight()) {
             return;
         }
         if (!selection

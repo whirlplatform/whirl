@@ -181,8 +181,8 @@ public class XLSXReportWriter extends FormWriter {
                                         : component.getValue(PropertyType.FontWeight.getCode())
                                         .getString();
                         if (weight != null) {
-                            if ("bold".equalsIgnoreCase(weight) ||
-                                    "bolder".equalsIgnoreCase(weight)) {
+                            if ("bold".equalsIgnoreCase(weight)
+                                    || "bolder".equalsIgnoreCase(weight)) {
                                 font.setBold(true);
                             }
                         }
@@ -198,13 +198,14 @@ public class XLSXReportWriter extends FormWriter {
                                     sz = (short) (sz * 72 / 96);
                                     font.setFontHeightInPoints(sz);
                                 } catch (Exception ex) {
+                                    // skipped
                                 }
                             } else if (size.contains("pt")) {
                                 try {
                                     short sz = Short.parseShort(size.replaceAll("pt", ""));
                                     font.setFontHeightInPoints(sz);
                                 } catch (Exception ex) {
-
+                                    // skipped
                                 }
                                 short sz = Short.parseShort(size.replaceAll("pt", ""));
                                 font.setFontHeightInPoints(sz);
@@ -267,6 +268,7 @@ public class XLSXReportWriter extends FormWriter {
                         w = (int) (w * 33.333);
                         sheet.setColumnWidth(i, w);
                     } catch (Exception ex) {
+                        // skipped
                     }
                 }
             }
@@ -302,6 +304,7 @@ public class XLSXReportWriter extends FormWriter {
                     h = (short) (h * 33.333);
                     currentRow.setHeight(h);
                 } catch (Exception ex) {
+                    // skipped
                 }
             }
         }
@@ -339,8 +342,8 @@ public class XLSXReportWriter extends FormWriter {
     }
 
     private void writeComponentProperties(ComponentModel component) {
-        if (ComponentType.LabelType == component.getType() ||
-                ComponentType.HtmlType == component.getType()) {
+        if (ComponentType.LabelType == component.getType()
+                || ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                     : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null

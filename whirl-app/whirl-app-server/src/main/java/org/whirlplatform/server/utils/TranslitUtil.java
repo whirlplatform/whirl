@@ -51,7 +51,7 @@ public class TranslitUtil {
     }
 
     public static String toTranslit(String text) {
-        char charBuffer[] = text.toCharArray();
+        char[] charBuffer = text.toCharArray();
         StringBuilder sb = new StringBuilder(text.length());
         for (int i = 0; i < charBuffer.length; i++) {
             char symbol = charBuffer[i];
@@ -72,6 +72,8 @@ public class TranslitUtil {
                         case 'ё':
                             replace = "yo";
                             break;
+                        default:
+                            throw new IllegalArgumentException("Unsupported symbol");
                     }
                 } else if (charBuffer[i - 1] == 'Ь' || charBuffer[i - 1] == 'ь') {
                     switch (symbol) {
@@ -81,6 +83,8 @@ public class TranslitUtil {
                         case 'и':
                             replace = "yi";
                             break;
+                        default:
+                            throw new IllegalArgumentException("Unsupported symbol");
                     }
                 }
                 if (replace == null) {

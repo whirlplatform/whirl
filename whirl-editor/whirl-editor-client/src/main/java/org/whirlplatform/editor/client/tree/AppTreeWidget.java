@@ -60,8 +60,8 @@ public abstract class AppTreeWidget extends AbstractAppTree {
         if (node != null) {
             selectedItem = findNode(event.getEventTarget().cast()).getTextElement();
             long currentTime = new Date().getTime();
-            if (prevTime != 0 && prevItem != null && currentTime - prevTime > 800 &&
-                    prevItem == selectedItem
+            if (prevTime != 0 && prevItem != null && currentTime - prevTime > 800
+                    && prevItem == selectedItem
                     && isRenaming(node.getModel())) {
                 clickTimer.schedule(500);
             }

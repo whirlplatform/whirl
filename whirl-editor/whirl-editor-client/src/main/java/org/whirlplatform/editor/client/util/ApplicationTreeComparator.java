@@ -20,14 +20,14 @@ public class ApplicationTreeComparator implements Comparator<AbstractElement> {
     public int compare(AbstractElement first, AbstractElement second) {
         if (first instanceof ComponentElement && second instanceof ComponentElement) {
             return compareComponents((ComponentElement) first, (ComponentElement) second);
-        } else if (first instanceof EventParameterElement &&
-                second instanceof EventParameterElement) {
-            return ((EventParameterElement) first).getIndex() -
-                    ((EventParameterElement) second).getIndex();
-        } else if (first instanceof AbstractTableElement &&
-                second instanceof AbstractTableElement) {
-            return (first != null && first.getName() != null) ?
-                    first.getName().compareTo(second.getName()) : -1;
+        } else if (first instanceof EventParameterElement
+                && second instanceof EventParameterElement) {
+            return ((EventParameterElement) first).getIndex()
+                    - ((EventParameterElement) second).getIndex();
+        } else if (first instanceof AbstractTableElement
+                && second instanceof AbstractTableElement) {
+            return (first != null && first.getName() != null)
+                ? first.getName().compareTo(second.getName()) : -1;
         } else if (first instanceof ApplicationElement && second instanceof ApplicationElement) {
             return (first != null && ((ApplicationElement) first).getCode() != null)
                     ? ((ApplicationElement) first).getCode()
@@ -38,19 +38,19 @@ public class ApplicationTreeComparator implements Comparator<AbstractElement> {
             return 1;
         } else if (first instanceof OrderedDummy && second instanceof OrderedDummy) {
             return compareOrderedDummies((OrderedDummy) first, (OrderedDummy) second);
-        } else if (first instanceof ContextMenuItemElement &&
-                second instanceof ContextMenuItemElement) {
-            return ((ContextMenuItemElement) first).getIndex() -
-                    ((ContextMenuItemElement) second).getIndex();
-        } else if (first instanceof ContextMenuItemElement &&
-                !(second instanceof ContextMenuItemElement)) {
+        } else if (first instanceof ContextMenuItemElement
+                && second instanceof ContextMenuItemElement) {
+            return ((ContextMenuItemElement) first).getIndex()
+                - ((ContextMenuItemElement) second).getIndex();
+        } else if (first instanceof ContextMenuItemElement
+            && !(second instanceof ContextMenuItemElement)) {
             return -1;
-        } else if (second instanceof ContextMenuItemElement &&
-                !(first instanceof ContextMenuItemElement)) {
+        } else if (second instanceof ContextMenuItemElement
+                && !(first instanceof ContextMenuItemElement)) {
             return 1;
         }
-        return (first != null && first.getName() != null) ?
-                first.getName().compareTo(second.getName()) : -1;
+        return (first != null && first.getName() != null)
+            ? first.getName().compareTo(second.getName()) : -1;
     }
 
     private int compareOrderedDummies(final OrderedDummy first, final OrderedDummy second) {
@@ -59,8 +59,8 @@ public class ApplicationTreeComparator implements Comparator<AbstractElement> {
 
     private int compareComponents(ComponentElement first, ComponentElement second) {
         int res = 0;
-        if (first.getParent() != null && second.getParent() != null &&
-                first.getParent() == second.getParent()) {
+        if (first.getParent() != null && second.getParent() != null
+                && first.getParent() == second.getParent()) {
             if (first.getParent().getType() == ComponentType.VerticalContainerType
                     || first.getParent().getType() == ComponentType.HorizontalContainerType
                     || first.getParent().getType() == ComponentType.TabPanelType) {

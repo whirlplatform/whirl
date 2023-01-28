@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.whirlplatform.jsdoc;
 
 import static com.google.common.base.CaseFormat.LOWER_CAMEL;
@@ -52,9 +53,9 @@ import org.whirlplatform.component.client.annotation.EsParam;
 import org.whirlplatform.component.client.annotation.EsReturn;
 
 @SupportedAnnotationTypes("jsinterop.annotations.JsType")
+
 @SuppressWarnings({"HardCodedStringLiteral", "Guava", "ResultOfMethodCallIgnored",
-        "SpellCheckingInspection",
-        "DuplicateStringLiteralInspection"})
+    "SpellCheckingInspection", "DuplicateStringLiteralInspection", "checkstyle:parametername"})
 public class EsDocProcessor extends AbstractProcessor {
 
     private static final String PACKAGE_TO_SCAN = "";
@@ -97,9 +98,9 @@ public class EsDocProcessor extends AbstractProcessor {
             debug("Discovered JsType [%s]", type);
 
             List<? extends Element> elements = typeElement.getEnclosedElements();
-            Predicate<Element> jsRelevant = e -> e != null &&
-                    e.getAnnotation(JsIgnore.class) == null &&
-                    e.getModifiers().contains(Modifier.PUBLIC);
+            Predicate<Element> jsRelevant = e -> e != null
+                    && e.getAnnotation(JsIgnore.class) == null
+                    && e.getModifiers().contains(Modifier.PUBLIC);
 
             // Constructor
             ElementFilter.constructorsIn(elements)
@@ -179,8 +180,8 @@ public class EsDocProcessor extends AbstractProcessor {
                     stream(Splitter.on('\n').trimResults().split(comment).spliterator(), false)
 
                             // not supported by ESDoc
-                            .filter(line -> !(line.contains("@author") ||
-                                    line.contains("@version")))
+                            .filter(line -> !(line.contains("@author")
+                                    || line.contains("@version")))
 
                             // process @param and @return in methods
                             .map(line -> {
@@ -203,8 +204,8 @@ public class EsDocProcessor extends AbstractProcessor {
                                                 paramType =
                                                         simpleName(parameter.asType().toString());
                                             }
-                                            result = PARAM_TAG + " {" + paramType + "}" +
-                                                    lineWithoutParam;
+                                            result = PARAM_TAG + " {" + paramType + "}"
+                                                + lineWithoutParam;
                                         }
                                         parameters.add(line); // parameters++
 
@@ -217,8 +218,8 @@ public class EsDocProcessor extends AbstractProcessor {
                                             returnType =
                                                     simpleName(method.getReturnType().toString());
                                         }
-                                        result = RETURN_TAG + " {" + returnType + "}" +
-                                                line.substring(RETURN_TAG.length());
+                                        result = RETURN_TAG + " {" + returnType + "}"
+                                            + line.substring(RETURN_TAG.length());
                                     }
                                 }
                                 return result;

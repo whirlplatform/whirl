@@ -99,8 +99,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
             TreeClassLoadConfig tmpConf = (TreeClassLoadConfig) loadConfig;
-            if ((tmpConf.getParentColumn() != null && tmpConf.getParent() != null) ||
-                    StringUtils.isEmpty(tmpConf.getQuery())) {
+            if ((tmpConf.getParentColumn() != null && tmpConf.getParent() != null)
+                    || StringUtils.isEmpty(tmpConf.getQuery())) {
                 all = true;
             }
         }
@@ -140,8 +140,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         if (!all) {
             topCommand.where(rowNumber.isBetween(
                     1 + (loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage(),
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) +
-                            loadConfig.getRowsPerPage()));
+                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
+                            + loadConfig.getRowsPerPage()));
         }
 
         addFunctionFields(topCommand, table, loadConfig, temp);
@@ -172,9 +172,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
             StringBuilder orderString = new StringBuilder();
             for (SortValue s : loadConfig.getSorts()) {
                 // Если тип поля - список, сортировать по строке
-                if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType() ||
-                        org.whirlplatform.meta.shared.data.DataType.FILE ==
-                                s.getField().getType()) {
+                if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType()
+                        || org.whirlplatform.meta.shared.data.DataType.FILE
+                        == s.getField().getType()) {
                     orderString.append(s.getField().getLabelExpression());
                 } else {
                     orderString.append(s.getField().getName());
@@ -190,8 +190,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
             StringBuilder orderString = new StringBuilder();
             for (TableColumnElement column : table.getSortedColumns()) {
                 if (column.isDefaultOrder() && column != table.getDeleteColumn()) {
-                    if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType() ||
-                            org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
+                    if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType()
+                            || org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
                         orderString.append(column.getLabelExpression());
                     } else {
                         orderString.append(column.getColumnName());

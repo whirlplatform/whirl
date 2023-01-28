@@ -41,11 +41,11 @@ public class ChangeUnitsContainer extends SimpleContainer {
     private static final int TARGET_WIDTH = 300;
     private static final int NESTED_WIDTH = 60;
 
-    final private Grid<ChangeUnit> grid;
-    final private CheckBoxSelectionModel<ChangeUnit> selectionModel;
-    final private List<ChangeUnit> undoSelected;
-    final private List<ChangeUnit> undoDeselected;
-    final private DisplayNameVisitor displayNameVisitor;
+    private final Grid<ChangeUnit> grid;
+    private final CheckBoxSelectionModel<ChangeUnit> selectionModel;
+    private final List<ChangeUnit> undoSelected;
+    private final List<ChangeUnit> undoDeselected;
+    private final DisplayNameVisitor displayNameVisitor;
     private boolean locked = true;
 
     public ChangeUnitsContainer() {

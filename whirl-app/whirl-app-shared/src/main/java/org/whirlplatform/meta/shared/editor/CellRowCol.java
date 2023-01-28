@@ -42,15 +42,19 @@ public class CellRowCol implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (!(this instanceof CellRowCol))
+        }
+        if (!(this instanceof CellRowCol)) {
             return false;
+        }
         CellRowCol other = (CellRowCol) obj;
-        if (row != other.row)
+        if (row != other.row) {
             return false;
+        }
         return col == other.col;
     }
 

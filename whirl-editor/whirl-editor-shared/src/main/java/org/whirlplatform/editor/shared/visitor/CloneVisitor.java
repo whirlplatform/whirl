@@ -50,6 +50,7 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
     private boolean userReferences = false;
     private Map<AbstractElement, AbstractElement> map = new IdentityHashMap<>();
     private List<Runnable> finalizations = new ArrayList<>();
+
     /**
      * @param element element to copy
      */

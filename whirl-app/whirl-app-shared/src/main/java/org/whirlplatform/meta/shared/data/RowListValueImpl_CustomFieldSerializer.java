@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
 import java.util.List;
 
+@SuppressWarnings("checkstyle:typename")
 public class RowListValueImpl_CustomFieldSerializer
         extends CustomFieldSerializer<RowListValueImpl> {
 

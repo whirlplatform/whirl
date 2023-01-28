@@ -237,13 +237,13 @@ public class CSVParser {
                                 // sequence
                                 && nextLine.length() > (i + 1)
                                 && nextLine.charAt(i + 1) != this.separator // not
-                            // at
-                            // the
-                            // end
-                            // of
-                            // an
-                            // escape
-                            // sequence
+                                // at
+                                // the
+                                // end
+                                // of
+                                // an
+                                // escape
+                                // sequence
                         ) {
 
                             if (ignoreLeadingWhiteSpace && sb.length() > 0

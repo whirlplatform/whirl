@@ -225,6 +225,7 @@ public class NumberFieldBuilder extends AbstractFieldBuilder
                 try {
                     n = Integer.valueOf(str);
                 } catch (Exception e1) {
+                    // skipped
                 }
             }
         }

@@ -12,7 +12,11 @@ import java.util.Set;
 
 @SuppressWarnings("serial")
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "genId")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public class FormRowModel implements Serializable, IsSerializable, Cloneable {
 
     private int row;
@@ -66,12 +70,15 @@ public class FormRowModel implements Serializable, IsSerializable, Cloneable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         FormRowModel other = (FormRowModel) obj;
         return row == other.row;
     }

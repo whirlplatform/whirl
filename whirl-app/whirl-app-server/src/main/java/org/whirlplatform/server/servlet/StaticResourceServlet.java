@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU Lesser General Public License along with this library.
  * If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.whirlplatform.server.servlet;
 
 import com.google.inject.Singleton;
@@ -73,8 +74,8 @@ public class StaticResourceServlet extends HttpServlet {
     private static boolean matches(String matchHeader, String toMatch) {
         String[] matchValues = matchHeader.split("\\s*,\\s*");
         Arrays.sort(matchValues);
-        return Arrays.binarySearch(matchValues, toMatch) > -1 ||
-                Arrays.binarySearch(matchValues, "*") > -1;
+        return Arrays.binarySearch(matchValues, toMatch) > -1
+                || Arrays.binarySearch(matchValues, "*") > -1;
     }
 
     /**
@@ -176,7 +177,7 @@ public class StaticResourceServlet extends HttpServlet {
     /**
      * Process HEAD request. This returns the same headers as GET request, but without content.
      *
-     * @see HttpServlet#doHead(HttpServletRequest, HttpServletResponse).
+     * @see HttpServlet#doHead(HttpServletRequest, HttpServletResponse)
      */
     protected void doHead(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -187,7 +188,7 @@ public class StaticResourceServlet extends HttpServlet {
     /**
      * Process GET request.
      *
-     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse).
+     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -198,7 +199,7 @@ public class StaticResourceServlet extends HttpServlet {
     /**
      * Initialize the servlet.
      *
-     * @see HttpServlet#init().
+     * @see HttpServlet#init()
      */
     public void init() throws ServletException {
 

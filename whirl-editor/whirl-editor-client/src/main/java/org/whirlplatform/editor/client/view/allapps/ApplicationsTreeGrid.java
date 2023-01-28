@@ -41,18 +41,18 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
     private static final String TAG_NAME = "tag";
     private static final String BRANCH_PREFIX = "@/branch-";
     private static final String BRANCH_NAME = "branch";
-    private final static String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
+    private static final String DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
     // Tree grid columns titles
-    private final static String NAME_CAPTION = EditorMessage.Util.MESSAGE.code();
-    private final static String TITLE_CAPTION = EditorMessage.Util.MESSAGE.title();
-    private final static String MODIFIED_CAPTION = EditorMessage.Util.MESSAGE.modified();
+    private static final String NAME_CAPTION = EditorMessage.Util.MESSAGE.code();
+    private static final String TITLE_CAPTION = EditorMessage.Util.MESSAGE.title();
+    private static final String MODIFIED_CAPTION = EditorMessage.Util.MESSAGE.modified();
     // Tree grid columns widths
-    private final static int NAME_COLUMN_WIDTH = 140;
-    private final static int TITLE_COLUMN_WIDTH = 250;
-    private final static int REVISION_COLUMN_WIDTH = 75;
-    private final static int DATE_COLUMN_WIDTH = 125;
-    private final static int ADDRESS_COLUMN_WIDTH = 400;
-    private final static int MODIFIED_COLUMN_WIDTH = 125;
+    private static final int NAME_COLUMN_WIDTH = 140;
+    private static final int TITLE_COLUMN_WIDTH = 250;
+    private static final int REVISION_COLUMN_WIDTH = 75;
+    private static final int DATE_COLUMN_WIDTH = 125;
+    private static final int ADDRESS_COLUMN_WIDTH = 400;
+    private static final int MODIFIED_COLUMN_WIDTH = 125;
     private static ColumnConfig<ApplicationStoreData, String> treeColumn =
             new ColumnConfig<>(createNameValueProvider(),
                     NAME_COLUMN_WIDTH, NAME_CAPTION);
@@ -83,9 +83,8 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
      * Рассчитывает ширину формы
      */
     public static int estimatedWidth() {
-        return MODIFIED_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TITLE_COLUMN_WIDTH +
-                REVISION_COLUMN_WIDTH
-                + DATE_COLUMN_WIDTH + ADDRESS_COLUMN_WIDTH;
+        return MODIFIED_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TITLE_COLUMN_WIDTH
+                + REVISION_COLUMN_WIDTH + DATE_COLUMN_WIDTH + ADDRESS_COLUMN_WIDTH;
     }
 
     /*
@@ -103,8 +102,8 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
                 new StoreSortInfo<ApplicationStoreData>(new Comparator<ApplicationStoreData>() {
                     @Override
                     public int compare(ApplicationStoreData o1, ApplicationStoreData o2) {
-                        int compareResult = (o1.getCode() != null) ?
-                                o1.getCode().compareToIgnoreCase(o2.getCode()) : -1;
+                        int compareResult = (o1.getCode() != null)
+                            ? o1.getCode().compareToIgnoreCase(o2.getCode()) : -1;
                         if (compareResult == 0) {
                             if (o1.getVersion() != null && o2.getVersion() != null) {
                                 compareResult = Version.compare(o1.getVersion(), o2.getVersion());

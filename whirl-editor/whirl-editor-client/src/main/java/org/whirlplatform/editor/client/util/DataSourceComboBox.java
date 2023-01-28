@@ -28,7 +28,7 @@ public class DataSourceComboBox extends ComboBox<DataSourceElement> {
             @Override
             public void onTriggerClick(TriggerClickEvent event) {
                 if (!isExpanded()) {
-//                    getStore().getLoader().load(getText());
+                    //getStore().getLoader().load(getText());
                 }
             }
         });

@@ -91,6 +91,7 @@ public class ReflectionJaversDiffer
     private Javers javers;
     private SearchGraphVisitor search = new SearchGraphVisitor();
     private ChildCollectorVisitor collector = new ChildCollectorVisitor();
+
     public ReflectionJaversDiffer() {
     }
 
@@ -233,8 +234,8 @@ public class ReflectionJaversDiffer
     @Override
     public void visit(ChangeDifferContext ctx, ApplicationElement element) {
         if (ctx.isMapChange() && ("tableRights".equals(ctx.getProperty())
-                || "tableColumnRights".equals(ctx.getProperty()) ||
-                "eventRights".equals(ctx.getProperty()))) {
+                || "tableColumnRights".equals(ctx.getProperty())
+                || "eventRights".equals(ctx.getProperty()))) {
             MapChange map = ctx.getMapChange();
             for (EntryAdded e : map.getEntryAddedChanges()) {
                 AbstractElement key =
@@ -267,8 +268,8 @@ public class ReflectionJaversDiffer
         for (EntryChange ec : c.getEntryChanges()) {
             ChangeUnit change = null;
             PropertyType key = (PropertyType) ec.getKey();
-            if (ec instanceof EntryValueChange &&
-                    (key == PropertyType.Rows || key == PropertyType.Columns)) {
+            if (ec instanceof EntryValueChange
+                    && (key == PropertyType.Rows || key == PropertyType.Columns)) {
                 change = new ChangeUnit(ChangeType.Change, element.getParent(), "children", null,
                         element,
                         search.search(ctx.getLeft(), element.getId()));

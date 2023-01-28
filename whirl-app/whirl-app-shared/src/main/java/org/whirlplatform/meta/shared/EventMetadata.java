@@ -10,7 +10,11 @@ import java.util.TreeMap;
 import org.whirlplatform.meta.shared.data.EventParameter;
 
 @SuppressWarnings("serial")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY,
+    creatorVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public class EventMetadata implements Serializable, Cloneable {
 
     private String id;

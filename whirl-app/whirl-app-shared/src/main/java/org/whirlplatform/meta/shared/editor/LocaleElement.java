@@ -23,8 +23,8 @@ public class LocaleElement implements Serializable, Cloneable {
         }
         String language = null;
         String country = null;
-        if ((string.length() == 2 || string.indexOf("_") == 2) &&
-                Character.isLetter(string.charAt(0))
+        if ((string.length() == 2 || string.indexOf("_") == 2)
+                && Character.isLetter(string.charAt(0))
                 && Character.isLetter(string.charAt(1))) {
             //language = string.toLowerCase();
             language = string.toLowerCase().substring(0, 2);
@@ -84,7 +84,9 @@ public class LocaleElement implements Serializable, Cloneable {
         }
         if (country == null) {
             return other.country == null;
-        } else return country.equals(other.country);
+        } else {
+            return country.equals(other.country);
+        }
     }
 
     public String asString() {

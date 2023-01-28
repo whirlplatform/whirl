@@ -75,12 +75,12 @@ public class Applications implements ApplicationsMBean {
     }
 
     @Override
-    synchronized public void addBlock(String appCode) {
+    public synchronized void addBlock(String appCode) {
         blockedApps.add(appCode);
     }
 
     @Override
-    synchronized public void removeBlock(String appCode) {
+    public synchronized void removeBlock(String appCode) {
         if (appCode == null) {
             throw new IllegalArgumentException("Application code should not be null");
         }

@@ -22,7 +22,6 @@ public class AppTreeReferencePart extends AbstractAppTreePart<ApplicationElement
             for (AbstractTableElement t : handledElement.getApplicationTables()) {
                 doAddElementUI(handledElement, t);
             }
-        } else {
         }
     }
 

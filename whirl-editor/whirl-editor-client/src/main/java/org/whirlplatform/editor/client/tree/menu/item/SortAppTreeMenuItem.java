@@ -24,13 +24,13 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 public class SortAppTreeMenuItem<T extends AppTree> extends MenuItem {
 
-    private final static String TITLE = EditorMessage.Util.MESSAGE.sort_title();
-    private final static ImageResource ICON = ComponentBundle.INSTANCE.context();
-    private final static String RADIO_GROUP = "SORT";
+    private static final String TITLE = EditorMessage.Util.MESSAGE.sort_title();
+    private static final ImageResource ICON = ComponentBundle.INSTANCE.context();
+    private static final String RADIO_GROUP = "SORT";
 
-    private final static String ASC = EditorMessage.Util.MESSAGE.sort_asc();
-    private final static String DESC = EditorMessage.Util.MESSAGE.sort_desc();
-    private final static String DEFAULT = EditorMessage.Util.MESSAGE.sort_default();
+    private static final String ASC = EditorMessage.Util.MESSAGE.sort_asc();
+    private static final String DESC = EditorMessage.Util.MESSAGE.sort_desc();
+    private static final String DEFAULT = EditorMessage.Util.MESSAGE.sort_default();
     CheckMenuItem defaultItem;
     CheckMenuItem ascItem;
     CheckMenuItem descItem;

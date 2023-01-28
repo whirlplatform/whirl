@@ -48,8 +48,8 @@ public class NamedParamResolver {
             if (e.getValue().getType() == DataType.LIST) {
                 ListModelData m = e.getValue().getListModelData();
                 model.put(e.getKey(), m != null ? m.getId() : null);
-            } else if (e.getValue() instanceof RowListValue &&
-                    isRowListEmpty((RowListValue) e.getValue())) {
+            } else if (e.getValue() instanceof RowListValue
+                    && isRowListEmpty((RowListValue) e.getValue())) {
                 // Иначе неправильно работает определение null в wheresql(если
                 // checkable,
                 // но есть только selected запись, то подставлялся текст "null")
@@ -64,8 +64,10 @@ public class NamedParamResolver {
     private boolean isRowListEmpty(RowListValue r) {
         if (r == null || r.getRowList().size() == 0) {
             return true;
-        } else return r.isCheckable() && r.getRowList().size() == 1 &&
-                !r.getRowList().get(0).isChecked();
+        } else {
+            return r.isCheckable() && r.getRowList().size() == 1
+                && !r.getRowList().get(0).isChecked();
+        }
     }
 
     private String parse(String sql) {
@@ -78,17 +80,20 @@ public class NamedParamResolver {
         for (int i = 0; i < sql.length(); i++) {
             String c = String.valueOf(sql.charAt(i));
             if (inSingleQuote) {
-                if ("'".equals(c))
+                if ("'".equals(c)) {
                     inSingleQuote = false;
+                }
             } else if (inDoubleQuote) {
-                if ("\"".equals(c))
+                if ("\"".equals(c)) {
                     inDoubleQuote = false;
+                }
             } else if ("'".equals(c)) {
                 if (i + 6 < sql.length() && sql.charAt(i + 1) == '\'' && sql.charAt(i + 2) == ':') {
                     int j = i + 3;
                     while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))
-                            && sql.charAt(j + 1) != '\'')
+                            && sql.charAt(j + 1) != '\'') {
                         j++;
+                    }
                     if (sql.charAt(j + 1) == '\'' && sql.charAt(j + 2) == '\'') {
                         String name = sql.substring(i + 3, j + 1);
                         i += name.length() + 4;
@@ -121,15 +126,16 @@ public class NamedParamResolver {
                     j--;
                 }
                 String inWord = sql.substring(j + 1, i);
-                if ("in".equalsIgnoreCase(inWord.trim()) &&
-                        sql.substring(i + 1).trim().startsWith(":")) {
+                if ("in".equalsIgnoreCase(inWord.trim())
+                        && sql.substring(i + 1).trim().startsWith(":")) {
                     inInClause = true;
                 }
-            } else if (":".equals(c) && i + 1 < sql.length() &&
-                    Character.isJavaIdentifierPart(sql.charAt(i + 1))) {
+            } else if (":".equals(c) && i + 1 < sql.length()
+                    && Character.isJavaIdentifierPart(sql.charAt(i + 1))) {
                 int j = i + 2;
-                while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j)))
+                while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))) {
                     j++;
+                }
                 String name = sql.substring(i + 1, j);
                 i += name.length();
 

@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("serial")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ClassMetadata implements Serializable {
 
     private String classId;
@@ -130,16 +131,21 @@ public class ClassMetadata implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         ClassMetadata other = (ClassMetadata) obj;
         if (classId == null) {
             return other.classId == null;
-        } else return classId.equals(other.classId);
+        } else {
+            return classId.equals(other.classId);
+        }
     }
 
 }

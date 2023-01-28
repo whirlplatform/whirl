@@ -22,11 +22,6 @@ public abstract class AbstractAppTreePart<T extends AbstractElement> implements 
     }
 
     @Override
-    public boolean isReference(AbstractElement element) {
-        return reference;
-    }
-
-    @Override
     public T getHandledElement() {
         return handledElement;
     }
@@ -38,6 +33,11 @@ public abstract class AbstractAppTreePart<T extends AbstractElement> implements 
     }
 
     protected boolean isReference() {
+        return reference;
+    }
+
+    @Override
+    public boolean isReference(AbstractElement element) {
         return reference;
     }
 

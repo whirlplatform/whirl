@@ -2,8 +2,6 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.whirlplatform.server.log.Logger;
-import org.whirlplatform.server.log.LoggerFactory;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -16,6 +14,8 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.TableFetcher;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;

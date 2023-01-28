@@ -365,8 +365,8 @@ public class ColumnModelHelper implements LocatorAware {
     }
 
     private boolean isLocatorAcceptable(Locator locator) {
-        return (locator != null && locator.typeEquals(LocatorParams.TYPE_CELL_EDITING) &&
-                locator.getPart() != null);
+        return (locator != null && locator.typeEquals(LocatorParams.TYPE_CELL_EDITING)
+            && locator.getPart() != null);
     }
 
     public static class LocatorParams {

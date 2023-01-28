@@ -69,8 +69,8 @@ public class JsonParamConverterProvider implements ParamConverterProvider {
                     .constructMapType((Class<? extends Map>) rawType, (Class) t[0],
                             (Class) t[1]);
 
-        } else if (ListHolder.class.isAssignableFrom(rawType) &&
-                genericType instanceof ParameterizedType) {
+        } else if (ListHolder.class.isAssignableFrom(rawType)
+                && genericType instanceof ParameterizedType) {
             Type[] t = ((ParameterizedType) genericType).getActualTypeArguments();
             mapType = mapper.getTypeFactory().constructParametricType(rawType, (Class) t[0]);
         } else {

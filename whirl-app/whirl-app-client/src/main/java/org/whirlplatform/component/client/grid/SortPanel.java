@@ -132,7 +132,8 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
         List<SortValue> all = new ArrayList<SortValue>();
         all.addAll(fromStore.getAll());
         all.addAll(toStore.getAll());
-        int labelLength = 0, maxLabelLength = 0;
+        int labelLength = 0;
+        int maxLabelLength = 0;
         for (SortValue sm : all) {
             labelLength = sm.getField().getRawLabel().length();
             if (maxLabelLength < labelLength) {

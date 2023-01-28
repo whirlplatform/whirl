@@ -157,7 +157,9 @@ public class PropertyValue implements Serializable, Cloneable {
         }
         if (values == null) {
             return other.values == null;
-        } else return values.equals(other.values);
+        } else {
+            return values.equals(other.values);
+        }
     }
 
     @Override

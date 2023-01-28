@@ -30,7 +30,7 @@ public class SessionManager implements Serializable {
     private static final long UNREGISTER_TIME = 6000;
     // глобальное хранилище сессий. Добавляются и удаляются листенером
     // SessionListener
-    private final static Set<HttpSession> sessions = Collections
+    private static final Set<HttpSession> sessions = Collections
             .newSetFromMap(new ConcurrentHashMap<HttpSession, Boolean>());
     private final Map<SessionToken, Date> touch = new ConcurrentHashMap<SessionToken, Date>();
     private final Map<SessionToken, ApplicationUser> userToken =
@@ -250,7 +250,7 @@ public class SessionManager implements Serializable {
      * Если пользователь не найден, выбрасывает исключение с параметром SessionExpired
      *
      * @param token
-     * @return
+     * @return ApplicationUser
      * @throws CustomException
      */
     public ApplicationUser getUser(SessionToken token) throws CustomException {

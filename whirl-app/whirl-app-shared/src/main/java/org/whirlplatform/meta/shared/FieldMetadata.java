@@ -17,7 +17,8 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 @SuppressWarnings("serial")
 @JsonInclude(Include.NON_NULL)
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "genId")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class FieldMetadata implements Serializable, Cloneable {
 
     /**
@@ -358,21 +359,28 @@ public class FieldMetadata implements Serializable, Cloneable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         FieldMetadata other = (FieldMetadata) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         if (this.id == null) {
             return other.id == null;
-        } else return this.id.equals(other.id);
+        } else {
+            return this.id.equals(other.id);
+        }
     }
 
     public FieldMetadata clone() {

@@ -37,9 +37,9 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
         if (!temp.where.isEmpty()) {
             countCommand.addWhereConstraints(temp.where);
         }
-//        if (!all) {
-//            countCommand.limitRows(10000);
-//        }
+        //if (!all) {
+        //      countCommand.limitRows(10000);
+        //}
         return countCommand;
     }
 
@@ -47,8 +47,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
                                             PlainTableFetcherHelper temp) {
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
-            if (((TreeClassLoadConfig) loadConfig).getParentColumn() != null &&
-                    ((TreeClassLoadConfig) loadConfig).getParent() != null) {
+            if (((TreeClassLoadConfig) loadConfig).getParentColumn() != null
+                    && ((TreeClassLoadConfig) loadConfig).getParent() != null) {
                 all = true;
             }
         }
@@ -80,14 +80,14 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
             command.addWhereConstraints(temp.where);
         }
 
-//        if (!all) {
-//            command.limitRows(10000);
-//        }
+        //if (!all) {
+        //      command.limitRows(10000);
+        //}
 
         if (!all) {
             command.limitRows(
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage()) +
-                            loadConfig.getRowsPerPage());
+                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
+                        + loadConfig.getRowsPerPage());
             command.skipRows((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage());
         }
 

@@ -212,9 +212,8 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
             key = String.valueOf(Math.round((Math.random() * 10000)));
         }
         // отправить на сервер идентификатор капчи и введенное значение
-        url = GWT.getHostPageBaseURL() + "captcha.png?" + CAPTCHA_KEY + "=" + key +
-                getDimensionsURLPart() + "&l="
-                + CAPTCHA_LENGTH;
+        url = GWT.getHostPageBaseURL() + "captcha.png?" + CAPTCHA_KEY + "=" + key
+            + getDimensionsURLPart() + "&l=" + CAPTCHA_LENGTH;
         // Браузер, похоже, кэширует картинки с одинаковыми адресами,
         // предотвратить это
         if (randomize) {
@@ -253,13 +252,6 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
         captchaInput.setValue("");
         captchaImg.setUrlAndVisibleRect(getCaptchaImageURL(true), 0, 0, imageWidth, imageHeight);
         container.forceLayout();
-    }
-
-    /**
-     * Пометить компонент как непрошедший проверку
-     */
-    private void markInvalid() {
-        captchaInput.forceInvalid(AppMessage.Util.MESSAGE.errorCaptchaVerification());
     }
 
     /**
@@ -346,6 +338,13 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
     @Override
     public void markInvalid(String msg) {
         super.markInvalid(msg);
+    }
+
+    /**
+     * Пометить компонент как непрошедший проверку
+     */
+    private void markInvalid() {
+        captchaInput.forceInvalid(AppMessage.Util.MESSAGE.errorCaptchaVerification());
     }
 
     /**

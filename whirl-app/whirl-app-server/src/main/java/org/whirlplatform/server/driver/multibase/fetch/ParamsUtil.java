@@ -76,8 +76,8 @@ public class ParamsUtil {
                 }
             } else {
                 if (v.getType() == null) {
-                    _log.warn("Parameter " + v.getCode() +
-                            " not found for event. Null value passed.");
+                    _log.warn("Parameter " + v.getCode()
+                            + " not found for event. Null value passed.");
                 }
                 param.setText(Getter.toDBString(v.getObject()));
             }
@@ -108,8 +108,8 @@ public class ParamsUtil {
             } else {
                 if (v.getType() == null) {
                     _log.warn(
-                            "Parameter " + v.getCode() + " has null type. Value " + v.getObject() +
-                                    " passed.");
+                            "Parameter " + v.getCode() + " has null type. Value " + v.getObject()
+                                + " passed.");
                 }
                 result.add(v.getObject());
             }

@@ -94,7 +94,9 @@ public class RowValueImpl implements RowValue {
         RowValueImpl other = (RowValueImpl) obj;
         if (id == null) {
             return other.id == null;
-        } else return id.equals(other.id);
+        } else {
+            return id.equals(other.id);
+        }
     }
 
     @Override

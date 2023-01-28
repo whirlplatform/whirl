@@ -123,8 +123,8 @@ public abstract class BorderContainerBuilderOverlay {
 
     /**
      * Устанавливает значение DOM-атрибута компонента class = "styleName". Пример:
-     * setStyleName("wide-container-class no-bordered") -> <div ... class="wide-container-class
-     * no-bordered" ... >...</div>
+     * setStyleName("wide-container-class no-bordered") ->
+     * <div class="wide-container-class no-bordered"></div>
      *
      * @param styleName
      */

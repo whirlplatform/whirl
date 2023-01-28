@@ -138,8 +138,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     fireAddElementUi(parent, result);
                 }
             });
-        } else if (parent instanceof NullFreeComponentElement &&
-                element instanceof NewComponentElement) {
+        } else if (parent instanceof NullFreeComponentElement
+                && element instanceof NewComponentElement) {
             // Перетаскивание компонента в корень свободных компонентов
             onAddElementCallback(parent, element, new Callback<ComponentElement, Throwable>() {
                 @Override
@@ -195,15 +195,15 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 //            }
             PropertyValue hAlign = added.getProperty(PropertyType.LayoutDataHorizontalAlign);
             if (hAlign.getValue(l) == null
-                    || (hAlign.getValue(l).getType() == DataType.STRING &&
-                    hAlign.getValue(l).toString().isEmpty())) {
+                    || (hAlign.getValue(l).getType() == DataType.STRING
+                    && hAlign.getValue(l).toString().isEmpty())) {
                 added.setProperty(PropertyType.LayoutDataHorizontalAlign,
                         new PropertyValue(DataType.STRING, l, "Center"));
             }
             PropertyValue vAlign = added.getProperty(PropertyType.LayoutDataVerticalAlign);
             if (vAlign.getValue(l) == null
-                    || vAlign.getValue(l).getType() == DataType.STRING &&
-                    vAlign.getValue(l).toString().isEmpty()) {
+                    || vAlign.getValue(l).getType() == DataType.STRING
+                    && vAlign.getValue(l).toString().isEmpty()) {
                 added.setProperty(PropertyType.LayoutDataVerticalAlign,
                         new PropertyValue(DataType.STRING, l, "Middle"));
             }
@@ -218,13 +218,13 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 
                 }
             });
-        } else if (parent instanceof NullFreeComponentElement &&
-                element instanceof ComponentElement) {
+        } else if (parent instanceof NullFreeComponentElement
+                && element instanceof ComponentElement) {
             // перенос существующего компонента в свободные
             onAddFreeComponent((ComponentElement) element);
             onSyncServerApplication();
-        } else if (parent instanceof NullRootComponentElement &&
-                element instanceof ComponentElement) {
+        } else if (parent instanceof NullRootComponentElement
+                && element instanceof ComponentElement) {
             // перенос существующего компонента в корневой
             onAddFreeComponent(currentApplication.getRootComponent());
             if (currentApplication.getFreeComponents().contains(element)) {
@@ -290,8 +290,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     fireAddElementUi(parent, param);
                 }
             });
-        } else if (parent instanceof ApplicationElement &&
-                element instanceof NewDataSourceElement) {
+        } else if (parent instanceof ApplicationElement
+                && element instanceof NewDataSourceElement) {
             onAddElementCallback(parent, element, new Callback<AbstractElement, Throwable>() {
                 @Override
                 public void onFailure(Throwable reason) {
@@ -466,8 +466,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             event.removeFromParent();
             app.addFreeEvent(event);
             fireAddElementUi(app, event);
-        } else if (parent instanceof ComponentElement &&
-                element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ComponentElement
+                && element instanceof NewContextMenuItemElement) {
             onAddElementCallback(parent, element,
                     new Callback<ContextMenuItemElement, Throwable>() {
                         @Override
@@ -481,8 +481,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                             fireAddElementUi(parent, result);
                         }
                     });
-        } else if (parent instanceof ComponentElement &&
-                element instanceof ContextMenuItemElement) {
+        } else if (parent instanceof ComponentElement
+                && element instanceof ContextMenuItemElement) {
             ComponentElement comp = (ComponentElement) parent;
             ContextMenuItemElement item = (ContextMenuItemElement) element;
             comp.removeContextMenuItem(item);
@@ -507,8 +507,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             event.removeFromParent();
             comp.addEvent(event);
             fireAddElementUi(comp, event);
-        } else if (parent instanceof ContextMenuItemElement &&
-                element instanceof NewContextMenuItemElement) {
+        } else if (parent instanceof ContextMenuItemElement
+                && element instanceof NewContextMenuItemElement) {
             onAddElementCallback(parent, element,
                     new Callback<ContextMenuItemElement, Throwable>() {
                         @Override
@@ -522,8 +522,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                             fireAddElementUi(parent, result);
                         }
                     });
-        } else if (parent instanceof ContextMenuItemElement &&
-                element instanceof ContextMenuItemElement) {
+        } else if (parent instanceof ContextMenuItemElement
+                && element instanceof ContextMenuItemElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
             ContextMenuItemElement childItem = (ContextMenuItemElement) element;
             item.removeChild(childItem);
@@ -535,9 +535,10 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
     private void fireAddElementUi(AbstractElement parent, AbstractElement addedElement) {
         eventBus.addElementUI(parent, addedElement);
         eventBus.selectTreeElement(addedElement);
-        if (addedElement instanceof ComponentElement ||
-                (addedElement instanceof EventParameterElement
+        if (addedElement instanceof ComponentElement
+                || (addedElement instanceof EventParameterElement
                         && ((EventParameterElement) addedElement).getComponentId() != null)) {
+            // skipped
         } else {
             eventBus.openElement(addedElement);
         }
@@ -667,11 +668,11 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
         } else if (parent instanceof ApplicationElement && element instanceof ApplicationElement) {
             ((ApplicationElement) parent).removeReference((ApplicationElement) element);
             removedElement = element;
-        } else if (parent instanceof ComponentElement &&
-                element instanceof ContextMenuItemElement) {
+        } else if (parent instanceof ComponentElement
+                && element instanceof ContextMenuItemElement) {
             ((ComponentElement) parent).removeContextMenuItem((ContextMenuItemElement) element);
-        } else if (parent instanceof ContextMenuItemElement &&
-                element instanceof ContextMenuItemElement) {
+        } else if (parent instanceof ContextMenuItemElement
+                && element instanceof ContextMenuItemElement) {
             ((ContextMenuItemElement) parent).removeChild((ContextMenuItemElement) element);
         }
 
@@ -688,8 +689,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
         if (parent.getType() == ComponentType.HorizontalContainerType
                 || parent.getType() == ComponentType.VerticalContainerType
                 || parent.getType() == ComponentType.HBoxContainerType
-                || parent.getType() == ComponentType.VBoxContainerType ||
-                parent.getType() == ComponentType.TreeMenuType
+                || parent.getType() == ComponentType.VBoxContainerType
+                || parent.getType() == ComponentType.TreeMenuType
                 || parent.getType() == ComponentType.HorizontalMenuType
                 || parent.getType() == ComponentType.HorizontalMenuItemType
                 || parent.getType() == ComponentType.TabPanelType) {
@@ -744,8 +745,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     ComponentElement e = iter.next();
                     String location = e.getProperty(PropertyType.LayoutDataLocation)
                             .getValue(currentApplication.getDefaultLocale()).getString();
-                    if (location == null ||
-                            location.equals(child.getProperty(PropertyType.LayoutDataLocation)
+                    if (location == null
+                            || location.equals(child.getProperty(PropertyType.LayoutDataLocation)
                                     .getValue(currentApplication.getDefaultLocale()).getString())) {
 
                         eventBus.removeElementUI(parent, e);
@@ -907,8 +908,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     @Override
                     public void onFailure(Throwable caught) {
                         ProgressHelper.hide();
-                        if (caught instanceof RPCException &&
-                                ((RPCException) caught).isSessionExpired()) {
+                        if (caught instanceof RPCException
+                                && ((RPCException) caught).isSessionExpired()) {
                             eventBus.showLoginPanel();
                             InfoHelper.error("save-application", EditorMessage.Util.MESSAGE.error(),
                                     caught.getMessage());
@@ -936,8 +937,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     @Override
                     public void onFailure(Throwable caught) {
                         ProgressHelper.hide();
-                        if (caught instanceof RPCException &&
-                                ((RPCException) caught).isSessionExpired()) {
+                        if (caught instanceof RPCException
+                                && ((RPCException) caught).isSessionExpired()) {
                             eventBus.showLoginPanel();
                             InfoHelper.error("save-application-as",
                                     EditorMessage.Util.MESSAGE.error(),
@@ -992,8 +993,10 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
         callback.onSuccess(currentApplication.getGroups());
     }
 
-    public <T extends AbstractElement> void onGetElementRights(Collection<T> elements,
-                                                               Callback<Collection<RightCollectionElement>, Throwable> callback) {
+    public <T extends AbstractElement> void onGetElementRights(
+            Collection<T> elements,
+            Callback<Collection<RightCollectionElement>,
+                Throwable> callback) {
         Set<RightCollectionElement> result = new HashSet<RightCollectionElement>();
         for (T e : elements) {
             if (e instanceof AbstractTableElement) {

@@ -247,6 +247,8 @@ public class EventParameterView extends ContentPanel implements
                 }
                 changeDataTypeVizibility(dataType.getValue());
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
         forceLayout();
     }

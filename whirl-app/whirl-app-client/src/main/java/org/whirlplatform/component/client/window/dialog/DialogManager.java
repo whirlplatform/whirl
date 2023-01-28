@@ -94,6 +94,9 @@ public class DialogManager {
                                 case NO:
                                     locator.setPart(new Locator(LocatorParams.TYPE_NO_BUTTON));
                                     break;
+                                default:
+                                    throw new IllegalArgumentException("Variable 'bt' can`t be this: "
+                                        + bt.toString());
                             }
                         }
                     }

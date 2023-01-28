@@ -30,8 +30,9 @@ public class SeleniumJSExport {
         if (result == null) { // в дочерних элементах ничего не нашли.
             // Значит, опрашиваем сам containable(если он - ComponentBuilder ) на наличие в
             // нём искомого элемента
-            if (containable instanceof ComponentBuilder)
+            if (containable instanceof ComponentBuilder) {
                 result = ((ComponentBuilder) containable).getLocatorByElement(element);
+            }
 
         }
         return result;

@@ -60,11 +60,10 @@ public class DBConnection {
             connection = constructor.newInstance(alias, conn, user);
 
         } catch (SQLException | NoSuchMethodException | SecurityException | InstantiationException
-                 | IllegalAccessException | IllegalArgumentException |
-                 InvocationTargetException e) {
+                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             _log.error(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": " +
-                            alias, e);
+                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
+                        + alias, e);
         }
         if (connection == null) {
             throw new ConnectException(
@@ -93,8 +92,8 @@ public class DBConnection {
             return ds;
         } catch (SecurityException | IllegalArgumentException e) {
             _log.error(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": " +
-                            alias, e);
+                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
+                        + alias, e);
             throw new ConnectException(
                     I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect());
         }

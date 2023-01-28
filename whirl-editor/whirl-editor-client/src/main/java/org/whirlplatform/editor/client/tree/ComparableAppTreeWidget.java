@@ -27,10 +27,10 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
  *
  */
 public abstract class ComparableAppTreeWidget extends AbstractAppTree implements ComparableAppTree {
-    private final static String CLOSE = EditorMessage.Util.MESSAGE.close();
-    private final static String SAVE = EditorMessage.Util.MESSAGE.save();
-    private final static String UNDO = EditorMessage.Util.MESSAGE.undo();
-    private final static int HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT * 2 / 3;
+    private static final String CLOSE = EditorMessage.Util.MESSAGE.close();
+    private static final String SAVE = EditorMessage.Util.MESSAGE.save();
+    private static final String UNDO = EditorMessage.Util.MESSAGE.undo();
+    private static final int HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT * 2 / 3;
     private final ChangeUnitsContainer changesContainer = new ChangeUnitsContainer();
     private Map<String, ChangeUnit> changeUnitsMap;
     private ChangesSorter changesSorter;

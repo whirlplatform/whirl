@@ -107,23 +107,23 @@ public abstract class DataValueOverlay {
      *
      * @param value
      */
-//    public static void setValue(DataValueImpl instance, Object value) {
-//        DataType type = instance.getType();
-//        // instance.setValue(DataValue.convertValueFromString(value, null,
-//        // type));
-//        if (value == null || (value instanceof String && (type == DataType.STRING))
-//                || (value instanceof Number && type == DataType.NUMBER)
-//                || (value instanceof Boolean && type == DataType.BOOLEAN)) {
-//            instance.setValue(value);
-//        } else if (value instanceof JavaScriptObject && type == DataType.DATE) {
-//            Date date = ExporterUtil.jsDateToDate((JavaScriptObject) value);
-//            instance.setValue(date);
-//        } else if (value instanceof JavaScriptObject && type == DataType.LIST) {
-//            instance.setValue(ExporterUtil.gwtInstance(value));
-//        } else {
-//            throw LogHelper.getAndLogException("setValue error. Type of value: " + instance.getType().name());
-//        }
-//    }
+    //    public static void setValue(DataValueImpl instance, Object value) {
+    //        DataType type = instance.getType();
+    //        // instance.setValue(DataValue.convertValueFromString(value, null,
+    //        // type));
+    //        if (value == null || (value instanceof String && (type == DataType.STRING))
+    //                || (value instanceof Number && type == DataType.NUMBER)
+    //                || (value instanceof Boolean && type == DataType.BOOLEAN)) {
+    //            instance.setValue(value);
+    //        } else if (value instanceof JavaScriptObject && type == DataType.DATE) {
+    //            Date date = ExporterUtil.jsDateToDate((JavaScriptObject) value);
+    //            instance.setValue(date);
+    //        } else if (value instanceof JavaScriptObject && type == DataType.LIST) {
+    //            instance.setValue(ExporterUtil.gwtInstance(value));
+    //        } else {
+    //            throw LogHelper.getAndLogException("setValue error. Type of value: " + instance.getType().name());
+    //        }
+    //    }
 
     /**
      * Узнать тип хранимого значения. Это будет одно из (STRING, NUMBER, LIST, DATE, BOOLEAN)

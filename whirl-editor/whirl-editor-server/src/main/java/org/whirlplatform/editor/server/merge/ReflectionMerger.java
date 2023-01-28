@@ -28,6 +28,8 @@ public class ReflectionMerger implements Merger {
                 case Change:
                     mergeChange(left, c);
                     break;
+                default:
+                    throw new IllegalArgumentException("Unsupported type");
             }
             merge(left, c.getNestedChanges());
         }

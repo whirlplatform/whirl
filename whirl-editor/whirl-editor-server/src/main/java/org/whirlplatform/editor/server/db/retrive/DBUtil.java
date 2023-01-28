@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.whirlplatform.editor.server.db.retrive;
 
 import java.sql.Connection;
@@ -39,8 +40,9 @@ public final class DBUtil {
     public static boolean close(ResultSet rs, Logger log) {
         boolean b = false;
         try {
-            if (rs != null)
+            if (rs != null) {
                 rs.close();
+            }
             b = true;
         } catch (SQLException e) {
             log.error("The resultset could not be closed!", e);

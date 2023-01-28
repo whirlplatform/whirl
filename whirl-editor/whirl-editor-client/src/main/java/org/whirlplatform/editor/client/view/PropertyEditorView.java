@@ -330,8 +330,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 ((DateField) typeField).setValue(dataValue.getDate());
             } else if (DataType.FILE.equals(dataValue.getType())) {
                 // У нас не может быть свойства типа файл
-            } else if (DataType.LIST.equals(dataValue.getType()) &&
-                    dataValue.getListModelData() != null) {
+            } else if (DataType.LIST.equals(dataValue.getType())
+                    && dataValue.getListModelData() != null) {
                 ListModelData l = dataValue.getListModelData();
                 AbstractElement e = ((ComboBox<AbstractElement>) typeField).getStore()
                         .findModelWithKey(l.getId());

@@ -109,11 +109,10 @@ public class HTMLReportWriter extends FormWriter {
 
         String click = "document.getElementById('button-table').style.visibility='hidden';"
                 + "var prtContent = document.getElementById('" + form.getId() + "');"
-                +
-                "var WinPrint = window.open('','','left=-100,top=-100,width=1,height=1,toolbar=0,scrollbars=0,status=0');"
-                + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();" +
-                "WinPrint.focus();"
-                + "WinPrint.print();" + "WinPrint.close();"
+                + "var WinPrint = window.open('', '', 'left=-100, top=-100, width=1, height=1, "
+                + "toolbar=0,scrollbars=0,status=0');"
+                + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();"
+                + "WinPrint.focus();" + "WinPrint.print();" + "WinPrint.close();"
                 + "document.getElementById('button-table').style.visibility='visible';";
         xmlStream.writeAttribute("onclick", click);
 
@@ -165,7 +164,8 @@ public class HTMLReportWriter extends FormWriter {
         String style;
         if (form.isGrid()) {
             style =
-                    "border-left: 1px solid; border-top: 1px solid;    border-collapse: collapse; border-spacing: 0; table-layout: fixed";
+                    "border-left: 1px solid; border-top: 1px solid;    "
+                        + "border-collapse: collapse; border-spacing: 0; table-layout: fixed";
         } else {
             style = "border: 0px none " + form.getGridColor()
                     + "; border-collapse: collapse; border-spacing: 0; table-layout: fixed;";
@@ -246,8 +246,8 @@ public class HTMLReportWriter extends FormWriter {
             style.append("background-color: " + cell.getBackgroundColor() + "; ");
         }
         if (form.isGrid()) {
-            style.append("    border-right: 1px solid; border-bottom: 1px solid; border-color: " +
-                    gridColor + "; ");
+            style.append("    border-right: 1px solid; border-bottom: 1px solid; border-color: "
+                    + gridColor + "; ");
         }
         if (cell.getBorderBottom() > 0) {
             style.append(
@@ -271,22 +271,22 @@ public class HTMLReportWriter extends FormWriter {
                             "color: " + component.getValue(PropertyType.Color.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontWeight.getCode()) != null) {
-                    style.append("font-weight: " +
-                            component.getValue(PropertyType.FontWeight.getCode()) + "; ");
+                    style.append("font-weight: "
+                            + component.getValue(PropertyType.FontWeight.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontSize.getCode()) != null) {
                     style.append(
-                            "font-size: " + component.getValue(PropertyType.FontSize.getCode()) +
-                                    "; ");
+                            "font-size: " + component.getValue(PropertyType.FontSize.getCode())
+                                    + "; ");
                 }
                 if (component.getValue(PropertyType.FontStyle.getCode()) != null) {
                     style.append(
-                            "font-style: " + component.getValue(PropertyType.FontStyle.getCode()) +
-                                    "; ");
+                            "font-style: " + component.getValue(PropertyType.FontStyle.getCode())
+                                    + "; ");
                 }
                 if (component.getValue(PropertyType.FontFamily.getCode()) != null) {
-                    style.append("font-family: " +
-                            component.getValue(PropertyType.FontFamily.getCode()) + "; ");
+                    style.append("font-family: "
+                            + component.getValue(PropertyType.FontFamily.getCode()) + "; ");
                 }
             }
         }
@@ -305,8 +305,8 @@ public class HTMLReportWriter extends FormWriter {
     }
 
     private void writeComponentProperties(ComponentModel component) throws XMLStreamException {
-        if (ComponentType.LabelType == component.getType() ||
-                ComponentType.HtmlType == component.getType()) {
+        if (ComponentType.LabelType == component.getType()
+                || ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                     : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null

@@ -155,8 +155,8 @@ public class MultibaseEditorConnector implements EditorConnector {
                 String tableNameWhirl = r.get("tableName");
                 String viewNameWhirl = r.get("viewName");
                 String listNameWhirl = r.get("listName");
-                if (tableName.equalsIgnoreCase(tableNameWhirl) ||
-                        tableName.equalsIgnoreCase(viewNameWhirl)
+                if (tableName.equalsIgnoreCase(tableNameWhirl)
+                        || tableName.equalsIgnoreCase(viewNameWhirl)
                         || tableName.equalsIgnoreCase(listNameWhirl)) {
                     exclude = true;
                     break;
@@ -435,8 +435,8 @@ public class MultibaseEditorConnector implements EditorConnector {
             ApplicationIdHelper.initIdsOf(application);
             metadataStore.saveApplication(application, version, user);
         } catch (MetadataStoreException e) {
-            String message = "Application save error: " +
-                    (application != null ? application.getCode() : "null");
+            String message = "Application save error: "
+                    + (application != null ? application.getCode() : "null");
             _log.error(message, e);
             throw new RPCException(message);
         }
@@ -451,8 +451,8 @@ public class MultibaseEditorConnector implements EditorConnector {
             ApplicationIdHelper.initIdsOf(application);
             metadataStore.saveApplicationAs(application, oldVersion, newVersion, user);
         } catch (MetadataStoreException e) {
-            String message = "Application save error: " +
-                    (application != null ? application.getCode() : "null");
+            String message = "Application save error: "
+                    + (application != null ? application.getCode() : "null");
             _log.error(message, e);
             throw new RPCException(message);
         }
@@ -500,8 +500,8 @@ public class MultibaseEditorConnector implements EditorConnector {
     private List<FileElement> extractFileElementsToCopy(ApplicationsDiff diff) {
         List<FileElement> result = new ArrayList<>();
         for (ChangeUnit unit : diff.getChanges()) {
-            if ((unit.getType() == ChangeType.Add) &&
-                    (unit.getRightValue() instanceof FileElement)) {
+            if ((unit.getType() == ChangeType.Add)
+                    && (unit.getRightValue() instanceof FileElement)) {
                 result.add((FileElement) unit.getRightValue());
             }
         }

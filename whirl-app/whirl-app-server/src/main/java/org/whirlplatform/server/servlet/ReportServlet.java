@@ -81,6 +81,7 @@ public class ReportServlet extends HttpServlet {
             user = SessionManager.get(request.getSession())
                     .getUser(new SessionToken(request.getSession().getId(), tokenId));
         } catch (CustomException e1) {
+            // skipped
         }
         response.reset();
 

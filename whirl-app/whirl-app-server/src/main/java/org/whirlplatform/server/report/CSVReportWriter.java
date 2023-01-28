@@ -138,8 +138,8 @@ public class CSVReportWriter extends FormWriter {
     }
 
     private boolean isInColSpanNotBase(Integer row, Integer col) {
-        return colSpanBaseCol != -1 && col > colSpanBaseCol &&
-                col <= colSpanBaseCol + colSpanBaseSpan - 1;
+        return colSpanBaseCol != -1 && col > colSpanBaseCol
+            && col <= colSpanBaseCol + colSpanBaseSpan - 1;
     }
 
     private boolean isInRowSpanNotBase(Integer row, Integer col) {
@@ -148,8 +148,8 @@ public class CSVReportWriter extends FormWriter {
             int rowSpan = rowSpanBaseSpan.get(baseCol);
             int colSpan = rowSpanBaseColSpan.get(baseCol);
 
-            if (row <= baseRow + rowSpan - 1 &&
-                    (baseRow == row && col > baseCol && col <= baseCol + colSpan - 1)
+            if (row <= baseRow + rowSpan - 1
+                    && (baseRow == row && col > baseCol && col <= baseCol + colSpan - 1)
                     || (baseRow < row && col >= baseCol && col <= baseCol + colSpan - 1)) {
                 return true;
             }
@@ -166,8 +166,8 @@ public class CSVReportWriter extends FormWriter {
             int baseRow = rowSpanBaseRow.get(baseCol);
             int rowSpan = rowSpanBaseSpan.get(baseCol);
             int colSpan = rowSpanBaseColSpan.get(baseCol);
-            if (baseRow < row && row == baseRow + rowSpan - 1 && col >= baseCol &&
-                    col <= baseCol + colSpan - 1) {
+            if (baseRow < row && row == baseRow + rowSpan - 1 && col >= baseCol
+                    && col <= baseCol + colSpan - 1) {
                 return true;
             }
         }
@@ -204,8 +204,8 @@ public class CSVReportWriter extends FormWriter {
         String result = null;
         ComponentModel component = cell.getComponent();
         if (component != null) {
-            if (ComponentType.LabelType == component.getType() ||
-                    ComponentType.HtmlType == component.getType()) {
+            if (ComponentType.LabelType == component.getType()
+                    || ComponentType.HtmlType == component.getType()) {
                 String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
                         : component.getValue(PropertyType.Html.getCode()).getString();
                 String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null

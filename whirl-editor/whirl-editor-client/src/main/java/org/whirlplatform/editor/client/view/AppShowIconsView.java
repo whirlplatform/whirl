@@ -61,11 +61,11 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
             @Override
             public SafeHtml render(String object) {
                 int sep = object.lastIndexOf("/");
-                String html = "<div style='width: 50%; overflow: hidden; white-space: nowrap;'>" +
-                        "<img src=" + object +
-                        " style='width: 5%; display: inline-block; overflow: hidden; " +
-                        "vertical-align: middle;'> " + object.substring(sep + 1) + "</div>" +
-                        "</div>";
+                String html = "<div style='width: 50%; overflow: hidden; white-space: nowrap;'>"
+                    + "<img src=" + object
+                    + " style='width: 5%; display: inline-block; overflow: hidden; "
+                    + "vertical-align: middle;'> " + object.substring(sep + 1) + "</div>"
+                    + "</div>";
                 return SafeHtmlUtils.fromSafeConstant(html);
             }
         }));
@@ -85,7 +85,6 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
     }-*/;
 
     public void buildUI() {
-
         BorderLayoutContainer.BorderLayoutData centerData =
                 new BorderLayoutContainer.BorderLayoutData();
         centerData.setMargins(new Margins(0, 0, 0, 0));

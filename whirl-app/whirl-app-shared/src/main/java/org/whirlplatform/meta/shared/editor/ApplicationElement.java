@@ -715,8 +715,8 @@ public class ApplicationElement extends AbstractElement {
                                           boolean code) {
         if (events != null) {
             for (EventElement event : events) {
-                boolean equalsCodeOrId = (code && codeOrId.equals(event.getCode()) ||
-                        codeOrId.equals(event.getId()));
+                boolean equalsCodeOrId = (code && codeOrId.equals(event.getCode())
+                    || codeOrId.equals(event.getId()));
                 boolean equalsParentId =
                         (parentId == null || parentId.equals(event.getParentEventId()));
                 if (equalsCodeOrId && equalsParentId) {

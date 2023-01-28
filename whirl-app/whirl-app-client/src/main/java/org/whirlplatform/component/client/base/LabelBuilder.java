@@ -116,9 +116,11 @@ public class LabelBuilder extends ComponentBuilder
      * @param c - Component
      */
     private void updateBgColor(Component c) {
-        if (c.getParent() != null)
-            if (bgColor != null)
+        if (c.getParent() != null) {
+            if (bgColor != null) {
                 c.getElement().getParentElement().getStyle().setBackgroundColor(bgColor);
+            }
+        }
     }
 
     /**

@@ -33,7 +33,7 @@ public class InjectServletConfig extends GuiceServletContextListener {
 
     private Configuration configuration = new JndiConfiguration();
 
-    private Set<ObjectName> mBeans = new HashSet<ObjectName>();
+    private Set<ObjectName> mBeans = new HashSet<ObjectName>();//
 
     @Override
     protected Injector getInjector() {
@@ -83,9 +83,8 @@ public class InjectServletConfig extends GuiceServletContextListener {
             mbeanServer.registerMBean(new Users(), usersName);
             mBeans.add(usersName);
 
-        } catch (MalformedObjectNameException | InstanceAlreadyExistsException |
-                 MBeanRegistrationException
-                 | NotCompliantMBeanException e) {
+        } catch (MalformedObjectNameException | InstanceAlreadyExistsException
+                 | MBeanRegistrationException | NotCompliantMBeanException e) {
             _log.warn("MBeanServer initialization failed", e);
         }
     }

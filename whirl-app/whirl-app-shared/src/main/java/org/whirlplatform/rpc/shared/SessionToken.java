@@ -10,7 +10,7 @@ public class SessionToken implements Serializable {
 
     private static final long serialVersionUID = 291910565207331L;
 
-    private transient static SessionToken _instance;
+    private static transient SessionToken _instance;
 
     private String sessionId;
 
@@ -73,21 +73,28 @@ public class SessionToken implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         SessionToken other = (SessionToken) obj;
         if (sessionId == null) {
-            if (other.sessionId != null)
+            if (other.sessionId != null) {
                 return false;
-        } else if (!sessionId.equals(other.sessionId))
+            }
+        } else if (!sessionId.equals(other.sessionId)) {
             return false;
+        }
         if (tokenId == null) {
             return other.tokenId == null;
-        } else return tokenId.equals(other.tokenId);
+        } else {
+            return tokenId.equals(other.tokenId);
+        }
     }
 
     @Override

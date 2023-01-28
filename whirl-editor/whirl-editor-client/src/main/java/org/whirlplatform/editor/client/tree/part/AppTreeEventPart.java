@@ -38,8 +38,8 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
     @Override
     public boolean isRenaming(AbstractElement element) {
         return handledElement == element
-                || (element instanceof EventParameterElement &&
-                handledElement.getParameters().contains(element));
+            || (element instanceof EventParameterElement
+            && handledElement.getParameters().contains(element));
     }
 
     @Override
@@ -60,16 +60,16 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
     @Override
     public boolean isEditing(AbstractElement element) {
         return element == handledElement
-                || (element instanceof EventParameterElement &&
-                handledElement.getParameters().contains(element));
+            || (element instanceof EventParameterElement
+            && handledElement.getParameters().contains(element));
     }
 
     @Override
     public boolean isDeleting(AbstractElement element) {
-        return (element instanceof EventParameterElement &&
-                handledElement.getParameters().contains(element))
-                || (handledElement instanceof EventElement &&
-                handledElement.getSubEvents().contains(element));
+        return (element instanceof EventParameterElement
+            && handledElement.getParameters().contains(element))
+            || (handledElement instanceof EventElement
+            && handledElement.getSubEvents().contains(element));
     }
 
     @Override
@@ -94,16 +94,16 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
 
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
-        if ((parent == handledElement || parent == folders.subEventFolder) &&
-                element instanceof EventElement) {
+        if ((parent == handledElement || parent == folders.subEventFolder)
+                && element instanceof EventElement) {
             // добавляем подчиненные события
             removeElement(element);
             addChildElement(folders.subEventFolder, element);
             putTreePart(element,
                     new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
             return true;
-        } else if ((parent == handledElement || parent == folders.parameterFolder) &&
-                element instanceof EventParameterElement) {
+        } else if ((parent == handledElement || parent == folders.parameterFolder)
+                && element instanceof EventParameterElement) {
             // добавляем параметры
             removeElement(element);
             addChildElement(folders.parameterFolder, element);
@@ -118,8 +118,8 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
         if ((element instanceof EventElement && handledElement.getSubEvents().contains(element))
-                || (element instanceof EventParameterElement &&
-                handledElement.getParameters().contains(element))) {
+                || (element instanceof EventParameterElement
+                && handledElement.getParameters().contains(element))) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -128,10 +128,10 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
 
     @Override
     public boolean doRemoveElementUI(AbstractElement parent, AbstractElement element) {
-        if ((element instanceof EventParameterElement &&
-                appTree.hasChild(folders.parameterFolder, element, false))
-                || (element instanceof EventElement &&
-                appTree.hasChild(folders.subEventFolder, element, false))) {
+        if ((element instanceof EventParameterElement
+                && appTree.hasChild(folders.parameterFolder, element, false))
+                || (element instanceof EventElement
+                && appTree.hasChild(folders.subEventFolder, element, false))) {
             // удаляем параметры или подчиненные события
             removeElement(element);
             return true;
@@ -163,33 +163,34 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
 
     @Override
     public boolean canDragDrop(AbstractElement dropTarget, Object dropData) {
-        if ((dropTarget instanceof EventParameterElement &&
-                handledElement.getParameters().contains(dropTarget))
-                && (dropData instanceof EventParameterElement &&
-                handledElement.getParameters().contains(dropData))) {
+        if ((dropTarget instanceof EventParameterElement
+                && handledElement.getParameters().contains(dropTarget))
+                && (dropData instanceof EventParameterElement
+                && handledElement.getParameters().contains(dropData))) {
             return true;
-        } else if (dropTarget == folders.parameterFolder &&
-                dropData instanceof EventParameterElement
+        } else if (dropTarget == folders.parameterFolder
+                && dropData instanceof EventParameterElement
                 && handledElement.getParameters().contains(dropData)) {
             return true;
         } else if (dropData instanceof ComponentElement
-                && (dropTarget == folders.parameterFolder ||
-                dropTarget instanceof EventParameterElement)) {
+                && (dropTarget == folders.parameterFolder
+                || dropTarget instanceof EventParameterElement)) {
             return true;
-        } else
-            return dropData instanceof EventElement &&
-                    (dropTarget == folders.subEventFolder || dropTarget == handledElement)
-                    && dropData != handledElement &&
-                    !handledElement.getSubEvents().contains(dropData)
-                    && !((EventElement) dropData).getSubEvents().contains(handledElement);
+        } else {
+            return dropData instanceof EventElement
+                && (dropTarget == folders.subEventFolder || dropTarget == handledElement)
+                && dropData != handledElement
+                && !handledElement.getSubEvents().contains(dropData)
+                && !((EventElement) dropData).getSubEvents().contains(handledElement);
+        }
     }
 
     @Override
     public boolean doDragDrop(AbstractElement dropTarget, Object dropData) {
-        if ((dropTarget instanceof EventParameterElement &&
-                handledElement.getParameters().contains(dropTarget))
-                && (dropData instanceof EventParameterElement &&
-                handledElement.getParameters().contains(dropData))) {
+        if ((dropTarget instanceof EventParameterElement
+                && handledElement.getParameters().contains(dropTarget))
+                && (dropData instanceof EventParameterElement
+                && handledElement.getParameters().contains(dropData))) {
             // кинули параметр на другой параметр, просто меняем индекс
             EventParameterElement overParameter = (EventParameterElement) dropTarget;
             EventParameterElement parameter = (EventParameterElement) dropData;
@@ -205,8 +206,8 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
                 appTree.refresh(param);
             }
             return true;
-        } else if (dropTarget == folders.parameterFolder &&
-                dropData instanceof EventParameterElement
+        } else if (dropTarget == folders.parameterFolder
+                && dropData instanceof EventParameterElement
                 && handledElement.getParameters().contains(dropData)) {
             // кинули параметр в ветку параметров, добавляем параметр в конец
             EventParameterElement parameter = (EventParameterElement) dropData;
@@ -227,8 +228,8 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
             e.setComponentId(((ComponentElement) dropData).getId());
             treePresenter.riseAddElement(handledElement, e);
             return true;
-        } else if ((dropTarget instanceof EventParameterElement &&
-                handledElement.getParameters().contains(dropTarget))
+        } else if ((dropTarget instanceof EventParameterElement
+                && handledElement.getParameters().contains(dropTarget))
                 && dropData instanceof ComponentElement) {
             EventParameterElement overParameter = (EventParameterElement) dropTarget;
             NewEventParameterElement e = new NewEventParameterElement();
@@ -239,8 +240,8 @@ public class AppTreeEventPart extends AbstractAppTreePart<EventElement> {
             // treeHandler.getEventBus().removeElementUI(event, overParameter);
             // view.addChildElement(folders.parameterFolder, overParameter);
             return true;
-        } else if ((dropTarget == handledElement || dropTarget == folders.subEventFolder) &&
-                dropData instanceof EventElement) {
+        } else if ((dropTarget == handledElement || dropTarget == folders.subEventFolder)
+                && dropData instanceof EventElement) {
             treePresenter.riseAddElement(handledElement, (EventElement) dropData);
             return true;
         }

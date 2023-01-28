@@ -34,6 +34,7 @@ public class ComponentStore extends ListStore<ComponentElement> {
             };
     private DataProxy<String, List<ComponentElement>> proxy;
     private Loader<String, List<ComponentElement>> loader;
+
     /**
      * По умолчанию выгружает все существующие в приложении компоненты.
      * <br> Второй параметр позволяет загрузить только компоненты являющиеся контейнерами.
@@ -100,8 +101,9 @@ public class ComponentStore extends ListStore<ComponentElement> {
                             if (loadConfig == null || loadConfig.isEmpty()) {
                                 if (containersOnly) {
                                     for (ComponentElement element : result) {
-                                        if (element.getType().isContainer())
+                                        if (element.getType().isContainer()) {
                                             list.add(element);
+                                        }
                                     }
                                 } else {
                                     list.addAll(result);
@@ -114,8 +116,8 @@ public class ComponentStore extends ListStore<ComponentElement> {
                                     String val =
                                             element.getProperty(PropertyType.Code).getDefaultValue()
                                                     .getString();
-                                    boolean isCode = val != null &&
-                                            (String.valueOf(val).toLowerCase().contains(query));
+                                    boolean isCode = val != null
+                                        && (String.valueOf(val).toLowerCase().contains(query));
                                     if (isName || isCode) {
                                         if (containersOnly) {
                                             if (element.getType().isContainer()) {

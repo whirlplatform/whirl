@@ -65,8 +65,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
     void initUi();
 
     @Event(handlers = {ApplicationTreePresenter.class, ToolBarPresenter.class,
-            PalletePresenter.class,
-            ApplicationPresenter.class, DesignPresenter.class, EventTemplatesPresenter.class})
+        PalletePresenter.class, ApplicationPresenter.class,
+        DesignPresenter.class, EventTemplatesPresenter.class})
     void buildApp();
 
     @Event(handlers = LoginPresenter.class)
@@ -127,9 +127,8 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * @param application
      */
     @Event(handlers = {MainPresenter.class, ElementEventHandler.class, LocalePresenter.class,
-            PropertyEditorPresenter.class, ToolBarPresenter.class, GroupPresenter.class,
-            ApplicationPresenter.class,
-            DesignPresenter.class, ApplicationTreePresenter.class})
+        PropertyEditorPresenter.class, ToolBarPresenter.class, GroupPresenter.class,
+        ApplicationPresenter.class, DesignPresenter.class, ApplicationTreePresenter.class})
     void loadApplication(ApplicationElement application, Version version);
 
     /**
@@ -181,12 +180,10 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * Открыть элемент на редактирование
      */
     @Event(handlers = {DesignPresenter.class, PropertyFormPresenter.class,
-            ApplicationPresenter.class,
-            EventPresenter.class, EventParameterPresenter.class, PropertyReportPresenter.class,
-            LocalePresenter.class,
-            DataSourcePresenter.class, SchemaPresenter.class, TablePresenter.class,
-            GroupPresenter.class,
-            DynamicTablePresenter.class, ContextMenuItemPresenter.class})
+        ApplicationPresenter.class, EventPresenter.class, EventParameterPresenter.class,
+        PropertyReportPresenter.class, LocalePresenter.class, DataSourcePresenter.class,
+        SchemaPresenter.class, TablePresenter.class, GroupPresenter.class,
+        DynamicTablePresenter.class, ContextMenuItemPresenter.class})
     void openElement(AbstractElement element);
 
     /**
@@ -195,7 +192,7 @@ public interface EditorEventBus extends EventBus, ApplicationDataProvider {
      * @param element
      */
     @Event(handlers = {ApplicationPresenter.class, TablePresenter.class,
-            DynamicTablePresenter.class})
+        DynamicTablePresenter.class})
     void viewElement(AbstractElement element);
 
     // компоненты

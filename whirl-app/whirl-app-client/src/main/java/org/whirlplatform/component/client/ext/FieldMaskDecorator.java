@@ -367,6 +367,8 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
                 case ' ':
                     this.content += ch;
                     break;
+                default:
+                    throw new IllegalArgumentException("Variable 'ch' can`t be this: " + ch.toString());
             }
         }
 
@@ -484,6 +486,8 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
                 case ' ':
                     regex.append("[" + ch + "]{1}");
                     break;
+                default:
+                    throw new IllegalArgumentException("Variable 'ch' can`t be this: " + ch);
             }
         }
         return regex.toString();

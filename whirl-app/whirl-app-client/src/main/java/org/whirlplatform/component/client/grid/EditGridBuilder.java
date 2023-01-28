@@ -369,8 +369,8 @@ public class EditGridBuilder extends ComponentBuilder
                 paramHelper.addJsonParameters(value.getString());
                 return true;
             }
-        } else if (name.equalsIgnoreCase(PropertyType.SkipInitialLoad.getCode()) &&
-                value.getBoolean() != null) {
+        } else if (name.equalsIgnoreCase(PropertyType.SkipInitialLoad.getCode())
+                && value.getBoolean() != null) {
             if (value != null) {
                 skipInitialLoad = value.getBoolean();
                 return true;
@@ -485,7 +485,7 @@ public class EditGridBuilder extends ComponentBuilder
     /**
      * Получение сущности грида
      *
-     * @return Grid<RowModelData>
+     * @return Grid<RowModelData></RowModelData>
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -887,8 +887,8 @@ public class EditGridBuilder extends ComponentBuilder
     @SuppressWarnings("unchecked")
     private void showConfirmation(String confirmText, SelectHandler handler, String idSuffix) {
         final String gridCode = getCode();
-        boolean useId = (gridCode == null || "".equals(gridCode) ||
-                ComponentBuilder.DEFAULT_CODE.equals(gridCode));
+        boolean useId = (gridCode == null || "".equals(gridCode)
+                || ComponentBuilder.DEFAULT_CODE.equals(gridCode));
         final String id = ((useId) ? getId() : gridCode) + "-" + idSuffix;
         Dialog dialog =
                 DialogManager.createDialog(id, AppMessage.Util.MESSAGE.confirm(), confirmText,
@@ -1374,6 +1374,9 @@ public class EditGridBuilder extends ComponentBuilder
                 case LOCAL:
                     stateStore = StorageHelper.local();
                     break;
+                default:
+                    throw new IllegalArgumentException("Variable 'scope' can`t be this: "
+                        + scope.toString());
             }
         }
     }
@@ -1515,7 +1518,9 @@ public class EditGridBuilder extends ComponentBuilder
             row = store.get(Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX)));
         } else if (locator.hasParameter(LocatorParams.PARAMETER_LABEL)) {
             // если есть колонка и/или текст
-            for (String s = "EditGridBuilder::getRowElementByLocator"; s == null; s = "") ;
+            for (String s = "EditGridBuilder::getRowElementByLocator"; s == null; s = "") {
+                // no use
+            };
             String colIndex = locator.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX);
             String colName = locator.getParameter(LocatorParams.PARAMETER_COLUMN_NAME);
             String label = locator.getParameter(LocatorParams.PARAMETER_LABEL);

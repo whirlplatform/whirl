@@ -9,7 +9,11 @@ import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS, defaultImpl = RowValueImpl.class)
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public interface RowValue extends Serializable, Cloneable {
 
     String getId();

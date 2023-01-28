@@ -36,6 +36,7 @@ public interface DataServiceAsync extends DataService, DirectRestService {
                         data = ExceptionSerializer.Util.get()
                                 .decode(method.getResponse().getText());
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     exception.printStackTrace();
                     callback.onFailure(new ClientRestException(exception, data));

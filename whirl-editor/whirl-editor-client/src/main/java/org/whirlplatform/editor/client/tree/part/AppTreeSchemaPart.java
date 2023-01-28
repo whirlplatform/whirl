@@ -64,14 +64,14 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
 
     @Override
     public boolean isDeleting(AbstractElement element) {
-        return element instanceof AbstractTableElement &&
-                handledElement.getTables().contains(element);
+        return element instanceof AbstractTableElement
+            && handledElement.getTables().contains(element);
     }
 
     @Override
     public boolean hasRights(AbstractElement element) {
-        return element == handledElement || element == folders.plainTables ||
-                element == folders.dynamicTables;
+        return element == handledElement || element == folders.plainTables
+            || element == folders.dynamicTables;
     }
 
     @Override
@@ -111,8 +111,8 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
 
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
-        if (element instanceof AbstractTableElement &&
-                handledElement.getTables().contains(element)) {
+        if (element instanceof AbstractTableElement
+                && handledElement.getTables().contains(element)) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }

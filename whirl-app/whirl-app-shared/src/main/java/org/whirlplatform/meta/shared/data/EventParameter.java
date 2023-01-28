@@ -11,7 +11,12 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonSubTypes(@JsonSubTypes.Type(EventParameterImpl.class))
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    creatorVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public interface EventParameter extends Serializable {
 
     ParameterType getType();

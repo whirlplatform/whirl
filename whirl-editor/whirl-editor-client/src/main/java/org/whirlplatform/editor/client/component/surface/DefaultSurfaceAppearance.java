@@ -12,6 +12,7 @@ public class DefaultSurfaceAppearance implements SurfaceAppearance {
 
     private SurfaceResources resource;
     private DefaultTemplate template;
+
     public DefaultSurfaceAppearance() {
         this(
                 GWT.<DefaultSurfaceResources>create(DefaultSurfaceResources.class));

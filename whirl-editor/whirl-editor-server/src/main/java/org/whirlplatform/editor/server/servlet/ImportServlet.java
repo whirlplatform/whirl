@@ -55,8 +55,8 @@ public class ImportServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
             List<FileItem> items = upload.parseRequest(req);
             for (FileItem item : items) {
-                if (!item.isFormField() && item.getFieldName() != null &&
-                        item.getFieldName().equals("file")) {
+                if (!item.isFormField() && item.getFieldName() != null
+                        && item.getFieldName().equals("file")) {
                     InputStream stream = item.getInputStream();
                     ApplicationElement application =
                             metadataStore.deserialize(IOUtils.toString(stream, "UTF-8"));

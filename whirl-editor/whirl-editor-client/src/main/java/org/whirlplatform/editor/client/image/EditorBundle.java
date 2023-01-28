@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundleWithLookup;
 import com.google.gwt.resources.client.ImageResource;
 
+@SuppressWarnings("checkstyle:all")
 public interface EditorBundle extends ClientBundleWithLookup {
 
     EditorBundle INSTANCE = GWT.create(EditorBundle.class);
@@ -202,7 +203,7 @@ public interface EditorBundle extends ClientBundleWithLookup {
 
     @Source("hboxcontainer-small.png")
     ImageResource hBoxContainerSmall();
-
+//
     @Source("contentpanel-small.png")
     ImageResource contentPanelSmall();
 

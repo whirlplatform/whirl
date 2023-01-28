@@ -94,8 +94,8 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
         if ((element instanceof EventElement && handledElement.getEvents().contains(element))
-                || (element instanceof ContextMenuItemElement &&
-                handledElement.hasChild((ContextMenuItemElement) element))) {
+                || (element instanceof ContextMenuItemElement
+                && handledElement.hasChild((ContextMenuItemElement) element))) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -105,8 +105,8 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean doRemoveElementUI(AbstractElement parent, AbstractElement element) {
         if ((element instanceof EventElement && handledElement.getEvents().contains(element))
-                || (element instanceof ContextMenuItemElement &&
-                handledElement.hasChild((ContextMenuItemElement) element))) {
+                || (element instanceof ContextMenuItemElement
+                && handledElement.hasChild((ContextMenuItemElement) element))) {
             removeElement(element);
             return true;
         }
@@ -132,21 +132,23 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     public boolean canDragDrop(AbstractElement dropTarget, Object dropData) {
         if (dropTarget == folders.eventFolder && dropData instanceof EventElement) {
             return true;
-        } else return dropData instanceof ContextMenuItemElement &&
-                dropTarget instanceof ContextMenuItemElement
+        } else {
+            return dropData instanceof ContextMenuItemElement
+                && dropTarget instanceof ContextMenuItemElement
                 && handledElement.hasChild((ContextMenuItemElement) dropData)
-                && (dropTarget == handledElement ||
-                handledElement.hasChild((ContextMenuItemElement) dropTarget));
+                && (dropTarget == handledElement
+                || handledElement.hasChild((ContextMenuItemElement) dropTarget));
+        }
     }
 
     @Override
     public boolean doDragDrop(AbstractElement dropTarget, Object dropData) {
-        if ((dropTarget == folders.eventFolder || dropTarget == handledElement) &&
-                dropData instanceof EventElement) {
+        if ((dropTarget == folders.eventFolder || dropTarget == handledElement)
+                && dropData instanceof EventElement) {
             treePresenter.riseAddElement(handledElement, (EventElement) dropData);
             return true;
-        } else if (dropData instanceof ContextMenuItemElement &&
-                dropTarget instanceof ContextMenuItemElement
+        } else if (dropData instanceof ContextMenuItemElement
+                && dropTarget instanceof ContextMenuItemElement
                 && handledElement.hasChild((ContextMenuItemElement) dropData)
                 && handledElement.hasChild((ContextMenuItemElement) dropTarget)) {
             ContextMenuItemElement childItem = (ContextMenuItemElement) dropData;
@@ -156,10 +158,10 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
 
             appTree.setExpanded(handledElement, true);
             return true;
-        } else if (dropData instanceof ContextMenuItemElement &&
-                dropTarget instanceof ContextMenuItemElement
-                && handledElement.hasChild((ContextMenuItemElement) dropData) &&
-                handledElement == dropTarget) {
+        } else if (dropData instanceof ContextMenuItemElement
+                && dropTarget instanceof ContextMenuItemElement
+                && handledElement.hasChild((ContextMenuItemElement) dropData)
+                && handledElement == dropTarget) {
             ContextMenuItemElement childItem = (ContextMenuItemElement) dropData;
             childItem.setIndex(handledElement.getChildren().size());
 

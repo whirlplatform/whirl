@@ -3,6 +3,7 @@
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
+
 package org.whirlplatform.component.client.window;
 
 import com.google.gwt.dom.client.Element;

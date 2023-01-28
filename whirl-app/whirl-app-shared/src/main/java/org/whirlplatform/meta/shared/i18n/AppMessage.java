@@ -3,6 +3,7 @@ package org.whirlplatform.meta.shared.i18n;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.Messages;
 
+@SuppressWarnings("checkstyle:methodname")
 public interface AppMessage extends Messages {
 
     String yes();
@@ -56,9 +57,10 @@ public interface AppMessage extends Messages {
     // allerts
     String alert();
 
+    
     String alert_notAllFieldsIsFill();
 
-    String alert_notAllRequiredFieldsIsFill();
+    String alert_notAllRequiredFieldsIsFill();////
 
     String alert_sessionExpired();
 

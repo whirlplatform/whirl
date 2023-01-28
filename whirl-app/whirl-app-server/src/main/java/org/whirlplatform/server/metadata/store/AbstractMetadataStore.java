@@ -38,7 +38,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
         // добавления
         // класс фильтра должен иметь конструктор с одним аргументом String -
         // исходный текст
-//        CONVERTERS.add(CustomConverter.class);
+        // CONVERTERS.add(CustomConverter.class);
     }
 
     @Override
@@ -128,11 +128,9 @@ public abstract class AbstractMetadataStore implements MetadataStore {
             Result result = new StreamResult(writer);
             TransformerFactory.newInstance().newTransformer().transform(source, result);
             return writer.toString();
-        } catch (SAXException | TransformerException | TransformerFactoryConfigurationError |
-                 InstantiationException
-                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException |
-                 NoSuchMethodException
-                 | SecurityException e) {
+        } catch (SAXException | TransformerException | TransformerFactoryConfigurationError
+                 | InstantiationException | IllegalAccessException | IllegalArgumentException
+                 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             throw new MetadataStoreException("Metadata converter applying error", e);
         }
     }
@@ -188,6 +186,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
             newAppPath = resolveApplicationPath(application.getCode(), newVersion);
             ApplicationFilesUtil.saveApplicationFilesAs(oldAppPath, newAppPath, application);
         } catch (IOException e) {
+            e.printStackTrace();
         }
         saveApplication(application, newVersion, user);
     }

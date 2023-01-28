@@ -29,6 +29,7 @@ public class TreeMenuDropTarget extends DropTarget {
                         .cast());
 
         if (item != null && !tree.getStore().getRootItems().contains(item.getModel())) {
+            // skipped
         }
         if (item != null) {
             if (tree.getStore().getRootItems().contains(item.getModel())) {

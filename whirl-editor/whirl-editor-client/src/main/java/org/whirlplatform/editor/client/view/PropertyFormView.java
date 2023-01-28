@@ -361,8 +361,8 @@ public class PropertyFormView extends AccordionLayoutContainer
                 if (selectedCells != null) {
                     boolean duplicate = false;
                     for (RequestElement m : reqsStore.getAll()) {
-                        if (selectedCells.getTop() == m.getTop() &&
-                                selectedCells.getBottom() == m.getBottom()) {
+                        if (selectedCells.getTop() == m.getTop()
+                                && selectedCells.getBottom() == m.getBottom()) {
                             duplicate = true;
                             break;
                         }

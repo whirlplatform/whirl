@@ -90,11 +90,11 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private Widget createEditor() {
         VerticalLayoutContainer container = new VerticalLayoutContainer();
         name = WidgetUtil.createTextField(false);
-//        name.addValidator(ValidatorUtil.createNameValidator());
+        //name.addValidator(ValidatorUtil.createNameValidator());
         code = WidgetUtil.createTextField(false);
         code.addValidator(ValidatorUtil.createCodeValidator());
         title = WidgetUtil.createTextField(false);
-//        url = WidgetUtil.createTextField(true);
+        //url = WidgetUtil.createTextField(true);
         locale = new LocaleField();
         version = new VersionField();
         container.add(new FieldLabel(name, NAME),
@@ -103,7 +103,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
                 new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(title, TITLE),
                 new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
-//        container.add(new FieldLabel(url, URL), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+        //container.add(new FieldLabel(url, URL), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(locale, LOCALE),
                 new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(version, VERSION),
@@ -122,7 +122,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
         appInfo.setCode(code.getValue());
         appInfo.setName(name.getValue());
         appInfo.setTitle(title.getValue());
-//        appInfo.setUrl(url.getValue());
+        //appInfo.setUrl(url.getValue());
         appInfo.setLocale(locale.getValue());
         appInfo.setVersion(version.getValue());
         return appInfo;
@@ -162,7 +162,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
             code.setValue(appInfo.getCode());
             name.setValue(appInfo.getName());
             title.setValue(appInfo.getTitle());
-//            url.setValue(appInfo.getUrl());
+            //url.setValue(appInfo.getUrl());
             locale.setValue(appInfo.getLocale());
             version.setValue(appInfo.getVersion());
         } else {
@@ -180,14 +180,14 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
         code.setEnabled(value);
         name.setEnabled(value);
         locale.setEnabled(value);
-//        url.setEnabled(value);
+        //url.setEnabled(value);
     }
 
     public void clearFields() {
         code.setValue("");
         name.setValue("");
         title.setValue("");
-//        url.setValue("");
+        //url.setValue("");
         locale.setValue(new LocaleElement("ru", ""));
         version.setValue(Version.create(0, 0, 1));
     }

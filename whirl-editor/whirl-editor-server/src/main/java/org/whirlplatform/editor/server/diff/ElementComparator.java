@@ -66,6 +66,7 @@ public class ElementComparator {
                 }
             }
         } catch (IOException e) {
+            // skipped
         }
     }
 

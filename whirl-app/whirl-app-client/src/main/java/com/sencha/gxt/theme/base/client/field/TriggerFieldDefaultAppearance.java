@@ -126,8 +126,8 @@ public class TriggerFieldDefaultAppearance extends ValueBaseFieldDefaultAppearan
 
         sb.append("class='").append(getStyle().field()).append(" ").append(getStyle().text());
 
-        String placeholder = options.getEmptyText() != null ?
-                " placeholder='" + SafeHtmlUtils.htmlEscape(options.getEmptyText()) + "' " : "";
+        String placeholder = options.getEmptyText() != null
+                ? " placeholder='" + SafeHtmlUtils.htmlEscape(options.getEmptyText()) + "' " : "";
 
         if (value.equals("") && options.getEmptyText() != null) {
             sb.append(" ").append(getStyle().empty());
@@ -157,8 +157,8 @@ public class TriggerFieldDefaultAppearance extends ValueBaseFieldDefaultAppearan
 
     @Override
     public boolean triggerIsOrHasChild(XElement parent, Element target) {
-        return parent.isOrHasChild(target) &&
-                target.<XElement>cast().is("." + getStyle().trigger());
+        return parent.isOrHasChild(target)
+                && target.<XElement>cast().is("." + getStyle().trigger());
     }
 
     @Override

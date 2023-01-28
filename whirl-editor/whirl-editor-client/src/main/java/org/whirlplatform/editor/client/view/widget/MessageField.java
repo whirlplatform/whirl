@@ -12,7 +12,7 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * The combination of the checkbox and textfield.
  */
 public class MessageField extends HBoxLayoutContainer {
-    private final static String LABEL = EditorMessage.Util.MESSAGE.message();
+    private static final String LABEL = EditorMessage.Util.MESSAGE.message();
 
     private final TextField value;
     private final CheckBox checkBox;

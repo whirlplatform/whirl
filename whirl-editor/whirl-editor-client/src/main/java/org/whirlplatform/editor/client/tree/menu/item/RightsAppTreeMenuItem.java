@@ -12,8 +12,8 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Права
  */
 public class RightsAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_rights();
-    private final static ImageResource ICON = ComponentBundle.INSTANCE.access();
+    private static final String TITLE = EditorMessage.Util.MESSAGE.context_menu_rights();
+    private static final ImageResource ICON = ComponentBundle.INSTANCE.access();
 
     public RightsAppTreeMenuItem() {
         super();

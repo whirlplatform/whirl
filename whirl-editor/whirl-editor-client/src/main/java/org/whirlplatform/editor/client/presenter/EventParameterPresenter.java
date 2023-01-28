@@ -77,6 +77,8 @@ public class EventParameterPresenter
                 }
                 view.setSelectedDataType(value.getType());
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
         eventBus.openElementView(view);
     }

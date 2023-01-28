@@ -37,8 +37,9 @@ public class ReportMessage extends AbstractMessage {
         StringBuilder builder = new StringBuilder();
         builder.append("[");
         for (DataValue v : params) {
-            if (v == null)
+            if (v == null) {
                 continue;
+            }
             builder.append("{\"").append(v.getCode()).append("\": ");
             builder.append("\"").append(v.isNull() ? "" : v.asString()).append("\"},");
         }

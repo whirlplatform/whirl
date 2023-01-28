@@ -133,7 +133,8 @@ public class XLSExporter extends Exporter {
                         "ВНИМАНИЕ! Количество строк данного отчета больше "
                                 + MAX_ROWS
                                 +
-                                ", отчет сформирован не полностью. Воспользоуйтесь другим форматом отчета для получения полных данных.");
+                                ", отчет сформирован не полностью. "
+                                + "Воспользоуйтесь другим форматом отчета для получения полных данных.");
                 HSSFFont font = (HSSFFont) workbook.createFont();
                 font.setColor(IndexedColors.RED.getIndex());
                 text.applyFont(font);
@@ -165,7 +166,8 @@ public class XLSExporter extends Exporter {
                         cell.setCellValue((Boolean) value);
                     } else if (value instanceof Clob) {
                         Clob clob = (Clob) value;
-                        String str, content = "";
+                        String str;
+                        String content = "";
                         BufferedReader re = new BufferedReader(
                                 clob.getCharacterStream());
                         while ((str = re.readLine()) != null) {

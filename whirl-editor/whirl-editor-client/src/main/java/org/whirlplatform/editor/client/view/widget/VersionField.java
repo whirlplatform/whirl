@@ -16,6 +16,7 @@ import org.whirlplatform.meta.shared.version.VersionUtil;
 /**
  * Vsersion/branch input control
  */
+@SuppressWarnings("checkstyle:all")
 public class VersionField extends HBoxLayoutContainer {
     protected final TextField fieldValue;
     protected final Radio radioBranch;

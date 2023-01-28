@@ -17,7 +17,7 @@ public class JavaFunctionContext implements FunctionContext {
         if (Scope.SESSION == scope) {
             user.saveJavaObject(key, object);
         } else if (Scope.SESSION == scope) {
-
+            // skipped
         }
     }
 
@@ -36,7 +36,7 @@ public class JavaFunctionContext implements FunctionContext {
         if (Scope.SESSION == scope) {
             return user.removeJavaObject(key);
         } else if (Scope.APPLICATION == scope) {
-
+            // skipped
         }
         return null;
     }
@@ -46,7 +46,7 @@ public class JavaFunctionContext implements FunctionContext {
         if (Scope.SESSION == scope) {
             return user.hasJavaObject(key);
         } else if (Scope.APPLICATION == scope) {
-
+            // skipped
         }
         return false;
     }

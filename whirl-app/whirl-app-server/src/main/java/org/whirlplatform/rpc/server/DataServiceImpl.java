@@ -356,8 +356,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
                                      ListHolder<DataValue> parameters) {
         HttpSession session = request.getSession();
         Set<FileItem> files = new HashSet<FileItem>();
-        Map<String, FileUpload> map =
-                (Map<String, FileUpload>) session.getAttribute(SESSION_FILE_MAP);
+        Map<String, FileUpload> map = (Map<String, FileUpload>) session.getAttribute(SESSION_FILE_MAP);
         List<DataValue> paramList = parameters.getList();
 
         if (event.getId().equals(session.getAttribute(DEFINED_NEXT_EVENT))) {

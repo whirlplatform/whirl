@@ -67,6 +67,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     public CheckGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
     }
+
     @JsIgnore
     public CheckGroupBuilder() {
         this(Collections.emptyMap());
@@ -337,6 +338,9 @@ public class CheckGroupBuilder extends ComponentBuilder implements
                 case LOCAL:
                     stateStore = StorageHelper.local();
                     break;
+                default:
+                    throw new IllegalArgumentException("Variable 'scope' of the type 'StateScope' can`t be this: "
+                        + scope.toString());
             }
         }
     }

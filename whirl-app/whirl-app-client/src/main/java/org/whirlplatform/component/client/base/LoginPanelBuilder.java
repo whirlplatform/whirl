@@ -135,10 +135,10 @@ public class LoginPanelBuilder extends ComponentBuilder {
 
             @Override
             public void onFailure(Throwable caught) {
-                if (caught instanceof ClientRestException &&
-                        ((ClientRestException) caught).getData() != null
-                        && ((ClientRestException) caught).getData().getType() ==
-                        ExceptionData.ExceptionType.PASSWORDCHANGE) {
+                if (caught instanceof ClientRestException
+                        && ((ClientRestException) caught).getData() != null
+                        && ((ClientRestException) caught).getData().getType()
+                        == ExceptionData.ExceptionType.PASSWORDCHANGE) {
                     ExceptionData pce = ((ClientRestException) caught).getData();
                     String pwdServiceUrl = pce.getPasswordChangeServiceUrl();
                     String currentUrl = URL.encodeComponent(Window.Location.getHref());

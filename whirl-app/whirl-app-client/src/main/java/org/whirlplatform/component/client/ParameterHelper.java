@@ -78,7 +78,7 @@ public class ParameterHelper {
      * Возвращает карту: код компонента - значение
      *
      * @param parameters - List< DataValue >
-     * @return Map<String, DataValue>
+     * @return Map < String, DataValue >
      */
     @SuppressWarnings("rawtypes")
     public Map<String, DataValue> getValues(List<DataValue> parameters) {
@@ -130,7 +130,7 @@ public class ParameterHelper {
      * Возвращает список значений
      *
      * @param parameters - List< DataValue >
-     * @return List<DataValue>
+     * @return List< DataValue >
      */
     public List<DataValue> getValueList(List<DataValue> parameters) {
         List<DataValue> allParams = new ArrayList<DataValue>();

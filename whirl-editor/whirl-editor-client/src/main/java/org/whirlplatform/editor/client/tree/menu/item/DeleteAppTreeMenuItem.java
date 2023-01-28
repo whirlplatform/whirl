@@ -12,8 +12,8 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Удалить
  */
 public class DeleteAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_remove();
-    private final static ImageResource ICON = ComponentBundle.INSTANCE.cross();
+    private static final String TITLE = EditorMessage.Util.MESSAGE.context_menu_remove();
+    private static final ImageResource ICON = ComponentBundle.INSTANCE.cross();
 
     public DeleteAppTreeMenuItem() {
         super();

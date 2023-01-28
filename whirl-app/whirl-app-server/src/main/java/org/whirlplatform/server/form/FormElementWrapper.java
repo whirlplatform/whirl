@@ -199,6 +199,7 @@ public class FormElementWrapper {
                 try {
                     original = original + (int) r.getHeight();
                 } catch (Exception ex) {
+                    // skipped
                 }
             }
         }
@@ -207,6 +208,7 @@ public class FormElementWrapper {
                 try {
                     fin = fin + (int) r.getHeight();
                 } catch (Exception ex) {
+                    // skipped
                 }
             }
 

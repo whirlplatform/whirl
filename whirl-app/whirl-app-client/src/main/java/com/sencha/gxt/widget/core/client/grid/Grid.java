@@ -171,9 +171,9 @@ import java.util.Set;
  * <p/>
  *
  * <pre>
- * public interface DataProperties extends PropertyAccess<Data> {
+ * public interface DataProperties extends PropertyAccess< Data> {
  * &#64;Path("name")
- * ModelKeyProvider<Data> key();
+ * ModelKeyProvider< Data> key();
  * ValueProvider&lt;Data, String> name();
  * ValueProvider&lt;Data, String> value();
  * }
@@ -206,8 +206,8 @@ import java.util.Set;
  * <p/>
  *
  * <pre>
- * new GridDragSource<Data>(g);
- * GridDropTarget<Data> dt = new GridDropTarget<Data>(g);
+ * new GridDragSource< Data>(g);
+ * GridDropTarget< Data> dt = new GridDropTarget< Data>(g);
  * dt.setFeedback(Feedback.BOTH);
  * </pre>
  * <p/>
@@ -348,7 +348,8 @@ public class Grid<M> extends Component
                 onMouseDown(event);
                 onClick(event);
                 // need to make sure to call view's mouse methods as well
-                // view can be set post-construction - make sure to use Grid's member variable rather than the constructor param
+                // view can be set post-construction -
+                // make sure to use Grid's member variable rather than the constructor param
                 GridView<M> view = Grid.this.view;
                 if (view != null) {
                     // since we're not preventingDefault, no reason to call view.onMouseDown
@@ -679,6 +680,8 @@ public class Grid<M> extends Component
             case Event.ONMOUSEUP:
                 onMouseUp(ce);
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
         view.handleComponentEvent(ce);
     }

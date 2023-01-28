@@ -21,8 +21,8 @@ public abstract class AbstractTemplatesPresenter
             @Override
             public void onSuccess(String result) {
                 InfoHelper.info("template-rename", EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + " <b> " +
-                                result + " </b> ");
+                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + " <b> "
+                            + result + " </b> ");
                 deleteTemplate(oldTemplate, false);
             }
 
@@ -59,8 +59,8 @@ public abstract class AbstractTemplatesPresenter
             @Override
             public void onSuccess(String result) {
                 InfoHelper.info("template-save", EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + "<b> " +
-                                result + " </b>");
+                        EditorMessage.Util.MESSAGE.templ_success_save_with_name() + "<b> "
+                            + result + " </b>");
                 if (reload) {
                     loadTemplates();
                 }

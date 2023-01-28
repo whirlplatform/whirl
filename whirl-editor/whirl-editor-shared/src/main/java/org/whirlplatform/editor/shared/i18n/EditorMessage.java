@@ -4,6 +4,7 @@ package org.whirlplatform.editor.shared.i18n;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.Messages;
 
+@SuppressWarnings("checkstyle:all")
 public interface EditorMessage extends Messages {
 
     String help_db();
@@ -15,7 +16,7 @@ public interface EditorMessage extends Messages {
 
     String login_login();
 
-    String login_password();
+    String login_password();//
 
     String refresh();
 

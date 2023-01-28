@@ -48,7 +48,7 @@ public abstract class EventParameterOverlay {
     /**
      * Установить значение параметра DataValue события. Событие должно иметь тип DATAVALUE
      *
-     * @param {@link DataValueOverlay DataValue}
+     * @param data {@link DataValueOverlay DataValue}
      */
     public abstract void setData(DataValue data);
 

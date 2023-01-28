@@ -126,7 +126,8 @@ public class OracleEventExecutor extends AbstractEventExecutor {
                 stmt.execute();
 
                 Clob clob = (Clob) stmt.getObject(1);
-                String str, content = "";
+                String str;
+                String content = "";
                 if (clob != null) {
                     BufferedReader re = new BufferedReader(clob.getCharacterStream());
                     while ((str = re.readLine()) != null) {

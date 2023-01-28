@@ -44,7 +44,9 @@ public abstract class AbstractCondition<T> implements Condition, Cloneable, Seri
         AbstractCondition other = (AbstractCondition) obj;
         if (value == null) {
             return other.value == null;
-        } else return value.equals(other.value);
+        } else {
+            return value.equals(other.value);
+        }
     }
 
     public abstract AbstractCondition<T> clone();

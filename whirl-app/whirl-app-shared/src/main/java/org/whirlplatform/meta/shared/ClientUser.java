@@ -30,9 +30,9 @@ public class ClientUser implements Serializable {
      */
     private String event;
 
-//    /** Параметры события передаваемые в URL запросе вида p1=...&p2=... */
-//    @SuppressWarnings("rawtypes")
-//    private LinkedHashMap<String, NativeParameter> eventParams;
+    //    /** Параметры события передаваемые в URL запросе вида p1=...&p2=... */
+    //    @SuppressWarnings("rawtypes")
+    //    private LinkedHashMap<String, NativeParameter> eventParams;
 
     private boolean guest;
 
@@ -62,15 +62,15 @@ public class ClientUser implements Serializable {
         this.sessionToken = token;
     }
 
-//    @SuppressWarnings("rawtypes")
-//    public LinkedHashMap<String, NativeParameter> getEventParams() {
-//        return eventParams;
-//    }
-//
-//    @SuppressWarnings("rawtypes")
-//    public void setEventParams(LinkedHashMap<String, NativeParameter> eventParams) {
-//        this.eventParams = eventParams;
-//    }
+    //    @SuppressWarnings("rawtypes")
+    //    public LinkedHashMap<String, NativeParameter> getEventParams() {
+    //        return eventParams;
+    //    }
+    //
+    //    @SuppressWarnings("rawtypes")
+    //    public void setEventParams(LinkedHashMap<String, NativeParameter> eventParams) {
+    //        this.eventParams = eventParams;
+    //    }
 
     public String getEvent() {
         return event;

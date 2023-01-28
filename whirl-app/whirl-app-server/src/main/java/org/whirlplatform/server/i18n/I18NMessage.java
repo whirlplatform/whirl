@@ -23,7 +23,7 @@ public class I18NMessage {
         thread.set(locale);
     }
 
-    public synchronized static AppMessage getMessage(Locale locale) {
+    public static synchronized AppMessage getMessage(Locale locale) {
         try {
             if (locale != null) {
                 return Hermes.get(AppMessage.class, locale.getLanguage());

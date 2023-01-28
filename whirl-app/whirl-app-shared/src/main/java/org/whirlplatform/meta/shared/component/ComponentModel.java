@@ -19,7 +19,8 @@ import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 @SuppressWarnings("serial")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ComponentModel implements Cloneable, Serializable, IsSerializable {
 
     protected List<ComponentModel> children = new ArrayList<ComponentModel>();

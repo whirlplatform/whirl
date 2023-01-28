@@ -167,8 +167,8 @@ public abstract class AbstractTemplatesView extends ContentPanel
 
                 ConfirmMessageBox messageBox =
                         new ConfirmMessageBox(EditorMessage.Util.MESSAGE.templ_delete(),
-                                EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> " +
-                                        template.getName() + " </b> ?");
+                                EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> "
+                                    + template.getName() + " </b> ?");
                 messageBox.getButton(PredefinedButton.YES).addSelectHandler(new SelectHandler() {
 
                     @Override

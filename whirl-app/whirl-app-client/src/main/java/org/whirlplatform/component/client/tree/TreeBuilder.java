@@ -278,10 +278,12 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.SingleSelection.getCode()) && value != null) {
             singleSelection = Boolean.TRUE.equals(value.getBoolean());
             if (tree != null && singleSelection) {
-                if (tree.getCheckStyle() == CheckCascade.NONE) // Пока только
+                if (tree.getCheckStyle() == CheckCascade.NONE) {
+                    // Пока только
                     // для
                     // CheckStyle.NONE
                     tree.setSingleSelectionCheckMode();
+                }
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.WhereSql.getCode()) && value != null) {
@@ -456,8 +458,8 @@ public class TreeBuilder extends ComponentBuilder
                 result.append("<span title=\"" + data + "\"");
                 result.append(" style=\"");
                 // серым отображаются элементы не найденный в поиске
-                if (isQuery() && !(!Util.isEmptyString(value) &&
-                        value.toLowerCase().contains(q.toLowerCase()))) {
+                if (isQuery() && !(!Util.isEmptyString(value)
+                        && value.toLowerCase().contains(q.toLowerCase()))) {
                     result.append("color: darkgray;");
                 }
                 if (!Util.isEmptyString(style)) {
@@ -745,6 +747,8 @@ public class TreeBuilder extends ComponentBuilder
                 case LOCAL:
                     stateStore = StorageHelper.local();
                     break;
+                default:
+                    throw new IllegalArgumentException("Unsupported scope");
             }
         }
     }
@@ -817,8 +821,8 @@ public class TreeBuilder extends ComponentBuilder
                 .getInputElement(tree.getSearchField().getElement()).isOrHasChild(element)) {
             part = new Locator(LocatorParams.TYPE_SEARCH_FIELD);
             part.setPart(new Locator(LocatorParams.TYPE_INPUT));
-        } else if (tree.getSearchButton() != null &&
-                tree.getSearchButton().getElement().isOrHasChild(element)) {
+        } else if (tree.getSearchButton() != null
+                && tree.getSearchButton().getElement().isOrHasChild(element)) {
             part = new Locator(LocatorParams.TYPE_SEARCH_BUTTON);
         } else {
             Tree.TreeNode<ListModelData> itemNode = tree.findNode(element);
@@ -855,14 +859,14 @@ public class TreeBuilder extends ComponentBuilder
 
         Locator part = locator.getPart();
         if (part != null) {
-            if (LocatorParams.TYPE_SEARCH_FIELD.equals(part.getType()) &&
-                    tree.getSearchField() != null
-                    && part.getPart() != null &&
-                    LocatorParams.TYPE_INPUT.equals(part.getPart().getType())) {
+            if (LocatorParams.TYPE_SEARCH_FIELD.equals(part.getType())
+                    && tree.getSearchField() != null
+                    && part.getPart() != null
+                    && LocatorParams.TYPE_INPUT.equals(part.getPart().getType())) {
                 return tree.getSearchField().getCell()
                         .getInputElement(tree.getSearchField().getElement());
-            } else if (LocatorParams.TYPE_SEARCH_BUTTON.equals(part.getType()) &&
-                    tree.getSearchButton() != null) {
+            } else if (LocatorParams.TYPE_SEARCH_BUTTON.equals(part.getType())
+                    && tree.getSearchButton() != null) {
                 return tree.getSearchButton().getElement();
             } else if (LocatorParams.TYPE_ITEM.equals(part.getType())) {
                 ListModelData model = null;

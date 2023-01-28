@@ -25,7 +25,7 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 @Presenter(view = ToolBarView.class)
 public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarView, EditorEventBus> {
 
-    private final static Logger logger = Logger.getLogger(ToolBarPresenter.class.getName());
+    private static final Logger logger = Logger.getLogger(ToolBarPresenter.class.getName());
     private ApplicationElement currentApplication;
     private Version currentVersion;
 

@@ -8,6 +8,7 @@
  * by the Geomajas Contributors License Agreement. For full licensing
  * details, see LICENSE.txt in the project root.
  */
+
 package org.geomajas.codemirror.client;
 
 import com.google.common.base.Preconditions;
@@ -79,26 +80,26 @@ public class CodeMirrorWrapper {
     private static native JavaScriptObject fromTextAreaJs(CodeMirrorWrapper wrapper,
                                                           TextAreaElement tae,
                                                           JavaScriptObject config) /*-{
-        var options = {
-                       extraKeys: {
-                                   "Ctrl-Space": function (editor) {
-                                                        $wnd.CodeMirror.showHint(editor, function (editor, callback) {
-                                                        var result = [];
-                                                        var cursor = editor.doc.getCursor();
-                                                        var index = editor.indexFromPos(cursor);
-                                                        $entry(wrapper.@org.geomajas.codemirror.client.CodeMirrorWrapper::getCompletions(Ljava/lang/String;IIILcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(editor.getValue(), cursor.line, cursor.ch, index, result, callback));
-                                                    }, {async: true});
-                                                 }
-                                  }
-                       };
-         for (var property in config) {
-            if (config.hasOwnProperty(property)) {
-                options[property] = config[property];
-            }
-        }
-        var cm = $wnd.CodeMirror.fromTextArea(tae, options);
-        return cm;
-    }-*/;
+var options = {
+               extraKeys: {
+                           "Ctrl-Space": function (editor) {
+                            $wnd.CodeMirror.showHint(editor, function (editor, callback) {
+                                var result = [];
+                                var cursor = editor.doc.getCursor();
+                                var index = editor.indexFromPos(cursor);
+                                $entry(wrapper.@org.geomajas.codemirror.client.CodeMirrorWrapper::getCompletions(Ljava/lang/String;IIILcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(editor.getValue(), cursor.line, cursor.ch, index, result, callback));
+                            }, {async: true});
+                           }
+                          }
+               };
+ for (var property in config) {
+    if (config.hasOwnProperty(property)) {
+        options[property] = config[property];
+    }
+}
+var cm = $wnd.CodeMirror.fromTextArea(tae, options);
+return cm;
+}-*/;
 
     private static native Object callFunction(JavaScriptObject jso, String name) /*-{
         return jso[name].apply(jso);

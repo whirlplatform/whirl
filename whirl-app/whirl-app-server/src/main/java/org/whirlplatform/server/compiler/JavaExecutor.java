@@ -120,8 +120,8 @@ public class JavaExecutor {
                     } else {
                         name = clazz.getName();
                     }
-                    if (i.singleton() && user.hasJavaObject(name) &&
-                            clazz.isInstance(user.loadJavaObject(name))) {
+                    if (i.singleton() && user.hasJavaObject(name)
+                            && clazz.isInstance(user.loadJavaObject(name))) {
                         function = (Function) user.loadJavaObject(name);
                     }
                 }
@@ -277,8 +277,8 @@ public class JavaExecutor {
                 }
             }
         } catch (ClassNotFoundException | ClassCastException | IllegalArgumentException
-                 | IllegalAccessException | SecurityException | InstantiationException |
-                 ConnectException e) {
+                 | IllegalAccessException | SecurityException | InstantiationException
+                 | ConnectException e) {
             _log.error(new ErrorMessage(user, e.getMessage()), e);
             throw new CustomException(e.getMessage());
         } catch (Throwable e) {
@@ -317,6 +317,7 @@ public class JavaExecutor {
             try {
                 return (Class<T>) classLoader.loadClass(fullName);
             } catch (ClassNotFoundException e) {
+                // skipped
             }
         }
 
@@ -339,9 +340,8 @@ public class JavaExecutor {
         if (result.getErrors().length > 0) {
             StringBuilder message = new StringBuilder();
             for (CompilationProblem p : result.getErrors()) {
-                message.append("start: " + p.getStartLine() + " " + p.getStartColumn() + " end: " +
-                        p.getEndLine() + " "
-                        + p.getEndColumn() + " - " + p.getMessage() + "\n");
+                message.append("start: " + p.getStartLine() + " " + p.getStartColumn() + " end: "
+                        + p.getEndLine() + " " + p.getEndColumn() + " - " + p.getMessage() + "\n");
             }
             String msg = message.toString();
             _log.warn("Method compilation problem" + "\n" + msg);

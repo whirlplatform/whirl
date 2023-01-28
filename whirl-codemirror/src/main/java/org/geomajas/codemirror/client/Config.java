@@ -20,7 +20,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  * possible options.
  *
  * @author Kristof Heirwegh
- * @see http://codemirror.net/doc/manual.html
+ * @see <a href="https://codemirror.net/doc/manual.html">...</a>
  * @since 3.1.1
  */
 public class Config {

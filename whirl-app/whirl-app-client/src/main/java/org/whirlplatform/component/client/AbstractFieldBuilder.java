@@ -87,8 +87,8 @@ public abstract class AbstractFieldBuilder extends ComponentBuilder
             setFieldMask(value.getString());
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Cleanable.getCode())) {
-            if (Boolean.TRUE.equals(value.getBoolean()) &&
-                    componentInstance instanceof ValueBaseField<?>) {
+            if (Boolean.TRUE.equals(value.getBoolean())
+                && componentInstance instanceof ValueBaseField<?>) {
                 clearDecorator = new FieldClearDecorator((ValueBaseField<?>) componentInstance,
                         createClearCommand());
                 setClearCrossRightOffset(2);
@@ -280,8 +280,8 @@ public abstract class AbstractFieldBuilder extends ComponentBuilder
     @JsIgnore
     @Override
     public Element getElementByLocator(Locator locator) {
-        if (fitsLocator(locator) && locator.getPart() != null &&
-                LocatorParams.TYPE_CLEAR.equals(locator.getPart().getType())) {
+        if (fitsLocator(locator) && locator.getPart() != null
+            && LocatorParams.TYPE_CLEAR.equals(locator.getPart().getType())) {
             return clearDecorator.getElement();
         }
         return super.getElementByLocator(locator);

@@ -13,7 +13,8 @@ import org.whirlplatform.meta.shared.FileValue;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS, defaultImpl = DataValueImpl.class)
 @JsonSubTypes({@JsonSubTypes.Type(DataValueImpl.class), @JsonSubTypes.Type(RowListValueImpl.class)})
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public interface DataValue extends Serializable, Cloneable {
 
     DataType getType();

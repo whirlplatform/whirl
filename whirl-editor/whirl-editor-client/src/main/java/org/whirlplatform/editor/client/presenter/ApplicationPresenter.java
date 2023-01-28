@@ -30,6 +30,7 @@ public class ApplicationPresenter
     private Version version;
     private TextButton saveButton;
     private TextButton closeButton;
+
     public ApplicationPresenter() {
         super();
     }

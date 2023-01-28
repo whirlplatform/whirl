@@ -130,7 +130,8 @@ public abstract class DateFieldBuilderOverlay {
 
     /**
      * Получить значение обёрточного типа {@link DataValueOverlay DataValue}, хранящегося в билдере.
-     * А из него уже можно получить javascript Date : dataValue.{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()}
+     * А из него уже можно получить javascript Date :
+     * dataValue.{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()}
      */
 ////    public static DataValue getDataValue(DateFieldBuilder instance) {
 //        return instance.getFieldValue();
@@ -139,9 +140,9 @@ public abstract class DateFieldBuilderOverlay {
     /**
      * Установить значение компонента, используя обёрточный тип {@link DataValueOverlay DataValue}
      */
-////    public static void setDataValue(DateFieldBuilder instance, DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static void setDataValue(DateFieldBuilder instance, DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Установить стиль на поле даты
@@ -179,7 +180,7 @@ public abstract class DateFieldBuilderOverlay {
     /**
      * Установить сообщение не валидности поля даты
      *
-     * @param
+     * @param message String
      */
     public abstract void markInvalid(String message);
 

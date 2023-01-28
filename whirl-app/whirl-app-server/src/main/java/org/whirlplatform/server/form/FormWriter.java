@@ -79,8 +79,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
      */
     protected void prepareForm() throws ConnectException, SQLException {
         Sql sql = form.getBeforeSql();
-        if (sql != null && sql.getDataSourceAlias() != null &&
-                !sql.getDataSourceAlias().isEmpty()) {
+        if (sql != null && sql.getDataSourceAlias() != null
+                && !sql.getDataSourceAlias().isEmpty()) {
             try (ConnectionWrapper connection = connectionProvider.getConnection(
                     sql.getDataSourceAlias(), user)) {
 
@@ -123,8 +123,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 } else if (DataType.NUMBER == e.getValue().getType()) {
                     // Чтобы числа записывались в нормальном формате, а не в
                     // 0.#E
-//                    DecimalFormat formatter = new DecimalFormat("#");
-//                    formatter.setMaximumFractionDigits(17);
+                    //DecimalFormat formatter = new DecimalFormat("#");
+                    //formatter.setMaximumFractionDigits(17);
                     try {
                         result.put(e.getKey(), decimalFmt.format(e.getValue().getDouble()));
                     } catch (IllegalArgumentException | NullPointerException ex) {
@@ -220,8 +220,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем
-        if (component.getType() == ComponentType.FormBuilderType ||
-                component.getType() == ComponentType.ReportType) {
+        if (component.getType() == ComponentType.FormBuilderType
+                || component.getType() == ComponentType.ReportType) {
             return;
         }
         for (ComponentModel child : component.getChildren()) {
@@ -231,8 +231,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
     protected String changeParameter(String property, String value, Map<String, String> params) {
         String result = replace(value, params);
-        if (!StringUtils.isEmpty(result) &&
-                PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
+        if (!StringUtils.isEmpty(result)
+                && PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
             for (AbstractTableElement t : user.getApplication().getAvailableTables()) {
                 if (result.trim().equals(t.getCode())) {
                     result = t.getId();
@@ -475,10 +475,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             return;
         }
         Map<String, String> rowValues = new HashMap<String, String>();
-//        Map<String, String> sqlValues = new HashMap<String, String>();
+        //Map<String, String> sqlValues = new HashMap<String, String>();
 
         rowValues.putAll(resultValues);
-//        sqlValues.putAll(resultValues);
+        //sqlValues.putAll(resultValues);
 
         // выводим данные по строкам
         for (Integer i : rows.keySet()) {

@@ -36,6 +36,7 @@ public class GridExportImport {
     private int windowWidth = 400;
     private LoadConfigProvider configProvider;
     private ParameterHelper paramHelper;
+
     public GridExportImport(LoadConfigProvider configProvider,
                             ParameterHelper paramHelper) {
         this.configProvider = configProvider;

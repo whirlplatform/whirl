@@ -427,6 +427,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                 case LOCAL:
                     stateStore = StorageHelper.local();
                     break;
+                default:
+                    throw new IllegalArgumentException("Unsupported scope");
             }
         }
     }
@@ -519,8 +521,8 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                     int index =
                             Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX));
                     found = finder.findByIndex(index);
-                } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL) &&
-                        Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
+                } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
+                        && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     String label = part.getParameter(LocatorParams.PARAMETER_LABEL);
                     found = finder.findByLabel(label);
                 }

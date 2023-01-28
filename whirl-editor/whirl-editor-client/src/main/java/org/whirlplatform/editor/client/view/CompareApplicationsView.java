@@ -37,19 +37,19 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
  */
 public class CompareApplicationsView extends Window implements ICompareApplicationsView {
 
-    private final static String MERGING = EditorMessage.Util.MESSAGE.action_merge_selection();
-    private final static String COMPARING =
+    private static final String MERGING = EditorMessage.Util.MESSAGE.action_merge_selection();
+    private static final String COMPARING =
             EditorMessage.Util.MESSAGE.action_compare_applications();
-    private final static String EXIT_BUTTON = EditorMessage.Util.MESSAGE.exit();
-    private final static String APPLY_BUTTON = EditorMessage.Util.MESSAGE.apply();
-    private final static String APPLY_TITLE = EditorMessage.Util.MESSAGE.compare_apps_apply_title();
-    private final static String APPLY_TEXT = EditorMessage.Util.MESSAGE.compare_apps_apply_text();
-    private final static String MERGE_BUTTON = EditorMessage.Util.MESSAGE.merge();
-    private final static String WINDOW_TITLE = EditorMessage.Util.MESSAGE.compare_apps_title();
-    private final static int WINDOW_WIDTH = 1024;
-    private final static int WINDOW_HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT;
-    private final static int GAP_BETWEEN_TREES = 40;
-    private final static int TREE_WIDTH = (WINDOW_WIDTH - GAP_BETWEEN_TREES) / 2;
+    private static final String EXIT_BUTTON = EditorMessage.Util.MESSAGE.exit();
+    private static final String APPLY_BUTTON = EditorMessage.Util.MESSAGE.apply();
+    private static final String APPLY_TITLE = EditorMessage.Util.MESSAGE.compare_apps_apply_title();
+    private static final String APPLY_TEXT = EditorMessage.Util.MESSAGE.compare_apps_apply_text();
+    private static final String MERGE_BUTTON = EditorMessage.Util.MESSAGE.merge();
+    private static final String WINDOW_TITLE = EditorMessage.Util.MESSAGE.compare_apps_title();
+    private static final int WINDOW_WIDTH = 1024;
+    private static final int WINDOW_HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT;
+    private static final int GAP_BETWEEN_TREES = 40;
+    private static final int TREE_WIDTH = (WINDOW_WIDTH - GAP_BETWEEN_TREES) / 2;
     private final TextButton mergeButton;
     private final TextButton applyButton;
     private CompareApplicationsPresenter presenter;
@@ -198,8 +198,8 @@ public class CompareApplicationsView extends Window implements ICompareApplicati
     }
 
     private void changeMergeButtonState() {
-        if (leftTree.getCheckedSelection().size() > 0 ||
-                rightTree.getCheckedSelection().size() > 0) {
+        if (leftTree.getCheckedSelection().size() > 0
+                || rightTree.getCheckedSelection().size() > 0) {
             mergeButton.setEnabled(true);
         } else {
             mergeButton.setEnabled(false);

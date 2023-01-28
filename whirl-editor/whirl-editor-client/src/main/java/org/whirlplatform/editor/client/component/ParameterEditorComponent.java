@@ -57,6 +57,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
     private Set<ParameterRow> parameters;
     private Map<String, ParameterType> valuesType = new HashMap<String, ParameterType>();
     private ComponentStore store;
+
     public ParameterEditorComponent(ComponentStore store) {
 
         super(new TriggerFieldCell(GWT.<ParameterFieldDefaultAppearance>create(

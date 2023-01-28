@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.gwt.user.client.ui;
 
 import com.google.gwt.core.client.JsArray;
@@ -740,7 +741,9 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
     }
 
     /**
-     * @deprecated Call and override {@link internalClearCell(Element, boolean)} instead.
+     * @deprecated Call and override
+     * {internalClearCell(Element, boolean)}
+     * instead.
      */
     @Deprecated
     protected boolean internalClearCell(com.google.gwt.user.client.Element td,

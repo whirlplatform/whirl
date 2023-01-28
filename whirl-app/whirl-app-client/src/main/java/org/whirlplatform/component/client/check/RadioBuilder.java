@@ -70,8 +70,8 @@ public class RadioBuilder extends AbstractFieldBuilder
             public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
                                        Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
-                if (isReadOnly() &&
-                        !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                if (isReadOnly()
+                        && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;

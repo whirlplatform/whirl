@@ -228,8 +228,9 @@ public class ReportBuilder extends ComponentBuilder implements
         AsyncCallback<Void> callback = new AsyncCallback<Void>() {
 
             public void onSuccess(Void result) {
-                if (rptFormat != null)
+                if (rptFormat != null) {
                     showReport(rptFormat);
+                }
             }
 
             public void onFailure(Throwable ex) {

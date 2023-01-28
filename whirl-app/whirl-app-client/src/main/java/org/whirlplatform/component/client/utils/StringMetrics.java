@@ -17,12 +17,15 @@ public class StringMetrics {
     public static int getWidth(String text, String size, String weight,
                                String family) {
         Element el = DOM.createDiv();
-        if (size != null)
+        if (size != null) {
             el.getStyle().setProperty("fontSize", size);
-        if (weight != null)
+        }
+        if (weight != null) {
             el.getStyle().setProperty("fontWeight", weight);
-        if (family != null)
+        }
+        if (family != null) {
             el.getStyle().setProperty("fontFamily", family);
+        }
         TextMetrics metric = TextMetrics.get();
         metric.bind(el);
         return metric.getWidth(text);
@@ -61,8 +64,9 @@ public class StringMetrics {
 
     public static int getWidth(int lenght, String size) {
         String text = "";
-        for (int i = 1; i <= lenght; i++)
+        for (int i = 1; i <= lenght; i++) {
             text = text + "X";
+        }
         return getWidth(text, size);
     }
 }

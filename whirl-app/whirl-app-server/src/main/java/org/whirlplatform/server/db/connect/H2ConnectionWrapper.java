@@ -18,11 +18,11 @@ public class H2ConnectionWrapper extends ConnectionWrapper {
         return new DBDatabaseDriverH2();
     }
 
-//    @Override
-//    public DataFetcher getDataFetcher(Connector connector) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
+    //    @Override
+    //    public DataFetcher getDataFetcher(Connector connector) {
+    //        // TODO Auto-generated method stub
+    //        return null;
+    //    }
 
     @Override
     public DataSourceDriver getDataSourceDriver() {

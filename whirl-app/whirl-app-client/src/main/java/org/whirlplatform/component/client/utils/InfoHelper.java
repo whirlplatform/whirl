@@ -73,8 +73,8 @@ public class InfoHelper {
             } else {
                 error(dialogId, AppMessage.Util.MESSAGE.alert(), exception.getMessage());
             }
-        } else if (exception instanceof ClientRestException &&
-                ((ClientRestException) exception).getData() != null) {
+        } else if (exception instanceof ClientRestException
+                && ((ClientRestException) exception).getData() != null) {
             ExceptionData rpc = ((ClientRestException) exception).getData();
             // сессиия истекла
             if (rpc.isSessionExpired()) {

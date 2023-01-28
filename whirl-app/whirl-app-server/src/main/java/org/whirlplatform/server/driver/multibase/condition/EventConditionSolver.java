@@ -160,8 +160,8 @@ public class EventConditionSolver extends AbstractConditionSolver {
         for (SQLCondition condition : list) {
             String columnName = columnPrefix + objectName + index;
             String resolvedValue = resolveValue(driver, condition.getValue(), objectName);
-            String q = "(" + resolvedValue + ")" +
-                    driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
+            String q = "(" + resolvedValue + ")"
+                + driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
             subColumns.add(columnName);
             subQueries.add(q);
             result.add(columnName);

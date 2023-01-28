@@ -170,8 +170,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.DisplayValue.getCode())) {
-            if (value != null && !Util.isEmptyString(value.getString()) &&
-                    comboBox.getValue() != null) {
+            if (value != null && !Util.isEmptyString(value.getString())
+                    && comboBox.getValue() != null) {
                 ListModelData model = comboBox.getValue();
                 if (model == null) {
                     model = new ListModelDataImpl();
@@ -538,6 +538,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
                     break;
                 case LOCAL:
                     stateStore = StorageHelper.local();
+                    break;
+                default:
                     break;
             }
         }

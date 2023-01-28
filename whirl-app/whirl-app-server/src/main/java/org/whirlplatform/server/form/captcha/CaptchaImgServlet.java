@@ -47,7 +47,7 @@ public class CaptchaImgServlet extends HttpServlet {
             try {
                 lettersCount = Integer.parseInt(sLettersCount);
             } catch (NumberFormatException nfe) {
-
+                nfe.printStackTrace();
             }
         }
         CaptchaImgGenerator captchaImgGenerator = null;

@@ -165,8 +165,8 @@ public class ApplicationIdHelper {
                 PropertyValue v = c.getProperty(PropertyType.DataSource);
                 if (v != null && v.getValue(v.getDefaultLocale()) != null) {
                     DataValue d = v.getValue(v.getDefaultLocale());
-                    if (d.getType() == DataType.LIST &&
-                            tempTableId.equals(d.getListModelData().getId())) {
+                    if (d.getType() == DataType.LIST
+                            && tempTableId.equals(d.getListModelData().getId())) {
                         d.getListModelData().setId(tableId);
                     }
                 }

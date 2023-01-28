@@ -97,8 +97,9 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
             }
 
             sql = sql.substring(0, sql.length() - 1);
-            if (params.size() != 0)
+            if (params.size() != 0) {
                 sql += ")";
+            }
         }
         sql += " }";
         return sql;

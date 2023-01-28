@@ -123,7 +123,10 @@ public class BorderLayoutDropTarget extends DropTarget {
         surface.getElement().makePositionable(true);
         int surfaceWidth = (2 * rect.getWidth() / 7);
         int surfaceHeight = (2 * rect.getHeight() / 7);
-        int x, y, width, height;
+        int x;
+        int y;
+        int width;
+        int height;
         switch (region) {
             case NORTH:
                 x = rect.getX();

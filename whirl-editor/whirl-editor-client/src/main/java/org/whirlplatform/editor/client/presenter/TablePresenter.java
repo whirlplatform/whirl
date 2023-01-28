@@ -158,8 +158,8 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
             }
         });
         view.setHeaderText(
-                EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - " +
-                        table.getName());
+                EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - "
+                        + table.getName());
         view.setTableTitle(table.getTitle());
         view.setCode(table.getCode());
         view.setEmptyRow(table.isEmptyRow());

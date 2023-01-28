@@ -24,13 +24,13 @@ public class ClassPathTemplateStore implements TemplateStore {
 
     private final Set<String> eventTemplates;
     private Logger _log = LoggerFactory.getLogger(ClassPathTemplateStore.class);
-    private String PACKAGE_EVENTS = "event";
+    private String packageEvents = "event";
     private Reflections reflections;
 
     @Inject
     public ClassPathTemplateStore() {
         reflections =
-                new Reflections(TemplateStore.class.getPackage().getName() + "." + PACKAGE_EVENTS,
+                new Reflections(TemplateStore.class.getPackage().getName() + "." + packageEvents,
                         new ResourcesScanner());
         eventTemplates = reflections.getResources(Pattern.compile(".*\\.wrt"));
     }

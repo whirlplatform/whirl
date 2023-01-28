@@ -200,8 +200,8 @@ public class TreeMenuBuilder extends TreeBuilder
             public boolean hasChildren(ListModelData parent) {
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
-                if (getClassMetadata().getClassId() != null &&
-                        parent.getProperties().containsKey(isLeafColumn)) {
+                if (getClassMetadata().getClassId() != null
+                        && parent.getProperties().containsKey(isLeafColumn)) {
                     return Boolean.valueOf(parent.<Boolean>get(isLeafColumn));
                 } else {
                     HorizontalMenuItemBuilder cb = (HorizontalMenuItemBuilder) findBuilder(parent);
@@ -285,8 +285,8 @@ public class TreeMenuBuilder extends TreeBuilder
                     @Override
                     public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
                         for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
-                            if (event.getSelection().size() > 0 &&
-                                    entry.getValue() == event.getSelection().get(0)) {
+                            if (event.getSelection().size() > 0
+                                    && entry.getValue() == event.getSelection().get(0)) {
                                 entry.getKey().fireEvent(new ClickEvent());
                                 break;
                             }

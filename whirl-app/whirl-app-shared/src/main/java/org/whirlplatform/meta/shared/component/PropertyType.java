@@ -229,9 +229,9 @@ public enum PropertyType implements Serializable {
     //TODO убрать упоминание по типам компонентов, свойства не должны содержать информацию по компонентам
     public static PropertyType parse(String type, ComponentType componentType) {
         for (PropertyType t : PropertyType.values()) {
-            if (t.getCode().equals(type) &&
-                    (t.getComponentTypes() == null ||
-                            t.getComponentTypes().contains(componentType))) {
+            if (t.getCode().equals(type)
+                    && (t.getComponentTypes() == null
+                    || t.getComponentTypes().contains(componentType))) {
                 return t;
             }
         }

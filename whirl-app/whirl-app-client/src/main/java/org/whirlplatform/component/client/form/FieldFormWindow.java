@@ -43,8 +43,8 @@ public class FieldFormWindow extends Window implements LocatorAware {
                 hide();
             }
         });
-        int height = getHeader().getOffsetHeight() + fieldPanel.getOffsetHeight() +
-                getButtonBar().getOffsetHeight();
+        int height = getHeader().getOffsetHeight() + fieldPanel.getOffsetHeight()
+                + getButtonBar().getOffsetHeight();
         int maxHeight = (int) Math.round(RootPanel.get().getOffsetHeight() * MAX_HEIGHT_PERCENT);
         height = (maxHeight < height) ? height : maxHeight;
         setHeight(height);
@@ -137,8 +137,8 @@ public class FieldFormWindow extends Window implements LocatorAware {
     }
 
     private boolean isAcceptable(final Locator locator) {
-        if (locator == null || locator.getPart() == null ||
-                !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
+        if (locator == null || locator.getPart() == null
+                || !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
             return false;
         }
         boolean typeIsOk = locator.typeEquals(LocatorParams.TYPE_FIELD_FORM);

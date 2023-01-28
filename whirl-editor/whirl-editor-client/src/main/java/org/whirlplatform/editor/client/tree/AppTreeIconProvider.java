@@ -13,6 +13,7 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 public class AppTreeIconProvider implements IconProvider<AbstractElement> {
     private AppTreeElementIconVisitContext ctx;
     private AppTreeElementIconSetter visitor;
+
     public AppTreeIconProvider() {
         ctx = new AppTreeElementIconVisitContext();
         visitor = new AppTreeElementIconSetter();

@@ -69,7 +69,15 @@ public class ExceptionData {
         this.allowedApps = allowedApps;
     }
 
-    public enum ExceptionType {SIMPLE, PASSWORDCHANGE, WRONGAPP}
+    public enum ExceptionType {
+        SIMPLE,
+        PASSWORDCHANGE,
+        WRONGAPP
+    }
 
-    public enum ExceptionLevel {ERROR, INFO}
+    public enum ExceptionLevel {
+        ERROR,
+        INFO
+    }
+
 }

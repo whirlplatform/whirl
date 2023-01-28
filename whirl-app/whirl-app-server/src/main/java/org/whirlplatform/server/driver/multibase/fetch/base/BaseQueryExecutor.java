@@ -47,14 +47,14 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
                                 resultSet);
                 if (resultSet.next()) {
                     _log.warn(
-                            "Query should return only 1 row. More than 1 rows returned.\n" + query +
-                                    " params =" + params + '\n' + ", sql: " + sql);
+                        "Query should return only 1 row. More than 1 rows returned.\n" + query
+                            + " params =" + params + '\n' + ", sql: " + sql);
                     throw new CustomException("Query should return 1 row.");
                 }
                 return resultValues;
             }
-            _log.warn("Query should return only 1 row. 0 rows returned.\n" + query + " params =" +
-                    params + '\n' + ", sql: " + sql);
+            _log.warn("Query should return only 1 row. 0 rows returned.\n" + query + " params ="
+                + params + '\n' + ", sql: " + sql);
             throw new CustomException("Query should return 1 row.");
         } catch (Exception e) {
             String err = query + " params =" + params + '\t' + e + ", sql: " + sql;

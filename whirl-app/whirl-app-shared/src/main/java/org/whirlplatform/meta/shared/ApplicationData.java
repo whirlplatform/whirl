@@ -13,7 +13,8 @@ import java.util.Map.Entry;
 /**
  * Данные о текущем приложении
  */
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 @SuppressWarnings("serial")
 public class ApplicationData implements Serializable {
 

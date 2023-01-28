@@ -92,8 +92,8 @@ public class CompareApplicationsPresenter
                     }
                     break;
                 case Merged:
-                    if (currentState == ComparisonState.Compared ||
-                            currentState == ComparisonState.ComparedAfterMerge) {
+                    if (currentState == ComparisonState.Compared
+                            || currentState == ComparisonState.ComparedAfterMerge) {
                         currentState = state;
                         view.loadLeftApplication(leftApp, leftVersion);
                         view.setChanges(appDiff.getChanges());
@@ -149,8 +149,8 @@ public class CompareApplicationsPresenter
     }
 
     public void mergeApplications() {
-        if (currentState != ComparisonState.Compared &&
-                currentState != ComparisonState.ComparedAfterMerge) {
+        if (currentState != ComparisonState.Compared
+                && currentState != ComparisonState.ComparedAfterMerge) {
             return;
         }
         if (appDiff.getChanges().size() == 0) {

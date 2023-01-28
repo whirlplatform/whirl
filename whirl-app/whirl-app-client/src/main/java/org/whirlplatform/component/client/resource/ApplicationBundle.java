@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 
+@SuppressWarnings("checkstyle:all")
 public interface ApplicationBundle extends ClientBundle {
 
     ApplicationBundle INSTANCE = GWT

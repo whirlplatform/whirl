@@ -7,6 +7,7 @@ import org.whirlplatform.server.driver.db.table.TableWhirlUsers;
 
 // org.whirlplatform.server.driver.db.table vs org.whirlplatform.server.driver.db 
 
+@SuppressWarnings("checkstyle:all")
 public class MetadataDatabase extends DBDatabase {
 
     private static final long serialVersionUID = 1L;

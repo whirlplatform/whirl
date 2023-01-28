@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 public class ComponentComboBox extends ComboBox<ComponentElement> {
 
     public ComponentComboBox(ComponentStore store) {
-//        super(store, new ElementLabelProvider<ComponentElement>());
+        //        super(store, new ElementLabelProvider<ComponentElement>());
         super(store, new LabelProvider<ComponentElement>() {
             @Override
             public String getLabel(ComponentElement item) {

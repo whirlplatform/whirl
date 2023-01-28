@@ -109,10 +109,11 @@ public class Getter {
         Double v = value;
         long val1 = Math.round(v * 10);
         long val2 = Math.round(v) * 10;
-        if (val1 != val2)
+        if (val1 != val2) {
             return value.toString();
-        else
+        } else {
             return String.valueOf(v.longValue());
+        }
     }
 
     public static String toDBString(Boolean value) {
@@ -144,10 +145,11 @@ public class Getter {
         Double v = (Double) value;
         long val1 = Math.round(v * 10);
         long val2 = Math.round(v) * 10;
-        if (val1 != val2)
+        if (val1 != val2) {
             return value.toString();
-        else
+        } else {
             return String.valueOf(v.longValue());
+        }
     }
 
     public static boolean safeBoolean(Boolean value) {
@@ -158,8 +160,9 @@ public class Getter {
     }
 
     public static String formatDate(Date value, String format) {
-        if (value == null)
+        if (value == null) {
             return "";
+        }
         DateTimeFormat dateFormat = DateTimeFormat.getFormat(format);
         String date = dateFormat.format(value);
         return date;
@@ -218,6 +221,7 @@ public class Getter {
                         result = result / 100;
                     }
                 } catch (NumberFormatException ex) {
+                    // skipped
                 }
             }
         }

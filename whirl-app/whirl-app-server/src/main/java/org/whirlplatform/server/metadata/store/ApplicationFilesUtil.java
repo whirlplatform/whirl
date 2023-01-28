@@ -193,6 +193,7 @@ public class ApplicationFilesUtil {
             List<FileElement> dataFiles = getApplicationDataFiles(oldAppPath);
             saveApplicationDataFiles(dataFiles, newAppPath);
         } catch (IOException e) {
+            e.printStackTrace();
         }
         saveApplicationFiles(newAppPath, application);
     }
@@ -286,7 +287,7 @@ public class ApplicationFilesUtil {
      *
      * @param appRoot
      * @param category
-     * @return
+     * @return Path
      * @throws IOException
      */
     public static Path createFolderPath(final String appRoot, final FileElementCategory category)
@@ -299,7 +300,7 @@ public class ApplicationFilesUtil {
      *
      * @param appPath
      * @param category
-     * @return
+     * @return Path
      * @throws IOException
      */
     public static Path createFolderPath(final Path appPath, final FileElementCategory category)

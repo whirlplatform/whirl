@@ -18,11 +18,11 @@ public class DerbyConnectionWrapper extends ConnectionWrapper {
         return new DBDatabaseDriverDerby();
     }
 
-//    @Override
-//    public DataFetcher getDataFetcher(Connector connector) {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
+    //    @Override
+    //    public DataFetcher getDataFetcher(Connector connector) {
+    //        // TODO Auto-generated method stub
+    //        return null;
+    //    }
 
     @Override
     public DataSourceDriver getDataSourceDriver() {

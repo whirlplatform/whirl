@@ -71,8 +71,8 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
             public void onBrowserEvent(com.google.gwt.cell.client.Cell.Context context,
                                        Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
-                if (isReadOnly() &&
-                        !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                if (isReadOnly()
+                        && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -149,6 +149,17 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     /**
      * Проверяет, является ли поле валидным.
      *
+     * @return true, для признания поля валидным
+     */
+    @JsIgnore
+    @Override
+    public boolean isValid() {
+        return isValid(false);
+    }
+
+    /**
+     * Проверяет, является ли поле валидным.
+     *
      * @param invalidate true для признания поля валидным
      * @return true если поле валидно
      */
@@ -184,17 +195,6 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     @Override
     public void clearInvalid() {
         checkBox.getErrorSupport().clearInvalid();
-    }
-
-    /**
-     * Проверяет, является ли поле валидным.
-     *
-     * @return true, для признания поля валидным
-     */
-    @JsIgnore
-    @Override
-    public boolean isValid() {
-        return isValid(false);
     }
 
     /**

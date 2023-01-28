@@ -10,13 +10,13 @@ import org.whirlplatform.server.monitor.RunningEvent;
 public class Events implements EventsMBean {
 
     // Синхронизация вообще нужна?
-    final private static Map<String, RunningEvent> dbEvents = Collections
+    private static final Map<String, RunningEvent> dbEvents = Collections
             .synchronizedMap(new HashMap<String, RunningEvent>());
-    final private static Map<String, RunningEvent> javaEvents = Collections
+    private static final Map<String, RunningEvent> javaEvents = Collections
             .synchronizedMap(new HashMap<String, RunningEvent>());
-    final private static Map<String, RunningEvent> formRequests = Collections
+    private static final Map<String, RunningEvent> formRequests = Collections
             .synchronizedMap(new HashMap<String, RunningEvent>());
-    final private static Map<String, RunningEvent> gridRequests = Collections
+    private static final Map<String, RunningEvent> gridRequests = Collections
             .synchronizedMap(new HashMap<String, RunningEvent>());
 
     public static void addEvent(RunningEvent event) {
@@ -33,8 +33,8 @@ public class Events implements EventsMBean {
             case GRIDREQUEST:
                 gridRequests.put(event.getEventGUID(), event);
                 break;
-//        default:
-//            break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
     }
 
@@ -52,8 +52,8 @@ public class Events implements EventsMBean {
             case GRIDREQUEST:
                 gridRequests.remove(event.getEventGUID());
                 break;
-//        default:
-//            break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
     }
 
@@ -122,24 +122,24 @@ public class Events implements EventsMBean {
         return getMethodsByType(RunningEvent.Type.JAVAEVENT);
     }
 
-//    @Override
-//    public void stopActiveJavaMethod(String methodId) {
-//        // TODO Auto-generated method stub
-//
-//    }
+    //    @Override
+    //    public void stopActiveJavaMethod(String methodId) {
+    //        // TODO Auto-generated method stub
+    //
+    //    }
 
     @Override
     public String[] getActiveFormRequests() {
         return getMethodsByType(RunningEvent.Type.FORMREQUEST);
     }
 
-//    @Override
-//    public void stopActiveFormRequest(String requestId) {
-//        RunningEvent re = formRequests.get(requestId);
-//        if (re != null) {
-//            re.onStop();
-//        }
-//    }
+    //    @Override
+    //    public void stopActiveFormRequest(String requestId) {
+    //        RunningEvent re = formRequests.get(requestId);
+    //        if (re != null) {
+    //            re.onStop();
+    //        }
+    //    }
 
     @Override
     public String[] getActiveGridRequests() {

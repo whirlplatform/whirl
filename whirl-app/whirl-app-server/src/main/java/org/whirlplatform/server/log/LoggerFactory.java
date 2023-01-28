@@ -19,6 +19,7 @@ public abstract class LoggerFactory {
         }
         return get().getLogger(clazz.getSimpleName());
     }
+
     public abstract Logger getLogger(String name);
 
 }

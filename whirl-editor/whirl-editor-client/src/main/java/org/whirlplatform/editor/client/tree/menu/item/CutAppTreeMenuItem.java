@@ -13,8 +13,8 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  * Пункт меню дерева приложения - Вырезать
  */
 public class CutAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_cut();
-    private final static ImageResource ICON = ComponentBundle.INSTANCE.cut();
+    private static final String TITLE = EditorMessage.Util.MESSAGE.context_menu_cut();
+    private static final ImageResource ICON = ComponentBundle.INSTANCE.cut();
 
     public CutAppTreeMenuItem() {
         super();

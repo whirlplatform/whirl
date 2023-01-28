@@ -456,6 +456,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 checkedModels.idReady = true;
             }
         } catch (IOException e) {
+            // skipped
         }
     }
 

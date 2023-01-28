@@ -114,5 +114,5 @@ public abstract class CheckGroupBuilderOverlay {
      *
      * @return объект типа {@link RowListValueOverlay RowListValue}
      */
-////    public abstract RowListValue getFieldValue();
+    //    public abstract RowListValue getFieldValue();
 }

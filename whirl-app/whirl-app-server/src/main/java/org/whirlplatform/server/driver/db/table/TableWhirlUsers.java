@@ -4,6 +4,7 @@ import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBTableColumn;
 import org.whirlplatform.server.driver.db.MetadataDatabase;
 
+@SuppressWarnings("checkstyle:all")
 public class TableWhirlUsers extends EmpireDBTable {
 
     private static final long serialVersionUID = 1L;

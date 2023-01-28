@@ -86,6 +86,7 @@ public class FileServlet extends HttpServlet {
                     .getUser(
                             new SessionToken(req.getSession().getId(), tokenId));
         } catch (CustomException e1) {
+            // skipped
         }
 
         String gettype = req.getParameter(AppConstant.GETTYPE);
@@ -213,6 +214,7 @@ public class FileServlet extends HttpServlet {
                 try {
                     resp.getWriter().println("ERROR");
                 } catch (IOException ex) {
+                    // skipped
                 }
             } catch (IOException e) {
                 _log.error(e);

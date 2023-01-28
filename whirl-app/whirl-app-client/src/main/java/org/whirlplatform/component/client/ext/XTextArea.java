@@ -41,10 +41,11 @@ public class XTextArea extends TextArea {
     }
 
     public void setSelectionText(String value) {
-        if (GXT.isIE())
+        if (GXT.isIE()) {
             setSelectionTextIE(getElement(), value);
-        else
+        } else {
             setSelectionText(getElement(), value);
+        }
     }
 
     private native void setSelectionText(Element elem, String strValue)/*-{

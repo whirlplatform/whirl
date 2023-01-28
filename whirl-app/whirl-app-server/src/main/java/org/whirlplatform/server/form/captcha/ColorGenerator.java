@@ -9,8 +9,8 @@ import java.awt.Color;
  */
 public class ColorGenerator {
 
-    private final static int COLOR_DEGREES = 255;
-    private final static int COLOR_GENERATOR_DELTA = 127;
+    private static final int COLOR_DEGREES = 255;
+    private static final int COLOR_GENERATOR_DELTA = 127;
 
     /**
      * This method is used for generating a random color.

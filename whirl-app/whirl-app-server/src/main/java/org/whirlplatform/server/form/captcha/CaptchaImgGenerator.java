@@ -172,8 +172,8 @@ public class CaptchaImgGenerator {
 
         int dX = x2 - x1;
         int dY = y2 - y1;
-        int xPoints[] = new int[4];
-        int yPoints[] = new int[4];
+        int[] xPoints = new int[4];
+        int[] yPoints = new int[4];
         int thickness = 2;
 
         double lineLength = Math.sqrt(dX * dX + dY * dY);

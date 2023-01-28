@@ -62,8 +62,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
 
         String viewName =
-                table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName()) ?
-                        table.getView().getViewName() :
+                table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName())
+                        ? table.getView().getViewName() :
                         table.getTableName();
 
         this.dbTable = new DBTable(viewName, this.dbDatabase, "t");
@@ -133,8 +133,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             DBColumnExpr col;
 
             // TODO: add functionality for file column
-            if (filter.getMetadata().getType() ==
-                    org.whirlplatform.meta.shared.data.DataType.FILE) {
+            if (filter.getMetadata().getType()
+                    == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 col = this.dbTable.getColumn(filter.getMetadata().getLabelExpression());
             } else {
                 col = this.dbTable.getColumn(filter.getMetadata().getName());
@@ -183,6 +183,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                 case REVERSE:
                     expr = createReverse(col, firstValue);
                     break;
+                default:
+                    throw new IllegalArgumentException("Unsupported type");
             }
             if (expr != null) {
                 this.where.add(expr);
@@ -225,8 +227,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         RightCollectionElement rightCollection = getUser().getApplication().getTableRights(table);
         // Добавление ограничений по правам приложения
         for (RightElement right : rightCollection.getApplicationRights()) {
-            if (RightType.RESTRICT == right.getType() &&
-                    right.getCondition() instanceof SQLCondition) {
+            if (RightType.RESTRICT == right.getType()
+                    && right.getCondition() instanceof SQLCondition) {
                 String value = (String) right.getCondition().getValue();
                 if (value != null && !value.isEmpty()) {
                     String resolvedValue =
@@ -242,8 +244,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         for (String groupName : getUser().getGroups()) {
             GroupElement group = getApplication().getGroup(groupName);
             for (RightElement right : rightCollection.getGroupRights(group)) {
-                if (RightType.RESTRICT == right.getType() &&
-                        right.getCondition() instanceof SQLCondition) {
+                if (RightType.RESTRICT == right.getType()
+                        && right.getCondition() instanceof SQLCondition) {
                     String value = (String) right.getCondition().getValue();
                     if (value != null && !value.isEmpty()) {
                         String resolvedValue =

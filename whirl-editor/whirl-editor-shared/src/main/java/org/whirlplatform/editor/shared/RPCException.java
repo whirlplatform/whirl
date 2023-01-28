@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class RPCException extends Exception implements Serializable, IsSerializable {
 
-    public final static String errType = "err";
-    public final static String infoType = "info";
+    public static final String errType = "err";
+    public static final String infoType = "info";
     /**
      *
      */
@@ -35,23 +35,26 @@ public class RPCException extends Exception implements Serializable, IsSerializa
     }
 
     public static String getMsg(String msg) {
-        if (msg == null)
+        if (msg == null) {
             return "";
+        }
         String message = new String(msg);
         if (message != null && message.contains("ORA")) {
             int start = message.indexOf("ORA-", 0);
             int stop = message.indexOf("ORA-", start + 1);
-            if (start != -1 & stop != -1)
+            if (start != -1 & stop != -1) {
                 message = message.substring(start + 10, stop);
+            }
         }
         return message;
     }
 
     private void getErrorType(String msg) {
-        if (msg != null && msg.contains("ORA-209"))
+        if (msg != null && msg.contains("ORA-209")) {
             type = infoType;
-        else
+        } else {
             type = errType;
+        }
     }
 
     public String getType() {

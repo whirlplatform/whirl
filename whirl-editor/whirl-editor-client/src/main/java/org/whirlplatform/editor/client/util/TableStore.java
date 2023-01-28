@@ -89,8 +89,8 @@ public class TableStore extends ListStore<AbstractTableElement> {
                                     boolean isTable = false;
                                     if (element instanceof PlainTableElement) {
                                         isTable = (((PlainTableElement) element)
-                                                .getTableName() != null &&
-                                                ((PlainTableElement) element)
+                                                .getTableName() != null
+                                                && ((PlainTableElement) element)
                                                         .getTableName().toLowerCase()
                                                         .contains(query));
                                     }

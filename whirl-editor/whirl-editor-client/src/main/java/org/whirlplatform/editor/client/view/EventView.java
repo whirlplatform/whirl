@@ -342,6 +342,8 @@ public class EventView extends ContentPanel implements IEventView {
                 source.showEditor(Config.forSql());
                 sourceLabel.setVisible(true);
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
         container.forceLayout();
     }

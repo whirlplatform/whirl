@@ -36,17 +36,23 @@ public class ContainerHelper {
         DataValue sizeData = builderProperties.get(PropertyType.LayoutDataSize.getCode());
         if (sizeData != null) {
             Double size = sizeData.getDouble();
-            if (size != null) data.setSize(size);
+            if (size != null) {
+                data.setSize(size);
+            }
         }
         DataValue collData = builderProperties.get(PropertyType.LayoutDataCollapsible.getCode());
         if (collData != null) {
             Boolean collaps = collData.getBoolean();
-            if (collaps != null) data.setCollapsible(collaps);
+            if (collaps != null) {
+                data.setCollapsible(collaps);
+            }
         }
         DataValue splitData = builderProperties.get(PropertyType.LayoutDataSplit.getCode());
         if (splitData != null) {
             Boolean split = splitData.getBoolean();
-            if (split != null) data.setSplit(split);
+            if (split != null) {
+                data.setSplit(split);
+            }
         }
 
         data.setMinSize(LAYOUT_DATA_MIN_SIZE);
@@ -131,19 +137,24 @@ public class ContainerHelper {
         DataValue minSizeData = properties.get(PropertyType.LayoutDataMinSize);
         if (minSizeData != null) {
             Double msval = minSizeData.getDouble();
-            if (msval != null) data.setMinSize(msval.intValue());
+            if (msval != null) {
+                data.setMinSize(msval.intValue());
+            }
         }
         DataValue maxSizeData = properties.get(PropertyType.LayoutDataMaxSize);
         if (maxSizeData != null) {
             Double msval = maxSizeData.getDouble();
-            if (msval != null) data.setMaxSize(msval.intValue());
+            if (msval != null) {
+                data.setMaxSize(msval.intValue());
+            }
         }
         DataValue flexData = properties.get(PropertyType.LayoutDataFlex);
         if (flexData != null) {
             Double flval = flexData.getDouble();
-            if (flval != null) data.setFlex(flval.intValue());
+            if (flval != null) {
+                data.setFlex(flval.intValue());
+            }
         }
-
         data.setMargins(getMargins(properties));
         return data;
     }
@@ -153,7 +164,9 @@ public class ContainerHelper {
         DataValue widthData = properties.get("LayoutData:Width");
         if (widthData != null) {
             Double width = widthData.getDouble();
-            if (width != null) component.setWidth(width);
+            if (width != null) {
+                component.setWidth(width);
+            }
         }
     }
 
@@ -162,7 +175,9 @@ public class ContainerHelper {
         DataValue heightData = properties.get("LayoutData:Height");
         if (heightData != null) {
             Double height = heightData.getDouble();
-            if (height != null) component.setHeight(height);
+            if (height != null) {
+                component.setHeight(height);
+            }
         }
     }
 

@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package org.whirlplatform.editor.server.db.retrive;
 
 import java.sql.Connection;
@@ -87,8 +88,9 @@ public class DBDatabaseRetriver {
         this.dbMeta = con.getMetaData();
         String[] tablePatterns = {null}; // Could be null, so start that
         // way.
-        if (config.getDbTablePattern() != null)
+        if (config.getDbTablePattern() != null) {
             tablePatterns = config.getDbTablePattern().split(","); // Support
+        }
         // a
         // comma
         // separated
@@ -128,8 +130,8 @@ public class DBDatabaseRetriver {
             info += "/ schema=" + config.getDbSchema();
             info += "/ pattern=" + config.getDbTablePattern();
             log.warn(
-                    "DatabaseMetaData.getTables() returned no tables or views! Please check parameters: " +
-                            info);
+                    "DatabaseMetaData.getTables() returned no tables or views! Please check parameters: "
+                        + info);
             log.info("Available catalogs: " + getCatalogs(dbMeta));
             log.info("Available schemata: " + getSchemata(dbMeta));
         }
@@ -176,9 +178,17 @@ public class DBDatabaseRetriver {
     private void gatherRelations(DBDatabase db, DatabaseMetaData dbMeta, ArrayList<String> tables)
             throws SQLException {
         ResultSet relations = null;
-        String fkTableName, pkTableName, fkColName, pkColName, relName;
-        DBTableColumn fkCol, pkCol;
-        DBTable fkTable, pkTable;
+
+        String fkTableName;
+        String pkTableName;
+        String fkColName;
+        String pkColName;
+        String relName;
+
+        DBTableColumn fkCol;
+        DBTableColumn pkCol;
+        DBTable fkTable;
+        DBTable pkTable;
         DBColumn col;
 
         // Add all Relations
@@ -197,31 +207,34 @@ public class DBDatabaseRetriver {
 
                 // Detect relation name
                 relName = relations.getString("FK_NAME");
-                if (relName == null || relName.isEmpty())
+                if (relName == null || relName.isEmpty()) {
                     relName = fkTableName + "." + fkColName + "-" + pkTableName + "." + pkColName;
+                }
 
                 pkTable = db.getTable(pkTableName);
                 fkTable = db.getTable(fkTableName);
 
                 // check if both tables really exist in the model
                 if (pkTable == null || fkTable == null) {
-                    log.error("Unable to add the relation \"" + relName +
-                            "\"! One of the tables could not be found.");
+                    log.error("Unable to add the relation \"" + relName
+                        + "\"! One of the tables could not be found.");
                     continue;
                 }
 
                 col = pkTable.getColumn(pkColName);
-                if (col instanceof DBTableColumn)
+                if (col instanceof DBTableColumn) {
                     pkCol = (DBTableColumn) col;
+                }
 
                 col = fkTable.getColumn(fkColName);
-                if (col instanceof DBTableColumn)
+                if (col instanceof DBTableColumn) {
                     fkCol = (DBTableColumn) col;
+                }
 
                 // check if both columns really exist in the model
                 if (fkCol == null || pkCol == null) {
-                    log.error("Unable to add the relation \"" + relName +
-                            "\"! One of the columns could not be found.");
+                    log.error("Unable to add the relation \"" + relName
+                            + "\"! One of the columns could not be found.");
                     continue;
                 }
 
@@ -233,8 +246,9 @@ public class DBDatabaseRetriver {
                     DBRelation.DBReference[] refsOld = r.getReferences();
                     refs = new DBRelation.DBReference[refsOld.length + 1];
                     int i = 0;
-                    for (; i < refsOld.length; i++)
+                    for (; i < refsOld.length; i++) {
                         refs[i] = refsOld[i];
+                    }
                     refs[i] = reference;
                     // remove old relation
                     db.getRelations().remove(r);
@@ -255,8 +269,9 @@ public class DBDatabaseRetriver {
         while (rs.next()) {
             retVal += rs.getString("TABLE_CAT") + ", ";
         }
-        if (retVal.length() > 2)
+        if (retVal.length() > 2) {
             retVal = retVal.substring(0, retVal.length() - 2);
+        }
 
         return retVal;
     }
@@ -268,8 +283,9 @@ public class DBDatabaseRetriver {
         while (rs.next()) {
             retVal += rs.getString("TABLE_SCHEM") + ", ";
         }
-        if (retVal.length() > 2)
+        if (retVal.length() > 2) {
             retVal = retVal.substring(0, retVal.length() - 2);
+        }
         return retVal;
     }
 
@@ -291,18 +307,21 @@ public class DBDatabaseRetriver {
             while (rs.next()) {
                 DBTableColumn c = addColumn(t, rs);
                 // check if it is a KeyColumn
-                if (pkCols.contains(c.getName()))
+                if (pkCols.contains(c.getName())) {
                     keys[i++] = c;
+                }
 
                 // check if it is the Timestamp/Locking Column
-                if (lockColName != null && c.getName().equalsIgnoreCase(lockColName))
+                if (lockColName != null && c.getName().equalsIgnoreCase(lockColName)) {
                     t.setTimestampColumn(c);
+                }
             }
             // Check whether all key columns have been set
-            for (i = 0; i < keys.length; i++)
+            for (i = 0; i < keys.length; i++) {
                 if (keys[i] == null) {
                     throw new ItemNotFoundException(pkCols.get(i));
                 }
+            }
             if (keys.length > 0) {
                 t.setPrimaryKey(keys);
             }
@@ -361,8 +380,9 @@ public class DBDatabaseRetriver {
                 + (rs.getInt("DECIMAL_DIGITS") < 0 ? 0 : rs.getInt("DECIMAL_DIGITS")));
         boolean required = false;
         String defaultValue = rs.getString("COLUMN_DEF");
-        if (rs.getString("IS_NULLABLE").equalsIgnoreCase("NO"))
+        if (rs.getString("IS_NULLABLE").equalsIgnoreCase("NO")) {
             required = true;
+        }
 
         // The following is a hack for MySQL which currently gets sent a string
         // "CURRENT_TIMESTAMP" from the Empire-db driver for MySQL.
@@ -373,8 +393,8 @@ public class DBDatabaseRetriver {
         // In this case, MySQL "CURRENT_TIMESTAMP" for Types.TIMESTAMP needs to
         // emit from the Empire-db driver the null value and not
         // "CURRENT_TIMESTAMP".
-        if (rs.getInt("DATA_TYPE") == Types.TIMESTAMP && defaultValue != null &&
-                defaultValue.equals("CURRENT_TIMESTAMP")) {
+        if (rs.getInt("DATA_TYPE") == Types.TIMESTAMP && defaultValue != null
+                && defaultValue.equals("CURRENT_TIMESTAMP")) {
             required = false; // It is in fact not required even though MySQL
             // schema is required because it has a default
             // value. Generally, should Empire-db emit
@@ -397,12 +417,10 @@ public class DBDatabaseRetriver {
             // MySQL matches on IS_AUTOINCREMENT column.
             // SQL Server matches on TYPE_NAME column with identity somewhere in
             // the string value.
-            if ((colName.equalsIgnoreCase("IS_AUTOINCREMENT") &&
-                    rs.getString(i).equalsIgnoreCase("YES"))
-                    ||
-                    (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*"))) {
+            if ((colName.equalsIgnoreCase("IS_AUTOINCREMENT")
+                    && rs.getString(i).equalsIgnoreCase("YES"))
+                    || (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*"))) {
                 empireType = DataType.AUTOINC;
-
             }
         }
 
@@ -416,8 +434,9 @@ public class DBDatabaseRetriver {
         // because the Record g/setters need to know this, right?
         // So, let's add it as meta data every time the column is AUTOINC
         // and reference it in the template.
-        if (empireType.equals(DataType.AUTOINC))
+        if (empireType.equals(DataType.AUTOINC)) {
             col.setAttribute("AutoIncDataType", originalType);
+        }
         return col;
 
     }
@@ -495,7 +514,7 @@ public class DBDatabaseRetriver {
     }
 
     public static class InMemoryView extends DBView {
-        private final static long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
         public InMemoryView(String name, DBDatabase db) {
             super(name, db);

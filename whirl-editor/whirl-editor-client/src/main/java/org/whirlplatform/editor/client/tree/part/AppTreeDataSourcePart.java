@@ -82,8 +82,8 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
 
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
-        if (parent == handledElement && element instanceof SchemaElement &&
-                handledElement.getSchemas().contains(element)) {
+        if (parent == handledElement && element instanceof SchemaElement
+                && handledElement.getSchemas().contains(element)) {
             removeElement(element);
             addChildElement(folders.schemas, element);
             putTreePart(element,

@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
 
+@SuppressWarnings("checkstyle:typename")
 public class DataValueImpl_CustomFieldSerializer extends CustomFieldSerializer<DataValueImpl> {
 
     // с сервера получаем время со смещением

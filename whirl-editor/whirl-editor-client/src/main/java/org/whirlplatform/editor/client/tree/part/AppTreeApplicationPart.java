@@ -93,9 +93,8 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
 
     @Override
     public boolean isAdding(AbstractElement element) {
-        return element == folders.events || element == folders.datasources ||
-                element == folders.references
-                || isComponentAddable(element);
+        return element == folders.events || element == folders.datasources
+            || element == folders.references || isComponentAddable(element);
     }
 
     @Override
@@ -118,20 +117,19 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
 
     @Override
     public boolean hasRights(AbstractElement element) {
-        return element == folders.components || element == folders.freeComponents ||
-                element == folders.events
-                || element == folders.datasources;
+        return element == folders.components || element == folders.freeComponents
+            || element == folders.events || element == folders.datasources;
     }
 
     @Override
     public boolean isDeleting(AbstractElement element) {
         return element == handledElement.getRootComponent()
-                || (element instanceof ComponentElement &&
-                handledElement.getFreeComponents().contains(element))
-                || (element instanceof EventElement &&
-                handledElement.getFreeEvents().contains(element))
-                || (element instanceof DataSourceElement &&
-                handledElement.getDataSources().contains(element));
+                || (element instanceof ComponentElement
+                && handledElement.getFreeComponents().contains(element))
+                || (element instanceof EventElement
+                && handledElement.getFreeEvents().contains(element))
+                || (element instanceof DataSourceElement
+                && handledElement.getDataSources().contains(element));
     }
 
     @Override
@@ -194,8 +192,8 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
                     new AppTreeComponentPart(appTree, treePresenter, (ComponentElement) element));
             return true;
         } else if ((parent == handledElement || parent instanceof NullFreeComponentElement)
-                && (element instanceof ComponentElement &&
-                handledElement.getFreeComponents().contains(element))) {
+                && (element instanceof ComponentElement
+                && handledElement.getFreeComponents().contains(element))) {
             removeElement(element);
             addChildElement(folders.freeComponents, element);
             putTreePart(element,
@@ -243,18 +241,18 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
         if (handledElement.getRootComponent() == element) {
             treePresenter.riseRemoveElement(new NullRootComponentElement(), element, true);
             return true;
-        } else if (element instanceof ComponentElement &&
-                handledElement.getFreeComponents().contains(element)) {
+        } else if (element instanceof ComponentElement
+            && handledElement.getFreeComponents().contains(element)) {
             treePresenter.riseRemoveElement(new NullFreeComponentElement(), element, true);
             return true;
-        } else if ((element instanceof EventElement &&
-                handledElement.getFreeEvents().contains(element))
-                || (element instanceof DataSourceElement &&
-                handledElement.getDataSources().contains(element))) {
+        } else if ((element instanceof EventElement
+            && handledElement.getFreeEvents().contains(element))
+            || (element instanceof DataSourceElement
+            && handledElement.getDataSources().contains(element))) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
-        } else if (element instanceof ApplicationElement &&
-                handledElement.getReferences().contains(element)) {
+        } else if (element instanceof ApplicationElement
+            && handledElement.getReferences().contains(element)) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -264,18 +262,18 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     @Override
     public boolean doRemoveElementUI(AbstractElement parent, AbstractElement element) {
         /* компонент */
-        if ((element instanceof ComponentElement &&
-                (appTree.hasChild(folders.components, element, false)
-                        || appTree.hasChild(folders.freeComponents, element, false)))
+        if ((element instanceof ComponentElement
+                && (appTree.hasChild(folders.components, element, false)
+                || appTree.hasChild(folders.freeComponents, element, false)))
                 /* событие */
-                || (element instanceof EventElement &&
-                appTree.hasChild(folders.events, element, false))
+                || (element instanceof EventElement
+                && appTree.hasChild(folders.events, element, false))
                 /* источник данных */
-                || (element instanceof DataSourceElement &&
-                appTree.hasChild(folders.datasources, element, false))
+                || (element instanceof DataSourceElement
+                && appTree.hasChild(folders.datasources, element, false))
                 /* зависимости */
-                || (element instanceof ApplicationElement &&
-                appTree.hasChild(folders.references, element, false))) {
+                || (element instanceof ApplicationElement
+                && appTree.hasChild(folders.references, element, false))) {
             removeElement(element);
             return true;
         }
@@ -337,10 +335,12 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
                 && (dropTarget == folders.freeComponents || dropTarget == folders.components)) {
             return true;
         } else if (dropTarget instanceof ReportElement
-                && (ComponentType.FormBuilderType.equals(dropData) ||
-                dropData instanceof FormElement)) {
+                && (ComponentType.FormBuilderType.equals(dropData)
+                || dropData instanceof FormElement)) {
             return true;
-        } else return dropData instanceof EventElement && dropTarget == folders.events;
+        } else {
+            return dropData instanceof EventElement && dropTarget == folders.events;
+        }
     }
 
     @Override
@@ -359,8 +359,8 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
         } else if (dropTarget == folders.components && dropData instanceof ComponentElement) {
             treePresenter.riseAddElement(new NullRootComponentElement(),
                     (ComponentElement) dropData);
-        } else if (dropTarget instanceof ReportElement &&
-                ComponentType.FormBuilderType.equals(dropData)) {
+        } else if (dropTarget instanceof ReportElement
+            && ComponentType.FormBuilderType.equals(dropData)) {
             treePresenter.riseAddElement(dropTarget,
                     new NewComponentElement((ComponentType) dropData));
             return true;
@@ -382,10 +382,10 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     private boolean isComponentAddable(AbstractElement element) {
         if (element instanceof ComponentElement) {
             ComponentType type = ((ComponentElement) element).getType();
-            return type.equals(ComponentType.HorizontalMenuType) ||
-                    type.equals(ComponentType.ButtonType)
-                    || type.equals(ComponentType.HorizontalMenuItemType) ||
-                    type.equals(ComponentType.TreeMenuType);
+            return type.equals(ComponentType.HorizontalMenuType)
+                || type.equals(ComponentType.ButtonType)
+                || type.equals(ComponentType.HorizontalMenuItemType)
+                || type.equals(ComponentType.TreeMenuType);
         }
         return false;
     }

@@ -385,8 +385,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                         }
 
                     };
-        } else if (builder instanceof HorizontalContainerBuilder ||
-                builder instanceof HBoxContainerBuilder) {
+        } else if (builder instanceof HorizontalContainerBuilder
+                || builder instanceof HBoxContainerBuilder) {
             HorizontalLayoutDropTarget target = new HorizontalLayoutDropTarget(
                     (InsertResizeContainer) builder.getComponent()) {
                 protected void onDragDrop(DndDropEvent event) {
@@ -397,8 +397,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
             };
             target.setFeedback(Feedback.BOTH);
-        } else if (builder instanceof VerticalContainerBuilder ||
-                builder instanceof VBoxContainerBuilder) {
+        } else if (builder instanceof VerticalContainerBuilder
+                || builder instanceof VBoxContainerBuilder) {
             VerticalLayoutDropTarget target = new VerticalLayoutDropTarget(
                     (InsertResizeContainer) builder.getComponent()) {
                 protected void onDragDrop(DndDropEvent event) {
@@ -608,8 +608,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // границе, rectangle.contains
             // вернет false
 
-            if (rectangle.contains(p1) && rectangle.contains(p2) &&
-                    rootElement.getChildren().contains(e)) {
+            if (rectangle.contains(p1) && rectangle.contains(p2)
+                    && rootElement.getChildren().contains(e)) {
                 selectedElements.add(e);
                 setBuilderSelected(el, true);
             }
@@ -742,14 +742,15 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     currentApplication.getDefaultLocale());
             setLocationData(parentElement, element, locationData);
         }
-        if (element.getType() == ComponentType.TabItemType &&
-                parentElement.getType() != ComponentType.TabPanelType) {
+        if (element.getType() == ComponentType.TabItemType
+                && parentElement.getType() != ComponentType.TabPanelType) {
             return;
         }
         if (element.getType() == ComponentType.HorizontalMenuItemType) {
             if (parentElement.getType() == ComponentType.HorizontalMenuType
                     || parentElement.getType() == ComponentType.TreeMenuType
                     || parentElement.getType() == ComponentType.HorizontalMenuItemType) {
+                // skipped
             } else {
                 return;
             }
@@ -869,11 +870,11 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
             // }
             // }
 
-            if (rowsValue != null &&
-                    rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
-                            null && colsValue != null
-                    && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
-                    null) {
+            if (rowsValue != null
+                    && rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger()
+                        != null && colsValue != null
+                    && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger()
+                        != null) {
                 int rows = rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                 int cols = colsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                 for (int i = 0; i < rows; i++) {
@@ -892,9 +893,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     ((FormBuilder) builder).setRowHeight(m.getRow(), height);
                 }
             } else {
-                if (rowsValue != null &&
-                        rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
-                                null) {
+                if (rowsValue != null
+                        && rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger()
+                            != null) {
                     int rows =
                             rowsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                     double height = 1.0 / rows;
@@ -916,9 +917,9 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
                     ((FormBuilder) builder).setColumnWidth(m.getColumn(), width);
                 }
             } else {
-                if (colsValue != null &&
-                        colsValue.getValue(currentApplication.getDefaultLocale()).getInteger() !=
-                                null) {
+                if (colsValue != null
+                        && colsValue.getValue(currentApplication.getDefaultLocale()).getInteger()
+                        != null) {
                     int cols =
                             colsValue.getValue(currentApplication.getDefaultLocale()).getInteger();
                     double width = 1.0 / cols;
@@ -994,9 +995,12 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 //                metadata.setInsertable(true);
 //                metadata.setUpdatable(true);
 //                metadata.setDeletable(true);
-//                List<DataType> types = Arrays.asList(DataType.STRING, DataType.BOOLEAN, DataType.DATE, DataType.NUMBER);
+//                List<DataType> types =
+//                  Arrays.asList(DataType.STRING, DataType.BOOLEAN, DataType.DATE, DataType.NUMBER);
 //                for (int i = 0; i < 15; i++) {
-//                    FieldMetadata field = new FieldMetadata("COLUMN_" + i, types.get(com.google.gwt.user.client.Random.nextInt(types.size())),
+//                    FieldMetadata field =
+//                      new FieldMetadata("COLUMN_" + i,
+//                          types.get(com.google.gwt.user.client.Random.nextInt(types.size())),
 //                            "Column " + i);
 //                    field.setWidth(150);
 //                    field.setView(true);
@@ -1077,7 +1081,7 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
 
     public void onRemoveElementUI(AbstractElement parent, AbstractElement element) {
         if (element instanceof ComponentElement) {
-
+            // skipped
         }
         if (!(element instanceof ComponentElement) || rootElement == null
                 || EditorHelper.hasNestedElement(rootElement, (ComponentElement) element)) {
@@ -1092,8 +1096,8 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     private void selectGroupCell() {
         FlexTable table = getFormTable(rootBuilder.getComponent());
         for (CellRangeElement model : selectedCells) {
-            if (model.getTop() >= table.getRowCount() ||
-                    model.getLeft() >= table.getCellCount(model.getTop())) {
+            if (model.getTop() >= table.getRowCount()
+                    || model.getLeft() >= table.getCellCount(model.getTop())) {
                 continue;
             }
             Element el = table.getFlexCellFormatter().getElement(model.getTop(), model.getLeft());

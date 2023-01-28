@@ -53,7 +53,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
         StringBuilder html = new StringBuilder();
 
         html.append(
-                "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" height=\"100%\" id=\"login-page\">");
+                "<table cellspacing=\"0\" "
+                    + "cellpadding=\"0\" border=\"0\" "
+                    + "width=\"100%\" height=\"100%\" id=\"login-page\">");
         html.append("<tbody>");
         html.append("<tr class=\"xs-header\">");
         Element elHeader = DOM.getElementById("login-header-template");

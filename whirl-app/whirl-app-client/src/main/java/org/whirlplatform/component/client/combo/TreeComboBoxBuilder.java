@@ -314,8 +314,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
             private void renderContains(SafeHtmlBuilder builder, String object) {
                 String q = comboBox.getText();
-                if (isQuery() && !(!Util.isEmptyString(object) &&
-                        object.toLowerCase().contains(q.toLowerCase()))) {
+                if (isQuery() && !(!Util.isEmptyString(object)
+                        && object.toLowerCase().contains(q.toLowerCase()))) {
                     builder.append(
                             SafeHtmlUtils.fromTrustedString(
                                     "<span style=\"color: darkgray;\">" + object + "</span>"));

@@ -173,8 +173,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             @Override
             public void onSelect(SelectEvent event) {
                 page--;
-                if (page < 1)
+                if (page < 1) {
                     page = 1;
+                }
                 ((TextButton) event.getSource()).focus();
                 changePage();
             }
@@ -186,8 +187,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             @Override
             public void onSelect(SelectEvent event) {
                 page -= PAGING_COUNT;
-                if (page < 1)
+                if (page < 1) {
                     page = 1;
+                }
                 ((TextButton) event.getSource()).focus();
                 changePage();
             }
@@ -216,8 +218,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             @Override
             public void onSelect(SelectEvent event) {
                 page += PAGING_COUNT;
-                if (page > pageCount)
+                if (page > pageCount) {
                     page = pageCount;
+                }
 
                 ((TextButton) event.getSource()).focus();
                 changePage();
@@ -231,8 +234,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             @Override
             public void onSelect(SelectEvent event) {
                 page++;
-                if (page > pageCount)
+                if (page > pageCount) {
                     page = pageCount;
+                }
                 ((TextButton) event.getSource()).focus();
                 changePage();
             }
@@ -390,8 +394,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             int statusLen = statusWidth / CHAR_PIXELS;
 
             if (statusLen < text.length()) {
-                if (statusLen <= 0)
+                if (statusLen <= 0) {
                     statusLen = text.length() / 3;
+                }
 
                 text = text.substring(0, statusLen) + "...";
             }
@@ -459,8 +464,9 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
     public void recalcParams() {
         if (rows != 0) {
             pageCount = rowCount / rows;
-            if (pageCount < ((float) rowCount / (float) rows))
+            if (pageCount < ((float) rowCount / (float) rows)) {
                 pageCount++;
+            }
 
             // Если внешним фильтром поменяли кол-во записей,
             // и номер текущей страницы оказался больше чем номер последней,
@@ -759,8 +765,8 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
                 TriggerFieldDefaultAppearance defApp = (TriggerFieldDefaultAppearance) appearance;
                 return selector.getElement().selectNode("." + defApp.getStyle().trigger());
             }
-        } else if (LocatorParams.TYPE_ITEM.equals(cpecificPart.getType()) &&
-                selector.isExpanded()) {
+        } else if (LocatorParams.TYPE_ITEM.equals(cpecificPart.getType())
+                && selector.isExpanded()) {
             String indexParam = cpecificPart.getParameter(LocatorParams.PARAM_INDEX);
             if (!Util.isEmptyString(indexParam)) {
                 int index = Integer.valueOf(indexParam);

@@ -73,8 +73,8 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
         RootPanel.get().add(searchField);
         searchField.getElement().makePositionable(true);
         searchField.setPosition(getAbsoluteLeft(), getAbsoluteTop());
-        searchField.setWidth(XTree.this.getElement().getWidth(false) - 25 -
-                searchButton.getElement().getOffsetWidth());
+        searchField.setWidth(XTree.this.getElement().getWidth(false)
+            - 25 - searchButton.getElement().getOffsetWidth());
         searchField.focus();
     }
 
@@ -266,8 +266,9 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
             // эти элементы.
             private void clearPartials() {
                 if (!partialMarkedElements.isEmpty()) {
-                    for (M marked : partialMarkedElements)
+                    for (M marked : partialMarkedElements) {
                         setChecked(marked, CheckState.UNCHECKED);
+                    }
                     partialMarkedElements.clear();
                 }
             }
@@ -275,8 +276,9 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
             // Снять CHECK со всех помеченных на дереве элементов.
             private void clearChecked() {
                 if (!getCheckedSelection().isEmpty()) {
-                    for (M item : getCheckedSelection())
+                    for (M item : getCheckedSelection()) {
                         setChecked(item, CheckState.UNCHECKED);
+                    }
                 }
             }
 

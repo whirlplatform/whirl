@@ -110,12 +110,13 @@ public class XMLApplicationImporter {
         try {
             metaversion = Integer.parseInt(appEl.attributeValue("metaversion"));
         } catch (NumberFormatException e) {
+            // skipped
         }
 
         if (MetadataSerializer.CURRENT_VERSION != metaversion) {
             throw new DocumentException(
-                    "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: " +
-                            metaversion);
+                    "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: "
+                        + metaversion);
         }
 
         application = new ApplicationElement();

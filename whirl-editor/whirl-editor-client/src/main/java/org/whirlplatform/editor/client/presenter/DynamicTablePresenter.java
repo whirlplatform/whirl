@@ -45,29 +45,29 @@ public class DynamicTablePresenter
 
                 // Собираем текст ошибки (если есть)
                 if (getMetadataFunction == null || getMetadataFunction.isEmpty()) {
-                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_empty_metadata() +
-                            "<br/>";
+                    errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_empty_metadata()
+                        + "<br/>";
                 }
                 if (getDataFunction == null || getDataFunction.isEmpty()) {
                     errorText +=
                             EditorMessage.Util.MESSAGE.error_dynamic_table_empty_data() + "<br/>";
                 }
                 if (getDataFunction != null && !getDataFunction.isEmpty()
-                        && (!getDataFunction.contains(":data_config") ||
-                        !getDataFunction.contains(":data_count"))) {
+                        && (!getDataFunction.contains(":data_config")
+                        || !getDataFunction.contains(":data_count"))) {
                     errorText +=
                             EditorMessage.Util.MESSAGE.error_dynamic_table_get_data() + "<br/>";
                 }
-                if (insertFunction != null && !insertFunction.isEmpty() &&
-                        !insertFunction.contains(":insert_config")) {
+                if (insertFunction != null && !insertFunction.isEmpty()
+                        && !insertFunction.contains(":insert_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_insert() + "<br/>";
                 }
-                if (updateFunction != null && !updateFunction.isEmpty() &&
-                        !updateFunction.contains(":update_config")) {
+                if (updateFunction != null && !updateFunction.isEmpty()
+                        && !updateFunction.contains(":update_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_update() + "<br/>";
                 }
-                if (deleteFunction != null && !deleteFunction.isEmpty() &&
-                        !deleteFunction.contains(":delete_config")) {
+                if (deleteFunction != null && !deleteFunction.isEmpty()
+                        && !deleteFunction.contains(":delete_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_delete() + "<br/>";
                 }
 

@@ -262,7 +262,7 @@ public class FilterPanel extends VerticalLayoutContainer
                     TriggerFieldDefaultAppearance defApp =
                             (TriggerFieldDefaultAppearance) appearance;
                     return comboBox.getElement()
-                            .selectNode("." + defApp.getStyle().trigger());// TODO
+                            .selectNode("." + defApp.getStyle().trigger()); // TODO
                 }
             } else if (LocatorParams.ITEM.equals(comboPart.getType()) && comboBox.isExpanded()) {
                 String indexParam = comboPart.getParameter(LocatorParams.INDEX);
@@ -300,7 +300,7 @@ public class FilterPanel extends VerticalLayoutContainer
                     TriggerFieldDefaultAppearance defApp =
                             (TriggerFieldDefaultAppearance) appearance;
                     return dateField.getElement()
-                            .selectNode("." + defApp.getStyle().trigger());// TODO
+                            .selectNode("." + defApp.getStyle().trigger()); // TODO
                 }
             } else if (LocatorParams.ITEM.equals(dateFieldPart.getType())) {
                 // TODO Реализовать получение элементов DatePicker - a.
@@ -346,8 +346,8 @@ public class FilterPanel extends VerticalLayoutContainer
         }
         String res = null;
         if (builder.length() > 0) {
-            res = AppMessage.Util.MESSAGE.filter_filter() + " :" +
-                    builder.substring(0, builder.length() - 1);
+            res = AppMessage.Util.MESSAGE.filter_filter() + " :"
+                    + builder.substring(0, builder.length() - 1);
         }
         return res;
     }
@@ -397,8 +397,9 @@ public class FilterPanel extends VerticalLayoutContainer
         Locator filterPart = null;
         for (FilterSet set : fields.values()) {
             filterPart = set.getLocatorByElement(element);
-            if (filterPart != null)
+            if (filterPart != null) {
                 return filterPart;
+            }
         }
         return filterPart;
     }
@@ -415,8 +416,9 @@ public class FilterPanel extends VerticalLayoutContainer
         boolean res = false;
         for (FilterSet set : fields.values()) {
             res = set.isComboBoxItemElement(element);
-            if (res)
+            if (res) {
                 break;
+            }
         }
         return res;
     }
@@ -567,8 +569,8 @@ public class FilterPanel extends VerticalLayoutContainer
 
         @SuppressWarnings({"unchecked"})
         public void setCondition(FilterType value) {
-            if (DataType.DATE == type || DataType.FILE == type || DataType.NUMBER == type ||
-                    DataType.STRING == type) {
+            if (DataType.DATE == type || DataType.FILE == type || DataType.NUMBER == type
+                    || DataType.STRING == type) {
                 ComboBox<FilterType> combo = (ComboBox<FilterType>) condition;
                 combo.setValue(value);
             } else {
@@ -789,8 +791,9 @@ public class FilterPanel extends VerticalLayoutContainer
         public Locator getLocatorByElement(Element element) {
             boolean isChild = false;
             boolean isComboItem = false;
-            if (label.getElement().isOrHasChild(element))
+            if (label.getElement().isOrHasChild(element)) {
                 return createFilterLocator(label, element, true, false);
+            }
             List<Widget> existingWidgets = new ArrayList<>();
             existingWidgets.add(condition);
             existingWidgets.add(firstValue);
@@ -811,11 +814,13 @@ public class FilterPanel extends VerticalLayoutContainer
                                             boolean isCombo) {
             Locator filterPart = new Locator(LocatorParams.TYPE_FILTER);
             String mdId = fieldData.getId();
-            if (!Util.isEmptyString(mdId))
+            if (!Util.isEmptyString(mdId)) {
                 filterPart.setParameter(LocatorParams.META_DATA_ID, mdId);
+            }
             String mdName = fieldData.getName();
-            if (!Util.isEmptyString(mdName))
+            if (!Util.isEmptyString(mdName)) {
                 filterPart.setParameter(LocatorParams.META_DATA_NAME, mdName);
+            }
             Locator widgetPart = null;
             if (label == widget) {
                 widgetPart = new Locator(LocatorParams.TYPE_LABEL);
@@ -925,18 +930,21 @@ public class FilterPanel extends VerticalLayoutContainer
             boolean isItem = false;
             if (condition != null) {
                 isItem = isComboBoxItemEl(condition, element);
-                if (isItem)
+                if (isItem) {
                     return isItem;
+                }
             }
             if (firstValue != null) {
                 isItem = isComboBoxItemEl(firstValue, element);
-                if (isItem)
+                if (isItem) {
                     return isItem;
+                }
             }
             if (secondValue != null) {
                 isItem = isComboBoxItemEl(secondValue, element);
-                if (isItem)
+                if (isItem) {
                     return isItem;
+                }
             }
             return isItem;
         }
@@ -973,8 +981,8 @@ public class FilterPanel extends VerticalLayoutContainer
         private Element getFilterElement(Locator locator) {
             if (LocatorParams.TYPE_LABEL.equals(locator.getType()) && label != null) {
                 return label.getElement();
-            } else if (LocatorParams.TYPE_CONDITION.equals(locator.getType()) &&
-                    condition != null) {
+            } else if (LocatorParams.TYPE_CONDITION.equals(locator.getType())
+                    && condition != null) {
                 Locator condPart = locator.getPart();
                 if (condPart != null) {
                     return getSpecificElement(condPart, condition);

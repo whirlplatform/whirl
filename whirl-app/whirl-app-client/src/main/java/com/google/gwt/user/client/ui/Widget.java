@@ -13,6 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package com.google.gwt.user.client.ui;
 
 import com.google.gwt.dom.client.Element;
@@ -215,6 +216,8 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
                     return;
                 }
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported 'event'");
         }
         DomEvent.fireNativeEvent(event, this, this.getElement());
     }

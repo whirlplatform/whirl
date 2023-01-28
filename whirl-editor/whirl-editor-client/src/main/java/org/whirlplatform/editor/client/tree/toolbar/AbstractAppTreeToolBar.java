@@ -133,8 +133,8 @@ public abstract class AbstractAppTreeToolBar<T extends AppTree> extends ToolBar 
     }
 
     private String getAppCode() {
-        return (appTree != null && appTree.getApplication() != null) ?
-                appTree.getApplication().getCode() : "";
+        return (appTree != null && appTree.getApplication() != null)
+            ? appTree.getApplication().getCode() : "";
     }
 
     private String getAppVersion() {

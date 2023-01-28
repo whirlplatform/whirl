@@ -12,8 +12,8 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
  * Пункт меню дерева приложения - Добавить
  */
 public class AddAppTreeMenuItem extends AbstractAppTreeMenuItem<AppTree> {
-    private final static String TITLE = EditorMessage.Util.MESSAGE.context_menu_add();
-    private final static ImageResource ICON = ComponentBundle.INSTANCE.plus();
+    private static final String TITLE = EditorMessage.Util.MESSAGE.context_menu_add();
+    private static final ImageResource ICON = ComponentBundle.INSTANCE.plus();
 
     public AddAppTreeMenuItem() {
         super();

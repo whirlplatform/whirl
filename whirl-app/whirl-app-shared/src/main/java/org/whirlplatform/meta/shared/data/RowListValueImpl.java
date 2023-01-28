@@ -69,7 +69,9 @@ public class RowListValueImpl extends DataValueImpl implements RowListValue {
         RowListValueImpl other = (RowListValueImpl) obj;
         if (rowList == null) {
             return other.rowList == null;
-        } else return rowList.equals(other.rowList);
+        } else {
+            return rowList.equals(other.rowList);
+        }
     }
 
     @Override

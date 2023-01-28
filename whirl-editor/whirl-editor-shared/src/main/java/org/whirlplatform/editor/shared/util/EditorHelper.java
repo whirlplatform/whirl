@@ -158,6 +158,8 @@ public class EditorHelper {
             case TreeComboBoxType:
                 setProperty(comp, defaultLocale, PropertyType.MinChars, 2);
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
         setProperty(comp, defaultLocale, PropertyType.Enabled, true);
 

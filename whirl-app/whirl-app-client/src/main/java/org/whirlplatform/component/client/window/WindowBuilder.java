@@ -388,8 +388,9 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     @Override
     public Locator getLocatorByElement(Element element) {
         String s = "WindowBuilder__getLocatorByElement(Element element)";
-        if (s != null)
+        if (s != null) {
             s = "";
+        }
 
         Locator locator = super.getLocatorByElement(element);
         if (locator == null) {

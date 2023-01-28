@@ -3,6 +3,7 @@
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
+
 package org.whirlplatform.component.client.window;
 
 import com.google.gwt.dom.client.Element;
@@ -44,8 +45,8 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
 
         int offset = window.getHeader().getOffsetHeight();
 
-        if (((left + VARIANCE + width) > containerWidth) ||
-                ((top + VARIANCE + height) > containerHeight)) {
+        if (((left + VARIANCE + width) > containerWidth)
+                || ((top + VARIANCE + height) > containerHeight)) {
             left = MINIMUM;
             top = MINIMUM;
         }

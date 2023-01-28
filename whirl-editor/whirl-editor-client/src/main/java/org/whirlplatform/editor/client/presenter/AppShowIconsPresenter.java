@@ -16,14 +16,15 @@ import org.whirlplatform.editor.shared.EditorDataService;
 public class AppShowIconsPresenter
         extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
 
-    private IAppShowIconsView IconsView;
+    private IAppShowIconsView iconsView;
     private ListStore<String> store;
     private RpcProxy<Void, List<String>> proxy;
+
     public AppShowIconsPresenter() {
     }
 
     public AppShowIconsPresenter(IAppShowIconsView iconsView) {
-        this.IconsView = iconsView;
+        this.iconsView = iconsView;
         this.store = new ListStore<>(String::toString);
         this.proxy = new RpcProxy<Void, List<String>>() {
             @Override

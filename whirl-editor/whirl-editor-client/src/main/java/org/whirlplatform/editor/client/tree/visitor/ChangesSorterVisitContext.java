@@ -138,16 +138,16 @@ public class ChangesSorterVisitContext implements VisitContext {
         System.out.println(sb.toString());
     }
 
-//    private void parentWarning(final AbstractElement element) {
-//        StringBuilder sb = new StringBuilder("*** Warning! *** Parent was not located for ");
-//        sb.append(element.getClass().getSimpleName());
-//        System.out.println(sb.toString());
-//    }
+    //    private void parentWarning(final AbstractElement element) {
+    //        StringBuilder sb = new StringBuilder("*** Warning! *** Parent was not located for ");
+    //        sb.append(element.getClass().getSimpleName());
+    //        System.out.println(sb.toString());
+    //    }
 
     public <E extends AbstractElement> String getParentId(final E element) {
         final String id = element.getId();
         if (!parents.containsKey(id)) {
-//            parentWarning(element);
+        //parentWarning(element);
             return null;
         }
         return parents.get(id);

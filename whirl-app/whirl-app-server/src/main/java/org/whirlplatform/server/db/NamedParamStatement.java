@@ -27,10 +27,11 @@ public class NamedParamStatement extends NamedParamResolver {
 
     public void setObject(String name, Object value) throws SQLException {
         List<Integer> indList = paramMap.get(name.toUpperCase());
-        if (indList != null)
+        if (indList != null) {
             for (Integer i : indList) {
                 stmt.setObject(i, value);
             }
+        }
     }
 
     public void setString(String name, String value) throws SQLException {
@@ -44,10 +45,11 @@ public class NamedParamStatement extends NamedParamResolver {
 
     public void setInt(String name, Integer value) throws SQLException {
         List<Integer> indList = paramMap.get(name.toUpperCase());
-        if (indList != null)
+        if (indList != null) {
             for (Integer i : indList) {
                 stmt.setInt(i, value);
             }
+        }
     }
 
 }

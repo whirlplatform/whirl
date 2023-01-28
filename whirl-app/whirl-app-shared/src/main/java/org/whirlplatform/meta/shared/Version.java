@@ -35,7 +35,9 @@ import java.util.List;
  * @author Simon Taddiken
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public final class Version implements Comparable<Version>, Serializable {
 
     /**
@@ -454,10 +456,10 @@ public final class Version implements Comparable<Version>, Serializable {
                         throw unexpectedChar(new String(stream), c);
                     }
                     break;
-
+                default:
+                    throw new IllegalArgumentException("Unsupported 'scope'");
             }
         }
-
         throw new IllegalStateException();
     }
 
@@ -658,7 +660,11 @@ public final class Version implements Comparable<Version>, Serializable {
                                boolean withBuildMetaData) {
         int result = 0;
         if (v1 != v2) {
-            final int mc, mm, mp, pr, md;
+            final int mc;
+            final int mm;
+            final int mp;
+            final int pr;
+            final int md;
             if ((mc = compareInt(v1.major, v2.major)) != 0) {
                 result = mc;
             } else if ((mm = compareInt(v1.minor, v2.minor)) != 0) {
@@ -1100,7 +1106,7 @@ public final class Version implements Comparable<Version>, Serializable {
                 this.preReleaseParts, newParts);
     }
 
-    private String[] verifyAndCopyArray(String parts[], boolean allowLeading0) {
+    private String[] verifyAndCopyArray(String[] parts, boolean allowLeading0) {
         final String[] result = new String[parts.length];
         final StringBuilder b = new StringBuilder();
         for (int i = 0; i < parts.length; ++i) {

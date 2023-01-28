@@ -32,6 +32,7 @@ public class DataSourceStore extends ListStore<DataSourceElement> {
             };
     private DataProxy<String, List<DataSourceElement>> proxy;
     private Loader<String, List<DataSourceElement>> loader;
+
     public DataSourceStore(
             ApplicationDataProvider provider) {
         super(new ElementKeyProvider<DataSourceElement>());

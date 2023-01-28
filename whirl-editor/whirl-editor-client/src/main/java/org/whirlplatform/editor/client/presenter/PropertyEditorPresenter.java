@@ -25,6 +25,7 @@ public class PropertyEditorPresenter
 
     private ApplicationElement application;
     private ComponentElement currentElement;
+
     public PropertyEditorPresenter() {
         super();
     }

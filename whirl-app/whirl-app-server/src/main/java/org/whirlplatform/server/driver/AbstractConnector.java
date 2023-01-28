@@ -169,10 +169,9 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
-//
-//    public String encrypt(String value, ApplicationUser user) {
-//        return user.getEncryptor().encrypt(value);
-//    }
+    //    public String encrypt(String value, ApplicationUser user) {
+    //        return user.getEncryptor().encrypt(value);
+    //    }
 
     @Override
     public AbstractTableElement findTableElement(String tableId, ApplicationUser user) {

@@ -12,7 +12,12 @@ import java.util.ListIterator;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    creatorVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public class LoadData<T extends RowModelData> {
 
     private PageConfig page = new PageConfig();

@@ -84,9 +84,9 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
         container.add(labelCode,
                 new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
         guest = new CheckBox();
-//        labelUrl = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
-//        container.add(labelUrl,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //labelUrl = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
+        //container.add(labelUrl,
+        //new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
         fieldTitle = new PropertyValueField();
         labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
@@ -157,8 +157,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 
         }, EditorMessage.Util.MESSAGE.application_css());
-//        container.add(cssLabel,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //container.add(cssLabel,
+        //new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     private void initJavaFields() {
@@ -181,8 +181,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 
         }, EditorMessage.Util.MESSAGE.application_java());
-//        container.add(javaLabel,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //container.add(javaLabel,
+        //new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     private void initImgFields() {
@@ -205,8 +205,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 
         }, EditorMessage.Util.MESSAGE.application_images());
-//        container.add(imageLabel,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //container.add(imageLabel,
+        //new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     private void initStaticFields() {
@@ -229,8 +229,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 
         }, EditorMessage.Util.MESSAGE.application_static());
-//        container.add(staticLabel,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //container.add(staticLabel,
+        //new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     @Override

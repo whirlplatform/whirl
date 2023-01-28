@@ -143,7 +143,8 @@ package org.whirlplatform.component.client.selenium;
 //            int counter = 0;
 //            for(int i = 0; i < parent.getChildCount(); i ++    ){
 //                Node child = parent.getChild(i);
-//    //            System.out.println("element tagname: " + element.getTagName()+", child tagname" + ((Element)child).getTagName());
+//    //            System.out.println("element tagname: " + element.getTagName()+", child tagname"
+//    + ((Element)child).getTagName());
 //                if(element.getTagName().equalsIgnoreCase(((Element)child).getTagName())){
 //                    counter ++;
 //                }

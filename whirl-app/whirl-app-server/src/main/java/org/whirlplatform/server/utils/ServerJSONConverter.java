@@ -33,7 +33,9 @@ public class ServerJSONConverter {
         } catch (JsonParseException e) {
             System.out.println(e);
         } catch (JsonMappingException e) {
+            // skipped
         } catch (IOException e) {
+            // skipped
         }
         return null;
     }

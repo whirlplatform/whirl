@@ -56,8 +56,8 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
 
     @Override
     public boolean isAdding(AbstractElement element) {
-        return !isReference() && element == folders.clones &&
-                handledElement instanceof PlainTableElement;
+        return !isReference() && element == folders.clones
+            && handledElement instanceof PlainTableElement;
     }
 
     @Override
@@ -74,22 +74,22 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isEditing(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement &&
-                handledElement.getClones().contains(element)));
+                || (element instanceof PlainTableElement
+                && handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean isDeleting(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement &&
-                handledElement.getClones().contains(element)));
+                || (element instanceof PlainTableElement
+                && handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean hasRights(AbstractElement element) {
         return element == handledElement
-                || (element instanceof PlainTableElement &&
-                handledElement.getClones().contains(element));
+                || (element instanceof PlainTableElement
+                && handledElement.getClones().contains(element));
     }
 
     @Override
@@ -172,8 +172,8 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isReference(AbstractElement element) {
         return isReference()
-                && (handledElement == element || (element instanceof PlainTableElement &&
-                handledElement.getClones().contains(element)));
+                && (handledElement == element || (element instanceof PlainTableElement
+                && handledElement.getClones().contains(element)));
     }
 
     class TableFolders {

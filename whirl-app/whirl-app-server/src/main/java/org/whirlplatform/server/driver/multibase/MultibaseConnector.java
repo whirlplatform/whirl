@@ -640,7 +640,8 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     private EventResult executeDB(EventMetadata event, List<DataValue> params, ApplicationUser user,
-                                  BiFunction<ConnectionWrapper, Entry<EventElement, List<DataValue>>, EventResult> func) {
+                                  BiFunction<ConnectionWrapper, Entry<EventElement, List<DataValue>>,
+                                      EventResult> func) {
         EventElement eventElement = user.getApplication().findEventElementById(event.getId());
         if (eventElement != null) {
             List<DataValue> splittedParameters = splitParameters(params);

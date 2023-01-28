@@ -28,8 +28,8 @@ public class DesignerHelper {
     static void setConstantComponentStyles(ComponentElement element, ComponentBuilder builder) {
         // Куда-то вынести из этого класса?
         // Окаймление пустых контейнеров и радио/чек группы
-        if ((element.getType().isContainer() ||
-                ComponentType.RadioGroupType.equals(element.getType())
+        if ((element.getType().isContainer()
+                || ComponentType.RadioGroupType.equals(element.getType())
                 || ComponentType.CheckGroupType.equals(element.getType()))
                 && !ComponentType.TabPanelType.equals(element.getType())) {
             // TabPanel странно себя ведет при установке setWidth <= 0

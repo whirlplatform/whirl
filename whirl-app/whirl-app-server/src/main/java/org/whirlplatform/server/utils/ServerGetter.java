@@ -27,8 +27,9 @@ public class ServerGetter {
     }
 
     public static String formatDate(Date value, String format) {
-        if (value == null || format == null)
+        if (value == null || format == null) {
             return "";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         String formattedDate = sdf.format(value);
         return formattedDate;

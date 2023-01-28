@@ -4,11 +4,12 @@ import java.util.UUID;
 
 public abstract class RunningEvent {
 
-    final private String eventGUID;
+    private final String eventGUID;
     private Type type;
     private String sql;
     private String userLogin;
     private String code;
+
     public RunningEvent(Type type, String code, String sql, String userLogin) {
         this.type = type;
         this.code = code;
@@ -39,5 +40,10 @@ public abstract class RunningEvent {
 
     public abstract void onStop();
 
-    public enum Type {DBEVENT, JAVAEVENT, FORMREQUEST, GRIDREQUEST}
+    public enum Type {
+        DBEVENT,
+        JAVAEVENT,
+        FORMREQUEST,
+        GRIDREQUEST
+    }
 }

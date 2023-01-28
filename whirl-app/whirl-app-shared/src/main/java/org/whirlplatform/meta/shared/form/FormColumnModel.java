@@ -9,7 +9,11 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "genId")
-@JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE)
 public class FormColumnModel implements Serializable, IsSerializable, Cloneable {
 
     private int col;
@@ -49,12 +53,15 @@ public class FormColumnModel implements Serializable, IsSerializable, Cloneable 
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         FormColumnModel other = (FormColumnModel) obj;
         return col == other.col;
     }

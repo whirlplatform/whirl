@@ -12,8 +12,8 @@ public class TreeElementNamesComparator implements Comparator<AbstractElement> {
 
     @Override
     public int compare(AbstractElement first, AbstractElement second) {
-        if ((first instanceof ComponentElement && second instanceof ComponentElement) ||
-                (first instanceof AbstractTableElement && second instanceof AbstractTableElement)) {
+        if ((first instanceof ComponentElement && second instanceof ComponentElement)
+            || (first instanceof AbstractTableElement && second instanceof AbstractTableElement)) {
             return first.getName().compareTo(second.getName());
         } else {
             return 0;

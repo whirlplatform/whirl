@@ -317,9 +317,9 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         }
         Set<MetadataModifiedHandler> handlers = modifiedHandlers.get(code, notNullVersion);
         if (handlers == null) {
-            final String NO_HANDLERS =
+            final String noHandlers =
                     "WatchService: Not found handlers for the application %s[%s]";
-            _log.warn(String.format(NO_HANDLERS, code, notNullVersion));
+            _log.warn(String.format(noHandlers, code, notNullVersion));
             return;
         }
         String context = event.context().toString();
@@ -478,8 +478,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         Path applicationPath;
         try {
             applicationPath = resolveApplicationPath(appCode, null);
-            if (applicationPath == null || Files.notExists(applicationPath) ||
-                    !Files.isDirectory(applicationPath)) {
+            if (applicationPath == null || Files.notExists(applicationPath)
+                    || !Files.isDirectory(applicationPath)) {
                 return null;
             }
             Version result = Version.parseVersion(applicationPath.getFileName().toString());

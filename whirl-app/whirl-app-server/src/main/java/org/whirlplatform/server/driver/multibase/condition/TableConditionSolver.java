@@ -116,6 +116,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 // case RESTRICT:
                 // sqlRestrictConditions.add(condition);
                 // break;
+                default:
+                    throw new IllegalArgumentException("Unsupported type");
             }
         } else if (currentColumn && nowColumn != null) {
             switch (currentType) {
@@ -125,6 +127,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 case VIEW:
                     sqlColumnViewConditions.put(nowColumn, condition);
                     break;
+                default:
+                    throw new IllegalArgumentException("Unsupported type");
             }
         }
     }
@@ -395,8 +399,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
     }
 
     private void checkSqlConditions() throws SQLException {
-        if (sqlInsertConditions.isEmpty() && sqlUpdateConditions.isEmpty() &&
-                sqlDeleteConditions.isEmpty()
+        if (sqlInsertConditions.isEmpty() && sqlUpdateConditions.isEmpty()
+                && sqlDeleteConditions.isEmpty()
                 && sqlColumnViewConditions.isEmpty() && sqlColumnEditConditions.isEmpty()) {
             return;
         }
@@ -491,8 +495,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
         for (SQLCondition condition : list) {
             String columnName = columnPrefix + objectName + index;
             String resolvedValue = resolveValue(driver, condition.getValue(), objectName, column);
-            String q = "(" + resolvedValue + ")" +
-                    driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
+            String q = "(" + resolvedValue + ")"
+                    + driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
             subColumns.add(columnName);
             subQueries.add(q);
             result.add(columnName);

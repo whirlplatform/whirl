@@ -142,7 +142,7 @@ public interface ComponentBundle extends ClientBundle {
     ImageResource hBoxContainer();
 
     @Source("vboxcontainer.png")
-    ImageResource vBoxContainer();
+    ImageResource vBoxContainer();//
 
     @Source("field-set.png")
     ImageResource fieldSet();

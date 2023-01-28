@@ -867,17 +867,22 @@ public class GridLayoutContainer extends ResizeContainer {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Cell other = (Cell) obj;
-            if (!getOuterType().equals(other.getOuterType()))
+            if (!getOuterType().equals(other.getOuterType())) {
                 return false;
-            if (column != other.column)
+            }
+            if (column != other.column) {
                 return false;
+            }
             return row == other.row;
         }
 

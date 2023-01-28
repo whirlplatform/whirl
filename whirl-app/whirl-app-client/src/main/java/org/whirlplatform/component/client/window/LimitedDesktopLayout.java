@@ -3,6 +3,7 @@
  * <p>
  * http://www.sencha.com/products/gxt/license/
  */
+
 package org.whirlplatform.component.client.window;
 
 import com.google.gwt.dom.client.Element;
@@ -40,6 +41,8 @@ public abstract class LimitedDesktopLayout {
             case OPEN:
                 layoutWindow(requestWindow, containerWidth, containerHeight, width, height);
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported type");
         }
 
     }

@@ -31,7 +31,10 @@ import org.whirlplatform.server.utils.TypesUtil;
 
 public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
         implements DataChanger<PlainTableElement> {
+
     private static Logger _log = LoggerFactory.getLogger(AbstractPlainDataChanger.class);
+
+    protected abstract String getNextId();
 
     public AbstractPlainDataChanger(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
@@ -217,6 +220,4 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
             database.executeDelete(dbTable, cmd, getConnection());
         }
     }
-
-    abstract protected String getNextId();
 }
