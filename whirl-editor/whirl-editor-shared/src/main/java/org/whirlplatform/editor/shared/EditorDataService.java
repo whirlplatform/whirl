@@ -3,7 +3,6 @@ package org.whirlplatform.editor.shared;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;
@@ -12,7 +11,6 @@ import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.ClientUser;
 import org.whirlplatform.meta.shared.Version;
-import org.whirlplatform.meta.shared.component.TipPropertyType;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
@@ -70,7 +68,6 @@ public interface EditorDataService extends RemoteService {
 
     List<String> getIcons() throws RPCException;
 
-    List<TipPropertyType> readDocFile() throws IOException;
     class Util {
         private static EditorDataServiceAsync dataService;
 
