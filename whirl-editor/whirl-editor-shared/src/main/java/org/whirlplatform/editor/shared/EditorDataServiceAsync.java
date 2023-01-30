@@ -70,6 +70,4 @@ public interface EditorDataServiceAsync {
 
     void getIcons(AsyncCallback<List<String>> callback);
 
-    void readDocFile(AsyncCallback<List<TipPropertyType>> callback);
-
 }
