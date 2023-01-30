@@ -62,7 +62,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
                 database);
 
             liquibase.update(null, new LabelExpression());
-            liquibase.rollback(1, scriptPath);
+            //liquibase.rollback(1, scriptPath);
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
