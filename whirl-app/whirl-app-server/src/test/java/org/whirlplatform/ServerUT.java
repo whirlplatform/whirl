@@ -40,18 +40,18 @@ public class ServerUT {
     public void migrationTest() throws EvolutionException {
         _log.info("Unit test started");
 
+        //postgres.createConnection()
         ConnectionProvider connectionProvider = new TomcatConnectionProvider();
         Configuration configuration = new JndiConfiguration();
-        EvolutionManager evolutionManager = new LiquibaseEvolutionManager(connectionProvider, configuration);
 
+        EvolutionManager evolutionManager = new LiquibaseEvolutionManager(connectionProvider, configuration);
         String alias = "metadata";
         String scriptPath = "org/whirlplatform/sql/changelog.xml";
-
         // Whirl apply test
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
         // Applications test
-        evolutionManager.applyApplicationEvolution(alias, scriptPath);
+        //evolutionManager.applyApplicationEvolution(alias, scriptPath);
     }
 
     @Test

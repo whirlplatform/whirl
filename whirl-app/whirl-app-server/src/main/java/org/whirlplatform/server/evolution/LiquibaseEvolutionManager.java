@@ -2,6 +2,7 @@ package org.whirlplatform.server.evolution;
 
 import java.sql.SQLException;
 import javax.inject.Inject;
+import javax.xml.stream.events.Namespace;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -41,6 +42,8 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     @Override
     public void applyMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
         applyEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
+        // прямо тут можно запускать rollback
+        //rollbackMetadataEvolution(alias, scriptPath);
     }
 
     private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
@@ -59,6 +62,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
                 database);
 
             liquibase.update(null, new LabelExpression());
+            liquibase.rollback(1, scriptPath);
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
@@ -91,7 +95,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
                 database);
 
             //liquibase.update(null, new LabelExpression());
-            liquibase.rollback((String) null, String.valueOf(new LabelExpression()));
+            liquibase.rollback(1, scriptPath);
             //liquibase.rollback();
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
