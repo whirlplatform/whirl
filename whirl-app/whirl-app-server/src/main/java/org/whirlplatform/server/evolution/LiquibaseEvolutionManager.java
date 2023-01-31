@@ -22,7 +22,6 @@ import org.whirlplatform.server.log.LoggerFactory;
 public class LiquibaseEvolutionManager implements EvolutionManager {
 
     private static Logger _log = LoggerFactory.getLogger(LiquibaseEvolutionManager.class);
-
     private ConnectionProvider connectionProvider;
     private Configuration configuration;
 
