@@ -1,2 +1,1 @@
-## **Background color**
 Цвет фона
