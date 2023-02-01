@@ -42,7 +42,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     public void applyMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
         applyEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
         // прямо тут можно запускать rollback
-        //rollbackMetadataEvolution(alias, scriptPath);
+        rollbackMetadataEvolution(alias, scriptPath);
     }
 
     private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
@@ -61,14 +61,12 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
                 database);
 
             liquibase.update(null, new LabelExpression());
-            //liquibase.rollback(1, scriptPath);
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
         }
     }
 
-    /* Rollback functionality */
     @Override
     public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
         rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
@@ -93,9 +91,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
             Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
                 database);
 
-            //liquibase.update(null, new LabelExpression());
-            liquibase.rollback(1, scriptPath);
-            //liquibase.rollback();
+            liquibase.rollback(2000, scriptPath);
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
