@@ -9,27 +9,27 @@ import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 public class HelpDecorator {
     private HelpDecorator() {
     }
+
     public static void pinTips(Widget target, String type) {
-        String propertyType = "api/"+type+".html";
+        String propertyType = "api/" + type + ".html";
         ToolTipConfig tipConfig = new ToolTipConfig();
 
         ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
             @Override
             public SafeHtml renderToolTip(Object data) {
                 StringBuilder html = new StringBuilder();
-
-                String width = "\"100%\"";
-                String height = "\"100%\"";
-                String style = "border:3px solid black;";
-
-                html.append("<iframe src=").append(propertyType)
-                    .append(" width=").append(width)
-                    .append(" height=").append(height)
-                    .append("style=").append(style)
-                    .append(" seamless")
-                    .append(" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"")
-                    .append(" frameborder=\"0\" scrolling=\"no\"")
-                    .append(" align=\"absmiddle\"")
+                String style = "<style type=\"text/css\">" +
+                    " iframe {" +
+                    " width: 100%;" +
+                    " height: 65px;" +
+                    " border:none;" +
+                    " }" +
+                    " </style>";
+                html
+                    .append(style)
+                    .append("<iframe src=").append(propertyType)
+                    .append(" loading=\"lazy\"")
+                    .append(" scrolling=\"no\"")
                     .append("></iframe>");
                 return SafeHtmlUtils.fromSafeConstant(html.toString());
             }
