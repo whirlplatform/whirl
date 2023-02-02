@@ -31,7 +31,6 @@ public class ServerUT {
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("postgres:" + DATABASE_VERSION))
         .withUsername("postgres")
-        //.withNetwork(net)
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
@@ -70,7 +69,7 @@ public class ServerUT {
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
         // Check amount of tables
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from pg_tables where tableowner = 'whirl'").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
@@ -94,7 +93,7 @@ public class ServerUT {
         evolutionManager.rollbackMetadataEvolution(alias, scriptPath);
 
         // Check amount of tables
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from pg_tables where tableowner = 'whirl'").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
@@ -104,5 +103,3 @@ public class ServerUT {
         _log.info("Rollback test finished!");
     }
 }
-
-

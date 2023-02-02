@@ -65,7 +65,6 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
         }
     }
 
-    /* Rollback functionality */
     @Override
     public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
         rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
@@ -90,9 +89,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
             Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
                 database);
 
-            //liquibase.update(null, new LabelExpression());
-            liquibase.rollback((String) null, String.valueOf(new LabelExpression()));
-            //liquibase.rollback();
+            liquibase.rollback(2000, scriptPath);
         } catch (LiquibaseException | SQLException | ConnectException e) {
             _log.error(e);
             throw new EvolutionException(e);
