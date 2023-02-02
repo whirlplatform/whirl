@@ -240,7 +240,6 @@
             <artifactId>log4j-core</artifactId>
         </dependency>
 
-
         <!-- Test -->
         <dependency>
             <groupId>com.google.jimfs</groupId>
