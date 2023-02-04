@@ -21,30 +21,6 @@
             failOnError="true"
             dbms="postgresql">
 
-        <sqlFile dbms="postgresql"
-                 path="types/function_input.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-
-        <sqlFile dbms="postgresql"
-                 path="types/function_result.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-
-        <sqlFile dbms="postgresql"
-                 path="types/row_value.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-
-        <sqlFile dbms="postgresql"
-                 path="types/row_list.sql"
-                 relativeToChangelogFile="true"
-                 splitStatements="true"
-                 stripComments="true"/>
-
         <createTable
                 tableName="WHIRL_USERS"
                 remarks="Stores user information">
@@ -178,8 +154,6 @@
                 referencedTableName="WHIRL_USERS"
                 referencedColumnNames="ID"/>
 
-        <addUniqueConstraint tableName="WHIRL_USERS" constraintName="UC_WHIRL_USERS" columnNames="LOGIN"/>
-
         <insert tableName="WHIRL_USERS">
             <column
                     name="DELETED"
@@ -204,9 +178,6 @@
                     type="datetime"
                     valueComputed="${date_now}"/>
         </insert>
-
-        <addUniqueConstraint tableName="WHIRL_USER_GROUPS" constraintName="UC_WHIRL_USER_GROUPS" columnNames="R_WHIRL_USERS, GROUP_CODE"/>
-
         <insert tableName="WHIRL_USER_GROUPS">
             <column
                     name="DELETED"
@@ -225,6 +196,9 @@
                     value="Whirl Editor access group"/>
         </insert>
 
+        <sqlFile path="hstore_extension.sql"
+                 relativeToChangelogFile="true"/>
+
         <rollback>
             <dropForeignKeyConstraint baseTableName="WHIRL_USER_GROUPS" constraintName="FK_WHIRL_USER_GROUPS_RWU"/>
             <dropIndex tableName="WHIRL_USER_GROUPS" indexName="IDX_WHIRL_USER_GROUPS_RWU"/>
@@ -237,18 +211,17 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
 
-            <sql>
-                DROP TYPE whirl.row_value;
-            </sql>
-            <sql>
-                DROP TYPE whirl.row_list;
-            </sql>
-            <sql>
-                DROP TYPE whirl.function_result;
-            </sql>
-            <sql>
-                DROP TYPE whirl.function_input;
-            </sql>
+            <sqlFile path="hstore_extension_rollback.sql"
+                     relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="hstore_extension" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="hstore_extension"
+                         path="hstore_extension.sql"
+                         relativeToChangelogFile="true"/>
+        <rollback>
+            <dropProcedure procedureName="hstore_extension"/>
         </rollback>
     </changeSet>
 

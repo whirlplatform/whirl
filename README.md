@@ -47,10 +47,35 @@ First the database to store platform data should be created.
     CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
     CREATE DATABASE whirl OWNER whirl;
     GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
-    -- connect to whirl database as superuser and run next commands
+    \c whirl -- connect to whirl database as superuser and run next commands
     CREATE SCHEMA whirl AUTHORIZATION whirl;
     CREATE EXTENSION IF NOT EXISTS hstore;
     ```
+
+- The Whirl Platform require PostgreSQL 13 or higher. But if you are using PostgreSQL 12 or lower, you can install 'hstore' extension by yourself.
+
+
+- NOTE: 'hstore' should be installed by 'whirl' user. You need to grant superuser to 'whirl' by 'postgres' user.
+The following code can help:
+
+
+- In the sql shell by 'postgres' user:
+    ```sql
+      ALTER ROLE whirl superuser;
+    ```
+      
+      
+- Then by 'whirl' user:
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS hstore;
+    ```  
+
+- And again by 'postgres':
+    ```sql
+      ALTER ROLE whirl nosuperuser;
+    ```  
+
+
 
 - MySQL:
   For MySQL configure it on port 3306.
