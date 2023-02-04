@@ -1,10 +1,10 @@
 /.settings/
 /.project
-/target/
+**/target/
 /.idea/
 /.whirl-work/
 *.iml
 .project
 .classpath
-*.versionsBackup
+**/.versionsBackup
 **/.flattened-pom.xml

@@ -36,9 +36,9 @@
  * ================================================================================
  */
 theme {
-  basePackage = "org.whirlplatform.theme"
+  basePackage = "org.whirlplatform.theme.triton"
   borderColor = "#157FCC"
-  name = "triton"
+  name = "Triton"
   panelBackgroundColor = "#ffffff"
   details {
     backgroundColor = "#ffffff"

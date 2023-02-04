@@ -85,12 +85,13 @@
                 <version>1.4.0</version>
                 <executions>
                     <execution>
-                        <id>generate-theme</id>
+                        <id>generate-theme-triton</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
+                            <skip>true</skip>
                             <executable>${java.home}/bin/java
                             </executable>
                             <arguments>
@@ -113,7 +114,7 @@
                                 <argument>-warDir</argument>
                                 <argument>${basedir}/target/war</argument>
                                 <!-- List theme config files here -->
-                                <argument>${basedir}/src/theme.theme</argument>
+                                <argument>${basedir}/src/triton.theme</argument>
                             </arguments>
                         </configuration>
                     </execution>
