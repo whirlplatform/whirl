@@ -21,9 +21,9 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertTrue;
 
-public class ServerUT {
+public class ServerUnitTest {
 
-    private static Logger _log = LoggerFactory.getLogger(ServerUT.class);
+    private static Logger _log = LoggerFactory.getLogger(ServerUnitTest.class);
 
     private static String DATABASE_VERSION = "14";
 
