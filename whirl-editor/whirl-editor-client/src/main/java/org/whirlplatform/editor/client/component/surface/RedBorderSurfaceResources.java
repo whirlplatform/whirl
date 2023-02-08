@@ -5,7 +5,7 @@ import org.whirlplatform.editor.client.component.surface.Surface.SurfaceResource
 import org.whirlplatform.editor.client.component.surface.Surface.SurfaceStyle;
 
 public interface RedBorderSurfaceResources extends SurfaceResources,
-        ClientBundle {
+    ClientBundle {
 
     @Source("RedBorderSurface.gss")
     RedBorderSurfaceStyle style();

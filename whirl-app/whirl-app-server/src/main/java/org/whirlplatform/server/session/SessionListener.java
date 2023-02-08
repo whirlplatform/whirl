@@ -10,7 +10,7 @@ import org.whirlplatform.server.servlet.FileServlet.FileUpload;
 
 public class SessionListener implements HttpSessionListener {
 
-//    private static Logger _log = Logger.getLogger(SessionListener.class.getName());
+    //    private static Logger _log = Logger.getLogger(SessionListener.class.getName());
 
     @Override
     public void sessionCreated(HttpSessionEvent event) {
@@ -20,7 +20,7 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent event) {
         SessionManager.get(event.getSession())
-                .unregisterSession(event.getSession());
+            .unregisterSession(event.getSession());
         deleteTemporaryFiles(event.getSession());
 
         SessionManager.detachSession(event.getSession());
@@ -28,7 +28,7 @@ public class SessionListener implements HttpSessionListener {
 
     private void deleteTemporaryFiles(HttpSession session) {
         HashMap<String, FileUpload> map = (HashMap<String, FileUpload>) session
-                .getAttribute(FileServlet.SESSION_FILE_MAP);
+            .getAttribute(FileServlet.SESSION_FILE_MAP);
         if (map != null) {
             for (String key : map.keySet()) {
                 FileUpload upload = map.get(key);

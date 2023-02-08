@@ -21,7 +21,7 @@ public class DataFetcherUtil {
                         } else {
                             try {
                                 result.put(pair[0],
-                                        URLDecoder.decode(pair[1], "UTF-8"));
+                                    URLDecoder.decode(pair[1], "UTF-8"));
                             } catch (UnsupportedEncodingException e) {
                                 result.put(pair[0], null);
                             }

@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.driver.db.table;
 
 import org.apache.empire.data.DataType;

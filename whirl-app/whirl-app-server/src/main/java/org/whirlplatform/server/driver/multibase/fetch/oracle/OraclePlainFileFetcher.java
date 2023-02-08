@@ -15,7 +15,7 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
 public class OraclePlainFileFetcher extends AbstractFetcher
-        implements FileFetcher<PlainTableElement> {
+    implements FileFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainFileFetcher.class);
 
     public OraclePlainFileFetcher(final ConnectionWrapper connection) {
@@ -59,7 +59,7 @@ public class OraclePlainFileFetcher extends AbstractFetcher
         final String fullName = createTableFullName(table);
         final String idColumnName = table.getIdColumn().getColumnName();
         String result =
-                String.format(SELECT, columnName, columnName, fullName, idColumnName, rowId);
+            String.format(SELECT, columnName, columnName, fullName, idColumnName, rowId);
         return result;
     }
 }

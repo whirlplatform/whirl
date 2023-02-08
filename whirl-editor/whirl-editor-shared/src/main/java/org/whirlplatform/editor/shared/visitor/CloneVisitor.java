@@ -160,10 +160,10 @@ public class CloneVisitor<T extends AbstractElement> extends GraphVisitor<CopyCo
 
         if (ctx.parentCopy instanceof FormElement) {
             for (Entry<CellRowCol, CellElement> e : ((FormElement) ctx.parentSource).getCells()
-                    .entrySet()) {
+                .entrySet()) {
                 if (e.getValue().getId().equals(src.getId())) {
                     ((FormElement) ctx.parentCopy).addCellElement(e.getKey().getRow(),
-                            e.getKey().getCol(), dest);
+                        e.getKey().getCol(), dest);
                     break;
                 }
             }

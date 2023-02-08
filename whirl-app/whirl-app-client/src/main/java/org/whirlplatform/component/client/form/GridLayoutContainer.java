@@ -26,19 +26,19 @@ import java.util.Map;
 
 public class GridLayoutContainer extends ResizeContainer {
 
-    private GridFlexTable table;
+    private final GridFlexTable table;
+    private final Map<String, Double> fixedRowHeight = new HashMap<>();
+    private final Map<String, Double> fixedColumnWidth = new HashMap<>();
+    private final Map<String, Double> percentRowHeight = new HashMap<>();
+    private final Map<String, Double> percentColumnWidth = new HashMap<>();
+    private final Map<String, Double> currentColumnWidth = new HashMap<>();
+    private final Map<String, Double> currentRowHeight = new HashMap<>();
+    private final Map<Widget, Cell> widgets = new HashMap<Widget, Cell>();
+    private final Map<Cell, Widget> cells = new HashMap<Cell, Widget>();
     private int numRows = 0;
     private int numColumns = 0;
     private Cell[][] cellIndexes;
     private Cell[][] gridIndexes;
-    private Map<String, Double> fixedRowHeight = new HashMap<>();
-    private Map<String, Double> fixedColumnWidth = new HashMap<>();
-    private Map<String, Double> percentRowHeight = new HashMap<>();
-    private Map<String, Double> percentColumnWidth = new HashMap<>();
-    private Map<String, Double> currentColumnWidth = new HashMap<>();
-    private Map<String, Double> currentRowHeight = new HashMap<>();
-    private Map<Widget, Cell> widgets = new HashMap<Widget, Cell>();
-    private Map<Cell, Widget> cells = new HashMap<Cell, Widget>();
 
     public GridLayoutContainer() {
         this(0, 0);
@@ -66,7 +66,7 @@ public class GridLayoutContainer extends ResizeContainer {
         }
         if (rows < 0) {
             throw new IndexOutOfBoundsException(
-                    "Can not set number of rows to " + rows);
+                "Can not set number of rows to " + rows);
         }
 
         if (table.getRowCount() > rows) {
@@ -97,7 +97,7 @@ public class GridLayoutContainer extends ResizeContainer {
         }
         if (columns < 0) {
             throw new IndexOutOfBoundsException(
-                    "Can not set number of columns to " + columns);
+                "Can not set number of columns to " + columns);
         }
 
         for (int i = 0; i < table.getRowCount(); i++) {
@@ -128,12 +128,12 @@ public class GridLayoutContainer extends ResizeContainer {
     public void insertRow(int beforeRow) {
         table.insertRow(beforeRow);
         for (int i = 0; i < numColumns; i++) {
-//            if (beforeRow == numRows) {
+            //            if (beforeRow == numRows) {
             table.insertCell(beforeRow, i);
-//            } else {                                               // Зачем это нужно было?
-//                Cell cell = getTablePositionByGrid(beforeRow, i);
-//                table.insertCell(beforeRow, i);
-//            }
+            //            } else {                                               // Зачем это нужно было?
+            //                Cell cell = getTablePositionByGrid(beforeRow, i);
+            //                table.insertCell(beforeRow, i);
+            //            }
         }
         numRows++;
         Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -147,12 +147,12 @@ public class GridLayoutContainer extends ResizeContainer {
 
     public void insertColumn(int beforeColumn) {
         for (int i = 0; i < table.getRowCount(); i++) {
-//            if (beforeColumn == numColumns) {
+            //            if (beforeColumn == numColumns) {
             table.insertCell(i, beforeColumn);
-//            } else {                                               // Зачем это нужно было?
-//                Cell cell = getTablePositionByGrid(i, beforeColumn);
-//                table.insertCell(i, beforeColumn);
-//            }
+            //            } else {                                               // Зачем это нужно было?
+            //                Cell cell = getTablePositionByGrid(i, beforeColumn);
+            //                table.insertCell(i, beforeColumn);
+            //            }
         }
         numColumns++;
         Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -201,22 +201,22 @@ public class GridLayoutContainer extends ResizeContainer {
     public void setWidget(int row, int column, Widget child) {
         if (row < 0) {
             throw new IndexOutOfBoundsException(
-                    "Row index can not be negative: " + row);
+                "Row index can not be negative: " + row);
         }
         if (column < 0) {
             throw new IndexOutOfBoundsException(
-                    "Column index can not be negative: " + column);
+                "Column index can not be negative: " + column);
         }
         if (row + 1 > numRows) {
             throw new IndexOutOfBoundsException(
-                    "Can not set widget at the row " + row
-                            + ". Container's row count is " + numRows + ".");
+                "Can not set widget at the row " + row
+                    + ". Container's row count is " + numRows + ".");
         }
         if (column + 1 > numColumns) {
             throw new IndexOutOfBoundsException(
-                    "Can not set widget at the column " + column
-                            + ". Container's columns count is " + numColumns
-                            + ".");
+                "Can not set widget at the column " + column
+                    + ". Container's columns count is " + numColumns
+                    + ".");
         }
 
         child.getElement().getStyle().setPosition(Position.RELATIVE);
@@ -306,10 +306,10 @@ public class GridLayoutContainer extends ResizeContainer {
                 int cy = y;
                 if (cellOccupied.get(String.valueOf(cy)) == null) {
                     cellOccupied
-                            .put(String.valueOf(cy), new HashMap<>());
+                        .put(String.valueOf(cy), new HashMap<>());
                 }
                 while (cellOccupied.get(String.valueOf(cy)).get(
-                        String.valueOf(cx)) != null) { // пропускаем уже занятые
+                    String.valueOf(cx)) != null) { // пропускаем уже занятые
                     // ячейки в строке
                     cx++;
                 }
@@ -319,10 +319,10 @@ public class GridLayoutContainer extends ResizeContainer {
                     for (int ty = cy; ty < cy + rowSpan; ty++) {
                         if (cellOccupied.get(String.valueOf(ty)) == null) {
                             cellOccupied.put(String.valueOf(ty),
-                                    new HashMap<>());
+                                new HashMap<>());
                         }
                         cellOccupied.get(String.valueOf(ty)).put(
-                                String.valueOf(tx), true);
+                            String.valueOf(tx), true);
                     }
                 }
                 // System.out.println("x:" + x + " y:" + y);
@@ -374,7 +374,7 @@ public class GridLayoutContainer extends ResizeContainer {
                         boolean layout) {
         if (rowSpan < 1) {
             throw new IndexOutOfBoundsException(
-                    "Row span can not be less than 1.");
+                "Row span can not be less than 1.");
         }
         Cell tablePosition = getTablePositionByGrid(row, column);
         if (tablePosition == null) {
@@ -384,9 +384,9 @@ public class GridLayoutContainer extends ResizeContainer {
         int tableColumn = tablePosition.getColumn();
 
         int currRowSpan = getTable().getFlexCellFormatter().getRowSpan(
-                tableRow, tableColumn);
+            tableRow, tableColumn);
         int currColSpan = getTable().getFlexCellFormatter().getColSpan(
-                tableRow, tableColumn);
+            tableRow, tableColumn);
 
         // сначала восстановим ячейки
         if (currColSpan != 1) {
@@ -422,19 +422,19 @@ public class GridLayoutContainer extends ResizeContainer {
                 // correctRowSpannedCells(r, tableColumn, 1, rowSpan);
                 if (colSpan != 1) {
                     correctSpannedCells(r, getTablePositionByGrid(r, column)
-                            .getColumn(), 1, colSpan);
+                        .getColumn(), 1, colSpan);
                 }
                 if (rowSpan != 1) {
                     correctRowSpannedCells(r, getTablePositionByGrid(r, column)
-                            .getColumn(), 1, rowSpan);
+                        .getColumn(), 1, rowSpan);
                 }
             }
         }
 
         getTable().getFlexCellFormatter().setRowSpan(tableRow, tableColumn,
-                rowSpan);
+            rowSpan);
         getTable().getFlexCellFormatter().setColSpan(tableRow, tableColumn,
-                colSpan);
+            colSpan);
         syncIndexes();
         if (layout) {
             doLayout();
@@ -444,14 +444,14 @@ public class GridLayoutContainer extends ResizeContainer {
     public int getRowSpan(int row, int column) {
         Cell cell = getTablePositionByGrid(row, column);
         return table.getFlexCellFormatter().getRowSpan(cell.getRow(),
-                cell.getColumn());
+            cell.getColumn());
     }
 
     public int getColSpan(int row, int column) {
 
         Cell cell = getTablePositionByGrid(row, column);
         return table.getFlexCellFormatter().getColSpan(cell.getRow(),
-                cell.getColumn());
+            cell.getColumn());
 
     }
 
@@ -529,8 +529,8 @@ public class GridLayoutContainer extends ResizeContainer {
             if (restWidth > 0) {
                 if (fixedColumnWidth.containsKey(String.valueOf(i))) {
                     // set fixed width
-//                    w = (int) Math
-//                            .floor(fixedColumnWidth.get(String.valueOf(i)));
+                    //                    w = (int) Math
+                    //                            .floor(fixedColumnWidth.get(String.valueOf(i)));
                     w = fixedColumnWidth.get(String.valueOf(i));
                     if (w > restWidth) {
                         w = restWidth;
@@ -540,7 +540,7 @@ public class GridLayoutContainer extends ResizeContainer {
                     }
                 } else if (percentColumnWidth.containsKey(String.valueOf(i))) {
                     double percent = percentColumnWidth.get(String.valueOf(i));
-//                    w = (int) Math.floor(percent * freeWidth);
+                    //                    w = (int) Math.floor(percent * freeWidth);
                     w = percent * freeWidth;
                     if (w > restWidth) {
                         w = restWidth - table.getCellSpacing();
@@ -557,7 +557,7 @@ public class GridLayoutContainer extends ResizeContainer {
             if (needSet) {
                 if (!(w < 1 && GXT.isIE())) {
                     table.getColumnFormatter().setWidth(i,
-                            w + Unit.PX.getType());
+                        w + Unit.PX.getType());
                 }
                 currentColumnWidth.put(String.valueOf(i), w);
             }
@@ -569,8 +569,8 @@ public class GridLayoutContainer extends ResizeContainer {
         for (Integer i : undefinedColumnWidth) {
             double w = 0;
             if (restWidth > 0) {
-//                w = (int) Math.floor(freeWidth * percentSize)
-//                        - table.getCellSpacing();
+                //                w = (int) Math.floor(freeWidth * percentSize)
+                //                        - table.getCellSpacing();
                 w = freeWidth * percentSize - table.getCellSpacing();
                 if (w > restWidth) {
                     w = restWidth;
@@ -603,7 +603,7 @@ public class GridLayoutContainer extends ResizeContainer {
             if (restHeight > 0) {
                 if (fixedRowHeight.containsKey(String.valueOf(i))) {
                     // set fixed width
-//                    h = (int) Math.floor(fixedRowHeight.get(String.valueOf(i)));
+                    //                    h = (int) Math.floor(fixedRowHeight.get(String.valueOf(i)));
                     h = fixedRowHeight.get(String.valueOf(i));
                     if (h > restHeight) {
                         h = restHeight;
@@ -613,7 +613,7 @@ public class GridLayoutContainer extends ResizeContainer {
                     }
                 } else if (percentRowHeight.containsKey(String.valueOf(i))) {
                     double percent = percentRowHeight.get(String.valueOf(i));
-//                    h = (int) Math.floor(percent * freeHeight);
+                    //                    h = (int) Math.floor(percent * freeHeight);
                     h = percent * freeHeight;
                     if (h > restHeight) {
                         h = restHeight - table.getCellSpacing();
@@ -629,7 +629,7 @@ public class GridLayoutContainer extends ResizeContainer {
 
             if (needSet) {
                 table.getRowFormatter().getElement(i)
-                        .setAttribute("height", h + Unit.PX.getType());
+                    .setAttribute("height", h + Unit.PX.getType());
                 currentRowHeight.put(String.valueOf(i), h);
             }
         }
@@ -640,8 +640,8 @@ public class GridLayoutContainer extends ResizeContainer {
         for (Integer i : undefinedRowHeight) {
             double h = 0;
             if (restHeight > 0) {
-//                h = (int) Math.floor(freeHeight * percentSize)
-//                        - table.getCellSpacing();
+                //                h = (int) Math.floor(freeHeight * percentSize)
+                //                        - table.getCellSpacing();
                 h = freeHeight * percentSize - table.getCellSpacing();
                 if (h > restHeight) {
                     h = restHeight;
@@ -651,7 +651,7 @@ public class GridLayoutContainer extends ResizeContainer {
                 }
             }
             table.getRowFormatter().getElement(i)
-                    .setAttribute("height", h + Unit.PX.getType());
+                .setAttribute("height", h + Unit.PX.getType());
             currentRowHeight.put(String.valueOf(i), h);
         }
 
@@ -688,7 +688,7 @@ public class GridLayoutContainer extends ResizeContainer {
                 }
             }
             int margins = data.getMargins().getTop()
-                    + data.getMargins().getBottom() + 2;
+                + data.getMargins().getBottom() + 2;
             height = (int) Math.floor((height - margins) * data.getHeight());
         }
 
@@ -707,7 +707,7 @@ public class GridLayoutContainer extends ResizeContainer {
                 }
             }
             int margins = data.getMargins().getLeft()
-                    + data.getMargins().getRight() + 2;
+                + data.getMargins().getRight() + 2;
             width = (int) Math.floor((width - margins) * data.getWidth());
         }
 
@@ -717,22 +717,22 @@ public class GridLayoutContainer extends ResizeContainer {
 
         if (data.getHorizontalAlignment() != null) {
             table.getCellFormatter().setHorizontalAlignment(row, column,
-                    data.getHorizontalAlignment());
+                data.getHorizontalAlignment());
         }
         if (data.getVerticalAlignment() != null) {
             table.getCellFormatter().setVerticalAlignment(row, column,
-                    data.getVerticalAlignment());
+                data.getVerticalAlignment());
         }
         Margins margins = data.getMargins();
         if (margins != null) {
             widget.getElement().getStyle()
-                    .setMarginTop(margins.getTop(), Unit.PX);
+                .setMarginTop(margins.getTop(), Unit.PX);
             widget.getElement().getStyle()
-                    .setMarginRight(margins.getRight(), Unit.PX);
+                .setMarginRight(margins.getRight(), Unit.PX);
             widget.getElement().getStyle()
-                    .setMarginBottom(margins.getBottom(), Unit.PX);
+                .setMarginBottom(margins.getBottom(), Unit.PX);
             widget.getElement().getStyle()
-                    .setMarginLeft(margins.getLeft(), Unit.PX);
+                .setMarginLeft(margins.getLeft(), Unit.PX);
         }
     }
 
@@ -839,8 +839,8 @@ public class GridLayoutContainer extends ResizeContainer {
 
     public class Cell {
 
-        private int row;
-        private int column;
+        private final int row;
+        private final int column;
 
         public Cell(int row, int column) {
             this.row = row;

@@ -30,7 +30,7 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
     // Operations
     private static final String LOADING = EditorMessage.Util.MESSAGE.action_load_application();
     private static final String RETRIEVING_APPS =
-            EditorMessage.Util.MESSAGE.all_applications_retrieving_apps();
+        EditorMessage.Util.MESSAGE.all_applications_retrieving_apps();
     // Button titles
     private static final String REMOVE = EditorMessage.Util.MESSAGE.remove();
     private static final String PACKAGE_TITLE = EditorMessage.Util.MESSAGE.toolbar_package();
@@ -41,7 +41,7 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
     private static final int WINDOW_WIDTH = ApplicationsTreeGrid.estimatedWidth() + 20;
     private static final int WINDOW_HEIGHT = WidgetUtil.MAX_WINDOW_HEIGHT;
     private static final String WINDOW_HEADER =
-            EditorMessage.Util.MESSAGE.all_applications_header();
+        EditorMessage.Util.MESSAGE.all_applications_header();
 
     private AllApplicationsPresenter presenter;
     private ApplicationsTreeGrid tree;
@@ -60,13 +60,13 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
         setHeight(WINDOW_HEIGHT);
         tree = new ApplicationsTreeGrid();
         tree.getSelectionModel()
-                .addSelectionChangedHandler(new SelectionChangedHandler<ApplicationStoreData>() {
-                    @Override
-                    public void onSelectionChanged(
-                            SelectionChangedEvent<ApplicationStoreData> event) {
-                        setButtonsState();
-                    }
-                });
+            .addSelectionChangedHandler(new SelectionChangedHandler<ApplicationStoreData>() {
+                @Override
+                public void onSelectionChanged(
+                    SelectionChangedEvent<ApplicationStoreData> event) {
+                    setButtonsState();
+                }
+            });
         tree.addCellDoubleClickHandler(new CellDoubleClickHandler() {
             @Override
             public void onCellClick(CellDoubleClickEvent event) {
@@ -183,7 +183,7 @@ public class AllApplicationsView extends Window implements IAllApplicationsView 
         VerticalLayoutContainer container = new VerticalLayoutContainer();
         container.add(tree, new VerticalLayoutData(1, 1));
         setWidget(container);
-    //  addButton(packageButton);
+        //  addButton(packageButton);
         addButton(loadButton);
         addButton(new FillToolItem());
         addButton(closeButton);

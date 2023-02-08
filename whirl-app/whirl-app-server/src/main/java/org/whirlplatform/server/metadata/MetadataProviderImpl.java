@@ -161,7 +161,7 @@ public class MetadataProviderImpl implements MetadataProvider {
     public void createDatabaseStructure() {
         try {
             evolutionManager.applyMetadataEvolution(metadataConfig.getMetadataAlias(),
-                    "org/whirlplatform/sql/changelog.xml");
+                "org/whirlplatform/sql/changelog.xml");
         } catch (EvolutionException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());

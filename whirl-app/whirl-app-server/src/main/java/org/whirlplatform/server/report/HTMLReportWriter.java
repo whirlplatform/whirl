@@ -46,7 +46,7 @@ public class HTMLReportWriter extends FormWriter {
         outputFactory.setProperty("escapeCharacters", false);
         try {
             xmlStream =
-                    outputFactory.createXMLStreamWriter(new OutputStreamWriter(stream, "UTF-8"));
+                outputFactory.createXMLStreamWriter(new OutputStreamWriter(stream, "UTF-8"));
 
             writeHeader();
             prepareForm();
@@ -108,12 +108,12 @@ public class HTMLReportWriter extends FormWriter {
         xmlStream.writeAttribute("style", "color: #033351");
 
         String click = "document.getElementById('button-table').style.visibility='hidden';"
-                + "var prtContent = document.getElementById('" + form.getId() + "');"
-                + "var WinPrint = window.open('', '', 'left=-100, top=-100, width=1, height=1, "
-                + "toolbar=0,scrollbars=0,status=0');"
-                + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();"
-                + "WinPrint.focus();" + "WinPrint.print();" + "WinPrint.close();"
-                + "document.getElementById('button-table').style.visibility='visible';";
+            + "var prtContent = document.getElementById('" + form.getId() + "');"
+            + "var WinPrint = window.open('', '', 'left=-100, top=-100, width=1, height=1, "
+            + "toolbar=0,scrollbars=0,status=0');"
+            + "WinPrint.document.write(prtContent.innerHTML);" + "WinPrint.document.close();"
+            + "WinPrint.focus();" + "WinPrint.print();" + "WinPrint.close();"
+            + "document.getElementById('button-table').style.visibility='visible';";
         xmlStream.writeAttribute("onclick", click);
 
         xmlStream.writeStartElement("img");
@@ -164,11 +164,11 @@ public class HTMLReportWriter extends FormWriter {
         String style;
         if (form.isGrid()) {
             style =
-                    "border-left: 1px solid; border-top: 1px solid;    "
-                        + "border-collapse: collapse; border-spacing: 0; table-layout: fixed";
+                "border-left: 1px solid; border-top: 1px solid;    "
+                    + "border-collapse: collapse; border-spacing: 0; table-layout: fixed";
         } else {
             style = "border: 0px none " + form.getGridColor()
-                    + "; border-collapse: collapse; border-spacing: 0; table-layout: fixed;";
+                + "; border-collapse: collapse; border-spacing: 0; table-layout: fixed;";
         }
         xmlStream.writeAttribute("style", style);
     }
@@ -247,11 +247,11 @@ public class HTMLReportWriter extends FormWriter {
         }
         if (form.isGrid()) {
             style.append("    border-right: 1px solid; border-bottom: 1px solid; border-color: "
-                    + gridColor + "; ");
+                + gridColor + "; ");
         }
         if (cell.getBorderBottom() > 0) {
             style.append(
-                    "border-bottom: " + cell.getBorderBottom() + "px solid " + gridColor + "; ");
+                "border-bottom: " + cell.getBorderBottom() + "px solid " + gridColor + "; ");
         }
         if (cell.getBorderTop() > 0) {
             style.append("border-top: " + cell.getBorderTop() + "px solid " + gridColor + "; ");
@@ -265,28 +265,28 @@ public class HTMLReportWriter extends FormWriter {
         if (cell.getComponent() != null) {
             ComponentModel component = cell.getComponent();
             if (cell.getComponent().getType() == ComponentType.LabelType
-                    || cell.getComponent().getType() == ComponentType.HtmlType) {
+                || cell.getComponent().getType() == ComponentType.HtmlType) {
                 if (component.getValue(PropertyType.Color.getCode()) != null) {
                     style.append(
-                            "color: " + component.getValue(PropertyType.Color.getCode()) + "; ");
+                        "color: " + component.getValue(PropertyType.Color.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontWeight.getCode()) != null) {
                     style.append("font-weight: "
-                            + component.getValue(PropertyType.FontWeight.getCode()) + "; ");
+                        + component.getValue(PropertyType.FontWeight.getCode()) + "; ");
                 }
                 if (component.getValue(PropertyType.FontSize.getCode()) != null) {
                     style.append(
-                            "font-size: " + component.getValue(PropertyType.FontSize.getCode())
-                                    + "; ");
+                        "font-size: " + component.getValue(PropertyType.FontSize.getCode())
+                            + "; ");
                 }
                 if (component.getValue(PropertyType.FontStyle.getCode()) != null) {
                     style.append(
-                            "font-style: " + component.getValue(PropertyType.FontStyle.getCode())
-                                    + "; ");
+                        "font-style: " + component.getValue(PropertyType.FontStyle.getCode())
+                            + "; ");
                 }
                 if (component.getValue(PropertyType.FontFamily.getCode()) != null) {
                     style.append("font-family: "
-                            + component.getValue(PropertyType.FontFamily.getCode()) + "; ");
+                        + component.getValue(PropertyType.FontFamily.getCode()) + "; ");
                 }
             }
         }
@@ -306,13 +306,13 @@ public class HTMLReportWriter extends FormWriter {
 
     private void writeComponentProperties(ComponentModel component) throws XMLStreamException {
         if (ComponentType.LabelType == component.getType()
-                || ComponentType.HtmlType == component.getType()) {
+            || ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
-                    : component.getValue(PropertyType.Html.getCode()).getString();
+                : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null
-                    : component.getValue(PropertyType.ReportDataType.getCode()).getString();
+                : component.getValue(PropertyType.ReportDataType.getCode()).getString();
             String fmt = !component.containsValue(PropertyType.ReportDataFormat.getCode()) ? null
-                    : component.getValue(PropertyType.ReportDataFormat.getCode()).getString();
+                : component.getValue(PropertyType.ReportDataFormat.getCode()).getString();
 
             if (valueStr == null || valueStr.isEmpty()) {
                 // xmlStream.writeCharacters("");
@@ -328,7 +328,7 @@ public class HTMLReportWriter extends FormWriter {
                 try {
                     DecimalFormat nf = new DecimalFormat(fmt);
                     xmlStream.writeCharacters(
-                            nf.format(Double.parseDouble(valueStr.replace(",", "."))));
+                        nf.format(Double.parseDouble(valueStr.replace(",", "."))));
 
                 } catch (NumberFormatException e) {
                     // xmlStream.writeCharacters("");

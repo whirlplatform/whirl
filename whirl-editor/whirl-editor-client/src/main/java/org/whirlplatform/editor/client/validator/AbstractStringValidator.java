@@ -1,4 +1,3 @@
-
 package org.whirlplatform.editor.client.validator;
 
 import com.google.gwt.editor.client.EditorError;

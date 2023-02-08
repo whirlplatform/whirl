@@ -63,7 +63,7 @@ public class HorizontalContainerBuilder extends InsertContainerBuilder {
         } else if (name.equalsIgnoreCase(PropertyType.AdjustForScroll.getCode())) {
             if (value != null && value.getString() != null) {
                 ((HorizontalLayoutContainer) container).setAdjustForScroll(
-                        Boolean.valueOf(value.getString()));
+                    Boolean.valueOf(value.getString()));
             }
             return true;
         }

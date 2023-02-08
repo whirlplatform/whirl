@@ -121,14 +121,16 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
  */
 @JsType(name = "EditGrid", namespace = "Whirl")
 public class EditGridBuilder extends ComponentBuilder
-        implements Clearable, Validatable, TitleProvider,
-        ListParameter<RowListValue>,
-        org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers,
-        org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers,
-        InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
-        DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState,
-        RowDoubleClickEvent.HasRowDoubleClickHandlers {
+    implements Clearable, Validatable, TitleProvider,
+    ListParameter<RowListValue>,
+    org.whirlplatform.component.client.event.LoadEvent.HasLoadHandlers,
+    org.whirlplatform.component.client.event.SelectEvent.HasSelectHandlers,
+    InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
+    DeleteEvent.HasDeleteHandlers, LoadConfigProvider, HasState,
+    RowDoubleClickEvent.HasRowDoubleClickHandlers {
 
+    // Окна редактирования-просмотра полей грида
+    private final Set<FieldFormWindow> activeFieldForms = new HashSet<>();
     protected StorageWrapper<RowListValue> stateStore;
     protected StateStore<RowListValue> selectionStateStore;
     protected boolean saveState;
@@ -170,16 +172,9 @@ public class EditGridBuilder extends ComponentBuilder
     private AbstractMetadataStateStore<ArrayList<SortValue>> sortStateStore;
     private AbstractMetadataStateStore<PageConfig> pageStateStore;
     private int defaultRowsPerPage = 0;
-
     private boolean showLoadMask;
-
     private boolean cellToolTip;
-
     private ColumnConfigStore columnConfigStore;
-
-    // Окна редактирования-просмотра полей грида
-    private Set<FieldFormWindow> activeFieldForms = new HashSet<>();
-
     // TODO фикс на обновление заголовка если он строится не видимым
     // private boolean refreshHeader = true;
     private HandlerRegistration headerRefreshRegistration;
@@ -370,7 +365,7 @@ public class EditGridBuilder extends ComponentBuilder
                 return true;
             }
         } else if (name.equalsIgnoreCase(PropertyType.SkipInitialLoad.getCode())
-                && value.getBoolean() != null) {
+            && value.getBoolean() != null) {
             if (value != null) {
                 skipInitialLoad = value.getBoolean();
                 return true;
@@ -437,8 +432,8 @@ public class EditGridBuilder extends ComponentBuilder
 
         };
         DataServiceAsync.Util.getDataService(callback)
-                .getTableConfig(SessionToken.get(), classId, whereSql,
-                        paramHelper.getValues(parameters));
+            .getTableConfig(SessionToken.get(), classId, whereSql,
+                paramHelper.getValues(parameters));
     }
 
     /**
@@ -473,7 +468,7 @@ public class EditGridBuilder extends ComponentBuilder
     private void setCheckable(boolean checkable) {
         if (checkable) {
             grid.setSelectionModel(new CheckBoxSelectionModel<RowModelData>(
-                    new IdentityValueProvider<RowModelData>()));
+                new IdentityValueProvider<RowModelData>()));
 
         } else {
             grid.setSelectionModel(new GridSelectionModel<RowModelData>());
@@ -518,13 +513,13 @@ public class EditGridBuilder extends ComponentBuilder
         }
 
         store = new ClassStore<RowModelData, ClassLoadConfig>(metadata,
-                new TableClassProxy(metadata));
+            new TableClassProxy(metadata));
         store.getLoader().addLoadHandler(handler);
         columnModel = new ColumnModelHelper(metadata, store, cellToolTip, columnConfigStore);
 
         if (grid.getSelectionModel() instanceof CheckBoxSelectionModel) {
             CheckBoxSelectionModel<RowModelData> sm =
-                    (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
+                (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
             columnModel.setFirstColumn(sm.getColumn());
         }
 
@@ -540,7 +535,7 @@ public class EditGridBuilder extends ComponentBuilder
                 @Override
                 public void onRecordChange(StoreRecordChangeEvent<RowModelData> event) {
                     Iterator<Change<RowModelData, ?>> iter =
-                            event.getRecord().getChanges().iterator();
+                        event.getRecord().getChanges().iterator();
                     while (iter.hasNext()) {
                         Change<RowModelData, ?> c = iter.next();
                         // event.getRecord().getModel().setChanged((String)
@@ -709,15 +704,15 @@ public class EditGridBuilder extends ComponentBuilder
             toolbar.removeFromParent();
         }
         toolbar = new EditGridToolBar(metadata, hideButtonsGroup, showButtonsData, showButtonsFind,
-                showButtonsExport,
-                showButtonsProcess, showButtonsRefresh, this, paramHelper, getId());
+            showButtonsExport,
+            showButtonsProcess, showButtonsRefresh, this, paramHelper, getId());
         toolbar.addViewHandler(new SelectHandler() {
             @Override
             public void onSelect(SelectEvent event) {
                 for (RowModelData m : grid.getSelectionModel().getSelectedItems()) {
                     final FieldFormWindow fieldForm = openFieldPanel(m, true, "view-" + m.getId());
                     fieldForm.setHeading(
-                            AppMessage.Util.MESSAGE.viewRecord() + metadata.getTitle());
+                        AppMessage.Util.MESSAGE.viewRecord() + metadata.getTitle());
                 }
             }
         });
@@ -730,7 +725,7 @@ public class EditGridBuilder extends ComponentBuilder
                     public void execute() {
                         if (fieldForm.checkUpload()) {
                             insertRecord(fieldForm,
-                                    toRowModelData(fieldForm, new RowModelDataImpl(), false));
+                                toRowModelData(fieldForm, new RowModelDataImpl(), false));
                         }
                     }
                 };
@@ -760,11 +755,11 @@ public class EditGridBuilder extends ComponentBuilder
                 for (final RowModelData m : grid.getSelectionModel().getSelectedItems()) {
                     if (!m.isEditable()) {
                         InfoHelper.info("update-" + getId(), AppMessage.Util.MESSAGE.info(),
-                                AppMessage.Util.MESSAGE.infoNotEditable());
+                            AppMessage.Util.MESSAGE.infoNotEditable());
                         continue;
                     }
                     final FieldFormWindow fieldForm =
-                            openFieldPanel(m, false, "update-" + m.getId());
+                        openFieldPanel(m, false, "update-" + m.getId());
                     final Command updateCommand = new Command() {
                         @Override
                         public void execute() {
@@ -780,19 +775,19 @@ public class EditGridBuilder extends ComponentBuilder
                                 return;
                             }
                             showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(),
-                                    new SelectHandler() {
-                                        @Override
-                                        public void onSelect(SelectEvent event) {
-                                            fieldForm.setUploadCommand(updateCommand);
-                                            if (!haveFile) {
-                                                updateCommand.execute();
-                                            }
+                                new SelectHandler() {
+                                    @Override
+                                    public void onSelect(SelectEvent event) {
+                                        fieldForm.setUploadCommand(updateCommand);
+                                        if (!haveFile) {
+                                            updateCommand.execute();
                                         }
-                                    }, "update-" + m.getId());
+                                    }
+                                }, "update-" + m.getId());
                         }
                     });
                     fieldForm.setHeading(
-                            AppMessage.Util.MESSAGE.editRecord() + metadata.getTitle());
+                        AppMessage.Util.MESSAGE.editRecord() + metadata.getTitle());
                 }
             }
 
@@ -807,7 +802,7 @@ public class EditGridBuilder extends ComponentBuilder
                         public void execute() {
                             if (fieldForm.checkUpload()) {
                                 insertRecord(fieldForm,
-                                        toRowModelData(fieldForm, new RowModelDataImpl(), false));
+                                    toRowModelData(fieldForm, new RowModelDataImpl(), false));
                             }
                         }
                     };
@@ -818,19 +813,19 @@ public class EditGridBuilder extends ComponentBuilder
                                 return;
                             }
                             showConfirmation(AppMessage.Util.MESSAGE.confirmAsk(),
-                                    new SelectHandler() {
-                                        @Override
-                                        public void onSelect(SelectEvent event) {
-                                            fieldForm.setUploadCommand(copyCommand);
-                                            if (!haveFile) {
-                                                copyCommand.execute();
-                                            }
+                                new SelectHandler() {
+                                    @Override
+                                    public void onSelect(SelectEvent event) {
+                                        fieldForm.setUploadCommand(copyCommand);
+                                        if (!haveFile) {
+                                            copyCommand.execute();
                                         }
-                                    }, "copy-" + m.getId());
+                                    }
+                                }, "copy-" + m.getId());
                         }
                     });
                     fieldForm.setHeading(
-                            AppMessage.Util.MESSAGE.copyRecord() + metadata.getTitle());
+                        AppMessage.Util.MESSAGE.copyRecord() + metadata.getTitle());
                 }
             }
         });
@@ -841,12 +836,12 @@ public class EditGridBuilder extends ComponentBuilder
                 showConfirmation(AppMessage.Util.MESSAGE.confirmDelete(), new SelectHandler() {
                     @Override
                     public void onSelect(
-                            com.sencha.gxt.widget.core.client.event.SelectEvent event) {
+                        com.sencha.gxt.widget.core.client.event.SelectEvent event) {
                         List<RowModelData> models = new ArrayList<RowModelData>();
                         for (RowModelData m : grid.getSelectionModel().getSelectedItems()) {
                             if (!m.isDeletable()) {
                                 InfoHelper.info("delete-" + getId(), AppMessage.Util.MESSAGE.info(),
-                                        AppMessage.Util.MESSAGE.infoNotDeletable());
+                                    AppMessage.Util.MESSAGE.infoNotDeletable());
                                 continue;
                             }
                             models.add(m);
@@ -888,12 +883,12 @@ public class EditGridBuilder extends ComponentBuilder
     private void showConfirmation(String confirmText, SelectHandler handler, String idSuffix) {
         final String gridCode = getCode();
         boolean useId = (gridCode == null || "".equals(gridCode)
-                || ComponentBuilder.DEFAULT_CODE.equals(gridCode));
+            || ComponentBuilder.DEFAULT_CODE.equals(gridCode));
         final String id = ((useId) ? getId() : gridCode) + "-" + idSuffix;
         Dialog dialog =
-                DialogManager.createDialog(id, AppMessage.Util.MESSAGE.confirm(), confirmText,
-                        new Pair<PredefinedButton, SelectHandler>(PredefinedButton.YES, handler),
-                        new Pair<PredefinedButton, SelectHandler>(PredefinedButton.NO, null));
+            DialogManager.createDialog(id, AppMessage.Util.MESSAGE.confirm(), confirmText,
+                new Pair<PredefinedButton, SelectHandler>(PredefinedButton.YES, handler),
+                new Pair<PredefinedButton, SelectHandler>(PredefinedButton.NO, null));
         dialog.show();
     }
 
@@ -924,7 +919,7 @@ public class EditGridBuilder extends ComponentBuilder
                 public void onSearch(SearchEvent event) {
                     ClassLoadConfig config = getLoadConfig(Collections.emptyList());
                     filterStateStore.save(getId() + "/filter",
-                            new ArrayList<FilterValue>(config.getFilters()));
+                        new ArrayList<FilterValue>(config.getFilters()));
                     load(false);
                 }
             });
@@ -956,7 +951,7 @@ public class EditGridBuilder extends ComponentBuilder
                 public void onSort(SortEvent event) {
                     ClassLoadConfig config = getLoadConfig(Collections.emptyList());
                     sortStateStore.save(getId() + "/sort",
-                            new ArrayList<SortValue>(config.getSorts()));
+                        new ArrayList<SortValue>(config.getSorts()));
                     grid.getStore().clearSortInfo();
                     load();
                 }
@@ -1292,13 +1287,13 @@ public class EditGridBuilder extends ComponentBuilder
     @JsIgnore
     private void initSelectHandler() {
         grid.getSelectionModel()
-                .addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
-                    @Override
-                    public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
-                        saveState();
-                        fireEvent(new org.whirlplatform.component.client.event.SelectEvent());
-                    }
-                });
+            .addSelectionChangedHandler(new SelectionChangedHandler<RowModelData>() {
+                @Override
+                public void onSelectionChanged(SelectionChangedEvent<RowModelData> event) {
+                    saveState();
+                    fireEvent(new org.whirlplatform.component.client.event.SelectEvent());
+                }
+            });
     }
 
     /**
@@ -1376,7 +1371,7 @@ public class EditGridBuilder extends ComponentBuilder
                     break;
                 default:
                     throw new IllegalArgumentException("Variable 'scope' can`t be this: "
-                        + scope.toString());
+                        + scope);
             }
         }
     }
@@ -1401,7 +1396,7 @@ public class EditGridBuilder extends ComponentBuilder
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore =
-                    new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
@@ -1429,7 +1424,7 @@ public class EditGridBuilder extends ComponentBuilder
     @JsIgnore
     @Override
     public HandlerRegistration addLoadHandler(
-            org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
+        org.whirlplatform.component.client.event.LoadEvent.LoadHandler handler) {
         return addHandler(handler, org.whirlplatform.component.client.event.LoadEvent.getType());
     }
 
@@ -1442,7 +1437,7 @@ public class EditGridBuilder extends ComponentBuilder
     @JsIgnore
     @Override
     public HandlerRegistration addSelectHandler(
-            org.whirlplatform.component.client.event.SelectEvent.SelectHandler handler) {
+        org.whirlplatform.component.client.event.SelectEvent.SelectHandler handler) {
         return addHandler(handler, org.whirlplatform.component.client.event.SelectEvent.getType());
     }
 
@@ -1485,7 +1480,7 @@ public class EditGridBuilder extends ComponentBuilder
     @JsIgnore
     @Override
     public HandlerRegistration addRowDoubleClickHandler(
-            RowDoubleClickEvent.RowDoubleClickHandler handler) {
+        RowDoubleClickEvent.RowDoubleClickHandler handler) {
         return addHandler(handler, RowDoubleClickEvent.getType());
     }
 
@@ -1520,7 +1515,7 @@ public class EditGridBuilder extends ComponentBuilder
             // если есть колонка и/или текст
             for (String s = "EditGridBuilder::getRowElementByLocator"; s == null; s = "") {
                 // no use
-            };
+            }
             String colIndex = locator.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX);
             String colName = locator.getParameter(LocatorParams.PARAMETER_COLUMN_NAME);
             String label = locator.getParameter(LocatorParams.PARAMETER_LABEL);
@@ -1564,29 +1559,29 @@ public class EditGridBuilder extends ComponentBuilder
         }
         if (row != null) {
             if (LocatorParams.TYPE_CHECK.equals(innerPart.getType())
-                    && grid.getSelectionModel() instanceof CheckBoxSelectionModel) {
+                && grid.getSelectionModel() instanceof CheckBoxSelectionModel) {
                 // ищем чекбокс строки если у нас CheckBoxSelectionModel с чек
                 // боксами и найдена строка
                 CheckBoxSelectionModel<RowModelData> sm =
-                        (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
+                    (CheckBoxSelectionModel<RowModelData>) grid.getSelectionModel();
                 // достаем элемент чекбокса по стилю из внешнего вида
                 if (sm.getAppearance() instanceof CheckBoxColumnDefaultAppearance) {
                     return grid.getView().getRow(row).<XElement>cast().selectNode(
-                            "." + ((CheckBoxColumnDefaultAppearance) sm.getAppearance()).getStyle()
-                                    .rowChecker()); //TODO
+                        "." + ((CheckBoxColumnDefaultAppearance) sm.getAppearance()).getStyle()
+                            .rowChecker()); //TODO
                 }
             } else if (LocatorParams.TYPE_CELL.equals(innerPart.getType())) {
                 if (innerPart.hasParameter(
-                        LocatorParams.PARAMETER_COLUMN_NAME)) { //в приоритете поиск ячейки по названию столбца.
+                    LocatorParams.PARAMETER_COLUMN_NAME)) { //в приоритете поиск ячейки по названию столбца.
                     // достаем елемент ячейки по колонке
                     String columnName = innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_NAME);
                     return getCellByColumnName(row, columnName);
                 } else if (innerPart.hasParameter(LocatorParams.PARAMETER_COLUMN_INDEX)) {
                     return grid.getView().getCell(store.indexOf(row),
-                            Integer.parseInt(
-                                    innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX)));
+                        Integer.parseInt(
+                            innerPart.getParameter(LocatorParams.PARAMETER_COLUMN_INDEX)));
                 } else if (innerPart.hasParameter(
-                        LocatorParams.PARAMETER_LABEL)) { //по тексту ищем в последнюю очередь.
+                    LocatorParams.PARAMETER_LABEL)) { //по тексту ищем в последнюю очередь.
                     String label = innerPart.getParameter(LocatorParams.PARAMETER_LABEL);
                     if (!Util.isEmptyString(label)) {
                         for (String columnName : row.getPropertyNames()) {
@@ -1613,7 +1608,7 @@ public class EditGridBuilder extends ComponentBuilder
     @JsIgnore
     public Element getCellByColumnName(RowModelData row, String columnName) {
         return grid.getView().getCell(store.indexOf(row),
-                grid.getColumnModel().indexOf(grid.getColumnModel().findColumnConfig(columnName)));
+            grid.getColumnModel().indexOf(grid.getColumnModel().findColumnConfig(columnName)));
     }
 
     /*
@@ -1716,10 +1711,10 @@ public class EditGridBuilder extends ComponentBuilder
                     int colInd = gridView.findCellIndex(element, null);
                     fillOutRowLocatorParameters(part, element, new GridCell(rowInd, colInd));
                     CheckBoxSelectionModel<RowModelData> sm =
-                            (CheckBoxSelectionModel<RowModelData>) grid
-                                    .getSelectionModel();
+                        (CheckBoxSelectionModel<RowModelData>) grid
+                            .getSelectionModel();
                     CheckBoxColumnDefaultAppearance appearance =
-                            ((CheckBoxColumnDefaultAppearance) sm.getAppearance());
+                        ((CheckBoxColumnDefaultAppearance) sm.getAppearance());
                     Locator endPointPart = null;
                     if (appearance.isRowChecker(element.cast())) {
                         endPointPart = new Locator(LocatorParams.TYPE_CHECK);

@@ -12,9 +12,9 @@ import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
 public class TreeClassProxy extends
-        RpcProxy<TreeClassLoadConfig, List<RowModelData>> {
+    RpcProxy<TreeClassLoadConfig, List<RowModelData>> {
 
-    private ClassMetadata metadata;
+    private final ClassMetadata metadata;
 
     public TreeClassProxy(ClassMetadata metadata) {
         this.metadata = metadata;
@@ -27,8 +27,8 @@ public class TreeClassProxy extends
             @Override
             public void execute() {
                 DataServiceAsync.Util.getDataService(callback)
-                        .getTreeClassData(SessionToken.get(), metadata,
-                                loadConfig);
+                    .getTreeClassData(SessionToken.get(), metadata,
+                        loadConfig);
             }
         });
     }

@@ -10,7 +10,7 @@ import org.whirlplatform.component.client.base.FramedLoginPanelBuilder;
 public abstract class FramedLoginPanelBuilderOverlay {
 
     public static FramedLoginPanelBuilder create(
-            FramedLoginPanelBuilder instance) {
+        FramedLoginPanelBuilder instance) {
         instance.create();
         return instance;
     }

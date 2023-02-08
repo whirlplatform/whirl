@@ -54,8 +54,8 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
     private static final int ADDRESS_COLUMN_WIDTH = 400;
     private static final int MODIFIED_COLUMN_WIDTH = 125;
     private static ColumnConfig<ApplicationStoreData, String> treeColumn =
-            new ColumnConfig<>(createNameValueProvider(),
-                    NAME_COLUMN_WIDTH, NAME_CAPTION);
+        new ColumnConfig<>(createNameValueProvider(),
+            NAME_COLUMN_WIDTH, NAME_CAPTION);
     private final Map<String, Set<ApplicationStoreData>> appsMap;
 
     public ApplicationsTreeGrid() {
@@ -68,7 +68,7 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
             public void render(com.google.gwt.cell.client.Cell.Context context, String value,
                                SafeHtmlBuilder sb) {
                 ApplicationStoreData data =
-                        getTreeStore().findModelWithKey(context.getKey().toString());
+                    getTreeStore().findModelWithKey(context.getKey().toString());
                 if ((data instanceof DummyRootFolder) || (data instanceof ApplicationStoreData)) {
                     sb.appendHtmlConstant("<b>").appendEscaped(value).appendHtmlConstant("</b>");
                 } else {
@@ -84,7 +84,7 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
      */
     public static int estimatedWidth() {
         return MODIFIED_COLUMN_WIDTH + NAME_COLUMN_WIDTH + TITLE_COLUMN_WIDTH
-                + REVISION_COLUMN_WIDTH + DATE_COLUMN_WIDTH + ADDRESS_COLUMN_WIDTH;
+            + REVISION_COLUMN_WIDTH + DATE_COLUMN_WIDTH + ADDRESS_COLUMN_WIDTH;
     }
 
     /*
@@ -92,36 +92,36 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
      */
     private static TreeStore<ApplicationStoreData> createTreeStore() {
         TreeStore<ApplicationStoreData> result =
-                new TreeStore<>(new ModelKeyProvider<ApplicationStoreData>() {
-                    @Override
-                    public String getKey(ApplicationStoreData item) {
-                        return (item == null) ? null : item.getId();
-                    }
-                });
+            new TreeStore<>(new ModelKeyProvider<ApplicationStoreData>() {
+                @Override
+                public String getKey(ApplicationStoreData item) {
+                    return (item == null) ? null : item.getId();
+                }
+            });
         result.addSortInfo(
-                new StoreSortInfo<ApplicationStoreData>(new Comparator<ApplicationStoreData>() {
-                    @Override
-                    public int compare(ApplicationStoreData o1, ApplicationStoreData o2) {
-                        int compareResult = (o1.getCode() != null)
-                            ? o1.getCode().compareToIgnoreCase(o2.getCode()) : -1;
-                        if (compareResult == 0) {
-                            if (o1.getVersion() != null && o2.getVersion() != null) {
-                                compareResult = Version.compare(o1.getVersion(), o2.getVersion());
-                            }
+            new StoreSortInfo<ApplicationStoreData>(new Comparator<ApplicationStoreData>() {
+                @Override
+                public int compare(ApplicationStoreData o1, ApplicationStoreData o2) {
+                    int compareResult = (o1.getCode() != null)
+                        ? o1.getCode().compareToIgnoreCase(o2.getCode()) : -1;
+                    if (compareResult == 0) {
+                        if (o1.getVersion() != null && o2.getVersion() != null) {
+                            compareResult = Version.compare(o1.getVersion(), o2.getVersion());
                         }
-                        return compareResult;
                     }
-                }, SortDir.ASC));
+                    return compareResult;
+                }
+            }, SortDir.ASC));
         return result;
     }
 
     private static ColumnModel<ApplicationStoreData> createColumnModel() {
         ColumnConfig<ApplicationStoreData, String> modifiedColumn =
-                new ColumnConfig<>(createModifiedValueProvider(),
-                        MODIFIED_COLUMN_WIDTH, MODIFIED_CAPTION);
+            new ColumnConfig<>(createModifiedValueProvider(),
+                MODIFIED_COLUMN_WIDTH, MODIFIED_CAPTION);
         ColumnConfig<ApplicationStoreData, String> titleColumn =
-                new ColumnConfig<>(createTitleValueProvider(),
-                        TITLE_COLUMN_WIDTH, TITLE_CAPTION);
+            new ColumnConfig<>(createTitleValueProvider(),
+                TITLE_COLUMN_WIDTH, TITLE_CAPTION);
 
         List<ColumnConfig<ApplicationStoreData, ?>> columnsList = new ArrayList<>();
         columnsList.add(treeColumn);
@@ -332,7 +332,7 @@ public class ApplicationsTreeGrid extends TreeGrid<ApplicationStoreData> {
      * Wraps ValueProvider and implements common methods
      */
     public abstract static class ReadOnlyValueProvider
-            implements ValueProvider<ApplicationStoreData, String> {
+        implements ValueProvider<ApplicationStoreData, String> {
         private final String path;
 
         ReadOnlyValueProvider(final String path) {

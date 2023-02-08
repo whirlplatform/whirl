@@ -54,25 +54,25 @@ public abstract class AbstractAppTree extends Tree<AbstractElement, String> impl
     // for constructor
     private static TreeStore<AbstractElement> createElementStore() {
         TreeStore<AbstractElement> store =
-                new TreeStore<AbstractElement>(new ElementKeyProvider<AbstractElement>()) {
-                    // Чтобы пустые контейнеры и свободные компоненты отображались как
-                    // контейнеры без элементов
-                    @Override
-                    public boolean hasChildren(AbstractElement item) {
-                        if (item instanceof ComponentElement
-                            &&
-                                ((ComponentElement) item).getType().isContainer()) {
-                            return true;
-                        } else if (item instanceof ChildrenlessDummy) {
-                            return false;
-                        } else if (item instanceof AbstractDummyElement) {
-                            return true;
-                        }
-                        return super.hasChildren(item);
+            new TreeStore<AbstractElement>(new ElementKeyProvider<AbstractElement>()) {
+                // Чтобы пустые контейнеры и свободные компоненты отображались как
+                // контейнеры без элементов
+                @Override
+                public boolean hasChildren(AbstractElement item) {
+                    if (item instanceof ComponentElement
+                        &&
+                        ((ComponentElement) item).getType().isContainer()) {
+                        return true;
+                    } else if (item instanceof ChildrenlessDummy) {
+                        return false;
+                    } else if (item instanceof AbstractDummyElement) {
+                        return true;
                     }
-                };
+                    return super.hasChildren(item);
+                }
+            };
         store.addSortInfo(
-                new StoreSortInfo<AbstractElement>(new ApplicationTreeComparator(), SortDir.ASC));
+            new StoreSortInfo<AbstractElement>(new ApplicationTreeComparator(), SortDir.ASC));
         return store;
     }
 
@@ -165,11 +165,11 @@ public abstract class AbstractAppTree extends Tree<AbstractElement, String> impl
     public boolean doCopyElement(AbstractElement element) {
         boolean result;
         if (element instanceof FormElement
-                || element instanceof ReportElement
-                || element instanceof ComponentElement
-                || element instanceof PlainTableElement
-                || element instanceof EventElement
-                || element instanceof EventElement) {
+            || element instanceof ReportElement
+            || element instanceof ComponentElement
+            || element instanceof PlainTableElement
+            || element instanceof EventElement
+            || element instanceof EventElement) {
             CloneVisitor<AbstractElement> cloner = new CloneVisitor<>(element, false, true);
             copy = cloner.copy();
             copy.setName(createNameForCopy(copy));

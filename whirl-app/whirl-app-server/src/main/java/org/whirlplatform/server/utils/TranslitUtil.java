@@ -43,7 +43,7 @@ public class TranslitUtil {
 
         for (int i = 0; i < charTable.length; i++) {
             char idx = (char) ((char) i + START_CHAR);
-            char lower = new String(new char[]{idx}).toLowerCase().charAt(0);
+            char lower = new String(new char[] {idx}).toLowerCase().charAt(0);
             if (charTable[i] != null) {
                 charTable[lower - START_CHAR] = charTable[i].toLowerCase();
             }

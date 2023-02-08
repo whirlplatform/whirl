@@ -39,7 +39,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
  */
 @JsType(name = "UploadField", namespace = "Whirl")
 public class UploadFieldBuilder extends AbstractFieldBuilder implements
-        Prepareable, NativeParameter<String>, Parameter<DataValue> {
+    Prepareable, NativeParameter<String>, Parameter<DataValue> {
 
     private FileUploadField upload;
 
@@ -92,13 +92,13 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
             @Override
             public void onSubmitComplete(SubmitCompleteEvent event) {
                 if (event.getResults() != null
-                        && event.getResults().contains("OK")) {
+                    && event.getResults().contains("OK")) {
                     ready = true;
                     readyCommand.execute();
                 } else {
                     InfoHelper.error("file-upload", AppMessage.Util.MESSAGE.error(),
-                            AppMessage.Util.MESSAGE.file_notUploaded() + ": "
-                                    + upload.getValue());
+                        AppMessage.Util.MESSAGE.file_notUploaded() + ": "
+                            + upload.getValue());
                 }
             }
         });
@@ -118,7 +118,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
             public void setValue(String value) {
                 fileTmpValue = value;
                 upload.getElement().child("input[type=\"text\"]")
-                        .setPropertyString("value", value);
+                    .setPropertyString("value", value);
             }
         };
         return adapter;
@@ -129,11 +129,11 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
     public Component create() {
         Component comp = super.create();
         form.setAction(GWT.getHostPageBaseURL() + "file?"
-                + AppConstant.GETTYPE + "=" + AppConstant.FORM_UPLOAD + "&"
-                + AppConstant.TABLE + "=" + fileId + "&"
-                + AppConstant.SAVE_FILE_NAME + "="
-                + Boolean.valueOf(saveFilename) + "&" + AppConstant.TOKEN_ID
-                + "=" + SessionToken.get().getTokenId());
+            + AppConstant.GETTYPE + "=" + AppConstant.FORM_UPLOAD + "&"
+            + AppConstant.TABLE + "=" + fileId + "&"
+            + AppConstant.SAVE_FILE_NAME + "="
+            + Boolean.valueOf(saveFilename) + "&" + AppConstant.TOKEN_ID
+            + "=" + SessionToken.get().getTokenId());
         return comp;
     }
 

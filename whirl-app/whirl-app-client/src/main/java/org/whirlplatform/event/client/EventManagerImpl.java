@@ -43,7 +43,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(ChangeEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(ChangeEvent.getType())) {
                     ((ChangeEvent.HasChangeHandlers) builder).addChangeHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -65,7 +65,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(DeleteEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(DeleteEvent.getType())) {
                     ((DeleteEvent.HasDeleteHandlers) builder).addDeleteHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -80,7 +80,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(DoubleClickEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(DoubleClickEvent.getType())) {
                     ((DoubleClickEvent.HasDoubleClickHandlers) builder).addDoubleClickHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -88,7 +88,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(InsertEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(InsertEvent.getType())) {
                     ((InsertEvent.HasInsertHandlers) builder).addInsertHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -96,7 +96,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(KeyPressEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(KeyPressEvent.getType())) {
                     ((KeyPressEvent.HasKeyPressHandlers) builder).addKeyPressHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -111,7 +111,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(SelectEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(SelectEvent.getType())) {
                     ((SelectEvent.HasSelectHandlers) builder).addSelectHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -147,7 +147,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(UpdateEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(UpdateEvent.getType())) {
                     ((UpdateEvent.HasUpdateHandlers) builder).addUpdateHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -162,7 +162,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(RefreshEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(RefreshEvent.getType())) {
                     ((RefreshEvent.HasRefreshHandlers) builder).addRefreshHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
         }
@@ -170,7 +170,7 @@ public class EventManagerImpl implements EventManager {
             if (model.hasEvents(RowDoubleClickEvent.getType())) {
                 for (EventMetadata e : model.getEventsByType(RowDoubleClickEvent.getType())) {
                     ((RowDoubleClickEvent.HasRowDoubleClickHandlers) builder).addRowDoubleClickHandler(
-                            new EventHelperImpl(e));
+                        new EventHelperImpl(e));
                 }
             }
 

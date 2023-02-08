@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(namespace = "Whirl", name = "TextField")
 public class TextFieldBuilder extends ValueBaseFieldBuilder
-        implements NativeParameter<String>, Parameter<DataValue> {
+    implements NativeParameter<String>, Parameter<DataValue> {
 
     @JsIgnore
     public TextFieldBuilder() {

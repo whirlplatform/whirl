@@ -50,13 +50,13 @@ public class ExportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         doExport(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         doExport(req, resp);
     }
 
@@ -67,9 +67,9 @@ public class ExportServlet extends HttpServlet {
         try {
             //user = SessionManager.get(request.getSession().getServletContext())
             user = SessionManager.get(request.getSession())
-                    .getUser(
-                            new SessionToken(request.getSession().getId(),
-                                    tokenId));
+                .getUser(
+                    new SessionToken(request.getSession().getId(),
+                        tokenId));
         } catch (CustomException e) {
             _log.error(e);
             response.sendError(500);
@@ -77,15 +77,15 @@ public class ExportServlet extends HttpServlet {
 
         String classList = request.getParameter(AppConstant.TABLE_ID);
         ExpImpType exportType = ExpImpType.valueOf(request
-                .getParameter(AppConstant.EXPIMP_TYPE_PARAM));
+            .getParameter(AppConstant.EXPIMP_TYPE_PARAM));
         boolean isAllRecords = Boolean.parseBoolean(request
-                .getParameter(AppConstant.EXPORT_ALLREC_PARAM));
+            .getParameter(AppConstant.EXPORT_ALLREC_PARAM));
         String whereSql = request.getParameter(PropertyType.WhereSql.getCode());
 
         boolean xlsx = Boolean.parseBoolean(request
-                .getParameter(AppConstant.EXPORT_XLSX_PARAM));
+            .getParameter(AppConstant.EXPORT_XLSX_PARAM));
         boolean columnHeader = Boolean.parseBoolean(request
-                .getParameter(AppConstant.EXPORT_COLUMNS_PARAM));
+            .getParameter(AppConstant.EXPORT_COLUMNS_PARAM));
         String paramId = request.getParameter("parameters_id");
 
         ClassLoadConfig loadConfig = null;
@@ -97,15 +97,15 @@ public class ExportServlet extends HttpServlet {
         }
 
         _log.info("SERVLET EXPORT: [pfuser, pfrole, classList, isAllRecords] = ["
-                + user.getId()
-                + ", "
-                + user.getApplication().getId()
-                + ", "
-                + classList
-                + ", "
-                + isAllRecords
-                + "] "
-                + exportType.toString());
+            + user.getId()
+            + ", "
+            + user.getApplication().getId()
+            + ", "
+            + classList
+            + ", "
+            + isAllRecords
+            + "] "
+            + exportType.toString());
 
         if (!StringUtils.isEmpty(whereSql)) {
             // TODO расшифровать whereSql =
@@ -126,21 +126,21 @@ public class ExportServlet extends HttpServlet {
                 }
                 response.setContentType("application/ms-excel;");
                 response.setHeader(
-                        "Content-Disposition",
-                        "attachment;filename=\""
-                                + getExportFileName(metadata, user) + extension
-                                + "\"");
+                    "Content-Disposition",
+                    "attachment;filename=\""
+                        + getExportFileName(metadata, user) + extension
+                        + "\"");
                 connector().exportXLS(metadata, columnHeader,
-                        xlsx, loadConfig, response.getOutputStream(), user);
+                    xlsx, loadConfig, response.getOutputStream(), user);
             } else if (exportType == ExpImpType.EXPORT_CSV) {
                 response.setContentType("text/csv;");
                 response.setHeader(
-                        "Content-Disposition",
-                        "attachment;filename=\""
-                                + getExportFileName(metadata, user) + ".csv"
-                                + "\"");
+                    "Content-Disposition",
+                    "attachment;filename=\""
+                        + getExportFileName(metadata, user) + ".csv"
+                        + "\"");
                 connector().exportCSV(metadata, columnHeader,
-                        loadConfig, response.getOutputStream(), user);
+                    loadConfig, response.getOutputStream(), user);
             }
         } catch (CustomException e) {
             _log.error(e);

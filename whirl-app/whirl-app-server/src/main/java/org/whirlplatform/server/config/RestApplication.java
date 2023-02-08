@@ -26,9 +26,9 @@ public class RestApplication extends ResourceConfig {
                 ServletContainer sContainer = (ServletContainer) container;
                 GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
                 GuiceIntoHK2Bridge guiceBridge =
-                        serviceLocator.getService(GuiceIntoHK2Bridge.class);
+                    serviceLocator.getService(GuiceIntoHK2Bridge.class);
                 Injector injector = (Injector) sContainer.getServletContext()
-                        .getAttribute(Injector.class.getName());
+                    .getAttribute(Injector.class.getName());
                 guiceBridge.bridgeGuiceInjector(injector);
             }
 
@@ -46,7 +46,7 @@ public class RestApplication extends ResourceConfig {
         register(JsonParamConverterProvider.class);
         register(RestExceptionMapper.class);
         register(ObjectMapperContextResolver.class);
-//        register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.FINE,
-//                Verbosity.PAYLOAD_ANY, 20000));
+        //        register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.FINE,
+        //                Verbosity.PAYLOAD_ANY, 20000));
     }
 }

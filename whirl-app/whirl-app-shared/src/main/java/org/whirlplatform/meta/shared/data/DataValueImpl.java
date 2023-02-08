@@ -39,8 +39,8 @@ public class DataValueImpl implements DataValue {
                 return null;
             }
             DateTimeFormat df =
-                    new DateTimeFormat("dd.MM.yyyy HH:mm:ss", new DefaultDateTimeFormatInfo()) {
-                    };
+                new DateTimeFormat("dd.MM.yyyy HH:mm:ss", new DefaultDateTimeFormatInfo()) {
+                };
             return df.parseStrict(value);
         } else if (DataType.NUMBER == type) {
             if (value == null || value.isEmpty()) {

@@ -17,7 +17,7 @@ import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.theme.base.client.field.TextFieldDefaultAppearance.TextFieldStyle;
 
 public class TriggerFieldDefaultAppearance extends ValueBaseFieldDefaultAppearance
-        implements TriggerFieldAppearance {
+    implements TriggerFieldAppearance {
 
     private final TriggerFieldResources resources;
     private final TriggerFieldStyle style;
@@ -127,7 +127,7 @@ public class TriggerFieldDefaultAppearance extends ValueBaseFieldDefaultAppearan
         sb.append("class='").append(getStyle().field()).append(" ").append(getStyle().text());
 
         String placeholder = options.getEmptyText() != null
-                ? " placeholder='" + SafeHtmlUtils.htmlEscape(options.getEmptyText()) + "' " : "";
+            ? " placeholder='" + SafeHtmlUtils.htmlEscape(options.getEmptyText()) + "' " : "";
 
         if (value.equals("") && options.getEmptyText() != null) {
             sb.append(" ").append(getStyle().empty());
@@ -158,7 +158,7 @@ public class TriggerFieldDefaultAppearance extends ValueBaseFieldDefaultAppearan
     @Override
     public boolean triggerIsOrHasChild(XElement parent, Element target) {
         return parent.isOrHasChild(target)
-                && target.<XElement>cast().is("." + getStyle().trigger());
+            && target.<XElement>cast().is("." + getStyle().trigger());
     }
 
     @Override

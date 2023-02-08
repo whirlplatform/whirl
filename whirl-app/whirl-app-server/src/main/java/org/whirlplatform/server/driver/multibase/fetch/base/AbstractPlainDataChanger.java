@@ -30,15 +30,15 @@ import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.utils.TypesUtil;
 
 public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
-        implements DataChanger<PlainTableElement> {
+    implements DataChanger<PlainTableElement> {
 
     private static Logger _log = LoggerFactory.getLogger(AbstractPlainDataChanger.class);
-
-    protected abstract String getNextId();
 
     public AbstractPlainDataChanger(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
     }
+
+    protected abstract String getNextId();
 
     @Override
     public RowModelData insert(ClassMetadata metadata, DataModifyConfig config,
@@ -60,12 +60,12 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
             if (c.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 dbTable.addColumn(c.getColumnName(), DataType.BLOB, 0, c.isNotNull());
                 dbTable.addColumn(c.getLabelExpression(), DataType.TEXT,
-                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                    c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             } else {
                 org.whirlplatform.meta.shared.data.DataType dataType =
-                        (c.getListTable()) == null ? null
-                                : getDataSourceDriver().createDataFetcher(c.getListTable())
-                                .getIdColumnType(table);
+                    (c.getListTable()) == null ? null
+                        : getDataSourceDriver().createDataFetcher(c.getListTable())
+                        .getIdColumnType(table);
                 Integer dataSize = (c.getSize() == null) ? 0 : c.getSize();
                 DataType empireType = TypesUtil.toEmpireType(c.getType(), dataType);
                 dbTable.addColumn(c.getColumnName(), empireType, dataSize, c.isNotNull());
@@ -88,13 +88,13 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
                 FileValue fileValue = model.get(f);
 
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(),
-                        (int) fileValue.getSize());
+                    (int) fileValue.getSize());
                 record.setValue(dbTable.getColumn(f), blob);
                 record.setValue(dbTable.getColumn(c.getLabelExpression()),
-                        ((FileValue) model.get(f)).getName());
+                    ((FileValue) model.get(f)).getName());
             } else if (c.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
                 record.setValue(dbTable.getColumn(f),
-                        model.get(f) == null ? null : ((ListModelData) model.get(f)).getId());
+                    model.get(f) == null ? null : ((ListModelData) model.get(f)).getId());
             } else {
                 record.setValue(dbTable.getColumn(f), model.get(f));
             }
@@ -117,11 +117,11 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
 
         TableColumnElement idColumn = table.getIdColumn();
         DBTableColumn dbIdColumn = dbTable.addColumn(idColumn.getColumnName(),
-                TypesUtil.toEmpireType(idColumn.getType(),
-                        (idColumn.getListTable() == null) ? null
-                                : getDataSourceDriver().createDataFetcher(idColumn.getListTable())
-                                .getIdColumnType(table)),
-                idColumn.getSize() == null ? 0 : idColumn.getSize(), idColumn.isNotNull());
+            TypesUtil.toEmpireType(idColumn.getType(),
+                (idColumn.getListTable() == null) ? null
+                    : getDataSourceDriver().createDataFetcher(idColumn.getListTable())
+                    .getIdColumnType(table)),
+            idColumn.getSize() == null ? 0 : idColumn.getSize(), idColumn.isNotNull());
 
         DBCommand selectCmd = database.createCommand();
         DBCommand updateCmd = database.createCommand();
@@ -135,20 +135,20 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
                 FileValue fileValue = model.get(f);
                 DBTableColumn dbColumn = dbTable.addColumn(f, DataType.BLOB, 0, c.isNotNull());
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(),
-                        (int) fileValue.getSize());
+                    (int) fileValue.getSize());
                 updateCmd.set(dbColumn.to(blob));
                 DBTableColumn fileNameColumn =
-                        dbTable.addColumn(c.getLabelExpression(), DataType.TEXT,
-                                c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                    dbTable.addColumn(c.getLabelExpression(), DataType.TEXT,
+                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
                 selectCmd.select(fileNameColumn);
                 updateCmd.set(fileNameColumn.to(((FileValue) model.get(f)).getName()));
             } else {
                 DBTableColumn dbColumn = dbTable.addColumn(f,
-                        TypesUtil.toEmpireType(c.getType(),
-                                c.getListTable() == null ? null
-                                        : getDataSourceDriver().createDataFetcher(c.getListTable())
-                                        .getIdColumnType(table)),
-                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                    TypesUtil.toEmpireType(c.getType(),
+                        c.getListTable() == null ? null
+                            : getDataSourceDriver().createDataFetcher(c.getListTable())
+                            .getIdColumnType(table)),
+                    c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
                 columns.add(dbColumn);
                 selectCmd.select(dbColumn);
                 if (c.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
@@ -187,11 +187,11 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
 
         TableColumnElement idColumn = table.getIdColumn();
         DBTableColumn dbIdColumn = dbTable.addColumn(idColumn.getColumnName(),
-                TypesUtil.toEmpireType(idColumn.getType(),
-                        idColumn.getListTable() == null ? null
-                                : getDataSourceDriver().createDataFetcher(idColumn.getListTable())
-                                .getIdColumnType(table)),
-                idColumn.getSize() == null ? 0 : idColumn.getSize(), idColumn.isNotNull());
+            TypesUtil.toEmpireType(idColumn.getType(),
+                idColumn.getListTable() == null ? null
+                    : getDataSourceDriver().createDataFetcher(idColumn.getListTable())
+                    .getIdColumnType(table)),
+            idColumn.getSize() == null ? 0 : idColumn.getSize(), idColumn.isNotNull());
 
         DBCommand cmd = database.createCommand();
 
@@ -211,9 +211,9 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
         TableColumnElement deleteColumnEl = table.getDeleteColumn();
         if (deleteColumnEl != null) {
             DBTableColumn deleteColumn =
-                    dbTable.addColumn(deleteColumnEl.getColumnName(), DataType.BOOL,
-                            deleteColumnEl.getSize() == null ? 0 : deleteColumnEl.getSize(),
-                            deleteColumnEl.isNotNull());
+                dbTable.addColumn(deleteColumnEl.getColumnName(), DataType.BOOL,
+                    deleteColumnEl.getSize() == null ? 0 : deleteColumnEl.getSize(),
+                    deleteColumnEl.isNotNull());
             cmd.set(deleteColumn.to(true));
             database.executeUpdate(cmd, getConnection());
         } else {

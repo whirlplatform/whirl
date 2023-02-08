@@ -21,12 +21,12 @@ public class VersionServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+        throws IOException {
         if (version == null) {
             version = getClass().getPackage().getImplementationVersion();
             if (version == null) {
                 try (InputStream is = getServletContext().getResourceAsStream(
-                        "/META-INF/MANIFEST.MF")) {
+                    "/META-INF/MANIFEST.MF")) {
                     Properties prop = new Properties();
                     prop.load(is);
                     version = prop.getProperty("Implementation-Version");

@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
 @Presenter(view = AllApplicationsView.class)
 public class AllApplicationsPresenter
-        extends BasePresenter<AllApplicationsPresenter.IAllApplicationsView, EditorEventBus> {
+    extends BasePresenter<AllApplicationsPresenter.IAllApplicationsView, EditorEventBus> {
 
     private Callback<ApplicationStoreData, Throwable> getApplicationDataCallback;
     private Callback<OpenResult, Throwable> openApplicationCallback;
@@ -28,27 +28,27 @@ public class AllApplicationsPresenter
     public void fetchApplicationElement(final ApplicationStoreData data) {
         if (data != null) {
             EditorDataService.Util.getDataService()
-                    .loadApplication(data, new AsyncCallback<ApplicationElement>() {
-                        @Override
-                        public void onSuccess(ApplicationElement result) {
-                            getView().hide();
-                            if (openApplicationCallback != null) {
-                                openApplicationCallback.onSuccess(
-                                        new OpenResult(result, data.getVersion()));
-                                openApplicationCallback = null;
-                            } else if (getApplicationDataCallback != null) {
-                                getApplicationDataCallback.onSuccess(data);
-                                getApplicationDataCallback = null;
-                            } else {
-                                getEventBus().loadApplication(result, data.getVersion());
-                            }
+                .loadApplication(data, new AsyncCallback<ApplicationElement>() {
+                    @Override
+                    public void onSuccess(ApplicationElement result) {
+                        getView().hide();
+                        if (openApplicationCallback != null) {
+                            openApplicationCallback.onSuccess(
+                                new OpenResult(result, data.getVersion()));
+                            openApplicationCallback = null;
+                        } else if (getApplicationDataCallback != null) {
+                            getApplicationDataCallback.onSuccess(data);
+                            getApplicationDataCallback = null;
+                        } else {
+                            getEventBus().loadApplication(result, data.getVersion());
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            view.showError(caught);
-                        }
-                    });
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        view.showError(caught);
+                    }
+                });
         }
     }
 
@@ -92,21 +92,21 @@ public class AllApplicationsPresenter
     private void loadApplicationsData() {
         getView().showLoadDataProgress();
         EditorDataService.Util.getDataService()
-                .loadApplicationList(new AsyncCallback<Collection<ApplicationStoreData>>() {
-                    @Override
-                    public void onSuccess(Collection<ApplicationStoreData> result) {
-                        getView().loadApplications(result);
-                    }
+            .loadApplicationList(new AsyncCallback<Collection<ApplicationStoreData>>() {
+                @Override
+                public void onSuccess(Collection<ApplicationStoreData> result) {
+                    getView().loadApplications(result);
+                }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        getView().showError(caught);
-                    }
-                });
+                @Override
+                public void onFailure(Throwable caught) {
+                    getView().showError(caught);
+                }
+            });
     }
 
     public interface IAllApplicationsView
-            extends IsWidget, ReverseViewInterface<AllApplicationsPresenter> {
+        extends IsWidget, ReverseViewInterface<AllApplicationsPresenter> {
 
         void loadApplications(Collection<ApplicationStoreData> data);
 

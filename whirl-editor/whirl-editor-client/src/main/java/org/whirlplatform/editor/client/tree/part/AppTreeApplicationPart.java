@@ -106,8 +106,8 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     @Override
     public boolean isPasting(AbstractElement parent, AbstractElement element) {
         return (element instanceof ComponentElement
-                && (parent == folders.components || parent == folders.freeComponents))
-                || (element instanceof EventElement && parent == folders.events);
+            && (parent == folders.components || parent == folders.freeComponents))
+            || (element instanceof EventElement && parent == folders.events);
     }
 
     @Override
@@ -124,12 +124,12 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     @Override
     public boolean isDeleting(AbstractElement element) {
         return element == handledElement.getRootComponent()
-                || (element instanceof ComponentElement
-                && handledElement.getFreeComponents().contains(element))
-                || (element instanceof EventElement
-                && handledElement.getFreeEvents().contains(element))
-                || (element instanceof DataSourceElement
-                && handledElement.getDataSources().contains(element));
+            || (element instanceof ComponentElement
+            && handledElement.getFreeComponents().contains(element))
+            || (element instanceof EventElement
+            && handledElement.getFreeEvents().contains(element))
+            || (element instanceof DataSourceElement
+            && handledElement.getDataSources().contains(element));
     }
 
     @Override
@@ -146,31 +146,31 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
         } else if (parent == folders.references) {
             // Callback для добавления зависимости после загрузки
             final AsyncCallback<ApplicationElement> callback =
-                    new AsyncCallback<ApplicationElement>() {
-                        @Override
-                        public void onSuccess(ApplicationElement result) {
-                            treePresenter.riseAddElement(handledElement, result);
-                        }
+                new AsyncCallback<ApplicationElement>() {
+                    @Override
+                    public void onSuccess(ApplicationElement result) {
+                        treePresenter.riseAddElement(handledElement, result);
+                    }
 
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            InfoHelper.throwInfo("load-application", caught);
-                        }
-                    };
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        InfoHelper.throwInfo("load-application", caught);
+                    }
+                };
 
             // Callback для загрузки зависимости после получения её id
             treePresenter.riseShowOpenApplicationsCallback(
-                    new Callback<ApplicationStoreData, Throwable>() {
-                        @Override
-                        public void onFailure(Throwable reason) {
-                        }
+                new Callback<ApplicationStoreData, Throwable>() {
+                    @Override
+                    public void onFailure(Throwable reason) {
+                    }
 
-                        @Override
-                        public void onSuccess(ApplicationStoreData result) {
-                            EditorDataService.Util.getDataService()
-                                    .loadApplication(result, callback);
-                        }
-                    });
+                    @Override
+                    public void onSuccess(ApplicationStoreData result) {
+                        EditorDataService.Util.getDataService()
+                            .loadApplication(result, callback);
+                    }
+                });
             return true;
         } else if (element instanceof ComponentElement && parent == folders.components) {
             treePresenter.riseAddElement(new NullRootComponentElement(), element);
@@ -185,46 +185,46 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
         if ((parent == handledElement || parent instanceof NullRootComponentElement)
-                && element == handledElement.getRootComponent()) {
+            && element == handledElement.getRootComponent()) {
             removeElement(element);
             addChildElement(folders.components, element);
             putTreePart(element,
-                    new AppTreeComponentPart(appTree, treePresenter, (ComponentElement) element));
+                new AppTreeComponentPart(appTree, treePresenter, (ComponentElement) element));
             return true;
         } else if ((parent == handledElement || parent instanceof NullFreeComponentElement)
-                && (element instanceof ComponentElement
-                && handledElement.getFreeComponents().contains(element))) {
+            && (element instanceof ComponentElement
+            && handledElement.getFreeComponents().contains(element))) {
             removeElement(element);
             addChildElement(folders.freeComponents, element);
             putTreePart(element,
-                    new AppTreeComponentPart(appTree, treePresenter, (ComponentElement) element));
+                new AppTreeComponentPart(appTree, treePresenter, (ComponentElement) element));
             return true;
         } else if (parent == handledElement && element instanceof EventElement
-                && handledElement.getFreeEvents().contains(element)) {
+            && handledElement.getFreeEvents().contains(element)) {
             removeElement(element);
             addChildElement(folders.events, element);
             putTreePart(element,
-                    new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
+                new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
             return true;
         } else if (parent == handledElement && element instanceof DataSourceElement
-                && handledElement.getDataSources().contains(element)) {
+            && handledElement.getDataSources().contains(element)) {
             removeElement(element);
             addChildElement(folders.datasources, element);
             putTreePart(element,
-                    new AppTreeDataSourcePart(appTree, treePresenter, (DataSourceElement) element));
+                new AppTreeDataSourcePart(appTree, treePresenter, (DataSourceElement) element));
             return true;
         } else if (parent == handledElement && element instanceof ApplicationElement
-                && handledElement.getReferences().contains(element)) {
+            && handledElement.getReferences().contains(element)) {
             removeElement(element);
             addChildElement(folders.references, element);
             putTreePart(element,
-                    new AppTreeReferencePart(appTree, treePresenter, (ApplicationElement) element));
+                new AppTreeReferencePart(appTree, treePresenter, (ApplicationElement) element));
             return true;
         } else if (parent == handledElement && element instanceof EventElement) {
             removeElement(element);
             addChildElement(folders.events, element);
             putTreePart(element,
-                    new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
+                new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
             return true;
         }
         return false;
@@ -263,17 +263,17 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     public boolean doRemoveElementUI(AbstractElement parent, AbstractElement element) {
         /* компонент */
         if ((element instanceof ComponentElement
-                && (appTree.hasChild(folders.components, element, false)
-                || appTree.hasChild(folders.freeComponents, element, false)))
-                /* событие */
-                || (element instanceof EventElement
-                && appTree.hasChild(folders.events, element, false))
-                /* источник данных */
-                || (element instanceof DataSourceElement
-                && appTree.hasChild(folders.datasources, element, false))
-                /* зависимости */
-                || (element instanceof ApplicationElement
-                && appTree.hasChild(folders.references, element, false))) {
+            && (appTree.hasChild(folders.components, element, false)
+            || appTree.hasChild(folders.freeComponents, element, false)))
+            /* событие */
+            || (element instanceof EventElement
+            && appTree.hasChild(folders.events, element, false))
+            /* источник данных */
+            || (element instanceof DataSourceElement
+            && appTree.hasChild(folders.datasources, element, false))
+            /* зависимости */
+            || (element instanceof ApplicationElement
+            && appTree.hasChild(folders.references, element, false))) {
             removeElement(element);
             return true;
         }
@@ -285,12 +285,12 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
         if (element == folders.events) {
             if (!handledElement.getFreeEvents().isEmpty()) {
                 treePresenter.riseEditRights(handledElement.getFreeEvents(),
-                        Collections.singleton(RightType.EXECUTE));
+                    Collections.singleton(RightType.EXECUTE));
             }
             return true;
         } else if (element == folders.components) {
             Collection<EventElement> events =
-                    getAllComponentsEvents(handledElement.getRootComponent());
+                getAllComponentsEvents(handledElement.getRootComponent());
             if (!events.isEmpty()) {
                 treePresenter.riseEditRights(events, Collections.singleton(RightType.EXECUTE));
             }
@@ -311,9 +311,9 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
             }
             if (!tables.isEmpty()) {
                 treePresenter.riseEditRights(tables,
-                        Collections.unmodifiableCollection(Arrays.asList(RightType.ADD,
-                                RightType.DELETE, RightType.EDIT, RightType.VIEW,
-                                RightType.RESTRICT)));
+                    Collections.unmodifiableCollection(Arrays.asList(RightType.ADD,
+                        RightType.DELETE, RightType.EDIT, RightType.VIEW,
+                        RightType.RESTRICT)));
             }
         }
         return false;
@@ -332,11 +332,11 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     @Override
     public boolean canDragDrop(AbstractElement dropTarget, Object dropData) {
         if ((dropData instanceof ComponentType || dropData instanceof ComponentElement)
-                && (dropTarget == folders.freeComponents || dropTarget == folders.components)) {
+            && (dropTarget == folders.freeComponents || dropTarget == folders.components)) {
             return true;
         } else if (dropTarget instanceof ReportElement
-                && (ComponentType.FormBuilderType.equals(dropData)
-                || dropData instanceof FormElement)) {
+            && (ComponentType.FormBuilderType.equals(dropData)
+            || dropData instanceof FormElement)) {
             return true;
         } else {
             return dropData instanceof EventElement && dropTarget == folders.events;
@@ -347,22 +347,22 @@ public class AppTreeApplicationPart extends AbstractAppTreePart<ApplicationEleme
     public boolean doDragDrop(AbstractElement dropTarget, Object dropData) {
         if (dropTarget == folders.freeComponents && dropData instanceof ComponentType) {
             treePresenter.riseAddElement(new NullFreeComponentElement(),
-                    new NewComponentElement((ComponentType) dropData));
+                new NewComponentElement((ComponentType) dropData));
             return true;
         } else if (dropTarget == folders.freeComponents && dropData instanceof ComponentElement) {
             treePresenter.riseAddElement(new NullFreeComponentElement(),
-                    (ComponentElement) dropData);
+                (ComponentElement) dropData);
         } else if (dropTarget == folders.components && dropData instanceof ComponentType) {
             treePresenter.riseAddElement(new NullRootComponentElement(),
-                    new NewComponentElement((ComponentType) dropData));
+                new NewComponentElement((ComponentType) dropData));
             return true;
         } else if (dropTarget == folders.components && dropData instanceof ComponentElement) {
             treePresenter.riseAddElement(new NullRootComponentElement(),
-                    (ComponentElement) dropData);
+                (ComponentElement) dropData);
         } else if (dropTarget instanceof ReportElement
             && ComponentType.FormBuilderType.equals(dropData)) {
             treePresenter.riseAddElement(dropTarget,
-                    new NewComponentElement((ComponentType) dropData));
+                new NewComponentElement((ComponentType) dropData));
             return true;
         } else if (dropTarget instanceof ReportElement && dropData instanceof FormElement) {
             treePresenter.riseAddElement(dropTarget, (ComponentElement) dropData);

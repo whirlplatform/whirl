@@ -13,7 +13,7 @@ public class RightCollectionElement extends AbstractElement {
     private AbstractElement element;
     private Set<RightElement> applicationRights = new HashSet<RightElement>();
     private Map<GroupElement, Set<RightElement>> groupRights =
-            new HashMap<GroupElement, Set<RightElement>>();
+        new HashMap<GroupElement, Set<RightElement>>();
 
     public RightCollectionElement() {
     }

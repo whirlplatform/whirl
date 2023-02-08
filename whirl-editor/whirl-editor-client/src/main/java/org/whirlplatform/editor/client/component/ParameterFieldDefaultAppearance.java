@@ -6,7 +6,7 @@ import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import org.whirlplatform.editor.client.component.ParameterEditorComponent.ParameterFieldAppearance;
 
 public class ParameterFieldDefaultAppearance extends
-        TriggerFieldDefaultAppearance implements ParameterFieldAppearance {
+    TriggerFieldDefaultAppearance implements ParameterFieldAppearance {
 
     public ParameterFieldDefaultAppearance() {
         this(GWT.create(ParameterFieldResources.class));

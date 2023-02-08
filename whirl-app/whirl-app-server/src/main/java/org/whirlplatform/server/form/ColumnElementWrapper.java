@@ -14,7 +14,7 @@ public class ColumnElementWrapper {
     private Integer finalCol = null;
 
     private Set<CellElementWrapper> cells = new TreeSet<CellElementWrapper>(
-            new CellComparator());
+        new CellComparator());
 
     public ColumnElementWrapper(int col) {
         this.col = col;

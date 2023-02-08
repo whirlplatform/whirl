@@ -33,7 +33,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private static final String CLOSE = EditorMessage.Util.MESSAGE.close();
     private static final String WARN = EditorMessage.Util.MESSAGE.warn();
     private static final String WARN_MESSAGE =
-            EditorMessage.Util.MESSAGE.warn_input_data_is_not_valid();
+        EditorMessage.Util.MESSAGE.warn_input_data_is_not_valid();
     private static final String WARN_EXISTS = EditorMessage.Util.MESSAGE.new_application_exists();
     private static final String NAME = EditorMessage.Util.MESSAGE.new_application_name();
     private static final String CODE = EditorMessage.Util.MESSAGE.new_application_code();
@@ -42,7 +42,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private static final String LOCALE = EditorMessage.Util.MESSAGE.new_application_locale();
     private static final String VERSION = EditorMessage.Util.MESSAGE.new_application_version();
     private static final String TITLE_NEW_APP =
-            EditorMessage.Util.MESSAGE.toolbar_creating_application();
+        EditorMessage.Util.MESSAGE.toolbar_creating_application();
     private static final String TITLE_SAVE_AS = EditorMessage.Util.MESSAGE.save_as();
     private AppBasicInfoPresenter presenter;
     private TextField name;
@@ -98,23 +98,23 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
         locale = new LocaleField();
         version = new VersionField();
         container.add(new FieldLabel(name, NAME),
-                new VerticalLayoutData(1, -1, new Margins(5, 5, 0, 5)));
+            new VerticalLayoutData(1, -1, new Margins(5, 5, 0, 5)));
         container.add(new FieldLabel(code, CODE),
-                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+            new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(title, TITLE),
-                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+            new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         //container.add(new FieldLabel(url, URL), new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(locale, LOCALE),
-                new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
+            new VerticalLayoutData(1, -1, new Margins(0, 5, 0, 5)));
         container.add(new FieldLabel(version, VERSION),
-                new VerticalLayoutData(1, -1, new Margins(10, 5, 0, 5)));
+            new VerticalLayoutData(1, -1, new Margins(10, 5, 0, 5)));
         container.setBorders(false);
         return container;
     }
 
     private boolean hasValidationErrors() {
         return !(name.validate() && /*url.validate() &&*/ code.validate() && title.validate()
-                && version.isValid() & locale.isValid());
+            && version.isValid() & locale.isValid());
     }
 
     private ApplicationBasicInfo createInfo() {

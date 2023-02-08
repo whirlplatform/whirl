@@ -27,8 +27,8 @@ import org.whirlplatform.meta.shared.data.DataValue;
 @JsType(name = "HorizontalMenu", namespace = "Whirl")
 public class HorizontalMenuBuilder extends InsertContainerBuilder implements Containable {
 
+    private final Map<Menu, MenuBarItem> map = new HashMap<Menu, MenuBarItem>();
     private MenuBar menuBar;
-    private Map<Menu, MenuBarItem> map = new HashMap<Menu, MenuBarItem>();
     private List<ComponentBuilder> children;
 
     @JsConstructor
@@ -54,9 +54,9 @@ public class HorizontalMenuBuilder extends InsertContainerBuilder implements Con
                 if (item != null) {
                     Menu m = item.getMenu();
                     // TODO Если пустое, не открываем
-//                    if (m.getChildren().size() > 0) {
+                    //                    if (m.getChildren().size() > 0) {
                     toggle(item);
-//                    }
+                    //                    }
                     // Выполнение события
                     for (ComponentBuilder child : children) {
                         HorizontalMenuItemBuilder builder = (HorizontalMenuItemBuilder) child;

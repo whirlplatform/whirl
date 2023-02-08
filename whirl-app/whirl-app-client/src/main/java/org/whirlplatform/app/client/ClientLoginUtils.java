@@ -73,15 +73,15 @@ public class ClientLoginUtils {
 
     public static void initTouchTimer() {
         final DataServiceAsync touchService =
-                DataServiceAsync.Util.getDataService(new AsyncCallback<Boolean>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                    }
+            DataServiceAsync.Util.getDataService(new AsyncCallback<Boolean>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                }
 
-                    @Override
-                    public void onSuccess(Boolean result) {
-                    }
-                });
+                @Override
+                public void onSuccess(Boolean result) {
+                }
+            });
 
         if (timer != null) {
             timer.cancel();

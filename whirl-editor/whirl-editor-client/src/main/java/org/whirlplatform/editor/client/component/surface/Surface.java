@@ -47,7 +47,7 @@ public class Surface extends Component {
             Rectangle rect = el.getBounds();
             getElement().getStyle().setPosition(Position.ABSOLUTE);
             getElement().setBounds(rect.getX(), rect.getY(), rect.getWidth(),
-                    rect.getHeight(), true);
+                rect.getHeight(), true);
         }
     }
 

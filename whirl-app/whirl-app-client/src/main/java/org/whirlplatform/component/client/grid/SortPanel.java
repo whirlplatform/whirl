@@ -37,14 +37,12 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
     public static final int MIN_WIDTH = 400;
     public static final int MIN_HEIGHT = 250;
     private final ClassMetadata metadata;
+    private final TextButton save;
+    private final TextButton close;
     private boolean init = false;
     private DualListField<SortValue, SortValue> dualList;
-
     private ListStore<SortValue> fromStore;
     private ListStore<SortValue> toStore;
-
-    private TextButton save;
-    private TextButton close;
 
     public SortPanel(final ClassMetadata metadata) {
         super();
@@ -97,26 +95,26 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
         toStore = new ListStore<SortValue>(keyProvider);
 
         ValueProvider<SortValue, SortValue> valueProvider =
-                new ValueProvider<SortValue, SortValue>() {
+            new ValueProvider<SortValue, SortValue>() {
 
-                    @Override
-                    public SortValue getValue(SortValue object) {
-                        return object;
-                    }
+                @Override
+                public SortValue getValue(SortValue object) {
+                    return object;
+                }
 
-                    @Override
-                    public void setValue(SortValue object, SortValue value) {
-                    }
+                @Override
+                public void setValue(SortValue object, SortValue value) {
+                }
 
-                    @Override
-                    public String getPath() {
-                        return null;
-                    }
+                @Override
+                public String getPath() {
+                    return null;
+                }
 
-                };
+            };
 
         dualList = new DualListField<SortValue, SortValue>(fromStore, toStore, valueProvider,
-                new SortRowCell(toStore));
+            new SortRowCell(toStore));
 
         dualList.setEnableDnd(true);
         dualList.setMode(Mode.INSERT);
@@ -207,7 +205,7 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
         for (SortValue m : data) {
             if (toStore.findModelWithKey(toStore.getKeyProvider().getKey(m)) != null) {
                 toStore.findModelWithKey(toStore.getKeyProvider().getKey(m))
-                        .setOrder(m.getOrder()); // Восстановление
+                    .setOrder(m.getOrder()); // Восстановление
                 // сортировки
                 sorts.add(m.getField());
                 continue;
@@ -374,17 +372,14 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
         }
         type = LocatorParams.PARAM_LABEL;
         Element byLabel =
-                getElementByParam(sortValPart.getParameter(type), type, false, store, view);
+            getElementByParam(sortValPart.getParameter(type), type, false, store, view);
         if (byLabel != null) {
             return byLabel;
         }
         type = LocatorParams.PARAM_INDEX;
         Element byIndex =
-                getElementByParam(sortValPart.getParameter(type), type, false, store, view);
-        if (byIndex != null) {
-            return byIndex;
-        }
-        return null;
+            getElementByParam(sortValPart.getParameter(type), type, false, store, view);
+        return byIndex;
     }
 
     private Element getToViewElement(Locator part) {
@@ -403,17 +398,14 @@ public class SortPanel extends Window implements SortEvent.HasSortHandlers, Loca
         }
         type = LocatorParams.PARAM_LABEL;
         Element byLabel =
-                getElementByParam(sortValPart.getParameter(type), type, isImg, store, view);
+            getElementByParam(sortValPart.getParameter(type), type, isImg, store, view);
         if (byLabel != null) {
             return byLabel;
         }
         type = LocatorParams.PARAM_INDEX;
         Element byIndex =
-                getElementByParam(sortValPart.getParameter(type), type, isImg, store, view);
-        if (byIndex != null) {
-            return byIndex;
-        }
-        return null;
+            getElementByParam(sortValPart.getParameter(type), type, isImg, store, view);
+        return byIndex;
     }
 
     private Element getElementByParam(String param, String paramType, boolean isImg,

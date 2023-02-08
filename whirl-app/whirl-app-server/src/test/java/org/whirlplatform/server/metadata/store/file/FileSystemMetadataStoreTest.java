@@ -49,10 +49,10 @@ public class FileSystemMetadataStoreTest {
 //        fs = Jimfs.newFileSystem(com.google.common.jimfs.Configuration.unix());
         fs = FileSystems.getDefault();
         applicationPath = fs.getPath(WORK_PATH,
-                FileSystemMetadataStore.APPLICATIONS_PATH, APPLICATION_CODE);
+            FileSystemMetadataStore.APPLICATIONS_PATH, APPLICATION_CODE);
         tagPath = applicationPath.resolve(FileSystemMetadataStore.TAG_PATH);
         branchPath = applicationPath
-                .resolve(FileSystemMetadataStore.BRANCH_PATH);
+            .resolve(FileSystemMetadataStore.BRANCH_PATH);
         Files.createDirectories(applicationPath);
         Files.createDirectories(tagPath);
         Files.createDirectories(branchPath);
@@ -73,29 +73,29 @@ public class FileSystemMetadataStoreTest {
     @Test
     public void test() throws MetadataStoreException {
         FileSystemMetadataStore store = new FileSystemMetadataStore(
-                new Configuration() {
+            new Configuration() {
 
-                    @Override
-                    public <T> Map<String, T> lookupAll(String path,
-                                                        Class<T> cls) {
-                        return null;
-                    }
+                @Override
+                public <T> Map<String, T> lookupAll(String path,
+                                                    Class<T> cls) {
+                    return null;
+                }
 
-                    @SuppressWarnings("unchecked")
-                    @Override
-                    public <T> T lookup(String name) {
-                        if ("Whirl/cachetimeout".equals(name)) {
-                            return (T) new Integer(10);
-                        }
-                        return (T) WORK_PATH;
+                @SuppressWarnings("unchecked")
+                @Override
+                public <T> T lookup(String name) {
+                    if ("Whirl/cachetimeout".equals(name)) {
+                        return (T) new Integer(10);
                     }
-                }, fs);
+                    return (T) WORK_PATH;
+                }
+            }, fs);
 
         List<Version> allVersions = new ArrayList<>();
 
         // проверяем сохранение
         Assert.assertFalse(Files.exists(version100Path
-                .resolve(FileSystemMetadataStore.APPLICATION_FILE)));
+            .resolve(FileSystemMetadataStore.APPLICATION_FILE)));
 
         ApplicationElement application = TestHelper.emptyApplication();
         application.setCode(APPLICATION_CODE);
@@ -104,13 +104,13 @@ public class FileSystemMetadataStoreTest {
         allVersions.add(Version.parseVersion("1.0.0"));
 
         Assert.assertTrue("Application not saved", Files.exists(version100Path
-                .resolve(FileSystemMetadataStore.APPLICATION_FILE)));
+            .resolve(FileSystemMetadataStore.APPLICATION_FILE)));
 
         // проверяем загрузку
         ApplicationElement loadedApplication = store.loadApplication(
-                application.getCode(), Version.parseVersion("1.0.0"));
+            application.getCode(), Version.parseVersion("1.0.0"));
         Assert.assertEquals("Application not loaded", application.getCode(),
-                loadedApplication.getCode());
+            loadedApplication.getCode());
 
         // проверяем загрузку последней версии
         application.setName("Version 1.0.2");
@@ -127,23 +127,23 @@ public class FileSystemMetadataStoreTest {
 
         loadedApplication = store.loadApplication(application.getCode(), null);
         Assert.assertEquals("Not last version loaded", application.getName(),
-                loadedApplication.getName());
+            loadedApplication.getName());
 
         // проверяем сохранение и загрузку ветки(branch)
         application.setName("Branch 1");
         store.saveApplication(application, Version.create("branch1"), user);
         Assert.assertTrue("Branch 1 save problem",
-                Files.exists(branch1Path.resolve(FileSystemMetadataStore.APPLICATION_FILE)));
+            Files.exists(branch1Path.resolve(FileSystemMetadataStore.APPLICATION_FILE)));
         allVersions.add(Version.create("branch1"));
 
         loadedApplication = store.loadApplication(application.getCode(), Version.create("branch1"));
         Assert.assertEquals("Branch 1 load problem", application.getName(),
-                loadedApplication.getName());
+            loadedApplication.getName());
 
         // проверяем получение списка со всеми версиями
         List<ApplicationStoreData> list = store.all();
         Assert.assertEquals("Size of saved version and size of actual version not equal",
-                allVersions.size(), list.size());
+            allVersions.size(), list.size());
 
         for (ApplicationStoreData d : list) {
             Assert.assertTrue("Version not found", allVersions.contains(d.getVersion()));

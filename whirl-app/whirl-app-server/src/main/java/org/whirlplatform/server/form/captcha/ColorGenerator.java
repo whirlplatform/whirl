@@ -23,8 +23,8 @@ public class ColorGenerator {
         /* if the startingFrom color is null, then generate a new random color. */
         if (startFrom == null) {
             return new Color((int) (Math.random() * COLOR_DEGREES),
-                    (int) (Math.random() * COLOR_DEGREES),
-                    (int) (Math.random() * COLOR_DEGREES));
+                (int) (Math.random() * COLOR_DEGREES),
+                (int) (Math.random() * COLOR_DEGREES));
         }
 
         /* try to avoid the startFrom color. */

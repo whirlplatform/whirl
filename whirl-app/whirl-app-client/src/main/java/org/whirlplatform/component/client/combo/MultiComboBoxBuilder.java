@@ -67,8 +67,8 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  */
 @JsType(name = "MultiComboBox", namespace = "Whirl")
 public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T>
-        implements
-        ListParameter<RowListValue> {
+    implements
+    ListParameter<RowListValue> {
 
     protected CountElement ce;
     protected ListView<ListModelData, ?> listView;
@@ -158,9 +158,9 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
             @Override
             public void onBrowserEvent(
-                    com.google.gwt.cell.client.Cell.Context context,
-                    Element parent, Boolean value, NativeEvent event,
-                    ValueUpdater<Boolean> valueUpdater) {
+                com.google.gwt.cell.client.Cell.Context context,
+                Element parent, Boolean value, NativeEvent event,
+                ValueUpdater<Boolean> valueUpdater) {
                 if ("change".equalsIgnoreCase(event.getType())) {
                     int idx = listView.findElementIndex(parent);
                     if (readOnly) {
@@ -196,11 +196,11 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         listView = new ListView<ListModelData, Boolean>(null, valueProvider, cell);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SIMPLE);
         comboBox = (T) new ComboBox<ListModelData>(
-                new ComboBoxCell<ListModelData>(null, labelProvider, listView) {
-                    @Override
-                    protected void onSelect(ListModelData item) {
-                    }
-                });
+            new ComboBoxCell<ListModelData>(null, labelProvider, listView) {
+                @Override
+                protected void onSelect(ListModelData item) {
+                }
+            });
         comboBox.setQueryDelay(delayTimeMs);
         initCountElement();
         return comboBox;
@@ -208,7 +208,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     protected void initCountElement() {
         ce = new CountElement(DomQuery.selectNode("input",
-                comboBox.getElement()));
+            comboBox.getElement()));
         ce.setCount(0);
     }
 
@@ -230,42 +230,42 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
         // Чтобы отмеченные элементы отображались в начале списка
         StoreSortInfo<ListModelData> sortInfo = new StoreSortInfo<ListModelData>(
-                new Comparator<ListModelData>() {
-                    @Override
-                    public int compare(ListModelData o1, ListModelData o2) {
-                        if (checkedModels.models.contains(o1)
-                                && !checkedModels.models.contains(o2)) {
-                            return -1;
-                        } else if (!checkedModels.models.contains(o1)
-                                && checkedModels.models.contains(o2)) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
+            new Comparator<ListModelData>() {
+                @Override
+                public int compare(ListModelData o1, ListModelData o2) {
+                    if (checkedModels.models.contains(o1)
+                        && !checkedModels.models.contains(o2)) {
+                        return -1;
+                    } else if (!checkedModels.models.contains(o1)
+                        && checkedModels.models.contains(o2)) {
+                        return 1;
+                    } else {
+                        return 0;
                     }
-                }, SortDir.ASC);
+                }
+            }, SortDir.ASC);
         store.addSortInfo(sortInfo);
         store.getLoader().addLoadHandler(
-                new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+            new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
 
-                    @Override
-                    public void onLoad(
-                            LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
-                        // Если в комбобокс не введено значение, добавляем
-                        // отмеченные элементы
-                        if (event.getLoadConfig().getQuery() == null
-                                || event.getLoadConfig().getQuery().isEmpty()) {
-                            for (ListModelData m : checkedModels.models) {
-                                if (!store.getAll().contains(m)) {
-                                    store.add(m);
-                                }
+                @Override
+                public void onLoad(
+                    LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                    // Если в комбобокс не введено значение, добавляем
+                    // отмеченные элементы
+                    if (event.getLoadConfig().getQuery() == null
+                        || event.getLoadConfig().getQuery().isEmpty()) {
+                        for (ListModelData m : checkedModels.models) {
+                            if (!store.getAll().contains(m)) {
+                                store.add(m);
                             }
                         }
-                        // Чтобы в комбобоксе не выделялся текст при загрузке
-                        // данных
-                        comboBox.select(comboBox.getText().length(), 0);
                     }
-                });
+                    // Чтобы в комбобоксе не выделялся текст при загрузке
+                    // данных
+                    comboBox.select(comboBox.getText().length(), 0);
+                }
+            });
         comboBox.setStore(store);
     }
 
@@ -420,7 +420,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             parseValue(value.getString(), true);
             return true;
         } else if (name
-                .equalsIgnoreCase(PropertyType.SingleSelection.getCode())) {
+            .equalsIgnoreCase(PropertyType.SingleSelection.getCode())) {
             singleSelection = value.getBoolean();
             return true;
         }
@@ -472,7 +472,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     protected void restoreSelectionState() {
         if (restoreState) {
             RowListValue v = (RowListValue) getSelectionStore().restore(
-                    getId() + "/select");
+                getId() + "/select");
             setFieldValue(v);
         }
     }
@@ -497,7 +497,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 part = new Locator(LocatorParams.TYPE_INPUT);
             }
             if (comboBox.getCell().getAppearance()
-                    .triggerIsOrHasChild(comboBox.getElement(), element)) {
+                .triggerIsOrHasChild(comboBox.getElement(), element)) {
                 part = new Locator(LocatorParams.TYPE_TRIGGER);
             }
             if (super.clearDecorator != null) {
@@ -546,9 +546,9 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 TriggerFieldAppearance appearance = comboBox.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
                     TriggerFieldDefaultAppearance defApp =
-                            (TriggerFieldDefaultAppearance) appearance;
+                        (TriggerFieldDefaultAppearance) appearance;
                     element = comboBox.getElement().selectNode(
-                            "." + defApp.getStyle().trigger()); // TODO надо что-то сделать
+                        "." + defApp.getStyle().trigger()); // TODO надо что-то сделать
                 }
             }
             if (LocatorParams.TYPE_CLEAR.equals(part.getType())) {
@@ -567,7 +567,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                     int index = Integer.parseInt(part.getParameter(LocatorParams.PARAMETER_INDEX));
                     element = listView.getElement(index);
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
-                        && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
+                    && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     String label = part.getParameter(LocatorParams.PARAMETER_LABEL);
                     for (ListModelData m : store.getAll()) {
                         if (label.equals(m.getLabel())) {
@@ -745,14 +745,14 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     }
 
     private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_TRIGGER = "Trigger";
-        private static String TYPE_CLEAR = "Clear";
-        private static String TYPE_ITEM = "Item";
-        private static String TYPE_CHECK = "Check";
-        private static String PARAMETER_ID = "id";
-        private static String PARAMETER_INDEX = "index";
-        private static String PARAMETER_LABEL = "label";
+        private static final String TYPE_INPUT = "Input";
+        private static final String TYPE_TRIGGER = "Trigger";
+        private static final String TYPE_CLEAR = "Clear";
+        private static final String TYPE_ITEM = "Item";
+        private static final String TYPE_CHECK = "Check";
+        private static final String PARAMETER_ID = "id";
+        private static final String PARAMETER_INDEX = "index";
+        private static final String PARAMETER_LABEL = "label";
     }
 
     class CheckedModels {

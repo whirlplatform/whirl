@@ -17,7 +17,7 @@ public class TableDataMessage extends AbstractMessage {
 
         // Определять тип? (table, list, tree)
         builder.append("{\"type\": \"getTableData\", \"sql\": \"")
-                .append(sql.replaceAll("\"", "\\\"")).append("\"}");
+            .append(sql.replaceAll("\"", "\\\"")).append("\"}");
 
         return getFullLogMessage(builder.toString());
     }

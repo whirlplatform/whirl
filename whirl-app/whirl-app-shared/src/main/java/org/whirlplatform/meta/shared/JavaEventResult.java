@@ -47,7 +47,7 @@ public class JavaEventResult implements EventResult, Serializable {
         eventResult.setMessageType((String) map.get("messageType"));
 
         for (Map<String, String> p : (List<Map<String, String>>) map
-                .get("parameters")) {
+            .get("parameters")) {
 
             Integer index = Integer.valueOf(p.get("index"));
             DataType type = DataType.valueOf(p.get("type"));
@@ -70,7 +70,7 @@ public class JavaEventResult implements EventResult, Serializable {
                 DataValue fieldValue = new DataValueImpl(type);
                 fieldValue.setCode(code);
                 fieldValue.setValue(DataValueImpl.convertValueFromString(value,
-                        title, type));
+                    title, type));
                 parameter.setDataWithCode(fieldValue);
             }
 

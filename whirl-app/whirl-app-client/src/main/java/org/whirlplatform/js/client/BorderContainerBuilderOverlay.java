@@ -26,7 +26,7 @@ public abstract class BorderContainerBuilderOverlay {
     public static void setChildWest(BorderContainerBuilder instance,
                                     ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
-                new DataValueImpl(DataType.STRING, "West"));
+            new DataValueImpl(DataType.STRING, "West"));
         instance.addChild(builder);
     }
 
@@ -38,7 +38,7 @@ public abstract class BorderContainerBuilderOverlay {
     public static void setChildEast(BorderContainerBuilder instance,
                                     ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
-                new DataValueImpl(DataType.STRING, "East"));
+            new DataValueImpl(DataType.STRING, "East"));
         instance.addChild(builder);
     }
 
@@ -50,7 +50,7 @@ public abstract class BorderContainerBuilderOverlay {
     public static void setChildNorth(BorderContainerBuilder instance,
                                      ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
-                new DataValueImpl(DataType.STRING, "North"));
+            new DataValueImpl(DataType.STRING, "North"));
         instance.addChild(builder);
     }
 
@@ -62,7 +62,7 @@ public abstract class BorderContainerBuilderOverlay {
     public static void setChildSouth(BorderContainerBuilder instance,
                                      ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataLocation.getCode(),
-                new DataValueImpl(DataType.STRING, "South"));
+            new DataValueImpl(DataType.STRING, "South"));
         instance.addChild(builder);
     }
 

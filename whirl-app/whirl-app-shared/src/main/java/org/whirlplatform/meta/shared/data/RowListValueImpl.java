@@ -16,10 +16,10 @@ public class RowListValueImpl extends DataValueImpl implements RowListValue {
         throw new UnsupportedOperationException();
     }
 
-//    @Override
-//    public List<RowValue> getValue() {
-//        return rowList;
-//    }
+    //    @Override
+    //    public List<RowValue> getValue() {
+    //        return rowList;
+    //    }
 
     public void addRowValue(RowValue row) {
         rowList.add(row);

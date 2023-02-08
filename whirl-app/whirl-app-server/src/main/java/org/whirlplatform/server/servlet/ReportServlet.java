@@ -71,7 +71,7 @@ public class ReportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+        throws IOException {
 
         String tokenId = request.getParameter(AppConstant.TOKEN_ID);
         ApplicationUser user = null;
@@ -79,7 +79,7 @@ public class ReportServlet extends HttpServlet {
             // user =
             // SessionManager.get(request.getSession().getServletContext())
             user = SessionManager.get(request.getSession())
-                    .getUser(new SessionToken(request.getSession().getId(), tokenId));
+                .getUser(new SessionToken(request.getSession().getId(), tokenId));
         } catch (CustomException e1) {
             // skipped
         }
@@ -103,7 +103,7 @@ public class ReportServlet extends HttpServlet {
             List<DataValue> params = loadParameters(report, user, request.getSession());
 
             FormElementWrapper form =
-                    connector().getFormRepresent(report.getFormId(), params, user);
+                connector().getFormRepresent(report.getFormId(), params, user);
             if (form == null) {
                 throw new CustomException("Wrong form id");
             }
@@ -128,18 +128,18 @@ public class ReportServlet extends HttpServlet {
     private void writeXLSX(Report report, FormElementWrapper form, ApplicationUser user,
                            HttpServletResponse response,
                            Collection<DataValue> params)
-            throws IOException, SQLException, ConnectException {
+        throws IOException, SQLException, ConnectException {
         response.setContentType(
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition",
-                "attachment; filename=\"" + form.getName() + ".xlsx\"");
+            "attachment; filename=\"" + form.getName() + ".xlsx\"");
         // + getReportName(report, user) + ".xlsx\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
              FormWriter writer = new XLSXReportWriter(connectionProvider, report, form, params,
-                     user)) {
+                 user)) {
             writer.write(response.getOutputStream());
         }
     }
@@ -147,17 +147,17 @@ public class ReportServlet extends HttpServlet {
     private void writeXLS(Report report, FormElementWrapper form, ApplicationUser user,
                           HttpServletResponse response,
                           Collection<DataValue> params)
-            throws IOException, SQLException, ConnectException {
+        throws IOException, SQLException, ConnectException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition",
-                "attachment; filename=\"" + form.getName() + ".xls\"");
+            "attachment; filename=\"" + form.getName() + ".xls\"");
         // + getReportName(report, user) + ".xls\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
              FormWriter writer = new XLSReportWriter(connectionProvider, report, form, params,
-                     user)) {
+                 user)) {
             writer.write(response.getOutputStream());
         }
     }
@@ -165,7 +165,7 @@ public class ReportServlet extends HttpServlet {
     private void writeHTML(Report report, FormElementWrapper form, ApplicationUser user,
                            HttpServletResponse response,
                            Collection<DataValue> params)
-            throws IOException, SQLException, ConnectException {
+        throws IOException, SQLException, ConnectException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
@@ -173,7 +173,7 @@ public class ReportServlet extends HttpServlet {
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
         try (Profile p = new ProfileImpl(m);
              HTMLReportWriter writer = new HTMLReportWriter(connectionProvider, form, params,
-                     user)) {
+                 user)) {
             writer.setPrint(report.isPrint());
             writer.write(response.getOutputStream());
         }
@@ -182,11 +182,11 @@ public class ReportServlet extends HttpServlet {
     private void writeCSV(Report report, FormElementWrapper form, ApplicationUser user,
                           HttpServletResponse response,
                           Collection<DataValue> params)
-            throws IOException, SQLException, ConnectException {
+        throws IOException, SQLException, ConnectException {
         response.setContentType("text/csv");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-Disposition",
-                "attachment; filename=\"" + form.getName() + ".csv\"");
+            "attachment; filename=\"" + form.getName() + ".csv\"");
         response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");
 
         Message m = new ReportMessage(user, report.getReportId(), form.getName(), params);
@@ -202,7 +202,7 @@ public class ReportServlet extends HttpServlet {
         Map<PropertyType, PropertyValue> props = connector().getReportProperties(rpt, false, user);
 
         LocaleElement locale =
-                new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
+            new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
 
         PropertyValue propPrint = props.get(PropertyType.Print);
         if (propPrint != null) {
@@ -228,7 +228,7 @@ public class ReportServlet extends HttpServlet {
         // Если сохраненные значения есть в контексте - достаем из контекста
         // Если нет, достаем из базы
         Map<String, DataValue> innerValues = (Map<String, DataValue>) session
-                .getAttribute("report_id_" + report.getReportId());
+            .getAttribute("report_id_" + report.getReportId());
         if (innerValues != null) {
             for (Entry<String, DataValue> entry : innerValues.entrySet()) {
                 DataValue value = entry.getValue();

@@ -68,52 +68,52 @@ public class DynamicTableView extends ContentPanel implements IDynaimcTableView 
     public void initFields() {
         tableTitle = new PropertyValueField();
         labelTableTitle = new FieldLabel(tableTitle,
-                EditorMessage.Util.MESSAGE.title());
+            EditorMessage.Util.MESSAGE.title());
         container.add(labelTableTitle, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         code = new TextField();
         labelCode = new FieldLabel(code,
-                EditorMessage.Util.MESSAGE.table_code());
+            EditorMessage.Util.MESSAGE.table_code());
         container.add(labelCode, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         emptyRow = new CheckBox();
         emptyRow.setBoxLabel("");
         labelEmptyRow = new FieldLabel(emptyRow,
-                EditorMessage.Util.MESSAGE.table_empty_row());
+            EditorMessage.Util.MESSAGE.table_empty_row());
         container.add(labelEmptyRow, new VerticalLayoutData(-1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         metadataFunction = new TextField();
         labelMetadataFunction = new FieldLabel(metadataFunction,
-                EditorMessage.Util.MESSAGE.table_metadata_function());
+            EditorMessage.Util.MESSAGE.table_metadata_function());
         container.add(labelMetadataFunction, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         dataFunction = new TextField();
         labelDataFunction =
-                new FieldLabel(dataFunction, EditorMessage.Util.MESSAGE.table_data_function());
+            new FieldLabel(dataFunction, EditorMessage.Util.MESSAGE.table_data_function());
         container.add(labelDataFunction, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         insertFunction = new TextField();
         labelInsertFunction =
-                new FieldLabel(insertFunction, EditorMessage.Util.MESSAGE.table_insert_function());
+            new FieldLabel(insertFunction, EditorMessage.Util.MESSAGE.table_insert_function());
         container.add(labelInsertFunction, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         updateFunction = new TextField();
         labelUpdateFunction =
-                new FieldLabel(updateFunction, EditorMessage.Util.MESSAGE.table_update_function());
+            new FieldLabel(updateFunction, EditorMessage.Util.MESSAGE.table_update_function());
         container.add(labelUpdateFunction, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         deleteFunction = new TextField();
         labelDeleteFunction =
-                new FieldLabel(deleteFunction, EditorMessage.Util.MESSAGE.table_delete_function());
+            new FieldLabel(deleteFunction, EditorMessage.Util.MESSAGE.table_delete_function());
         container.add(labelDeleteFunction, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
     }
 
     @Override

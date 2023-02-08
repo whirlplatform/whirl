@@ -20,7 +20,7 @@ public class DateSerializerServer extends StdSerializer<Date> {
 
     @Override
     public void serialize(Date value, JsonGenerator gen, SerializerProvider provider)
-            throws IOException {
+        throws IOException {
         gen.writeString(AppConstant.getDateFormatSerialize().format(value));
     }
 }

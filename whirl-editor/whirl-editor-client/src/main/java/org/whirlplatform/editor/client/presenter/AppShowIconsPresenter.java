@@ -14,7 +14,7 @@ import org.whirlplatform.editor.shared.EditorDataService;
 
 @Presenter(view = AppShowIconsView.class)
 public class AppShowIconsPresenter
-        extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
+    extends BasePresenter<AppShowIconsPresenter.IAppShowIconsView, EditorEventBus> {
 
     private IAppShowIconsView iconsView;
     private ListStore<String> store;
@@ -47,7 +47,7 @@ public class AppShowIconsPresenter
     }
 
     public interface IAppShowIconsView
-            extends IsWidget, ReverseViewInterface<AppShowIconsPresenter> {
+        extends IsWidget, ReverseViewInterface<AppShowIconsPresenter> {
         void show();
     }
 }

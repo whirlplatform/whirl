@@ -44,7 +44,7 @@ import org.whirlplatform.server.metadata.store.WatchableStore;
 @Singleton
 @Named("FileSystemMetadataStore")
 public class FileSystemMetadataStore extends AbstractMetadataStore
-        implements Runnable, WatchableStore {
+    implements Runnable, WatchableStore {
     protected static final String APPLICATIONS_PATH = "applications";
     protected static final String TAG_PATH = "tag";
     protected static final String BRANCH_PATH = "branch";
@@ -54,7 +54,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private static final Logger _log = LoggerFactory.getLogger(FileSystemMetadataStore.class);
     protected FileSystem fileSystem;
     protected Table<String, Version, Set<MetadataModifiedHandler>> modifiedHandlers =
-            HashBasedTable.create();
+        HashBasedTable.create();
     private String workPath;
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
@@ -104,11 +104,11 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
     private ApplicationElement loadApplicationFromPath(Path applicationPath,
                                                        boolean ignoreReferences)
-            throws MetadataStoreException, IOException {
+        throws MetadataStoreException, IOException {
         final String xml = readApplicationXmlFile(applicationPath);
         if (xml == null) {
             String message =
-                    String.format("The application xml file not found in %", applicationPath);
+                String.format("The application xml file not found in %", applicationPath);
             _log.error(message);
             throw new MetadataStoreException(message);
         }
@@ -138,7 +138,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
     @Override
     protected Path resolveApplicationPath(final String appCode, final Version appVersion)
-            throws IOException, MetadataStoreException {
+        throws IOException, MetadataStoreException {
         Path base = basePath();
         if (!Files.exists(base)) {
             throw new MetadataStoreException("Base path doesn't exists: " + base.toString());
@@ -163,7 +163,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
             }
             if (versions.isEmpty()) {
                 final String message =
-                        String.format("Versions not found for the application: '%s'", appCode);
+                    String.format("Versions not found for the application: '%s'", appCode);
                 _log.error(message);
                 throw new MetadataStoreException(message);
             }
@@ -183,7 +183,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     @Override
     public ApplicationElement loadApplication(String code, Version version,
                                               boolean ignoreReferences)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         final String stringVersion = (version != null) ? version.toString() : "null";
         try {
             _log.info(String.format("Loading the application %s[%s]", code, stringVersion));
@@ -191,7 +191,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
             // загружаем xml
             ApplicationElement application =
-                    loadApplicationFromPath(applicationPath, ignoreReferences);
+                loadApplicationFromPath(applicationPath, ignoreReferences);
             // загружаем файлы
             ApplicationFilesUtil.loadApplicationFiles(applicationPath, application);
 
@@ -200,7 +200,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
             return application;
         } catch (IOException e) {
             final String message =
-                    String.format("Error loading the application %s[%s]", code, stringVersion);
+                String.format("Error loading the application %s[%s]", code, stringVersion);
             _log.error(message, e);
             throw new MetadataStoreException(message, e);
         }
@@ -209,13 +209,13 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     @Override
     public void saveApplication(ApplicationElement application, Version version,
                                 ApplicationUser user)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         try {
             final String appCode = application.getCode();
             if (version == null) {
                 //TODO сделать нормальное сообщение о том что приложение не доступно
                 throw new MetadataStoreException(
-                        String.format("The version of '%s' should be provided", appCode));
+                    String.format("The version of '%s' should be provided", appCode));
             }
             final Path applicationPath = createApplicatonPath(appCode, version);
             writeApplicationXmlFile(applicationPath, serialize(application));
@@ -226,11 +226,11 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     }
 
     private Path createApplicatonPath(final String appCode, final Version version)
-            throws IOException {
+        throws IOException {
         final Path appsRoot = basePath().resolve(APPLICATIONS_PATH);
         final String versionFolder = version.isBranch() ? BRANCH_PATH : TAG_PATH;
         final Path result =
-                appsRoot.resolve(appCode).resolve(versionFolder).resolve(version.toString());
+            appsRoot.resolve(appCode).resolve(versionFolder).resolve(version.toString());
         if (!Files.exists(result)) {
             Files.createDirectories(result);
         }
@@ -245,7 +245,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
      * @throws IOException
      */
     protected void writeApplicationXmlFile(final Path applicationPath, final String xml)
-            throws IOException {
+        throws IOException {
         Path appFile = applicationPath.resolve(APPLICATION_FILE);
         if (!Files.exists(appFile)) {
             Files.createFile(appFile);
@@ -257,12 +257,12 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
     protected void saveApplicationFiles(Path applicationPath, ApplicationElement application) {
         Map<FileElement, Exception> errors =
-                ApplicationFilesUtil.saveApplicationFiles(applicationPath, application);
+            ApplicationFilesUtil.saveApplicationFiles(applicationPath, application);
         final String NOT_SAVED = "Application file %s not saved to path %s";
         for (Entry<FileElement, Exception> e : errors.entrySet()) {
             _log.warn(
-                    String.format(NOT_SAVED, e.getKey().getFileName(), applicationPath.toString()),
-                    e.getValue());
+                String.format(NOT_SAVED, e.getKey().getFileName(), applicationPath.toString()),
+                e.getValue());
         }
     }
 
@@ -285,7 +285,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
                 if (code == null || notNullVersion == null) {
                     Path unregistered = (Path) key.watchable();
                     _log.warn(String.format("WatchService: Unregistered WatchKey for the path:'%s'",
-                            unregistered));
+                        unregistered));
                     continue;
                 }
                 for (WatchEvent<?> event : key.pollEvents()) {
@@ -310,7 +310,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     }
 
     private void processWatchKeyEvent(WatchEvent<?> event, String code, Version notNullVersion)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         if (StandardWatchEventKinds.OVERFLOW == event.kind()) {
             _log.warn("OVERFLOW detected");
             return;
@@ -318,14 +318,14 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         Set<MetadataModifiedHandler> handlers = modifiedHandlers.get(code, notNullVersion);
         if (handlers == null) {
             final String noHandlers =
-                    "WatchService: Not found handlers for the application %s[%s]";
+                "WatchService: Not found handlers for the application %s[%s]";
             _log.warn(String.format(noHandlers, code, notNullVersion));
             return;
         }
         String context = event.context().toString();
         if (APPLICATION_FILE.equals(context) || context.endsWith("jar")) {
             final String MODIFY =
-                    "WatchService: The application %s[%s] context '%s' has been modified";
+                "WatchService: The application %s[%s] context '%s' has been modified";
             _log.info(String.format(MODIFY, code, notNullVersion, context));
             _log.info(String.format("WatchService: %d handler(s) registered", handlers.size()));
             ApplicationElement application = loadApplication(code, originalVersion(notNullVersion));
@@ -334,7 +334,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
             }
         } else if (!"java".equals(context)) {
             _log.info(String.format("WatchService: the context '%s' was deliberately ignored",
-                    context));
+                context));
         }
     }
 
@@ -342,7 +342,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     public void addModifiedHandler(String code, Version version, MetadataModifiedHandler handler) {
         if (watchService == null) {
             _log.warn(
-                    "WatchService: Unable to register the handler due to the service is not available");
+                "WatchService: Unable to register the handler due to the service is not available");
             return;
         }
         if (code == null || handler == null) {
@@ -359,9 +359,9 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
                 set.add(handler);
             } catch (IOException | MetadataStoreException e) {
                 _log.warn(String.format(
-                        "WatchService: the tracking not started for the application '%s[%s]' ",
-                        code,
-                        version), e);
+                    "WatchService: the tracking not started for the application '%s[%s]' ",
+                    code,
+                    version), e);
             }
         }
     }
@@ -378,7 +378,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     }
 
     private void startChangeTracking(final Path path, final String code, final Version version)
-            throws IOException {
+        throws IOException {
         if (Files.exists(path) && Files.isDirectory(path)) {
             WatchKey key = path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
             registerCodeVersionKey(key, code, version);
@@ -442,7 +442,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
                 }
                 if (Files.exists(branches)) {
                     try (DirectoryStream<Path> branchesStream = Files.newDirectoryStream(
-                            branches)) {
+                        branches)) {
                         for (Path b : branchesStream) {
                             if (Files.exists(b.resolve(APPLICATION_FILE))) {
                                 result.add(createApplicationStoreData(b, true));
@@ -461,7 +461,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
     private ApplicationStoreData createApplicationStoreData(Path applicationVersionPath,
                                                             boolean branch)
-            throws IOException {
+        throws IOException {
         Path appFile = applicationVersionPath.resolve(APPLICATION_FILE);
         String appFileContent = new String(Files.readAllBytes(appFile), StandardCharsets.UTF_8);
         ApplicationStoreData data = assembleApplicationStoreData(appFileContent);
@@ -479,7 +479,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         try {
             applicationPath = resolveApplicationPath(appCode, null);
             if (applicationPath == null || Files.notExists(applicationPath)
-                    || !Files.isDirectory(applicationPath)) {
+                || !Files.isDirectory(applicationPath)) {
                 return null;
             }
             Version result = Version.parseVersion(applicationPath.getFileName().toString());

@@ -217,7 +217,7 @@ public class CaptchaBuilder extends AbstractFieldBuilder implements Validatable 
         // Браузер, похоже, кэширует картинки с одинаковыми адресами,
         // предотвратить это
         if (randomize) {
-            String randomPart = "&t=" + String.valueOf(Math.round((Math.random() * 100000)));
+            String randomPart = "&t=" + Math.round((Math.random() * 100000));
             url += randomPart;
         }
         return url;

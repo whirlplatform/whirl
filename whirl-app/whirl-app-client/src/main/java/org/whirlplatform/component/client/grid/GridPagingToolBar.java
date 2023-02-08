@@ -57,6 +57,8 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
      * ...[2] [3] [4] [5] [6] ... >>
      */
     private static final int CHAR_PIXELS = 8;
+    private final List<PageButton> pageButtons = new ArrayList<PageButton>(PAGING_COUNT);
+    private final ChangeEvent changeEvent = new ChangeEvent();
     private boolean buttonPressed;
     private boolean comboPressed;
     private HBoxLayoutContainer buttonsContainer;
@@ -68,12 +70,10 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
     private TextButton fastNext;
     private SeparatorToolItem pgSeparator;
     private SimpleComboBox<Integer> selector;
-    private List<PageButton> pageButtons = new ArrayList<PageButton>(PAGING_COUNT);
     private NumberField<Integer> numField;
     private Status numLabel;
     private Status filter;
     private int oldValue;
-    private ChangeEvent changeEvent = new ChangeEvent();
     /**
      * Текущая страница
      */
@@ -653,7 +653,7 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
                 selectorlocator.setPart(inputPart);
                 return selectorlocator;
             } else if (selector.getCell().getAppearance()
-                    .triggerIsOrHasChild(selector.getElement(), element)) {
+                .triggerIsOrHasChild(selector.getElement(), element)) {
                 Locator selectorlocator = new Locator(LocatorParams.TYPE_SELECTOR);
                 Locator inputPart = new Locator(LocatorParams.TYPE_TRIGGER);
                 selectorlocator.setPart(inputPart);
@@ -691,7 +691,7 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
             if (button.getElement().isOrHasChild(element)) {
                 Locator pageButtonLocator = new Locator(LocatorParams.TYPE_PAGE_BUTTON);
                 pageButtonLocator.setParameter(LocatorParams.PARAM_NUM,
-                        String.valueOf(button.getNumber()));
+                    String.valueOf(button.getNumber()));
                 return pageButtonLocator;
             }
         }
@@ -766,7 +766,7 @@ class GridPagingToolBar extends ToolBar implements LocatorAware {
                 return selector.getElement().selectNode("." + defApp.getStyle().trigger());
             }
         } else if (LocatorParams.TYPE_ITEM.equals(cpecificPart.getType())
-                && selector.isExpanded()) {
+            && selector.isExpanded()) {
             String indexParam = cpecificPart.getParameter(LocatorParams.PARAM_INDEX);
             if (!Util.isEmptyString(indexParam)) {
                 int index = Integer.valueOf(indexParam);

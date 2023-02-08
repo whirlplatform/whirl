@@ -7,7 +7,7 @@ import org.whirlplatform.editor.client.tree.menu.item.ChangesComparableAppTreeMe
  * Меню для дерева сравнения приложений
  */
 public class ComparableAppTreeMenu extends AbstractAppTreeMenu<ComparableAppTree>
-        implements AppTreeMenu<ComparableAppTree> {
+    implements AppTreeMenu<ComparableAppTree> {
 
     public ComparableAppTreeMenu(ComparableAppTree appTree) {
         super(appTree);

@@ -14,7 +14,7 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.storage.client.StorageHelper;
 
 public class ColumnConfigStore implements ColumnHiddenChangeHandler, ColumnWidthChangeHandler,
-        ColumnMoveHandler {
+    ColumnMoveHandler {
 
     String compId;
 

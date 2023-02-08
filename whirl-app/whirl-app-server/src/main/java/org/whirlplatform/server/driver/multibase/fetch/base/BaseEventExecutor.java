@@ -70,8 +70,8 @@ public class BaseEventExecutor extends AbstractEventExecutor {
                                     time = new Timestamp((dataValue.getDate()).getTime());
                                 }
                                 stmt.setTimestamp(i, time,
-                                        Calendar.getInstance(getUser().getTimeZone(),
-                                                getUser().getLocale()));
+                                    Calendar.getInstance(getUser().getTimeZone(),
+                                        getUser().getLocale()));
                             }
                         } else {
                             stmt.setObject(i, v);

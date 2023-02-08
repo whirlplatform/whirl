@@ -63,13 +63,13 @@ public class TableConditionSolver extends AbstractConditionSolver {
     // private Set<SQLCondition> sqlRestrictConditions = new
     // HashSet<SQLCondition>();
     private Multimap<TableColumnElement, SQLCondition> sqlColumnViewConditions =
-            HashMultimap.create();
+        HashMultimap.create();
     private Multimap<TableColumnElement, SQLCondition> sqlColumnEditConditions =
-            HashMultimap.create();
+        HashMultimap.create();
     private Map<TableColumnElement, Boolean> columnView =
-            new HashMap<TableColumnElement, Boolean>();
+        new HashMap<TableColumnElement, Boolean>();
     private Map<TableColumnElement, Boolean> columnEdit =
-            new HashMap<TableColumnElement, Boolean>();
+        new HashMap<TableColumnElement, Boolean>();
 
     private Set<String> sqlColumnTableInsert = new HashSet<String>();
     private Set<String> sqlColumnTableUpdate = new HashSet<String>();
@@ -208,7 +208,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
             // addRestrictions();
         } catch (SQLException | EmpireException e) {
             _log.warn("Unable to check table SQL conditions: "
-                    + /* table.getTableName() */table.getName(), e); // TODO:
+                + /* table.getTableName() */table.getName(), e); // TODO:
             // DynamicDataSource
         }
 
@@ -334,7 +334,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 RightCollectionElement right = application.getTableColumnRights(c);
                 for (String g : user.getGroups()) {
                     rights.addAll(
-                            filter(right.getGroupRights(application.getGroup(g)), currentType));
+                        filter(right.getGroupRights(application.getGroup(g)), currentType));
                 }
                 // если нет прав на группы, то берем права по приложению
                 if (rights.isEmpty()) {
@@ -362,7 +362,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 RightCollectionElement right = application.getTableColumnRights(c);
                 for (String g : user.getGroups()) {
                     rights.addAll(
-                            filter(right.getGroupRights(application.getGroup(g)), currentType));
+                        filter(right.getGroupRights(application.getGroup(g)), currentType));
                 }
                 // если нет прав на группы, то берем права по приложению
                 if (rights.isEmpty()) {
@@ -400,8 +400,8 @@ public class TableConditionSolver extends AbstractConditionSolver {
 
     private void checkSqlConditions() throws SQLException {
         if (sqlInsertConditions.isEmpty() && sqlUpdateConditions.isEmpty()
-                && sqlDeleteConditions.isEmpty()
-                && sqlColumnViewConditions.isEmpty() && sqlColumnEditConditions.isEmpty()) {
+            && sqlDeleteConditions.isEmpty()
+            && sqlColumnViewConditions.isEmpty() && sqlColumnEditConditions.isEmpty()) {
             return;
         }
 
@@ -416,18 +416,18 @@ public class TableConditionSolver extends AbstractConditionSolver {
         // запросы для вычисления доступов по таблице
         if (!insert) {
             sqlColumnTableInsert.addAll(
-                    createConditionSubQueries("TI_", ((PlainTableElement) table).getTableName(),
-                            sqlInsertConditions, subColumns, subQueries, false));
+                createConditionSubQueries("TI_", ((PlainTableElement) table).getTableName(),
+                    sqlInsertConditions, subColumns, subQueries, false));
         }
         if (!update) {
             sqlColumnTableUpdate.addAll(
-                    createConditionSubQueries("TU_", ((PlainTableElement) table).getTableName(),
-                            sqlUpdateConditions, subColumns, subQueries, false));
+                createConditionSubQueries("TU_", ((PlainTableElement) table).getTableName(),
+                    sqlUpdateConditions, subColumns, subQueries, false));
         }
         if (!delete) {
             sqlColumnTableDelete.addAll(
-                    createConditionSubQueries("TD_", ((PlainTableElement) table).getTableName(),
-                            sqlDeleteConditions, subColumns, subQueries, false));
+                createConditionSubQueries("TD_", ((PlainTableElement) table).getTableName(),
+                    sqlDeleteConditions, subColumns, subQueries, false));
         }
 
         // запросы для вычисления доступов по колонкам
@@ -435,13 +435,13 @@ public class TableConditionSolver extends AbstractConditionSolver {
             // if (!isViewable(c)) {
             if (!columnView.get(c)) {
                 sqlColumnColumnView.putAll(c, createConditionSubQueries("CV_", c.getColumnName(),
-                        sqlColumnViewConditions.get(c), subColumns, subQueries, true));
+                    sqlColumnViewConditions.get(c), subColumns, subQueries, true));
             }
         }
         for (TableColumnElement c : sqlColumnEditConditions.keySet()) {
             if (!columnEdit.get(c)) {
                 sqlColumnColumnEdit.putAll(c, createConditionSubQueries("CE_", c.getColumnName(),
-                        sqlColumnEditConditions.get(c), subColumns, subQueries, true));
+                    sqlColumnEditConditions.get(c), subColumns, subQueries, true));
             }
         }
 
@@ -454,7 +454,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
         _log.info(query);
 
         try (ResultSet rs = connection.getDatabaseDriver()
-                .executeQuery(query, null, false, connection)) {
+            .executeQuery(query, null, false, connection)) {
             if (rs.next()) {
                 // достаем вычисленные значения
                 // таблица
@@ -472,13 +472,13 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 for (TableColumnElement col : sqlColumnColumnView.keySet()) {
                     for (String dbCol : sqlColumnColumnView.get(col)) {
                         setColumnViewAllowance(col,
-                                getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
+                            getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
                     }
                 }
                 for (TableColumnElement col : sqlColumnColumnEdit.keySet()) {
                     for (String dbCol : sqlColumnColumnEdit.get(col)) {
                         setColumnEditAllowance(col,
-                                getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
+                            getSubQueryValue(rs, subColumns.indexOf(dbCol) + 1));
                     }
                 }
             }
@@ -496,7 +496,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
             String columnName = columnPrefix + objectName + index;
             String resolvedValue = resolveValue(driver, condition.getValue(), objectName, column);
             String q = "(" + resolvedValue + ")"
-                    + driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
+                + driver.getSQLPhrase(DBDatabaseDriver.SQL_RENAME_COLUMN) + columnName;
             subColumns.add(columnName);
             subQueries.add(q);
             result.add(columnName);
@@ -557,7 +557,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
             return null;
         }
         NamedParamResolver resolver =
-                new NamedParamResolver(driver, value, processParams(params, objectName, column));
+            new NamedParamResolver(driver, value, processParams(params, objectName, column));
         return resolver.getResultSql();
     }
 

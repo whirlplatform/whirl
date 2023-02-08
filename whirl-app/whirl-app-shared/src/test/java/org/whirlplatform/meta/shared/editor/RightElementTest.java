@@ -33,7 +33,7 @@ public class RightElementTest {
         origin.setCondition(originCondition);
         Assert.assertEquals("RightElement type was not set", ORIGIN_TYPE, origin.getType());
         Assert.assertEquals("RightElement condition was not set", ORIGIN_CONDITION_VALUE,
-                origin.getCondition().getValue());
+            origin.getCondition().getValue());
     }
 
     @Test
@@ -42,15 +42,15 @@ public class RightElementTest {
         origin.setCondition(originCondition);
         RightElement clone = origin.clone();
         Assert.assertEquals("Clone condition value was not copied",
-                origin.getCondition().getValue(),
-                clone.getCondition().getValue());
+            origin.getCondition().getValue(),
+            clone.getCondition().getValue());
         Assert.assertEquals("Clone type value was not copied", origin.getType(), clone.getType());
         Assert.assertEquals("Clone is not equal to the origin", origin, clone);
         clone.setType(CLONE_TYPE);
         clone.setCondition(cloneCondition);
         Assert.assertEquals("Origin type depends on clone type", ORIGIN_TYPE, origin.getType());
         Assert.assertEquals("Origin condition depends on clone type", ORIGIN_CONDITION_VALUE,
-                origin.getCondition().getValue());
+            origin.getCondition().getValue());
         Assert.assertNotEquals("Clone is equal to the origin", origin, clone);
     }
 }

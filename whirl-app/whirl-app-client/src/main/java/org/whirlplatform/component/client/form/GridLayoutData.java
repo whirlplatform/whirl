@@ -6,7 +6,7 @@ import com.sencha.gxt.widget.core.client.container.HasWidth;
 import com.sencha.gxt.widget.core.client.container.MarginData;
 
 public class GridLayoutData extends MarginData implements HasWidth, HasHeight,
-        HasAlignment {
+    HasAlignment {
 
     private double width = -1d;
     private double height = -1d;

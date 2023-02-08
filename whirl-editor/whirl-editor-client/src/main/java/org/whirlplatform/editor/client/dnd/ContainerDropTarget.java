@@ -45,7 +45,7 @@ public class ContainerDropTarget extends DropTarget {
     @Override
     protected void onDragMove(DndDragMoveEvent event) {
         XElement target = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         if (!container.getElement().isOrHasChild(target)) {
             event.setCancelled(true);
             event.getStatusProxy().setStatus(false);
@@ -61,9 +61,9 @@ public class ContainerDropTarget extends DropTarget {
         XElement el = container.getElement().cast();
         Rectangle rect = el.getBounds();
         Surface.get()
-                .getElement()
-                .setBounds(rect.getX(), rect.getY(), rect.getWidth(),
-                        rect.getHeight());
+            .getElement()
+            .setBounds(rect.getX(), rect.getY(), rect.getWidth(),
+                rect.getHeight());
         Surface.get().show(el);
     }
 

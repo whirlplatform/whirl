@@ -81,10 +81,10 @@ public class FileServlet extends HttpServlet {
         ApplicationUser user = null;
         try {
             user = SessionManager
-                    // .get(req.getSession().getServletContext())
-                    .get(req.getSession())
-                    .getUser(
-                            new SessionToken(req.getSession().getId(), tokenId));
+                // .get(req.getSession().getServletContext())
+                .get(req.getSession())
+                .getUser(
+                    new SessionToken(req.getSession().getId(), tokenId));
         } catch (CustomException e1) {
             // skipped
         }
@@ -96,7 +96,7 @@ public class FileServlet extends HttpServlet {
         String tableCode = req.getParameter(AppConstant.TABOLE_CODE);
         if (classList == null && tableCode != null) {
             for (AbstractTableElement t : user.getApplication()
-                    .getAvailableTables()) {
+                .getAvailableTables()) {
                 if (tableCode.equals(t.getCode())) {
                     classList = t.getId();
                     break;
@@ -106,29 +106,29 @@ public class FileServlet extends HttpServlet {
         String id = req.getParameter(AppConstant.ID);
         String contentType = req.getParameter(AppConstant.CONTENT_TYPE);
         Boolean attachment = req.getParameter(AppConstant.ATTACHMENT) == null ? true
-                : Boolean.valueOf(req.getParameter(AppConstant.ATTACHMENT));
+            : Boolean.valueOf(req.getParameter(AppConstant.ATTACHMENT));
 
         _log.info("SERVLET FILE: [gettype, field, classList, dfobj] = ["
-                + gettype + ", " + field + ", " + classList + ", " + id + "]");
+            + gettype + ", " + field + ", " + classList + ", " + id + "]");
         if (gettype.equalsIgnoreCase(AppConstant.TABLE)) {
             try (OutputStream out = resp.getOutputStream()) {
                 FileValue file = connector().downloadFileFromTable(classList,
-                        field, id, user);
+                    field, id, user);
 
                 resp.reset();
                 // resp.setContentLength(((InputStream)
                 // file.getInputStream()).available()); // ?
                 if (attachment) {
                     resp.setHeader(
-                            "Content-Disposition",
-                            "attachment; filename=\""
-                                    + encodeFileName(file.getName()) + "\";"
-                                    + "filename*=\""
-                                    + encodeFileName(file.getName()) + "\"");
+                        "Content-Disposition",
+                        "attachment; filename=\""
+                            + encodeFileName(file.getName()) + "\";"
+                            + "filename*=\""
+                            + encodeFileName(file.getName()) + "\"");
                 }
 
                 String type = URLConnection.guessContentTypeFromName(file
-                        .getName());
+                    .getName());
                 if (type == null && contentType == null) {
                     type = "application/octet-stream";
                 } else if (contentType != null) {
@@ -152,19 +152,19 @@ public class FileServlet extends HttpServlet {
                 List<FileItem> items = upload.parseRequest(req);
                 for (FileItem item : items) {
                     if (!item.isFormField() && item.getFieldName() != null
-                            && item.getSize() > 0) {
+                        && item.getSize() > 0) {
                         FileValue fileValue = new FileValue();
                         fileValue.setName(item.getName());
                         fileValue.setInputStream(item.getInputStream());
 
                         ClassMetadata metadata = new ClassMetadata(classList);
                         FieldMetadata fieldMeta = new FieldMetadata(field,
-                                DataType.FILE, "");
+                            DataType.FILE, "");
                         RowModelData model = new RowModelDataImpl();
                         model.set(field, fileValue);
                         DataModifyConfig config = new DataModifyConfig(
-                                DataModifyType.UPDATE, Arrays.asList(model),
-                                null);
+                            DataModifyType.UPDATE, Arrays.asList(model),
+                            null);
                         metadata.addField(fieldMeta);
                         connector().update(metadata, config, user);
                     }
@@ -181,28 +181,28 @@ public class FileServlet extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
 
             boolean saveName = Boolean.valueOf(req
-                    .getParameter(AppConstant.SAVE_FILE_NAME));
+                .getParameter(AppConstant.SAVE_FILE_NAME));
             List<FileItem> items;
             try {
                 boolean fileLoaded = false;
                 items = upload.parseRequest(req);
                 for (FileItem item : items) {
                     if (!item.isFormField()
-                            && AppConstant.TABLE.equals(item.getFieldName())) {
+                        && AppConstant.TABLE.equals(item.getFieldName())) {
                         putToFileMap(req, fileId, item, saveName);
                         fileLoaded = true;
                         _log.info("File info: "
-                                + "FileName="
-                                + item.getName()
-                                + "; FieldName="
-                                + item.getFieldName()
-                                + "; Content-type: "
-                                + item.getContentType()
-                                + "; Size: "
-                                + String.valueOf(item.getSize())
-                                + "Path: "
-                                + ((DiskFileItem) item).getStoreLocation()
-                                .getAbsolutePath());
+                            + "FileName="
+                            + item.getName()
+                            + "; FieldName="
+                            + item.getFieldName()
+                            + "; Content-type: "
+                            + item.getContentType()
+                            + "; Size: "
+                            + String.valueOf(item.getSize())
+                            + "Path: "
+                            + ((DiskFileItem) item).getStoreLocation()
+                            .getAbsolutePath());
                     }
                 }
                 if (!fileLoaded) {
@@ -226,7 +226,7 @@ public class FileServlet extends HttpServlet {
                               FileItem file, boolean saveName) {
         HttpSession session = req.getSession();
         HashMap<String, FileUpload> map = (HashMap<String, FileUpload>) session
-                .getAttribute(SESSION_FILE_MAP);
+            .getAttribute(SESSION_FILE_MAP);
         if (map == null) {
             map = new HashMap<String, FileUpload>();
             session.setAttribute(SESSION_FILE_MAP, map);

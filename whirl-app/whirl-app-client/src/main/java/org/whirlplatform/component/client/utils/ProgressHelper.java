@@ -10,7 +10,7 @@ public class ProgressHelper {
     public static void show(String waitText) {
         if (_instance == null) {
             _instance = new AutoProgressMessageBox(
-                    AppMessage.Util.MESSAGE.executing());
+                AppMessage.Util.MESSAGE.executing());
         }
         _instance.setMessage(waitText);
         _instance.show();

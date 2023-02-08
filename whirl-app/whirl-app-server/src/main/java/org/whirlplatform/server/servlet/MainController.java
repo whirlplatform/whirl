@@ -30,7 +30,7 @@ public class MainController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         req.setAttribute("configuration", configuration);
         req.setAttribute("connector", connector);
         req.getRequestDispatcher("/WEB-INF/jsp/app.jsp").forward(req, resp);

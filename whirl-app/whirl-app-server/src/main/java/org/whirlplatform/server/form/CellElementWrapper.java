@@ -140,7 +140,7 @@ public class CellElementWrapper implements Cloneable {
     }
 
     public static class CellComparator implements
-            Comparator<CellElementWrapper> {
+        Comparator<CellElementWrapper> {
 
         @Override
         public int compare(CellElementWrapper o1, CellElementWrapper o2) {

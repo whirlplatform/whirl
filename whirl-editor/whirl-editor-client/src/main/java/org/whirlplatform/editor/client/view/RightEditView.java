@@ -43,12 +43,12 @@ import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.SQLCondition;
 
 public class RightEditView extends GridLayoutContainer implements
-        IRightEditView {
+    IRightEditView {
 
     private GroupElement applicationGroup = new GroupElement();
     private Table<AbstractElement, GroupElement, Map<RightType, RightChangeComponent>> mappings =
-            HashBasedTable
-                    .create();
+        HashBasedTable
+            .create();
     private GridLayoutDecorator decorator = new GridLayoutDecorator(this);
 
     public RightEditView() {
@@ -115,14 +115,14 @@ public class RightEditView extends GridLayoutContainer implements
                 while (grIter.hasNext()) {
                     GroupElement g = grIter.next();
                     Map<RightType, RightChangeComponent> map = mappings.get(e,
-                            g);
+                        g);
                     if (map == null) {
                         map = new HashMap<RightType, RightChangeComponent>();
                         mappings.put(e, g, map);
                     }
 
                     RightChangeComponent changeComponent = new RightChangeComponent(
-                            t);
+                        t);
                     setWidget(elemRow, grIndex + 2, changeComponent);
                     map.put(t, changeComponent);
 
@@ -141,16 +141,16 @@ public class RightEditView extends GridLayoutContainer implements
 
     public Map<AbstractElement, RightCollectionElement> getRights() {
         Map<AbstractElement, RightCollectionElement> result =
-                new HashMap<AbstractElement, RightCollectionElement>();
+            new HashMap<AbstractElement, RightCollectionElement>();
         for (AbstractElement e : mappings.rowKeySet()) {
-//            boolean hasRights = false;
+            //            boolean hasRights = false;
             RightCollectionElement collection = new RightCollectionElement(e);
             for (GroupElement g : mappings.row(e).keySet()) {
                 Map<RightType, RightChangeComponent> map = mappings.get(e, g);
                 for (RightChangeComponent c : map.values()) {
                     RightElement right = c.getValue();
                     if (right != null) {
-//                        hasRights = true;
+                        //                        hasRights = true;
                         if (g == applicationGroup) {
                             collection.addApplicationRight(right);
                         } else if (g instanceof GroupElement) {
@@ -159,9 +159,9 @@ public class RightEditView extends GridLayoutContainer implements
                     }
                 }
             }
-//            if (hasRights) {
+            //            if (hasRights) {
             result.put(e, collection);
-//            }
+            //            }
         }
         return result;
     }
@@ -170,7 +170,7 @@ public class RightEditView extends GridLayoutContainer implements
     public void setRight(AbstractElement element, RightCollectionElement right) {
         for (RightElement r : right.getApplicationRights()) {
             Map<RightType, RightChangeComponent> map = mappings.get(element,
-                    applicationGroup);
+                applicationGroup);
             if (map != null && map.containsKey(r.getType())) {
                 RightChangeComponent component = map.get(r.getType());
                 component.setValue(r);
@@ -183,7 +183,7 @@ public class RightEditView extends GridLayoutContainer implements
             }
             for (RightElement r : right.getGroupRights(g)) {
                 Map<RightType, RightChangeComponent> map = mappings.get(
-                        element, g);
+                    element, g);
                 if (map != null && map.containsKey(r.getType())) {
                     RightChangeComponent component = map.get(r.getType());
                     component.setValue(r);
@@ -193,7 +193,7 @@ public class RightEditView extends GridLayoutContainer implements
     }
 
     private class RightChangeComponent extends HorizontalLayoutContainer
-            implements TakesValue<RightElement> {
+        implements TakesValue<RightElement> {
 
         private RightType rightType;
 
@@ -234,51 +234,51 @@ public class RightEditView extends GridLayoutContainer implements
             conditionButton.setEnabled(false);
             add(conditionButton, new HorizontalLayoutData(-1, -1));
 
-//            conditionWindow = new Window();
-//            conditionWindow.setModal(true);
-//            conditionWindow.setHeadingHtml(EditorMessage.Util.MESSAGE.right_edit_edit_condition());
-//            conditionWindow.setWidth(600);
-//            conditionWindow.setHeight(500);
-//
-//            VerticalLayoutContainer conditionPanel = new VerticalLayoutContainer();
-//            conditionWindow.setWidget(conditionPanel);
+            //            conditionWindow = new Window();
+            //            conditionWindow.setModal(true);
+            //            conditionWindow.setHeadingHtml(EditorMessage.Util.MESSAGE.right_edit_edit_condition());
+            //            conditionWindow.setWidth(600);
+            //            conditionWindow.setHeight(500);
+            //
+            //            VerticalLayoutContainer conditionPanel = new VerticalLayoutContainer();
+            //            conditionWindow.setWidget(conditionPanel);
 
             conditionType = new SimpleComboBox<String>(
-                    new StringLabelProvider<String>());
+                new StringLabelProvider<String>());
             conditionType.add("SQL");
             conditionType.setValue("SQL");
             conditionType.setEnabled(false);
-//            FieldLabel typeLabel = new FieldLabel(conditionType,
-//                    EditorMessage.Util.MESSAGE.right_edit_condition_type());
-//            conditionPanel.add(typeLabel, new VerticalLayoutData(1, -1,
-//                    new Margins(5, 5, 0, 5)));
-//
-//            conditionText = new CodeMirrorPanel();
-//            FieldLabel conditionLabel = new FieldLabel(conditionText,
-//                    EditorMessage.Util.MESSAGE.right_edit_condition_value());
-//            conditionPanel.add(conditionLabel, new VerticalLayoutData(1, 1,
-//                    new Margins(5, 5, 5, 5)));
-//
-//            TextButton conditionSave = new TextButton(EditorMessage.Util.MESSAGE.save());
-//            conditionSave.addSelectHandler(new SelectHandler() {
-//                @Override
-//                public void onSelect(SelectEvent event) {
-//                    conditionValue = conditionText.getValue() != null
-//                            && conditionText.getValue().isEmpty() ? null
-//                            : conditionText.getValue();
-//                    conditionWindow.hide();
-//                }
-//            });
-//            TextButton conditionClose = new TextButton(EditorMessage.Util.MESSAGE.close());
-//            conditionClose.addSelectHandler(new SelectHandler() {
-//                @Override
-//                public void onSelect(SelectEvent event) {
-//                    conditionWindow.hide();
-//                }
-//            });
-//            conditionWindow.setButtonAlign(BoxLayoutPack.END);
-//            conditionWindow.addButton(conditionSave);
-//            conditionWindow.addButton(conditionClose);
+            //            FieldLabel typeLabel = new FieldLabel(conditionType,
+            //                    EditorMessage.Util.MESSAGE.right_edit_condition_type());
+            //            conditionPanel.add(typeLabel, new VerticalLayoutData(1, -1,
+            //                    new Margins(5, 5, 0, 5)));
+            //
+            //            conditionText = new CodeMirrorPanel();
+            //            FieldLabel conditionLabel = new FieldLabel(conditionText,
+            //                    EditorMessage.Util.MESSAGE.right_edit_condition_value());
+            //            conditionPanel.add(conditionLabel, new VerticalLayoutData(1, 1,
+            //                    new Margins(5, 5, 5, 5)));
+            //
+            //            TextButton conditionSave = new TextButton(EditorMessage.Util.MESSAGE.save());
+            //            conditionSave.addSelectHandler(new SelectHandler() {
+            //                @Override
+            //                public void onSelect(SelectEvent event) {
+            //                    conditionValue = conditionText.getValue() != null
+            //                            && conditionText.getValue().isEmpty() ? null
+            //                            : conditionText.getValue();
+            //                    conditionWindow.hide();
+            //                }
+            //            });
+            //            TextButton conditionClose = new TextButton(EditorMessage.Util.MESSAGE.close());
+            //            conditionClose.addSelectHandler(new SelectHandler() {
+            //                @Override
+            //                public void onSelect(SelectEvent event) {
+            //                    conditionWindow.hide();
+            //                }
+            //            });
+            //            conditionWindow.setButtonAlign(BoxLayoutPack.END);
+            //            conditionWindow.addButton(conditionSave);
+            //            conditionWindow.addButton(conditionClose);
         }
 
         private void openConditionWindow() {
@@ -293,15 +293,15 @@ public class RightEditView extends GridLayoutContainer implements
                 conditionWindow.setWidget(conditionPanel);
 
                 FieldLabel typeLabel = new FieldLabel(conditionType,
-                        EditorMessage.Util.MESSAGE.right_edit_condition_type());
+                    EditorMessage.Util.MESSAGE.right_edit_condition_type());
                 conditionPanel.add(typeLabel, new VerticalLayoutData(1, -1,
-                        new Margins(5, 5, 0, 5)));
+                    new Margins(5, 5, 0, 5)));
 
                 conditionText = new CodeMirrorPanel();
                 FieldLabel conditionLabel = new FieldLabel(conditionText,
-                        EditorMessage.Util.MESSAGE.right_edit_condition_value());
+                    EditorMessage.Util.MESSAGE.right_edit_condition_value());
                 conditionPanel.add(conditionLabel, new VerticalLayoutData(1, 1,
-                        new Margins(5, 5, 5, 5)));
+                    new Margins(5, 5, 5, 5)));
 
 
                 TextButton conditionSave = new TextButton(EditorMessage.Util.MESSAGE.apply());
@@ -309,8 +309,8 @@ public class RightEditView extends GridLayoutContainer implements
                     @Override
                     public void onSelect(SelectEvent event) {
                         conditionValue = conditionText.getValue() != null
-                                && conditionText.getValue().isEmpty() ? null
-                                : conditionText.getValue();
+                            && conditionText.getValue().isEmpty() ? null
+                            : conditionText.getValue();
                         conditionWindow.hide();
                     }
                 });
@@ -326,7 +326,7 @@ public class RightEditView extends GridLayoutContainer implements
                 conditionWindow.addButton(conditionClose);
             }
             conditionText
-                    .setValue(conditionValue == null ? "" : conditionValue);
+                .setValue(conditionValue == null ? "" : conditionValue);
             conditionText.showEditor(Config.forSql());
             conditionWindow.show();
         }
@@ -347,12 +347,12 @@ public class RightEditView extends GridLayoutContainer implements
         @Override
         public RightElement getValue() {
             if (state.getValue() == null
-                    || state.getValue() == CheckState.UNCHECKED) {
+                || state.getValue() == CheckState.UNCHECKED) {
                 RightElement right = new RightElement(rightType);
                 BooleanCondition c = new BooleanCondition();
                 c.setValue(false);
                 right.setCondition(c);
-//                return null;
+                //                return null;
                 return right;
             } else if (state.getValue() == CheckState.CHECKED) {
                 RightElement right = new RightElement(rightType);

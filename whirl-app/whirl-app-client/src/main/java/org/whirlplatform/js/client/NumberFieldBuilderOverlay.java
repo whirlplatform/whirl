@@ -114,13 +114,13 @@ public abstract class NumberFieldBuilderOverlay {
      */
     public abstract boolean isHidden();
 
-////    public static DataValue getDataValue(NumberFieldBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(NumberFieldBuilder instance, DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static DataValue getDataValue(NumberFieldBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(NumberFieldBuilder instance, DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Установить скрытость числового поля

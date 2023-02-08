@@ -48,13 +48,13 @@ public class TabPanelDesigner extends ComponentDesigner {
                 int i = idx.intValue();
                 if (i >= index) {
                     fireComponentPropertyChangeEvent(
-                            new ComponentPropertyChangeEvent(e, PropertyType.LayoutDataIndex,
-                                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+                        new ComponentPropertyChangeEvent(e, PropertyType.LayoutDataIndex,
+                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
                 }
             }
             fireComponentPropertyChangeEvent(
-                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+                new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
         }
     }
 

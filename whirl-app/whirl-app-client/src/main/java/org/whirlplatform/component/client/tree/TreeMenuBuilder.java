@@ -66,7 +66,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
  */
 @JsType(name = "TreeMenu", namespace = "Whirl")
 public class TreeMenuBuilder extends TreeBuilder
-        implements ClickEvent.HasClickHandlers, Containable {
+    implements ClickEvent.HasClickHandlers, Containable {
 
     // TODO переписать, выкинуть наследование от TreeBuilder
 
@@ -201,8 +201,8 @@ public class TreeMenuBuilder extends TreeBuilder
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
                 if (getClassMetadata().getClassId() != null
-                        && parent.getProperties().containsKey(isLeafColumn)) {
-                    return Boolean.valueOf(parent.<Boolean>get(isLeafColumn));
+                    && parent.getProperties().containsKey(isLeafColumn)) {
+                    return parent.<Boolean>get(isLeafColumn);
                 } else {
                     HorizontalMenuItemBuilder cb = (HorizontalMenuItemBuilder) findBuilder(parent);
                     return cb != null && cb.getChildren().length > 0;
@@ -228,7 +228,7 @@ public class TreeMenuBuilder extends TreeBuilder
 
             @Override
             protected void loadData(ListModelData config) {
-                if (builderMap.values().contains(config)) {
+                if (builderMap.containsValue(config)) {
                     // добавляем в результат loader-а локальные данные
                     // (MenuItemBuilder)
                     ComponentBuilder builder = findBuilder(config);
@@ -280,48 +280,48 @@ public class TreeMenuBuilder extends TreeBuilder
         });
 
         tree.getSelectionModel()
-                .addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
+            .addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
 
-                    @Override
-                    public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
-                        for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
-                            if (event.getSelection().size() > 0
-                                    && entry.getValue() == event.getSelection().get(0)) {
-                                entry.getKey().fireEvent(new ClickEvent());
-                                break;
-                            }
+                @Override
+                public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
+                    for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
+                        if (event.getSelection().size() > 0
+                            && entry.getValue() == event.getSelection().get(0)) {
+                            entry.getKey().fireEvent(new ClickEvent());
+                            break;
                         }
                     }
-                });
+                }
+            });
 
         tree.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleSafeHtmlCell<String> cell =
-                new SimpleSafeHtmlCell<String>(SimpleSafeHtmlRenderer.getInstance(),
-                        "click") {
-                    @Override
-                    public void onBrowserEvent(Context context, Element parent, String value,
-                                               NativeEvent event,
-                                               ValueUpdater<String> valueUpdater) {
-                        super.onBrowserEvent(context, parent, value, event, valueUpdater);
-                        if (eventColumn != null && "click".equals(event.getType())) {
-                            if (registration != null) {
-                                registration.removeHandler();
-                            }
+            new SimpleSafeHtmlCell<String>(SimpleSafeHtmlRenderer.getInstance(),
+                "click") {
+                @Override
+                public void onBrowserEvent(Context context, Element parent, String value,
+                                           NativeEvent event,
+                                           ValueUpdater<String> valueUpdater) {
+                    super.onBrowserEvent(context, parent, value, event, valueUpdater);
+                    if (eventColumn != null && "click".equals(event.getType())) {
+                        if (registration != null) {
+                            registration.removeHandler();
+                        }
 
-                            ListModelData model = getStore().getChild(context.getIndex());
-                            String eventCode = model.get(eventColumn);
+                        ListModelData model = getStore().getChild(context.getIndex());
+                        String eventCode = model.get(eventColumn);
 
-                            ComponentBuilder cb = findBuilder(model);
+                        ComponentBuilder cb = findBuilder(model);
 
-                            if (cb != null) {
-                                cb.fireEvent(new ClickEvent());
-                            } else {
-                                loadEvent(eventCode);
-                            }
+                        if (cb != null) {
+                            cb.fireEvent(new ClickEvent());
+                        } else {
+                            loadEvent(eventCode);
                         }
                     }
-                };
+                }
+            };
         tree.setCell(cell);
 
         Comparator<RowModelData> comp = new Comparator<RowModelData>() {
@@ -366,13 +366,8 @@ public class TreeMenuBuilder extends TreeBuilder
     }
 
     private SafeUri getImageUrl(String role, String image) {
-        StringBuilder url = new StringBuilder();
-        url.append(GWT.getHostPageBaseURL());
-        url.append("resource?type=download&data=image&code=");
-        url.append(role);
-        url.append("&fileName=");
-        url.append(image);
-        return UriUtils.fromString(url.toString());
+        String url = GWT.getHostPageBaseURL() + "resource?type=download&data=image&code=" + role + "&fileName=" + image;
+        return UriUtils.fromString(url);
     }
 
     private ListModelData getModelData(HorizontalMenuItemBuilder cb) {

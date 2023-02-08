@@ -228,13 +228,13 @@ import java.util.Set;
  * @see CellSelectionModel
  */
 public class Grid<M> extends Component
-        implements HasViewReadyHandlers, HasSortChangeHandlers, HasRowClickHandlers,
-        HasRowDoubleClickHandlers, HasRowMouseDownHandlers, HasCellClickHandlers,
-        HasCellDoubleClickHandlers,
-        HasCellMouseDownHandlers, HasHeaderClickHandlers, HasHeaderDoubleClickHandlers,
-        HasHeaderContextMenuHandlers,
-        HasHeaderMouseDownHandlers, HasRefreshHandlers, HasReconfigureHandlers,
-        HasBodyScrollHandlers {
+    implements HasViewReadyHandlers, HasSortChangeHandlers, HasRowClickHandlers,
+    HasRowDoubleClickHandlers, HasRowMouseDownHandlers, HasCellClickHandlers,
+    HasCellDoubleClickHandlers,
+    HasCellMouseDownHandlers, HasHeaderClickHandlers, HasHeaderDoubleClickHandlers,
+    HasHeaderContextMenuHandlers,
+    HasHeaderMouseDownHandlers, HasRefreshHandlers, HasReconfigureHandlers,
+    HasBodyScrollHandlers {
 
     /**
      * The current column model for this grid. Should be considered read-only in derived classes
@@ -269,31 +269,31 @@ public class Grid<M> extends Component
     private int lazyRowRender = 10;
     private HandlerRegistration loaderRegistration;
     private boolean loadMask;
-    private LoaderHandler<ListLoadConfig, ListLoadResult<?>> loadHandler =
-            new LoaderHandler<ListLoadConfig, ListLoadResult<?>>() {
-                @Override
-                public void onBeforeLoad(final BeforeLoadEvent<ListLoadConfig> event) {
-                    Grid.this.onLoaderBeforeLoad();
-                    Scheduler.get().scheduleFinally(new ScheduledCommand() {
-                        @Override
-                        public void execute() {
-                            if (event.isCancelled()) {
-                                Grid.this.onLoadLoader();
-                            }
+    private final LoaderHandler<ListLoadConfig, ListLoadResult<?>> loadHandler =
+        new LoaderHandler<ListLoadConfig, ListLoadResult<?>>() {
+            @Override
+            public void onBeforeLoad(final BeforeLoadEvent<ListLoadConfig> event) {
+                Grid.this.onLoaderBeforeLoad();
+                Scheduler.get().scheduleFinally(new ScheduledCommand() {
+                    @Override
+                    public void execute() {
+                        if (event.isCancelled()) {
+                            Grid.this.onLoadLoader();
                         }
-                    });
-                }
+                    }
+                });
+            }
 
-                @Override
-                public void onLoad(LoadEvent<ListLoadConfig, ListLoadResult<?>> event) {
-                    Grid.this.onLoadLoader();
-                }
+            @Override
+            public void onLoad(LoadEvent<ListLoadConfig, ListLoadResult<?>> event) {
+                Grid.this.onLoadLoader();
+            }
 
-                @Override
-                public void onLoadException(LoadExceptionEvent<ListLoadConfig> event) {
-                    Grid.this.onLoaderLoadException();
-                }
-            };
+            @Override
+            public void onLoadException(LoadExceptionEvent<ListLoadConfig> event) {
+                Grid.this.onLoaderLoadException();
+            }
+        };
 
     /**
      * Creates a new grid with the given data store and column model.
@@ -879,9 +879,9 @@ public class Grid<M> extends Component
         Element cellParent = getView().getCell(rowIndex, colIndex);
         if (value != null && config != null && cellParent != null) {
             Context context =
-                    new Context(rowIndex, colIndex, getStore().getKeyProvider().getKey(value));
+                new Context(rowIndex, colIndex, getStore().getKeyProvider().getKey(value));
             return fireEventToCell(event, event.getType(), cellParent.getFirstChildElement(), value,
-                    context, config);
+                context, config);
         }
         return null;
     }
@@ -1064,7 +1064,7 @@ public class Grid<M> extends Component
      * decouples components that need to know if a cell is selectable from components that know if a
      * cell is selectable.
      */
-    public static interface Callback {
+    public interface Callback {
 
         /**
          * Returns true to indicate the given cell is selectable.
@@ -1072,7 +1072,7 @@ public class Grid<M> extends Component
          * @param cell the cell to check
          * @return true to indicate the cell is editable
          */
-        public boolean isSelectable(GridCell cell);
+        boolean isSelectable(GridCell cell);
     }
 
     /**

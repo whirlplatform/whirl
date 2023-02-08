@@ -97,11 +97,11 @@ public class SortAppTreeMenuItem<T extends AppTree> extends MenuItem {
                 List<StoreSortInfo<AbstractElement>> sortInfo = store.getSortInfo();
                 if (ascItem.equals(currentItem)) {
                     sortInfo.add(
-                            new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.ASC));
+                        new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.ASC));
                     message = EditorMessage.Util.MESSAGE.sort_display_asc();
                 } else if (descItem.equals(currentItem)) {
                     sortInfo.add(
-                            new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.DESC));
+                        new StoreSortInfo<>(new TreeElementNamesComparator(), SortDir.DESC));
                     message = EditorMessage.Util.MESSAGE.sort_display_desc();
                 } else if (defaultItem.equals(currentItem)) {
                     message = EditorMessage.Util.MESSAGE.sort_display_default();

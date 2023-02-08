@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.db;
 
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class DBConnection {
      * @throws IOException
      */
     static ConnectionWrapper getConnection(String alias, ApplicationUser user)
-            throws ConnectException {
+        throws ConnectException {
         ConnectionWrapper connection = null;
         try {
             DataSource ds = getDataSource(alias);
@@ -55,30 +54,30 @@ public class DBConnection {
 
             Class<ConnectionWrapper> clazz = connectionWrapperClass(alias);
             Constructor<ConnectionWrapper> constructor =
-                    clazz.getConstructor(String.class, Connection.class,
-                            ApplicationUser.class);
+                clazz.getConstructor(String.class, Connection.class,
+                    ApplicationUser.class);
             connection = constructor.newInstance(alias, conn, user);
 
         } catch (SQLException | NoSuchMethodException | SecurityException | InstantiationException
                  | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             _log.error(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
-                        + alias, e);
+                I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
+                    + alias, e);
         }
         if (connection == null) {
             throw new ConnectException(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect());
+                I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect());
         }
         return connection;
     }
 
     @SuppressWarnings("unchecked")
     private static Class<ConnectionWrapper> connectionWrapperClass(String alias)
-            throws ConnectException {
+        throws ConnectException {
         try {
             String driverClassName = ContextUtil.lookup("Whirl/ds/" + alias + "/driver");
             Class<ConnectionWrapper> clazz =
-                    (Class<ConnectionWrapper>) Class.forName(driverClassName);
+                (Class<ConnectionWrapper>) Class.forName(driverClassName);
             return clazz;
         } catch (ClassNotFoundException e) {
             _log.error(e);
@@ -92,10 +91,10 @@ public class DBConnection {
             return ds;
         } catch (SecurityException | IllegalArgumentException e) {
             _log.error(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
-                        + alias, e);
+                I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect() + ": "
+                    + alias, e);
             throw new ConnectException(
-                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect());
+                I18NMessage.getMessage(I18NMessage.getRequestLocale()).errorDBConnect());
         }
     }
 

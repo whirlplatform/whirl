@@ -104,7 +104,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
             setModal(Boolean.TRUE.equals(value.getBoolean()));
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Title.getCode()) && value != null
-                && !Util.isEmptyString(value.getString())) {
+            && !Util.isEmptyString(value.getString())) {
             setTitle(value.getString());
         }
         return super.setProperty(name, value);
@@ -336,12 +336,12 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
     public void show() {
         // Нужно ли делать окно модальным
         WindowManager.get()
-                .add(this); // т.к. при вызове window.hide() билдер удаляется из списка, регистрирую его
+            .add(this); // т.к. при вызове window.hide() билдер удаляется из списка, регистрирую его
         // заново, что необходимо для работы локаторов
         boolean parentModal = isParentModal();
         window.setModal(this.modal || parentModal);
         WindowManager.get().showWindow(
-                window); // излишне выполняется операция syncTaskBars(). но это не критично.
+            window); // излишне выполняется операция syncTaskBars(). но это не критично.
     }
 
     /**
@@ -445,7 +445,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
                 }
             }
             return window.getHeader()
-                    .getElement(); // если toolbarButton не определена - возвращаю просто header окна
+                .getElement(); // если toolbarButton не определена - возвращаю просто header окна
         }
         return null;
     }
@@ -509,7 +509,7 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
      * Помощь при работе с элементами Header-а окна.
      */
     private class ToolBarHelper {
-        private Header header;
+        private final Header header;
 
         public ToolBarHelper(Header header) {
             this.header = header;
@@ -526,17 +526,17 @@ public class WindowBuilder extends ComponentBuilder implements Containable {
                                 if (tool.getElement().hasClassName(ToolButton.CLOSE.getStyle())) {
                                     headerPart.setPart(new Locator(LocatorParams.TYPE_TOOL_CLOSE));
                                 } else if (tool.getElement()
-                                        .hasClassName(ToolButton.RESTORE.getStyle())) {
+                                    .hasClassName(ToolButton.RESTORE.getStyle())) {
                                     headerPart.setPart(
-                                            new Locator(LocatorParams.TYPE_TOOL_RESTORE));
+                                        new Locator(LocatorParams.TYPE_TOOL_RESTORE));
                                 } else if (tool.getElement()
-                                        .hasClassName(ToolButton.MAXIMIZE.getStyle())) {
+                                    .hasClassName(ToolButton.MAXIMIZE.getStyle())) {
                                     headerPart.setPart(
-                                            new Locator(LocatorParams.TYPE_TOOL_MAXIMIZE));
+                                        new Locator(LocatorParams.TYPE_TOOL_MAXIMIZE));
                                 } else if (tool.getElement()
-                                        .hasClassName(ToolButton.MINIMIZE.getStyle())) {
+                                    .hasClassName(ToolButton.MINIMIZE.getStyle())) {
                                     headerPart.setPart(
-                                            new Locator(LocatorParams.TYPE_TOOL_MINIMIZE));
+                                        new Locator(LocatorParams.TYPE_TOOL_MINIMIZE));
                                 }
                                 break;
                             }

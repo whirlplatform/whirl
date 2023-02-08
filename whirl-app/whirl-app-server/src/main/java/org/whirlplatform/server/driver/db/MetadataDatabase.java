@@ -14,10 +14,10 @@ public class MetadataDatabase extends DBDatabase {
     private static MetadataDatabase instance;
     public final TableWhirlUsers WHIRL_USERS = new TableWhirlUsers(this);
     public final TableWhirlUserApplications WHIRL_USER_APPLICATIONS =
-            new TableWhirlUserApplications(
-                    this);
-    public final TableWhirlUserGroups WHIRL_USER_GROUPS = new TableWhirlUserGroups(
+        new TableWhirlUserApplications(
             this);
+    public final TableWhirlUserGroups WHIRL_USER_GROUPS = new TableWhirlUserGroups(
+        this);
 
     /**
      * Default constructor for the MetadataDatabase.

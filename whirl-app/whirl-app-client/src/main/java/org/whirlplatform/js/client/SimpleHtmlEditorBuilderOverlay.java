@@ -46,14 +46,14 @@ public abstract class SimpleHtmlEditorBuilderOverlay {
 
     public abstract String getValue();
 
-////    public static DataValue getDataValue(SimpleHtmlEditorBuilder instance) {
-//        return instance.getFieldValue();
-//    }
+    //    public static DataValue getDataValue(SimpleHtmlEditorBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
 
-////    public static void setDataValue(SimpleHtmlEditorBuilder instance,
-//                                    DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static void setDataValue(SimpleHtmlEditorBuilder instance,
+    //                                    DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     public abstract void setValue(String value);
 

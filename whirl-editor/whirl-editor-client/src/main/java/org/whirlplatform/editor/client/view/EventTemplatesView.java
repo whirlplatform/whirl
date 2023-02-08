@@ -27,8 +27,8 @@ public class EventTemplatesView extends AbstractTemplatesView {
                 AbstractElement data = copy((AbstractElement) event.getData());
                 final BaseTemplate template = new BaseTemplate(data, true);
                 final PromptMessageBox messageBox =
-                        new PromptMessageBox(EditorMessage.Util.MESSAGE.templ_save(),
-                                EditorMessage.Util.MESSAGE.templ_enter_name());
+                    new PromptMessageBox(EditorMessage.Util.MESSAGE.templ_save(),
+                        EditorMessage.Util.MESSAGE.templ_enter_name());
                 messageBox.setToolTip(EditorMessage.Util.MESSAGE.templ_name_message());
                 messageBox.getButton(PredefinedButton.OK).addSelectHandler(new SelectHandler() {
 
@@ -47,7 +47,7 @@ public class EventTemplatesView extends AbstractTemplatesView {
                     @Override
                     public void onSelect(SelectEvent event) {
                         InfoHelper.info("templace-save-cancel", EditorMessage.Util.MESSAGE.undo(),
-                                EditorMessage.Util.MESSAGE.templ_save_cancel());
+                            EditorMessage.Util.MESSAGE.templ_save_cancel());
                     }
                 });
                 messageBox.show();
@@ -56,7 +56,7 @@ public class EventTemplatesView extends AbstractTemplatesView {
             @Override
             protected void onDragMove(DndDragMoveEvent event) {
                 event.getStatusProxy().setStatus(
-                        event.getData() != null && event.getData() instanceof EventElement);
+                    event.getData() != null && event.getData() instanceof EventElement);
             }
         });
     }

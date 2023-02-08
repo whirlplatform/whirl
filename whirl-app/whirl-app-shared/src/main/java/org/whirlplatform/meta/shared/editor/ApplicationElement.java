@@ -53,11 +53,11 @@ public class ApplicationElement extends AbstractElement {
     private Set<GroupElement> groups = new HashSet<GroupElement>();
 
     private Map<AbstractTableElement, RightCollectionElement> tableRights =
-            new HashMap<AbstractTableElement, RightCollectionElement>();
+        new HashMap<AbstractTableElement, RightCollectionElement>();
     private Map<TableColumnElement, RightCollectionElement> tableColumnRights =
-            new HashMap<TableColumnElement, RightCollectionElement>();
+        new HashMap<TableColumnElement, RightCollectionElement>();
     private Map<EventElement, RightCollectionElement> eventRights =
-            new HashMap<EventElement, RightCollectionElement>();
+        new HashMap<EventElement, RightCollectionElement>();
 
     private boolean available = true;
 
@@ -571,7 +571,7 @@ public class ApplicationElement extends AbstractElement {
     public void removeTableColumnRights(AbstractTableElement table) {
         synchronized (tableColumnRights) {
             Iterator<Entry<TableColumnElement, RightCollectionElement>> iter =
-                    tableColumnRights.entrySet().iterator();
+                tableColumnRights.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<TableColumnElement, RightCollectionElement> e = iter.next();
                 if (table == e.getKey().getTable()) {
@@ -718,12 +718,12 @@ public class ApplicationElement extends AbstractElement {
                 boolean equalsCodeOrId = (code && codeOrId.equals(event.getCode())
                     || codeOrId.equals(event.getId()));
                 boolean equalsParentId =
-                        (parentId == null || parentId.equals(event.getParentEventId()));
+                    (parentId == null || parentId.equals(event.getParentEventId()));
                 if (equalsCodeOrId && equalsParentId) {
                     return event;
                 }
                 EventElement subEvent =
-                        getEventFromList(event.getSubEvents(), codeOrId, parentId, code);
+                    getEventFromList(event.getSubEvents(), codeOrId, parentId, code);
                 if (subEvent != null) {
                     return subEvent;
                 }

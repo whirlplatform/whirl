@@ -31,7 +31,7 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
         QueryMessage msg = new QueryMessage(connection.getUser(), query);
 
         RunningEvent ev = new RunningEvent(RunningEvent.Type.DBEVENT, "", query,
-                connection.getUser().getLogin()) {
+            connection.getUser().getLogin()) {
 
             @Override
             public void onStop() {
@@ -40,11 +40,11 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
         };
         try (Profile p = new ProfileImpl(msg, ev)) {
             ResultSet resultSet =
-                    connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+                connection.getDatabaseDriver().executeQuery(query, null, false, connection);
             if (resultSet.next()) {
                 Map<String, DataValue> resultValues =
-                        collectResultSetValue(connection.getDatabaseDriver(),
-                                resultSet);
+                    collectResultSetValue(connection.getDatabaseDriver(),
+                        resultSet);
                 if (resultSet.next()) {
                     _log.warn(
                         "Query should return only 1 row. More than 1 rows returned.\n" + query

@@ -4,7 +4,7 @@ import com.sencha.gxt.data.shared.LabelProvider;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 public class ElementLabelProvider<T extends AbstractElement> implements
-        LabelProvider<T> {
+    LabelProvider<T> {
 
     @Override
     public String getLabel(T item) {

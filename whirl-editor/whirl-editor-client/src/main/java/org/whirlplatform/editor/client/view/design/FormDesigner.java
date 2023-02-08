@@ -98,7 +98,7 @@ public class FormDesigner extends ComponentDesigner {
         public void onMouseSelection(MouseSelectionEvent event) {
             if (event.isSelect()) {
                 setSelection(new Rectangle(event.getClientX(),
-                        event.getClientY(), event.getWidth(), event.getHeight()));
+                    event.getClientY(), event.getWidth(), event.getHeight()));
             } else {
                 clearSelection();
             }
@@ -151,7 +151,7 @@ public class FormDesigner extends ComponentDesigner {
         });
         deleteColumn = new TextButton();
         deleteColumn
-                .setTitle(EditorMessage.Util.MESSAGE.design_column_remove());
+            .setTitle(EditorMessage.Util.MESSAGE.design_column_remove());
         deleteColumn.setIcon(EditorBundle.INSTANCE.deleteColumn());
         deleteColumn.addSelectHandler(new SelectHandler() {
 
@@ -188,7 +188,7 @@ public class FormDesigner extends ComponentDesigner {
             @Override
             public void onSelect(SelectEvent event) {
                 onAddBorderTop(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderRight = new TextButton();
@@ -199,19 +199,19 @@ public class FormDesigner extends ComponentDesigner {
             @Override
             public void onSelect(SelectEvent event) {
                 onAddBorderRight(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderBottom = new TextButton();
         borderBottom
-                .setTitle(EditorMessage.Util.MESSAGE.design_border_bottom());
+            .setTitle(EditorMessage.Util.MESSAGE.design_border_bottom());
         borderBottom.setIcon(EditorBundle.INSTANCE.borderBottom());
         borderBottom.addSelectHandler(new SelectHandler() {
 
             @Override
             public void onSelect(SelectEvent event) {
                 onAddBorderBottom(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderLeft = new TextButton();
@@ -222,12 +222,12 @@ public class FormDesigner extends ComponentDesigner {
             @Override
             public void onSelect(SelectEvent event) {
                 onAddBorderLeft(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
 
         borderWidth = new SimpleComboBox<Integer>(
-                new StringLabelProvider<Integer>());
+            new StringLabelProvider<Integer>());
         borderWidth.setAllowBlank(false);
         borderWidth.setForceSelection(true);
         borderWidth.setEditable(false);
@@ -250,34 +250,34 @@ public class FormDesigner extends ComponentDesigner {
         borderColorMenu = new ColorMenu();
         borderColor.setMenu(borderColorMenu);
         borderColorMenu.getPalette().addValueChangeHandler(
-                new ValueChangeHandler<String>() {
+            new ValueChangeHandler<String>() {
 
-                    @Override
-                    public void onValueChange(ValueChangeEvent<String> event) {
-                        borderColorMenu.hide();
-                    }
-                });
+                @Override
+                public void onValueChange(ValueChangeEvent<String> event) {
+                    borderColorMenu.hide();
+                }
+            });
 
         backgroundColor = new TextButton();
         backgroundColor.setTitle(EditorMessage.Util.MESSAGE
-                .design_background_color());
+            .design_background_color());
         backgroundColor.setIcon(EditorBundle.INSTANCE.color());
         backgroundColorMenu = new ColorMenu();
         backgroundColor.setMenu(backgroundColorMenu);
         backgroundColorMenu.getPalette().addValueChangeHandler(
-                new ValueChangeHandler<String>() {
+            new ValueChangeHandler<String>() {
 
-                    @Override
-                    public void onValueChange(ValueChangeEvent<String> event) {
-                        backgroundColorMenu.hide();
-                        backgroundColorMenu.getPalette().setValue("");
-                        onSetColor(event.getValue());
-                    }
-                });
+                @Override
+                public void onValueChange(ValueChangeEvent<String> event) {
+                    backgroundColorMenu.hide();
+                    backgroundColorMenu.getPalette().setValue("");
+                    onSetColor(event.getValue());
+                }
+            });
 
         clearBackgroundColor = new TextButton();
         clearBackgroundColor.setTitle(EditorMessage.Util.MESSAGE
-                .design_clear_color());
+            .design_clear_color());
         clearBackgroundColor.setIcon(EditorBundle.INSTANCE.clearColor());
         clearBackgroundColor.addSelectHandler(new SelectHandler() {
             @Override
@@ -316,7 +316,7 @@ public class FormDesigner extends ComponentDesigner {
         new GridLayoutDropTarget((GridLayoutContainer) builder.getComponent()) {
             protected void onDragDrop(DndDropEvent event) {
                 FormDesigner.super.onRootDrop(element, builder,
-                        event.getData(), getCell());
+                    event.getData(), getCell());
                 super.onDragDrop(event);
             }
 
@@ -358,35 +358,35 @@ public class FormDesigner extends ComponentDesigner {
         if (selectedCells.size() > 0) {
             model = new CellRangeElement(-1, -1, -1, -1);
             GridLayoutContainer container = (GridLayoutContainer) rootBuilder
-                    .getComponent();
+                .getComponent();
             for (CellRangeElement m : selectedCells) {
                 Cell cellIndexes = container.getGridPositionByTable(m.getTop(),
-                        m.getLeft());
+                    m.getLeft());
                 if (cellIndexes == null) {
                     continue;
                 }
                 int top = cellIndexes.getRow() > m.getTop() ? cellIndexes
-                        .getRow() : m.getTop();
+                    .getRow() : m.getTop();
                 int right = cellIndexes.getColumn() > m.getRight() ? cellIndexes
-                        .getColumn() : m.getRight();
+                    .getColumn() : m.getRight();
                 int bottom = cellIndexes.getRow() > m.getBottom() ? cellIndexes
-                        .getRow() : m.getBottom();
+                    .getRow() : m.getBottom();
                 int left = cellIndexes.getColumn() > m.getLeft() ? cellIndexes
-                        .getColumn() : m.getLeft();
+                    .getColumn() : m.getLeft();
 
                 if (model.getTop() < 0 || model.getTop() > cellIndexes.getRow()) {
                     model.setTop(top);
                 }
                 if (model.getRight() < 0
-                        || model.getRight() < cellIndexes.getColumn()) {
+                    || model.getRight() < cellIndexes.getColumn()) {
                     model.setRight(right);
                 }
                 if (model.getBottom() < 0
-                        || model.getBottom() < cellIndexes.getRow()) {
+                    || model.getBottom() < cellIndexes.getRow()) {
                     model.setBottom(bottom);
                 }
                 if (model.getLeft() < 0
-                        || model.getLeft() > cellIndexes.getColumn()) {
+                    || model.getLeft() > cellIndexes.getColumn()) {
                     model.setLeft(left);
                 }
             }
@@ -408,14 +408,14 @@ public class FormDesigner extends ComponentDesigner {
             for (int j = 0; j < cells; j++) {
                 Element el = table.getFlexCellFormatter().getElement(i, j);
                 if (el != null
-                        && el.getAbsoluteLeft() <= rectangle.getX()
-                        + rectangle.getWidth()
-                        && el.getAbsoluteLeft() + el.getClientWidth() >= rectangle
-                        .getX()
-                        && el.getAbsoluteTop() <= rectangle.getY()
-                        + rectangle.getHeight()
-                        && el.getAbsoluteTop() + el.getClientHeight() >= rectangle
-                        .getY()) {
+                    && el.getAbsoluteLeft() <= rectangle.getX()
+                    + rectangle.getWidth()
+                    && el.getAbsoluteLeft() + el.getClientWidth() >= rectangle
+                    .getX()
+                    && el.getAbsoluteTop() <= rectangle.getY()
+                    + rectangle.getHeight()
+                    && el.getAbsoluteTop() + el.getClientHeight() >= rectangle
+                    .getY()) {
 
                     selectedCells.add(new CellRangeElement(i, j, i, j));
                 }
@@ -477,9 +477,9 @@ public class FormDesigner extends ComponentDesigner {
 
     private void setCellSelected(Element el, boolean selected) {
         Surface surface = setElementSelected(
-                el,
-                GWT.<DefaultSurfaceAppearance>create(DefaultSurfaceAppearance.class),
-                selected);
+            el,
+            GWT.<DefaultSurfaceAppearance>create(DefaultSurfaceAppearance.class),
+            selected);
         if (surface != null) {
             surface.getElement().getStyle().setZIndex(1);
         }
@@ -495,11 +495,11 @@ public class FormDesigner extends ComponentDesigner {
         FlexTable table = getFormTable(rootBuilder.getComponent());
         for (CellRangeElement model : selectedCells) {
             if (model.getTop() >= table.getRowCount()
-                    || model.getLeft() >= table.getCellCount(model.getTop())) {
+                || model.getLeft() >= table.getCellCount(model.getTop())) {
                 continue;
             }
             Element el = table.getFlexCellFormatter().getElement(
-                    model.getTop(), model.getLeft());
+                model.getTop(), model.getLeft());
             if (el != null) {
                 setBuilderSelection(((XElement) el).getBounds());
                 setCellSelected(el, true);
@@ -519,7 +519,7 @@ public class FormDesigner extends ComponentDesigner {
      */
     private void setBuilderSelection(Rectangle rectangle) {
         for (Entry<ComponentElement, ComponentBuilder> entry : builders
-                .entrySet()) {
+            .entrySet()) {
             ComponentElement e = entry.getKey();
             ComponentBuilder b = entry.getValue();
             XElement el = b.getComponent().getElement();
@@ -533,7 +533,7 @@ public class FormDesigner extends ComponentDesigner {
             // вернет false
 
             if (rectangle.contains(p1) && rectangle.contains(p2)
-                    && rootElement.getChildren().contains(e)) {
+                && rootElement.getChildren().contains(e)) {
                 selectedElements.add(e);
                 setBuilderSelected(el, true);
             }
@@ -545,9 +545,9 @@ public class FormDesigner extends ComponentDesigner {
         // Может ли быть не formElement?
         FormElement form = (FormElement) rootElement;
         int rows = form.getProperty(PropertyType.Rows).getValue(defaultLocale)
-                .getDouble().intValue();
+            .getDouble().intValue();
         int cols = form.getProperty(PropertyType.Columns)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
 
         // int index = rows;
         int index = model == null ? rows : model.getTop();
@@ -565,20 +565,20 @@ public class FormDesigner extends ComponentDesigner {
             for (ComponentElement comp : comps) {
                 if (comp.getParent() == rootElement) {
                     int compRow = comp
-                            .getProperty(PropertyType.LayoutDataFormRow)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue();
+                        .getProperty(PropertyType.LayoutDataFormRow)
+                        .getValue(defaultLocale).getDouble()
+                        .intValue();
                     if (compRow >= model.getTop()) {
                         fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(
-                                form, PropertyType.LayoutDataFormRow,
-                                new PropertyValue(DataType.NUMBER,
-                                        defaultLocale, ++compRow)));
+                            form, PropertyType.LayoutDataFormRow,
+                            new PropertyValue(DataType.NUMBER,
+                                defaultLocale, ++compRow)));
                     }
                 }
             }
         }
         firePropertyChangeEvent(new PropertyChangeEvent(form,
-                new FormRowInsertData(form, index)));
+            new FormRowInsertData(form, index)));
         repaint();
     }
 
@@ -586,9 +586,9 @@ public class FormDesigner extends ComponentDesigner {
         CellRangeElement model = getSelectedCellsArea();
         FormElement form = (FormElement) rootElement;
         int rows = form.getProperty(PropertyType.Rows).getValue(defaultLocale)
-                .getDouble().intValue();
+            .getDouble().intValue();
         int cols = form.getProperty(PropertyType.Columns)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
 
         // int index = cols;
         int index = model == null ? cols : model.getLeft();
@@ -607,20 +607,20 @@ public class FormDesigner extends ComponentDesigner {
             for (ComponentElement comp : comps) {
                 if (comp.getParent() == rootElement) {
                     int compCol = comp
-                            .getProperty(PropertyType.LayoutDataFormColumn)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue();
+                        .getProperty(PropertyType.LayoutDataFormColumn)
+                        .getValue(defaultLocale).getDouble()
+                        .intValue();
                     if (compCol >= model.getLeft()) {
                         fireComponentPropertyChangeEvent(new ComponentPropertyChangeEvent(
-                                comp, PropertyType.LayoutDataFormColumn,
-                                new PropertyValue(DataType.NUMBER,
-                                        defaultLocale, ++compCol)));
+                            comp, PropertyType.LayoutDataFormColumn,
+                            new PropertyValue(DataType.NUMBER,
+                                defaultLocale, ++compCol)));
                     }
                 }
             }
         }
         firePropertyChangeEvent(new PropertyChangeEvent(form,
-                new FormColumnInsertData(form, index)));
+            new FormColumnInsertData(form, index)));
         repaint();
     }
 
@@ -633,8 +633,8 @@ public class FormDesigner extends ComponentDesigner {
             if (!checkRowsHasSpans()) {
                 for (int i = 0; i < rowsCount; i++) {
                     int rows = rootElement.getProperty(PropertyType.Rows)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue();
+                        .getValue(defaultLocale).getDouble()
+                        .intValue();
                     if (rowNum < rows && rows > 1) {
                         deleteRow(rowNum);
                     }
@@ -643,7 +643,7 @@ public class FormDesigner extends ComponentDesigner {
                 repaint();
             } else {
                 Info.display(EditorMessage.Util.MESSAGE.warn(),
-                        EditorMessage.Util.MESSAGE.warn_need_to_split());
+                    EditorMessage.Util.MESSAGE.warn_need_to_split());
             }
         }
     }
@@ -656,9 +656,9 @@ public class FormDesigner extends ComponentDesigner {
     public void deleteRow(int index) {
         FormElement form = (FormElement) rootElement;
         int rows = rootElement.getProperty(PropertyType.Rows)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
         int cols = rootElement.getProperty(PropertyType.Columns)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
         // if (index < rows && rows > 1) {
         CellElement next;
         for (int i = 0; i < cols; i++) {
@@ -673,11 +673,11 @@ public class FormDesigner extends ComponentDesigner {
         for (ComponentElement comp : comps) {
             if (comp.getParent() == rootElement) {
                 int compRow = comp.getProperty(PropertyType.LayoutDataFormRow)
-                        .getValue(defaultLocale).getDouble().intValue();
+                    .getValue(defaultLocale).getDouble().intValue();
                 if (compRow > index) {
                     comp.setProperty(PropertyType.LayoutDataFormRow,
-                            new PropertyValue(DataType.NUMBER, defaultLocale,
-                                    --compRow));
+                        new PropertyValue(DataType.NUMBER, defaultLocale,
+                            --compRow));
                 } else if (compRow == index) {
                     // перемещаем компоненты, расположенные на удаляемых
                     // ячейках в
@@ -688,7 +688,7 @@ public class FormDesigner extends ComponentDesigner {
         }
 
         firePropertyChangeEvent(new PropertyChangeEvent(form,
-                new FormRowDeleteData(form, index)));
+            new FormRowDeleteData(form, index)));
     }
 
     private void onDeleteColumn() {
@@ -700,8 +700,8 @@ public class FormDesigner extends ComponentDesigner {
             if (!checkColumnsHasSpans()) {
                 for (int i = 0; i < colsCount; i++) {
                     int cols = rootElement.getProperty(PropertyType.Columns)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue();
+                        .getValue(defaultLocale).getDouble()
+                        .intValue();
                     if (colNum < cols && cols > 1) {
                         deleteColumn(colNum);
                     }
@@ -711,7 +711,7 @@ public class FormDesigner extends ComponentDesigner {
                 repaint();
             } else {
                 Info.display(EditorMessage.Util.MESSAGE.warn(),
-                        EditorMessage.Util.MESSAGE.warn_need_to_split());
+                    EditorMessage.Util.MESSAGE.warn_need_to_split());
             }
         }
     }
@@ -724,9 +724,9 @@ public class FormDesigner extends ComponentDesigner {
     public void deleteColumn(int index) {
         FormElement form = (FormElement) rootElement;
         int rows = rootElement.getProperty(PropertyType.Rows)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
         int cols = rootElement.getProperty(PropertyType.Columns)
-                .getValue(defaultLocale).getDouble().intValue();
+            .getValue(defaultLocale).getDouble().intValue();
 
         // if (index < cols && cols > 1) {
 
@@ -743,12 +743,12 @@ public class FormDesigner extends ComponentDesigner {
         for (ComponentElement comp : comps) {
             if (comp.getParent() == rootElement) {
                 int compCol = comp
-                        .getProperty(PropertyType.LayoutDataFormColumn)
-                        .getValue(defaultLocale).getDouble().intValue();
+                    .getProperty(PropertyType.LayoutDataFormColumn)
+                    .getValue(defaultLocale).getDouble().intValue();
                 if (compCol > index) {
                     comp.setProperty(PropertyType.LayoutDataFormColumn,
-                            new PropertyValue(DataType.NUMBER, defaultLocale,
-                                    --compCol));
+                        new PropertyValue(DataType.NUMBER, defaultLocale,
+                            --compCol));
                 } else if (compCol == index) {
                     // перемещаем компоненты, расположенные на удаляемых
                     // ячейках в
@@ -758,7 +758,7 @@ public class FormDesigner extends ComponentDesigner {
             }
         }
         firePropertyChangeEvent(new PropertyChangeEvent(form,
-                new FormColumnDeleteData(form, index)));
+            new FormColumnDeleteData(form, index)));
     }
 
     private boolean checkRowsHasSpans() {
@@ -769,14 +769,14 @@ public class FormDesigner extends ComponentDesigner {
         int bottom = 0;
         for (CellRangeElement model : selectedCells) {
             int topTmp = table.getFlexCellFormatter()
-                    .getElement(model.getTop(), model.getLeft())
-                    .getAbsoluteTop() + 1;
+                .getElement(model.getTop(), model.getLeft())
+                .getAbsoluteTop() + 1;
             if (topTmp < top) {
                 top = topTmp;
             }
             int botTmp = table.getFlexCellFormatter()
-                    .getElement(model.getBottom(), model.getLeft())
-                    .getAbsoluteBottom() - 1;
+                .getElement(model.getBottom(), model.getLeft())
+                .getAbsoluteBottom() - 1;
             if (botTmp > bottom) {
                 bottom = botTmp;
             }
@@ -785,13 +785,13 @@ public class FormDesigner extends ComponentDesigner {
 
         clearSelection();
         setSelection(new Rectangle(table.getAbsoluteLeft(), top + 1, width,
-                bottom - top - 1));
+            bottom - top - 1));
 
         CellRangeElement model = getSelectedCellsArea();
         for (int i = model.getTop(); i <= model.getBottom(); i++) {
             for (int j = model.getLeft(); j <= model.getRight(); j++) {
                 if (((FormElement) rootElement).findCellElement(i, j)
-                        .getRowSpan() > 1) {
+                    .getRowSpan() > 1) {
                     hasSpans = true;
                 }
             }
@@ -807,14 +807,14 @@ public class FormDesigner extends ComponentDesigner {
         int right = 0;
         for (CellRangeElement model : selectedCells) {
             int leftTmp = table.getFlexCellFormatter()
-                    .getElement(model.getTop(), model.getLeft())
-                    .getAbsoluteLeft() + 1;
+                .getElement(model.getTop(), model.getLeft())
+                .getAbsoluteLeft() + 1;
             if (leftTmp < left) {
                 left = leftTmp;
             }
             int rightTmp = table.getFlexCellFormatter()
-                    .getElement(model.getTop(), model.getRight())
-                    .getAbsoluteRight() - 1;
+                .getElement(model.getTop(), model.getRight())
+                .getAbsoluteRight() - 1;
             if (rightTmp > right) {
                 right = rightTmp;
             }
@@ -825,13 +825,13 @@ public class FormDesigner extends ComponentDesigner {
         clearSelection();
         // Прибавляю/отнимаю 2 чтобы учитывать padding
         setSelection(new Rectangle(left + 1, table.getAbsoluteTop(), right
-                - left - 1, height));
+            - left - 1, height));
 
         CellRangeElement model = getSelectedCellsArea();
         for (int i = model.getTop(); i <= model.getBottom(); i++) {
             for (int j = model.getLeft(); j <= model.getRight(); j++) {
                 if (((FormElement) rootElement).findCellElement(i, j)
-                        .getColSpan() > 1) {
+                    .getColSpan() > 1) {
                     hasSpans = true;
                 }
             }
@@ -846,47 +846,47 @@ public class FormDesigner extends ComponentDesigner {
                 int row = model.getTop();
                 int col = model.getLeft();
                 int bottomSpan = ((FormElement) rootElement).findCellElement(
-                        model.getBottom(), col).getRowSpan();
+                    model.getBottom(), col).getRowSpan();
                 int rightSpan = ((FormElement) rootElement).findCellElement(
-                        row, model.getRight()).getColSpan();
+                    row, model.getRight()).getColSpan();
 
                 if (selectedElements.size() > 1) {
                     InfoHelper.error("more-than-one-element", EditorMessage.Util.MESSAGE.error(),
-                            EditorMessage.Util.MESSAGE
-                                    .error_more_than_one_element());
+                        EditorMessage.Util.MESSAGE
+                            .error_more_than_one_element());
                     return;
                 } else if (selectedElements.size() == 1) {
                     ComponentElement comp = selectedElements.get(0);
                     if (comp.getProperty(PropertyType.LayoutDataFormRow)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue() != row) {
+                        .getValue(defaultLocale).getDouble()
+                        .intValue() != row) {
                         comp.setProperty(PropertyType.LayoutDataFormRow,
-                                new PropertyValue(DataType.NUMBER,
-                                        defaultLocale, row));
+                            new PropertyValue(DataType.NUMBER,
+                                defaultLocale, row));
                     }
                     if (comp.getProperty(PropertyType.LayoutDataFormColumn)
-                            .getValue(defaultLocale).getDouble()
-                            .intValue() != col) {
+                        .getValue(defaultLocale).getDouble()
+                        .intValue() != col) {
                         comp.setProperty(PropertyType.LayoutDataFormColumn,
-                                new PropertyValue(DataType.NUMBER,
-                                        defaultLocale, col));
+                            new PropertyValue(DataType.NUMBER,
+                                defaultLocale, col));
                     }
                 }
 
                 // Разбиваем все выделенные объединенные ячейки
                 for (int i = model.getTop(); i < model.getBottom() + bottomSpan; i++) {
                     for (int j = model.getLeft(); j < model.getRight()
-                            + rightSpan; j++) {
+                        + rightSpan; j++) {
                         ((FormElement) rootElement).findCellElement(i, j)
-                                .setColSpan(1);
+                            .setColSpan(1);
                         ((FormElement) rootElement).findCellElement(i, j)
-                                .setRowSpan(1);
+                            .setRowSpan(1);
                     }
                 }
                 int rowSpan = model.getBottom() - model.getTop() + bottomSpan;
                 int colSpan = model.getRight() - model.getLeft() + rightSpan;
                 CellElement m = ((FormElement) rootElement).findCellElement(
-                        row, col);
+                    row, col);
                 m.setRowSpan(rowSpan);
                 m.setColSpan(colSpan);
                 clearSelection();
@@ -902,7 +902,7 @@ public class FormDesigner extends ComponentDesigner {
                 for (int i = model.getTop(); i <= model.getBottom(); i++) {
                     for (int j = model.getLeft(); j <= model.getRight(); j++) {
                         CellElement m = ((FormElement) rootElement)
-                                .findCellElement(i, j);
+                            .findCellElement(i, j);
                         m.setRowSpan(1);
                         m.setColSpan(1);
                     }
@@ -918,7 +918,7 @@ public class FormDesigner extends ComponentDesigner {
         if (model != null) {
             for (int i = model.getLeft(); i <= model.getRight(); i++) {
                 CellElement m = ((FormElement) rootElement).findCellElement(
-                        model.getTop(), i);
+                    model.getTop(), i);
                 m.setBorderTop(width);
                 m.setBorderTopColor(color);
             }
@@ -931,7 +931,7 @@ public class FormDesigner extends ComponentDesigner {
         if (model != null) {
             for (int i = model.getTop(); i <= model.getBottom(); i++) {
                 CellElement m = ((FormElement) rootElement).findCellElement(i,
-                        model.getRight());
+                    model.getRight());
                 m.setBorderRight(width);
                 m.setBorderRightColor(color);
             }
@@ -944,7 +944,7 @@ public class FormDesigner extends ComponentDesigner {
         if (model != null) {
             for (int i = model.getLeft(); i <= model.getRight(); i++) {
                 CellElement m = ((FormElement) rootElement).findCellElement(
-                        model.getBottom(), i);
+                    model.getBottom(), i);
                 m.setBorderBottom(width);
                 m.setBorderBottomColor(color);
             }
@@ -957,7 +957,7 @@ public class FormDesigner extends ComponentDesigner {
         if (model != null) {
             for (int i = model.getTop(); i <= model.getBottom(); i++) {
                 CellElement m = ((FormElement) rootElement).findCellElement(i,
-                        model.getLeft());
+                    model.getLeft());
                 m.setBorderLeft(width);
                 m.setBorderLeftColor(color);
             }
@@ -971,7 +971,7 @@ public class FormDesigner extends ComponentDesigner {
             for (int i = model.getTop(); i <= model.getBottom(); i++) {
                 for (int j = model.getLeft(); j <= model.getRight(); j++) {
                     CellElement m = ((FormElement) rootElement)
-                            .findCellElement(i, j);
+                        .findCellElement(i, j);
                     m.setBackgroundColor(color);
                 }
             }

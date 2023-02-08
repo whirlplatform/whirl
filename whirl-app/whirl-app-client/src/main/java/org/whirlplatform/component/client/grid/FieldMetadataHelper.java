@@ -30,37 +30,37 @@ public class FieldMetadataHelper {
         Map<String, DataValue> properties = new FastMap<DataValue>();
         if (!field.isEdit() || viewOnly) {
             properties.put(PropertyType.ReadOnly.getCode(),
-                    new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
+                new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
         }
         if (field.isRequired()) {
             properties.put(PropertyType.Required.getCode(),
-                    new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
+                new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
         }
         if (field.isHidden()) {
             properties.put(PropertyType.Hidden.getCode(),
-                    new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
+                new DataValueImpl(DataType.BOOLEAN, Boolean.TRUE));
         }
         if (field.getRegEx() != null && !field.getRegEx().isEmpty()) {
             properties.put(PropertyType.RegEx.getCode(),
-                    new DataValueImpl(DataType.STRING, field.getRegEx()));
+                new DataValueImpl(DataType.STRING, field.getRegEx()));
         }
         if (field.getRegExError() != null && !field.getRegExError().isEmpty()) {
             properties.put(PropertyType.RegExMessage.getCode(),
-                    new DataValueImpl(DataType.STRING, field.getRegExError()));
+                new DataValueImpl(DataType.STRING, field.getRegExError()));
         }
         if (field.getHeight() != 0) {
             properties.put(PropertyType.Height.getCode(),
-                    new DataValueImpl(DataType.NUMBER, field.getHeight()));
+                new DataValueImpl(DataType.NUMBER, field.getHeight()));
         }
         if (field.getClassId() != null) {
             ListModelData list = new ListModelDataImpl();
             list.setId(field.getClassId());
             properties.put(PropertyType.DataSource.getCode(),
-                    new DataValueImpl(DataType.LIST, list));
+                new DataValueImpl(DataType.LIST, list));
         }
         if (field.getType() == DataType.LIST) {
             properties.put(PropertyType.ReloadStructure.getCode(),
-                    new DataValueImpl(DataType.BOOLEAN, true));
+                new DataValueImpl(DataType.BOOLEAN, true));
         }
         return properties;
     }
@@ -82,7 +82,7 @@ public class FieldMetadataHelper {
             builder = new DateFieldBuilder(properties);
         } else if (m.getType() == DataType.LIST) {
             if (m.getListViewType() == null
-                    || ListViewType.LIST.equals(m.getListViewType())) {
+                || ListViewType.LIST.equals(m.getListViewType())) {
                 builder = new TableComboBoxBuilder(m, properties);
             } else if (ListViewType.MULTI.equals(m.getListViewType())) {
                 builder = new TableMultiComboBoxBuilder(m, properties);

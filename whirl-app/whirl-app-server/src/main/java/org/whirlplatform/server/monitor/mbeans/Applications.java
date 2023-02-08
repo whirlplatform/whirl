@@ -52,9 +52,9 @@ public class Applications implements ApplicationsMBean {
             ApplicationElement app = u.getApplication();
             if (app != null) {
                 builder.append("{\"id\": \"").append(app.getId())
-                        .append("\", \"code\": \"").append(app.getCode())
-                        .append("\", \"name\": \"").append(app.getName())
-                        .append("\"},");
+                    .append("\", \"code\": \"").append(app.getCode())
+                    .append("\", \"name\": \"").append(app.getName())
+                    .append("\"},");
                 apps.add(builder.toString());
             }
         }
@@ -87,7 +87,7 @@ public class Applications implements ApplicationsMBean {
         blockedApps.remove(appCode);
 
         Set<ApplicationUser> users =
-                new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
+            new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
         for (ApplicationUser u : users) {
             if (u.getApplication() != null && appCode.equals(u.getApplication().getCode())) {
                 SessionManager.unregisterUser(u);

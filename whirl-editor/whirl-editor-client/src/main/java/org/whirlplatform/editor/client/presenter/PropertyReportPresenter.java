@@ -13,8 +13,8 @@ import org.whirlplatform.meta.shared.editor.ReportElement;
 
 @Presenter(view = PropertyReportView.class)
 public class PropertyReportPresenter
-        extends
-        BasePresenter<PropertyReportPresenter.IPropertyReportView, EditorEventBus> {
+    extends
+    BasePresenter<PropertyReportPresenter.IPropertyReportView, EditorEventBus> {
 
     private ReportElement report;
 
@@ -36,7 +36,7 @@ public class PropertyReportPresenter
     }
 
     public interface IPropertyReportView extends IsWidget,
-            ReverseViewInterface<PropertyReportPresenter> {
+        ReverseViewInterface<PropertyReportPresenter> {
         void setParams(List<FieldMetadata> fields);
     }
 }

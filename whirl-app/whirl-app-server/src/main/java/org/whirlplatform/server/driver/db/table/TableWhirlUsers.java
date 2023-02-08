@@ -29,7 +29,7 @@ public class TableWhirlUsers extends EmpireDBTable {
         NAME = addColumn("NAME", DataType.TEXT, 255.0, false, null);
         EMAIL = addColumn("EMAIL", DataType.TEXT, 255.0, false, null);
         CREATION_DATE = addColumn("CREATION_DATE", DataType.DATETIME, 7.0, false,
-                null);
+            null);
 
         // configure key columns (primary key)
         setPrimaryKey(ID);

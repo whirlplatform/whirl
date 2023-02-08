@@ -42,8 +42,8 @@ import org.whirlplatform.editor.shared.visitor.CloneVisitor;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 
 public abstract class AbstractTemplatesView extends ContentPanel
-        implements AbstractTemplatesPresenter.IComponentTemplatesView,
-        ReverseViewInterface<AbstractTemplatesPresenter> {
+    implements AbstractTemplatesPresenter.IComponentTemplatesView,
+    ReverseViewInterface<AbstractTemplatesPresenter> {
 
     private static final ComponentProperties properties = GWT.create(ComponentProperties.class);
     private AbstractTemplatesPresenter presenter;
@@ -81,11 +81,11 @@ public abstract class AbstractTemplatesView extends ContentPanel
     private void createGrid() {
         IdentityValueProvider<BaseTemplate> identity = new IdentityValueProvider<>();
         CheckBoxSelectionModel<BaseTemplate> selectionModel =
-                new CheckBoxSelectionModel<>(identity);
+            new CheckBoxSelectionModel<>(identity);
         selectionModel.setSelectionMode(SelectionMode.SINGLE);
         ColumnConfig<BaseTemplate, String> config = new ColumnConfig<>(properties.name());
         config.setColumnStyle(SafeStylesUtils.fromTrustedString(
-                "font-weight: bold; font-size: 12px; height: 20px;"));
+            "font-weight: bold; font-size: 12px; height: 20px;"));
         List<ColumnConfig<BaseTemplate, ?>> list = new ArrayList<>();
         list.add(selectionModel.getColumn());
         list.add(config);
@@ -166,9 +166,9 @@ public abstract class AbstractTemplatesView extends ContentPanel
                 BaseTemplate template = getGrid().getSelectionModel().getSelectedItem();
 
                 ConfirmMessageBox messageBox =
-                        new ConfirmMessageBox(EditorMessage.Util.MESSAGE.templ_delete(),
-                                EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> "
-                                    + template.getName() + " </b> ?");
+                    new ConfirmMessageBox(EditorMessage.Util.MESSAGE.templ_delete(),
+                        EditorMessage.Util.MESSAGE.templ_delete_req() + " <b> "
+                            + template.getName() + " </b> ?");
                 messageBox.getButton(PredefinedButton.YES).addSelectHandler(new SelectHandler() {
 
                     @Override
@@ -181,7 +181,7 @@ public abstract class AbstractTemplatesView extends ContentPanel
                     @Override
                     public void onSelect(SelectEvent event) {
                         InfoHelper.info("template-toolbar", EditorMessage.Util.MESSAGE.undo(),
-                                EditorMessage.Util.MESSAGE.templ_delete_cancel());
+                            EditorMessage.Util.MESSAGE.templ_delete_cancel());
                     }
                 });
                 messageBox.show();

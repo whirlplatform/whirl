@@ -25,7 +25,7 @@ public class CaptchaImgGenerator {
     private Integer bufferLength = null;
 
     public CaptchaImgGenerator(Integer lettersCount, OutputStream out)
-            throws IOException {
+        throws IOException {
         this(50, 120, lettersCount, out);
     }
 
@@ -33,7 +33,7 @@ public class CaptchaImgGenerator {
                                OutputStream out) throws IOException {
         Integer lettersCount = (lc != null) ? lc : DEFAULT_LETTERS_COUNT;
         BufferedImage bufferedImage = new BufferedImage(width, height,
-                BufferedImage.TYPE_INT_RGB);
+            BufferedImage.TYPE_INT_RGB);
         Random rand = new Random(System.currentTimeMillis());
         Graphics2D graphics = bufferedImage.createGraphics();
 
@@ -43,17 +43,17 @@ public class CaptchaImgGenerator {
 
         // generate a random value
         this.captchaText = UUID.randomUUID().toString().replace("-", "")
-                .substring(0, lettersCount);
+            .substring(0, lettersCount);
 
         Color startingColor = new Color(rand.nextInt(255), rand.nextInt(255),
-                rand.nextInt(255));
+            rand.nextInt(255));
         Color endingColor = new Color(rand.nextInt(255), rand.nextInt(255),
-                rand.nextInt(255));
+            rand.nextInt(255));
         applyCurrentGradientPaint(graphics, bufferedImage.getWidth(),
-                bufferedImage.getHeight(), startingColor, endingColor);
+            bufferedImage.getHeight(), startingColor, endingColor);
 
         graphics.fillRect(0, 0, bufferedImage.getWidth(),
-                bufferedImage.getHeight());
+            bufferedImage.getHeight());
 
         // Draw the image border.
 
@@ -66,17 +66,17 @@ public class CaptchaImgGenerator {
 
         // Draw text on the CAPTCHA image.
         drawTextOnImage(graphics, captchaText, bufferedImage.getWidth(),
-                bufferedImage.getHeight(), fontSize, textColor);
+            bufferedImage.getHeight(), fontSize, textColor);
 
         // Apply noise on the CAPTCHA image.
         applyNoiseOnImage(graphics, bufferedImage.getWidth(),
-                bufferedImage.getHeight(), startingColor, endingColor);
+            bufferedImage.getHeight(), startingColor, endingColor);
 
         // applyNoise(graphics, bufferedImage.getWidth(),
         // bufferedImage.getHeight());
 
         drawBorders(graphics, bufferedImage.getWidth(),
-                bufferedImage.getHeight());
+            bufferedImage.getHeight());
 
         this.bufferLength = bufferedImage.getRaster().getDataBuffer().getSize();
         // write out the PNG file
@@ -96,7 +96,7 @@ public class CaptchaImgGenerator {
                                                   Color endingColor) {
 
         GradientPaint gradientPaint = new GradientPaint(0, 0, startingColor,
-                width, height, endingColor);
+            width, height, endingColor);
 
         graphics.setPaint(gradientPaint);
     }
@@ -135,9 +135,9 @@ public class CaptchaImgGenerator {
         }
 
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+            RenderingHints.VALUE_ANTIALIAS_ON);
         textLayout = new TextLayout(captchaText, font,
-                graphics.getFontRenderContext());
+            graphics.getFontRenderContext());
 
         int w = (graphics.getFontMetrics()).stringWidth(captchaText);
         int d = (graphics.getFontMetrics()).getDescent();
@@ -223,7 +223,7 @@ public class CaptchaImgGenerator {
         drawThickLineOnImage(graphics, 0, yPoint1, width / 4, yPoint2);
         drawThickLineOnImage(graphics, width / 4, yPoint2, width / 2, yPoint3);
         drawThickLineOnImage(graphics, width / 2, yPoint3, 3 * width / 4,
-                yPoint4);
+            yPoint4);
         drawThickLineOnImage(graphics, 3 * width / 4, yPoint4, width, yPoint5);
     }
 
@@ -233,7 +233,7 @@ public class CaptchaImgGenerator {
      */
     private double getDelta(int period, double i, double phase, double frames) {
         return (double) (period / 2)
-                * Math.sin(i / (double) period + (2 * PI * phase) / frames);
+            * Math.sin(i / (double) period + (2 * PI * phase) / frames);
     }
 
     /*
@@ -249,14 +249,14 @@ public class CaptchaImgGenerator {
         double deltaY;
 
         applyCurrentGradientPaint(graphics, bufferedImageWidth,
-                bufferedImageHeight, startingColor, endingColor);
+            bufferedImageHeight, startingColor, endingColor);
 
         for (int i = 0; i < bufferedImageWidth; ++i) {
             deltaX = getDelta(periodValue, i, phaseNumber, numberOfFrames);
             graphics.copyArea(i, 0, 1, bufferedImageHeight, 0, (int) deltaX);
             graphics.drawLine(i, (int) deltaX, i, 0);
             graphics.drawLine(i, (int) deltaX + bufferedImageHeight, i,
-                    bufferedImageHeight);
+                bufferedImageHeight);
         }
 
         for (int i = 0; i < bufferedImageHeight; ++i) {
@@ -264,7 +264,7 @@ public class CaptchaImgGenerator {
             graphics.copyArea(0, i, bufferedImageWidth, 1, (int) deltaY, 0);
             graphics.drawLine((int) deltaY, i, 0, i);
             graphics.drawLine((int) deltaY + bufferedImageWidth, i,
-                    bufferedImageWidth, i);
+                bufferedImageWidth, i);
         }
     }
 

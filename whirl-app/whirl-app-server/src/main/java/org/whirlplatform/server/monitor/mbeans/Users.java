@@ -17,9 +17,9 @@ public class Users implements UsersMBean {
         for (ApplicationUser u : users) {
             builder.setLength(0);
             builder.append("{\"id\": \"").append(u.getId())
-                    .append("\", \"login\": \"").append(u.getLogin())
-                    .append("\", \"name\": \"").append(u.getName())
-                    .append("\"},");
+                .append("\", \"login\": \"").append(u.getLogin())
+                .append("\", \"name\": \"").append(u.getName())
+                .append("\"},");
             userStrings.add(builder.toString());
         }
 
@@ -49,9 +49,9 @@ public class Users implements UsersMBean {
             if (u.getApplication().getCode().equalsIgnoreCase(appCode)) {
                 builder.setLength(0);
                 builder.append("{\"id\": \"").append(u.getId())
-                        .append("\", \"login\": \"").append(u.getLogin())
-                        .append("\", \"name\": \"").append(u.getName())
-                        .append("\"},");
+                    .append("\", \"login\": \"").append(u.getLogin())
+                    .append("\", \"name\": \"").append(u.getName())
+                    .append("\"},");
                 userStrings.add(builder.toString());
             }
         }
@@ -73,7 +73,7 @@ public class Users implements UsersMBean {
         }
 
         Set<ApplicationUser> users =
-                new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
+            new HashSet<ApplicationUser>(SessionManager.getUsersFromAllSessions());
         for (ApplicationUser u : users) {
             if (u.getApplication() != null && appCode.equals(u.getApplication().getCode())) {
                 SessionManager.unregisterUser(u);

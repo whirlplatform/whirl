@@ -43,12 +43,12 @@ public class EditorPosition implements Serializable, IsSerializable {
     }
 
     private static native int getIntFromJavaScriptObject(
-            JavaScriptObject object, String propertyName, int defaultValue)/*-{
-                                                                            if(object[propertyName] == undefined) {
-                                                                            return defaultValue;
-                                                                            }
-                                                                            return object[propertyName];
-                                                                            }-*/;
+        JavaScriptObject object, String propertyName, int defaultValue)/*-{
+        if (object[propertyName] == undefined) {
+            return defaultValue;
+        }
+        return object[propertyName];
+    }-*/;
 
     public int getLineNumber() {
         return lineNumber;
@@ -73,14 +73,14 @@ public class EditorPosition implements Serializable, IsSerializable {
         }
         EditorPosition other = (EditorPosition) o;
         return this.lineNumber == other.lineNumber
-                && this.columnNumber == other.columnNumber;
+            && this.columnNumber == other.columnNumber;
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper("EditorPosition")
-                .add("lineNumber", lineNumber)
-                .add("columnNumber", columnNumber).toString();
+            .add("lineNumber", lineNumber)
+            .add("columnNumber", columnNumber).toString();
     }
 
     /**
@@ -100,10 +100,10 @@ public class EditorPosition implements Serializable, IsSerializable {
      * @return The JavaScriptObject position object.
      */
     private native JavaScriptObject toJavaScriptObject(int line, int ch)/*-{
-                                                                        return {
-                                                                        line: line,
-                                                                        ch: ch
-                                                                        };
-                                                                        }-*/;
+        return {
+            line: line,
+            ch: ch
+        };
+    }-*/;
 
 }

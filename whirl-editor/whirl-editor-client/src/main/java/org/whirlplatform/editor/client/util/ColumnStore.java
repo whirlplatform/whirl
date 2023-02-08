@@ -26,19 +26,19 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement.Order;
 public class ColumnStore extends ListStore<TableColumnElement> {
 
     private static final Comparator<TableColumnElement> comparator =
-            new Comparator<TableColumnElement>() {
+        new Comparator<TableColumnElement>() {
 
-                @Override
-                public int compare(TableColumnElement o1, TableColumnElement o2) {
-                    if (o1.getId().isEmpty()) {
-                        return -1;
-                    } else if (o2.getId().isEmpty()) {
-                        return 1;
-                    }
-                    return o1.getName().compareTo(o2.getName());
+            @Override
+            public int compare(TableColumnElement o1, TableColumnElement o2) {
+                if (o1.getId().isEmpty()) {
+                    return -1;
+                } else if (o2.getId().isEmpty()) {
+                    return 1;
                 }
+                return o1.getName().compareTo(o2.getName());
+            }
 
-            };
+        };
     private DataProxy<String, List<TableColumnElement>> proxy;
     private Loader<String, List<TableColumnElement>> loader;
 
@@ -65,7 +65,7 @@ public class ColumnStore extends ListStore<TableColumnElement> {
     }
 
     public interface TableColumnProperties extends
-            PropertyAccess<TableColumnElement> {
+        PropertyAccess<TableColumnElement> {
 
         ModelKeyProvider<TableColumnElement> id();
 
@@ -115,7 +115,7 @@ public class ColumnStore extends ListStore<TableColumnElement> {
     }
 
     private class ColumnProxy implements
-            DataProxy<String, List<TableColumnElement>> {
+        DataProxy<String, List<TableColumnElement>> {
         private ApplicationDataProvider provider;
         private PlainTableElement table;
 
@@ -123,42 +123,42 @@ public class ColumnStore extends ListStore<TableColumnElement> {
             this.provider = provider;
             this.table = table;
             addSortInfo(new StoreSortInfo<TableColumnElement>(comparator,
-                    SortDir.ASC));
+                SortDir.ASC));
         }
 
         @Override
         public void load(final String loadConfig,
                          final Callback<List<TableColumnElement>, Throwable> callback) {
             provider.getAvailableColumns(table,
-                    new Callback<Collection<TableColumnElement>, Throwable>() {
-                        @Override
-                        public void onFailure(Throwable reason) {
-                            callback.onFailure(reason);
-                        }
+                new Callback<Collection<TableColumnElement>, Throwable>() {
+                    @Override
+                    public void onFailure(Throwable reason) {
+                        callback.onFailure(reason);
+                    }
 
-                        @Override
-                        public void onSuccess(
-                                Collection<TableColumnElement> result) {
-                            List<TableColumnElement> list = new ArrayList<TableColumnElement>();
-                            if (loadConfig == null || loadConfig.isEmpty()) {
-                                list.addAll(result);
-                            } else {
-                                for (TableColumnElement element : result) {
-                                    String query = loadConfig.toLowerCase();
-                                    boolean isName = element.getName() != null
-                                            && element.getName().toLowerCase()
-                                            .contains(query);
-                                    boolean isColumn = (element.getColumnName() != null && element
-                                            .getColumnName().toLowerCase()
-                                            .contains(query));
-                                    if (isName || isColumn) {
-                                        list.add(element);
-                                    }
+                    @Override
+                    public void onSuccess(
+                        Collection<TableColumnElement> result) {
+                        List<TableColumnElement> list = new ArrayList<TableColumnElement>();
+                        if (loadConfig == null || loadConfig.isEmpty()) {
+                            list.addAll(result);
+                        } else {
+                            for (TableColumnElement element : result) {
+                                String query = loadConfig.toLowerCase();
+                                boolean isName = element.getName() != null
+                                    && element.getName().toLowerCase()
+                                    .contains(query);
+                                boolean isColumn = (element.getColumnName() != null && element
+                                    .getColumnName().toLowerCase()
+                                    .contains(query));
+                                if (isName || isColumn) {
+                                    list.add(element);
                                 }
                             }
-                            callback.onSuccess(list);
                         }
-                    });
+                        callback.onSuccess(list);
+                    }
+                });
         }
     }
 

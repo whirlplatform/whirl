@@ -26,7 +26,7 @@ import org.whirlplatform.server.log.impl.TableDataMessage;
 import org.whirlplatform.server.monitor.RunningEvent;
 
 public class OraclePlainTableFetcher extends OraclePlainDataFetcher
-        implements TableFetcher<PlainTableElement> {
+    implements TableFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainTableFetcher.class);
 
     public OraclePlainTableFetcher(ConnectionWrapper connectionWrapper,
@@ -37,15 +37,15 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher
     public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
                                                ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp =
-                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp);
     }
 
     protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(
-            ClassMetadata metadata,
-            PlainTableElement table,
-            ClassLoadConfig loadConfig,
-            H temp) {
+        ClassMetadata metadata,
+        PlainTableElement table,
+        ClassLoadConfig loadConfig,
+        H temp) {
 
         List<RowModelData> result = new ArrayList<RowModelData>();
         temp.prepare(metadata, table, loadConfig);
@@ -55,10 +55,10 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher
         final DBReader selectReader = new DBReader();
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
 
-        final boolean[] stoppedHolder = new boolean[]{false};
+        final boolean[] stoppedHolder = new boolean[] {false};
         RunningEvent ev = new RunningEvent(RunningEvent.Type.GRIDREQUEST, table.getCode(),
-                selectCmd.getSelect(),
-                getUser().getLogin()) {
+            selectCmd.getSelect(),
+            getUser().getLogin()) {
             @Override
             public void onStop() {
                 //TODO abort
@@ -103,7 +103,7 @@ public class OraclePlainTableFetcher extends OraclePlainDataFetcher
             // Обработка остановки выполнения запроса
             if (stoppedHolder[0]) {
                 throw new CustomException(I18NMessage.getMessage(I18NMessage.getRequestLocale())
-                        .alert_event_cancelled());
+                    .alert_event_cancelled());
             } else {
                 throw e;
             }

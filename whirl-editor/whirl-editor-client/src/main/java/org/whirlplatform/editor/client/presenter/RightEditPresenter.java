@@ -22,7 +22,7 @@ import org.whirlplatform.meta.shared.editor.RightType;
 
 @Presenter(view = RightEditView.class)
 public class RightEditPresenter extends
-        BasePresenter<RightEditPresenter.IRightEditView, EditorEventBus> {
+    BasePresenter<RightEditPresenter.IRightEditView, EditorEventBus> {
 
     private Window w = new Window();
 
@@ -83,19 +83,19 @@ public class RightEditPresenter extends
 
     private void loadRights(Collection<AbstractElement> elements) {
         eventBus.getElementRights(elements,
-                new Callback<Collection<RightCollectionElement>, Throwable>() {
+            new Callback<Collection<RightCollectionElement>, Throwable>() {
 
-                    @Override
-                    public void onFailure(Throwable reason) {
-                    }
+                @Override
+                public void onFailure(Throwable reason) {
+                }
 
-                    @Override
-                    public void onSuccess(
-                            Collection<RightCollectionElement> result) {
-                        onRightsLoaded(result);
-                    }
+                @Override
+                public void onSuccess(
+                    Collection<RightCollectionElement> result) {
+                    onRightsLoaded(result);
+                }
 
-                });
+            });
     }
 
     private void onRightsLoaded(Collection<RightCollectionElement> rights) {

@@ -5,7 +5,7 @@ import com.sencha.gxt.theme.base.client.field.TriggerFieldDefaultAppearance;
 import org.whirlplatform.editor.client.component.MultiSetCell.MultiSetCellAppearance;
 
 public class MultiSetCellDefaultAppearance extends TriggerFieldDefaultAppearance
-        implements MultiSetCellAppearance {
+    implements MultiSetCellAppearance {
 
     public MultiSetCellDefaultAppearance() {
         this(GWT.create(MultiSetCellResources.class));

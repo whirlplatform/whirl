@@ -33,7 +33,7 @@ public abstract class Importer {
             model.set(f.getKey().getName(), f.getValue());
         }
         DataModifyConfig config =
-                new DataModifyConfig(DataModifyType.INSERT, Arrays.asList(model), null);
+            new DataModifyConfig(DataModifyType.INSERT, Arrays.asList(model), null);
         connector.insert(metadata, config, user);
     }
 

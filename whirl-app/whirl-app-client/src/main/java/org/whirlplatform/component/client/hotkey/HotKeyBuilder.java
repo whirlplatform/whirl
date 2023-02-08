@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 public class HotKeyBuilder extends ComponentBuilder implements
-        HasKeyPressHandlers {
+    HasKeyPressHandlers {
 
     private boolean isAlt;
     private boolean isCtrl;

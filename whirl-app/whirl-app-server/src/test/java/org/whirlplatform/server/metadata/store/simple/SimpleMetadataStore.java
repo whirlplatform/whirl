@@ -35,7 +35,7 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
     @Override
     public ApplicationElement loadApplication(String code, Version version,
                                               boolean ignoreReferences)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         if (version != null) {
             log.warn(String.format("The version of '%s' should be null", code));
         }
@@ -43,10 +43,10 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
         final String fileName = String.format("%s.xml", code);
         try {
             final String xml =
-                    IOUtils.toString(this.getClass().getResourceAsStream(fileName), "UTF-8");
+                IOUtils.toString(this.getClass().getResourceAsStream(fileName), "UTF-8");
             result = deserialize(xml, ignoreReferences);
             log.info(
-                    String.format("Successfully deserialized the application file '%s'", fileName));
+                String.format("Successfully deserialized the application file '%s'", fileName));
         } catch (IOException e) {
             final String message = String.format("Error loading application file '%s'", fileName);
             log.error(message, e);
@@ -81,7 +81,7 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
             }
         } catch (IOException e) {
             final String message =
-                    String.format("Error loading application list from %s", applicationsRoot);
+                String.format("Error loading application list from %s", applicationsRoot);
             log.error(message, e);
             throw new MetadataStoreException(message, e);
         }
@@ -90,9 +90,9 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
 
     @Override
     protected Path resolveApplicationPath(String appCode, Version appVersion)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         final String resourcePath =
-                getClass().getPackage().toString().replace("package ", "").replace(".", "/");
+            getClass().getPackage().toString().replace("package ", "").replace(".", "/");
         URL resourceUrl = getClass().getResource("/" + resourcePath);
         File resourceDir;
         try {
@@ -108,7 +108,7 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
     }
 
     private ApplicationStoreData createApplicationStoreData(final Path appXmlFile)
-            throws IOException {
+        throws IOException {
         final String content = new String(Files.readAllBytes(appXmlFile), StandardCharsets.UTF_8);
         ApplicationStoreData result = assembleApplicationStoreData(content);
         final String fileName = appXmlFile.getFileName().toString();

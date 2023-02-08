@@ -49,8 +49,8 @@ public class ElementComparator {
                                              Class<?> superclass) {
         try {
             Set<ClassInfo> classes = ClassPath.from(superclass.getClassLoader())
-                    .getTopLevelClassesRecursive(
-                            Reflection.getPackageName(superclass));
+                .getTopLevelClassesRecursive(
+                    Reflection.getPackageName(superclass));
             for (ClassInfo info : classes) {
                 Class<?> base = info.load();
                 if (base.isInterface() || base.isEnum()) {

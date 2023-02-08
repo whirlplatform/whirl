@@ -5,7 +5,7 @@ import org.whirlplatform.editor.client.component.surface.Surface.SurfaceResource
 import org.whirlplatform.editor.client.component.surface.Surface.SurfaceStyle;
 
 public interface GrayBorderSurfaceResources extends SurfaceResources,
-        ClientBundle {
+    ClientBundle {
 
     @Source("GrayBorderSurface.gss")
     GrayBorderSurfaceStyle style();

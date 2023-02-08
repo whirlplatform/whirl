@@ -42,7 +42,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
  */
 @JsType(name = "Form", namespace = "Whirl")
 public class FormBuilder extends ComponentBuilder implements Containable,
-        HasCreateParameters, LoadEvent.HasLoadHandlers, RefreshEvent.HasRefreshHandlers {
+    HasCreateParameters, LoadEvent.HasLoadHandlers, RefreshEvent.HasRefreshHandlers {
 
     private GridLayoutContainer container;
     private GridLayoutDecorator decorator;
@@ -131,7 +131,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     private List<DataValue> defaultParameters(List<DataValue> parameters) {
         List<DataValue> allParams = new ArrayList<DataValue>();
         for (Entry<String, DataValue> entry : paramHelper.getValues(parameters)
-                .entrySet()) {
+            .entrySet()) {
             DataValue v = entry.getValue();
             v.setCode(entry.getKey());
             allParams.add(v);
@@ -167,8 +167,8 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             @Override
             public void execute() {
                 DataServiceAsync.Util.getDataService(loadCallback)
-                        .getForm(SessionToken.get(), getId(),
-                                new ListHolder(parameters));
+                    .getForm(SessionToken.get(), getId(),
+                        new ListHolder(parameters));
             }
         });
     }
@@ -186,8 +186,8 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             @Override
             public boolean execute() {
                 DataServiceAsync.Util.getDataService(refreshCallback)
-                        .getForm(SessionToken.get(), getId(),
-                                new ListHolder(parameters));
+                    .getForm(SessionToken.get(), getId(),
+                        new ListHolder(parameters));
                 return false;
             }
         }, 0);
@@ -198,7 +198,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             return;
         }
         clearContainer();
-//        container.clearCellGroupings();
+        //        container.clearCellGroupings();
         container.clearSpans();
 
         // размеры
@@ -214,8 +214,8 @@ public class FormBuilder extends ComponentBuilder implements Containable,
             for (FormCellModel cell : row.getCells()) {
                 if (cell.getRowSpan() != 1 || cell.getColSpan() != 1) {
                     container.setSpan(cell.getRow().getRow(), cell.getColumn()
-                                    .getCol(), cell.getRowSpan(), cell.getColSpan(),
-                            false);
+                            .getCol(), cell.getRowSpan(), cell.getColSpan(),
+                        false);
                 }
             }
         }
@@ -227,29 +227,29 @@ public class FormBuilder extends ComponentBuilder implements Containable,
                 int r = cell.getRow().getRow();
                 int c = cell.getColumn().getCol();
                 decorator.setCellBorderTop(r, c, cell.getBorderTop(),
-                        cell.getBorderTopColor());
+                    cell.getBorderTopColor());
                 decorator.setCellBorderRight(r, c, cell.getBorderRight(),
-                        cell.getBorderRightColor());
+                    cell.getBorderRightColor());
                 decorator.setCellBorderBottom(r, c, cell.getBorderBottom(),
-                        cell.getBorderBottomColor());
+                    cell.getBorderBottomColor());
                 decorator.setCellBorderLeft(r, c, cell.getBorderLeft(),
-                        cell.getBorderLeftColor());
+                    cell.getBorderLeftColor());
 
                 decorator.setCellColor(r, c, cell.getColor());
 
                 if (cell.getComponent() != null) {
                     ContainerHelper.buildComponent(
-                            Collections.singleton(cell.getComponent()), this);
+                        Collections.singleton(cell.getComponent()), this);
                 }
             }
         }
 
-//        for (CellGroupModel group : form.getGroups()) {
-//            container.setCellGrouping(
-//                    new Region(group.getTop(), group.getRight(), group
-//                            .getBottom(), group.getLeft()), group.getTitle(),
-//                    true);
-//        }
+        //        for (CellGroupModel group : form.getGroups()) {
+        //            container.setCellGrouping(
+        //                    new Region(group.getTop(), group.getRight(), group
+        //                            .getBottom(), group.getLeft()), group.getTitle(),
+        //                    true);
+        //        }
         decorator.setPaddingInCells(1);
         container.doLayout();
         container.unmask();
@@ -258,13 +258,13 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 
     private void onRefresh(FormModel form) {
         if (container.getRowCount() != form.getRowCount()
-                || container.getColumnCount() != form.getColumnCount()) {
+            || container.getColumnCount() != form.getColumnCount()) {
             return;
         }
         for (FormRowModel row : form.getRows()) {
             for (FormCellModel cell : row.getCells()) {
                 ComponentBuilder b = getChild(row.getRow(), cell.getColumn()
-                        .getCol());
+                    .getCol());
                 ComponentModel m = cell.getComponent();
 
                 changeProperties(b, m);
@@ -285,7 +285,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
 
     private void changeProperties(ComponentBuilder builder, ComponentModel model) {
         if (model == null || builder == null
-                || !model.getId().equals(builder.getId())) {
+            || !model.getId().equals(builder.getId())) {
             return;
         }
         for (String p : builder.getReplaceableProperties()) {
@@ -293,8 +293,8 @@ public class FormBuilder extends ComponentBuilder implements Containable,
         }
 
         if (!(builder instanceof Containable)
-                || builder.getType() == ComponentType.FormBuilderType
-                || builder.getType() == ComponentType.ReportType) {
+            || builder.getType() == ComponentType.FormBuilderType
+            || builder.getType() == ComponentType.ReportType) {
             return;
         }
         for (ComponentBuilder b : ((Containable) builder).getChildren()) {
@@ -316,7 +316,7 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     @Override
     public void addChild(ComponentBuilder child) {
         container.setWidget(child.getRowPosition(), child.getColumnPosition(),
-                child.getComponent(), child.getGridLayoutData());
+            child.getComponent(), child.getGridLayoutData());
         children.add(child);
         child.setParentBuilder(this);
     }
@@ -395,11 +395,11 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     public void setRowSpan(int row, int column, int rowSpan) {
         if (rowSpan < 1) {
             throw new IndexOutOfBoundsException(
-                    "Row span can not be less than 1.");
+                "Row span can not be less than 1.");
         }
 
         setSpan(row, column, rowSpan, container.getTable()
-                .getFlexCellFormatter().getRowSpan(row, column));
+            .getFlexCellFormatter().getRowSpan(row, column));
     }
 
     /**
@@ -412,10 +412,10 @@ public class FormBuilder extends ComponentBuilder implements Containable,
     public void setColSpan(int row, int column, int colSpan) {
         if (colSpan < 1) {
             throw new IndexOutOfBoundsException(
-                    "Column span can not be less than 1.");
+                "Column span can not be less than 1.");
         }
         setSpan(row, column, container.getTable().getFlexCellFormatter()
-                .getRowSpan(row, column), colSpan);
+            .getRowSpan(row, column), colSpan);
     }
 
     /**

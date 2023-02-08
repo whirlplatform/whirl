@@ -7,8 +7,8 @@ import com.sencha.gxt.core.client.util.Util;
 
 public class GridLayoutDecorator {
 
-    private GridLayoutContainer container;
-    private FlexTable table;
+    private final GridLayoutContainer container;
+    private final FlexTable table;
 
     public GridLayoutDecorator(GridLayoutContainer container) {
         this.container = container;
@@ -29,21 +29,21 @@ public class GridLayoutDecorator {
 
     public void setCellBorderTop(int row, int column, int thickness, String color) {
         GridLayoutContainer.Cell c = container.getTablePositionByGrid(row,
-                column);
+            column);
         if (c == null) {
             return;
         }
         if (table.getRowCount() > c.getRow()
-                && table.getCellCount(c.getRow()) > c.getColumn()) {
+            && table.getCellCount(c.getRow()) > c.getColumn()) {
             TableCellElement cell = table.getCellFormatter()
-                    .getElement(c.getRow(), c.getColumn()).cast();
+                .getElement(c.getRow(), c.getColumn()).cast();
             if (thickness > 0) {
                 if (color == null) {
                     color = "#000000";
                 }
                 cell.getStyle()
-                        .setProperty("borderTop", thickness + "px solid "
-                                + (color.startsWith("#") ? color : "#" + color));
+                    .setProperty("borderTop", thickness + "px solid "
+                        + (color.startsWith("#") ? color : "#" + color));
             } else {
                 cell.getStyle().setProperty("borderTop", "0px none");
             }
@@ -52,20 +52,20 @@ public class GridLayoutDecorator {
 
     public void setCellBorderRight(int row, int column, int thickness, String color) {
         GridLayoutContainer.Cell c = container.getTablePositionByGrid(row,
-                column);
+            column);
         if (c == null) {
             return;
         }
         if (table.getRowCount() > c.getRow() && table.getCellCount(c.getRow()) > c.getColumn()) {
             TableCellElement cell = table.getCellFormatter()
-                    .getElement(c.getRow(), c.getColumn()).cast();
+                .getElement(c.getRow(), c.getColumn()).cast();
             if (thickness > 0) {
                 if (color == null) {
                     color = "#000000";
                 }
                 cell.getStyle().setProperty("borderRight",
-                        thickness + "px solid "
-                                + (color.startsWith("#") ? color : "#" + color));
+                    thickness + "px solid "
+                        + (color.startsWith("#") ? color : "#" + color));
             } else {
                 cell.getStyle().setProperty("borderRight", "0px none");
             }
@@ -74,20 +74,20 @@ public class GridLayoutDecorator {
 
     public void setCellBorderBottom(int row, int column, int thickness, String color) {
         GridLayoutContainer.Cell c = container.getTablePositionByGrid(row,
-                column);
+            column);
         if (c == null) {
             return;
         }
         if (table.getRowCount() > c.getRow() && table.getCellCount(c.getRow()) > c.getColumn()) {
             TableCellElement cell = table.getCellFormatter()
-                    .getElement(c.getRow(), c.getColumn()).cast();
+                .getElement(c.getRow(), c.getColumn()).cast();
             if (thickness > 0) {
                 if (color == null) {
                     color = "#000000";
                 }
                 cell.getStyle().setProperty("borderBottom",
-                        thickness + "px solid "
-                                + (color.startsWith("#") ? color : "#" + color));
+                    thickness + "px solid "
+                        + (color.startsWith("#") ? color : "#" + color));
             } else {
                 cell.getStyle().setProperty("borderBottom", "0px none");
             }
@@ -96,20 +96,20 @@ public class GridLayoutDecorator {
 
     public void setCellBorderLeft(int row, int column, int thickness, String color) {
         GridLayoutContainer.Cell c = container.getTablePositionByGrid(row,
-                column);
+            column);
         if (c == null) {
             return;
         }
         if (table.getRowCount() > c.getRow() && table.getCellCount(c.getRow()) > c.getColumn()) {
             TableCellElement cell = table.getCellFormatter()
-                    .getElement(c.getRow(), c.getColumn()).cast();
+                .getElement(c.getRow(), c.getColumn()).cast();
             if (thickness > 0) {
                 if (color == null) {
                     color = "#000000";
                 }
                 cell.getStyle().setProperty("borderLeft",
-                        thickness + "px solid "
-                                + (color.startsWith("#") ? color : "#" + color));
+                    thickness + "px solid "
+                        + (color.startsWith("#") ? color : "#" + color));
             } else {
                 cell.getStyle().setProperty("borderLeft", "0px none");
             }
@@ -118,16 +118,16 @@ public class GridLayoutDecorator {
 
     public void setCellColor(int row, int column, String color) {
         GridLayoutContainer.Cell c = container.getTablePositionByGrid(row,
-                column);
+            column);
         if (c == null) {
             return;
         }
         if (!Util.isEmptyString(color) && table.getRowCount() > c.getRow()
-                && table.getCellCount(c.getRow()) > c.getColumn()) {
+            && table.getCellCount(c.getRow()) > c.getColumn()) {
             TableCellElement cell = table.getCellFormatter()
-                    .getElement(c.getRow(), c.getColumn()).cast();
+                .getElement(c.getRow(), c.getColumn()).cast();
             cell.getStyle().setBackgroundColor(
-                    color.startsWith("#") ? color : "#" + color);
+                color.startsWith("#") ? color : "#" + color);
         }
     }
 
@@ -139,7 +139,7 @@ public class GridLayoutDecorator {
         for (int i = 0; i < table.getRowCount(); i++) {
             for (int j = 0; j < table.getCellCount(i); j++) {
                 table.getCellFormatter().getElement(i, j).getStyle()
-                        .setPadding(padding, Unit.PX);
+                    .setPadding(padding, Unit.PX);
             }
         }
     }

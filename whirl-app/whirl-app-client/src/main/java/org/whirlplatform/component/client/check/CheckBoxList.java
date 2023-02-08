@@ -35,18 +35,18 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
 public class CheckBoxList extends SimpleContainer implements
-        HasCheckChangedHandlers<ListModelData> {
+    HasCheckChangedHandlers<ListModelData> {
 
+    private final InsertResizeContainer list;
+    private final LabelProvider<ListModelData> labelProvider;
+    private final ValueProvider<RowModelData, Boolean> valueProvider;
+    private final Map<RowModelData, CheckBox> modelCheck = new HashMap<RowModelData, CheckBox>();
+    private final Map<CheckBox, HandlerRegistration> checkHandler =
+        new HashMap<CheckBox, HandlerRegistration>();
+    private final CheckSelectionModel selectionModel = new CheckSelectionModel();
     private GroupingHandlerRegistration groupingRegistration;
-    private InsertResizeContainer list;
-    private LabelProvider<ListModelData> labelProvider;
-    private ValueProvider<RowModelData, Boolean> valueProvider;
-    private Map<RowModelData, CheckBox> modelCheck = new HashMap<RowModelData, CheckBox>();
-    private Map<CheckBox, HandlerRegistration> checkHandler =
-            new HashMap<CheckBox, HandlerRegistration>();
     private Store<ListModelData> store;
-    private CheckSelectionModel selectionModel = new CheckSelectionModel();
-    private StoreHandlers<ListModelData> handlers = new StoreHandlers<ListModelData>() {
+    private final StoreHandlers<ListModelData> handlers = new StoreHandlers<ListModelData>() {
 
         @Override
         public void onAdd(StoreAddEvent<ListModelData> event) {
@@ -100,7 +100,7 @@ public class CheckBoxList extends SimpleContainer implements
             list = new VerticalLayoutContainer();
         }
         ((HasScrollSupport) list).getScrollSupport().setScrollMode(
-                ScrollMode.AUTO);
+            ScrollMode.AUTO);
         setWidget(list);
     }
 
@@ -121,14 +121,14 @@ public class CheckBoxList extends SimpleContainer implements
             }
 
             HandlerRegistration handler = check
-                    .addChangeHandler(new ChangeHandler() {
+                .addChangeHandler(new ChangeHandler() {
 
-                        @Override
-                        public void onChange(ChangeEvent event) {
-                            fireEvent(new CheckChangedEvent<RowModelData>(
-                                    Collections.singletonList(m)));
-                        }
-                    });
+                    @Override
+                    public void onChange(ChangeEvent event) {
+                        fireEvent(new CheckChangedEvent<RowModelData>(
+                            Collections.singletonList(m)));
+                    }
+                });
 
             checkHandler.put(check, handler);
             modelCheck.put(m, check);
@@ -151,7 +151,7 @@ public class CheckBoxList extends SimpleContainer implements
 
     @Override
     public HandlerRegistration addCheckChangedHandler(
-            CheckChangedHandler<ListModelData> handler) {
+        CheckChangedHandler<ListModelData> handler) {
         return addHandler(handler, CheckChangedEvent.getType());
     }
 

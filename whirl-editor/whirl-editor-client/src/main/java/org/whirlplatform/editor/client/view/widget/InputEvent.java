@@ -9,7 +9,7 @@ import com.google.gwt.event.dom.client.DomEvent;
  */
 public class InputEvent extends DomEvent<InputHandler> {
     private static final Type<InputHandler> TYPE =
-            new Type<InputHandler>("input", new InputEvent());
+        new Type<InputHandler>("input", new InputEvent());
 
     protected InputEvent() {
     }

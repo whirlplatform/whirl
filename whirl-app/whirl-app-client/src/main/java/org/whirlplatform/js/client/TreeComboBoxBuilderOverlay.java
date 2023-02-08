@@ -52,14 +52,14 @@ public abstract class TreeComboBoxBuilderOverlay {
      */
     public abstract boolean isValid(boolean invalidate);
 
-////    public static RowListValue getDataValue(TreeComboBoxBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(TreeComboBoxBuilder instance,
-//                                    RowListValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static RowListValue getDataValue(TreeComboBoxBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(TreeComboBoxBuilder instance,
+    //                                    RowListValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     public abstract String getText();
 

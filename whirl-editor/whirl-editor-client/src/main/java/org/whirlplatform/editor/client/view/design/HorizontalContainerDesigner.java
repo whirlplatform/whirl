@@ -19,10 +19,10 @@ public class HorizontalContainerDesigner extends IndexContainerDesigner {
     protected void initRootDropTarget(final ComponentElement element,
                                       final ComponentBuilder builder) {
         HorizontalLayoutDropTarget target = new HorizontalLayoutDropTarget(
-                (InsertResizeContainer) builder.getComponent()) {
+            (InsertResizeContainer) builder.getComponent()) {
             protected void onDragDrop(DndDropEvent event) {
                 HorizontalContainerDesigner.super.onRootDrop(element, builder,
-                        event.getData(), getIndex());
+                    event.getData(), getIndex());
                 super.onDragDrop(event);
             }
 

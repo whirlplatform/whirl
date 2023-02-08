@@ -37,7 +37,7 @@ import org.whirlplatform.meta.shared.data.RowModelData;
  * Дерево для корректной работы с поиском. Обычное неправильно работало при CheckCascade = TRI
  */
 public class XTree<M extends RowModelData, C> extends Tree<M, C>
-        implements HasValueChangeHandlers<M> {
+    implements HasValueChangeHandlers<M> {
 
     private Command searchCommand;
     private TextField searchField;
@@ -131,7 +131,7 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
             }
         });
         // Чтобы по клику на иконке поле ввода не скывалось
-        eventPreview.setIgnoreList(new CompositeElement(new Element[]{searchButton.getElement()}));
+        eventPreview.setIgnoreList(new CompositeElement(new Element[] {searchButton.getElement()}));
 
         this.addAttachHandler(new AttachEvent.Handler() {
 
@@ -163,69 +163,69 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
         hideSearch();
     }
 
-//    @Override
-//    protected void onTriCheckCascade(M model, com.sencha.gxt.widget.core.client.tree.Tree.CheckState checked) {
-//        if (checked == CheckState.CHECKED) {
-//
-//            List<M> children = store.getAllChildren(model);
-//            cascade = false;// TODO 
-//            for (M child : children) {
-//                TreeNode<M> n = findNode(child);
-//                if (n != null) {
-//                    setChecked(child, checked);
-//                }
-//            }
-//
-//            M parent = store.getParent(model);
-//            while (parent != null) {
-//                boolean allChildrenChecked = true;
-//                for (M child : store.getAllChildren(parent)) {
-//                    TreeNode<M> n = findNode(child);
-//                    if (n != null) {
-//                        if (!isChecked(child)) {
-//                            allChildrenChecked = false;
-//                        }
-//                    }
-//                }
-//
-//                if (!allChildrenChecked || model.getLevelCount() > store.getChildCount(parent)) {
-//                    setChecked(parent, CheckState.PARTIAL);
-//                } else {
-//                    setChecked(parent, CheckState.CHECKED);
-//                }
-//
-//                parent = store.getParent(parent);
-//
-//            }
-//            cascade = true; //TODO
-//        } else if (checked == CheckState.UNCHECKED) {
-//            List<M> children = store.getAllChildren(model);
-//            cascade = false; //TODO
-//            for (M child : children) {
-//                setChecked(child, checked);
-//            }
-//
-//            M parent = store.getParent(model);
-//            while (parent != null) {
-//                boolean anyChildChecked = false;
-//                for (M child : store.getAllChildren(parent)) {
-//                    if (isChecked(child)) {
-//                        anyChildChecked = true;
-//                    }
-//                }
-//
-//                if (anyChildChecked) {
-//                    setChecked(parent, CheckState.PARTIAL);
-//                } else {
-//                    setChecked(parent, CheckState.UNCHECKED);
-//                }
-//
-//                parent = store.getParent(parent);
-//            }
-//
-//            cascade = true; //TODO
-//        }
-//    }
+    //    @Override
+    //    protected void onTriCheckCascade(M model, com.sencha.gxt.widget.core.client.tree.Tree.CheckState checked) {
+    //        if (checked == CheckState.CHECKED) {
+    //
+    //            List<M> children = store.getAllChildren(model);
+    //            cascade = false;// TODO
+    //            for (M child : children) {
+    //                TreeNode<M> n = findNode(child);
+    //                if (n != null) {
+    //                    setChecked(child, checked);
+    //                }
+    //            }
+    //
+    //            M parent = store.getParent(model);
+    //            while (parent != null) {
+    //                boolean allChildrenChecked = true;
+    //                for (M child : store.getAllChildren(parent)) {
+    //                    TreeNode<M> n = findNode(child);
+    //                    if (n != null) {
+    //                        if (!isChecked(child)) {
+    //                            allChildrenChecked = false;
+    //                        }
+    //                    }
+    //                }
+    //
+    //                if (!allChildrenChecked || model.getLevelCount() > store.getChildCount(parent)) {
+    //                    setChecked(parent, CheckState.PARTIAL);
+    //                } else {
+    //                    setChecked(parent, CheckState.CHECKED);
+    //                }
+    //
+    //                parent = store.getParent(parent);
+    //
+    //            }
+    //            cascade = true; //TODO
+    //        } else if (checked == CheckState.UNCHECKED) {
+    //            List<M> children = store.getAllChildren(model);
+    //            cascade = false; //TODO
+    //            for (M child : children) {
+    //                setChecked(child, checked);
+    //            }
+    //
+    //            M parent = store.getParent(model);
+    //            while (parent != null) {
+    //                boolean anyChildChecked = false;
+    //                for (M child : store.getAllChildren(parent)) {
+    //                    if (isChecked(child)) {
+    //                        anyChildChecked = true;
+    //                    }
+    //                }
+    //
+    //                if (anyChildChecked) {
+    //                    setChecked(parent, CheckState.PARTIAL);
+    //                } else {
+    //                    setChecked(parent, CheckState.UNCHECKED);
+    //                }
+    //
+    //                parent = store.getParent(parent);
+    //            }
+    //
+    //            cascade = true; //TODO
+    //        }
+    //    }
 
     public String getSearchText() {
         return searchField == null ? "" : searchField.getText();
@@ -254,13 +254,12 @@ public class XTree<M extends RowModelData, C> extends Tree<M, C>
 
     public void setSingleSelectionCheckMode() {
         addCheckChangeHandler(new CheckChangeHandler<M>() {
+            private final List<M> partialMarkedElements = new ArrayList<>();
             /**
              * Если выполняется сейчас, ничего не делаем. Иначе бесконечная
              * рекурсия
              */
             private boolean executionNow = false;
-
-            private List<M> partialMarkedElements = new ArrayList<>();
 
             // Снять метки PARTIAL c элементов дерева и очистить список хранящий
             // эти элементы.

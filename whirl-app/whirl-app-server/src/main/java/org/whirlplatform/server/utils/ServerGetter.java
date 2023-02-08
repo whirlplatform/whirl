@@ -45,7 +45,7 @@ public class ServerGetter {
     }
 
     public static String getResultSetValue(ResultSet resultSet, int column)
-            throws SQLException {
+        throws SQLException {
         String result = resultSet.getString(column);
         if (result == null) {
             return result;
@@ -55,7 +55,7 @@ public class ServerGetter {
             Date d = resultSet.getTimestamp(column);
             return ServerGetter.formatDate(d, AppConstant.DATE_FORMAT_LONG);
         } else if (columnType == Types.DOUBLE || columnType == Types.NUMERIC
-                || columnType == Types.REAL) {
+            || columnType == Types.REAL) {
             return ServerGetter.formatNumber(resultSet.getDouble(column));
         } else if (columnType == Types.FLOAT) {
             return ServerGetter.formatNumber(resultSet.getFloat(column));
@@ -69,13 +69,13 @@ public class ServerGetter {
         if (result == null) {
             return result;
         }
-//        int columnType = reader.getMetaData().getColumnType(column);
+        //        int columnType = reader.getMetaData().getColumnType(column);
         DataType columnType = reader.getColumnExpr(column).getDataType();
         if (DataType.DATETIME == columnType || DataType.DATE == columnType) {
             Date d = reader.getDateTime(column);
             return ServerGetter.formatDate(d, AppConstant.DATE_FORMAT_LONG);
         } else if (DataType.DECIMAL == columnType || DataType.INTEGER == columnType
-                || DataType.FLOAT == columnType) {
+            || DataType.FLOAT == columnType) {
             return ServerGetter.formatNumber(reader.getDouble(column));
         } else {
             return result;

@@ -22,7 +22,7 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 public class HorizontalMenuItemBuilder extends ComponentBuilder implements
-        ClickEvent.HasClickHandlers, Containable {
+    ClickEvent.HasClickHandlers, Containable {
 
     private ComponentHorizontalMenuItem wrapper;
     private String imageUrl;
@@ -101,7 +101,7 @@ public class HorizontalMenuItemBuilder extends ComponentBuilder implements
 
     private ImageResource getImageResource(String imageUrl) {
         return IconHelper.getImageResource(UriUtils.fromString(imageUrl), 16,
-                16);
+            16);
     }
 
     @Override

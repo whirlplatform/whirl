@@ -47,7 +47,7 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public class AppTreeElementIconSetter
-        implements TreeElementVisitor<AppTreeElementIconVisitContext> {
+    implements TreeElementVisitor<AppTreeElementIconVisitContext> {
     private final EditorBundle icon;
 
     public AppTreeElementIconSetter() {

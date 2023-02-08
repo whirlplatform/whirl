@@ -23,17 +23,17 @@ public class EventTemplatesPresenter extends AbstractTemplatesPresenter {
     @Override
     public void loadTemplates() {
         EditorDataService.Util.getDataService()
-                .loadEventTemplates(new AsyncCallback<List<BaseTemplate>>() {
+            .loadEventTemplates(new AsyncCallback<List<BaseTemplate>>() {
 
-                    @Override
-                    public void onSuccess(List<BaseTemplate> result) {
-                        view.addComponents(result);
-                    }
+                @Override
+                public void onSuccess(List<BaseTemplate> result) {
+                    view.addComponents(result);
+                }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        InfoHelper.throwInfo("template-load-event", caught);
-                    }
-                });
+                @Override
+                public void onFailure(Throwable caught) {
+                    InfoHelper.throwInfo("template-load-event", caught);
+                }
+            });
     }
 }

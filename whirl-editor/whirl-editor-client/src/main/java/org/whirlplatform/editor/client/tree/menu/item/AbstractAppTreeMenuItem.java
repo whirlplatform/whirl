@@ -11,7 +11,7 @@ import org.whirlplatform.editor.client.tree.AppTree;
  * приложения.
  */
 public abstract class AbstractAppTreeMenuItem<T extends AppTree> extends MenuItem
-        implements AppTreeMenuItem<T> {
+    implements AppTreeMenuItem<T> {
     private T appTree;
 
     public AbstractAppTreeMenuItem() {

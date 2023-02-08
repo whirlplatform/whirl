@@ -27,7 +27,7 @@ public class MultiSetCell<T> extends TriggerFieldCell<String> {
 
     public MultiSetCell() {
         this(
-                GWT.<MultiSetCellDefaultAppearance>create(MultiSetCellDefaultAppearance.class));
+            GWT.<MultiSetCellDefaultAppearance>create(MultiSetCellDefaultAppearance.class));
     }
 
     public MultiSetCell(MultiSetCellAppearance appearance) {
@@ -114,7 +114,7 @@ public class MultiSetCell<T> extends TriggerFieldCell<String> {
     }
 
     public HandlerRegistration addSelectionHandler(
-            SelectionHandler<Item> handler) {
+        SelectionHandler<Item> handler) {
         return menu.addSelectionHandler(handler);
     }
 

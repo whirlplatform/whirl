@@ -83,11 +83,11 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
         if (parent == handledElement && element instanceof SchemaElement
-                && handledElement.getSchemas().contains(element)) {
+            && handledElement.getSchemas().contains(element)) {
             removeElement(element);
             addChildElement(folders.schemas, element);
             putTreePart(element,
-                    new AppTreeSchemaPart(appTree, treePresenter, (SchemaElement) element));
+                new AppTreeSchemaPart(appTree, treePresenter, (SchemaElement) element));
             return true;
         }
         return false;
@@ -132,8 +132,8 @@ public class AppTreeDataSourcePart extends AbstractAppTreePart<DataSourceElement
             }
             if (!tables.isEmpty()) {
                 treePresenter.riseEditRights(tables, Collections.unmodifiableCollection(Arrays
-                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
-                                RightType.RESTRICT)));
+                    .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
+                        RightType.RESTRICT)));
             }
         }
         return false;

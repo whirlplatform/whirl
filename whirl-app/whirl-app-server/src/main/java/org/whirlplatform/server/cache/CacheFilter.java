@@ -19,11 +19,11 @@ public class CacheFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse, FilterChain chain)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         response.setHeader("Cache-Control",
-                "max-age=0,no-cache,no-store,must-revalidate,proxy-revalidate,s-maxage=0");
+            "max-age=0,no-cache,no-store,must-revalidate,proxy-revalidate,s-maxage=0");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma", "No-cache");
         chain.doFilter(servletRequest, servletResponse);

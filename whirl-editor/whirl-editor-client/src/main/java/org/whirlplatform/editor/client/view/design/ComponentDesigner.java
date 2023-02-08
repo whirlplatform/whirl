@@ -112,7 +112,7 @@ public class ComponentDesigner extends AbstractDesigner {
             public void onSelect(SelectEvent event) {
                 if (selectedElement != null) {
                     fireRemoveComponentEvent(
-                            new RemoveComponentEvent(rootElement, selectedElement));
+                        new RemoveComponentEvent(rootElement, selectedElement));
                 }
             }
         });
@@ -305,9 +305,9 @@ public class ComponentDesigner extends AbstractDesigner {
 
     protected void setBuilderSelected(Element el, boolean selected) {
         Surface surface = setElementSelected(el,
-                new DefaultSurfaceAppearance(
-                        GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
-                selected);
+            new DefaultSurfaceAppearance(
+                GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
+            selected);
         if (surface != null) {
             surface.getElement().getStyle().setZIndex(2);
         }
@@ -391,7 +391,7 @@ public class ComponentDesigner extends AbstractDesigner {
         if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
             ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
             Double childWidth =
-                    child.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
+                child.getProperty(PropertyType.Width).getValue(defaultLocale).getDouble();
             if (childWidth != null) {
                 v = childWidth;
             }
@@ -410,7 +410,7 @@ public class ComponentDesigner extends AbstractDesigner {
         if (v == 0 && rootBuilder instanceof Containable && element.getChildren().size() == 1) {
             ComponentElement child = (ComponentElement) element.getChildren().toArray()[0];
             Double childHeight =
-                    child.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
+                child.getProperty(PropertyType.Height).getValue(defaultLocale).getDouble();
             if (childHeight != null) {
                 v = childHeight;
             }

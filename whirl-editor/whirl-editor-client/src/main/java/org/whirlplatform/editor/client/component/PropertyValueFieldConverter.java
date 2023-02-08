@@ -4,7 +4,7 @@ import com.sencha.gxt.data.shared.Converter;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 public class PropertyValueFieldConverter implements
-        Converter<PropertyValue, String> {
+    Converter<PropertyValue, String> {
 
     private PropertyValueField field;
 

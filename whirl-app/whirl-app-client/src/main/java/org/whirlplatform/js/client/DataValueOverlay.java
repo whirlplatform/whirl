@@ -40,7 +40,7 @@ public abstract class DataValueOverlay {
             return instance.getString();
         } else {
             throw LogHelper.getAndLogException(
-                    "getString error. Type of value: " + instance.getType().name());
+                "getString error. Type of value: " + instance.getType().name());
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class DataValueOverlay {
             return instance.getDouble();
         } else {
             throw LogHelper.getAndLogException(
-                    "getNumber error. Type of value: " + instance.getType().name());
+                "getNumber error. Type of value: " + instance.getType().name());
         }
     }
 
@@ -68,7 +68,7 @@ public abstract class DataValueOverlay {
             return instance.getBoolean();
         } else {
             throw LogHelper.getAndLogException(
-                    "getBoolean error. Type of value: " + instance.getType().name());
+                "getBoolean error. Type of value: " + instance.getType().name());
         }
     }
 
@@ -82,7 +82,7 @@ public abstract class DataValueOverlay {
             return instance.getDate();
         } else {
             throw LogHelper.getAndLogException(
-                    "getDate error. Type of value: " + instance.getType().name());
+                "getDate error. Type of value: " + instance.getType().name());
         }
     }
 
@@ -97,7 +97,7 @@ public abstract class DataValueOverlay {
             return instance.getListModelData();
         } else {
             throw LogHelper.getAndLogException(
-                    "getList error. Type of value: " + instance.getType().name());
+                "getList error. Type of value: " + instance.getType().name());
         }
     }
 

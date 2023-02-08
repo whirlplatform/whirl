@@ -41,15 +41,15 @@ public class Whirl {
         // });
 
         final DataServiceAsync service =
-                DataServiceAsync.Util.getDataService(new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                    }
+            DataServiceAsync.Util.getDataService(new AsyncCallback<Void>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                }
 
-                    @Override
-                    public void onSuccess(Void result) {
-                    }
-                });
+                @Override
+                public void onSuccess(Void result) {
+                }
+            });
         ClientLoginUtils.initTouchTimer();
 
         Window.addWindowClosingHandler(new ClosingHandler() {

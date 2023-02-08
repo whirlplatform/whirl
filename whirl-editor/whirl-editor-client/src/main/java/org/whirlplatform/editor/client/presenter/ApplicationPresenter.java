@@ -23,8 +23,8 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @Presenter(view = ApplicationView.class)
 public class ApplicationPresenter
-        extends BasePresenter<ApplicationPresenter.IApplicationView, EditorEventBus>
-        implements ElementPresenter {
+    extends BasePresenter<ApplicationPresenter.IApplicationView, EditorEventBus>
+    implements ElementPresenter {
 
     private ApplicationElement application;
     private Version version;
@@ -110,8 +110,8 @@ public class ApplicationPresenter
         // view.initFields();
 
         view.setHeaderText(
-                EditorMessage.Util.MESSAGE.editing_application() + application.getName() + " ["
-                        + application.getVersion() + "]");
+            EditorMessage.Util.MESSAGE.editing_application() + application.getName() + " ["
+                + application.getVersion() + "]");
         view.clearFilesFields();
         view.setLocales(application.getLocales(), application.getDefaultLocale());
         view.setApplicationCode(application.getCode());

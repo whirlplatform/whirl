@@ -82,7 +82,7 @@ public class FileTemplateImporter implements TemplateImporter {
     private List<String> readTemplatesAsStrings(Path pathToFolder) {
         List<String> result = new ArrayList<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(pathToFolder,
-                "*" + FileSystemTemplateStore.EXT)) {
+            "*" + FileSystemTemplateStore.EXT)) {
             for (Path path : stream) {
                 String xmlFile = new String(Files.readAllBytes(path), Charset.forName("UTF-8"));
                 if (!xmlFile.isEmpty()) {

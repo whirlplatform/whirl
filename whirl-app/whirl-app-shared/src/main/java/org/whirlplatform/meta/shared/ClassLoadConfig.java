@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonSubTypes(@JsonSubTypes.Type(TreeClassLoadConfig.class))
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
-        isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
+    isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ClassLoadConfig implements Serializable {
 
     private PageConfig page = new PageConfig();

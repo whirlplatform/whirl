@@ -10,7 +10,7 @@ import org.whirlplatform.server.log.LoggerFactory;
 public class SessionKillerJob implements Job {
 
     private static Logger _log = LoggerFactory
-            .getLogger(SessionKillerJob.class);
+        .getLogger(SessionKillerJob.class);
 
 
     @Override

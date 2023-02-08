@@ -14,11 +14,9 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
 
     private static final int MINIMUM = 50;
     private static final int VARIANCE = 50;
-
+    private final Random random = new Random();
     private int left;
     private int top;
-
-    private Random random = new Random();
 
     @Override
     public DesktopLayoutType getDesktopLayoutType() {
@@ -36,7 +34,7 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
         }
 
         super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth,
-                containerHeight);
+            containerHeight);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class CenterDesktopLayout extends LimitedDesktopLayout implements Desktop
         int offset = window.getHeader().getOffsetHeight();
 
         if (((left + VARIANCE + width) > containerWidth)
-                || ((top + VARIANCE + height) > containerHeight)) {
+            || ((top + VARIANCE + height) > containerHeight)) {
             left = MINIMUM;
             top = MINIMUM;
         }

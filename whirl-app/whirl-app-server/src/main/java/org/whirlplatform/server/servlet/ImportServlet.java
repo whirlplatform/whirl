@@ -47,7 +47,7 @@ public class ImportServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
 
@@ -57,40 +57,40 @@ public class ImportServlet extends HttpServlet {
         ApplicationUser user = null;
         try {
             user = SessionManager
-                    //.get(req.getSession().getServletContext())
-                    .get(req.getSession())
-                    .getUser(
-                            new SessionToken(req.getSession().getId(), tokenId));
+                //.get(req.getSession().getServletContext())
+                .get(req.getSession())
+                .getUser(
+                    new SessionToken(req.getSession().getId(), tokenId));
             String classList = req.getParameter(AppConstant.TABLE_ID);
 
             ClassMetadata metadata = connector().getClassMetadata(classList,
-                    null, user);
+                null, user);
             if (checkAccess(metadata)) {
                 FileItemFactory factory = new DiskFileItemFactory();
                 ServletFileUpload upload = new ServletFileUpload(factory);
                 List<FileItem> items = upload.parseRequest(req);
                 for (FileItem item : items) {
                     if (!item.isFormField() && item.getFieldName() != null
-                            && item.getFieldName().equals("file")) {
+                        && item.getFieldName().equals("file")) {
                         InputStream stream = item.getInputStream();
 
                         if (ExpImpType.IMPORT_CSV.name().equals(importType)) {
                             CSVImporter importer = new CSVImporter(_connector,
-                                    user, metadata);
+                                user, metadata);
                             importer.importFromStream(stream);
                             if (importer.isImportError()) {
                                 throw new CustomException(
-                                        "В процессе иморта возникли ошибки. Часть данных не имортирована.");
+                                    "В процессе иморта возникли ошибки. Часть данных не имортирована.");
                             }
                         }
 
                         if (ExpImpType.IMPORT_XLS.name().equals(importType)) {
                             XLSImporter importer = new XLSImporter(_connector,
-                                    user, metadata);
+                                user, metadata);
                             importer.importFromStream(stream);
                             if (importer.isImportError()) {
                                 throw new CustomException(
-                                        "В процессе иморта возникли ошибки. Часть данных не имортирована.");
+                                    "В процессе иморта возникли ошибки. Часть данных не имортирована.");
                             }
                         }
                     }

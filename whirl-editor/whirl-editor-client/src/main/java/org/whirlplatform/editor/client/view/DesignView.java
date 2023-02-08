@@ -31,7 +31,7 @@ import org.whirlplatform.editor.client.presenter.DesignPresenter.IDesignView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 public class DesignView extends FlowLayoutContainer implements IDesignView,
-        ReverseViewInterface<DesignPresenter> {
+    ReverseViewInterface<DesignPresenter> {
 
     private DesignPresenter presenter;
     private SimpleContainer container;
@@ -153,7 +153,7 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
         });
         deleteColumn = new TextButton();
         deleteColumn
-                .setTitle(EditorMessage.Util.MESSAGE.design_column_remove());
+            .setTitle(EditorMessage.Util.MESSAGE.design_column_remove());
         deleteColumn.setIcon(EditorBundle.INSTANCE.deleteColumn());
         deleteColumn.addSelectHandler(new SelectHandler() {
 
@@ -190,7 +190,7 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
             @Override
             public void onSelect(SelectEvent event) {
                 presenter.onAddBorderTop(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderRight = new TextButton();
@@ -201,19 +201,19 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
             @Override
             public void onSelect(SelectEvent event) {
                 presenter.onAddBorderRight(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderBottom = new TextButton();
         borderBottom
-                .setTitle(EditorMessage.Util.MESSAGE.design_border_bottom());
+            .setTitle(EditorMessage.Util.MESSAGE.design_border_bottom());
         borderBottom.setIcon(EditorBundle.INSTANCE.borderBottom());
         borderBottom.addSelectHandler(new SelectHandler() {
 
             @Override
             public void onSelect(SelectEvent event) {
                 presenter.onAddBorderBottom(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
         borderLeft = new TextButton();
@@ -224,12 +224,12 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
             @Override
             public void onSelect(SelectEvent event) {
                 presenter.onAddBorderLeft(borderWidth.getValue(),
-                        borderColorMenu.getColor());
+                    borderColorMenu.getColor());
             }
         });
 
         borderWidth = new SimpleComboBox<Integer>(
-                new StringLabelProvider<Integer>());
+            new StringLabelProvider<Integer>());
         borderWidth.setAllowBlank(false);
         borderWidth.setForceSelection(true);
         borderWidth.setEditable(false);
@@ -251,30 +251,30 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
         borderColorMenu = new ColorMenu();
         borderColor.setMenu(borderColorMenu);
         borderColorMenu.getPalette().addValueChangeHandler(
-                new ValueChangeHandler<String>() {
+            new ValueChangeHandler<String>() {
 
-                    @Override
-                    public void onValueChange(ValueChangeEvent<String> event) {
-                        borderColorMenu.hide();
-                    }
-                });
+                @Override
+                public void onValueChange(ValueChangeEvent<String> event) {
+                    borderColorMenu.hide();
+                }
+            });
 
         backgroundColor = new TextButton();
         backgroundColor.setTitle(EditorMessage.Util.MESSAGE
-                .design_background_color());
+            .design_background_color());
         backgroundColor.setIcon(EditorBundle.INSTANCE.color());
         backgroundColorMenu = new ColorMenu();
         backgroundColor.setMenu(backgroundColorMenu);
         backgroundColorMenu.getPalette().addValueChangeHandler(
-                new ValueChangeHandler<String>() {
+            new ValueChangeHandler<String>() {
 
-                    @Override
-                    public void onValueChange(ValueChangeEvent<String> event) {
-                        backgroundColorMenu.hide();
-                        backgroundColorMenu.getPalette().setValue("");
-                        presenter.onSetColor(event.getValue());
-                    }
-                });
+                @Override
+                public void onValueChange(ValueChangeEvent<String> event) {
+                    backgroundColorMenu.hide();
+                    backgroundColorMenu.getPalette().setValue("");
+                    presenter.onSetColor(event.getValue());
+                }
+            });
 
         clearBackgroundColor = new TextButton();
         clearBackgroundColor.setTitle(EditorMessage.Util.MESSAGE.design_clear_color());
@@ -385,7 +385,7 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
     // view
     @Override
     public Component getContainer() {
-//        return inner;
+        //        return inner;
         return container;
     }
 
@@ -410,7 +410,7 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
             container.setWidth(new Double(containerWidth * width).intValue());
         } else if (percentWidth != 0) {
             container.setWidth(new Double(containerWidth * percentWidth)
-                    .intValue());
+                .intValue());
         }
         if (height > 1) {
             container.setHeight(new Double(height).intValue());
@@ -418,10 +418,10 @@ public class DesignView extends FlowLayoutContainer implements IDesignView,
         } else if (height > 0) {
             percentHeight = height;
             container
-                    .setHeight(new Double(containerHeight * height).intValue());
+                .setHeight(new Double(containerHeight * height).intValue());
         } else if (percentHeight != 0) {
             container.setHeight(new Double(containerHeight * percentHeight)
-                    .intValue());
+                .intValue());
         }
     }
 

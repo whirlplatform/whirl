@@ -7,6 +7,7 @@ import com.sencha.gxt.data.shared.loader.LoadExceptionEvent;
 import com.sencha.gxt.data.shared.loader.LoadExceptionEvent.LoadExceptionHandler;
 import com.sencha.gxt.data.shared.loader.LoadHandler;
 import com.sencha.gxt.data.shared.loader.Loader;
+import java.util.Objects;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
@@ -15,7 +16,7 @@ import org.whirlplatform.meta.shared.data.RowModelData;
 
 //TODO перенести в component/client
 public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
-        extends ListStore<T> {
+    extends ListStore<T> {
 
     protected ClassMetadata metadata;
 
@@ -58,7 +59,7 @@ public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
         for (int i = 0; i < size(); i++) {
             String findedKey = getKeyProvider().getKey(get(i));
             // TODO ошибка в реализации GXT хорошо бы оформить у них
-            if (findedKey == key || (findedKey != null && findedKey.equals(key))) {
+            if (Objects.equals(findedKey, key)) {
                 return get(i);
             }
         }

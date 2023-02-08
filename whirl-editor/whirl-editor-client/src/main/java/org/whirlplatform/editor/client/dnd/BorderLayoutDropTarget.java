@@ -77,7 +77,7 @@ public class BorderLayoutDropTarget extends DropTarget {
     @Override
     protected void onDragMove(DndDragMoveEvent event) {
         XElement target = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         if (!borderLayout.getElement().isOrHasChild(target)) {
             event.setCancelled(true);
             event.getStatusProxy().setStatus(false);
@@ -171,7 +171,7 @@ public class BorderLayoutDropTarget extends DropTarget {
     enum Region {
 
         CENTER("Center"), NORTH("North"), EAST("East"), SOUTH("South"), WEST(
-                "West");
+            "West");
 
         private final String value;
 

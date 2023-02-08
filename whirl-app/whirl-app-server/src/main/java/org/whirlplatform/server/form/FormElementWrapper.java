@@ -19,15 +19,15 @@ public class FormElementWrapper {
     private LocaleElement locale;
 
     private SortedMap<Integer, RowElementWrapper> rowMap =
-            new TreeMap<Integer, RowElementWrapper>();
+        new TreeMap<Integer, RowElementWrapper>();
     private SortedMap<Integer, ColumnElementWrapper> colMap =
-            new TreeMap<Integer, ColumnElementWrapper>();
+        new TreeMap<Integer, ColumnElementWrapper>();
     private Map<XPoint, CellElementWrapper> cellMap = new HashMap<XPoint, CellElementWrapper>();
 
     private SqlManager sqlManager = new SqlManager();
 
     private SortedMap<Integer, RowElementWrapper> finalRowMap =
-            new TreeMap<Integer, RowElementWrapper>();
+        new TreeMap<Integer, RowElementWrapper>();
 
     public FormElementWrapper(FormElement element, LocaleElement locale) {
         this.element = element;

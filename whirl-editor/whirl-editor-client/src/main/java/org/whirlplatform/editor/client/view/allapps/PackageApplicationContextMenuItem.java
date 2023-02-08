@@ -9,7 +9,7 @@ import org.whirlplatform.editor.client.view.context.AbstractContextMenuItem;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 
 public class PackageApplicationContextMenuItem
-        extends AbstractContextMenuItem<AllApplicationsView> {
+    extends AbstractContextMenuItem<AllApplicationsView> {
 
     public PackageApplicationContextMenuItem() {
         super();

@@ -29,7 +29,7 @@ public class RowModelDataValueProvider<V> implements ValueProvider<RowModelData,
     public boolean equals(Object obj) {
         if (obj instanceof RowModelDataValueProvider) {
             return property
-                    .equals(((RowModelDataValueProvider<?>) obj).property);
+                .equals(((RowModelDataValueProvider<?>) obj).property);
         }
         return false;
     }

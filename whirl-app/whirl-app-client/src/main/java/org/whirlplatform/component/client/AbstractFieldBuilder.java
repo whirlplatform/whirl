@@ -24,8 +24,8 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  * Билдер-родитель для всех билдеров-полей.
  */
 public abstract class AbstractFieldBuilder extends ComponentBuilder
-        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers,
-        KeyPressEvent.HasKeyPressHandlers {
+    implements Clearable, Validatable, ChangeEvent.HasChangeHandlers,
+    KeyPressEvent.HasKeyPressHandlers {
 
     protected boolean required;
     protected FieldClearDecorator clearDecorator;
@@ -90,7 +90,7 @@ public abstract class AbstractFieldBuilder extends ComponentBuilder
             if (Boolean.TRUE.equals(value.getBoolean())
                 && componentInstance instanceof ValueBaseField<?>) {
                 clearDecorator = new FieldClearDecorator((ValueBaseField<?>) componentInstance,
-                        createClearCommand());
+                    createClearCommand());
                 setClearCrossRightOffset(2);
             }
             return true;

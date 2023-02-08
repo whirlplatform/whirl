@@ -18,8 +18,8 @@ public class ThreeStateCheckCell extends FieldCell<CheckState> {
 
     public ThreeStateCheckCell() {
         this(
-                new DefaultTreeStateCheckAppearance(
-                        GWT.create(ThreeStateCheckResources.class)));
+            new DefaultTreeStateCheckAppearance(
+                GWT.create(ThreeStateCheckResources.class)));
     }
 
     public ThreeStateCheckCell(ThreeStateCheckAppearance appearance) {
@@ -45,8 +45,8 @@ public class ThreeStateCheckCell extends FieldCell<CheckState> {
         super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
         if ("click".equals(event.getType())
-                ||
-                ("keypress".equals(event.getType()) && event.getKeyCode() == KeyCodes.KEY_ENTER)) {
+            ||
+            ("keypress".equals(event.getType()) && event.getKeyCode() == KeyCodes.KEY_ENTER)) {
             CheckState v = nextState(value);
             valueUpdater.update(v);
             setValue(context, parent, v);
@@ -86,12 +86,12 @@ public class ThreeStateCheckCell extends FieldCell<CheckState> {
     }
 
     public static class DefaultTreeStateCheckAppearance implements
-            ThreeStateCheckAppearance {
+        ThreeStateCheckAppearance {
 
         private ThreeStateCheckResources resources;
 
         public DefaultTreeStateCheckAppearance(
-                ThreeStateCheckResources resources) {
+            ThreeStateCheckResources resources) {
             this.resources = resources;
         }
 
@@ -128,9 +128,9 @@ public class ThreeStateCheckCell extends FieldCell<CheckState> {
                 image = resources.unchecked();
             }
             sb.append(SafeHtmlUtils.fromTrustedString("<img src=\""
-                    + image.getSafeUri().asString() + "\" width=\""
-                    + image.getWidth() + "px;\" + height=\""
-                    + image.getHeight() + "px;\"></img>"));
+                + image.getSafeUri().asString() + "\" width=\""
+                + image.getWidth() + "px;\" + height=\""
+                + image.getHeight() + "px;\"></img>"));
         }
 
     }

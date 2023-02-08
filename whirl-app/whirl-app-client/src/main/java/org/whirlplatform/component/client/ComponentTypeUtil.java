@@ -169,7 +169,7 @@ public class ComponentTypeUtil {
             return builder;
         }
         MessageBox message = new MessageBox(AppMessage.Util.MESSAGE.error(),
-                AppMessage.Util.MESSAGE.alert_noCompBuilder());
+            AppMessage.Util.MESSAGE.alert_noCompBuilder());
         message.setIcon(MessageBox.ICONS.warning());
         return null;
     }

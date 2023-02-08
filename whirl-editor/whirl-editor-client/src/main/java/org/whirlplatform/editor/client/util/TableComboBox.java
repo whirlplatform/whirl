@@ -28,7 +28,7 @@ public class TableComboBox extends ComboBox<AbstractTableElement> {
             @Override
             public void onTriggerClick(TriggerClickEvent event) {
                 if (!isExpanded()) {
-//                    getStore().getLoader().load(getText());
+                    //                    getStore().getLoader().load(getText());
                 }
             }
         });

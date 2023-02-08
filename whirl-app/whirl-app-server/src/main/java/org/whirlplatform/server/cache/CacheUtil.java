@@ -13,8 +13,8 @@ public class CacheUtil {
     // private static final Log _log = LogFactory.getLog(CacheUtil.class);
 
     private static final Cache<String, Object> cache = CacheBuilder
-            .newBuilder().maximumSize(3000)
-            .expireAfterWrite(20, TimeUnit.MINUTES).build();
+        .newBuilder().maximumSize(3000)
+        .expireAfterWrite(20, TimeUnit.MINUTES).build();
 
     private static Cache<String, Object> getCache() {
         return cache;

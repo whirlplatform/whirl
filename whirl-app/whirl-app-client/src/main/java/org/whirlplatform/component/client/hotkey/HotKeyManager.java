@@ -9,8 +9,8 @@ public class HotKeyManager {
 
     private static HotKeyManager _instance;
 
-    private Map<HotKeyHandler, HandlerRegistration> registrations =
-            new HashMap<HotKeyHandler, HandlerRegistration>();
+    private final Map<HotKeyHandler, HandlerRegistration> registrations =
+        new HashMap<HotKeyHandler, HandlerRegistration>();
 
     private HotKeyManager() {
     }

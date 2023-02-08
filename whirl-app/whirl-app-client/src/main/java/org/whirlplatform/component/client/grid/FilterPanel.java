@@ -58,18 +58,16 @@ import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 public class FilterPanel extends VerticalLayoutContainer
-        implements ResizeHandler, SearchEvent.HasSearchHandlers, LocatorAware {
+    implements ResizeHandler, SearchEvent.HasSearchHandlers, LocatorAware {
 
-    private ClassMetadata metadata;
+    private final ClassMetadata metadata;
 
-    private FlexTable panel = new FlexTable();
-    private Map<FieldMetadata, FilterSet> fields = new HashMap<FieldMetadata, FilterSet>();
-
+    private final FlexTable panel = new FlexTable();
+    private final Map<FieldMetadata, FilterSet> fields = new HashMap<FieldMetadata, FilterSet>();
+    private final TextButton searchBtn = new TextButton(AppMessage.Util.MESSAGE.filter());
+    private final TextButton clearBtn = new TextButton(AppMessage.Util.MESSAGE.clear());
+    private final TextButton closeBtn = new TextButton(AppMessage.Util.MESSAGE.close());
     private Window window;
-
-    private TextButton searchBtn = new TextButton(AppMessage.Util.MESSAGE.filter());
-    private TextButton clearBtn = new TextButton(AppMessage.Util.MESSAGE.clear());
-    private TextButton closeBtn = new TextButton(AppMessage.Util.MESSAGE.close());
 
     public FilterPanel(ClassMetadata metadata) {
         super();
@@ -141,7 +139,7 @@ public class FilterPanel extends VerticalLayoutContainer
             Object first = f.getFirstValue();
             Object second = f.getSecondValue();
             if (FilterType.NO_FILTER != f.getType() && (first != null || second != null
-                    || FilterType.EMPTY == f.getType() || FilterType.NOT_EMPTY == f.getType())) {
+                || FilterType.EMPTY == f.getType() || FilterType.NOT_EMPTY == f.getType())) {
                 loadConfig.addFilter(f);
             }
         }
@@ -260,9 +258,9 @@ public class FilterPanel extends VerticalLayoutContainer
                 TriggerFieldAppearance appearance = comboBox.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
                     TriggerFieldDefaultAppearance defApp =
-                            (TriggerFieldDefaultAppearance) appearance;
+                        (TriggerFieldDefaultAppearance) appearance;
                     return comboBox.getElement()
-                            .selectNode("." + defApp.getStyle().trigger()); // TODO
+                        .selectNode("." + defApp.getStyle().trigger()); // TODO
                 }
             } else if (LocatorParams.ITEM.equals(comboPart.getType()) && comboBox.isExpanded()) {
                 String indexParam = comboPart.getParameter(LocatorParams.INDEX);
@@ -298,9 +296,9 @@ public class FilterPanel extends VerticalLayoutContainer
                 TriggerFieldAppearance appearance = dateField.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
                     TriggerFieldDefaultAppearance defApp =
-                            (TriggerFieldDefaultAppearance) appearance;
+                        (TriggerFieldDefaultAppearance) appearance;
                     return dateField.getElement()
-                            .selectNode("." + defApp.getStyle().trigger()); // TODO
+                        .selectNode("." + defApp.getStyle().trigger()); // TODO
                 }
             } else if (LocatorParams.ITEM.equals(dateFieldPart.getType())) {
                 // TODO Реализовать получение элементов DatePicker - a.
@@ -329,11 +327,11 @@ public class FilterPanel extends VerticalLayoutContainer
                     builder.append((v.<ListModelData>getFirstValue()).getLabel());
                 } else if (DataType.BOOLEAN == v.getMetadata().getType()) {
                     builder.append(
-                            v.<Boolean>getFirstValue() ? AppMessage.Util.MESSAGE.yes() :
-                                    AppMessage.Util.MESSAGE.no());
+                        v.<Boolean>getFirstValue() ? AppMessage.Util.MESSAGE.yes() :
+                            AppMessage.Util.MESSAGE.no());
                 } else if (DataType.DATE == v.getMetadata().getType()) {
                     builder.append(DateTimeFormat.getFormat("dd.MM.yyyy hh:mm:ss")
-                            .format(v.getFirstValue()));
+                        .format(v.getFirstValue()));
                 } else {
                     builder.append(v.<Object>getFirstValue());
                 }
@@ -347,7 +345,7 @@ public class FilterPanel extends VerticalLayoutContainer
         String res = null;
         if (builder.length() > 0) {
             res = AppMessage.Util.MESSAGE.filter_filter() + " :"
-                    + builder.substring(0, builder.length() - 1);
+                + builder.substring(0, builder.length() - 1);
         }
         return res;
     }
@@ -515,8 +513,8 @@ public class FilterPanel extends VerticalLayoutContainer
 
     private class FilterSet implements LocatorAware {
 
-        private DataType type;
-        private FieldMetadata fieldData;
+        private final DataType type;
+        private final FieldMetadata fieldData;
 
         private HTML label;
 
@@ -542,7 +540,7 @@ public class FilterPanel extends VerticalLayoutContainer
         public Widget getConditionWidget() {
             if (condition == null) {
                 if (DataType.DATE == type || DataType.FILE == type || DataType.NUMBER == type
-                        || DataType.STRING == type) {
+                    || DataType.STRING == type) {
                     condition = createConditionCombo();
                 } else {
                     condition = new CheckBox();
@@ -554,7 +552,7 @@ public class FilterPanel extends VerticalLayoutContainer
         @SuppressWarnings("unchecked")
         public FilterType getCondition() {
             if (DataType.DATE.equals(type) || DataType.FILE == (type) || DataType.NUMBER == type
-                    || DataType.STRING == type) {
+                || DataType.STRING == type) {
                 ComboBox<FilterType> combo = (ComboBox<FilterType>) condition;
                 return combo.getValue();
             } else {
@@ -570,16 +568,12 @@ public class FilterPanel extends VerticalLayoutContainer
         @SuppressWarnings({"unchecked"})
         public void setCondition(FilterType value) {
             if (DataType.DATE == type || DataType.FILE == type || DataType.NUMBER == type
-                    || DataType.STRING == type) {
+                || DataType.STRING == type) {
                 ComboBox<FilterType> combo = (ComboBox<FilterType>) condition;
                 combo.setValue(value);
             } else {
                 CheckBox check = (CheckBox) condition;
-                if (FilterType.EQUALS.equals(value)) {
-                    check.setValue(true);
-                } else {
-                    check.setValue(false);
-                }
+                check.setValue(FilterType.EQUALS.equals(value));
             }
         }
 
@@ -608,7 +602,7 @@ public class FilterPanel extends VerticalLayoutContainer
                 sourse.setId(fieldData.getClassId());
                 comboBuilder.setProperty("DataSource", new DataValueImpl(DataType.LIST, sourse));
                 comboBuilder.setProperty(PropertyType.ReloadStructure.getCode(),
-                        new DataValueImpl(DataType.BOOLEAN, true));
+                    new DataValueImpl(DataType.BOOLEAN, true));
                 w = comboBuilder.create();
             } else {
                 w = new TextField();
@@ -625,14 +619,14 @@ public class FilterPanel extends VerticalLayoutContainer
 
         private ComboBox<FilterType> createConditionCombo() {
             SimpleComboBox<FilterType> combo =
-                    new SimpleComboBox<FilterType>(new LabelProvider<FilterType>() {
+                new SimpleComboBox<FilterType>(new LabelProvider<FilterType>() {
 
-                        @Override
-                        public String getLabel(FilterType item) {
-                            return FilterTypeUtil.getLabel(item);
-                        }
+                    @Override
+                    public String getLabel(FilterType item) {
+                        return FilterTypeUtil.getLabel(item);
+                    }
 
-                    });
+                });
             combo.addBeforeQueryHandler(new BeforeQueryHandler<FilterType>() {
 
                 @Override
@@ -757,7 +751,7 @@ public class FilterPanel extends VerticalLayoutContainer
                     case REVERSE:
                         if (firstValue instanceof Field && isEmpty((Field<?>) firstValue)) {
                             ((Field<?>) firstValue).markInvalid(
-                                    AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
+                                AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
                             return false;
                         }
                         break;
@@ -765,13 +759,13 @@ public class FilterPanel extends VerticalLayoutContainer
                         boolean valid = true;
                         if (firstValue instanceof Field && isEmpty((Field<?>) firstValue)) {
                             ((Field<?>) firstValue).markInvalid(
-                                    AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
+                                AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
                             valid = false;
                         }
                         if (secondValue instanceof Field && isEmpty((Field<?>) secondValue)) {
                             ((Field<?>) secondValue)
-                                    .markInvalid(
-                                            AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
+                                .markInvalid(
+                                    AppMessage.Util.MESSAGE.alert_notAllRequiredFieldsIsFill());
                             valid = false;
                         }
                         if (!valid) {
@@ -867,7 +861,7 @@ public class FilterPanel extends VerticalLayoutContainer
             if (box.getCell().getInputElement(box.getElement()).isOrHasChild(element)) {
                 concretePart = new Locator(LocatorParams.INPUT);
             } else if (box.getCell().getAppearance()
-                    .triggerIsOrHasChild(box.getElement(), element)) {
+                .triggerIsOrHasChild(box.getElement(), element)) {
                 concretePart = new Locator(LocatorParams.TRIGGER);
             } else {
                 concretePart = new Locator(LocatorParams.ITEM);
@@ -886,7 +880,7 @@ public class FilterPanel extends VerticalLayoutContainer
             if (dateField.getCell().getInputElement(dateField.getElement()).isOrHasChild(element)) {
                 concretePart = new Locator(LocatorParams.INPUT);
             } else if (dateField.getCell().getAppearance()
-                    .triggerIsOrHasChild(dateField.getElement(), element)) {
+                .triggerIsOrHasChild(dateField.getElement(), element)) {
                 concretePart = new Locator(LocatorParams.TRIGGER);
             } else {
                 // TODO: Разобраться с получением конкретного элемента в пикере.
@@ -982,7 +976,7 @@ public class FilterPanel extends VerticalLayoutContainer
             if (LocatorParams.TYPE_LABEL.equals(locator.getType()) && label != null) {
                 return label.getElement();
             } else if (LocatorParams.TYPE_CONDITION.equals(locator.getType())
-                    && condition != null) {
+                && condition != null) {
                 Locator condPart = locator.getPart();
                 if (condPart != null) {
                     return getSpecificElement(condPart, condition);
@@ -1007,7 +1001,7 @@ public class FilterPanel extends VerticalLayoutContainer
             if (isTextField || isNumberField) {
                 if (widget instanceof ValueBaseField<?>) {
                     return ((ValueBaseField<?>) widget).getCell()
-                            .getInputElement(widget.getElement());
+                        .getInputElement(widget.getElement());
                 }
             } else if (LocatorParams.TYPE_CHECK.equals(locator.getType())) {
                 if (widget instanceof CheckBox) {

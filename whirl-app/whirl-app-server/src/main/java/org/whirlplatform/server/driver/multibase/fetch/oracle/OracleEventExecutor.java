@@ -56,19 +56,19 @@ public class OracleEventExecutor extends AbstractEventExecutor {
         DBFunctionMessage m = new DBFunctionMessage(getUser(), eventElement, paramsDataValue);
 
         // Обход ограничения на final переменные
-        final boolean[] stoppedHolder = new boolean[]{false};
+        final boolean[] stoppedHolder = new boolean[] {false};
         // Метод для прекращения выполнения события
         RunningEvent ev = new RunningEvent(RunningEvent.Type.DBEVENT, eventElement.getCode(),
-                eventElement.getFunction(), getUser().getLogin()) {
+            eventElement.getFunction(), getUser().getLogin()) {
             @Override
             public void onStop() {
                 //TODO abort
-//                try {
-//                    stoppedHolder[0] = true;
-//                    getConnection().abort();
-//                } catch (SQLException e) {
-//                    _log.info("Stop event error", e);
-//                }
+                //                try {
+                //                    stoppedHolder[0] = true;
+                //                    getConnection().abort();
+                //                } catch (SQLException e) {
+                //                    _log.info("Stop event error", e);
+                //                }
             }
         };
         // Чтобы можно было дописать ошибку обернул в еще один try
@@ -140,8 +140,8 @@ public class OracleEventExecutor extends AbstractEventExecutor {
             } catch (Exception e) {
                 if (stoppedHolder[0]) {
                     throw new CustomException(
-                            I18NMessage.getMessage(I18NMessage.getRequestLocale())
-                                    .alert_event_cancelled());
+                        I18NMessage.getMessage(I18NMessage.getRequestLocale())
+                            .alert_event_cancelled());
                 }
                 String err = function + " params =" + params + '\t' + e + ", sql: " + sql;
                 _log.error(err, e);
@@ -155,7 +155,7 @@ public class OracleEventExecutor extends AbstractEventExecutor {
         CallableStatement cst = null;
         try {
             cst = getConnection().prepareCall(
-                    "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
+                "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
             cst.registerOutParameter(1, Types.CLOB);
             cst.execute();
             return cst.getClob(1);

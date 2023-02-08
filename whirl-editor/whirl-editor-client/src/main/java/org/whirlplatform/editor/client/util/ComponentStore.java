@@ -19,19 +19,19 @@ import org.whirlplatform.meta.shared.editor.ComponentElement;
 public class ComponentStore extends ListStore<ComponentElement> {
 
     private static final Comparator<ComponentElement> comparator =
-            new Comparator<ComponentElement>() {
+        new Comparator<ComponentElement>() {
 
-                @Override
-                public int compare(ComponentElement o1, ComponentElement o2) {
-                    if (o1.getId().isEmpty()) {
-                        return -1;
-                    } else if (o2.getId().isEmpty()) {
-                        return 1;
-                    }
-                    return o1.getName().compareTo(o2.getName());
+            @Override
+            public int compare(ComponentElement o1, ComponentElement o2) {
+                if (o1.getId().isEmpty()) {
+                    return -1;
+                } else if (o2.getId().isEmpty()) {
+                    return 1;
                 }
+                return o1.getName().compareTo(o2.getName());
+            }
 
-            };
+        };
     private DataProxy<String, List<ComponentElement>> proxy;
     private Loader<String, List<ComponentElement>> loader;
 
@@ -69,7 +69,7 @@ public class ComponentStore extends ListStore<ComponentElement> {
     }
 
     private class ComponentProxy implements
-            DataProxy<String, List<ComponentElement>> {
+        DataProxy<String, List<ComponentElement>> {
 
         private ApplicationDataProvider provider;
         private boolean containersOnly = false;
@@ -78,7 +78,7 @@ public class ComponentStore extends ListStore<ComponentElement> {
             this.provider = provider;
             this.containersOnly = containersOnly;
             addSortInfo(new StoreSortInfo<ComponentElement>(comparator,
-                    SortDir.ASC));
+                SortDir.ASC));
         }
 
         public void setContainersOnly(boolean containersOnly) {
@@ -89,49 +89,49 @@ public class ComponentStore extends ListStore<ComponentElement> {
         public void load(final String loadConfig,
                          final Callback<List<ComponentElement>, Throwable> callback) {
             provider.getAvailableComponents(
-                    new Callback<Collection<ComponentElement>, Throwable>() {
-                        @Override
-                        public void onFailure(Throwable reason) {
-                            callback.onFailure(reason);
-                        }
+                new Callback<Collection<ComponentElement>, Throwable>() {
+                    @Override
+                    public void onFailure(Throwable reason) {
+                        callback.onFailure(reason);
+                    }
 
-                        @Override
-                        public void onSuccess(Collection<ComponentElement> result) {
-                            List<ComponentElement> list = new ArrayList<ComponentElement>();
-                            if (loadConfig == null || loadConfig.isEmpty()) {
-                                if (containersOnly) {
-                                    for (ComponentElement element : result) {
+                    @Override
+                    public void onSuccess(Collection<ComponentElement> result) {
+                        List<ComponentElement> list = new ArrayList<ComponentElement>();
+                        if (loadConfig == null || loadConfig.isEmpty()) {
+                            if (containersOnly) {
+                                for (ComponentElement element : result) {
+                                    if (element.getType().isContainer()) {
+                                        list.add(element);
+                                    }
+                                }
+                            } else {
+                                list.addAll(result);
+                            }
+                        } else {
+                            for (ComponentElement element : result) {
+                                String query = loadConfig.toLowerCase();
+                                boolean isName = element.getName() != null
+                                    && element.getName().toLowerCase().contains(query);
+                                String val =
+                                    element.getProperty(PropertyType.Code).getDefaultValue()
+                                        .getString();
+                                boolean isCode = val != null
+                                    && (String.valueOf(val).toLowerCase().contains(query));
+                                if (isName || isCode) {
+                                    if (containersOnly) {
                                         if (element.getType().isContainer()) {
                                             list.add(element);
                                         }
-                                    }
-                                } else {
-                                    list.addAll(result);
-                                }
-                            } else {
-                                for (ComponentElement element : result) {
-                                    String query = loadConfig.toLowerCase();
-                                    boolean isName = element.getName() != null
-                                            && element.getName().toLowerCase().contains(query);
-                                    String val =
-                                            element.getProperty(PropertyType.Code).getDefaultValue()
-                                                    .getString();
-                                    boolean isCode = val != null
-                                        && (String.valueOf(val).toLowerCase().contains(query));
-                                    if (isName || isCode) {
-                                        if (containersOnly) {
-                                            if (element.getType().isContainer()) {
-                                                list.add(element);
-                                            }
-                                        } else {
-                                            list.add(element);
-                                        }
+                                    } else {
+                                        list.add(element);
                                     }
                                 }
                             }
-                            callback.onSuccess(list);
                         }
-                    });
+                        callback.onSuccess(list);
+                    }
+                });
         }
     }
 

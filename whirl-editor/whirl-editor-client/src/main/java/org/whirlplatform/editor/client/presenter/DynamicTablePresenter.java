@@ -22,8 +22,8 @@ import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 
 @Presenter(view = DynamicTableView.class)
 public class DynamicTablePresenter
-        extends BasePresenter<DynamicTablePresenter.IDynaimcTableView, EditorEventBus>
-        implements ElementPresenter {
+    extends BasePresenter<DynamicTablePresenter.IDynaimcTableView, EditorEventBus>
+    implements ElementPresenter {
 
     private DynamicTableElement table;
     private TextButton saveButton;
@@ -50,24 +50,24 @@ public class DynamicTablePresenter
                 }
                 if (getDataFunction == null || getDataFunction.isEmpty()) {
                     errorText +=
-                            EditorMessage.Util.MESSAGE.error_dynamic_table_empty_data() + "<br/>";
+                        EditorMessage.Util.MESSAGE.error_dynamic_table_empty_data() + "<br/>";
                 }
                 if (getDataFunction != null && !getDataFunction.isEmpty()
-                        && (!getDataFunction.contains(":data_config")
-                        || !getDataFunction.contains(":data_count"))) {
+                    && (!getDataFunction.contains(":data_config")
+                    || !getDataFunction.contains(":data_count"))) {
                     errorText +=
-                            EditorMessage.Util.MESSAGE.error_dynamic_table_get_data() + "<br/>";
+                        EditorMessage.Util.MESSAGE.error_dynamic_table_get_data() + "<br/>";
                 }
                 if (insertFunction != null && !insertFunction.isEmpty()
-                        && !insertFunction.contains(":insert_config")) {
+                    && !insertFunction.contains(":insert_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_insert() + "<br/>";
                 }
                 if (updateFunction != null && !updateFunction.isEmpty()
-                        && !updateFunction.contains(":update_config")) {
+                    && !updateFunction.contains(":update_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_update() + "<br/>";
                 }
                 if (deleteFunction != null && !deleteFunction.isEmpty()
-                        && !deleteFunction.contains(":delete_config")) {
+                    && !deleteFunction.contains(":delete_config")) {
                     errorText += EditorMessage.Util.MESSAGE.error_dynamic_table_delete() + "<br/>";
                 }
 
@@ -88,7 +88,7 @@ public class DynamicTablePresenter
                 eventBus.syncServerApplication();
 
                 InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.info_table_saved());
+                    EditorMessage.Util.MESSAGE.info_table_saved());
             }
         });
         panel.addButton(saveButton);
@@ -144,7 +144,7 @@ public class DynamicTablePresenter
     }
 
     public interface IDynaimcTableView
-            extends ReverseViewInterface<DynamicTablePresenter>, IsWidget {
+        extends ReverseViewInterface<DynamicTablePresenter>, IsWidget {
 
         PropertyValue getTableTitle();
 

@@ -16,9 +16,9 @@ public abstract class ComparableTreeView extends TreeView<AbstractElement> {
                                 TreeViewRenderMode renderMode) {
         SafeHtmlBuilder sb = new SafeHtmlBuilder();
         tree.getAppearance()
-                .renderNode(sb, id, text, tree.getStyle(), icon, isCheckable(m, checkable), checked,
-                        joint,
-                        level, renderMode);
+            .renderNode(sb, id, text, tree.getStyle(), icon, isCheckable(m, checkable), checked,
+                joint,
+                level, renderMode);
         return sb.toSafeHtml();
     }
 

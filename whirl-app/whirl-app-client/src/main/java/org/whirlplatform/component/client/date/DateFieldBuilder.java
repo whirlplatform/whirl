@@ -33,7 +33,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  */
 @JsType(name = "DateField", namespace = "Whirl")
 public class DateFieldBuilder extends AbstractFieldBuilder
-        implements NativeParameter<Date>, Parameter<DataValue> {
+    implements NativeParameter<Date>, Parameter<DataValue> {
 
     private DateField field;
     private String datePattern;
@@ -315,7 +315,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder
             if (field.getCell().getInputElement(field.getElement()).isOrHasChild(element)) {
                 result.setPart(new Locator(DateFieldBuilder.LocatorParams.TYPE_INPUT));
             } else if (field.getCell().getAppearance()
-                    .triggerIsOrHasChild(field.getElement(), element)) {
+                .triggerIsOrHasChild(field.getElement(), element)) {
                 result.setPart(new Locator(DateFieldBuilder.LocatorParams.TYPE_TRIGGER));
             }
         }
@@ -338,9 +338,9 @@ public class DateFieldBuilder extends AbstractFieldBuilder
                 TriggerFieldAppearance appearance = field.getCell().getAppearance();
                 if (appearance instanceof TriggerFieldDefaultAppearance) {
                     TriggerFieldDefaultAppearance defApp =
-                            (TriggerFieldDefaultAppearance) appearance;
+                        (TriggerFieldDefaultAppearance) appearance;
                     element = field.getElement()
-                            .selectNode("." + defApp.getStyle().trigger()); //TODO что-то придумать
+                        .selectNode("." + defApp.getStyle().trigger()); //TODO что-то придумать
                 }
             }
         }
@@ -468,7 +468,7 @@ public class DateFieldBuilder extends AbstractFieldBuilder
     }
 
     private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
-        private static String TYPE_TRIGGER = "Trigger";
+        private static final String TYPE_INPUT = "Input";
+        private static final String TYPE_TRIGGER = "Trigger";
     }
 }

@@ -39,32 +39,32 @@ public abstract class TreeBuilderOverlay {
 
     public abstract void isHidden();
 
-////    @Deprecated
-//    public abstract RowListValue getFieldValue();
-//
-////    @Deprecated
-//    public abstract void setFieldValue(RowListValue value);
-//
-////    public static RowListValue getDataValue(TreeBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(TreeBuilder instance, RowListValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    @Deprecated
+    //    public abstract RowListValue getFieldValue();
+    //
+    //    @Deprecated
+    //    public abstract void setFieldValue(RowListValue value);
+    //
+    //    public static RowListValue getDataValue(TreeBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(TreeBuilder instance, RowListValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     public abstract void setStyleName(String styleName);
 
-//    @Deprecated
-////    public static void loadParameters(TreeBuilder instance,
-//                                      DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
-//
-////    public static void loadWithParameters(TreeBuilder instance,
-//                                          DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
+    //    @Deprecated
+    //    public static void loadParameters(TreeBuilder instance,
+    //                                      DataValue[] parameters) {
+    //        instance.load(Arrays.asList(parameters));
+    //    }
+    //
+    //    public static void loadWithParameters(TreeBuilder instance,
+    //                                          DataValue[] parameters) {
+    //        instance.load(Arrays.asList(parameters));
+    //    }
 
     public abstract void load();
 
@@ -78,9 +78,9 @@ public abstract class TreeBuilderOverlay {
      */
     public abstract boolean isValid(boolean invalidate);
 
-//    /**
-//     * Очищает фильтр поиска по тексту.
-//     */
-////    public abstract void clearLabelFilter();
+    //    /**
+    //     * Очищает фильтр поиска по тексту.
+    //     */
+    //    public abstract void clearLabelFilter();
 
 }

@@ -23,8 +23,8 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
     @Override
     public void bind() {
         List<ComponentType> types = Arrays.stream(ComponentType.values())
-                .filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v))
-                .collect(Collectors.toList());
+            .filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v))
+            .collect(Collectors.toList());
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
             initDND(c, t);

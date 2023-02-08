@@ -60,7 +60,7 @@ public class JaversDiffTest {
 
     private ApplicationElement load(String file) throws MetadataStoreException, IOException {
         return metadata.deserialize(
-                IOUtils.toString(JaversDiffTest.class.getResourceAsStream(file)));
+            IOUtils.toString(JaversDiffTest.class.getResourceAsStream(file)));
     }
 
     private ApplicationElement base() throws MetadataStoreException, IOException {
@@ -104,7 +104,7 @@ public class JaversDiffTest {
 
         // изменение права на событии
         checkDiff(load("event-add-right.xml"), load("event-change-right.xml"),
-                load("event-add-right.xml"), 1);
+            load("event-add-right.xml"), 1);
 
     }
 

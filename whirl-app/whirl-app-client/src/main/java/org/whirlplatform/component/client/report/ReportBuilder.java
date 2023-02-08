@@ -39,7 +39,7 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
  * Построитель формы ввода параметров для отчёта.
  */
 public class ReportBuilder extends ComponentBuilder implements
-        HasCreateParameters {
+    HasCreateParameters {
 
     private static final String STORAGE_PREFIX = "report-params-";
 
@@ -101,7 +101,7 @@ public class ReportBuilder extends ComponentBuilder implements
                 paramValues = new HashMap<FieldMetadata, DataValue>();
                 for (FieldMetadata f : result) {
                     DataValue value = values == null ? null : values.get(f
-                            .getName());
+                        .getName());
                     paramValues.put(f, value);
                 }
                 processRptParams();
@@ -118,13 +118,13 @@ public class ReportBuilder extends ComponentBuilder implements
     private void processRptParams() {
         if (showReportParams) {
             List<FieldMetadata> fieldDataList = new ArrayList<FieldMetadata>(
-                    paramValues.keySet());
+                paramValues.keySet());
 
             panel = new FieldFormPanel(fieldDataList);
 
             if (startParameters.isEmpty()) {
                 for (Entry<FieldMetadata, DataValue> entry : paramValues
-                        .entrySet()) {
+                    .entrySet()) {
                     panel.setValue(entry.getKey(), entry.getValue());
                 }
             } else {
@@ -140,9 +140,9 @@ public class ReportBuilder extends ComponentBuilder implements
             ButtonBar buttonBar = new ButtonBar();
             buildButtons(buttonBar);
             container.add(panel, new VerticalLayoutData(1, 1, new Margins(5, 5,
-                    5, 5)));
+                5, 5)));
             container.add(buttonBar, new VerticalLayoutData(1, -1, new Margins(
-                    10, 15, 0, 0)));
+                10, 15, 0, 0)));
         } else {
             Map<String, DataValue> values = new HashMap<String, DataValue>();
             for (DataValue param : startParameters) {
@@ -154,7 +154,7 @@ public class ReportBuilder extends ComponentBuilder implements
 
     protected void buildButtons(ButtonBar buttonBar) {
         TextButton showRptBtn = new TextButton(
-                AppMessage.Util.MESSAGE.report_makeHTML());
+            AppMessage.Util.MESSAGE.report_makeHTML());
         showRptBtn.addSelectHandler(new SelectHandler() {
 
             @Override
@@ -164,7 +164,7 @@ public class ReportBuilder extends ComponentBuilder implements
         });
 
         TextButton showRptBtnExcel = new TextButton(
-                AppMessage.Util.MESSAGE.report_makeXLSX());
+            AppMessage.Util.MESSAGE.report_makeXLSX());
         showRptBtnExcel.addSelectHandler(new SelectHandler() {
 
             @Override
@@ -174,7 +174,7 @@ public class ReportBuilder extends ComponentBuilder implements
         });
 
         TextButton showRptBtnExcel2000 = new TextButton(
-                AppMessage.Util.MESSAGE.report_makeXLS());
+            AppMessage.Util.MESSAGE.report_makeXLS());
         showRptBtnExcel2000.addSelectHandler(new SelectHandler() {
 
             @Override
@@ -184,7 +184,7 @@ public class ReportBuilder extends ComponentBuilder implements
         });
 
         TextButton showRptBtnCsv = new TextButton(
-                AppMessage.Util.MESSAGE.report_makeCSV());
+            AppMessage.Util.MESSAGE.report_makeCSV());
         showRptBtnCsv.addSelectHandler(new SelectHandler() {
 
             @Override
@@ -238,29 +238,29 @@ public class ReportBuilder extends ComponentBuilder implements
             }
         };
         DataServiceAsync.Util.getDataService(callback).saveReportValues(SessionToken.get(),
-                getId(), values);
+            getId(), values);
     }
 
     private void showReport(String rptFormat) {
         StringBuilder str = new StringBuilder(GWT.getHostPageBaseURL()
-                + "report?format=" + rptFormat + "&rpt=" + getId() + "&dpih="
-                + DPIHelper.getHorizontalDPI() + "&dpiv="
-                + DPIHelper.getVerticalDPI() + "&" + AppConstant.TOKEN_ID + "="
-                + SessionToken.get().getTokenId());
+            + "report?format=" + rptFormat + "&rpt=" + getId() + "&dpih="
+            + DPIHelper.getHorizontalDPI() + "&dpiv="
+            + DPIHelper.getVerticalDPI() + "&" + AppConstant.TOKEN_ID + "="
+            + SessionToken.get().getTokenId());
         if (rptFormat.equalsIgnoreCase(AppConstant.REPORT_FORMAT_HTML)) {
             com.google.gwt.user.client.Window.open(str.toString(), "SubWindow"
-                            + Math.abs(Random.nextInt()),
-                    "menubar,resizable,scrollbars,status");
+                    + Math.abs(Random.nextInt()),
+                "menubar,resizable,scrollbars,status");
         } else {
             com.google.gwt.user.client.Window.open(str.toString(), "_blank",
-                    null);
+                null);
         }
     }
 
     @Override
     public boolean setProperty(String name, DataValue value) {
         if (name.equalsIgnoreCase(PropertyType.ShowReportParams.getCode())
-                && value != null && value.getBoolean() != null) {
+            && value != null && value.getBoolean() != null) {
             showReportParams = value.getBoolean();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ReportFormat.getCode())) {

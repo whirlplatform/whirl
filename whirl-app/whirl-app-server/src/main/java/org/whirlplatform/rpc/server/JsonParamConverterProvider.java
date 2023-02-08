@@ -41,36 +41,36 @@ public class JsonParamConverterProvider implements ParamConverterProvider {
     public <T> ParamConverter<T> getConverter(final Class<T> rawType, final Type genericType,
                                               final Annotation[] annotations) {
         ParamConverter<T> defaultConverter =
-                defaultProvider.getConverter(rawType, genericType, annotations);
+            defaultProvider.getConverter(rawType, genericType, annotations);
         if (defaultConverter != null && !ClassMetadata.class.equals(rawType)) {
             return defaultConverter;
         }
 
         // Check whether we can convert the given type with Jackson.
         final MessageBodyReader<T> mbr =
-                providers.getMessageBodyReader(rawType, genericType, annotations,
-                        MediaType.APPLICATION_JSON_TYPE);
+            providers.getMessageBodyReader(rawType, genericType, annotations,
+                MediaType.APPLICATION_JSON_TYPE);
         if (mbr == null || !mbr.isReadable(rawType, genericType, annotations,
-                MediaType.APPLICATION_JSON_TYPE)) {
+            MediaType.APPLICATION_JSON_TYPE)) {
             return null;
         }
 
         // Obtain custom ObjectMapper for special handling.
         final ContextResolver<ObjectMapper> contextResolver =
-                providers.getContextResolver(ObjectMapper.class,
-                        MediaType.APPLICATION_JSON_TYPE);
+            providers.getContextResolver(ObjectMapper.class,
+                MediaType.APPLICATION_JSON_TYPE);
 
         final ObjectMapper mapper =
-                contextResolver != null ? contextResolver.getContext(rawType) : new ObjectMapper();
+            contextResolver != null ? contextResolver.getContext(rawType) : new ObjectMapper();
         final JavaType mapType;
         if (Map.class.isAssignableFrom(rawType) && genericType instanceof ParameterizedType) {
             Type[] t = ((ParameterizedType) genericType).getActualTypeArguments();
             mapType = mapper.getTypeFactory()
-                    .constructMapType((Class<? extends Map>) rawType, (Class) t[0],
-                            (Class) t[1]);
+                .constructMapType((Class<? extends Map>) rawType, (Class) t[0],
+                    (Class) t[1]);
 
         } else if (ListHolder.class.isAssignableFrom(rawType)
-                && genericType instanceof ParameterizedType) {
+            && genericType instanceof ParameterizedType) {
             Type[] t = ((ParameterizedType) genericType).getActualTypeArguments();
             mapType = mapper.getTypeFactory().constructParametricType(rawType, (Class) t[0]);
         } else {

@@ -57,10 +57,9 @@ public interface AppMessage extends Messages {
     // allerts
     String alert();
 
-    
     String alert_notAllFieldsIsFill();
 
-    String alert_notAllRequiredFieldsIsFill();////
+    String alert_notAllRequiredFieldsIsFill();
 
     String alert_sessionExpired();
 

@@ -19,7 +19,6 @@ import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.form.Radio;
 import com.sencha.gxt.widget.core.client.form.error.SideErrorHandler;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
@@ -61,7 +60,7 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
  */
 @JsType(name = "RadioGroup", namespace = "Whirl")
 public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
-        Validatable, ListParameter<RowListValue>, SelectEvent.HasSelectHandlers, HasState {
+    Validatable, ListParameter<RowListValue>, SelectEvent.HasSelectHandlers, HasState {
 
     protected StorageWrapper<RowListValue> stateStore;
     protected StateStore<RowListValue> selectionStateStore;
@@ -79,14 +78,14 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private String checkedIds;
     private boolean required = false;
     private ClassStore<ListModelData, ClassLoadConfig> store;
+    private final LoadHandler<ClassLoadConfig, LoadData<ListModelData>> loadHandler =
+        new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+            @Override
+            public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                rebuild();
+            }
+        };
     private ParameterHelper paramHelper;
-    private LoadHandler<ClassLoadConfig, LoadData<ListModelData>> loadHandler =
-            new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
-                @Override
-                public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
-                    rebuild();
-                }
-            };
 
     @JsConstructor
     public RadioGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -210,7 +209,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void setDataSourceId(String dataSourceId) {
         metadata = new ClassMetadata(dataSourceId);
         selectionStateStore =
-                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
     }
 
     /**
@@ -218,7 +217,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
      */
     private void loadData() {
         store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-                new ListClassProxy(metadata));
+            new ListClassProxy(metadata));
         store.getLoader().addLoadHandler(loadHandler);
 
         store.getLoader().load(getLoadConfig());
@@ -230,7 +229,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private void rebuild() {
         for (int i = 0; i < store.size(); i++) {
             Radio radio = new Radio();
-            radio.setBoxLabel((String) store.get(i).getLabel());
+            radio.setBoxLabel(store.get(i).getLabel());
 
             radio.setData(LocatorParams.DATA_PARAM_ID, store.get(i).getId());
             layout.add(radio);
@@ -377,7 +376,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     @Override
     public void markInvalid(String msg) {
         EditorError error = new SimpleEditorError(msg);
-        errorHandler.markInvalid(Arrays.asList(error));
+        errorHandler.markInvalid(Collections.singletonList(error));
     }
 
     /**
@@ -453,7 +452,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore =
-                    new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }
@@ -475,7 +474,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     @Override
     public HandlerRegistration addSelectHandler(SelectEvent.SelectHandler handler) {
         return addHandler(handler,
-                SelectEvent.getType());
+            SelectEvent.getType());
     }
 
 
@@ -492,7 +491,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                 if (item.getElement().isOrHasChild(element)) {
                     Locator part = new Locator(LocatorParams.TYPE_ITEM);
                     part.setParameter(LocatorParams.PARAMETER_ID,
-                            String.valueOf(item.getData(LocatorParams.DATA_PARAM_ID)));
+                        String.valueOf(item.getData(LocatorParams.DATA_PARAM_ID)));
                     part.setParameter(LocatorParams.PARAMETER_LABEL, item.getBoxLabel().asString());
                     part.setParameter(LocatorParams.PARAMETER_INDEX, String.valueOf(idx));
                     locator.setPart(part);
@@ -519,10 +518,10 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                     found = finder.findById(id);
                 } else if (part.hasParameter(LocatorParams.PARAMETER_INDEX)) {
                     int index =
-                            Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX));
+                        Integer.parseInt(locator.getParameter(LocatorParams.PARAMETER_INDEX));
                     found = finder.findByIndex(index);
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
-                        && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
+                    && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     String label = part.getParameter(LocatorParams.PARAMETER_LABEL);
                     found = finder.findByLabel(label);
                 }
@@ -585,13 +584,13 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
 
     private static class LocatorParams {
 
-        private static String PARAMETER_ID = "id";
-        private static String PARAMETER_LABEL = "label";
-        private static String PARAMETER_INDEX = "index";
+        private static final String PARAMETER_ID = "id";
+        private static final String PARAMETER_LABEL = "label";
+        private static final String PARAMETER_INDEX = "index";
 
-        private static String TYPE_ITEM = "Item";
+        private static final String TYPE_ITEM = "Item";
 
-        private static String DATA_PARAM_ID = "Id";
+        private static final String DATA_PARAM_ID = "Id";
     }
 
     private class RadioItemFinder {
@@ -635,7 +634,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
                 HasValue<Boolean> o = iter.next();
                 Radio item = (Radio) o;
                 String itemLabel = String.valueOf(item.getBoxLabel());
-                if (itemLabel != null && label.equalsIgnoreCase(itemLabel)) {
+                if (label.equalsIgnoreCase(itemLabel)) {
                     return item;
                 }
             }

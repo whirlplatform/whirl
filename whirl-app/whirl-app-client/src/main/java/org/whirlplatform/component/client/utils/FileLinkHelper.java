@@ -13,8 +13,8 @@ public class FileLinkHelper {
         String classListParam = AppConstant.TABLE_ID + "=" + tableId;
         String objParem = AppConstant.ID + "=" + rowId;
         return GWT.getHostPageBaseURL() + "file?" + fileTypeParam + "&"
-                + nameParam + "&" + classListParam + "&" + objParem + "&"
-                + AppConstant.TOKEN_ID + "=" + SessionToken.get().getTokenId();
+            + nameParam + "&" + classListParam + "&" + objParem + "&"
+            + AppConstant.TOKEN_ID + "=" + SessionToken.get().getTokenId();
     }
 
     public static String getTableFileLinkByCode(String tableCode,
@@ -24,8 +24,8 @@ public class FileLinkHelper {
         String classListParam = AppConstant.TABOLE_CODE + "=" + tableCode;
         String objParem = AppConstant.ID + "=" + rowId;
         return GWT.getHostPageBaseURL() + "file?" + fileTypeParam + "&"
-                + nameParam + "&" + classListParam + "&" + objParem + "&"
-                + AppConstant.TOKEN_ID + "=" + SessionToken.get().getTokenId();
+            + nameParam + "&" + classListParam + "&" + objParem + "&"
+            + AppConstant.TOKEN_ID + "=" + SessionToken.get().getTokenId();
     }
 
 }

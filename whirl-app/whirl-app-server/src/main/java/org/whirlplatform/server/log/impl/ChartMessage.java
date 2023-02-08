@@ -19,7 +19,7 @@ public class ChartMessage extends AbstractMessage {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"type\": \"chart\", \"chartId\": \"").append(chartId).append("\", ");
         builder.append("\"chartName\": \"").append(chartName.replaceAll("\"", "\\\""))
-                .append("\", ");
+            .append("\", ");
         builder.append("\"params\": ").append("}");
 
         return getFullLogMessage(builder.toString());

@@ -39,7 +39,7 @@ public class CompareApplicationsView extends Window implements ICompareApplicati
 
     private static final String MERGING = EditorMessage.Util.MESSAGE.action_merge_selection();
     private static final String COMPARING =
-            EditorMessage.Util.MESSAGE.action_compare_applications();
+        EditorMessage.Util.MESSAGE.action_compare_applications();
     private static final String EXIT_BUTTON = EditorMessage.Util.MESSAGE.exit();
     private static final String APPLY_BUTTON = EditorMessage.Util.MESSAGE.apply();
     private static final String APPLY_TITLE = EditorMessage.Util.MESSAGE.compare_apps_apply_title();
@@ -199,7 +199,7 @@ public class CompareApplicationsView extends Window implements ICompareApplicati
 
     private void changeMergeButtonState() {
         if (leftTree.getCheckedSelection().size() > 0
-                || rightTree.getCheckedSelection().size() > 0) {
+            || rightTree.getCheckedSelection().size() > 0) {
             mergeButton.setEnabled(true);
         } else {
             mergeButton.setEnabled(false);

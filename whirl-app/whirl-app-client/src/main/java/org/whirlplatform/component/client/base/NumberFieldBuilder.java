@@ -29,7 +29,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  */
 @JsType(name = "NumberField", namespace = "Whirl")
 public class NumberFieldBuilder extends AbstractFieldBuilder
-        implements NativeParameter<Double>, Parameter<DataValue> {
+    implements NativeParameter<Double>, Parameter<DataValue> {
 
     private NumberField<Double> field;
     // private MaxLengthValidator maxLengthValidator;
@@ -392,6 +392,6 @@ public class NumberFieldBuilder extends AbstractFieldBuilder
     }
 
     private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
+        private static final String TYPE_INPUT = "Input";
     }
 }

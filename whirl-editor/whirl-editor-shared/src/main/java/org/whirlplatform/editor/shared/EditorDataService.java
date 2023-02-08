@@ -32,15 +32,15 @@ public interface EditorDataService extends RemoteService {
     SaveResult saveApplicationAs(SaveData saveData, Version oldVersion) throws RPCException;
 
     SaveResult syncServerApplication(ApplicationElement application, Version version)
-            throws RPCException;
+        throws RPCException;
 
     SaveResult loadServerApplication() throws RPCException;
 
     <T extends AbstractElement> T newElement(AbstractElement parent, AbstractElement element)
-            throws RPCException;
+        throws RPCException;
 
     Collection<RowModelData> getTableImportList(DataSourceElement datasource, SchemaElement schema)
-            throws RPCException;
+        throws RPCException;
 
     Collection<PlainTableElement> importTables(DataSourceElement datasource, SchemaElement schema,
                                                Collection<RowModelData> models) throws RPCException;
@@ -52,7 +52,7 @@ public interface EditorDataService extends RemoteService {
     void createPackage(ApplicationStoreData data) throws RPCException;
 
     ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData right)
-            throws RPCException;
+        throws RPCException;
 
     ApplicationsDiff diff(ApplicationElement left, ApplicationElement right) throws RPCException;
 

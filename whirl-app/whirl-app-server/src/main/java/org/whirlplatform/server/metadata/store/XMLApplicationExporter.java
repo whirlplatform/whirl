@@ -81,7 +81,7 @@ public class XMLApplicationExporter {
         applicationEl.addAttribute("id", application.getId());
         applicationEl.addAttribute("name", application.getName());
         applicationEl.addAttribute("metaversion",
-                String.valueOf(MetadataSerializer.CURRENT_VERSION));
+            String.valueOf(MetadataSerializer.CURRENT_VERSION));
 
         Element propertiesEl = applicationEl.addElement("properties");
 
@@ -620,8 +620,8 @@ public class XMLApplicationExporter {
                 parameter.addAttribute("name", param.getName());
                 parameter.addAttribute("type", param.getType().toString());
                 parameter.addAttribute("componentId",
-                        param.getComponent() == null ? param.getComponentId() :
-                                param.getComponent().getId());
+                    param.getComponent() == null ? param.getComponentId() :
+                        param.getComponent().getId());
                 parameter.addAttribute("componentName", param.getComponentCode());
                 parameter.addAttribute("storageCode", param.getStorageCode());
                 if (type != null) {

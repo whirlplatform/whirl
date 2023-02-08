@@ -61,7 +61,7 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
     private void initGrid() {
         IdentityValueProvider<FieldMetadata> identity = new IdentityValueProvider<FieldMetadata>();
         CheckBoxSelectionModel<FieldMetadata> sm =
-                new CheckBoxSelectionModel<FieldMetadata>(identity);
+            new CheckBoxSelectionModel<FieldMetadata>(identity);
         sm.setSelectionMode(SelectionMode.SINGLE);
         // sm.addSelectionHandler(new SelectionHandler<RowColModel>() {
         // @Override
@@ -102,22 +102,22 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
         // };
 
         ValueProvider<FieldMetadata, String> labelProvider =
-                new ValueProvider<FieldMetadata, String>() {
+            new ValueProvider<FieldMetadata, String>() {
 
-                    @Override
-                    public String getValue(FieldMetadata object) {
-                        return object.getRawLabel();
-                    }
+                @Override
+                public String getValue(FieldMetadata object) {
+                    return object.getRawLabel();
+                }
 
-                    @Override
-                    public void setValue(FieldMetadata object, String value) {
-                    }
+                @Override
+                public void setValue(FieldMetadata object, String value) {
+                }
 
-                    @Override
-                    public String getPath() {
-                        return "name";
-                    }
-                };
+                @Override
+                public String getPath() {
+                    return "name";
+                }
+            };
 
         FieldProperties props = GWT.create(FieldProperties.class);
 
@@ -125,8 +125,8 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
         // ColumnConfig<FieldMetadata, ListModelData>(
         // classIdProvider, 100, "Мастер-таблица");
         ColumnConfig<FieldMetadata, String> classIdColumn =
-                new ColumnConfig<FieldMetadata, String>(props.classId(),
-                        100, EditorMessage.Util.MESSAGE.property_report_master_table());
+            new ColumnConfig<FieldMetadata, String>(props.classId(),
+                100, EditorMessage.Util.MESSAGE.property_report_master_table());
 
         // TODO: Доделать
         // classIdColumn.setCell(new AbstractCell<ListModelData>() {
@@ -145,29 +145,29 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
         // });
 
         ColumnConfig<FieldMetadata, DataType> typeColumn =
-                new ColumnConfig<FieldMetadata, DataType>(props.type(), 100,
-                        EditorMessage.Util.MESSAGE.property_report_field_type());
+            new ColumnConfig<FieldMetadata, DataType>(props.type(), 100,
+                EditorMessage.Util.MESSAGE.property_report_field_type());
 
         ColumnConfig<FieldMetadata, Boolean> requiredColumn =
-                new ColumnConfig<FieldMetadata, Boolean>(props.required(),
-                        100, EditorMessage.Util.MESSAGE.property_report_required());
+            new ColumnConfig<FieldMetadata, Boolean>(props.required(),
+                100, EditorMessage.Util.MESSAGE.property_report_required());
         requiredColumn.setCell(new CheckBoxCell());
 
         ColumnConfig<FieldMetadata, String> nameColumn =
-                new ColumnConfig<FieldMetadata, String>(labelProvider, 100,
-                        EditorMessage.Util.MESSAGE.property_report_field_name());
+            new ColumnConfig<FieldMetadata, String>(labelProvider, 100,
+                EditorMessage.Util.MESSAGE.property_report_field_name());
 
         ColumnConfig<FieldMetadata, String> eNameColumn =
-                new ColumnConfig<FieldMetadata, String>(props.name(), 100,
-                        EditorMessage.Util.MESSAGE.property_report_field_code());
+            new ColumnConfig<FieldMetadata, String>(props.name(), 100,
+                EditorMessage.Util.MESSAGE.property_report_field_code());
 
         ColumnConfig<FieldMetadata, ListViewType> viewTypeColumn =
-                new ColumnConfig<FieldMetadata, ListViewType>(
-                        props.listViewType(), 100,
-                        EditorMessage.Util.MESSAGE.property_report_list_view_type());
+            new ColumnConfig<FieldMetadata, ListViewType>(
+                props.listViewType(), 100,
+                EditorMessage.Util.MESSAGE.property_report_list_view_type());
 
         List<ColumnConfig<FieldMetadata, ?>> columns =
-                new ArrayList<ColumnConfig<FieldMetadata, ?>>();
+            new ArrayList<ColumnConfig<FieldMetadata, ?>>();
         columns.add(nameColumn);
         columns.add(eNameColumn);
         columns.add(typeColumn);
@@ -188,7 +188,7 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
         // new NumberPropertyEditor.IntegerPropertyEditor(null)));
         editing.addEditor(classIdColumn, new TextField());
         SimpleComboBox<DataType> typeCombo =
-                new SimpleComboBox<DataType>(new StringLabelProvider());
+            new SimpleComboBox<DataType>(new StringLabelProvider());
         typeCombo.setTriggerAction(TriggerAction.ALL);
         typeCombo.setEditable(false);
         typeCombo.add(Arrays.asList(DataType.values()));
@@ -199,7 +199,7 @@ public class PropertyReportView extends ContentPanel implements IPropertyReportV
         editing.addEditor(requiredColumn, new CheckBox());
 
         SimpleComboBox<ListViewType> viewTypeCombo =
-                new SimpleComboBox<ListViewType>(new StringLabelProvider());
+            new SimpleComboBox<ListViewType>(new StringLabelProvider());
         viewTypeCombo.setTriggerAction(TriggerAction.ALL);
         viewTypeCombo.setEditable(false);
         viewTypeCombo.add(Arrays.asList(ListViewType.values()));

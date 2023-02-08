@@ -12,7 +12,7 @@ public class NamedParamStatement extends NamedParamResolver {
     PreparedStatement stmt;
 
     public NamedParamStatement(DBDatabaseDriver driver, Connection conn, String sql)
-            throws SQLException {
+        throws SQLException {
         super(driver, sql);
         stmt = conn.prepareStatement(getResultSql());
     }

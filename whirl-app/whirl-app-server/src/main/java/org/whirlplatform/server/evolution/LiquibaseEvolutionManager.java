@@ -34,7 +34,7 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
 
     @Override
     public void applyApplicationEvolution(String alias, String scriptPath)
-            throws EvolutionException {
+        throws EvolutionException {
         applyEvolution(alias, scriptPath, new FileSystemResourceAccessor());
     }
 
@@ -44,19 +44,19 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     }
 
     private void applyEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
-            throws EvolutionException {
+        throws EvolutionException {
         Boolean applyEvolutions = configuration.<Boolean>lookup("Whirl/ds/" + alias
-                + "/evolutions/enabled");
+            + "/evolutions/enabled");
         if (applyEvolutions == null || !applyEvolutions) {
             return;
         }
 
         try (ConnectionWrapper connection = connectionProvider.getConnection(alias)) {
             Database database = DatabaseFactory.getInstance()
-                    .findCorrectDatabaseImplementation(new JdbcConnection(connection));
+                .findCorrectDatabaseImplementation(new JdbcConnection(connection));
 
             Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
-                    database);
+                database);
 
             liquibase.update(null, new LabelExpression());
         } catch (LiquibaseException | SQLException | ConnectException e) {

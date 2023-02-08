@@ -13,14 +13,14 @@ public class SQLConditionTest {
         SQLCondition origin = new SQLCondition();
         origin.setValue(ORIGIN_VALUE);
         Assert.assertEquals("SQLCondition origin value was not set", ORIGIN_VALUE,
-                origin.getValue());
+            origin.getValue());
         SQLCondition clone = origin.clone();
         Assert.assertEquals("SQLCondition clone value was not copied", ORIGIN_VALUE,
-                clone.getValue());
+            clone.getValue());
         clone.setValue(CLONE_VALUE);
         Assert.assertEquals("SQLCondition clone value was not set", CLONE_VALUE, clone.getValue());
         Assert.assertEquals("SQLCondition origin value depends on clone value", ORIGIN_VALUE,
-                origin.getValue());
+            origin.getValue());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class SQLConditionTest {
         SQLCondition clone = new SQLCondition();
         clone.setValue(CLONE_VALUE);
         Assert.assertEquals("Conditions with the same value do not equal to each other", origin,
-                origin2);
+            origin2);
         Assert.assertNotEquals("Conditions have the same value", origin, clone);
         Assert.assertNotEquals("Conditions have the same value", origin2, clone);
     }

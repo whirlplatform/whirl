@@ -71,10 +71,10 @@ public class TypesUtil {
         if (sqlType == Types.TIMESTAMP || sqlType == Types.DATE) {
             result = org.apache.empire.data.DataType.DATETIME;
         } else if (sqlType == Types.DOUBLE || sqlType == Types.NUMERIC
-                || sqlType == Types.REAL || sqlType == Types.FLOAT
-                || sqlType == Types.DECIMAL || sqlType == Types.TINYINT
-                || sqlType == Types.BIGINT || sqlType == Types.INTEGER
-                || sqlType == Types.SMALLINT) {
+            || sqlType == Types.REAL || sqlType == Types.FLOAT
+            || sqlType == Types.DECIMAL || sqlType == Types.TINYINT
+            || sqlType == Types.BIGINT || sqlType == Types.INTEGER
+            || sqlType == Types.SMALLINT) {
             result = org.apache.empire.data.DataType.DECIMAL;
         } else if (sqlType == Types.CLOB) {
             result = org.apache.empire.data.DataType.CLOB;

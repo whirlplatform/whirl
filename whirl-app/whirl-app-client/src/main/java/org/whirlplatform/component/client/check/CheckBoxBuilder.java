@@ -34,8 +34,8 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  */
 @JsType(namespace = "Whirl", name = "CheckBox")
 public class CheckBoxBuilder extends AbstractFieldBuilder
-        implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, NativeParameter<Boolean>,
-        Parameter<DataValue> {
+    implements Clearable, Validatable, ChangeEvent.HasChangeHandlers, NativeParameter<Boolean>,
+    Parameter<DataValue> {
 
     private CheckBox checkBox;
 
@@ -72,7 +72,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
                                        Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
                 if (isReadOnly()
-                        && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                    && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -185,8 +185,8 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
      */
     public void markInvalid(String msg) {
         checkBox.getErrorSupport().markInvalid(
-                Collections.singletonList(
-                        new DefaultEditorError(checkBox, msg, checkBox.getValue())));
+            Collections.singletonList(
+                new DefaultEditorError(checkBox, msg, checkBox.getValue())));
     }
 
     /**
@@ -279,7 +279,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator) && locator.getPart() != null
-                && LocatorParams.TYPE_INPUT.equals(locator.getPart().getType())) {
+            && LocatorParams.TYPE_INPUT.equals(locator.getPart().getType())) {
             return checkBox.getCell().getInputElement(getWrapper().getElement());
         }
         return null;
@@ -380,7 +380,7 @@ public class CheckBoxBuilder extends AbstractFieldBuilder
 
     private static class LocatorParams {
 
-        private static String TYPE_INPUT = "Input";
+        private static final String TYPE_INPUT = "Input";
 
     }
 

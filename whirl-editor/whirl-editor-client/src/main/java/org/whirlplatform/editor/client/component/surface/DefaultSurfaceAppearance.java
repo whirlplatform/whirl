@@ -15,7 +15,7 @@ public class DefaultSurfaceAppearance implements SurfaceAppearance {
 
     public DefaultSurfaceAppearance() {
         this(
-                GWT.<DefaultSurfaceResources>create(DefaultSurfaceResources.class));
+            GWT.<DefaultSurfaceResources>create(DefaultSurfaceResources.class));
     }
 
     public DefaultSurfaceAppearance(SurfaceResources resources) {
@@ -31,7 +31,7 @@ public class DefaultSurfaceAppearance implements SurfaceAppearance {
     }
 
     public interface DefaultSurfaceResources extends SurfaceResources,
-            ClientBundle {
+        ClientBundle {
         @Source("Surface.gss")
         SurfaceStyle style();
     }

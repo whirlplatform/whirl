@@ -8,10 +8,10 @@ import java.util.List;
 
 @SuppressWarnings("checkstyle:typename")
 public class RowListValueImpl_CustomFieldSerializer
-        extends CustomFieldSerializer<RowListValueImpl> {
+    extends CustomFieldSerializer<RowListValueImpl> {
 
     public static void serialize(SerializationStreamWriter streamWriter, RowListValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         streamWriter.writeString(instance.getCode());
         streamWriter.writeObject(instance.getRowList());
         streamWriter.writeBoolean(instance.isCheckable());
@@ -20,7 +20,7 @@ public class RowListValueImpl_CustomFieldSerializer
     @SuppressWarnings("unchecked")
     public static void deserialize(SerializationStreamReader streamReader,
                                    RowListValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         instance.setCode(streamReader.readString());
         instance.setRowList((List<RowValue>) streamReader.readObject());
         instance.setCheckable(streamReader.readBoolean());
@@ -28,14 +28,14 @@ public class RowListValueImpl_CustomFieldSerializer
 
     @Override
     public void serializeInstance(SerializationStreamWriter streamWriter, RowListValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         serialize(streamWriter, instance);
     }
 
     @Override
     public void deserializeInstance(SerializationStreamReader streamReader,
                                     RowListValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         deserialize(streamReader, instance);
     }
 }

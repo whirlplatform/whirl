@@ -117,15 +117,15 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
             }
         }
         Map<String, DataValue> resultMap =
-                queryExecutor.executeQuery(eventElement.getSource(), paramMap);
+            queryExecutor.executeQuery(eventElement.getSource(), paramMap);
         DataValue queryResultColumn = resultMap.getOrDefault(AppConstant.WHIRL_RESULT,
-                resultMap.getOrDefault(AppConstant.WHIRL_RESULT.toLowerCase(), null));
+            resultMap.getOrDefault(AppConstant.WHIRL_RESULT.toLowerCase(), null));
 
         EventResult result;
         if (queryResultColumn != null) {
             if (!queryResultColumn.isTypeOf(DataType.STRING)) {
                 throw new CustomException(
-                        "Result column " + AppConstant.WHIRL_RESULT + " should be string type.");
+                    "Result column " + AppConstant.WHIRL_RESULT + " should be string type.");
             }
             result = parseEventResult(queryResultColumn.getString());
 

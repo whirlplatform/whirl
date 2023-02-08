@@ -19,10 +19,10 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 public class FieldFormWindow extends Window implements LocatorAware {
 
     private static final double MAX_HEIGHT_PERCENT = 0.85;
-    private FieldFormPanel fieldPanel;
+    private final FieldFormPanel fieldPanel;
+    private final TextButton saveBtn = new TextButton(AppMessage.Util.MESSAGE.save());
+    private final TextButton closeBtn = new TextButton(AppMessage.Util.MESSAGE.close());
     private String code;
-    private TextButton saveBtn = new TextButton(AppMessage.Util.MESSAGE.save());
-    private TextButton closeBtn = new TextButton(AppMessage.Util.MESSAGE.close());
 
     public FieldFormWindow(List<FieldMetadata> fields, boolean viewOnly, String code) {
         super();
@@ -44,7 +44,7 @@ public class FieldFormWindow extends Window implements LocatorAware {
             }
         });
         int height = getHeader().getOffsetHeight() + fieldPanel.getOffsetHeight()
-                + getButtonBar().getOffsetHeight();
+            + getButtonBar().getOffsetHeight();
         int maxHeight = (int) Math.round(RootPanel.get().getOffsetHeight() * MAX_HEIGHT_PERCENT);
         height = (maxHeight < height) ? height : maxHeight;
         setHeight(height);
@@ -138,7 +138,7 @@ public class FieldFormWindow extends Window implements LocatorAware {
 
     private boolean isAcceptable(final Locator locator) {
         if (locator == null || locator.getPart() == null
-                || !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
+            || !locator.hasParameter(LocatorParams.PARAMETER_CODE)) {
             return false;
         }
         boolean typeIsOk = locator.typeEquals(LocatorParams.TYPE_FIELD_FORM);

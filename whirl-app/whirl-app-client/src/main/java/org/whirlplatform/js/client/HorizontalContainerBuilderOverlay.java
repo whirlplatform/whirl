@@ -14,7 +14,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
 public abstract class HorizontalContainerBuilderOverlay {
 
     public static HorizontalContainerBuilder create(
-            HorizontalContainerBuilder instance) {
+        HorizontalContainerBuilder instance) {
         instance.create();
         return instance;
     }
@@ -28,20 +28,20 @@ public abstract class HorizontalContainerBuilderOverlay {
                                        int index, ComponentBuilder builder,
                                        HorizontalLayoutData data) {
         builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
-                new DataValueImpl(DataType.NUMBER, index));
+            new DataValueImpl(DataType.NUMBER, index));
         if (data != null) {
             builder.setProperty(PropertyType.LayoutDataWidth.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getWidth()));
+                new DataValueImpl(DataType.NUMBER, data.getWidth()));
             builder.setProperty(PropertyType.LayoutDataHeight.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getHeight()));
+                new DataValueImpl(DataType.NUMBER, data.getHeight()));
             builder.setProperty(PropertyType.LayoutDataMarginTop.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getTop()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getTop()));
             builder.setProperty(PropertyType.LayoutDataMarginRight.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getRight()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getRight()));
             builder.setProperty(PropertyType.LayoutDataMarginBottom.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getBottom()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getBottom()));
             builder.setProperty(PropertyType.LayoutDataMarginLeft.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getLeft()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getLeft()));
         }
         instance.addChild(builder);
     }

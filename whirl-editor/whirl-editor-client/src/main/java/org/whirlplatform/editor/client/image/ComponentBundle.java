@@ -10,8 +10,10 @@ public interface ComponentBundle extends ClientBundle {
 
     @Source("database.png")
     ImageResource helpDB();
+
     @Source("help.png")
     ImageResource helpJS();
+
     @Source("icon_selection.png")
     ImageResource iconSelection();
 
@@ -142,7 +144,7 @@ public interface ComponentBundle extends ClientBundle {
     ImageResource hBoxContainer();
 
     @Source("vboxcontainer.png")
-    ImageResource vBoxContainer();//
+    ImageResource vBoxContainer();
 
     @Source("field-set.png")
     ImageResource fieldSet();

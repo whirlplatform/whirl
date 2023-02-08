@@ -25,7 +25,7 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
     TextField login = new TextField();
     PasswordField password = new PasswordField();
     TextButton submit = new TextButton(
-            EditorMessage.Util.MESSAGE.login_submit());
+        EditorMessage.Util.MESSAGE.login_submit());
     ModalPanel modal = ModalPanel.pop();
 
     public LoginView() {
@@ -36,7 +36,7 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
         setResizable(false);
         setDraggable(false);
         getHeader().setText(
-                EditorMessage.Util.MESSAGE.login_fill_login_password());
+            EditorMessage.Util.MESSAGE.login_fill_login_password());
         final FormPanel form = new FormPanel();
         form.setAction("javascript:;");
         VerticalLayoutContainer container = new VerticalLayoutContainer();
@@ -52,14 +52,14 @@ public class LoginView extends Window implements LoginPresenter.ILoginView {
         }, submit, login, password);
 
         FieldLabel loginField = new FieldLabel(login,
-                EditorMessage.Util.MESSAGE.login_login());
+            EditorMessage.Util.MESSAGE.login_login());
         FieldLabel passwordField = new FieldLabel(password,
-                EditorMessage.Util.MESSAGE.login_password());
+            EditorMessage.Util.MESSAGE.login_password());
 
         container
-                .add(loginField, new VerticalLayoutData(1, -1, new Margins(5)));
+            .add(loginField, new VerticalLayoutData(1, -1, new Margins(5)));
         container.add(passwordField, new VerticalLayoutData(1, -1, new Margins(
-                5)));
+            5)));
         addButton(submit);
         setButtonAlign(BoxLayoutPack.END);
 

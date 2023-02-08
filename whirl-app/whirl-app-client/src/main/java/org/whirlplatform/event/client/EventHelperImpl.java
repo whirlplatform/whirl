@@ -71,11 +71,8 @@ public class EventHelperImpl implements EventHelper {
 
     private static final Logger LOGGER = Logger.getLogger(EventHelperImpl.class.getName());
 
-    private EventMetadata metadata;
-
-    private AsyncCallback<EventCallbackResult> afterEventCallback;
-
-    private Command startHandler = new Command() {
+    private final EventMetadata metadata;
+    private final Command startHandler = new Command() {
         @Override
         public void execute() {
             if (metadata.isWait()) {
@@ -83,12 +80,13 @@ public class EventHelperImpl implements EventHelper {
             }
         }
     };
-    private Command completeHandler = new Command() {
+    private final Command completeHandler = new Command() {
         @Override
         public void execute() {
             ProgressHelper.hide();
         }
     };
+    private AsyncCallback<EventCallbackResult> afterEventCallback;
 
     EventHelperImpl(EventMetadata metadata) {
         this.metadata = metadata;
@@ -113,7 +111,7 @@ public class EventHelperImpl implements EventHelper {
             dialog.setHideOnButtonClick(true);
             dialog.setPredefinedButtons(PredefinedButton.YES, PredefinedButton.NO);
             dialog.getButton(PredefinedButton.YES)
-                    .addSelectHandler(event -> scheduleEventExecute(source));
+                .addSelectHandler(event -> scheduleEventExecute(source));
             dialog.show();
         } else {
             scheduleEventExecute(source);
@@ -219,7 +217,7 @@ public class EventHelperImpl implements EventHelper {
                     EventCallbackResult callbackResult = new EventCallbackResult();
                     List<EventParameter> list = new ArrayList<>(result.getParametersMap().values());
                     Map<EventParameter, ComponentBuilder> components =
-                            new HashMap<EventParameter, ComponentBuilder>();
+                        new HashMap<EventParameter, ComponentBuilder>();
                     findComponents(list, components, null, null, null);
 
                     callbackResult.setParameters(convertParameters(list, components));
@@ -333,7 +331,7 @@ public class EventHelperImpl implements EventHelper {
     private void componentExecute(ComponentBuilder source, final ComponentBuilder component,
                                   List<DataValue> parameters) {
         if (ComponentType.ReportType == component.getType()
-                && !((ReportBuilder) component).isShowReportParams()) {
+            && !((ReportBuilder) component).isShowReportParams()) {
             return;
         }
 
@@ -343,22 +341,21 @@ public class EventHelperImpl implements EventHelper {
             if (old != null) {
                 if (old.getType() == ComponentType.WindowType) {
                     ((WindowBuilder) old).hide();
-                }
-//                else if (old.getParentBuilder().getType() == ComponentType.WindowType) {
-//                    if (WindowManager.get().isMinimized((Window) old.getParentBuilder().getComponent())) {
-//                        WindowManager.get().removeWindow((Window) old.getParentBuilder().getComponent());
-//                    } else {
-//                        ((WindowBuilder) old.getParentBuilder()).hide();
-//                    }
-//                }
-                else {
+                } else {
+                    // else if (old.getParentBuilder().getType() == ComponentType.WindowType) {
+                    //      if (WindowManager.get().isMinimized((Window) old.getParentBuilder().getComponent())) {
+                    //             WindowManager.get().removeWindow((Window) old.getParentBuilder().getComponent());
+                    //      } else {
+                    //     ((WindowBuilder) old.getParentBuilder()).hide();
+                    //        }
+                    //       }
                     old.removeFromParent();
                 }
             }
         }
 
         ComponentBuilder targetComponent =
-                BuilderManager.findBuilder(metadata.getTargetComponentId(), false);
+            BuilderManager.findBuilder(metadata.getTargetComponentId(), false);
         if (targetComponent instanceof Containable) {
             ((Containable) targetComponent).addChild(component);
         } else if (component.getType() == ComponentType.WindowType) {
@@ -367,35 +364,34 @@ public class EventHelperImpl implements EventHelper {
             return;
         }
 
-//
-//            // строим новое окно
-//            WindowBuilder window = new WindowBuilder();
-//            window.setTitle(component.getTitle());
-//            window.setClosable(true);
-//            window.setMinimizable(true);
-//            window.setMaximizable(true);
-//            window.addChild(component);
-//
-//            DataValue width = component.getProperties().get(PropertyType.Width.getCode());
-//            DataValue height = component.getProperties().get(PropertyType.Height.getCode());
-//            if (width == null || width.getDouble() == null) {
-//                window.setWidth(800);
-//            } else {
-//                window.setWidth(width.getDouble().intValue());
-//            }
-//            if (height == null || height.getDouble() == null) {
-//                window.setHeight(500);
-//            } else {
-//                window.setHeight(height.getDouble().intValue());
-//            }
-//            window.show();
-//            window.center();
-//
-//            targetComponent = window;
-//        }
+        //
+        //            // строим новое окно
+        //            WindowBuilder window = new WindowBuilder();
+        //            window.setTitle(component.getTitle());
+        //            window.setClosable(true);
+        //            window.setMinimizable(true);
+        //            window.setMaximizable(true);
+        //            window.addChild(component);
+        //
+        //            DataValue width = component.getProperties().get(PropertyType.Width.getCode());
+        //            DataValue height = component.getProperties().get(PropertyType.Height.getCode());
+        //            if (width == null || width.getDouble() == null) {
+        //                window.setWidth(800);
+        //            } else {
+        //                window.setWidth(width.getDouble().intValue());
+        //            }
+        //            if (height == null || height.getDouble() == null) {
+        //                window.setHeight(500);
+        //            } else {
+        //                window.setHeight(height.getDouble().intValue());
+        //            }
+        //            window.show();
+        //            window.center();
+        //
+        //            targetComponent = window;
+        //        }
         if (targetComponent == null) {
             LOGGER.warning("Target component not found: " + metadata.getTargetComponentId());
-            return;
         } else if (targetComponent.getComponent() instanceof ResizeContainer) {
             ((ResizeContainer) targetComponent.getComponent()).forceLayout();
         }
@@ -425,7 +421,7 @@ public class EventHelperImpl implements EventHelper {
     private void attachScript(String functionName, String script) {
         if (!checkFunctionExists(functionName)) {
             ScriptInjector.fromString(script).setWindow(ScriptInjector.TOP_WINDOW)
-                    .setRemoveTag(false).inject();
+                .setRemoveTag(false).inject();
         }
     }
 
@@ -482,7 +478,7 @@ public class EventHelperImpl implements EventHelper {
         final Map<EventParameter, Validatable> componentValidatables = new HashMap<>();
         final Map<EventParameter, Prepareable> componentPreparables = new HashMap<>();
         findComponents(parameters, components, componentParameters, componentValidatables,
-                componentPreparables);
+            componentPreparables);
 
         // сначала все проверяем
         boolean valid = true;
@@ -533,7 +529,7 @@ public class EventHelperImpl implements EventHelper {
         for (EventParameter v : parameters) {
             DataValue data;
             boolean isCompParam = v.getType() == ParameterType.COMPONENTCODE
-                    || v.getType() == ParameterType.COMPONENT;
+                || v.getType() == ParameterType.COMPONENT;
             if (isCompParam /*TODO && components.get(v) != null - определится зачем это условие*/) {
                 data = getDataValue(components.get(v));
             } else if (v.getType() == ParameterType.STORAGE) {

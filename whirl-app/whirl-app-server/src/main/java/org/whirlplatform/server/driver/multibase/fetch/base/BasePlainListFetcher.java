@@ -25,7 +25,7 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
 public class BasePlainListFetcher extends BasePlainTableFetcher
-        implements ListFetcher<PlainTableElement> {
+    implements ListFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(BasePlainListFetcher.class);
 
     public BasePlainListFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
@@ -38,7 +38,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
         @SuppressWarnings("unused")
         Date start = new Date();
         PlainListFetcherHelper temp =
-                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
 
         List<ListModelData> result = new ArrayList<ListModelData>();

@@ -42,7 +42,7 @@ public class ToolBarView extends ToolBar implements IToolBarView {
 
     private static final String ERROR = EditorMessage.Util.MESSAGE.error();
     private static final String ERROR_IMPORT =
-            EditorMessage.Util.MESSAGE.error_import_application();
+        EditorMessage.Util.MESSAGE.error_import_application();
     private static final String WARN = EditorMessage.Util.MESSAGE.warn();
     private static final String WARN_NO_CURR_APP = "No applications loaded!";
 
@@ -71,13 +71,13 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         compareButton = new ToolbarCompareButton(getPresenter());
         add(newButton.asTextButton());
         add(openButton.asTextButton());
-//        add(openXmlButton.asTextButton());
+        //        add(openXmlButton.asTextButton());
         add(new SeparatorToolItem());
         add(saveButton.asTextButton());
         add(saveAsButton.asTextButton());
-//        add(saveXmlButton.asTextButton());
-//        add(packageButton.asTextButton());
-//        add(compareButton.asTextButton());
+        //        add(saveXmlButton.asTextButton());
+        //        add(packageButton.asTextButton());
+        //        add(compareButton.asTextButton());
         add(new SeparatorToolItem());
         add(new ToolBarShowIconsButton(getPresenter()));
         add(createHelpMenu());
@@ -87,7 +87,7 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         updateButtonState();
     }
 
-    public TextButton createHelpMenu(){
+    public TextButton createHelpMenu() {
         TextButton button = new TextButton();
         MenuItem js = new MenuItem("JavaScript API");
         js.setIcon(ComponentBundle.INSTANCE.helpJS());
@@ -106,6 +106,7 @@ public class ToolBarView extends ToolBar implements IToolBarView {
 
         return button;
     }
+
     private FormPanel createImportForm() {
         if (importForm == null) {
             importForm = new FormPanel();

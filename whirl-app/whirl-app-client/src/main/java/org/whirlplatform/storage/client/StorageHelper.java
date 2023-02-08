@@ -26,7 +26,7 @@ public class StorageHelper {
      * TODO это фейковый сервис для создания сериализаторова GWT-RPC
      */
     @SuppressWarnings("unused")
-    private static DataServiceStubAsync dataService = GWT.create(DataServiceStub.class);
+    private static final DataServiceStubAsync dataService = GWT.create(DataServiceStub.class);
 
     private static String getKey(String code) {
         ApplicationData application = BuilderManager.getApplicationData();
@@ -34,7 +34,7 @@ public class StorageHelper {
         ClientUser user = ClientUser.getCurrentUser();
         assert user != null : "You should be authorized to use StorageHelper";
         return "/" + KEY_PREFIX + "/" + application.getApplicationCode() + "/"
-                + user.getLogin() + "/" + code;
+            + user.getLogin() + "/" + code;
     }
 
     public static <T extends Serializable> StorageWrapper<T> local() {
@@ -80,10 +80,10 @@ public class StorageHelper {
     }
 
     private static class StorageExtWrapper<T extends Serializable> implements
-            StorageWrapper<T> {
+        StorageWrapper<T> {
 
-        private StorageExt storage;
-        private StateScope scope;
+        private final StorageExt storage;
+        private final StateScope scope;
 
         public StorageExtWrapper(StorageExt storage, StateScope scope) {
             this.storage = storage;
@@ -95,7 +95,7 @@ public class StorageHelper {
             assert !Util.isEmptyString(code) : "Code can not be empty to save in store";
             try {
                 storage.put(StorageKeyFactory.serializableKey(getKey(code)),
-                        value);
+                    value);
                 return true;
             } catch (StorageQuotaExceededException | SerializationException e) {
                 return false;
@@ -106,8 +106,8 @@ public class StorageHelper {
         @Override
         public T get(String code) {
             try {
-                return (T) storage.get(StorageKeyFactory
-                        .serializableKey(getKey(code)));
+                return storage.get(StorageKeyFactory
+                    .serializableKey(getKey(code)));
             } catch (Exception e) {
                 return null;
             }
@@ -125,7 +125,7 @@ public class StorageHelper {
                 String code = storage.key(i);
                 if (code.startsWith(prefix)) {
                     storage.remove(StorageKeyFactory
-                            .serializableKey(getKey(code)));
+                        .serializableKey(getKey(code)));
                 }
             }
         }
@@ -138,11 +138,11 @@ public class StorageHelper {
     }
 
     private static class MemoryStorageWrapper<T extends Serializable>
-            implements StorageWrapper<T> {
+        implements StorageWrapper<T> {
 
         private static final StorageSerializer TYPE_SERIALIZER = GWT
-                .create(StorageSerializer.class);
-        private static Map<String, String> store = new HashMap<String, String>();
+            .create(StorageSerializer.class);
+        private static final Map<String, String> store = new HashMap<String, String>();
 
         @Override
         public boolean put(String code, T value) {

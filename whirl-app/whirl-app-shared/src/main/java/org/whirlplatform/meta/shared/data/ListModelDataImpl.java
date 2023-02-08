@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 
 @SuppressWarnings("serial")
 public class ListModelDataImpl extends RowModelDataImpl
-        implements ListModelData {
+    implements ListModelData {
 
     private String label;
 
@@ -38,7 +38,7 @@ public class ListModelDataImpl extends RowModelDataImpl
         }
         for (Entry<String, DataValue> e : data.entrySet()) {
             clone.data.put(e.getKey(),
-                    e.getValue() != null ? e.getValue().clone() : null);
+                e.getValue() != null ? e.getValue().clone() : null);
         }
         clone.changed = changed;
         clone.levelCount = levelCount;

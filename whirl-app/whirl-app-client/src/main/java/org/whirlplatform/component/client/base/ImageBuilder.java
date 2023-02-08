@@ -22,7 +22,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "Image", namespace = "Whirl")
 public class ImageBuilder extends ComponentBuilder
-        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+    implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
     private Image image;
 
@@ -146,7 +146,7 @@ public class ImageBuilder extends ComponentBuilder
 
             @Override
             public void onDoubleClick(
-                    com.google.gwt.event.dom.client.DoubleClickEvent event) {
+                com.google.gwt.event.dom.client.DoubleClickEvent event) {
                 if (isEnabled()) {
                     fireEvent(new DoubleClickEvent());
                 }

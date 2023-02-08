@@ -38,13 +38,13 @@ import org.whirlplatform.meta.shared.data.RowListValue;
 
 public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAware {
 
-    private Map<FieldMetadata, AbstractFieldBuilder> builders =
-            new HashMap<FieldMetadata, AbstractFieldBuilder>();
-    private Map<FieldMetadata, UploadFieldBuilder> uploadBuilders =
-            new HashMap<FieldMetadata, UploadFieldBuilder>();
-    private Map<FieldMetadata, IsField<?>> components = new HashMap<FieldMetadata, IsField<?>>();
+    private final Map<FieldMetadata, AbstractFieldBuilder> builders =
+        new HashMap<FieldMetadata, AbstractFieldBuilder>();
+    private final Map<FieldMetadata, UploadFieldBuilder> uploadBuilders =
+        new HashMap<FieldMetadata, UploadFieldBuilder>();
+    private final Map<FieldMetadata, IsField<?>> components = new HashMap<FieldMetadata, IsField<?>>();
 
-    private Set<FieldMetadata> changed = new HashSet<FieldMetadata>();
+    private final Set<FieldMetadata> changed = new HashSet<FieldMetadata>();
 
     private boolean wasChanged;
 
@@ -71,9 +71,10 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
     public boolean checkUpload() {
         boolean result = true;
         for (Entry<FieldMetadata, UploadFieldBuilder> entry : uploadBuilders
-                .entrySet()) {
+            .entrySet()) {
             if (changed.contains(entry.getKey()) && !entry.getValue().isReady()) {
                 result = false;
+                break;
             }
         }
         return result;
@@ -155,7 +156,7 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
 
         if (builders.get(metadata) instanceof ListParameter) {
             ((ListParameter) builders.get(metadata))
-                    .setFieldValue((RowListValue) value);
+                .setFieldValue((RowListValue) value);
         }
 
         IsField field = components.get(metadata);
@@ -181,7 +182,7 @@ public class FieldFormPanel extends VerticalLayoutContainer implements LocatorAw
 
         if (builders.get(metadata) instanceof ListParameter) {
             RowListValue value = ((ListParameter) builders.get(metadata))
-                    .getFieldValue();
+                .getFieldValue();
             return value;
         }
 

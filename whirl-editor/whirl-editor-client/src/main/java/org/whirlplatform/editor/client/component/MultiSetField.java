@@ -29,7 +29,7 @@ public class MultiSetField<T> extends TriggerField<String> {
 
     public MultiSetField(Collection<T> keys, MultiSetCellResources resources) {
         this(keys, new MultiSetCell<T>(new MultiSetCellDefaultAppearance(
-                resources)));
+            resources)));
     }
 
     @SuppressWarnings("unchecked")
@@ -78,7 +78,7 @@ public class MultiSetField<T> extends TriggerField<String> {
     }
 
     public HandlerRegistration addSelectionHandler(
-            SelectionHandler<Item> handler) {
+        SelectionHandler<Item> handler) {
         return getCell().addSelectionHandler(handler);
     }
 

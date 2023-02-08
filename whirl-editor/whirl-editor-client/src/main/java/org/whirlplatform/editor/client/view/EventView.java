@@ -107,23 +107,23 @@ public class EventView extends ContentPanel implements IEventView {
 
     private ComboBox<EventType> initTypeField() {
         ListStore<EventType> store = new ListStore<EventType>(
-                new ModelKeyProvider<EventType>() {
-                    @Override
-                    public String getKey(EventType item) {
-                        return item.name();
-                    }
-                });
+            new ModelKeyProvider<EventType>() {
+                @Override
+                public String getKey(EventType item) {
+                    return item.name();
+                }
+            });
         store.addAll(Arrays.stream(EventType.values())
-                .filter(eventType -> !EventType.Java.equals(eventType))
-                .collect(Collectors.toList()));
+            .filter(eventType -> !EventType.Java.equals(eventType))
+            .collect(Collectors.toList()));
 
         ComboBox<EventType> result = new ComboBox<EventType>(store,
-                new LabelProvider<EventType>() {
-                    @Override
-                    public String getLabel(EventType item) {
-                        return item.name();
-                    }
-                });
+            new LabelProvider<EventType>() {
+                @Override
+                public String getLabel(EventType item) {
+                    return item.name();
+                }
+            });
         result.setAllowBlank(false);
         result.setEditable(false);
         return result;
@@ -131,13 +131,13 @@ public class EventView extends ContentPanel implements IEventView {
 
     private ComboBox<String> initHandlerTypeField() {
         SimpleComboBox<String> result = new SimpleComboBox<String>(
-                new LabelProvider<String>() {
-                    @Override
-                    public String getLabel(String item) {
-                        int subStrEnd = item.indexOf("Handler");
-                        return subStrEnd == -1 ? item : item.substring(0, subStrEnd);
-                    }
-                });
+            new LabelProvider<String>() {
+                @Override
+                public String getLabel(String item) {
+                    int subStrEnd = item.indexOf("Handler");
+                    return subStrEnd == -1 ? item : item.substring(0, subStrEnd);
+                }
+            });
 
         // TODO выделить в переиспользуемый список определяемый по типу
         // компонента
@@ -175,106 +175,106 @@ public class EventView extends ContentPanel implements IEventView {
             }
         });
         typeLabel = new FieldLabel(type,
-                EditorMessage.Util.MESSAGE.event_type());
+            EditorMessage.Util.MESSAGE.event_type());
         container.add(typeLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         handlerType = initHandlerTypeField();
         handlerType.setAllowBlank(true);
         handlerType.setTriggerAction(TriggerAction.ALL);
         handlerType.setEditable(false);
         handlerTypeLabel = new FieldLabel(handlerType,
-                EditorMessage.Util.MESSAGE.event_handler());
+            EditorMessage.Util.MESSAGE.event_handler());
         container.add(handlerTypeLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         code = new TextField();
         codeLabel = new FieldLabel(code,
-                EditorMessage.Util.MESSAGE.event_code());
+            EditorMessage.Util.MESSAGE.event_code());
         container.add(codeLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         named = new CheckBox();
         named.setBoxLabel("");
         namedLabel = new FieldLabel(named,
-                EditorMessage.Util.MESSAGE.event_single_parameter());
+            EditorMessage.Util.MESSAGE.event_single_parameter());
         container.add(namedLabel, new VerticalLayoutData(-1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         confirm = new CheckBox();
         confirm.setBoxLabel("");
         confirmLabel = new FieldLabel(confirm,
-                EditorMessage.Util.MESSAGE.event_confirm());
+            EditorMessage.Util.MESSAGE.event_confirm());
         container.add(confirmLabel, new VerticalLayoutData(-1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         confirmText = new PropertyValueField();
         confirmTextLabel = new FieldLabel(confirmText,
-                EditorMessage.Util.MESSAGE.event_confirm_text());
+            EditorMessage.Util.MESSAGE.event_confirm_text());
         container.add(confirmTextLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         wait = new CheckBox();
         wait.setBoxLabel("");
         waitLabel = new FieldLabel(wait,
-                EditorMessage.Util.MESSAGE.event_wait());
+            EditorMessage.Util.MESSAGE.event_wait());
         container.add(waitLabel, new VerticalLayoutData(-1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         waitText = new PropertyValueField();
         waitTextLabel = new FieldLabel(waitText,
-                EditorMessage.Util.MESSAGE.event_wait_text());
+            EditorMessage.Util.MESSAGE.event_wait_text());
         container.add(waitTextLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         schema = new TextField();
         schemaLabel = new FieldLabel(schema,
-                EditorMessage.Util.MESSAGE.event_schema());
+            EditorMessage.Util.MESSAGE.event_schema());
         container.add(schemaLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         function = new TextField();
         functionLabel = new FieldLabel(function,
-                EditorMessage.Util.MESSAGE.event_function());
+            EditorMessage.Util.MESSAGE.event_function());
         container.add(functionLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         component = new ComponentComboBox(new ComponentStore(getPresenter()
-                .getEventBus(), false));
+            .getEventBus(), false));
         component.setTriggerAction(TriggerAction.ALL);
         componentLabel = new FieldLabel(component,
-                EditorMessage.Util.MESSAGE.event_component());
+            EditorMessage.Util.MESSAGE.event_component());
         container.add(componentLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         targetComponent = new ComponentComboBox(new ComponentStore(
-                getPresenter().getEventBus(), true));
+            getPresenter().getEventBus(), true));
         targetComponent.setTriggerAction(TriggerAction.ALL);
         targetComponentLabel = new FieldLabel(targetComponent,
-                EditorMessage.Util.MESSAGE.event_contaner());
+            EditorMessage.Util.MESSAGE.event_contaner());
         container.add(targetComponentLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         createNew = new CheckBox();
         createNew.setBoxLabel("");
         createNewLabel = new FieldLabel(createNew,
-                EditorMessage.Util.MESSAGE.event_create_new());
+            EditorMessage.Util.MESSAGE.event_create_new());
         container.add(createNewLabel, new VerticalLayoutData(-1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         dataSource = new DataSourceComboBox(new DataSourceStore(getPresenter()
-                .getEventBus()));
+            .getEventBus()));
         dataSource.setTriggerAction(TriggerAction.ALL);
         dataSourceLabel = new FieldLabel(dataSource,
-                EditorMessage.Util.MESSAGE.event_datasource());
+            EditorMessage.Util.MESSAGE.event_datasource());
         container.add(dataSourceLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         source = new CodeMirrorPanel();
         sourceLabel = new FieldLabel(source,
-                EditorMessage.Util.MESSAGE.event_source());
+            EditorMessage.Util.MESSAGE.event_source());
         container.add(sourceLabel, new VerticalLayoutData(1, 400, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
     }
 
     @Override

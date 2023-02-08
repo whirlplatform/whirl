@@ -68,21 +68,21 @@ public class AppTreeReferencePart extends AbstractAppTreePart<ApplicationElement
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
         if (parent == handledElement && element instanceof PlainTableElement
-                && handledElement.getApplicationTables().contains(element)) {
+            && handledElement.getApplicationTables().contains(element)) {
             removeElement(element);
             addChildElement(handledElement, element);
             AppTreePlainTablePart tableHandler = new AppTreePlainTablePart(appTree, treePresenter,
-                    (PlainTableElement) element);
+                (PlainTableElement) element);
             tableHandler.setReference(true);
             putTreePart(element, tableHandler);
             return true;
         } else if (parent == handledElement && element instanceof DynamicTableElement
-                && handledElement.getApplicationTables().contains(element)) {
+            && handledElement.getApplicationTables().contains(element)) {
             removeElement(element);
             addChildElement(handledElement, element);
             AppTreeDynamicTablePart dynamicTableHandler =
-                    new AppTreeDynamicTablePart(appTree, treePresenter,
-                            (DynamicTableElement) element);
+                new AppTreeDynamicTablePart(appTree, treePresenter,
+                    (DynamicTableElement) element);
             dynamicTableHandler.setReference(true);
             putTreePart(element, dynamicTableHandler);
             return true;

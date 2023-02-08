@@ -121,7 +121,7 @@ public class SeleniumJSExport {
             locator = LoginPanelBuilder.locatorByElement(element);
         }
         if (locator != null) {
-            return "whirl:" + locator.toString();
+            return "whirl:" + locator;
         }
         return null;
     }

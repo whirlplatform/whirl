@@ -139,6 +139,6 @@ public abstract class AbstractAppTreeToolBar<T extends AppTree> extends ToolBar 
 
     private String getAppVersion() {
         return (appTree != null && appTree.getVersion() != null) ? appTree.getVersion().toString() :
-                "";
+            "";
     }
 }

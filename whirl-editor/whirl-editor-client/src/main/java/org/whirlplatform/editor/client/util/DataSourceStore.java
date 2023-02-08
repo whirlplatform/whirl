@@ -18,23 +18,23 @@ import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 public class DataSourceStore extends ListStore<DataSourceElement> {
 
     private static final Comparator<DataSourceElement> comparator =
-            new Comparator<DataSourceElement>() {
+        new Comparator<DataSourceElement>() {
 
-                @Override
-                public int compare(DataSourceElement o1, DataSourceElement o2) {
-                    if (o1.getId().isEmpty()) {
-                        return -1;
-                    } else if (o2.getId().isEmpty()) {
-                        return 1;
-                    }
-                    return o1.getName().compareTo(o2.getName());
+            @Override
+            public int compare(DataSourceElement o1, DataSourceElement o2) {
+                if (o1.getId().isEmpty()) {
+                    return -1;
+                } else if (o2.getId().isEmpty()) {
+                    return 1;
                 }
-            };
+                return o1.getName().compareTo(o2.getName());
+            }
+        };
     private DataProxy<String, List<DataSourceElement>> proxy;
     private Loader<String, List<DataSourceElement>> loader;
 
     public DataSourceStore(
-            ApplicationDataProvider provider) {
+        ApplicationDataProvider provider) {
         super(new ElementKeyProvider<DataSourceElement>());
 
         proxy = new DataSourceProxy(provider);
@@ -84,11 +84,11 @@ public class DataSourceStore extends ListStore<DataSourceElement> {
                         for (DataSourceElement element : result) {
                             String query = loadConfig.toLowerCase();
                             boolean isName = element.getName() != null
-                                    && element.getName().toLowerCase()
-                                    .contains(query);
+                                && element.getName().toLowerCase()
+                                .contains(query);
                             boolean isDataSource = (element.getDatabaseName() != null && element
-                                    .getDatabaseName().toLowerCase()
-                                    .contains(query));
+                                .getDatabaseName().toLowerCase()
+                                .contains(query));
                             if (isName || isDataSource) {
                                 list.add(element);
                             }

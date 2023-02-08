@@ -49,10 +49,10 @@ public class InfoHelper {
     private static void displayReloadPage(String dialogId, String title, String message) {
         SafeHtmlBuilder builder = new SafeHtmlBuilder();
         builder.appendHtmlConstant(message)
-                .appendHtmlConstant(
-                        "<br/><a href=\"#\" onclick=\"window.location.reload(true);\" style=\"color:#7777FF\">")
-                .appendHtmlConstant(AppMessage.Util.MESSAGE.reloadPage())
-                .appendHtmlConstant("</a>");
+            .appendHtmlConstant(
+                "<br/><a href=\"#\" onclick=\"window.location.reload(true);\" style=\"color:#7777FF\">")
+            .appendHtmlConstant(AppMessage.Util.MESSAGE.reloadPage())
+            .appendHtmlConstant("</a>");
         SafeHtml titleHtml = SafeHtmlUtils.fromString(title == null ? "" : title);
         // InfoConfig config = new DefaultInfoConfig(titleHtml,
         // builder.toSafeHtml());
@@ -69,17 +69,17 @@ public class InfoHelper {
             StatusCodeException sex = (StatusCodeException) exception;
             if (sex.getStatusCode() == 0) {
                 error(dialogId, AppMessage.Util.MESSAGE.alert(),
-                        AppMessage.Util.MESSAGE.errorServerConnection());
+                    AppMessage.Util.MESSAGE.errorServerConnection());
             } else {
                 error(dialogId, AppMessage.Util.MESSAGE.alert(), exception.getMessage());
             }
         } else if (exception instanceof ClientRestException
-                && ((ClientRestException) exception).getData() != null) {
+            && ((ClientRestException) exception).getData() != null) {
             ExceptionData rpc = ((ClientRestException) exception).getData();
             // сессиия истекла
             if (rpc.isSessionExpired()) {
                 displayReloadPage(dialogId, AppMessage.Util.MESSAGE.alert(),
-                        exception.getMessage());
+                    exception.getMessage());
             } else if (rpc.getType() == ExceptionData.ExceptionType.SIMPLE) {
                 error(dialogId, AppMessage.Util.MESSAGE.alert(), exception.getMessage());
             } else {

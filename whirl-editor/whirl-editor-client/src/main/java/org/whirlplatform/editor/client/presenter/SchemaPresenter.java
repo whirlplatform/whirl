@@ -25,7 +25,7 @@ import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 
 @Presenter(view = SchemaView.class)
 public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private SchemaElement schema;
 
@@ -57,20 +57,20 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus>
             public void onSelect(SelectEvent event) {
                 view.startProcessing();
                 EditorDataService.Util.getDataService()
-                        .getTableImportList(schema.getDataSource(), schema,
-                                new AsyncCallback<Collection<RowModelData>>() {
-                                    @Override
-                                    public void onSuccess(Collection<RowModelData> result) {
-                                        view.setImports(result);
-                                        view.stopProcessing();
-                                    }
+                    .getTableImportList(schema.getDataSource(), schema,
+                        new AsyncCallback<Collection<RowModelData>>() {
+                            @Override
+                            public void onSuccess(Collection<RowModelData> result) {
+                                view.setImports(result);
+                                view.stopProcessing();
+                            }
 
-                                    @Override
-                                    public void onFailure(Throwable caught) {
-                                        InfoHelper.throwInfo("get-table-import-list", caught);
-                                        view.stopProcessing();
-                                    }
-                                });
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                InfoHelper.throwInfo("get-table-import-list", caught);
+                                view.stopProcessing();
+                            }
+                        });
             }
         });
         view.addImportHandler(new SelectHandler() {
@@ -95,23 +95,23 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus>
 
     public void importTableElements(final Collection<RowModelData> models) {
         final AsyncCallback<Collection<PlainTableElement>> callback =
-                new AsyncCallback<Collection<PlainTableElement>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        InfoHelper.throwInfo("import-tables", caught);
-                        view.stopProcessing();
-                    }
+            new AsyncCallback<Collection<PlainTableElement>>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    InfoHelper.throwInfo("import-tables", caught);
+                    view.stopProcessing();
+                }
 
-                    @Override
-                    public void onSuccess(Collection<PlainTableElement> result) {
-                        for (PlainTableElement t : result) {
-                            eventBus.addElement(schema, t);
-                        }
-                        InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
-                                EditorMessage.Util.MESSAGE.info_tables_imported());
-                        view.stopProcessing();
+                @Override
+                public void onSuccess(Collection<PlainTableElement> result) {
+                    for (PlainTableElement t : result) {
+                        eventBus.addElement(schema, t);
                     }
-                };
+                    InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
+                        EditorMessage.Util.MESSAGE.info_tables_imported());
+                    view.stopProcessing();
+                }
+            };
 
         // Проверка на наличие таблиц в приложении
         eventBus.getAvailableTables(new Callback<Collection<AbstractTableElement>, Throwable>() {
@@ -135,15 +135,15 @@ public class SchemaPresenter extends BasePresenter<ISchemaView, EditorEventBus>
                 }
                 if (tables.length() > 0) {
                     String warnMsg = EditorMessage.Util.MESSAGE.warn_this_tables_already_imported()
-                            + tables.substring(0, tables.length() - 2);
+                        + tables.substring(0, tables.length() - 2);
                     InfoHelper.warning("get-available-tables",
-                            EditorMessage.Util.MESSAGE.warn_tables_already_imported(), warnMsg);
+                        EditorMessage.Util.MESSAGE.warn_tables_already_imported(), warnMsg);
                 }
                 if (uniqueModels.size() > 0) {
                     view.startProcessing();
                     EditorDataService.Util.getDataService()
-                            .importTables(schema.getDataSource(), schema, uniqueModels,
-                                    callback);
+                        .importTables(schema.getDataSource(), schema, uniqueModels,
+                            callback);
                 }
             }
         });

@@ -44,10 +44,10 @@ public class NamedParamResolverTest {
         values.put("value_test1", value);
 
         NamedParamResolver resolver = new NamedParamResolver(driver,
-                "('':value_test1'')", values);
+            "('':value_test1'')", values);
 
         Assert.assertEquals("Double quotes", "('1,10')",
-                resolver.getResultSql());
+            resolver.getResultSql());
 
         // null
         values = new HashMap<>();
@@ -55,7 +55,7 @@ public class NamedParamResolverTest {
         value.setCode("value_test2");
         resolver = new NamedParamResolver(driver, "('':value_test2'')", values);
         Assert.assertEquals("Null verification", "(null)",
-                resolver.getResultSql());
+            resolver.getResultSql());
     }
 
 }

@@ -34,7 +34,7 @@ public class ResourceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException {
+        throws ServletException {
         String type = req.getParameter("action");
         try {
             if ("download".equals(type)) {
@@ -46,7 +46,7 @@ public class ResourceServlet extends HttpServlet {
     }
 
     private void onDownload(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ContainerException {
+        throws IOException, ContainerException {
         String type = req.getParameter("path");
         String appCode = req.getParameter("code");
         String branch = req.getParameter("branch");
@@ -54,22 +54,22 @@ public class ResourceServlet extends HttpServlet {
         final String fileName = req.getParameter("fileName");
 
         AtomicReference<ApplicationReference> reference = metadataContainer
-                .getApplication(appCode,
-                        Version.parseBranchVersionOrNull(branch, version));
+            .getApplication(appCode,
+                Version.parseBranchVersionOrNull(branch, version));
         if (reference != null) {
             ApplicationElement application = reference.get().getApplication();
             if (fileName != null && "javascript".equals(type)
-                    || "css".equals(type) || "image".equals(type)) {
+                || "css".equals(type) || "image".equals(type)) {
                 FileElement file = null;
                 if ("javascript".equals(type)) {
                     file = findFileElement(application.getJavaScriptFiles(),
-                            branch, version, fileName);
+                        branch, version, fileName);
                 } else if ("css".equals(type)) {
                     file = findFileElement(application.getCssFiles(), branch,
-                            version, fileName);
+                        version, fileName);
                 } else if ("image".equals(type)) {
                     file = findFileElement(application.getImageFiles(), branch,
-                            version, fileName);
+                        version, fileName);
                 }
                 if (file != null) {
                     try (InputStream in = (InputStream) file.getInputStream()) {

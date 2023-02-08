@@ -1,4 +1,3 @@
-
 package org.whirlplatform.editor.shared.i18n;
 
 import com.google.gwt.core.client.GWT;
@@ -8,6 +7,7 @@ import com.google.gwt.i18n.client.Messages;
 public interface EditorMessage extends Messages {
 
     String help_db();
+
     String select_icon();
 
     String login_submit();

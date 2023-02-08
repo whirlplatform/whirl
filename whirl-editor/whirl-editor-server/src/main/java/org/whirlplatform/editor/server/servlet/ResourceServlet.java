@@ -84,7 +84,7 @@ public class ResourceServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     public void saveFileInContext(HttpSession session, String fileId, FileItem file) {
         Map<String, FileItem> files =
-                (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
+            (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
         if (files == null) {
             files = new HashMap<String, FileItem>();
             session.setAttribute("whirl-editor-filemap", files);
@@ -93,7 +93,7 @@ public class ResourceServlet extends HttpServlet {
     }
 
     private void onUpload(HttpServletRequest req, HttpServletResponse resp)
-            throws FileUploadException {
+        throws FileUploadException {
         if (ServletFileUpload.isMultipartContent(req)) {
             ServletFileUpload upload = createServletFileUpload();
             List<FileItem> files = upload.parseRequest(req);
@@ -127,7 +127,7 @@ public class ResourceServlet extends HttpServlet {
             FileElementCategory category = FileElementCategory.get(type);
             Version version = extractVersion(req);
             try (InputStream in = metadataStore.getApplicationFileInputStream(appCode, version,
-                    category, fileName)) {
+                category, fileName)) {
                 copyInputStreamToResponce(resp, in, fileName);
             } catch (MetadataStoreException | IOException e) {
                 _log.error(e);
@@ -149,7 +149,7 @@ public class ResourceServlet extends HttpServlet {
 
     private void copyInputStreamToResponce(HttpServletResponse resp, InputStream in,
                                            String fileName)
-            throws IOException {
+        throws IOException {
         ServletOutputStream out = resp.getOutputStream();
         resp.setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
         resp.setContentType("application/octet-stream");
@@ -176,7 +176,7 @@ public class ResourceServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     public FileItem getFileFromContext(HttpSession session, String fileName) {
         Map<String, FileItem> files =
-                (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
+            (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
         if (files == null) {
             return null;
         }

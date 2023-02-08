@@ -19,7 +19,7 @@ default:
   timeout: 3h
 
 variables:
-  MAVEN_OPTS: '-Dmaven.repo.local=.m2/repository'
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
 Check Checkstyle:
   stage: check
@@ -27,12 +27,29 @@ Check Checkstyle:
     # Run on source event = merge requests
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
       when: always
-  allow_failure: true
+  allow_failure: false
   script:
-    - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate checkstyle:check
+    - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate
+    - mvn $MAVEN_OPTS checkstyle:check
   artifacts:
     paths:
       - target/site/*
+    when: on_failure
+    expire_in: 36 hours
+
+Check Tests:
+  stage: check
+  rules:
+    # Run on source event = merge requests
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
+  allow_failure: false
+  script:
+    - mvn $MAVEN_OPTS test -Dgwt.skipCompilation=true
+  artifacts:
+    reports:
+      junit:
+        - "**/target/surefire-reports/*.xml"
     when: on_failure
     expire_in: 36 hours
 
@@ -59,6 +76,11 @@ Check Build:
         CHANGELIST: "-SNAPSHOT"
         SHA: ${CI_COMMIT_SHORT_SHA}
   allow_failure: false
+  needs:
+    - job: Check Checkstyle
+      artifacts: false
+    - job: Check Tests
+      artifacts: false
 
 Package:
   extends:

@@ -46,7 +46,7 @@ public class CloneVisitorTest {
     private static void collectAllSubclasses(Set<Class<?>> collection, Class<?> superclass) {
         try {
             Set<ClassInfo> classes = ClassPath.from(superclass.getClassLoader())
-                    .getTopLevelClassesRecursive(Reflection.getPackageName(superclass));
+                .getTopLevelClassesRecursive(Reflection.getPackageName(superclass));
             for (ClassInfo info : classes) {
                 Class<?> base = info.load();
                 if (base.isInterface() || base.isEnum()) {
@@ -119,7 +119,7 @@ public class CloneVisitorTest {
         table.setIdColumn(idColumn);
 
         TableColumnElement deleteColumn =
-                createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
+            createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
         table.addColumn(deleteColumn);
         table.setDeleteColumn(deleteColumn);
 
@@ -140,7 +140,7 @@ public class CloneVisitorTest {
 
         diff = javers().compare(table, copy);
         assertEquals("Copied object should not be equals: " + diff.prettyPrint(),
-                diff.getChanges().size(), 2);
+            diff.getChanges().size(), 2);
 
         // Copy table with clone
         PlainTableElement clone = createTable("1", "table_clone", "Clone", "CLONE");
@@ -149,7 +149,7 @@ public class CloneVisitorTest {
         clone.setIdColumn(cloneId);
 
         TableColumnElement deleteId =
-                createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
+            createColumn("11", DataType.BOOLEAN, "DELETE_COLUMN", 200, false);
         clone.addColumn(deleteId);
         clone.setDeleteColumn(deleteId);
 

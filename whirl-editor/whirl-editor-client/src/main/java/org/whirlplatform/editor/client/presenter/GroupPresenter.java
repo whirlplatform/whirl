@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.editor.GroupElement;
 
 @Presenter(view = GroupView.class)
 public class GroupPresenter extends BasePresenter<GroupPresenter.IGroupView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private ApplicationElement application;
 

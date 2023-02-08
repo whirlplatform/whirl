@@ -23,7 +23,7 @@ import org.whirlplatform.meta.shared.Version;
  */
 @Presenter(view = AppBasicInfoView.class)
 public class AppBasicInfoPresenter
-        extends BasePresenter<AppBasicInfoPresenter.IAppBasicInfoView, EditorEventBus> {
+    extends BasePresenter<AppBasicInfoPresenter.IAppBasicInfoView, EditorEventBus> {
 
     private Callback<ApplicationBasicInfo, Throwable> resultCallback;
     private Map<String, Set<Version>> appsMap = new HashMap<>();
@@ -61,17 +61,17 @@ public class AppBasicInfoPresenter
 
     private void loadApplications() {
         EditorDataService.Util.getDataService()
-                .loadApplicationList(new AsyncCallback<Collection<ApplicationStoreData>>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        view.showError(caught);
-                    }
+            .loadApplicationList(new AsyncCallback<Collection<ApplicationStoreData>>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    view.showError(caught);
+                }
 
-                    @Override
-                    public void onSuccess(Collection<ApplicationStoreData> result) {
-                        initAppsMap(result);
-                    }
-                });
+                @Override
+                public void onSuccess(Collection<ApplicationStoreData> result) {
+                    initAppsMap(result);
+                }
+            });
     }
 
     protected void initAppsMap(Collection<ApplicationStoreData> result) {
@@ -85,7 +85,7 @@ public class AppBasicInfoPresenter
     }
 
     public interface IAppBasicInfoView
-            extends IsWidget, ReverseViewInterface<AppBasicInfoPresenter> {
+        extends IsWidget, ReverseViewInterface<AppBasicInfoPresenter> {
         void showAsNew();
 
         void showAsSaveAs(ApplicationBasicInfo appInfo);

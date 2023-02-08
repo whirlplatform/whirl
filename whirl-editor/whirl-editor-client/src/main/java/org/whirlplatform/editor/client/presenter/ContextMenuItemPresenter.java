@@ -21,8 +21,8 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @Presenter(view = ContextMenuItemView.class)
 public class ContextMenuItemPresenter extends
-        BasePresenter<ContextMenuItemPresenter.IContextMenuItemView, EditorEventBus>
-        implements ElementPresenter {
+    BasePresenter<ContextMenuItemPresenter.IContextMenuItemView, EditorEventBus>
+    implements ElementPresenter {
 
     private ContextMenuItemElement item;
 
@@ -33,7 +33,7 @@ public class ContextMenuItemPresenter extends
         }
         item = (ContextMenuItemElement) element;
         view.setHeaderText(
-                EditorMessage.Util.MESSAGE.editing_context_menu() + " " + item.getName());
+            EditorMessage.Util.MESSAGE.editing_context_menu() + " " + item.getName());
         view.clearValues();
         eventBus.getApplication(new Callback<ApplicationElement, Throwable>() {
             @Override
@@ -73,7 +73,7 @@ public class ContextMenuItemPresenter extends
     }
 
     public interface IContextMenuItemView
-            extends ReverseViewInterface<ContextMenuItemPresenter>, IsWidget {
+        extends ReverseViewInterface<ContextMenuItemPresenter>, IsWidget {
         PropertyValue getLabel();
 
         void setLabel(PropertyValue label);

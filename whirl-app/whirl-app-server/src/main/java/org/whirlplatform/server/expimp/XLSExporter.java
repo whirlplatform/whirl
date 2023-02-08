@@ -78,7 +78,7 @@ public class XLSExporter extends Exporter {
         headerStyle.setBorderLeft(BorderStyle.HAIR);
         headerStyle.setBorderRight(BorderStyle.HAIR);
         headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT
-                .getIndex());
+            .getIndex());
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
         CellStyle resultStyle = workbook.createCellStyle();
@@ -104,7 +104,7 @@ public class XLSExporter extends Exporter {
                     dateFormat = AppConstant.DATE_FORMAT_LONG;
                 }
                 cs.setDataFormat(workbook.createDataFormat().getFormat(
-                        dateFormat));
+                    dateFormat));
                 dateStyles.put(f, cs);
             }
             Cell cell = row.createCell(currentCell);
@@ -128,13 +128,13 @@ public class XLSExporter extends Exporter {
             if (!xlsx && currentRow > MAX_ROWS) {
                 Cell cell = row.createCell(currentCell);
                 sheet.addMergedRegion(new CellRangeAddress(currentRow,
-                        currentRow, currentCell, currentCell + 5));
+                    currentRow, currentCell, currentCell + 5));
                 RichTextString text = new HSSFRichTextString(
-                        "ВНИМАНИЕ! Количество строк данного отчета больше "
-                                + MAX_ROWS
-                                +
-                                ", отчет сформирован не полностью. "
-                                + "Воспользоуйтесь другим форматом отчета для получения полных данных.");
+                    "ВНИМАНИЕ! Количество строк данного отчета больше "
+                        + MAX_ROWS
+                        +
+                        ", отчет сформирован не полностью. "
+                        + "Воспользоуйтесь другим форматом отчета для получения полных данных.");
                 HSSFFont font = (HSSFFont) workbook.createFont();
                 font.setColor(IndexedColors.RED.getIndex());
                 text.applyFont(font);
@@ -169,7 +169,7 @@ public class XLSExporter extends Exporter {
                         String str;
                         String content = "";
                         BufferedReader re = new BufferedReader(
-                                clob.getCharacterStream());
+                            clob.getCharacterStream());
                         while ((str = re.readLine()) != null) {
                             content += (content.equals("") ? "" : "\n") + str;
                         }

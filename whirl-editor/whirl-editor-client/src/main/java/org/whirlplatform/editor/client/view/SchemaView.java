@@ -84,7 +84,7 @@ public class SchemaView extends ContentPanel implements ISchemaView {
         });
         labelSchema = new FieldLabel(fieldSchema, EditorMessage.Util.MESSAGE.schema_schema());
         container.add(labelSchema, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
     }
 
     private void initImport() {
@@ -95,32 +95,32 @@ public class SchemaView extends ContentPanel implements ISchemaView {
         bar.add(refreshButton, new HorizontalLayoutData(0.15, -1));
         bar.add(importButton, new HorizontalLayoutData(0.15, -1));
         bar.add(importLabel, new HorizontalLayoutData(0.7, -1,
-                new Margins(0, 0, 0, 5)));
+            new Margins(0, 0, 0, 5)));
         container.add(bar, new VerticalLayoutData(1, 40, new Margins(10, 5, 0,
-                5)));
+            5)));
 
         IdentityValueProvider<RowModelData> identityProvider =
-                new IdentityValueProvider<RowModelData>();
+            new IdentityValueProvider<RowModelData>();
         CheckBoxSelectionModel<RowModelData> selectionModel =
-                new CheckBoxSelectionModel<RowModelData>(
-                        identityProvider);
+            new CheckBoxSelectionModel<RowModelData>(
+                identityProvider);
         selectionModel.setSelectionMode(SelectionMode.MULTI);
 
         List<ColumnConfig<RowModelData, ?>> columns =
-                new ArrayList<ColumnConfig<RowModelData, ?>>();
+            new ArrayList<ColumnConfig<RowModelData, ?>>();
         columns.add(selectionModel.getColumn());
         ColumnConfig<RowModelData, String> tableNameColumn = new ColumnConfig<RowModelData, String>(
-                new RowModelDataValueProvider<String>("tableName"), 250,
-                EditorMessage.Util.MESSAGE.schema_table());
+            new RowModelDataValueProvider<String>("tableName"), 250,
+            EditorMessage.Util.MESSAGE.schema_table());
         ColumnConfig<RowModelData, String> titleColumn = new ColumnConfig<RowModelData, String>(
-                new RowModelDataValueProvider<String>("title"), 250,
-                EditorMessage.Util.MESSAGE.schema_name());
+            new RowModelDataValueProvider<String>("title"), 250,
+            EditorMessage.Util.MESSAGE.schema_name());
         ColumnConfig<RowModelData, String> sourceColumn = new ColumnConfig<RowModelData, String>(
-                new RowModelDataValueProvider<String>("source"), 250,
-                EditorMessage.Util.MESSAGE.schema_source());
+            new RowModelDataValueProvider<String>("source"), 250,
+            EditorMessage.Util.MESSAGE.schema_source());
         ColumnConfig<RowModelData, String> typeColumn = new ColumnConfig<RowModelData, String>(
-                new RowModelDataValueProvider<String>("objectType"), 250,
-                EditorMessage.Util.MESSAGE.schema_object_type());
+            new RowModelDataValueProvider<String>("objectType"), 250,
+            EditorMessage.Util.MESSAGE.schema_object_type());
         columns.add(tableNameColumn);
         columns.add(titleColumn);
         columns.add(sourceColumn);
@@ -132,12 +132,12 @@ public class SchemaView extends ContentPanel implements ISchemaView {
         importTables.setSelectionModel(selectionModel);
         importTables.setBorders(true);
         container.add(importTables, new VerticalLayoutData(1, 500, new Margins(
-                0, 5, 0, 5)));
+            0, 5, 0, 5)));
     }
 
     private void initProcessing() {
         processingMessageBox =
-                new AutoProgressMessageBox(EditorMessage.Util.MESSAGE.schema_processing());
+            new AutoProgressMessageBox(EditorMessage.Util.MESSAGE.schema_processing());
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.sencha.gxt.widget.core.client.button.ToggleButton;
 
 public class TaskButton extends ToggleButton {
 
-    private Window window;
+    private final Window window;
 
     public TaskButton(final Window window) {
         super();

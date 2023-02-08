@@ -85,14 +85,14 @@ public class FileSystemTemplateStore implements TemplateStore {
     @Override
     public List<BaseTemplate> loadEventTemplates() throws RPCException {
         return importer.loadEventTemplates(getPathToFolder(BaseTemplate.Type.EVENT_TEMPLATE))
-                .stream().map(this::asBaseTemplate).collect(Collectors.toList());
+            .stream().map(this::asBaseTemplate).collect(Collectors.toList());
     }
 
     @Override
     public List<BaseTemplate> loadComponentTemplates() throws RPCException {
         return importer.loadComponentTemplates(
-                        getPathToFolder(BaseTemplate.Type.COMPONENT_TEMPLATE))
-                .stream().map(this::asBaseTemplate).collect(Collectors.toList());
+                getPathToFolder(BaseTemplate.Type.COMPONENT_TEMPLATE))
+            .stream().map(this::asBaseTemplate).collect(Collectors.toList());
     }
 
     private BaseTemplate asBaseTemplate(AbstractElement element) {

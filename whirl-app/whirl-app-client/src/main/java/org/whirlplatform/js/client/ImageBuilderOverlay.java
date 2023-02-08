@@ -83,17 +83,17 @@ public abstract class ImageBuilderOverlay {
      */
     public abstract void focus();
 
-////    public static HandlerRegistrationWrapper addClickHandler(
-//            final ImageBuilder instance, final Events.EventClosure callback) {
-//        return new HandlerRegistrationWrapper(
-//                instance.addClickHandler(new ClickEvent.ClickHandler() {
-//                    @Override
-//                    public void onClick(ClickEvent event) {
-//                        EventCallbackResult result = new EventCallbackResult();
-//                        result.setSource(instance);
-//                        callback.success(result);
-//                    }
-//                }));
-//    }
+    //    public static HandlerRegistrationWrapper addClickHandler(
+    //            final ImageBuilder instance, final Events.EventClosure callback) {
+    //        return new HandlerRegistrationWrapper(
+    //                instance.addClickHandler(new ClickEvent.ClickHandler() {
+    //                    @Override
+    //                    public void onClick(ClickEvent event) {
+    //                        EventCallbackResult result = new EventCallbackResult();
+    //                        result.setSource(instance);
+    //                        callback.success(result);
+    //                    }
+    //                }));
+    //    }
 
 }

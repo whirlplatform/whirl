@@ -27,22 +27,22 @@ public class ServerModule extends ServletModule {
     protected void configureServlets() {
         // фильтр кеширования запросов
         filter("/application", "/application/application.nocache.js")
-                .through(CacheFilter.class);
+            .through(CacheFilter.class);
         // фильтр для локалей
         filter("/*").through(I18NFilter.class);
 
         // Основная страница
         serve("/app").with(MainController.class);
         // Сервлет RPC
-//        serve("/application/data").with(DataServiceImpl.class);
+        //        serve("/application/data").with(DataServiceImpl.class);
         // Регистрация REST приложения
         HashMap<String, String> servletParams = new HashMap<>();
         servletParams.put("javax.ws.rs.Application", RestApplication.class.getName());
         bind(ServletContainer.class).in(Scopes.SINGLETON);
         serve("/application/data/*").with(ServletContainer.class, servletParams);
 
-//        serve("/application").with(HttpServletDispatcher.class, servletParams);
-//        bind(HttpServletDispatcher.class).in(Scopes.SINGLETON);
+        //        serve("/application").with(HttpServletDispatcher.class, servletParams);
+        //        bind(HttpServletDispatcher.class).in(Scopes.SINGLETON);
         bind(JacksonJsonProvider.class);
         bind(DataServiceImpl.class);
         bind(JsonParamConverterProvider.class);
@@ -64,7 +64,7 @@ public class ServerModule extends ServletModule {
         // Сервлет файлы для таблиц
         serve("/file").with(FileServlet.class);
         // Сервлет вызова сервисов
-//        serveRegex("/service/([a-z]+)/([a-z]+)$").with(RewriteRunner.class);
+        //        serveRegex("/service/([a-z]+)/([a-z]+)$").with(RewriteRunner.class);
         // Сервлет для статики
         serveRegex("/static/.+$").with(StaticResourceServlet.class);
         //Jobs

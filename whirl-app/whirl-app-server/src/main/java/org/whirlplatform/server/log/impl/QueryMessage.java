@@ -16,7 +16,7 @@ public class QueryMessage extends AbstractMessage {
         StringBuilder builder = new StringBuilder();
 
         builder.append("{\"type\": \"executeQuery\", \"sql\": \"")
-                .append(sql.replaceAll("\"", "\\\"")).append("\"}");
+            .append(sql.replaceAll("\"", "\\\"")).append("\"}");
 
         return getFullLogMessage(builder.toString());
     }

@@ -99,7 +99,7 @@ public class XMLApplicationImporter {
 
     @SuppressWarnings("unchecked")
     ApplicationElement buildApplication(InputStream stream, MetadataStore loader)
-            throws DocumentException {
+        throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(stream);
         Element appEl = document.getRootElement();
@@ -115,8 +115,8 @@ public class XMLApplicationImporter {
 
         if (MetadataSerializer.CURRENT_VERSION != metaversion) {
             throw new DocumentException(
-                    "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: "
-                        + metaversion);
+                "Metadata version must be " + MetadataSerializer.CURRENT_VERSION + ". Got: "
+                    + metaversion);
         }
 
         application = new ApplicationElement();
@@ -268,7 +268,7 @@ public class XMLApplicationImporter {
                 Element tableRightsEl = rightsEl.element("tableRights");
                 if (tableRightsEl != null) {
                     for (Element collectionEl : (List<Element>) tableRightsEl.elements(
-                            "collection")) {
+                        "collection")) {
                         RightCollectionElement collection = buildTableRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
@@ -283,9 +283,9 @@ public class XMLApplicationImporter {
                 Element tableColumnRightsEl = rightsEl.element("tableColumnRights");
                 if (tableColumnRightsEl != null) {
                     for (Element collectionEl : (List<Element>) tableColumnRightsEl.elements(
-                            "collection")) {
+                        "collection")) {
                         RightCollectionElement collection =
-                                buildTableColumnRightCollection(collectionEl);
+                            buildTableColumnRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
                         }
@@ -299,13 +299,13 @@ public class XMLApplicationImporter {
                 Element eventRightsEl = rightsEl.element("eventRights");
                 if (eventRightsEl != null) {
                     for (Element collectionEl : (List<Element>) eventRightsEl.elements(
-                            "collection")) {
+                        "collection")) {
                         RightCollectionElement collection = buildEventRightCollection(collectionEl);
                         if (collection == null) {
                             continue;
                         }
                         application.setEventRightCollection((EventElement) collection.getElement(),
-                                collection);
+                            collection);
                     }
                 }
             }
@@ -696,7 +696,7 @@ public class XMLApplicationImporter {
 
     @SuppressWarnings("unchecked")
     private PropertyValue buildPropertyValue(DataType type, Element propertyEl)
-            throws DocumentException {
+        throws DocumentException {
 
         Element defaulLocaleEl = propertyEl.element("defaultLocale");
         LocaleElement defaultLocale = parseLocale(defaulLocaleEl.attributeValue("locale"));
@@ -752,7 +752,7 @@ public class XMLApplicationImporter {
                 @Override
                 public void run() {
                     event.setDataSource(
-                            map(propertiesEl.elementText("dataSourceId"), DataSourceElement.class));
+                        map(propertiesEl.elementText("dataSourceId"), DataSourceElement.class));
                 }
             });
 
@@ -781,7 +781,7 @@ public class XMLApplicationImporter {
                 @Override
                 public void run() {
                     event.setComponent(
-                            map(propertiesEl.elementText("componentId"), ComponentElement.class));
+                        map(propertiesEl.elementText("componentId"), ComponentElement.class));
                 }
             });
         }
@@ -790,8 +790,8 @@ public class XMLApplicationImporter {
                 @Override
                 public void run() {
                     event.setTargetComponent(
-                            map(propertiesEl.elementText("targetComponentId"),
-                                    ComponentElement.class));
+                        map(propertiesEl.elementText("targetComponentId"),
+                            ComponentElement.class));
                 }
             });
         }
@@ -807,7 +807,7 @@ public class XMLApplicationImporter {
         if (parametersEl != null) {
             for (Element paramEl : (List<Element>) parametersEl.elements()) {
                 ParameterType eventParamType =
-                        ParameterType.valueOf(paramEl.attributeValue("type"));
+                    ParameterType.valueOf(paramEl.attributeValue("type"));
                 final EventParameterElement param = new EventParameterElement(eventParamType);
 
                 param.setId(paramEl.attributeValue("id"));
@@ -831,7 +831,7 @@ public class XMLApplicationImporter {
                 if (dataTypeStr != null) {
                     DataType dataType = DataType.valueOf(dataTypeStr);
                     param.setValue(parseStringValue(dataType, paramEl.getText(),
-                            paramEl.attributeValue("label")));
+                        paramEl.attributeValue("label")));
                 }
                 event.addParameter(param);
             }
@@ -921,7 +921,7 @@ public class XMLApplicationImporter {
                 // быть
                 // null
                 model.setEmptyText(
-                        buildPropertyValue(DataType.STRING, requestEl.element("emptyText")));
+                    buildPropertyValue(DataType.STRING, requestEl.element("emptyText")));
                 model.setSql(requestEl.elementText("query"));
 
                 if (requestEl.element("dataSourceId") != null) {
@@ -929,7 +929,7 @@ public class XMLApplicationImporter {
                         @Override
                         public void run() {
                             model.setDataSource(map(requestEl.elementText("dataSourceId"),
-                                    DataSourceElement.class));
+                                DataSourceElement.class));
                         }
                     });
 
@@ -993,7 +993,7 @@ public class XMLApplicationImporter {
                 fd.setClassId(fieldEl.attributeValue("classid"));
                 if (!StringUtils.isEmpty(fieldEl.attributeValue("listViewType"))) {
                     fd.setListViewType(
-                            ListViewType.valueOf(fieldEl.attributeValue("listViewType")));
+                        ListViewType.valueOf(fieldEl.attributeValue("listViewType")));
                 }
             }
             fields.add(fd);
@@ -1033,13 +1033,13 @@ public class XMLApplicationImporter {
     }
 
     public ApplicationElement buildApplicationFromString(String xml, MetadataStore loader)
-            throws DocumentException {
+        throws DocumentException {
         InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
         return buildApplication(stream, loader);
     }
 
     private DataValue parseStringValue(DataType type, String value, String label)
-            throws DocumentException {
+        throws DocumentException {
         DataValue result = new DataValueImpl(type);
         if (DataType.BOOLEAN == type) {
             result.setValue(Boolean.valueOf(value));
@@ -1100,8 +1100,8 @@ public class XMLApplicationImporter {
         try {
 
             ApplicationElement reference = loader
-                    .loadApplication(code, version == null ? null : Version.parseVersion(version),
-                            true);
+                .loadApplication(code, version == null ? null : Version.parseVersion(version),
+                    true);
             if (reference == null) {
                 return null;
             }

@@ -1,4 +1,3 @@
-
 package org.whirlplatform.rpc.server;
 
 import com.google.inject.Singleton;
@@ -202,13 +201,13 @@ public class DataServiceImpl implements DataService, DirectRestService {
         token.setSessionId(request.getSession().getId());
         try {
             SessionManager.get(
-                    // getThreadLocalRequest().getSession().getServletContext())
-                    request.getSession()).unregisterUser(token);
+                // getThreadLocalRequest().getSession().getServletContext())
+                request.getSession()).unregisterUser(token);
             return true;
         } catch (Exception e) {
             _log.error(e);
             throw new CustomException(
-                    I18NMessage.getMessage(getLocaleByString(null)).error() + ": logout()");
+                I18NMessage.getMessage(getLocaleByString(null)).error() + ": logout()");
         }
     }
 
@@ -298,7 +297,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
         HttpSession session = request.getSession();
 
         Map<String, FileUpload> map =
-                (Map<String, FileUpload>) session.getAttribute("SESSION_FILE_MAP");
+            (Map<String, FileUpload>) session.getAttribute("SESSION_FILE_MAP");
         Set<FileItem> files = new HashSet<FileItem>();
 
         if (map == null) {
@@ -332,7 +331,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
     @Override
     public FormModel getForm(SessionToken token, String formId, ListHolder<DataValue> parameters) {
         FormModel form =
-                connector().getForm(formId, parameters.getList(), getApplicationUser(token));
+            connector().getForm(formId, parameters.getList(), getApplicationUser(token));
         return form;
     }
 
@@ -361,11 +360,11 @@ public class DataServiceImpl implements DataService, DirectRestService {
 
         if (event.getId().equals(session.getAttribute(DEFINED_NEXT_EVENT))) {
             Map<String, DataValue> nonSerializableParams = (Map<String, DataValue>) session
-                    .getAttribute(NON_SERIALAZABLE_PARAMS);
+                .getAttribute(NON_SERIALAZABLE_PARAMS);
             for (DataValue paramFromList : paramList) {
                 FileValue fileValue;
                 if (paramFromList.getType() == DataType.FILE
-                        && (fileValue = paramFromList.getFileValue()) != null) {
+                    && (fileValue = paramFromList.getFileValue()) != null) {
                     DataValue paramFromSession = nonSerializableParams.get(fileValue.getTempId());
                     if (paramFromSession != null) {
                         paramList.set(paramList.indexOf(paramFromList), paramFromSession);
@@ -415,31 +414,31 @@ public class DataServiceImpl implements DataService, DirectRestService {
         // файл, то файлы не возвращаются обратно на сервер
         if (result.getNextEventCode() != null) {
             EventMetadata nextEvent = connector().getNextEvent(event, result.getNextEventCode(),
-                    getApplicationUser(token));
+                getApplicationUser(token));
             result.setNextEvent(nextEvent);
             if (nextEvent != null) {
                 // проверяем, что есть праметры которые надо достать с клиента
                 boolean hasClientParameter = false;
                 ArrayList<EventParameter> allParams =
-                        new ArrayList<>(result.getParametersMap().values());
+                    new ArrayList<>(result.getParametersMap().values());
                 allParams.addAll(nextEvent.getParametersList());
 
                 for (EventParameter p : allParams) {
                     ParameterType t = p.getType();
                     hasClientParameter =
-                            t == ParameterType.COMPONENT || t == ParameterType.COMPONENTCODE
-                                    || t == ParameterType.STORAGE;
+                        t == ParameterType.COMPONENT || t == ParameterType.COMPONENTCODE
+                            || t == ParameterType.STORAGE;
                     if (hasClientParameter) {
                         break;
                     }
                 }
                 boolean isNextServerEvent = nextEvent.getType() == EventType.DatabaseFunction
-                        || nextEvent.getType() == EventType.Java;
+                    || nextEvent.getType() == EventType.Java;
                 // если событие серверное и нет параметров с клиента, то можем
                 // выполнить сразу
                 if (nextEvent != null && isNextServerEvent && !hasClientParameter) {
                     result = executeServer(token, nextEvent,
-                            new ListHolder<DataValue>(extractValues(result)));
+                        new ListHolder<DataValue>(extractValues(result)));
                     // если след.событие серверное, но есть параметры с клиента.
                 } else if (nextEvent != null && isNextServerEvent && hasClientParameter) {
                     Map<String, DataValue> nonSerializableParams = new HashMap<>();
@@ -474,7 +473,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
         // metadata.setSource(meta.getSource());
         JavaFunctionMessage msg = new JavaFunctionMessage(user, metadata, parameters);
         RunningEvent ev = new RunningEvent(RunningEvent.Type.JAVAEVENT, metadata.getCode(), "",
-                user.getLogin()) {
+            user.getLogin()) {
             @Override
             public void onStop() {
                 // Не понятно как остановить выполнение
@@ -483,8 +482,8 @@ public class DataServiceImpl implements DataService, DirectRestService {
 
         try (Profile p = new ProfileImpl(msg, ev)) {
             JavaExecutor exec =
-                    new JavaExecutor(connector(), connectionProvider, user, metadata.getSource(),
-                            servletContext);
+                new JavaExecutor(connector(), connectionProvider, user, metadata.getSource(),
+                    servletContext);
             EventResult result = exec.execute(parameters);
             if (result != null) {
                 if ("ERROR".equals(result.getMessageType())) {
@@ -529,8 +528,8 @@ public class DataServiceImpl implements DataService, DirectRestService {
     @Override
     public void removeToken(SessionToken token) {
         SessionManager.get(
-                // getThreadLocalRequest().getSession().getServletContext())
-                request.getSession()).markForUnregister(token);
+            // getThreadLocalRequest().getSession().getServletContext())
+            request.getSession()).markForUnregister(token);
     }
 
     public Boolean checkCaptchaCode(SessionToken token, String captchaCode,

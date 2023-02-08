@@ -63,7 +63,7 @@ import java.util.NoSuchElementException;
  */
 @SuppressWarnings("deprecation")
 public abstract class HTMLTable extends Panel implements SourcesTableEvents,
-        HasAllDragAndDropHandlers, HasClickHandlers, HasDoubleClickHandlers {
+    HasAllDragAndDropHandlers, HasClickHandlers, HasDoubleClickHandlers {
 
     private static final HTMLTableImpl impl = GWT.create(HTMLTableImpl.class);
     /**
@@ -559,12 +559,12 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
         checkRowBounds(row);
         if (column < 0) {
             throw new IndexOutOfBoundsException("Column " + column
-                    + " must be non-negative: " + column);
+                + " must be non-negative: " + column);
         }
         int cellSize = getCellCount(row);
         if (cellSize <= column) {
             throw new IndexOutOfBoundsException("Column index: " + column
-                    + ", Column size: " + getCellCount(row));
+                + ", Column size: " + getCellCount(row));
         }
     }
 
@@ -578,7 +578,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
         int rowSize = getRowCount();
         if ((row >= rowSize) || (row < 0)) {
             throw new IndexOutOfBoundsException("Row index: " + row + ", Row size: "
-                    + rowSize);
+                + rowSize);
         }
     }
 
@@ -811,7 +811,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
         // Ensure that the indices are not negative.
         if (column < 0) {
             throw new IndexOutOfBoundsException(
-                    "Cannot access a column with a negative index: " + column);
+                "Cannot access a column with a negative index: " + column);
         }
     }
 
@@ -910,13 +910,13 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
 
         @Override
         public native JsArray<Element> getRows(Element tbody) /*-{
-      return tbody.rows;
-    }-*/;
+            return tbody.rows;
+        }-*/;
 
         @Override
         public native JsArray<Element> getCells(Element row) /*-{
-      return row.cells;
-    }-*/;
+            return row.cells;
+        }-*/;
     }
 
     /**
@@ -927,13 +927,13 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
 
         @Override
         public native JsArray<Element> getRows(Element tbody) /*-{
-      return tbody.children;
-    }-*/;
+            return tbody.children;
+        }-*/;
 
         @Override
         public native JsArray<Element> getCells(Element row) /*-{
-      return row.children;
-    }-*/;
+            return row.children;
+        }-*/;
     }
 
     /**
@@ -1139,7 +1139,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
          */
         public void setStylePrimaryName(int row, int column, String styleName) {
             UIObject.setStylePrimaryName(getCellElement(bodyElem, row, column),
-                    styleName);
+                styleName);
         }
 
         /**
@@ -1155,7 +1155,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
                                          VerticalAlignmentConstant align) {
             prepareCell(row, column);
             getCellElement(bodyElem, row, column).getStyle()
-                    .setProperty("verticalAlign", align.getVerticalAlignString());
+                .setProperty("verticalAlign", align.getVerticalAlignString());
         }
 
         /**
@@ -1522,7 +1522,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
          */
         public void setVerticalAlign(int row, VerticalAlignmentConstant align) {
             ensureElement(row).getStyle()
-                    .setProperty("verticalAlign", align.getVerticalAlignString());
+                .setProperty("verticalAlign", align.getVerticalAlignString());
         }
 
         /**
@@ -1560,7 +1560,7 @@ public abstract class HTMLTable extends Panel implements SourcesTableEvents,
          */
         @Deprecated
         protected com.google.gwt.user.client.Element getRow(
-                com.google.gwt.user.client.Element tbody, int row) {
+            com.google.gwt.user.client.Element tbody, int row) {
             return DOM.asOld(impl.getRows(tbody).get(row));
         }
 

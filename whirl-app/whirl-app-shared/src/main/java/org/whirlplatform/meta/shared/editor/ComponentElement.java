@@ -136,7 +136,7 @@ public class ComponentElement extends AbstractElement {
      */
     public Collection<ContextMenuItemElement> getContextMenuItems() {
         List<ContextMenuItemElement> result =
-                new ArrayList<ContextMenuItemElement>(contextMenuItems);
+            new ArrayList<ContextMenuItemElement>(contextMenuItems);
         Collections.sort(result, ContextMenuItemElement.getComparator());
         return Collections.unmodifiableList(result);
     }

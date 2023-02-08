@@ -11,7 +11,7 @@ public class AppTreeToolBarWithSort extends AbstractAppTreeToolBar<AppTree> {
     public AppTreeToolBarWithSort(AppTree appTree) {
         super();
         menu = new SortAppTreeMenu(appTree,
-                new SortAppTreeMenuItem<AppTree>(appTree));
+            new SortAppTreeMenuItem<AppTree>(appTree));
         setContextButtonMenu(menu);
         addContextButton();
     }

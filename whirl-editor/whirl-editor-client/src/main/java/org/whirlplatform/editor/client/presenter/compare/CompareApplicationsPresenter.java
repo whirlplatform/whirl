@@ -29,8 +29,8 @@ import org.whirlplatform.meta.shared.editor.RightType;
  */
 @Presenter(view = CompareApplicationsView.class)
 public class CompareApplicationsPresenter
-        extends BasePresenter<CompareApplicationsPresenter.ICompareApplicationsView, EditorEventBus>
-        implements AppTreePresenter {
+    extends BasePresenter<CompareApplicationsPresenter.ICompareApplicationsView, EditorEventBus>
+    implements AppTreePresenter {
 
     private ComparisonState currentState;
     private ComparableAppTree currentTree;
@@ -85,7 +85,7 @@ public class CompareApplicationsPresenter
                         currentState = state;
                         view.changeState(state);
                     } else if (currentState == ComparisonState.Merged
-                            || currentState == ComparisonState.ComparedAfterMerge) {
+                        || currentState == ComparisonState.ComparedAfterMerge) {
                         changeState(ComparisonState.ComparedAfterMerge);
                     } else {
                         showWrongStateChange(state);
@@ -93,7 +93,7 @@ public class CompareApplicationsPresenter
                     break;
                 case Merged:
                     if (currentState == ComparisonState.Compared
-                            || currentState == ComparisonState.ComparedAfterMerge) {
+                        || currentState == ComparisonState.ComparedAfterMerge) {
                         currentState = state;
                         view.loadLeftApplication(leftApp, leftVersion);
                         view.setChanges(appDiff.getChanges());
@@ -150,7 +150,7 @@ public class CompareApplicationsPresenter
 
     public void mergeApplications() {
         if (currentState != ComparisonState.Compared
-                && currentState != ComparisonState.ComparedAfterMerge) {
+            && currentState != ComparisonState.ComparedAfterMerge) {
             return;
         }
         if (appDiff.getChanges().size() == 0) {
@@ -162,27 +162,27 @@ public class CompareApplicationsPresenter
         if (changes.size() == 0) {
             //TODO i18n
             InfoHelper.info("merge-impossible", "Merge impossible!",
-                    "You should select at least one element.");
+                "You should select at least one element.");
             return;
         }
         ApplicationsDiff diff = new ApplicationsDiff(changes, leftApp, rightApp);
         diff.setLeftStoreData(createAppStoreData(leftApp, leftVersion));
         diff.setRightStoreData(createAppStoreData(rightApp, rightVersion));
         EditorDataService.Util.getDataService()
-                .merge(diff, new AsyncCallback<ApplicationElement>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        appDiff = null;
-                        changeState(ComparisonState.Initialised);
-                        view.showException(caught);
-                    }
+            .merge(diff, new AsyncCallback<ApplicationElement>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    appDiff = null;
+                    changeState(ComparisonState.Initialised);
+                    view.showException(caught);
+                }
 
-                    @Override
-                    public void onSuccess(ApplicationElement result) {
-                        leftApp = result;
-                        changeState(ComparisonState.Merged);
-                    }
-                });
+                @Override
+                public void onSuccess(ApplicationElement result) {
+                    leftApp = result;
+                    changeState(ComparisonState.Merged);
+                }
+            });
     }
 
     private void showWrongStateChange(ComparisonState state) {
@@ -232,27 +232,27 @@ public class CompareApplicationsPresenter
             return;
         }
         EditorDataService.Util.getDataService()
-                .diff(leftApp, rightApp, new AsyncCallback<ApplicationsDiff>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        appDiff = null;
-                        view.showException(caught);
-                    }
+            .diff(leftApp, rightApp, new AsyncCallback<ApplicationsDiff>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    appDiff = null;
+                    view.showException(caught);
+                }
 
-                    @Override
-                    public void onSuccess(ApplicationsDiff result) {
-                        int numberOfChanges = result.getChanges().size();
-                        appDiff = result;
-                        view.setChanges(result.getChanges());
-                        changeState(ComparisonState.Compared);
-                        view.showComparisonResult(numberOfChanges);
-                    }
-                });
+                @Override
+                public void onSuccess(ApplicationsDiff result) {
+                    int numberOfChanges = result.getChanges().size();
+                    appDiff = result;
+                    view.setChanges(result.getChanges());
+                    changeState(ComparisonState.Compared);
+                    view.showComparisonResult(numberOfChanges);
+                }
+            });
     }
 
     private boolean comparisonAllowed() {
         return (currentState != ComparisonState.Start && currentState != ComparisonState.LeftLoaded
-                && currentState != ComparisonState.RightLoaded);
+            && currentState != ComparisonState.RightLoaded);
     }
 
     private ApplicationStoreData createAppStoreData(final ApplicationElement app,
@@ -306,7 +306,7 @@ public class CompareApplicationsPresenter
 
     @Override
     public void riseShowOpenApplicationsCallback(
-            Callback<ApplicationStoreData, Throwable> callback) {
+        Callback<ApplicationStoreData, Throwable> callback) {
         Info.display("Oops!", "riseShowOpenApplicationsCallback - Illegal operation");
     }
 
@@ -325,7 +325,7 @@ public class CompareApplicationsPresenter
     }
 
     public interface ICompareApplicationsView
-            extends IsWidget, ReverseViewInterface<CompareApplicationsPresenter> {
+        extends IsWidget, ReverseViewInterface<CompareApplicationsPresenter> {
         void show();
 
         void showComparisonResult(int number);

@@ -11,13 +11,13 @@ public class Events implements EventsMBean {
 
     // Синхронизация вообще нужна?
     private static final Map<String, RunningEvent> dbEvents = Collections
-            .synchronizedMap(new HashMap<String, RunningEvent>());
+        .synchronizedMap(new HashMap<String, RunningEvent>());
     private static final Map<String, RunningEvent> javaEvents = Collections
-            .synchronizedMap(new HashMap<String, RunningEvent>());
+        .synchronizedMap(new HashMap<String, RunningEvent>());
     private static final Map<String, RunningEvent> formRequests = Collections
-            .synchronizedMap(new HashMap<String, RunningEvent>());
+        .synchronizedMap(new HashMap<String, RunningEvent>());
     private static final Map<String, RunningEvent> gridRequests = Collections
-            .synchronizedMap(new HashMap<String, RunningEvent>());
+        .synchronizedMap(new HashMap<String, RunningEvent>());
 
     public static void addEvent(RunningEvent event) {
         switch (event.getType()) {
@@ -84,11 +84,11 @@ public class Events implements EventsMBean {
         for (RunningEvent e : cur.values()) {
             builder.setLength(0);
             builder.append("{\"guid\": \"").append(e.getEventGUID())
-                    .append("\", \"login\": \"").append(e.getUserLogin())
-                    .append("\", \"code\": \"").append(e.getCode())
-                    .append("\", \"sql\": \"")
-                    .append(e.getSql() == null ? "" : e.getSql().replaceAll("\"", "\\\""))
-                    .append("\"},");
+                .append("\", \"login\": \"").append(e.getUserLogin())
+                .append("\", \"code\": \"").append(e.getCode())
+                .append("\", \"sql\": \"")
+                .append(e.getSql() == null ? "" : e.getSql().replaceAll("\"", "\\\""))
+                .append("\"},");
             // eventStrings.add(e.getEventGUID() + ": " + e.getUserLogin() +
             // ": " + e.getSql());
             eventStrings.add(builder.toString());
@@ -99,7 +99,7 @@ public class Events implements EventsMBean {
             result[0] = "{\"events\": [" + result[0];
             String lastEl = result[result.length - 1];
             result[result.length - 1] = lastEl
-                    .substring(0, lastEl.length() - 1) + "]}";
+                .substring(0, lastEl.length() - 1) + "]}";
         }
         return result;
     }

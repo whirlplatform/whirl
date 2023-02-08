@@ -24,7 +24,7 @@ public class HorizontalMenuDesigner extends IndexContainerDesigner {
             @Override
             protected void onDragDrop(DndDropEvent event) {
                 HorizontalMenuDesigner.super.onRootDrop(element, builder, event.getData(),
-                        getIndex());
+                    getIndex());
                 super.onDragDrop(event);
             }
         };
@@ -36,8 +36,8 @@ public class HorizontalMenuDesigner extends IndexContainerDesigner {
         int index = locationData == null ? -1 : (Integer) locationData;
         if (index >= 0) {
             fireComponentPropertyChangeEvent(
-                    new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
-                            new PropertyValue(DataType.NUMBER, defaultLocale, index)));
+                new ComponentPropertyChangeEvent(element, PropertyType.LayoutDataIndex,
+                    new PropertyValue(DataType.NUMBER, defaultLocale, index)));
         }
     }
 

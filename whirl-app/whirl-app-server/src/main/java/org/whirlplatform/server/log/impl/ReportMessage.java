@@ -24,7 +24,7 @@ public class ReportMessage extends AbstractMessage {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"type\": \"report\", \"reportId\": \"").append(reportId).append("\", ");
         builder.append("\"reportName\": \"").append(reportName.replaceAll("\"", "\\\""))
-                .append("\", ");
+            .append("\", ");
         builder.append("\"params\": ").append(getParamsString()).append("}");
 
         return getFullLogMessage(builder.toString());

@@ -60,8 +60,8 @@ public class AutoCompletionChoice implements Serializable {
     @Override
     public int hashCode() {
         return "AutoCompletionChoice".hashCode() + text.hashCode()
-                + displayText.hashCode() + cssClassName.hashCode()
-                + replaceTextFrom.hashCode() + replaceTextTo.hashCode();
+            + displayText.hashCode() + cssClassName.hashCode()
+            + replaceTextFrom.hashCode() + replaceTextTo.hashCode();
     }
 
     @Override
@@ -74,18 +74,18 @@ public class AutoCompletionChoice implements Serializable {
         }
         AutoCompletionChoice other = (AutoCompletionChoice) o;
         return this.text.equals(other.text)
-                && this.displayText.equals(other.displayText)
-                && this.cssClassName.equals(other.cssClassName)
-                && this.replaceTextFrom.equals(other.replaceTextFrom)
-                && this.replaceTextTo.equals(other.replaceTextTo);
+            && this.displayText.equals(other.displayText)
+            && this.cssClassName.equals(other.cssClassName)
+            && this.replaceTextFrom.equals(other.replaceTextFrom)
+            && this.replaceTextTo.equals(other.replaceTextTo);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper("AutoCompletionChoice")
-                .add("text", text).add("displayText", displayText)
-                .add("cssClassName", cssClassName)
-                .add("replaceFrom", replaceTextFrom)
-                .add("replaceTo", replaceTextTo).toString();
+            .add("text", text).add("displayText", displayText)
+            .add("cssClassName", cssClassName)
+            .add("replaceFrom", replaceTextFrom)
+            .add("replaceTo", replaceTextTo).toString();
     }
 }

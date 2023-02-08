@@ -26,9 +26,9 @@ public abstract class FormBuilderOverlay {
     public static void setChild(FormBuilder instance, int row, int column,
                                 ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataFormRow.getCode(),
-                new DataValueImpl(DataType.NUMBER, row));
+            new DataValueImpl(DataType.NUMBER, row));
         builder.setProperty(PropertyType.LayoutDataFormColumn.getCode(),
-                new DataValueImpl(DataType.NUMBER, column));
+            new DataValueImpl(DataType.NUMBER, column));
         instance.addChild(builder);
     }
 
@@ -78,23 +78,22 @@ public abstract class FormBuilderOverlay {
      *
      * @param parameters список параметров  {@link DataValueOverlay DataValue}
      */
-////    public static void loadParameters(FormBuilder instance,
-//                                      DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
+    //    public static void loadParameters(FormBuilder instance,
+    //                                      DataValue[] parameters) {
+    //        instance.load(Arrays.asList(parameters));
+    //    }
 
-////    public abstract void refresh();
+    //    public abstract void refresh();
 
     /**
      * Перезагрузить компоненты формы, зависящие от выполнения запросов SQL на форме.
      *
      * @param parameters - массив параметров для выполнения запросов на форме
      */
-////    public static void refreshParameters(FormBuilder instance,
-//                                         DataValue[] parameters) {
-//        instance.refresh(Arrays.asList(parameters));
-//    }
-
+    //    public static void refreshParameters(FormBuilder instance,
+    //                                         DataValue[] parameters) {
+    //        instance.refresh(Arrays.asList(parameters));
+    //    }
     public abstract boolean isHidden();
 
     public abstract void setHidden(boolean hidden);

@@ -6,7 +6,7 @@ import org.whirlplatform.meta.shared.FilterValue;
 import org.whirlplatform.storage.client.StorageHelper;
 
 public class FilterClientStateStore extends
-        AbstractMetadataStateStore<ArrayList<FilterValue>> {
+    AbstractMetadataStateStore<ArrayList<FilterValue>> {
 
     public FilterClientStateStore(StateScope scope, ClassMetadata metadata) {
         super(scope, metadata);

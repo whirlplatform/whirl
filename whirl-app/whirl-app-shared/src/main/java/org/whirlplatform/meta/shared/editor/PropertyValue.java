@@ -19,7 +19,7 @@ public class PropertyValue implements Serializable, Cloneable {
     private LocaleElement defaultLocale;
     private Map<LocaleElement, DataValue> values = new HashMap<LocaleElement, DataValue>();
     private Map<LocaleElement, DataValue> replaceableValues =
-            new HashMap<LocaleElement, DataValue>();
+        new HashMap<LocaleElement, DataValue>();
 
     public PropertyValue() {
     }
@@ -114,10 +114,10 @@ public class PropertyValue implements Serializable, Cloneable {
         final int prime = 31;
         int result = 1;
         result = prime * result
-                + ((defaultLocale == null) ? 0 : defaultLocale.hashCode());
+            + ((defaultLocale == null) ? 0 : defaultLocale.hashCode());
         result = prime * result + (replaceable ? 1231 : 1237);
         result = prime * result + ((replaceableValues == null) ? 0
-                : replaceableValues.hashCode());
+            : replaceableValues.hashCode());
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         result = prime * result + ((values == null) ? 0 : values.hashCode());
         return result;
@@ -181,12 +181,12 @@ public class PropertyValue implements Serializable, Cloneable {
         clone.type = type;
         for (Entry<LocaleElement, DataValue> e : values.entrySet()) {
             clone.values.put(e.getKey() != null ? e.getKey().clone() : null,
-                    e.getValue() != null ? e.getValue().clone() : null);
+                e.getValue() != null ? e.getValue().clone() : null);
         }
         for (Entry<LocaleElement, DataValue> e : replaceableValues.entrySet()) {
             clone.replaceableValues.put(
-                    e.getKey() != null ? e.getKey().clone() : null,
-                    e.getValue() != null ? e.getValue().clone() : null);
+                e.getKey() != null ? e.getKey().clone() : null,
+                e.getValue() != null ? e.getValue().clone() : null);
         }
         return clone;
     }

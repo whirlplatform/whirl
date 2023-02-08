@@ -36,13 +36,13 @@ public abstract class AbstractAppTreePart<T extends AbstractElement> implements 
         return reference;
     }
 
+    protected void setReference(boolean reference) {
+        this.reference = reference;
+    }
+
     @Override
     public boolean isReference(AbstractElement element) {
         return reference;
-    }
-
-    protected void setReference(boolean reference) {
-        this.reference = reference;
     }
 
     protected void addRootElement(AbstractElement element) {

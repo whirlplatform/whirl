@@ -25,8 +25,8 @@ public class TreeMenuDropTarget extends DropTarget {
     @Override
     protected void showFeedback(DndDragMoveEvent event) {
         final TreeNode item = tree.findNode(
-                event.getDragMoveEvent().getNativeEvent().getEventTarget()
-                        .cast());
+            event.getDragMoveEvent().getNativeEvent().getEventTarget()
+                .cast());
 
         if (item != null && !tree.getStore().getRootItems().contains(item.getModel())) {
             // skipped
@@ -45,7 +45,7 @@ public class TreeMenuDropTarget extends DropTarget {
             }
         } else {
             showInsert(tree.findNode(tree.getStore().getChild(tree.getStore().getRootCount() - 1))
-                    .getElement(), false);
+                .getElement(), false);
             insertIndex = tree.getStore().getRootCount();
         }
     }

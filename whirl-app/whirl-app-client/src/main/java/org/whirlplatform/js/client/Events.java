@@ -26,7 +26,7 @@ public class Events {
             public void onSuccess(EventMetadata result) {
                 if (result == null) {
                     failFunction.fail("Event not found: "
-                            + eventCode);
+                        + eventCode);
                     return;
                 }
                 for (EventParameterImpl param : params) {

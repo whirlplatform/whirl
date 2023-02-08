@@ -19,10 +19,10 @@ import org.whirlplatform.storage.client.StorageHelper;
 
 public class ParameterHelper {
 
-    private List<String> parameterIds = new ArrayList<String>();
-    private List<String> parameterCodes = new ArrayList<String>();
-    private List<String> storageCodes = new ArrayList<String>();
-    private Map<String, String> staticValues = new HashMap<String, String>();
+    private final List<String> parameterIds = new ArrayList<String>();
+    private final List<String> parameterCodes = new ArrayList<String>();
+    private final List<String> storageCodes = new ArrayList<String>();
+    private final Map<String, String> staticValues = new HashMap<String, String>();
 
     /**
      * Добавление параметров
@@ -129,8 +129,8 @@ public class ParameterHelper {
     /**
      * Возвращает список значений
      *
-     * @param parameters - List< DataValue >
-     * @return List< DataValue >
+     * @param parameters - List
+     * @return List
      */
     public List<DataValue> getValueList(List<DataValue> parameters) {
         List<DataValue> allParams = new ArrayList<DataValue>();

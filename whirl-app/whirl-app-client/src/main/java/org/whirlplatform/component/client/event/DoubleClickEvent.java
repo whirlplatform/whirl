@@ -40,7 +40,7 @@ public class DoubleClickEvent extends GwtEvent<DoubleClickHandler> {
     public interface HasDoubleClickHandlers {
 
         HandlerRegistration addDoubleClickHandler(
-                DoubleClickHandler handler);
+            DoubleClickHandler handler);
 
     }
 

@@ -66,7 +66,7 @@ public class SessionToken implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result
-                + ((sessionId == null) ? 0 : sessionId.hashCode());
+            + ((sessionId == null) ? 0 : sessionId.hashCode());
         result = prime * result + ((tokenId == null) ? 0 : tokenId.hashCode());
         return result;
     }

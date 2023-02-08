@@ -28,13 +28,13 @@ public class MainInitializerServlet extends QuartzInitializerServlet {
         super.init(ctx);
         // джоб на убивание устаревших сессий
         JobDetail sessionJob =
-                JobBuilder.newJob(SessionKillerJob.class).withIdentity("SessionJob").build();
+            JobBuilder.newJob(SessionKillerJob.class).withIdentity("SessionJob").build();
         Trigger sessionTrigger = TriggerBuilder.newTrigger().forJob(sessionJob).withPriority(5)
-                .startAt(DateBuilder.futureDate(31, IntervalUnit.SECOND))
-                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(30)).build();
+            .startAt(DateBuilder.futureDate(31, IntervalUnit.SECOND))
+            .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(30)).build();
 
         StdSchedulerFactory factory =
-                (StdSchedulerFactory) ctx.getServletContext().getAttribute(QUARTZ_FACTORY_KEY);
+            (StdSchedulerFactory) ctx.getServletContext().getAttribute(QUARTZ_FACTORY_KEY);
         try {
             Scheduler scheduler = factory.getScheduler();
             scheduler.scheduleJob(sessionJob, sessionTrigger);

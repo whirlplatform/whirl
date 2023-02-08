@@ -11,8 +11,8 @@ public class UploadField extends FileUploadField {
     public UploadField() {
         super();
         fileId = AppConstant.FORM_UPLOAD + "_FILE_"
-                + String.valueOf(System.currentTimeMillis())
-                + String.valueOf(Random.nextInt());
+            + System.currentTimeMillis()
+            + Random.nextInt();
         setName("file");
     }
 

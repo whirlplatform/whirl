@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.report;
 
 import java.awt.Color;
@@ -125,7 +124,7 @@ public class XLSXReportWriter extends FormWriter {
                 if (c.getBackgroundColor() != null) {
                     String tmpColor = c.getBackgroundColor();
                     tmpColor = tmpColor.startsWith("#") ? tmpColor.replace("#", "0x") :
-                            "0x".concat(tmpColor);
+                        "0x".concat(tmpColor);
                     s.setFillForegroundColor(new XSSFColor(Color.decode(tmpColor)));
                 } else if (backgroud != null) {
                     s.setFillForegroundColor(new XSSFColor(backgroud));
@@ -165,11 +164,11 @@ public class XLSXReportWriter extends FormWriter {
                 if (c.getComponent() != null) {
                     ComponentModel component = c.getComponent();
                     if (c.getComponent().getType() == ComponentType.LabelType
-                            || c.getComponent().getType() == ComponentType.HtmlType) {
+                        || c.getComponent().getType() == ComponentType.HtmlType) {
                         XSSFFont font = (XSSFFont) workbook.createFont();
 
                         String color = !component.containsValue(PropertyType.Color.getCode()) ? null
-                                : component.getValue(PropertyType.Color.getCode()).getString();
+                            : component.getValue(PropertyType.Color.getCode()).getString();
                         if (color != null) {
                             font.setColor(new XSSFColor(Color.decode(color.replace("#", "0x"))));
                         } else {
@@ -177,20 +176,20 @@ public class XLSXReportWriter extends FormWriter {
                         }
 
                         String weight =
-                                !component.containsValue(PropertyType.FontWeight.getCode()) ? null
-                                        : component.getValue(PropertyType.FontWeight.getCode())
-                                        .getString();
+                            !component.containsValue(PropertyType.FontWeight.getCode()) ? null
+                                : component.getValue(PropertyType.FontWeight.getCode())
+                                .getString();
                         if (weight != null) {
                             if ("bold".equalsIgnoreCase(weight)
-                                    || "bolder".equalsIgnoreCase(weight)) {
+                                || "bolder".equalsIgnoreCase(weight)) {
                                 font.setBold(true);
                             }
                         }
 
                         String size =
-                                !component.containsValue(PropertyType.FontSize.getCode()) ? null
-                                        : component.getValue(PropertyType.FontSize.getCode())
-                                        .getString();
+                            !component.containsValue(PropertyType.FontSize.getCode()) ? null
+                                : component.getValue(PropertyType.FontSize.getCode())
+                                .getString();
                         if (size != null) {
                             if (size.contains("px")) {
                                 try {
@@ -217,9 +216,9 @@ public class XLSXReportWriter extends FormWriter {
                         }
 
                         String style =
-                                !component.containsValue(PropertyType.FontStyle.getCode()) ? null
-                                        : component.getValue(PropertyType.FontStyle.getCode())
-                                        .getString();
+                            !component.containsValue(PropertyType.FontStyle.getCode()) ? null
+                                : component.getValue(PropertyType.FontStyle.getCode())
+                                .getString();
                         if (style != null) {
                             if ("italic".equalsIgnoreCase(style)) {
                                 font.setItalic(true);
@@ -227,9 +226,9 @@ public class XLSXReportWriter extends FormWriter {
                         }
 
                         String fontName =
-                                !component.containsValue(PropertyType.FontFamily.getCode()) ? null
-                                        : component.getValue(PropertyType.FontFamily.getCode())
-                                        .getString();
+                            !component.containsValue(PropertyType.FontFamily.getCode()) ? null
+                                : component.getValue(PropertyType.FontFamily.getCode())
+                                .getString();
                         if (fontName != null) {
                             font.setFontName(fontName);
                         } else {
@@ -239,11 +238,11 @@ public class XLSXReportWriter extends FormWriter {
                         s.setFont(font);
                     }
                     if (ComponentType.LabelType == c.getComponent().getType()
-                            || ComponentType.HtmlType == c.getComponent().getType()) {
+                        || ComponentType.HtmlType == c.getComponent().getType()) {
                         String format = !c.getComponent()
-                                .containsValue(PropertyType.ReportDataFormat.getCode()) ? null
-                                : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode())
-                                .getString();
+                            .containsValue(PropertyType.ReportDataFormat.getCode()) ? null
+                            : c.getComponent().getValue(PropertyType.ReportDataFormat.getCode())
+                            .getString();
                         if (format != null && !format.isEmpty()) {
                             s.setDataFormat(helper.createDataFormat().getFormat(format));
                         }
@@ -282,8 +281,8 @@ public class XLSXReportWriter extends FormWriter {
         if (rowSpan > 1 || colSpan > 1) {
             int col = cell.getColumn().getFinalCol();
             sheet.addMergedRegion(
-                    new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
-                            col + cell.getColSpan() - 1));
+                new CellRangeAddress(currentRow, currentRow + cell.getRowSpan() - 1, col,
+                    col + cell.getColSpan() - 1));
         }
     }
 
@@ -323,7 +322,7 @@ public class XLSXReportWriter extends FormWriter {
         writeComponent(component);
 
         CellStyle style =
-                styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
+            styleMap.get(new XPoint(cell.getRow().getRow(), cell.getColumn().getCol()));
         currentCell.setCellStyle(style);
         // end cell
     }
@@ -335,7 +334,7 @@ public class XLSXReportWriter extends FormWriter {
         }
         if (component.hasValues()) {
             component.setValue("Type",
-                    new DataValueImpl(DataType.STRING, component.getType().name()));
+                new DataValueImpl(DataType.STRING, component.getType().name()));
             writeComponentProperties(component);
         }
         // end component
@@ -343,11 +342,11 @@ public class XLSXReportWriter extends FormWriter {
 
     private void writeComponentProperties(ComponentModel component) {
         if (ComponentType.LabelType == component.getType()
-                || ComponentType.HtmlType == component.getType()) {
+            || ComponentType.HtmlType == component.getType()) {
             String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
-                    : component.getValue(PropertyType.Html.getCode()).getString();
+                : component.getValue(PropertyType.Html.getCode()).getString();
             String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null
-                    : component.getValue(PropertyType.ReportDataType.getCode()).getString();
+                : component.getValue(PropertyType.ReportDataType.getCode()).getString();
             if (ReportDataType.NUMBER.name().equals(type)) {
                 currentCell.setCellType(CellType.NUMERIC);
                 if (valueStr == null || valueStr.isEmpty()) {

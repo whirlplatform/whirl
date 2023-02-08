@@ -139,11 +139,11 @@ public class SearchGraphVisitorTest {
         SearchGraphVisitor visitor = new SearchGraphVisitor();
 
         ComponentElement findedComponent =
-                visitor.search(application, thirdSecondComponent.getId());
+            visitor.search(application, thirdSecondComponent.getId());
         assertEquals("Component not found", thirdSecondComponent, findedComponent);
 
         EventElement findedEvent =
-                visitor.search(application, rootFirstSecondESecondEFirstEvent.getId());
+            visitor.search(application, rootFirstSecondESecondEFirstEvent.getId());
         assertEquals("Event not found", rootFirstSecondESecondEFirstEvent, findedEvent);
 
     }

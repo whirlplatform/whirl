@@ -8,7 +8,7 @@ import org.whirlplatform.meta.shared.editor.AbstractElement;
  */
 @SuppressWarnings("serial")
 public abstract class AbstractDummyElement extends AbstractElement
-        implements VisitableTreeElement, TreeDummy {
+    implements VisitableTreeElement, TreeDummy {
 
     public AbstractDummyElement() {
         super();

@@ -59,8 +59,8 @@ public class FragmentManager implements ValueChangeHandler<String> {
 
     public void setParameter(String name, String value, boolean issueEvent) {
         if (name != null
-                && (fragments.get(name) == null || (fragments.get(name) != null && !fragments
-                .get(name).equals(value)))) {
+            && (fragments.get(name) == null || (fragments.get(name) != null && !fragments
+            .get(name).equals(value)))) {
             oldFragments = new HashMap<>();
             oldFragments.putAll(fragments);
             if (value == null) {

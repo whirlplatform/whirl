@@ -53,20 +53,20 @@ public abstract class MultiComboBoxBuilderOverlay {
 
     public abstract void focus();
 
-////    @Deprecated
-//    public abstract void setFieldValue(RowListValue value);
+    //    @Deprecated
+    //    public abstract void setFieldValue(RowListValue value);
 
-////    @Deprecated
-//    public abstract RowListValue getFieldValue();
-//
-////    public static RowListValue getDataValue(MultiComboBoxBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(MultiComboBoxBuilder instance,
-//                                    RowListValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    @Deprecated
+    //    public abstract RowListValue getFieldValue();
+    //
+    //    public static RowListValue getDataValue(MultiComboBoxBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(MultiComboBoxBuilder instance,
+    //                                    RowListValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     public abstract String getText();
 

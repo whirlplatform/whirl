@@ -44,12 +44,12 @@ public class ChangesSorter {
 
     public List<ChangeUnit> getChangeUnits(final String elementId) {
         return (changesExist(elementId)) ? changesMap.get(elementId).getChangeUnits() :
-                new ArrayList<ChangeUnit>();
+            new ArrayList<ChangeUnit>();
     }
 
     public ElementChangeState getChangeState(final String elementId) {
         return (changesExist(elementId)) ? changesMap.get(elementId).getChangeState() :
-                ElementChangeState.NONE;
+            ElementChangeState.NONE;
     }
 
     public void clear() {

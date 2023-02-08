@@ -70,7 +70,7 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public class ReflectionJaversDiffer
-        implements Differ, ElementVisitor<ReflectionJaversDiffer.ChangeDifferContext> {
+    implements Differ, ElementVisitor<ReflectionJaversDiffer.ChangeDifferContext> {
 
     private static final Set<Class<?>> ENTITIES = new HashSet<>();
     private static final Set<Class<?>> VALUES = new HashSet<>();
@@ -98,7 +98,7 @@ public class ReflectionJaversDiffer
     private static void collectAllSubclasses(Set<Class<?>> collection, Class<?> superclass) {
         try {
             Set<ClassInfo> classes = ClassPath.from(superclass.getClassLoader())
-                    .getTopLevelClassesRecursive(Reflection.getPackageName(superclass));
+                .getTopLevelClassesRecursive(Reflection.getPackageName(superclass));
             for (ClassInfo info : classes) {
                 Class<?> base = info.load();
                 if (base.isInterface() || base.isEnum()) {
@@ -120,7 +120,7 @@ public class ReflectionJaversDiffer
 
     @Override
     public ApplicationsDiff diff(ApplicationElement left, ApplicationElement right)
-            throws DiffException {
+        throws DiffException {
         init();
         List<ChangeUnit> result = new ArrayList<>();
         Set<AbstractElement> excluded = new HashSet<>();
@@ -132,8 +132,8 @@ public class ReflectionJaversDiffer
             Object o = c.getAffectedObject().get();
             if (o instanceof AbstractElement) {
                 ChangeDifferContext context =
-                        new ChangeDifferContext(left, right, result, c, diff.getChanges(),
-                                excluded);
+                    new ChangeDifferContext(left, right, result, c, diff.getChanges(),
+                        excluded);
                 ((AbstractElement) o).accept(context, this);
             }
         }
@@ -181,44 +181,44 @@ public class ReflectionJaversDiffer
         if (ctx.isValueChange()) {
             ValueChange value = ctx.getValueChange();
             result.add(new ChangeUnit(ChangeType.Change, element, value.getPropertyName(), null,
-                    ctx.<Serializable>findObject(value.getRight()),
-                    ctx.findObject(value.getLeft())));
+                ctx.<Serializable>findObject(value.getRight()),
+                ctx.findObject(value.getLeft())));
         } else if (ctx.isReferenceChange()) {
             ReferenceChange reference = ctx.getReferenceChange();
             result.add(new ChangeUnit(ChangeType.Change, element, reference.getPropertyName(), null,
-                    !reference.getRightObject().isPresent() ? null :
-                            reference.getRightObject().get(),
-                    !reference.getLeftObject().isPresent() ? null :
-                            (Serializable) reference.getLeftObject().get()));
+                !reference.getRightObject().isPresent() ? null :
+                    reference.getRightObject().get(),
+                !reference.getLeftObject().isPresent() ? null :
+                    (Serializable) reference.getLeftObject().get()));
         } else if (ctx.isCollectionChange()) {
             CollectionChange collection = ctx.getCollectionChange();
             for (ValueAdded e : collection.getValueAddedChanges()) {
                 result.add(new ChangeUnit(ChangeType.Add, element, collection.getPropertyName(),
-                        e.getIndex(),
-                        ctx.<Serializable>findObject(e.getValue())));
+                    e.getIndex(),
+                    ctx.<Serializable>findObject(e.getValue())));
             }
             for (ValueRemoved e : collection.getValueRemovedChanges()) {
                 result.add(new ChangeUnit(ChangeType.Remove, element, collection.getPropertyName(),
-                        e.getIndex(), null,
-                        ctx.findObject(e.getValue())));
+                    e.getIndex(), null,
+                    ctx.findObject(e.getValue())));
             }
         } else if (ctx.isMapChange()) {
             MapChange map = ctx.getMapChange();
             for (EntryAdded e : map.getEntryAddedChanges()) {
                 result.add(new ChangeUnit(ChangeType.Add, element, map.getPropertyName(),
-                        ctx.<Serializable>findObject(e.getKey()),
-                        ctx.<Serializable>findObject(e.getValue())));
+                    ctx.<Serializable>findObject(e.getKey()),
+                    ctx.<Serializable>findObject(e.getValue())));
             }
             for (EntryRemoved e : map.getEntryRemovedChanges()) {
                 result.add(new ChangeUnit(ChangeType.Remove, element, map.getPropertyName(),
-                        ctx.<Serializable>findObject(e.getKey()),
-                        ctx.<Serializable>findObject(e.getValue())));
+                    ctx.<Serializable>findObject(e.getKey()),
+                    ctx.<Serializable>findObject(e.getValue())));
             }
             for (EntryValueChange e : map.getEntryValueChanges()) {
                 result.add(new ChangeUnit(ChangeType.Change, element, map.getPropertyName(),
-                        ctx.<Serializable>findObject(e.getKey()),
-                        ctx.<Serializable>findObject(e.getRightValue()),
-                        ctx.findObject(e.getLeftValue())));
+                    ctx.<Serializable>findObject(e.getKey()),
+                    ctx.<Serializable>findObject(e.getRightValue()),
+                    ctx.findObject(e.getLeftValue())));
             }
         }
         return result;
@@ -234,26 +234,26 @@ public class ReflectionJaversDiffer
     @Override
     public void visit(ChangeDifferContext ctx, ApplicationElement element) {
         if (ctx.isMapChange() && ("tableRights".equals(ctx.getProperty())
-                || "tableColumnRights".equals(ctx.getProperty())
-                || "eventRights".equals(ctx.getProperty()))) {
+            || "tableColumnRights".equals(ctx.getProperty())
+            || "eventRights".equals(ctx.getProperty()))) {
             MapChange map = ctx.getMapChange();
             for (EntryAdded e : map.getEntryAddedChanges()) {
                 AbstractElement key =
-                        search.search(element, (String) ((InstanceId) e.getKey()).getCdoId());
+                    search.search(element, (String) ((InstanceId) e.getKey()).getCdoId());
                 RightCollectionElement value = (RightCollectionElement) e.getValue();
                 ctx.addResult(
-                        new ChangeUnit(ChangeType.Add, element, map.getPropertyName(), key, value));
+                    new ChangeUnit(ChangeType.Add, element, map.getPropertyName(), key, value));
             }
             for (EntryRemoved e : map.getEntryRemovedChanges()) {
                 ctx.addResult(new ChangeUnit(ChangeType.Remove, element, map.getPropertyName(),
-                        search.search(element, (String) ((InstanceId) e.getKey()).getCdoId()),
-                        ctx.<Serializable>findObject(e.getValue())));
+                    search.search(element, (String) ((InstanceId) e.getKey()).getCdoId()),
+                    ctx.<Serializable>findObject(e.getValue())));
             }
             for (EntryValueChange e : map.getEntryValueChanges()) {
                 ctx.addResult(new ChangeUnit(ChangeType.Change, element, map.getPropertyName(),
-                        search.search(element, (String) ((InstanceId) e.getKey()).getCdoId()),
-                        ctx.<Serializable>findObject(e.getRightValue()),
-                        ctx.findObject(e.getLeftValue())));
+                    search.search(element, (String) ((InstanceId) e.getKey()).getCdoId()),
+                    ctx.<Serializable>findObject(e.getRightValue()),
+                    ctx.findObject(e.getLeftValue())));
             }
             return;
         }
@@ -269,10 +269,10 @@ public class ReflectionJaversDiffer
             ChangeUnit change = null;
             PropertyType key = (PropertyType) ec.getKey();
             if (ec instanceof EntryValueChange
-                    && (key == PropertyType.Rows || key == PropertyType.Columns)) {
+                && (key == PropertyType.Rows || key == PropertyType.Columns)) {
                 change = new ChangeUnit(ChangeType.Change, element.getParent(), "children", null,
-                        element,
-                        search.search(ctx.getLeft(), element.getId()));
+                    element,
+                    search.search(ctx.getLeft(), element.getId()));
                 ctx.exclude(element);
                 ctx.exclude(collector.collect(element));
                 stop = true;

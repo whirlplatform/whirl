@@ -29,7 +29,7 @@ import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 
 public class EventParameterView extends ContentPanel implements
-        IEventParameterView {
+    IEventParameterView {
 
     private EventParameterPresenter presenter;
     private VerticalLayoutContainer container;
@@ -77,34 +77,34 @@ public class EventParameterView extends ContentPanel implements
             }
         });
         typeLabel = new FieldLabel(type,
-                EditorMessage.Util.MESSAGE.event_parameter_type());
+            EditorMessage.Util.MESSAGE.event_parameter_type());
         container.add(typeLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         code = new TextField();
         codeLabel = new FieldLabel(code,
-                EditorMessage.Util.MESSAGE.event_parameter_code());
+            EditorMessage.Util.MESSAGE.event_parameter_code());
         container.add(codeLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         component = new ComponentComboBox(new ComponentStore(getPresenter()
-                .getEventBus(), false));
+            .getEventBus(), false));
         componentLabel = new FieldLabel(component,
-                EditorMessage.Util.MESSAGE.event_parameter_component());
+            EditorMessage.Util.MESSAGE.event_parameter_component());
         container.add(componentLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         componentCode = new TextField();
         componentCodeLabel = new FieldLabel(componentCode,
-                EditorMessage.Util.MESSAGE.event_parameter_component_code());
+            EditorMessage.Util.MESSAGE.event_parameter_component_code());
         container.add(componentCodeLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         storageCode = new TextField();
         storageCodeLabel = new FieldLabel(storageCode,
-                EditorMessage.Util.MESSAGE.event_parameter_storage_code());
+            EditorMessage.Util.MESSAGE.event_parameter_storage_code());
         container.add(storageCodeLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
 
         dataType = initDataTypeField();
         dataType.addSelectionHandler(new SelectionHandler<DataType>() {
@@ -114,71 +114,71 @@ public class EventParameterView extends ContentPanel implements
             }
         });
         dataTypeLabel = new FieldLabel(dataType,
-                EditorMessage.Util.MESSAGE.event_parameter_data_type());
+            EditorMessage.Util.MESSAGE.event_parameter_data_type());
         container.add(dataTypeLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         string = new TextField();
         stringLabel = new FieldLabel(string,
-                EditorMessage.Util.MESSAGE.event_parameter_value());
+            EditorMessage.Util.MESSAGE.event_parameter_value());
         container.add(stringLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         number = new NumberField<Double>(new DoublePropertyEditor());
         number.setHeight(300);
         numberLabel = new FieldLabel(number,
-                EditorMessage.Util.MESSAGE.event_parameter_value());
+            EditorMessage.Util.MESSAGE.event_parameter_value());
         container.add(numberLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         date = new DateField();
         dateLabel = new FieldLabel(date,
-                EditorMessage.Util.MESSAGE.event_parameter_value());
+            EditorMessage.Util.MESSAGE.event_parameter_value());
         container.add(dateLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         bool = new CheckBox();
         boolLabel = new FieldLabel(bool,
-                EditorMessage.Util.MESSAGE.event_parameter_value());
+            EditorMessage.Util.MESSAGE.event_parameter_value());
         container.add(boolLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         listId = new TextField();
         listIdLabel = new FieldLabel(listId,
-                EditorMessage.Util.MESSAGE.event_parameter_list_id());
+            EditorMessage.Util.MESSAGE.event_parameter_list_id());
         container.add(listIdLabel, new VerticalLayoutData(1, -1, new Margins(
-                10, 10, 0, 10)));
+            10, 10, 0, 10)));
 
         listLabel = new TextField();
         listLabelLabel = new FieldLabel(listLabel,
-                EditorMessage.Util.MESSAGE.event_parameter_list_value());
+            EditorMessage.Util.MESSAGE.event_parameter_list_value());
         container.add(listLabelLabel, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
     }
 
     // TODO просмотреть дублирующиеся
     private ComboBox<DataType> initDataTypeField() {
         ListStore<DataType> store = new ListStore<DataType>(
-                new ModelKeyProvider<DataType>() {
+            new ModelKeyProvider<DataType>() {
 
-                    @Override
-                    public String getKey(DataType item) {
-                        return item.name();
-                    }
-                });
+                @Override
+                public String getKey(DataType item) {
+                    return item.name();
+                }
+            });
         store.add(DataType.STRING);
         store.add(DataType.NUMBER);
         store.add(DataType.DATE);
         store.add(DataType.BOOLEAN);
         store.add(DataType.LIST);
         ComboBox<DataType> result = new ComboBox<DataType>(store,
-                new LabelProvider<DataType>() {
+            new LabelProvider<DataType>() {
 
-                    @Override
-                    public String getLabel(DataType item) {
-                        return item.name();
-                    }
-                });
+                @Override
+                public String getLabel(DataType item) {
+                    return item.name();
+                }
+            });
 
         result.setTriggerAction(TriggerAction.ALL);
         result.setEditable(false);
@@ -188,22 +188,22 @@ public class EventParameterView extends ContentPanel implements
 
     private ComboBox<ParameterType> initTypeField() {
         ListStore<ParameterType> store = new ListStore<ParameterType>(
-                new ModelKeyProvider<ParameterType>() {
+            new ModelKeyProvider<ParameterType>() {
 
-                    @Override
-                    public String getKey(ParameterType item) {
-                        return item.name();
-                    }
-                });
+                @Override
+                public String getKey(ParameterType item) {
+                    return item.name();
+                }
+            });
         store.addAll(Arrays.asList(ParameterType.values()));
         ComboBox<ParameterType> result = new ComboBox<ParameterType>(store,
-                new LabelProvider<ParameterType>() {
+            new LabelProvider<ParameterType>() {
 
-                    @Override
-                    public String getLabel(ParameterType item) {
-                        return item.name();
-                    }
-                });
+                @Override
+                public String getLabel(ParameterType item) {
+                    return item.name();
+                }
+            });
         result.setAllowBlank(false);
         result.setEditable(false);
         result.setTriggerAction(TriggerAction.ALL);

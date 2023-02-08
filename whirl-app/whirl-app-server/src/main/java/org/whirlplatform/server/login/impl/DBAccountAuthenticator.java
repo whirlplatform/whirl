@@ -46,14 +46,14 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
     @Override
     public ApplicationUser login(LoginData login) throws LoginException, CustomException {
         try (ConnectionWrapper connection = connectionProvider.getConnection(
-                SrvConstant.DEFAULT_CONNECTION)) {
+            SrvConstant.DEFAULT_CONNECTION)) {
             MetadataDatabase db = getMetadataDatabase(connection);
 
             DBCommand command = db.createCommand();
             DBColumnExpr loginCol = db.WHIRL_USERS.LOGIN.lower().as("LOGIN");
             command.select(db.WHIRL_USERS.ID, loginCol, db.WHIRL_USERS.PASSWORD_HASH,
-                    db.WHIRL_USERS.NAME,
-                    db.WHIRL_USERS.EMAIL);
+                db.WHIRL_USERS.NAME,
+                db.WHIRL_USERS.EMAIL);
             command.where(db.WHIRL_USERS.LOGIN.lower().is(login.getLogin().toLowerCase()));
             command.where(db.WHIRL_USERS.DELETED.cmp(DBCmpType.NULL, null));
 
@@ -62,8 +62,8 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
 
             ApplicationUser user = null;
             if (reader.moveNext() && login.getLogin().equalsIgnoreCase(reader.getString(loginCol))
-                    && BCrypt.checkpw(login.getPassword(),
-                    reader.getString(db.WHIRL_USERS.PASSWORD_HASH))) {
+                && BCrypt.checkpw(login.getPassword(),
+                reader.getString(db.WHIRL_USERS.PASSWORD_HASH))) {
                 user = new ApplicationUser();
                 String userId = reader.getString(db.WHIRL_USERS.ID);
                 user.setId(reader.getString(db.WHIRL_USERS.ID));
@@ -76,7 +76,7 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
 
             if (user == null) {
                 throw new LoginException(
-                        I18NMessage.getMessage(I18NMessage.getRequestLocale()).login_error());
+                    I18NMessage.getMessage(I18NMessage.getRequestLocale()).login_error());
             }
 
             return user;
@@ -92,7 +92,7 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
         DBCommand command = db.createCommand();
         command.select(db.WHIRL_USER_GROUPS.GROUP_CODE);
         command.where(db.WHIRL_USER_GROUPS.R_WHIRL_USERS.is(userId)
-                .and(db.WHIRL_USER_GROUPS.DELETED.cmp(DBCmpType.NULL, null)));
+            .and(db.WHIRL_USER_GROUPS.DELETED.cmp(DBCmpType.NULL, null)));
 
         DBReader reader = new DBReader();
         reader.open(command, connection);
@@ -109,7 +109,7 @@ public class DBAccountAuthenticator implements AccountAuthenticator {
         DBCommand command = db.createCommand();
         command.select(db.WHIRL_USER_APPLICATIONS.APPLICATION_CODE);
         command.where(db.WHIRL_USER_GROUPS.R_WHIRL_USERS.is(userId)
-                .and(db.WHIRL_USER_GROUPS.DELETED.cmp(DBCmpType.NULL, null)));
+            .and(db.WHIRL_USER_GROUPS.DELETED.cmp(DBCmpType.NULL, null)));
 
         DBReader reader = new DBReader();
         reader.open(command, connection);

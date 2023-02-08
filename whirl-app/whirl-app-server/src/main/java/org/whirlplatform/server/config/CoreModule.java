@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.config;
 
 import com.google.inject.AbstractModule;
@@ -40,12 +39,12 @@ public class CoreModule extends AbstractModule {
 
         bind(FileSystem.class).toInstance(FileSystems.getDefault());
         bind(MetadataStore.class).to(
-                FileSystemMetadataStore.class); //TODO configuration.<String>lookup("Whirl/config/metadata/store")
+            FileSystemMetadataStore.class); //TODO configuration.<String>lookup("Whirl/config/metadata/store")
 
         bind(MetadataContainer.class).to(DefaultMetadataContainer.class);
 
         bind(AccountAuthenticator.class).to(
-                DBAccountAuthenticator.class); //TODO configuration.<String>lookup("Whirl/config/authenticator")
+            DBAccountAuthenticator.class); //TODO configuration.<String>lookup("Whirl/config/authenticator")
 
         bind(EvolutionManager.class).to(LiquibaseEvolutionManager.class);
 

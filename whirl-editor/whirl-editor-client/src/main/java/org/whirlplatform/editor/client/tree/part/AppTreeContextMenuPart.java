@@ -78,14 +78,14 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
             removeElement(element);
             addChildElement(folders.eventFolder, element);
             putTreePart(element,
-                    new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
+                new AppTreeEventPart(appTree, treePresenter, (EventElement) element));
             return true;
         } else if (parent == handledElement && element instanceof ContextMenuItemElement) {
             removeElement(element);
             addChildElement(handledElement, element);
             putTreePart(element,
-                    new AppTreeContextMenuPart(appTree, treePresenter,
-                            (ContextMenuItemElement) element));
+                new AppTreeContextMenuPart(appTree, treePresenter,
+                    (ContextMenuItemElement) element));
             return true;
         }
         return false;
@@ -94,8 +94,8 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
         if ((element instanceof EventElement && handledElement.getEvents().contains(element))
-                || (element instanceof ContextMenuItemElement
-                && handledElement.hasChild((ContextMenuItemElement) element))) {
+            || (element instanceof ContextMenuItemElement
+            && handledElement.hasChild((ContextMenuItemElement) element))) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -105,8 +105,8 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean doRemoveElementUI(AbstractElement parent, AbstractElement element) {
         if ((element instanceof EventElement && handledElement.getEvents().contains(element))
-                || (element instanceof ContextMenuItemElement
-                && handledElement.hasChild((ContextMenuItemElement) element))) {
+            || (element instanceof ContextMenuItemElement
+            && handledElement.hasChild((ContextMenuItemElement) element))) {
             removeElement(element);
             return true;
         }
@@ -122,7 +122,7 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     public boolean doEditElementRights(AbstractElement element) {
         if (element == folders.eventFolder && !handledElement.getEvents().isEmpty()) {
             treePresenter.riseEditRights(handledElement.getEvents(),
-                    Collections.singleton(RightType.EXECUTE));
+                Collections.singleton(RightType.EXECUTE));
             return true;
         }
         return false;
@@ -144,13 +144,13 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean doDragDrop(AbstractElement dropTarget, Object dropData) {
         if ((dropTarget == folders.eventFolder || dropTarget == handledElement)
-                && dropData instanceof EventElement) {
+            && dropData instanceof EventElement) {
             treePresenter.riseAddElement(handledElement, (EventElement) dropData);
             return true;
         } else if (dropData instanceof ContextMenuItemElement
-                && dropTarget instanceof ContextMenuItemElement
-                && handledElement.hasChild((ContextMenuItemElement) dropData)
-                && handledElement.hasChild((ContextMenuItemElement) dropTarget)) {
+            && dropTarget instanceof ContextMenuItemElement
+            && handledElement.hasChild((ContextMenuItemElement) dropData)
+            && handledElement.hasChild((ContextMenuItemElement) dropTarget)) {
             ContextMenuItemElement childItem = (ContextMenuItemElement) dropData;
             childItem.setIndex(((ContextMenuItemElement) dropTarget).getIndex());
 
@@ -159,9 +159,9 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
             appTree.setExpanded(handledElement, true);
             return true;
         } else if (dropData instanceof ContextMenuItemElement
-                && dropTarget instanceof ContextMenuItemElement
-                && handledElement.hasChild((ContextMenuItemElement) dropData)
-                && handledElement == dropTarget) {
+            && dropTarget instanceof ContextMenuItemElement
+            && handledElement.hasChild((ContextMenuItemElement) dropData)
+            && handledElement == dropTarget) {
             ContextMenuItemElement childItem = (ContextMenuItemElement) dropData;
             childItem.setIndex(handledElement.getChildren().size());
 
@@ -181,7 +181,7 @@ public class AppTreeContextMenuPart extends AbstractAppTreePart<ContextMenuItemE
     @Override
     public boolean isPasting(AbstractElement parent, AbstractElement element) {
         return (parent == folders.eventFolder && element instanceof EventElement)
-                || (parent == handledElement && element instanceof ContextMenuItemElement);
+            || (parent == handledElement && element instanceof ContextMenuItemElement);
     }
 
     private class ContextMenuFolders {

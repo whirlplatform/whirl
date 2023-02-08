@@ -45,7 +45,7 @@ public class TileDesktopLayout implements DesktopLayout {
 
         for (int testRowCount = 1; testRowCount <= layoutCount; testRowCount++) {
             int testColumnCount = (layoutCount + (testRowCount - 1))
-                    / testRowCount;
+                / testRowCount;
             int tileWidth = availableWidth / testColumnCount;
             int tileHeight = availableHeight / testRowCount;
             int delta = tileWidth - tileHeight;
@@ -73,11 +73,11 @@ public class TileDesktopLayout implements DesktopLayout {
                 int column = layoutIndex % columnCount;
                 int top = MARGIN_TOP + (row * tileHeight + row * SPACING);
                 int left = MARGIN_LEFT
-                        + (column * tileWidth + column * SPACING);
+                    + (column * tileWidth + column * SPACING);
                 window.setPixelSize(tileWidth, tileHeight); // must set prior to
                 // alignTo
                 window.alignTo(element, new AnchorAlignment(Anchor.TOP_LEFT,
-                        Anchor.TOP_LEFT), left, top);
+                    Anchor.TOP_LEFT), left, top);
                 layoutIndex++;
             }
         }

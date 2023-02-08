@@ -75,7 +75,7 @@ public class StaticResourceServlet extends HttpServlet {
         String[] matchValues = matchHeader.split("\\s*,\\s*");
         Arrays.sort(matchValues);
         return Arrays.binarySearch(matchValues, toMatch) > -1
-                || Arrays.binarySearch(matchValues, "*") > -1;
+            || Arrays.binarySearch(matchValues, "*") > -1;
     }
 
     /**
@@ -88,7 +88,7 @@ public class StaticResourceServlet extends HttpServlet {
      * @throws IOException If something fails at I/O level.
      */
     private static void copy(RandomAccessFile input, OutputStream output, long start, long length)
-            throws IOException {
+        throws IOException {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         int read;
 
@@ -124,8 +124,8 @@ public class StaticResourceServlet extends HttpServlet {
         String[] acceptValues = acceptHeader.split("\\s*(,|;)\\s*");
         Arrays.sort(acceptValues);
         return Arrays.binarySearch(acceptValues, toAccept) > -1
-                || Arrays.binarySearch(acceptValues, toAccept.replaceAll("/.*$", "/*")) > -1
-                || Arrays.binarySearch(acceptValues, "*/*") > -1;
+            || Arrays.binarySearch(acceptValues, toAccept.replaceAll("/.*$", "/*")) > -1
+            || Arrays.binarySearch(acceptValues, "*/*") > -1;
     }
 
     /**
@@ -165,8 +165,8 @@ public class StaticResourceServlet extends HttpServlet {
 
     private String getPlatformContextPath() {
         String context = getServletContext().getContextPath().startsWith("/")
-                ? getServletContext().getContextPath().substring(1)
-                : getServletContext().getContextPath();
+            ? getServletContext().getContextPath().substring(1)
+            : getServletContext().getContextPath();
         if (context == null || context.isEmpty()) {
             context = "ROOT";
         }
@@ -180,7 +180,7 @@ public class StaticResourceServlet extends HttpServlet {
      * @see HttpServlet#doHead(HttpServletRequest, HttpServletResponse)
      */
     protected void doHead(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+        throws IOException {
         // Process request without content.
         processRequest(request, response, false);
     }
@@ -191,7 +191,7 @@ public class StaticResourceServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+        throws IOException {
         // Process request with content.
         processRequest(request, response, true);
     }
@@ -213,17 +213,17 @@ public class StaticResourceServlet extends HttpServlet {
             File path = new File(this.basePath);
             if (!path.exists() && !path.mkdirs()) {
                 throw new ServletException(
-                        "FileServlet init param 'basePath' value '" + this.basePath
-                                + "' does actually not exist in file system.");
+                    "FileServlet init param 'basePath' value '" + this.basePath
+                        + "' does actually not exist in file system.");
             }
             if (!path.isDirectory()) {
                 throw new ServletException(
-                        "FileServlet init param 'basePath' value '" + this.basePath
-                                + "' is actually not a directory in file system.");
+                    "FileServlet init param 'basePath' value '" + this.basePath
+                        + "' is actually not a directory in file system.");
             } else if (!path.canRead()) {
                 throw new ServletException(
-                        "FileServlet init param 'basePath' value '" + this.basePath
-                                + "' is actually not readable in file system.");
+                    "FileServlet init param 'basePath' value '" + this.basePath
+                        + "' is actually not readable in file system.");
             }
         }
     }
@@ -238,7 +238,7 @@ public class StaticResourceServlet extends HttpServlet {
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response,
                                 boolean content)
-            throws IOException {
+        throws IOException {
         // Validate the requested file
         // ------------------------------------------------------------
 
@@ -256,13 +256,13 @@ public class StaticResourceServlet extends HttpServlet {
         requestedFile = URLDecoder.decode(requestedFile, "UTF-8");
 
         String applicationCode =
-                StringUtils.substringBefore(StringUtils.substringAfter(requestedFile, "/static/"),
-                        "/");
+            StringUtils.substringBefore(StringUtils.substringAfter(requestedFile, "/static/"),
+                "/");
         String filePath =
-                StringUtils.substringAfter(requestedFile, "/static/" + applicationCode + "/");
+            StringUtils.substringAfter(requestedFile, "/static/" + applicationCode + "/");
         requestedFile = PathUtils.getApplicationFilePath(basePath, getPlatformContextPath(),
-                applicationCode, "static",
-                filePath);
+            applicationCode, "static",
+            filePath);
 
         // URL-decode the file name (might contain spaces and on) and prepare
         // file object.
@@ -426,13 +426,11 @@ public class StaticResourceServlet extends HttpServlet {
             String acceptEncoding = request.getHeader("Accept-Encoding");
             acceptsGzip = acceptEncoding != null && accepts(acceptEncoding, "gzip");
             contentType += ";charset=UTF-8";
-        }
-
-        // Else, expect for images, determine content disposition. If content
-        // type is supported by
-        // the browser, then set to inline, else attachment which will pop a
-        // 'save as' dialogue.
-        else if (!contentType.startsWith("image")) {
+        } else if (!contentType.startsWith("image")) {
+            // Else, expect for images, determine content disposition. If content
+            // type is supported by
+            // the browser, then set to inline, else attachment which will pop a
+            // 'save as' dialogue.
             String accept = request.getHeader("Accept");
             disposition = accept != null && accepts(accept, contentType) ? "inline" : "attachment";
         }
@@ -464,7 +462,7 @@ public class StaticResourceServlet extends HttpServlet {
                 Range r = full;
                 response.setContentType(contentType);
                 response.setHeader("Content-Range",
-                        "bytes " + r.start + "-" + r.end + "/" + r.total);
+                    "bytes " + r.start + "-" + r.end + "/" + r.total);
 
                 if (content) {
                     if (acceptsGzip) {
@@ -489,7 +487,7 @@ public class StaticResourceServlet extends HttpServlet {
                 Range r = ranges.get(0);
                 response.setContentType(contentType);
                 response.setHeader("Content-Range",
-                        "bytes " + r.start + "-" + r.end + "/" + r.total);
+                    "bytes " + r.start + "-" + r.end + "/" + r.total);
                 response.setHeader("Content-Length", String.valueOf(r.length));
                 response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT); // 206.
 
@@ -517,7 +515,7 @@ public class StaticResourceServlet extends HttpServlet {
                         sos.println("--" + MULTIPART_BOUNDARY);
                         sos.println("Content-Type: " + contentType);
                         sos.println(
-                                "Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
+                            "Content-Range: bytes " + r.start + "-" + r.end + "/" + r.total);
 
                         // Copy single part range of multi part range.
                         copy(input, output, r.start, r.length);

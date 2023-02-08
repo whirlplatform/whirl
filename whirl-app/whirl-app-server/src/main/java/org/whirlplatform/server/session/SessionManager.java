@@ -25,16 +25,16 @@ public class SessionManager implements Serializable {
     private static final String TOKEN_MANAGER = "TOKEN_MANAGER";
 
     private static final long SESSION_TIME =
-            Long.parseLong(System.getProperty(PROPERTY_WHIRL_TOKEN_SESSION_TIME, "120000"));
+        Long.parseLong(System.getProperty(PROPERTY_WHIRL_TOKEN_SESSION_TIME, "120000"));
 
     private static final long UNREGISTER_TIME = 6000;
     // глобальное хранилище сессий. Добавляются и удаляются листенером
     // SessionListener
     private static final Set<HttpSession> sessions = Collections
-            .newSetFromMap(new ConcurrentHashMap<HttpSession, Boolean>());
+        .newSetFromMap(new ConcurrentHashMap<HttpSession, Boolean>());
     private final Map<SessionToken, Date> touch = new ConcurrentHashMap<SessionToken, Date>();
     private final Map<SessionToken, ApplicationUser> userToken =
-            new ConcurrentHashMap<SessionToken, ApplicationUser>();
+        new ConcurrentHashMap<SessionToken, ApplicationUser>();
     private boolean changed = false;
 
     private SessionManager() {
@@ -70,7 +70,7 @@ public class SessionManager implements Serializable {
         // но теоретически должна срабатывать регистрация в листенере.
         // так что, полагаю, тут всё хорошо.
         SessionManager sessionManager = (SessionManager) httpSession
-                .getAttribute(TOKEN_MANAGER);
+            .getAttribute(TOKEN_MANAGER);
         if (sessionManager.isChanged()) {
             httpSession.setAttribute(TOKEN_MANAGER, sessionManager); // для
             // DeltaManager
@@ -113,7 +113,7 @@ public class SessionManager implements Serializable {
             SessionManager manager = SessionManager.get(ses);
 
             Iterator<SessionToken> tokenIter = manager.userToken.keySet()
-                    .iterator();
+                .iterator();
             while (tokenIter.hasNext()) {
                 SessionToken t = tokenIter.next();
                 ApplicationUser u = manager.userToken.get(t);
@@ -137,7 +137,7 @@ public class SessionManager implements Serializable {
             SessionManager manager = SessionManager.get(ses);
 
             Iterator<SessionToken> tokenIter = manager.userToken.keySet()
-                    .iterator();
+                .iterator();
             while (tokenIter.hasNext()) {
                 SessionToken t = tokenIter.next();
                 ApplicationUser u = manager.userToken.get(t);
@@ -259,8 +259,8 @@ public class SessionManager implements Serializable {
             ApplicationUser user = userToken.get(token);
             if (user == null) {
                 throw new CustomException(
-                        I18NMessage.getMessage(I18NMessage.getRequestLocale())
-                                .alert_sessionExpired(), true);
+                    I18NMessage.getMessage(I18NMessage.getRequestLocale())
+                        .alert_sessionExpired(), true);
             }
             return user;
         }
@@ -285,7 +285,7 @@ public class SessionManager implements Serializable {
             if (set != null) {
                 for (SessionToken t : set) {
                     if (t.getSessionId().equals(token.getSessionId())
-                            && !t.getTokenId().equals(token.getTokenId())) {
+                        && !t.getTokenId().equals(token.getTokenId())) {
                         return true;
                     }
                 }
@@ -306,13 +306,13 @@ public class SessionManager implements Serializable {
                     // удаляем если токен не был активен в течении SESSION_TIME секунд
                     Date date = touch.get(t);
                     Date timeToKillBefore = new Date(
-                            System.currentTimeMillis() - SESSION_TIME);
+                        System.currentTimeMillis() - SESSION_TIME);
                     if (!userToken.containsKey(t)
-                            || (date == null || date.before(timeToKillBefore))) {
+                        || (date == null || date.before(timeToKillBefore))) {
                         unregisterToken(token);
                         setChanged();
                     } else if (!t.getSessionId().equals(token.getSessionId())
-                            && !t.getTokenId().equals(token.getTokenId())) {
+                        && !t.getTokenId().equals(token.getTokenId())) {
                         return true;
                     }
                 }
@@ -334,7 +334,7 @@ public class SessionManager implements Serializable {
     public void markForUnregister(final SessionToken token) {
         synchronized (this) {
             Date newTime = new Date(System.currentTimeMillis() - SESSION_TIME
-                    + UNREGISTER_TIME);
+                + UNREGISTER_TIME);
             touch.put(token, newTime);
             setChanged();
         }
@@ -373,7 +373,7 @@ public class SessionManager implements Serializable {
         }
         for (Entry<SessionToken, ApplicationUser> e : userToken.entrySet()) {
             if (appCode.equalsIgnoreCase(
-                    e.getValue().getApplication().getCode())) {
+                e.getValue().getApplication().getCode())) {
                 userToken.remove(e.getKey());
             }
         }
@@ -386,7 +386,7 @@ public class SessionManager implements Serializable {
     @Override
     public String toString() {
         String s = "SessionManager hash code: " + this.hashCode() + ", class: "
-                + this.getClass() + ": ";
+            + this.getClass() + ": ";
         s += ", touch: [";
         Iterator<SessionToken> touchIter = this.touch.keySet().iterator();
         while (touchIter.hasNext()) {
@@ -397,7 +397,7 @@ public class SessionManager implements Serializable {
         // touch SessionToken, Date
         s += "userToken: [";
         Iterator<SessionToken> userTokenIter = this.userToken.keySet()
-                .iterator();
+            .iterator();
         while (userTokenIter.hasNext()) {
             SessionToken st = userTokenIter.next();
             s += "[key: " + st + ", value: " + this.userToken.get(st) + "] ";

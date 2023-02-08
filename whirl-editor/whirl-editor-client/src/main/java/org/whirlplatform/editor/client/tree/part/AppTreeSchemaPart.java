@@ -92,18 +92,18 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
         if (parent == handledElement && element instanceof PlainTableElement
-                && handledElement.getTables().contains(element)) {
+            && handledElement.getTables().contains(element)) {
             removeElement(element);
             addChildElement(folders.plainTables, element);
             putTreePart(element,
-                    new AppTreePlainTablePart(appTree, treePresenter, (PlainTableElement) element));
+                new AppTreePlainTablePart(appTree, treePresenter, (PlainTableElement) element));
             return true;
         } else if (parent == handledElement && element instanceof DynamicTableElement
-                && handledElement.getTables().contains(element)) {
+            && handledElement.getTables().contains(element)) {
             removeElement(element);
             addChildElement(folders.dynamicTables, element);
             putTreePart(element, new AppTreeDynamicTablePart(appTree, treePresenter,
-                    (DynamicTableElement) element));
+                (DynamicTableElement) element));
             return true;
         }
         return false;
@@ -112,7 +112,7 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
     @Override
     public boolean doRemoveElement(AbstractElement parent, AbstractElement element) {
         if (element instanceof AbstractTableElement
-                && handledElement.getTables().contains(element)) {
+            && handledElement.getTables().contains(element)) {
             treePresenter.riseRemoveElement(handledElement, element, true);
             return true;
         }
@@ -146,8 +146,8 @@ public class AppTreeSchemaPart extends AbstractAppTreePart<SchemaElement> {
             }
             if (!tables.isEmpty()) {
                 treePresenter.riseEditRights(tables, Collections.unmodifiableCollection(Arrays
-                        .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
-                                RightType.RESTRICT)));
+                    .asList(RightType.ADD, RightType.DELETE, RightType.EDIT, RightType.VIEW,
+                        RightType.RESTRICT)));
             }
         }
         return false;

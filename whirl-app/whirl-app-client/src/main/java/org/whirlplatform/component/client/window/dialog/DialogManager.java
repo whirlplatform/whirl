@@ -21,7 +21,7 @@ import org.whirlplatform.component.client.utils.Pair;
 
 public class DialogManager {
 
-    private static Map<Dialog, String> dialogs = new HashMap<>();
+    private static final Map<Dialog, String> dialogs = new HashMap<>();
 
     public static Dialog createDialog(String dialogId, String headingText, String text,
                                       Pair<Dialog.PredefinedButton, SelectEvent.SelectHandler>... buttons) {
@@ -55,7 +55,7 @@ public class DialogManager {
 
     public static MessageBox createMessage(String dialogId, String title, String message) {
         AlertMessageBox window =
-                new AlertMessageBox(DataUtils.notNull(title, ""), DataUtils.notNull(message, ""));
+            new AlertMessageBox(DataUtils.notNull(title, ""), DataUtils.notNull(message, ""));
         window.setWidth(500);
         window.setPredefinedButtons(PredefinedButton.OK);
         addHandler(dialogId, window);
@@ -96,7 +96,7 @@ public class DialogManager {
                                     break;
                                 default:
                                     throw new IllegalArgumentException("Variable 'bt' can`t be this: "
-                                        + bt.toString());
+                                        + bt);
                             }
                         }
                     }
@@ -106,8 +106,8 @@ public class DialogManager {
                 @Override
                 public Element getElementByLocator(Locator locator) {
                     if (!locator.hasParameter(LocatorParams.PARAMETER_ID)
-                            || !locator.getParameter(LocatorParams.PARAMETER_ID)
-                            .equals(dialogs.get(d))) {
+                        || !locator.getParameter(LocatorParams.PARAMETER_ID)
+                        .equals(dialogs.get(d))) {
                         return null;
                     }
                     Locator part = locator.getPart();
@@ -143,15 +143,15 @@ public class DialogManager {
 
     private static class LocatorParams {
 
-        private static String TYPE_DIALOG = "Dialog";
+        private static final String TYPE_DIALOG = "Dialog";
 
-        private static String PARAMETER_ID = "id";
+        private static final String PARAMETER_ID = "id";
 
-        private static String TYPE_OK_BUTTON = "OkButton";
-        private static String TYPE_CANCEL_BUTTON = "CancelButton";
-        private static String TYPE_CLOSE_BUTTON = "CloseButton";
-        private static String TYPE_YES_BUTTON = "YesButton";
-        private static String TYPE_NO_BUTTON = "NoButton";
+        private static final String TYPE_OK_BUTTON = "OkButton";
+        private static final String TYPE_CANCEL_BUTTON = "CancelButton";
+        private static final String TYPE_CLOSE_BUTTON = "CloseButton";
+        private static final String TYPE_YES_BUTTON = "YesButton";
+        private static final String TYPE_NO_BUTTON = "NoButton";
 
     }
 

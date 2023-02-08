@@ -47,7 +47,7 @@ public class ReflectionMerger implements Merger {
     }
 
     private Field getDeclaredClassOrSuperclassField(Class<?> clazz, String property)
-            throws NoSuchFieldException {
+        throws NoSuchFieldException {
         Class<?> current = clazz;
         while (current != null) {
             try {

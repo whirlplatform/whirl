@@ -21,7 +21,7 @@ import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @Presenter(view = PropertyEditorView.class)
 public class PropertyEditorPresenter
-        extends BasePresenter<PropertyEditorPresenter.IPropertyEditorView, EditorEventBus> {
+    extends BasePresenter<PropertyEditorPresenter.IPropertyEditorView, EditorEventBus> {
 
     private ApplicationElement application;
     private ComponentElement currentElement;
@@ -40,16 +40,16 @@ public class PropertyEditorPresenter
     private Map<PropertyType, PropertyValue> prepareProperties(ComponentType type,
                                                                Map<PropertyType, PropertyValue> initProps) {
         Map<PropertyType, PropertyValue> result = new TreeMap<PropertyType, PropertyValue>(
-                new Comparator<PropertyType>() {
-                    @Override
-                    public int compare(PropertyType o1, PropertyType o2) {
-                        int res = String.valueOf(!o1.isUI()).compareTo(String.valueOf(!o2.isUI()));
-                        if (res == 0) {
-                            res = o1.getCode().compareTo(o2.getCode());
-                        }
-                        return res;
+            new Comparator<PropertyType>() {
+                @Override
+                public int compare(PropertyType o1, PropertyType o2) {
+                    int res = String.valueOf(!o1.isUI()).compareTo(String.valueOf(!o2.isUI()));
+                    if (res == 0) {
+                        res = o1.getCode().compareTo(o2.getCode());
                     }
-                });
+                    return res;
+                }
+            });
         for (PropertyType propertyType : type.getProperties()) {
             PropertyValue propertyValue = initProps.get(propertyType);
             result.put(propertyType, propertyValue);
@@ -61,7 +61,7 @@ public class PropertyEditorPresenter
         view.finishEditing();
         PropertyEditorPresenter.this.currentElement = element;
         view.setComponentProperties(currentElement.getType(),
-                prepareProperties(currentElement.getType(), currentElement.getProperties()));
+            prepareProperties(currentElement.getType(), currentElement.getProperties()));
         eventBus.changeSecondLeftComponent(view);
     }
 
@@ -69,9 +69,9 @@ public class PropertyEditorPresenter
     public void onChangeComponentProperty(PropertyType type,
                                           LocaleElement locale, boolean replaceable, Object value) {
         eventBus.addElement(currentElement,
-                new NewPropertyElement(type, locale, replaceable, value));
+            new NewPropertyElement(type, locale, replaceable, value));
         eventBus.syncComponentPropertyToUI(currentElement, type.getCode(),
-                value == null ? null : new DataValueImpl(type.getType(), value));
+            value == null ? null : new DataValueImpl(type.getType(), value));
     }
 
     public void onSyncComponentPropertyToElement(ComponentElement element) {
@@ -81,7 +81,7 @@ public class PropertyEditorPresenter
 
         // TODO устанавливать значения по одному
         view.setComponentProperties(element.getType(),
-                prepareProperties(element.getType(), currentElement.getProperties()));
+            prepareProperties(element.getType(), currentElement.getProperties()));
     }
 
     public void onLoadApplication(ApplicationElement application, Version version) {
@@ -93,7 +93,7 @@ public class PropertyEditorPresenter
     }
 
     public interface IPropertyEditorView
-            extends IsWidget, ReverseViewInterface<PropertyEditorPresenter> {
+        extends IsWidget, ReverseViewInterface<PropertyEditorPresenter> {
 
         Map<PropertyType, PropertyValue> getProperties();
 

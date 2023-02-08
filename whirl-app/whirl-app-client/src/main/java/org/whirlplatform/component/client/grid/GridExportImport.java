@@ -33,9 +33,9 @@ import org.whirlplatform.rpc.shared.SessionToken;
 
 public class GridExportImport {
 
-    private int windowWidth = 400;
-    private LoadConfigProvider configProvider;
-    private ParameterHelper paramHelper;
+    private final int windowWidth = 400;
+    private final LoadConfigProvider configProvider;
+    private final ParameterHelper paramHelper;
 
     public GridExportImport(LoadConfigProvider configProvider,
                             ParameterHelper paramHelper) {
@@ -98,7 +98,7 @@ public class GridExportImport {
         FormPanel form = new FormPanel();
         final VerticalLayoutContainer mainContainer = new VerticalLayoutContainer();
         mainContainer.setHeight(exportType.equals(ExpImpType.EXPORT_XLS) ? 220
-                : 150);
+            : 150);
         MarginData labelMargin = new MarginData(new Margins(0, 0, 5, 5));
         MarginData radioMargin = new MarginData(new Margins(0, 0, 5, 10));
         String borderStyle = "border:1px solid #A0A0A0";
@@ -125,7 +125,7 @@ public class GridExportImport {
         group1.add(allRecords);
         group1.add(pageRecords);
         container1.setLayoutData(new VerticalLayoutData(-1, 70, new Margins(0,
-                0, 10, 0)));
+            0, 10, 0)));
         container1.getElement().applyStyles(borderStyle);
         mainContainer.add(container1);
 
@@ -151,7 +151,7 @@ public class GridExportImport {
         group2.add(titles);
         group2.add(columns);
         container2.setLayoutData(new VerticalLayoutData(-1, 70, new Margins(0,
-                0, 10, 0)));
+            0, 10, 0)));
         container2.getElement().applyStyles(borderStyle);
         mainContainer.add(container2);
 
@@ -185,7 +185,7 @@ public class GridExportImport {
         form.add(mainContainer);
 
         addExportListener(window, execute, metadata, exportType, title,
-                allRecords, columns, xlsx);
+            allRecords, columns, xlsx);
         return form;
     }
 
@@ -208,11 +208,11 @@ public class GridExportImport {
             @Override
             public void onSelect(SelectEvent event) {
                 form.setAction(GWT.getHostPageBaseURL() + "import?"
-                        + AppConstant.TABLE_ID + "=" + metadata.getClassId()
-                        + "&" + AppConstant.TOKEN_ID + "="
-                        + SessionToken.get().getTokenId() + "&"
-                        + AppConstant.EXPIMP_TYPE_PARAM + "="
-                        + exportType.toString());
+                    + AppConstant.TABLE_ID + "=" + metadata.getClassId()
+                    + "&" + AppConstant.TOKEN_ID + "="
+                    + SessionToken.get().getTokenId() + "&"
+                    + AppConstant.EXPIMP_TYPE_PARAM + "="
+                    + exportType.toString());
                 form.submit();
                 execute.setEnabled(false);
                 execute.setText(AppMessage.Util.MESSAGE.executing());
@@ -225,11 +225,11 @@ public class GridExportImport {
                 String result = event.getResults();
                 if (result != null && result.contains("<pre>OK</pre>")) {
                     InfoHelper.info("grid-export", result,
-                            AppMessage.Util.MESSAGE.expimp_importSuccess(title));
+                        AppMessage.Util.MESSAGE.expimp_importSuccess(title));
                     window.hide();
                 } else {
                     InfoHelper.warning("grid-export", result,
-                            AppMessage.Util.MESSAGE.expimp_notAllImported());
+                        AppMessage.Util.MESSAGE.expimp_notAllImported());
                 }
                 execute.setEnabled(true);
                 execute.setText(AppMessage.Util.MESSAGE.expimp_doImport());
@@ -248,7 +248,7 @@ public class GridExportImport {
         FormPanel form;
         TextButton execute;
         if (exportType == ExpImpType.IMPORT_CSV
-                || exportType == ExpImpType.IMPORT_XLS) {
+            || exportType == ExpImpType.IMPORT_XLS) {
             execute = new TextButton(AppMessage.Util.MESSAGE.expimp_doImport());
             form = createImportForm(execute, metadata, exportType, title, wb);
         } else {
@@ -284,31 +284,31 @@ public class GridExportImport {
                         StringBuilder link = new StringBuilder();
                         link.append(GWT.getHostPageBaseURL() + "export?");
                         link.append(AppConstant.TABLE_ID + "="
-                                + metadata.getClassId());
+                            + metadata.getClassId());
                         link.append("&" + AppConstant.EXPIMP_TYPE_PARAM + "="
-                                + exportType.name());
+                            + exportType.name());
                         link.append("&" + AppConstant.EXPORT_TITLE_PARAM + "="
-                                + title);
+                            + title);
                         link.append("&" + AppConstant.EXPORT_COLUMNS_PARAM
-                                + "=" + columns.getValue());
+                            + "=" + columns.getValue());
                         link.append("&" + AppConstant.EXPORT_ALLREC_PARAM + "="
-                                + allRecords.getValue());
+                            + allRecords.getValue());
                         link.append("&" + AppConstant.TOKEN_ID + "="
-                                + SessionToken.get().getTokenId());
+                            + SessionToken.get().getTokenId());
                         if (exportType.equals(ExpImpType.EXPORT_XLS)) {
                             link.append("&" + AppConstant.EXPORT_XLSX_PARAM
-                                    + "=" + xlsx.getValue());
+                                + "=" + xlsx.getValue());
                         }
                         link.append("&parameters_id=" + result);
                         com.google.gwt.user.client.Window.open(link.toString(),
-                                "_blank", null);
+                            "_blank", null);
                         window.hide();
                     }
                 };
 
                 DataServiceAsync.Util.getDataService(callback).saveLoadConfig(SessionToken.get(),
-                        configProvider.getLoadConfig(
-                                paramHelper.getValueList(Collections.emptyList())));
+                    configProvider.getLoadConfig(
+                        paramHelper.getValueList(Collections.emptyList())));
             }
         });
     }

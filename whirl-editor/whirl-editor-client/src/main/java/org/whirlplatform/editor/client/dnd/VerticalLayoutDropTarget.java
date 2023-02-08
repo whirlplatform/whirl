@@ -68,7 +68,7 @@ public class VerticalLayoutDropTarget extends DropTarget {
     @Override
     protected void onDragMove(DndDragMoveEvent event) {
         XElement target = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         if (!verticalLayout.getElement().isOrHasChild(target)) {
             event.setCancelled(true);
             event.getStatusProxy().setStatus(false);
@@ -83,10 +83,10 @@ public class VerticalLayoutDropTarget extends DropTarget {
         event.getStatusProxy().setStatus(true);
         NativeEvent e = event.getDragMoveEvent().getNativeEvent().cast();
         Element el = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         Widget w = verticalLayout.findWidget(el);
         if (w != null
-                && (feedback == Feedback.INSERT || feedback == Feedback.BOTH)) {
+            && (feedback == Feedback.INSERT || feedback == Feedback.BOTH)) {
             int height = el.getOffsetHeight();
             int mid = height / 2;
             mid += el.getAbsoluteTop();

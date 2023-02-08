@@ -18,7 +18,7 @@ public class VersionUtil {
      */
     public static Version createVersion(final String value) {
         return (Version.isValidVersion(value)) ? Version.parseVersion(value) :
-                Version.create(value);
+            Version.create(value);
     }
 
     /**

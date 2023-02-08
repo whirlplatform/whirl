@@ -35,7 +35,7 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  */
 @JsType(name = "Radio", namespace = "Whirl")
 public class RadioBuilder extends AbstractFieldBuilder
-        implements NativeParameter<Boolean>, Parameter<DataValue> {
+    implements NativeParameter<Boolean>, Parameter<DataValue> {
 
     private Radio radio;
 
@@ -71,7 +71,7 @@ public class RadioBuilder extends AbstractFieldBuilder
                                        Element parent, Boolean value,
                                        NativeEvent event, ValueUpdater<Boolean> valueUpdater) {
                 if (isReadOnly()
-                        && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
+                    && !("blur".equals(event.getType()) || "focus".equals(event.getType()))) {
                     event.preventDefault();
                     event.stopPropagation();
                     return;
@@ -117,7 +117,7 @@ public class RadioBuilder extends AbstractFieldBuilder
             setValue(value.getBoolean());
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.GroupName.getCode())
-                && !Util.isEmptyString(value.getString())) {
+            && !Util.isEmptyString(value.getString())) {
             setGroupName(value.getString());
             return true;
         }
@@ -248,7 +248,7 @@ public class RadioBuilder extends AbstractFieldBuilder
      */
     public void markInvalid(String msg) {
         radio.getErrorSupport().markInvalid(
-                Collections.singletonList(new DefaultEditorError(radio, msg, radio.getValue())));
+            Collections.singletonList(new DefaultEditorError(radio, msg, radio.getValue())));
     }
 
     /**
@@ -279,7 +279,7 @@ public class RadioBuilder extends AbstractFieldBuilder
     @Override
     public Element getElementByLocator(Locator locator) {
         if (fitsLocator(locator) && locator.getPart() != null
-                && LocatorParams.TYPE_INPUT.equals(locator.getPart().getType())) {
+            && LocatorParams.TYPE_INPUT.equals(locator.getPart().getType())) {
             return radio.getCell().getInputElement(getWrapper().getElement());
         }
         return null;
@@ -392,6 +392,6 @@ public class RadioBuilder extends AbstractFieldBuilder
     }
 
     private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
+        private static final String TYPE_INPUT = "Input";
     }
 }

@@ -66,7 +66,7 @@ public class DownloadServlet extends HttpServlet {
             Version version = extractVersion(req);
             FileElementCategory category = FileElementCategory.get(categoryValue);
             try (InputStream in = metadataStore.getApplicationFileInputStream(code, version,
-                    category, fileName)) {
+                category, fileName)) {
                 copyInputStreamToResponce(resp, in, fileName);
             } catch (MetadataStoreException e) {
                 _log.error(e);
@@ -90,7 +90,7 @@ public class DownloadServlet extends HttpServlet {
 
     private void copyInputStreamToResponce(HttpServletResponse resp, InputStream in,
                                            String fileName)
-            throws IOException {
+        throws IOException {
         ServletOutputStream out = resp.getOutputStream();
         resp.setHeader("Content-disposition", "attachment; filename=\"" + fileName + "\"");
         resp.setContentType("application/octet-stream");
@@ -109,7 +109,7 @@ public class DownloadServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     public FileItem getFileFromContext(HttpSession session, String fileName) {
         Map<String, FileItem> files =
-                (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
+            (Map<String, FileItem>) session.getAttribute("whirl-editor-filemap");
         if (files == null) {
             return null;
         }

@@ -37,15 +37,15 @@ public class DataSourceView extends ContentPanel implements IDataSourceView {
     private void initFields() {
         fieldAlias = new TextField();
         labelAlias = new FieldLabel(fieldAlias,
-                EditorMessage.Util.MESSAGE.datasource_synonym());
+            EditorMessage.Util.MESSAGE.datasource_synonym());
         container.add(labelAlias, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         fieldDatabaseName = new TextField();
         labelDatabaseName = new FieldLabel(fieldDatabaseName,
-                EditorMessage.Util.MESSAGE.datasource_source_name());
+            EditorMessage.Util.MESSAGE.datasource_source_name());
         container.add(labelDatabaseName, new VerticalLayoutData(1, -1,
-                new Margins(10, 10, 0, 10)));
+            new Margins(10, 10, 0, 10)));
     }
 
     @Override

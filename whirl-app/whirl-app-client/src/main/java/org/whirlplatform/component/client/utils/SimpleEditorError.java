@@ -5,7 +5,7 @@ import com.google.gwt.editor.client.EditorError;
 
 public class SimpleEditorError implements EditorError {
 
-    private String message;
+    private final String message;
 
     public SimpleEditorError(String message) {
         this.message = message;

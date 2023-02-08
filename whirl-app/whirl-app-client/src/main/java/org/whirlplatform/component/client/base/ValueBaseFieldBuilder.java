@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
-        implements NativeParameter<String>, Parameter<DataValue> {
+    implements NativeParameter<String>, Parameter<DataValue> {
 
     protected ValueBaseField<String> field;
 
@@ -216,7 +216,7 @@ public abstract class ValueBaseFieldBuilder extends AbstractFieldBuilder
     }
 
     private static class LocatorParams {
-        private static String TYPE_INPUT = "Input";
+        private static final String TYPE_INPUT = "Input";
     }
 
 }

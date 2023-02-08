@@ -27,7 +27,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "Label", namespace = "Whirl")
 public class LabelBuilder extends ComponentBuilder
-        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+    implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
     protected boolean hasEvent;
     private String bgColor;
@@ -66,13 +66,13 @@ public class LabelBuilder extends ComponentBuilder
 
         // Иначе событие при клике в редакторе не обрабатывается
         field.sinkEvents(
-                Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
+            Event.getTypeInt(com.google.gwt.event.dom.client.ClickEvent.getType().getName()));
         field.sinkEvents(Event.getTypeInt(
-                com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
+            com.google.gwt.event.dom.client.DragStartEvent.getType().getName()));
         field.sinkEvents(
-                Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
+            Event.getTypeInt(com.google.gwt.event.dom.client.DragEndEvent.getType().getName()));
         field.sinkEvents(
-                Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
+            Event.getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType().getName()));
         return wrapper;
     }
 
@@ -323,6 +323,6 @@ public class LabelBuilder extends ComponentBuilder
     }
 
     private static class LocatorParams {
-        private static String TYPE_TEXT = "Text";
+        private static final String TYPE_TEXT = "Text";
     }
 }

@@ -24,7 +24,7 @@ public class DataValueImpl_CustomFieldSerializer extends CustomFieldSerializer<D
     }
 
     public static void serialize(SerializationStreamWriter streamWriter, DataValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         streamWriter.writeObject(instance.getType());
         if (instance.getType() == DataType.DATE) {
             if (instance.getDate() == null) {
@@ -43,7 +43,7 @@ public class DataValueImpl_CustomFieldSerializer extends CustomFieldSerializer<D
     }
 
     public static void deserialize(SerializationStreamReader streamReader, DataValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         instance.setType((DataType) streamReader.readObject());
         if (instance.getType() == DataType.DATE) {
             String dateString = streamReader.readString();
@@ -58,13 +58,13 @@ public class DataValueImpl_CustomFieldSerializer extends CustomFieldSerializer<D
 
     @Override
     public void serializeInstance(SerializationStreamWriter streamWriter, DataValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         serialize(streamWriter, instance);
     }
 
     @Override
     public void deserializeInstance(SerializationStreamReader streamReader, DataValueImpl instance)
-            throws SerializationException {
+        throws SerializationException {
         deserialize(streamReader, instance);
     }
 }

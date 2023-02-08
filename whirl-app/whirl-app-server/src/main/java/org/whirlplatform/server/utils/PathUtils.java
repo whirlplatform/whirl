@@ -14,10 +14,10 @@ public class PathUtils {
             result = File.separator;
         } else {
             result = base
-                    + (base.endsWith(File.separator) ? "" : File.separator);
+                + (base.endsWith(File.separator) ? "" : File.separator);
         }
         result = result + platformContext + File.separator + "applications"
-                + File.separator + applicationCode + File.separator + type;
+            + File.separator + applicationCode + File.separator + type;
 
         if (!StringUtils.isEmpty(file)) {
             result = result + File.separator + file;

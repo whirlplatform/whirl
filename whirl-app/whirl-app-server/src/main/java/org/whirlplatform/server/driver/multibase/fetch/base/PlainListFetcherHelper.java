@@ -29,8 +29,8 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
         super.prepare(metadata, table, config);
 
         this.labelExpression =
-                dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
-                        .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
+            dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
+                .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
@@ -39,13 +39,13 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
         if (config instanceof TreeClassLoadConfig) {
             TableColumnElement c =
-                    table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
+                table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
             DBColumn parentColumn = this.dbTable.addColumn(c.getColumnName(),
-                    TypesUtil.toEmpireType(c.getType(),
-                            c.getListTable() == null ? null
-                                    : getDataSourceDriver().createDataFetcher(c.getListTable())
-                                    .getIdColumnType(table)),
-                    c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+                TypesUtil.toEmpireType(c.getType(),
+                    c.getListTable() == null ? null
+                        : getDataSourceDriver().createDataFetcher(c.getListTable())
+                        .getIdColumnType(table)),
+                c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
 
             RowModelData parent = ((TreeClassLoadConfig) config).getParent();
             if (parent != null) {

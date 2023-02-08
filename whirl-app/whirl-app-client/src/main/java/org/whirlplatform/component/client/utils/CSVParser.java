@@ -73,7 +73,7 @@ public class CSVParser {
      */
     public CSVParser() {
         this(DEFAULT_SEPARATOR, DEFAULT_QUOTE_CHARACTER,
-                DEFAULT_ESCAPE_CHARACTER);
+            DEFAULT_ESCAPE_CHARACTER);
     }
 
     /**
@@ -118,7 +118,7 @@ public class CSVParser {
     public CSVParser(char separator, char quotechar, char escape,
                      boolean strictQuotes) {
         this(separator, quotechar, escape, strictQuotes,
-                DEFAULT_IGNORE_LEADING_WHITESPACE);
+            DEFAULT_IGNORE_LEADING_WHITESPACE);
     }
 
     /**
@@ -135,11 +135,11 @@ public class CSVParser {
                      boolean strictQuotes, boolean ignoreLeadingWhiteSpace) {
         if (anyCharactersAreTheSame(separator, quotechar, escape)) {
             throw new UnsupportedOperationException(
-                    "The separator, quote, and escape characters must be different!");
+                "The separator, quote, and escape characters must be different!");
         }
         if (separator == NULL_CHARACTER) {
             throw new UnsupportedOperationException(
-                    "The separator character must be defined!");
+                "The separator character must be defined!");
         }
         this.separator = separator;
         this.quotechar = quotechar;
@@ -151,8 +151,8 @@ public class CSVParser {
     private boolean anyCharactersAreTheSame(char separator, char quotechar,
                                             char escape) {
         return isSameCharacter(separator, quotechar)
-                || isSameCharacter(separator, escape)
-                || isSameCharacter(quotechar, escape);
+            || isSameCharacter(separator, escape)
+            || isSameCharacter(quotechar, escape);
     }
 
     private boolean isSameCharacter(char c1, char c2) {
@@ -183,7 +183,7 @@ public class CSVParser {
      * @throws IOException if bad things happen during the read
      */
     private String[] parseLine(String nextLine, boolean multi)
-            throws IOException {
+        throws IOException {
 
         if (!multi && pending != null) {
             pending = null;
@@ -193,7 +193,7 @@ public class CSVParser {
             if (pending != null) {
                 String s = pending;
                 pending = null;
-                return new String[]{s};
+                return new String[] {s};
             } else {
                 return null;
             }
@@ -217,7 +217,7 @@ public class CSVParser {
                 }
             } else if (c == quotechar) {
                 if (isNextCharacterEscapedQuote(nextLine, inQuotes || inField,
-                        i)) {
+                    i)) {
                     sb.append(nextLine.charAt(i + 1));
                     i++;
                 } else {
@@ -227,29 +227,14 @@ public class CSVParser {
                     // a,bc"d"ef,g
                     if (!strictQuotes) {
                         if (i > 2 // not on the beginning of the line
-                                && nextLine.charAt(i - 1) != this.separator // not
-                                // at
-                                // the
-                                // beginning
-                                // of
-                                // an
-                                // escape
-                                // sequence
-                                && nextLine.length() > (i + 1)
-                                && nextLine.charAt(i + 1) != this.separator // not
-                                // at
-                                // the
-                                // end
-                                // of
-                                // an
-                                // escape
-                                // sequence
+                            && nextLine.charAt(i - 1) != this.separator // not at the beginning of an escape sequence
+                            && nextLine.length() > (i + 1)
+                            && nextLine.charAt(i + 1) != this.separator // not at the end of the line
                         ) {
 
                             if (ignoreLeadingWhiteSpace && sb.length() > 0
-                                    && isAllWhiteSpace(sb)) {
-                                sb.setLength(0); // discard white space leading
-                                // up to quote
+                                && isAllWhiteSpace(sb)) {
+                                sb.setLength(0); // discard white space leading up to quote
                             } else {
                                 sb.append(c);
                                 // continue;
@@ -282,7 +267,7 @@ public class CSVParser {
                 // list yet
             } else {
                 throw new IOException(
-                        "Un-terminated quoted field at end of CSV line");
+                    "Un-terminated quoted field at end of CSV line");
             }
         }
         if (sb != null) {
@@ -303,10 +288,10 @@ public class CSVParser {
     private boolean isNextCharacterEscapedQuote(String nextLine,
                                                 boolean inQuotes, int i) {
         return inQuotes // we are in quotes, therefore there can be escaped
-                // quotes in here.
-                && nextLine.length() > (i + 1) // there is indeed another
-                // character to check.
-                && nextLine.charAt(i + 1) == quotechar;
+            // quotes in here.
+            && nextLine.length() > (i + 1) // there is indeed another
+            // character to check.
+            && nextLine.charAt(i + 1) == quotechar;
     }
 
     /**
@@ -320,11 +305,11 @@ public class CSVParser {
     protected boolean isNextCharacterEscapable(String nextLine,
                                                boolean inQuotes, int i) {
         return inQuotes // we are in quotes, therefore there can be escaped
-                // quotes in here.
-                && nextLine.length() > (i + 1) // there is indeed another
-                // character to check.
-                && (nextLine.charAt(i + 1) == quotechar || nextLine
-                .charAt(i + 1) == this.escape);
+            // quotes in here.
+            && nextLine.length() > (i + 1) // there is indeed another
+            // character to check.
+            && (nextLine.charAt(i + 1) == quotechar || nextLine
+            .charAt(i + 1) == this.escape);
     }
 
     /**

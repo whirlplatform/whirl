@@ -197,12 +197,12 @@ public class Config {
 
     private static native void setValue(JavaScriptObject object, String key,
                                         Object value) /*-{
-                            object[key] = value;
-                            }-*/;
+        object[key] = value;
+    }-*/;
 
     private static native Object getValue(JavaScriptObject object, String key) /*-{
-                                                                                return object[key];
-                                                                                }-*/;
+        return object[key];
+    }-*/;
 
     /**
      * Creates and returns a default {@link Config} object.

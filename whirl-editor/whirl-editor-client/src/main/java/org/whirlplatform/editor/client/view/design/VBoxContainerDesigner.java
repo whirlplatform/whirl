@@ -19,10 +19,10 @@ public class VBoxContainerDesigner extends ComponentDesigner {
     protected void initRootDropTarget(final ComponentElement element,
                                       final ComponentBuilder builder) {
         VerticalLayoutDropTarget target = new VerticalLayoutDropTarget(
-                (InsertResizeContainer) builder.getComponent()) {
+            (InsertResizeContainer) builder.getComponent()) {
             protected void onDragDrop(DndDropEvent event) {
                 VBoxContainerDesigner.super.onRootDrop(element, builder, event.getData(),
-                        getIndex());
+                    getIndex());
                 super.onDragDrop(event);
             }
         };

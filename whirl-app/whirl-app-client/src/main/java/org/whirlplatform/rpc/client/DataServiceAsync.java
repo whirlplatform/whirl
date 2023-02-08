@@ -34,7 +34,7 @@ public interface DataServiceAsync extends DataService, DirectRestService {
                     ExceptionData data = null;
                     try {
                         data = ExceptionSerializer.Util.get()
-                                .decode(method.getResponse().getText());
+                            .decode(method.getResponse().getText());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

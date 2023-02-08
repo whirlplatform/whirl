@@ -28,13 +28,13 @@ public class CaptchaImgServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+        throws IOException {
         session = request.getSession(true);
 
         if (request.getHeader("User-Agent").indexOf("MSIE 6.0") == -1) {
             response.setHeader("Pragma", "no-cache");
             response.setHeader("cache-control",
-                    "max-age=0,no-cache, no-store,must-revalidate, proxy-revalidate, s-maxage=0");
+                "max-age=0,no-cache, no-store,must-revalidate, proxy-revalidate, s-maxage=0");
         }
         response.setDateHeader("Expires", 0);
         response.setContentType("image/png");
@@ -56,10 +56,10 @@ public class CaptchaImgServlet extends HttpServlet {
                 int width = Integer.parseInt(sWidth);
                 int height = Integer.parseInt(sHeight);
                 captchaImgGenerator = new CaptchaImgGenerator(height, width, lettersCount,
-                        response.getOutputStream());
+                    response.getOutputStream());
             } catch (NumberFormatException nfe) {
                 captchaImgGenerator =
-                        new CaptchaImgGenerator(lettersCount, response.getOutputStream());
+                    new CaptchaImgGenerator(lettersCount, response.getOutputStream());
             }
         } else {
             captchaImgGenerator = new CaptchaImgGenerator(lettersCount, response.getOutputStream());

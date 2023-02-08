@@ -45,7 +45,7 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
  */
 @JsType(name = "CheckGroup", namespace = "Whirl")
 public class CheckGroupBuilder extends ComponentBuilder implements
-        ListParameter<RowListValue>, HasState {
+    ListParameter<RowListValue>, HasState {
 
     private String labelExpression;
     private String checkColumn;
@@ -124,7 +124,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         Orientation orientation = Orientation.VERTICAL;
         DataValue orientationDataValue = builderProperties.get(PropertyType.Orientation.getCode());
         if (orientationDataValue != null && Orientation.HORIZONTAL.toString()
-                .equalsIgnoreCase(orientationDataValue.getString())) {
+            .equalsIgnoreCase(orientationDataValue.getString())) {
             orientation = Orientation.HORIZONTAL;
         }
         list = new CheckBoxList(orientation, labelProvider, valueProvider);
@@ -201,26 +201,26 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     private void initStore() {
         if (checkColumn != null) {
             metadata.addField(new FieldMetadata(checkColumn, DataType.BOOLEAN,
-                    null));
+                null));
         }
         store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-                new ListClassProxy(metadata));
+            new ListClassProxy(metadata));
         checkedRegistration = store
-                .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
-                    @Override
-                    public void onDataChange(
-                            StoreDataChangeEvent<ListModelData> event) {
-                        if (checkedIds == null) {
-                            restoreSelectionState();
-                        } else {
-                            for (String obj : checkedIds.split(",")) {
-                                ListModelData m = store.findModelWithKey(obj);
-                                list.getSelectionModel().select(m, true);
-                            }
+            .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
+                @Override
+                public void onDataChange(
+                    StoreDataChangeEvent<ListModelData> event) {
+                    if (checkedIds == null) {
+                        restoreSelectionState();
+                    } else {
+                        for (String obj : checkedIds.split(",")) {
+                            ListModelData m = store.findModelWithKey(obj);
+                            list.getSelectionModel().select(m, true);
                         }
-                        checkedRegistration.removeHandler();
                     }
-                });
+                    checkedRegistration.removeHandler();
+                }
+            });
     }
 
     /**
@@ -327,7 +327,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     @Override
     public void setStateScope(StateScope scope) {
         if (stateStore == null
-                || (stateStore != null && scope != stateStore.getScope())) {
+            || (stateStore != null && scope != stateStore.getScope())) {
             switch (scope) {
                 case MEMORY:
                     stateStore = StorageHelper.memory();
@@ -340,7 +340,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
                     break;
                 default:
                     throw new IllegalArgumentException("Variable 'scope' of the type 'StateScope' can`t be this: "
-                        + scope.toString());
+                        + scope);
             }
         }
     }
@@ -365,7 +365,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore = new SelectionClientStateStore<RowListValue>(
-                    StateScope.LOCAL, metadata);
+                StateScope.LOCAL, metadata);
         }
         return selectionStateStore;
     }

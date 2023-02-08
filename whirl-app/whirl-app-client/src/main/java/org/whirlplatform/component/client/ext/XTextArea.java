@@ -7,8 +7,8 @@ import com.sencha.gxt.widget.core.client.form.TextArea;
 
 public class XTextArea extends TextArea {
 
-    private int fieldWidth;
-    private int fieldHeight;
+    private final int fieldWidth;
+    private final int fieldHeight;
     private boolean isfocused;
 
     public XTextArea(int fieldWidth, int fieldHeight) {
@@ -54,7 +54,7 @@ public class XTextArea extends TextArea {
             var endPos = elem.selectionEnd;
             restoreTop = elem.scrollTop;
             elem.value = elem.value.substring(0, startPos) + strValue
-                    + elem.value.substring(endPos, elem.value.length);
+                + elem.value.substring(endPos, elem.value.length);
             elem.selectionStart = startPos + strValue.length;
             elem.selectionEnd = startPos + strValue.length;
             if (restoreTop > 0) {

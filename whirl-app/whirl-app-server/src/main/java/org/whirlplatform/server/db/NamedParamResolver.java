@@ -49,7 +49,7 @@ public class NamedParamResolver {
                 ListModelData m = e.getValue().getListModelData();
                 model.put(e.getKey(), m != null ? m.getId() : null);
             } else if (e.getValue() instanceof RowListValue
-                    && isRowListEmpty((RowListValue) e.getValue())) {
+                && isRowListEmpty((RowListValue) e.getValue())) {
                 // Иначе неправильно работает определение null в wheresql(если
                 // checkable,
                 // но есть только selected запись, то подставлялся текст "null")
@@ -91,7 +91,7 @@ public class NamedParamResolver {
                 if (i + 6 < sql.length() && sql.charAt(i + 1) == '\'' && sql.charAt(i + 2) == ':') {
                     int j = i + 3;
                     while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))
-                            && sql.charAt(j + 1) != '\'') {
+                        && sql.charAt(j + 1) != '\'') {
                         j++;
                     }
                     if (sql.charAt(j + 1) == '\'' && sql.charAt(j + 2) == '\'') {
@@ -127,11 +127,11 @@ public class NamedParamResolver {
                 }
                 String inWord = sql.substring(j + 1, i);
                 if ("in".equalsIgnoreCase(inWord.trim())
-                        && sql.substring(i + 1).trim().startsWith(":")) {
+                    && sql.substring(i + 1).trim().startsWith(":")) {
                     inInClause = true;
                 }
             } else if (":".equals(c) && i + 1 < sql.length()
-                    && Character.isJavaIdentifierPart(sql.charAt(i + 1))) {
+                && Character.isJavaIdentifierPart(sql.charAt(i + 1))) {
                 int j = i + 2;
                 while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))) {
                     j++;
@@ -180,7 +180,7 @@ public class NamedParamResolver {
             StringBuilder builder = new StringBuilder();
             for (RowValue row : ((RowListValue) parameter).getRowList()) {
                 if ((!row.isChecked() && ((RowListValue) parameter).isCheckable())
-                        || (!row.isSelected() && !((RowListValue) parameter).isCheckable())) {
+                    || (!row.isSelected() && !((RowListValue) parameter).isCheckable())) {
                     continue;
                 }
                 String id = row.getId();
@@ -203,19 +203,19 @@ public class NamedParamResolver {
         switch (parameter.getType()) {
             case BOOLEAN:
                 result = driver.getValueString(parameter.getBoolean(),
-                        org.apache.empire.data.DataType.BOOL);
+                    org.apache.empire.data.DataType.BOOL);
                 break;
             case DATE:
                 result = driver.getValueString(parameter.getDate(),
-                        org.apache.empire.data.DataType.DATETIME);
+                    org.apache.empire.data.DataType.DATETIME);
                 break;
             case NUMBER:
                 result = driver.getValueString(parameter.getDouble(),
-                        org.apache.empire.data.DataType.FLOAT);
+                    org.apache.empire.data.DataType.FLOAT);
                 break;
             case STRING:
                 result = driver.getValueString(parameter.getString(),
-                        org.apache.empire.data.DataType.TEXT);
+                    org.apache.empire.data.DataType.TEXT);
                 break;
             case LIST:
                 ListModelData list = parameter.getListModelData();
@@ -232,7 +232,7 @@ public class NamedParamResolver {
                 break;
             default:
                 result = driver.getValueString(parameter.getString(),
-                        org.apache.empire.data.DataType.UNKNOWN);
+                    org.apache.empire.data.DataType.UNKNOWN);
                 break;
         }
         return result;

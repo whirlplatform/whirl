@@ -107,7 +107,7 @@ public class AppConstant {
         if (dateFormatLong == null) {
             DateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
             dateFormatLong = new DateTimeFormat(AppConstant.DATE_FORMAT_LONG,
-                    info) {
+                info) {
             };
         }
         return dateFormatLong;
@@ -117,7 +117,7 @@ public class AppConstant {
         if (dateFormatShort == null) {
             DateTimeFormatInfo info = new DefaultDateTimeFormatInfo();
             dateFormatShort = new DateTimeFormat(AppConstant.DATE_FORMAT_SHORT,
-                    info) {
+                info) {
             };
         }
         return dateFormatLong;

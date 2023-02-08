@@ -20,7 +20,7 @@ public abstract class AbstractDynamicDataFetcher extends AbstractMultiFetcher {
             return "";
         }
         NamedParamResolver resolver =
-                new NamedParamResolver(getConnection().getDatabaseDriver(), value, parameters);
+            new NamedParamResolver(getConnection().getDatabaseDriver(), value, parameters);
         return resolver.getResultSql();
     }
 }

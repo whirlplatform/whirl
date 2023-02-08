@@ -203,7 +203,8 @@ public interface EditorBundle extends ClientBundleWithLookup {
 
     @Source("hboxcontainer-small.png")
     ImageResource hBoxContainerSmall();
-//
+
+    //
     @Source("contentpanel-small.png")
     ImageResource contentPanelSmall();
 

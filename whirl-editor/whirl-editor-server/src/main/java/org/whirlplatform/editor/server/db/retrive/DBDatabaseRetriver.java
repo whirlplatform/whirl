@@ -82,7 +82,7 @@ public class DBDatabaseRetriver {
      * @throws SQLException
      */
     private void populateDatabase(DBDatabase db)
-            throws SQLException {
+        throws SQLException {
 
         ArrayList<String> populatedTables = new ArrayList<String>();
         this.dbMeta = con.getMetaData();
@@ -130,22 +130,22 @@ public class DBDatabaseRetriver {
             info += "/ schema=" + config.getDbSchema();
             info += "/ pattern=" + config.getDbTablePattern();
             log.warn(
-                    "DatabaseMetaData.getTables() returned no tables or views! Please check parameters: "
-                        + info);
+                "DatabaseMetaData.getTables() returned no tables or views! Please check parameters: "
+                    + info);
             log.info("Available catalogs: " + getCatalogs(dbMeta));
             log.info("Available schemata: " + getSchemata(dbMeta));
         }
     }
 
     private boolean gatherTables(String pattern, ArrayList<String> populatedTables, DBDatabase db)
-            throws SQLException {
+        throws SQLException {
         ResultSet tables = null;
         boolean tablesFound = false;
         try {
             // Get table metadata
             tables = dbMeta.getTables(config.getDbCatalog(), config.getDbSchema(),
-                    pattern == null ? pattern : pattern.trim(),
-                    new String[]{"TABLE", "VIEW"});
+                pattern == null ? pattern : pattern.trim(),
+                new String[] {"TABLE", "VIEW"});
 
             // Add all tables and views
             while (tables.next()) {
@@ -176,7 +176,7 @@ public class DBDatabaseRetriver {
     }
 
     private void gatherRelations(DBDatabase db, DatabaseMetaData dbMeta, ArrayList<String> tables)
-            throws SQLException {
+        throws SQLException {
         ResultSet relations = null;
 
         String fkTableName;
@@ -196,7 +196,7 @@ public class DBDatabaseRetriver {
 
             // check for foreign-keys
             relations =
-                    dbMeta.getImportedKeys(config.getDbCatalog(), config.getDbSchema(), tableName);
+                dbMeta.getImportedKeys(config.getDbCatalog(), config.getDbSchema(), tableName);
             while (relations.next()) {
                 pkCol = fkCol = null;
 
@@ -234,7 +234,7 @@ public class DBDatabaseRetriver {
                 // check if both columns really exist in the model
                 if (fkCol == null || pkCol == null) {
                     log.error("Unable to add the relation \"" + relName
-                            + "\"! One of the columns could not be found.");
+                        + "\"! One of the columns could not be found.");
                     continue;
                 }
 
@@ -253,7 +253,7 @@ public class DBDatabaseRetriver {
                     // remove old relation
                     db.getRelations().remove(r);
                 } else {
-                    refs = new DBRelation.DBReference[]{reference};
+                    refs = new DBRelation.DBReference[] {reference};
                 }
                 // Add a new relation
                 db.addRelation(relName, refs);
@@ -263,7 +263,7 @@ public class DBDatabaseRetriver {
     }
 
     private String getCatalogs(DatabaseMetaData dbMeta)
-            throws SQLException {
+        throws SQLException {
         String retVal = "";
         ResultSet rs = dbMeta.getCatalogs();
         while (rs.next()) {
@@ -277,7 +277,7 @@ public class DBDatabaseRetriver {
     }
 
     private String getSchemata(DatabaseMetaData dbMeta)
-            throws SQLException {
+        throws SQLException {
         String retVal = "";
         ResultSet rs = dbMeta.getSchemas();
         while (rs.next()) {
@@ -296,7 +296,7 @@ public class DBDatabaseRetriver {
      * @throws SQLException
      */
     private void populateTable(DBTable t)
-            throws SQLException {
+        throws SQLException {
         List<String> pkCols = this.findPkColumns(t.getName());
         String lockColName = config.getTimestampColumn();
         DBColumn[] keys = new DBColumn[pkCols.size()];
@@ -337,7 +337,7 @@ public class DBDatabaseRetriver {
      * @throws SQLException
      */
     private void populateView(InMemoryView v)
-            throws SQLException {
+        throws SQLException {
         ResultSet rs = null;
         try {
             rs = dbMeta.getColumns(config.getDbCatalog(), config.getDbSchema(), v.getName(), null);
@@ -355,7 +355,7 @@ public class DBDatabaseRetriver {
      * @throws SQLException
      */
     private List<String> findPkColumns(String tableName)
-            throws SQLException {
+        throws SQLException {
         List<String> cols = new ArrayList<String>();
         ResultSet rs = null;
         try {
@@ -373,11 +373,11 @@ public class DBDatabaseRetriver {
      * Adds DBColumn object to the given DBTable. The DBColumn is created from the given ResultSet
      */
     private DBTableColumn addColumn(DBTable t, ResultSet rs)
-            throws SQLException {
+        throws SQLException {
         String name = rs.getString("COLUMN_NAME");
         DataType empireType = getEmpireDataType(rs.getInt("DATA_TYPE"));
         double colSize = Double.parseDouble("" + rs.getInt("COLUMN_SIZE") + '.'
-                + (rs.getInt("DECIMAL_DIGITS") < 0 ? 0 : rs.getInt("DECIMAL_DIGITS")));
+            + (rs.getInt("DECIMAL_DIGITS") < 0 ? 0 : rs.getInt("DECIMAL_DIGITS")));
         boolean required = false;
         String defaultValue = rs.getString("COLUMN_DEF");
         if (rs.getString("IS_NULLABLE").equalsIgnoreCase("NO")) {
@@ -394,7 +394,7 @@ public class DBDatabaseRetriver {
         // emit from the Empire-db driver the null value and not
         // "CURRENT_TIMESTAMP".
         if (rs.getInt("DATA_TYPE") == Types.TIMESTAMP && defaultValue != null
-                && defaultValue.equals("CURRENT_TIMESTAMP")) {
+            && defaultValue.equals("CURRENT_TIMESTAMP")) {
             required = false; // It is in fact not required even though MySQL
             // schema is required because it has a default
             // value. Generally, should Empire-db emit
@@ -418,8 +418,8 @@ public class DBDatabaseRetriver {
             // SQL Server matches on TYPE_NAME column with identity somewhere in
             // the string value.
             if ((colName.equalsIgnoreCase("IS_AUTOINCREMENT")
-                    && rs.getString(i).equalsIgnoreCase("YES"))
-                    || (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*"))) {
+                && rs.getString(i).equalsIgnoreCase("YES"))
+                || (colName.equals("TYPE_NAME") && rs.getString(i).matches(".*(?i:identity).*"))) {
                 empireType = DataType.AUTOINC;
             }
         }
@@ -445,7 +445,7 @@ public class DBDatabaseRetriver {
      * Adds DBColumn object to the given DBTable. The DBColumn is created from the given ResultSet
      */
     private DBViewColumn addColumn(InMemoryView v, ResultSet rs)
-            throws SQLException {
+        throws SQLException {
         String name = rs.getString("COLUMN_NAME");
         DataType empireType = getEmpireDataType(rs.getInt("DATA_TYPE"));
 

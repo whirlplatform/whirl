@@ -19,8 +19,8 @@ import org.whirlplatform.meta.shared.editor.RightType;
 
 @Presenter(view = ApplicationTreeView.class)
 public class ApplicationTreePresenter extends
-        BasePresenter<ApplicationTreePresenter.IApplicationTreeView, EditorEventBus>
-        implements AppTreePresenter {
+    BasePresenter<ApplicationTreePresenter.IApplicationTreeView, EditorEventBus>
+    implements AppTreePresenter {
 
     /**
      * Позволяет определить, элемент был выбран кликом по дереву или из DesignPresenter
@@ -142,7 +142,7 @@ public class ApplicationTreePresenter extends
 
     @Override
     public void riseShowOpenApplicationsCallback(
-            Callback<ApplicationStoreData, Throwable> callback) {
+        Callback<ApplicationStoreData, Throwable> callback) {
         eventBus.showOpenApplicationsCallback(callback);
     }
 

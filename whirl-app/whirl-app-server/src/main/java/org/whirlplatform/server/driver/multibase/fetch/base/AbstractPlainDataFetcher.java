@@ -62,19 +62,19 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
             switch (colDataType) {
                 case STRING:
                     model.set(field.getName(),
-                            reader.isNull(colInd) ? null : reader.getString(colInd));
+                        reader.isNull(colInd) ? null : reader.getString(colInd));
                     break;
                 case NUMBER:
                     model.set(field.getName(),
-                            reader.isNull(colInd) ? null : reader.getDouble(colInd));
+                        reader.isNull(colInd) ? null : reader.getDouble(colInd));
                     break;
                 case DATE:
                     model.set(field.getName(),
-                            reader.isNull(colInd) ? null : reader.getDateTime(colInd));
+                        reader.isNull(colInd) ? null : reader.getDateTime(colInd));
                     break;
                 case BOOLEAN:
                     model.set(field.getName(),
-                            reader.isNull(colInd) ? null : reader.getBoolean(colInd));
+                        reader.isNull(colInd) ? null : reader.getBoolean(colInd));
                     break;
                 case LIST:
                     ListModelData listValue = new ListModelDataImpl();

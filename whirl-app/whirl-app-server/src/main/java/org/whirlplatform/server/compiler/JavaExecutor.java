@@ -54,14 +54,14 @@ public class JavaExecutor {
     private static final String COMPILER_SOURCE_ENCODING = "UTF-8";
 
     private static final Pattern ifacePattern =
-            Pattern.compile("(?<=implements[\\s])(([\\s]+)?[\\w]+)",
-                    Pattern.CASE_INSENSITIVE);
-
-    private static final Pattern packPattern = Pattern.compile("(?<=package[\\s+])([\\w\\.]+)",
+        Pattern.compile("(?<=implements[\\s])(([\\s]+)?[\\w]+)",
             Pattern.CASE_INSENSITIVE);
 
+    private static final Pattern packPattern = Pattern.compile("(?<=package[\\s+])([\\w\\.]+)",
+        Pattern.CASE_INSENSITIVE);
+
     private static final Pattern classPattern =
-            Pattern.compile("(?<=class[\\s+])([\\w]+)", Pattern.CASE_INSENSITIVE);
+        Pattern.compile("(?<=class[\\s+])([\\w]+)", Pattern.CASE_INSENSITIVE);
 
     private Connector connector;
 
@@ -121,7 +121,7 @@ public class JavaExecutor {
                         name = clazz.getName();
                     }
                     if (i.singleton() && user.hasJavaObject(name)
-                            && clazz.isInstance(user.loadJavaObject(name))) {
+                        && clazz.isInstance(user.loadJavaObject(name))) {
                         function = (Function) user.loadJavaObject(name);
                     }
                 }
@@ -157,7 +157,7 @@ public class JavaExecutor {
                         if (f.getType().isAssignableFrom(Connection.class)) {
                             DataSource annotation = f.getAnnotation(DataSource.class);
                             Connection connection =
-                                    connectionProvider.getConnection(annotation.alias, user);
+                                connectionProvider.getConnection(annotation.alias, user);
                             connections.add(connection);
                             f.setAccessible(true);
                             f.set(function, connection);
@@ -167,8 +167,8 @@ public class JavaExecutor {
                             f.setAccessible(true);
                             try {
                                 Constructor<ReportManager> c =
-                                        ReportManager.class.getDeclaredConstructor(
-                                                ApplicationUser.class, Connector.class);
+                                    ReportManager.class.getDeclaredConstructor(
+                                        ApplicationUser.class, Connector.class);
                                 c.setAccessible(true);
                                 ReportManager manager = c.newInstance(user, connector);
                                 f.set(function, manager);
@@ -182,21 +182,21 @@ public class JavaExecutor {
                             try {
                                 // Определение директории приложения
                                 String srvPath =
-                                        srvContext.getContextPath().startsWith("/") ? srvContext
-                                                .getContextPath().substring(1) :
-                                                srvContext.getContextPath();
+                                    srvContext.getContextPath().startsWith("/") ? srvContext
+                                        .getContextPath().substring(1) :
+                                        srvContext.getContextPath();
                                 if (srvPath == null || srvPath.isEmpty()) {
                                     srvPath = "ROOT";
                                 }
                                 srvPath.replace("/", "-");
 
                                 String rootFolderPath = PathUtils.getApplicationFilePath(ContextUtil
-                                                .lookup("Whirl/work-path"), srvPath,
-                                        user.getApplication().getCode(),
-                                        "data", null);
+                                        .lookup("Whirl/work-path"), srvPath,
+                                    user.getApplication().getCode(),
+                                    "data", null);
 
                                 Constructor<FileManager> c =
-                                        FileManager.class.getDeclaredConstructor(File.class);
+                                    FileManager.class.getDeclaredConstructor(File.class);
                                 c.setAccessible(true);
                                 FileManager manager = c.newInstance(new File(rootFolderPath));
                                 f.set(function, manager);
@@ -217,11 +217,11 @@ public class JavaExecutor {
                     final Function fFunction = function;
                     final List<DataValue> fParams = funcParams;
                     funcResult =
-                            executeCallable(new Callable<org.whirlplatform.java.EventResult>() {
-                                public org.whirlplatform.java.EventResult call() {
-                                    return fFunction.execute(fParams);
-                                }
-                            });
+                        executeCallable(new Callable<org.whirlplatform.java.EventResult>() {
+                            public org.whirlplatform.java.EventResult call() {
+                                return fFunction.execute(fParams);
+                            }
+                        });
                 } catch (Throwable e) {
                     _log.error(new ErrorMessage(user, e.getMessage()), e);
                     throw new CustomException(e.getMessage());
@@ -308,7 +308,7 @@ public class JavaExecutor {
 
     @SuppressWarnings("unchecked")
     private <T> Class<T> getClass(String packageName, String className, String source)
-            throws ClassNotFoundException {
+        throws ClassNotFoundException {
         CompilationData data = user.getCompilationData();
         String fullName = getClassName(packageName, className);
         ClassLoader classLoader = data.getMainClassLoader();
@@ -335,13 +335,13 @@ public class JavaExecutor {
         String pathName = fullName.replace(".", "/") + ".java";
         reader.add(pathName, source.getBytes(StandardCharsets.UTF_8));
         CompilationResult result =
-                compiler.compile(new String[]{pathName}, reader, data.getResourceStore(),
-                        classLoader, settings);
+            compiler.compile(new String[] {pathName}, reader, data.getResourceStore(),
+                classLoader, settings);
         if (result.getErrors().length > 0) {
             StringBuilder message = new StringBuilder();
             for (CompilationProblem p : result.getErrors()) {
                 message.append("start: " + p.getStartLine() + " " + p.getStartColumn() + " end: "
-                        + p.getEndLine() + " " + p.getEndColumn() + " - " + p.getMessage() + "\n");
+                    + p.getEndLine() + " " + p.getEndColumn() + " - " + p.getMessage() + "\n");
             }
             String msg = message.toString();
             _log.warn("Method compilation problem" + "\n" + msg);

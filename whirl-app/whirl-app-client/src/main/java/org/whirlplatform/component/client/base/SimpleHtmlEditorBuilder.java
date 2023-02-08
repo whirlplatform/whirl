@@ -24,7 +24,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  */
 @JsType(namespace = "Whirl", name = "SimpleHtmlEditor")
 public class SimpleHtmlEditorBuilder extends AbstractFieldBuilder
-        implements NativeParameter<String>, Parameter<DataValue> {
+    implements NativeParameter<String>, Parameter<DataValue> {
 
     protected HtmlEditor field;
 

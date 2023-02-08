@@ -5,7 +5,7 @@ import org.whirlplatform.meta.shared.PageConfig;
 import org.whirlplatform.storage.client.StorageHelper;
 
 public class PagingClientStateStore extends
-        AbstractMetadataStateStore<PageConfig> {
+    AbstractMetadataStateStore<PageConfig> {
 
     public PagingClientStateStore(StateScope scope, ClassMetadata metadata) {
         super(scope, metadata);

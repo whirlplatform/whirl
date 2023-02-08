@@ -70,18 +70,18 @@ public enum PropertyType implements Serializable {
     Format("Format", DataType.STRING, false, true),
     DisplayValue("DisplayValue", DataType.STRING, false),
     StringValue("Value", DataType.STRING, false, false, Arrays.asList(
-            ComponentType.TextFieldType,
-            ComponentType.TextAreaType,
-            ComponentType.MultiComboBoxType,
-            ComponentType.TreeComboBoxType,
-            ComponentType.ComboBoxType)),
+        ComponentType.TextFieldType,
+        ComponentType.TextAreaType,
+        ComponentType.MultiComboBoxType,
+        ComponentType.TreeComboBoxType,
+        ComponentType.ComboBoxType)),
     NumberValue("Value", DataType.NUMBER, false, false, Arrays.asList(
-            ComponentType.NumberFieldType)),
+        ComponentType.NumberFieldType)),
     DateValue("Value", DataType.DATE, false, false, Arrays.asList(
-            ComponentType.DateFieldType)),
+        ComponentType.DateFieldType)),
     BooleanValue("Value", DataType.BOOLEAN, false, false, Arrays.asList(
-            ComponentType.RadioType,
-            ComponentType.CheckBoxType)),
+        ComponentType.RadioType,
+        ComponentType.CheckBoxType)),
     Delay("Delay", DataType.NUMBER, false),
     Editable("Editable", DataType.BOOLEAN, false), Cleanable("Cleanable", DataType.BOOLEAN, false),
     FrameEditing("FrameEditing", DataType.BOOLEAN, false),
@@ -98,14 +98,14 @@ public enum PropertyType implements Serializable {
     MaxRowSelected("MaxRowSelected", DataType.NUMBER, false),
     MaxRowMessage("MaxRowMessage", DataType.STRING, false),
     NumberMaxValue("MaxValue", DataType.NUMBER, false, false,
-            Arrays.asList(ComponentType.NumberFieldType)),
+        Arrays.asList(ComponentType.NumberFieldType)),
     DateMaxValue("MaxValue", DataType.DATE, false, false,
-            Arrays.asList(ComponentType.DateFieldType)),
+        Arrays.asList(ComponentType.DateFieldType)),
     MinLength("MinLength", DataType.NUMBER, false),
     NumberMinValue("MinValue", DataType.NUMBER, false, false,
-            Arrays.asList(ComponentType.NumberFieldType)),
+        Arrays.asList(ComponentType.NumberFieldType)),
     DateMinValue("MinValue", DataType.DATE, false, false,
-            Arrays.asList(ComponentType.DateFieldType)),
+        Arrays.asList(ComponentType.DateFieldType)),
     Code("Code", DataType.STRING, false, true),
 
     LabelExpression("LabelExpression", DataType.STRING, false, true),
@@ -230,8 +230,8 @@ public enum PropertyType implements Serializable {
     public static PropertyType parse(String type, ComponentType componentType) {
         for (PropertyType t : PropertyType.values()) {
             if (t.getCode().equals(type)
-                    && (t.getComponentTypes() == null
-                    || t.getComponentTypes().contains(componentType))) {
+                && (t.getComponentTypes() == null
+                || t.getComponentTypes().contains(componentType))) {
                 return t;
             }
         }

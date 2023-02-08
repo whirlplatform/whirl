@@ -45,13 +45,13 @@ import org.whirlplatform.editor.shared.i18n.EditorMessage;
 public class ParameterEditorComponent extends TriggerField<String> {
 
     private HorizontalLayoutData comboLayoutData =
-            new HorizontalLayoutData(150, -1, new Margins(0, 5, 0, 0));
+        new HorizontalLayoutData(150, -1, new Margins(0, 5, 0, 0));
     private HorizontalLayoutData halfLayoutData =
-            new HorizontalLayoutData(0.5, -1, new Margins(0, 5, 0, 0));
+        new HorizontalLayoutData(0.5, -1, new Margins(0, 5, 0, 0));
     private HorizontalLayoutData fullLayoutData =
-            new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0));
+        new HorizontalLayoutData(1, -1, new Margins(0, 5, 0, 0));
     private HorizontalLayoutData buttonLayoutData =
-            new HorizontalLayoutData(30, -1, new Margins(0, 10, 0, 0));
+        new HorizontalLayoutData(30, -1, new Margins(0, 10, 0, 0));
     private Window window;
     private VerticalLayoutContainer container;
     private Set<ParameterRow> parameters;
@@ -61,7 +61,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
     public ParameterEditorComponent(ComponentStore store) {
 
         super(new TriggerFieldCell(GWT.<ParameterFieldDefaultAppearance>create(
-                ParameterFieldDefaultAppearance.class)));
+            ParameterFieldDefaultAppearance.class)));
         ClickHandler handler = new ClickHandler() {
 
             @Override
@@ -207,7 +207,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
 
         if (object.containsKey(ParameterType.STORAGECODE.getJsonName())) {
             JSONArray storage =
-                    json.isObject().get(ParameterType.STORAGECODE.getJsonName()).isArray();
+                json.isObject().get(ParameterType.STORAGECODE.getJsonName()).isArray();
             for (int i = 0; i < storage.size(); i++) {
                 valuesType.put(storage.get(i).isString().stringValue(), ParameterType.STORAGECODE);
             }
@@ -215,7 +215,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
 
         if (object.containsKey(ParameterType.STATICVALUE.getJsonName())) {
             JSONArray values =
-                    json.isObject().get(ParameterType.STATICVALUE.getJsonName()).isArray();
+                json.isObject().get(ParameterType.STATICVALUE.getJsonName()).isArray();
             for (int i = 0; i < values.size(); i++) {
                 valuesType.put(values.get(i).isObject().toString(), ParameterType.STATICVALUE);
             }
@@ -251,22 +251,22 @@ public class ParameterEditorComponent extends TriggerField<String> {
 
     private class ParameterRow extends HorizontalLayoutContainer {
         LabelProvider<ParameterType> parameterTypeLabelProvider =
-                new LabelProvider<ParameterType>() {
+            new LabelProvider<ParameterType>() {
 
-                    @Override
-                    public String getLabel(ParameterType item) {
-                        if (item == ParameterType.COMPONENTCODE) {
-                            return EditorMessage.Util.MESSAGE.event_parameter_component_code();
-                        } else if (item == ParameterType.COMPONENTID) {
-                            return EditorMessage.Util.MESSAGE.event_parameter_component();
-                        } else if (item == ParameterType.STORAGECODE) {
-                            return EditorMessage.Util.MESSAGE.event_parameter_storage_code();
-                        } else if (item == ParameterType.STATICVALUE) {
-                            return EditorMessage.Util.MESSAGE.event_parameter_static();
-                        }
-                        return null;
+                @Override
+                public String getLabel(ParameterType item) {
+                    if (item == ParameterType.COMPONENTCODE) {
+                        return EditorMessage.Util.MESSAGE.event_parameter_component_code();
+                    } else if (item == ParameterType.COMPONENTID) {
+                        return EditorMessage.Util.MESSAGE.event_parameter_component();
+                    } else if (item == ParameterType.STORAGECODE) {
+                        return EditorMessage.Util.MESSAGE.event_parameter_storage_code();
+                    } else if (item == ParameterType.STATICVALUE) {
+                        return EditorMessage.Util.MESSAGE.event_parameter_static();
                     }
-                };
+                    return null;
+                }
+            };
         TextButton removeButton;
         private SimpleComboBox<ParameterType> codeOrIdCombo;
         private TextField textField;
@@ -283,23 +283,23 @@ public class ParameterEditorComponent extends TriggerField<String> {
             textField = new TextField();
             codeField = new TextField();
             codeOrIdCombo = new SimpleComboBox<ParameterType>(
-                    parameterTypeLabelProvider);
+                parameterTypeLabelProvider);
             codeOrIdCombo.setTriggerAction(TriggerAction.ALL);
             codeOrIdCombo.setForceSelection(true);
             codeOrIdCombo.setEditable(false);
             codeOrIdCombo.add(Arrays.asList(ParameterType.COMPONENTCODE,
-                    ParameterType.COMPONENTID, ParameterType.STORAGECODE,
-                    ParameterType.STATICVALUE));
+                ParameterType.COMPONENTID, ParameterType.STORAGECODE,
+                ParameterType.STATICVALUE));
             codeOrIdCombo
-                    .addSelectionHandler(new SelectionHandler<ParameterType>() {
+                .addSelectionHandler(new SelectionHandler<ParameterType>() {
 
-                        @Override
-                        public void onSelection(
-                                SelectionEvent<ParameterType> event) {
-                            type = event.getSelectedItem();
-                            rebuild(null);
-                        }
-                    });
+                    @Override
+                    public void onSelection(
+                        SelectionEvent<ParameterType> event) {
+                        type = event.getSelectedItem();
+                        rebuild(null);
+                    }
+                });
 
             removeButton = new TextButton();
             removeButton.setTitle(EditorMessage.Util.MESSAGE.event_parameter_remove());
@@ -326,7 +326,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
             add(codeOrIdCombo, comboLayoutData);
 
             if (type == ParameterType.COMPONENTCODE
-                    || type == ParameterType.STORAGECODE) {
+                || type == ParameterType.STORAGECODE) {
                 textField.setValue(value);
                 add(textField, fullLayoutData);
             } else if (type == ParameterType.STATICVALUE) {
@@ -352,7 +352,7 @@ public class ParameterEditorComponent extends TriggerField<String> {
 
         public String getValue() {
             if (type == ParameterType.COMPONENTCODE
-                    || type == ParameterType.STORAGECODE) {
+                || type == ParameterType.STORAGECODE) {
                 return textField.getValue();
             } else if (type == ParameterType.STATICVALUE) {
                 JSONObject val = new JSONObject();

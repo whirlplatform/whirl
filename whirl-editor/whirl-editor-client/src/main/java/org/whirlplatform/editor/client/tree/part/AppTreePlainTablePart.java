@@ -45,9 +45,9 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
             result = element == handledElement;
             if (!result && handledElement instanceof PlainTableElement) {
                 result = element instanceof TableColumnElement
-                        && handledElement.getColumns().contains(element)
-                        || element instanceof PlainTableElement
-                        && handledElement.getClones().contains(element);
+                    && handledElement.getColumns().contains(element)
+                    || element instanceof PlainTableElement
+                    && handledElement.getClones().contains(element);
             }
         }
 
@@ -74,22 +74,22 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isEditing(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement
-                && handledElement.getClones().contains(element)));
+            || (element instanceof PlainTableElement
+            && handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean isDeleting(AbstractElement element) {
         return !isReference() && (element == handledElement
-                || (element instanceof PlainTableElement
-                && handledElement.getClones().contains(element)));
+            || (element instanceof PlainTableElement
+            && handledElement.getClones().contains(element)));
     }
 
     @Override
     public boolean hasRights(AbstractElement element) {
         return element == handledElement
-                || (element instanceof PlainTableElement
-                && handledElement.getClones().contains(element));
+            || (element instanceof PlainTableElement
+            && handledElement.getClones().contains(element));
     }
 
     @Override
@@ -104,7 +104,7 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean doAddElementUI(AbstractElement parent, AbstractElement element) {
         if (parent == handledElement && element instanceof PlainTableElement
-                && handledElement.getClones().contains(element)) {
+            && handledElement.getClones().contains(element)) {
             removeElement(element);
             addChildElement(folders.clones, element);
             // TableTreePartHandler tableHandler = new
@@ -144,11 +144,11 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean doEditElementRights(AbstractElement element) {
         if (element == handledElement || (element instanceof PlainTableElement
-                && handledElement.getClones().contains(element))) {
+            && handledElement.getClones().contains(element))) {
             treePresenter.riseEditRights(Collections.singleton(element),
-                    Collections.unmodifiableCollection(
-                            Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
-                                    RightType.VIEW, RightType.RESTRICT)));
+                Collections.unmodifiableCollection(
+                    Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
+                        RightType.VIEW, RightType.RESTRICT)));
         }
         return false;
     }
@@ -172,8 +172,8 @@ public class AppTreePlainTablePart extends AbstractAppTreePart<PlainTableElement
     @Override
     public boolean isReference(AbstractElement element) {
         return isReference()
-                && (handledElement == element || (element instanceof PlainTableElement
-                && handledElement.getClones().contains(element)));
+            && (handledElement == element || (element instanceof PlainTableElement
+            && handledElement.getClones().contains(element)));
     }
 
     class TableFolders {

@@ -149,12 +149,12 @@ public class FieldMetadata implements Serializable, Cloneable {
             // TODO рендеринг должен находиться в представлении, а не в
             // метаданных
             ret = "<span title='" + AppMessage.Util.MESSAGE.notEditableField()
-                    + "' >" + ret
-                    + "<span style='color:#15428B; font-size:12px;'> *</span></span>";
+                + "' >" + ret
+                + "<span style='color:#15428B; font-size:12px;'> *</span></span>";
         } else if (required) {
             ret = "<span title='" + AppMessage.Util.MESSAGE.requiredField()
-                    + "'>" + ret
-                    + "<span style='color:red; font-size:12px;'> *</span></span>";
+                + "'>" + ret
+                + "<span style='color:red; font-size:12px;'> *</span></span>";
         }
         return ret;
     }

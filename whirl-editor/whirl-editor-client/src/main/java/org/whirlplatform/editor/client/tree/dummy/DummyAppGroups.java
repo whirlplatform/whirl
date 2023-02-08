@@ -10,7 +10,7 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
  */
 @SuppressWarnings("serial")
 public class DummyAppGroups extends AbstractDummyElement
-        implements ChildrenlessDummy, OrderedDummy {
+    implements ChildrenlessDummy, OrderedDummy {
     private static final String ID_PREFIX = "dummy-application-groups-";
     private static final String TITLE = EditorMessage.Util.MESSAGE.dummy_application_groups();
     private static final int INDEX = 20;

@@ -77,16 +77,16 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
     }
 
     private static native void copyToClipboard(String text)/*-{
-        navigator.clipboard.writeText(text).then(function() {
+        navigator.clipboard.writeText(text).then(function () {
             console.log('Async: Copying to clipboard was successful!');
-        }, function(err) {
+        }, function (err) {
             console.error('Async: Could not copy text: ', err);
         });
     }-*/;
 
     public void buildUI() {
         BorderLayoutContainer.BorderLayoutData centerData =
-                new BorderLayoutContainer.BorderLayoutData();
+            new BorderLayoutContainer.BorderLayoutData();
         centerData.setMargins(new Margins(0, 0, 0, 0));
 
         BorderLayoutContainer con = new BorderLayoutContainer();

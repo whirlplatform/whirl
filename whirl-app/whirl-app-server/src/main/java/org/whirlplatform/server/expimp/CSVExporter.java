@@ -74,10 +74,10 @@ public class CSVExporter extends Exporter {
         String result;
         if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
             result =
-                    reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
+                reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
         } else {
             result = ServerGetter.getResultSetValue(reader,
-                    reader.getFieldIndex(field.getName()));
+                reader.getFieldIndex(field.getName()));
         }
         return result;
     }

@@ -24,11 +24,11 @@ import java.util.Set;
 public class WindowManager {
 
     private static WindowManager _instance;
-    private DesktopLayout layout = new CascadeDesktopLayout();
+    private final DesktopLayout layout = new CascadeDesktopLayout();
+    private final Map<Window, WindowBuilder> builders = new HashMap<Window, WindowBuilder>();
+    private final Map<Window, WindowDescription> windows = new LinkedHashMap<Window, WindowDescription>();
+    private final Set<TaskBar> taskBars = new HashSet<TaskBar>();
     private Window activeWindow;
-    private Map<Window, WindowBuilder> builders = new HashMap<Window, WindowBuilder>();
-    private Map<Window, WindowDescription> windows = new LinkedHashMap<Window, WindowDescription>();
-    private Set<TaskBar> taskBars = new HashSet<TaskBar>();
     private WindowHandler handler;
 
     public static WindowManager get() {
@@ -57,15 +57,15 @@ public class WindowManager {
         }
         windows.put(window, new WindowDescription());
         getWindowDescription(window).addHandlerRegistration(
-                window.addActivateHandler(ensureHandler()));
+            window.addActivateHandler(ensureHandler()));
         getWindowDescription(window).addHandlerRegistration(
-                window.addDeactivateHandler(ensureHandler()));
+            window.addDeactivateHandler(ensureHandler()));
         getWindowDescription(window).addHandlerRegistration(
-                window.addMinimizeHandler(ensureHandler()));
+            window.addMinimizeHandler(ensureHandler()));
         getWindowDescription(window).addHandlerRegistration(
-                window.addHideHandler(ensureHandler()));
+            window.addHideHandler(ensureHandler()));
         getWindowDescription(window).addHandlerRegistration(
-                window.addShowHandler(ensureHandler()));
+            window.addShowHandler(ensureHandler()));
         syncTaskBars();
     }
 
@@ -178,8 +178,8 @@ public class WindowManager {
     }
 
     private class WindowHandler implements ActivateHandler<Window>,
-            DeactivateHandler<Window>, MinimizeHandler, HideHandler,
-            ShowHandler {
+        DeactivateHandler<Window>, MinimizeHandler, HideHandler,
+        ShowHandler {
 
         @Override
         public void onActivate(ActivateEvent<Window> event) {
@@ -209,9 +209,9 @@ public class WindowManager {
 
     private class WindowDescription {
 
+        private final List<HandlerRegistration> handlerRegistrations =
+            new LinkedList<HandlerRegistration>();
         private boolean isMinimized;
-        private List<HandlerRegistration> handlerRegistrations =
-                new LinkedList<HandlerRegistration>();
         private boolean minimizingNow;
 
         public boolean isMinimized() {

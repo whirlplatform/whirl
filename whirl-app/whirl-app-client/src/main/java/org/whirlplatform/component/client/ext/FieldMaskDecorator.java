@@ -28,13 +28,13 @@ import org.whirlplatform.meta.shared.AppConstant;
 @SuppressWarnings({"rawtypes"})
 public class FieldMaskDecorator<T> extends AbstractValidator<T> {
 
-    private ValueBaseField<T> field;
-    private String mask;
-    private List<String> expression = new ArrayList<String>();
+    private final ValueBaseField<T> field;
+    private final String mask;
+    private final List<String> expression = new ArrayList<String>();
+    private final Set<HandlerRegistration> handlerRegistrations = new HashSet<HandlerRegistration>();
     private String baseContent = "";
     private String content = "";
     private String validContent = "";
-    private Set<HandlerRegistration> handlerRegistrations = new HashSet<HandlerRegistration>();
     private RegExp compiledRegExp;
 
     private boolean includeMask = false;
@@ -93,7 +93,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
                 int indexToDelete = -1;
                 int keyCode = event.getNativeKeyCode();
                 if (keyCode == KeyCodes.KEY_BACKSPACE
-                        || keyCode == KeyCodes.KEY_DELETE) {
+                    || keyCode == KeyCodes.KEY_DELETE) {
                     indexToDelete = cursor;
                 }
                 if (indexToDelete != -1) {
@@ -129,33 +129,33 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
 
         }));
         handlerRegistrations.add(field
-                .addKeyPressHandler(new KeyPressHandler() {
-                    @Override
-                    public void onKeyPress(KeyPressEvent event) {
-                        int cursor = field.getCursorPos();
-                        Integer nativeCode = event.getNativeEvent()
-                                .getKeyCode();
-                        if (nativeCode == KeyCodes.KEY_TAB
-                                || nativeCode == KeyCodes.KEY_LEFT
-                                || nativeCode == KeyCodes.KEY_RIGHT
-                                || nativeCode == KeyCodes.KEY_UP
-                                || nativeCode == KeyCodes.KEY_DOWN) {
-                            return;
-                        }
-
-                        int index = validIndex(cursor);
-                        if (index > validContent.length()) {
-                            index = validContent.length();
-                            cursor = lastValidPos();
-                        }
-
-                        if (addCharCode(event.getCharCode(), index)) {
-                            field.setCursorPos(nextValidPos(cursor) + 1);
-
-                        }
-                        event.preventDefault();
+            .addKeyPressHandler(new KeyPressHandler() {
+                @Override
+                public void onKeyPress(KeyPressEvent event) {
+                    int cursor = field.getCursorPos();
+                    Integer nativeCode = event.getNativeEvent()
+                        .getKeyCode();
+                    if (nativeCode == KeyCodes.KEY_TAB
+                        || nativeCode == KeyCodes.KEY_LEFT
+                        || nativeCode == KeyCodes.KEY_RIGHT
+                        || nativeCode == KeyCodes.KEY_UP
+                        || nativeCode == KeyCodes.KEY_DOWN) {
+                        return;
                     }
-                }));
+
+                    int index = validIndex(cursor);
+                    if (index > validContent.length()) {
+                        index = validContent.length();
+                        cursor = lastValidPos();
+                    }
+
+                    if (addCharCode(event.getCharCode(), index)) {
+                        field.setCursorPos(nextValidPos(cursor) + 1);
+
+                    }
+                    event.preventDefault();
+                }
+            }));
         handlerRegistrations.add(field.addFocusHandler(new FocusHandler() {
 
             @Override
@@ -185,7 +185,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
                 try {
                     preparedValue = field.getPropertyEditor().parse(content);
                 } catch (ParseException e) {
-//                    e.printStackTrace();
+                    //                    e.printStackTrace();
                 }
                 if (preparedValue instanceof String) {
                     if (includeMask) {
@@ -218,7 +218,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
     private int nextValidPos(int cursor) {
         int index = cursor;
         while (baseContent.length() > index
-                && baseContent.toCharArray()[index] != '_') {
+            && baseContent.toCharArray()[index] != '_') {
             index = index + 1;
         }
         if (index == baseContent.length()) {
@@ -263,7 +263,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
             return string;
         }
         return string.substring(0, index - 1)
-                + string.substring(index, string.length());
+            + string.substring(index);
     }
 
     private String putCharAt(String string, int index, Character ch) {
@@ -273,15 +273,15 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
             return string + ch.toString();
         }
         return string.substring(0, index) + ch.toString()
-                + string.substring(index, string.length());
+            + string.substring(index);
     }
 
     private boolean addCharCode(Character ch, int index) {
         String contentToValidate = putCharAt(validContent, index, ch);
 
         if (contentToValidate.length() <= expression.size()
-                && String.valueOf(ch).matches(
-                expression.get(contentToValidate.length() - 1))) {
+            && String.valueOf(ch).matches(
+            expression.get(contentToValidate.length() - 1))) {
             validContent = contentToValidate;
             format();
             return true;
@@ -300,7 +300,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
 
         for (Integer i = 0; i < this.validContent.length(); i++) {
             this.content = this.content.replaceFirst("[_]",
-                    this.validContent.substring(i, i + 1));
+                this.validContent.substring(i, i + 1));
         }
 
         field.setText(this.content);
@@ -368,7 +368,7 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
                     this.content += ch;
                     break;
                 default:
-                    throw new IllegalArgumentException("Variable 'ch' can`t be this: " + ch.toString());
+                    throw new IllegalArgumentException("Variable 'ch' can`t be this: " + ch);
             }
         }
 
@@ -421,8 +421,8 @@ public class FieldMaskDecorator<T> extends AbstractValidator<T> {
             }
             if (!compiledRegExp.test(text)) {
                 return createError(editor,
-                        "Ошибка ввода: строка должна быть в формате " + mask,
-                        value);
+                    "Ошибка ввода: строка должна быть в формате " + mask,
+                    value);
             }
         }
         return null;

@@ -38,8 +38,8 @@ IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY O
 */
 public class RandomUUID {
     private static final char[] CHARS =
-            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                    .toCharArray();
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            .toCharArray();
 
     /**
      * Generate a random uuid of the specified length. Example: uuid(15) returns "VcydxgltxrVZSTV"

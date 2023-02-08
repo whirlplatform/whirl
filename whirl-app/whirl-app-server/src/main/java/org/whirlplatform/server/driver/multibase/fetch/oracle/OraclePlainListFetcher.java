@@ -17,8 +17,8 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
 public class OraclePlainListFetcher
-        extends org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainTableFetcher
-        implements ListFetcher<PlainTableElement> {
+    extends org.whirlplatform.server.driver.multibase.fetch.oracle.OraclePlainTableFetcher
+    implements ListFetcher<PlainTableElement> {
 
     private static Logger logger = LoggerFactory.getLogger(OraclePlainListFetcher.class);
 
@@ -31,7 +31,7 @@ public class OraclePlainListFetcher
                                                ClassLoadConfig loadConfig) {
 
         PlainListFetcherHelper temp =
-                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         LoadData<RowModelData> data = getTableData(metadata, table, loadConfig, temp);
 
         List<ListModelData> result = data.getData().stream().map(v -> {

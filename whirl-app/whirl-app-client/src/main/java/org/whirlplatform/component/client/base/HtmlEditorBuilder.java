@@ -26,7 +26,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  */
 @JsType(name = "HtmlEditor", namespace = "Whirl")
 public class HtmlEditorBuilder extends ComponentBuilder
-        implements NativeParameter<String>, Parameter<DataValue>, Clearable {
+    implements NativeParameter<String>, Parameter<DataValue>, Clearable {
 
     protected JavaScriptObject editor;
     private SimpleContainer container;

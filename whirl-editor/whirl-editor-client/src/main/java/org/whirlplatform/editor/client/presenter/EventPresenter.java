@@ -24,7 +24,7 @@ import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 @Presenter(view = EventView.class)
 public class EventPresenter extends BasePresenter<EventPresenter.IEventView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private EventElement event;
 
@@ -33,35 +33,35 @@ public class EventPresenter extends BasePresenter<EventPresenter.IEventView, Edi
         view.initUI();
         ContentPanel panel = ((ContentPanel) view.asWidget());
         panel.addButton(new TextButton(EditorMessage.Util.MESSAGE.apply(),
-                new SelectHandler() { // "Сохранить"
-                    @Override
-                    public void onSelect(SelectEvent e) {
-                        event.setType(view.getType());
-                        event.setCode(view.getCode());
-                        event.setHandlerType(view.getHandlerType());
-                        event.setNamed(view.isNamed());
-                        event.setConfirm(view.isConfirm());
-                        event.setConfirmText(view.getConfirmText());
-                        event.setWait(view.isWait());
-                        event.setWaitText(view.getWaitText());
-                        event.setSchema(view.getSchema());
-                        event.setFunction(view.getFunction());
-                        event.setSource(view.getSource());
-                        event.setComponent(view.getComponent());
-                        event.setTargetComponent(view.getTargetComponent());
-                        event.setDataSource(view.getDataSource());
-                        event.setCreateNew(view.isCreateNewComponent());
-                        eventBus.syncServerApplication();
-                        eventBus.closeElementView();
-                    }
-                }));
+            new SelectHandler() { // "Сохранить"
+                @Override
+                public void onSelect(SelectEvent e) {
+                    event.setType(view.getType());
+                    event.setCode(view.getCode());
+                    event.setHandlerType(view.getHandlerType());
+                    event.setNamed(view.isNamed());
+                    event.setConfirm(view.isConfirm());
+                    event.setConfirmText(view.getConfirmText());
+                    event.setWait(view.isWait());
+                    event.setWaitText(view.getWaitText());
+                    event.setSchema(view.getSchema());
+                    event.setFunction(view.getFunction());
+                    event.setSource(view.getSource());
+                    event.setComponent(view.getComponent());
+                    event.setTargetComponent(view.getTargetComponent());
+                    event.setDataSource(view.getDataSource());
+                    event.setCreateNew(view.isCreateNewComponent());
+                    eventBus.syncServerApplication();
+                    eventBus.closeElementView();
+                }
+            }));
         panel.addButton(new TextButton(EditorMessage.Util.MESSAGE.close(),
-                new SelectHandler() { // "Закрыть"
-                    @Override
-                    public void onSelect(SelectEvent event) {
-                        eventBus.closeElementView();
-                    }
-                }));
+            new SelectHandler() { // "Закрыть"
+                @Override
+                public void onSelect(SelectEvent event) {
+                    eventBus.closeElementView();
+                }
+            }));
     }
 
     public void onOpenElement(AbstractElement element) {

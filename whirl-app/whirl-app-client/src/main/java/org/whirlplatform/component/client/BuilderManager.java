@@ -32,7 +32,7 @@ public class BuilderManager {
     }
 
     public static Collection<ComponentBuilder> allChildren(
-            Containable container) {
+        Containable container) {
         Set<ComponentBuilder> result = new HashSet<ComponentBuilder>();
         for (ComponentBuilder b : container.getChildren()) {
             result.add(b);
@@ -81,7 +81,7 @@ public class BuilderManager {
         ComponentBuilder result = null;
         if (BuilderManager.getRoot() != null) {
             result = findBuilder(BuilderManager.getRoot(), componentIdOrCode,
-                    code);
+                code);
             if (result != null) {
                 return result;
             }
@@ -89,7 +89,7 @@ public class BuilderManager {
 
         for (WindowBuilder w : WindowManager.get().getBuilders()) {
             if ((!code && componentIdOrCode.equals(w.getId()))
-                    || (code && componentIdOrCode.equals(w.getCode()))) {
+                || (code && componentIdOrCode.equals(w.getCode()))) {
                 return w;
             }
 
@@ -106,7 +106,7 @@ public class BuilderManager {
         ComponentBuilder result;
         for (ComponentBuilder b : containable.getChildren()) {
             if ((!code && componentIdOrCode.equals(b.getId()))
-                    || (code && componentIdOrCode.equals(b.getCode()))) {
+                || (code && componentIdOrCode.equals(b.getCode()))) {
                 return b;
             }
 

@@ -11,7 +11,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 public class PostgreSQLConnectionWrapper extends ConnectionWrapper {
 
     private static final DBDatabaseDriverPostgreSQL DATABASE_DRIVER =
-            new DBDatabaseDriverPostgreSQL();
+        new DBDatabaseDriverPostgreSQL();
 
     public PostgreSQLConnectionWrapper(String alias, Connection connection, ApplicationUser user) {
         super(alias, connection, user);

@@ -20,7 +20,7 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
 public class BasePlainDataFetcher extends AbstractPlainDataFetcher
-        implements DataFetcher<PlainTableElement> {
+    implements DataFetcher<PlainTableElement> {
     @SuppressWarnings("unused")
     private static Logger _log = LoggerFactory.getLogger(BasePlainDataFetcher.class);
 
@@ -48,7 +48,7 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
             if (((TreeClassLoadConfig) loadConfig).getParentColumn() != null
-                    && ((TreeClassLoadConfig) loadConfig).getParent() != null) {
+                && ((TreeClassLoadConfig) loadConfig).getParent() != null) {
                 all = true;
             }
         }
@@ -59,8 +59,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
             if (f.isView()) {
                 if (f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
                     DBColumnExpr expression =
-                            temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN)
-                                    .as(f.getName() + LABEL_EXPRESSION_NAME);
+                        temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN)
+                            .as(f.getName() + LABEL_EXPRESSION_NAME);
                     command.select(expression);
                 }
                 command.select(temp.dbTable.getColumn(f.getName()));
@@ -72,7 +72,7 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
         } else {
             for (SortValue s : loadConfig.getSorts()) {
                 command.orderBy(temp.dbTable.getColumn(s.getField().getName()),
-                        s.getOrder() == SortType.DESC);
+                    s.getOrder() == SortType.DESC);
             }
         }
 
@@ -86,8 +86,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
 
         if (!all) {
             command.limitRows(
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
-                        + loadConfig.getRowsPerPage());
+                ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
+                    + loadConfig.getRowsPerPage());
             command.skipRows((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage());
         }
 
@@ -101,7 +101,7 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
     public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table,
                                    ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp =
-                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
         DBReader reader = createAndOpenReader(selectCmd);

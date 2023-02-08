@@ -66,7 +66,7 @@ public class CodeGenerator {
             t.process(context.get(), bw);
         } catch (IOException | TemplateException e) {
             throw new GenerationException(
-                    "Error generating template " + template + ": " + e.getMessage(), e);
+                "Error generating template " + template + ": " + e.getMessage(), e);
         } finally {
             try {
                 bw.close();
@@ -74,7 +74,7 @@ public class CodeGenerator {
             } catch (IOException ioe) {
                 //noinspection ThrowFromFinallyBlock
                 throw new GenerationException(
-                        "Error generating template " + template + ": " + ioe.getMessage(), ioe);
+                    "Error generating template " + template + ": " + ioe.getMessage(), ioe);
             }
         }
         return sw.getBuffer();

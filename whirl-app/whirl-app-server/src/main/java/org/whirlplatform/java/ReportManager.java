@@ -45,22 +45,22 @@ public class ReportManager {
     }
 
     public void writeReportXLS(String code, List<DataValue> params, OutputStream out)
-            throws Exception {
+        throws Exception {
         writeReport(code, true, AppConstant.REPORT_FORMAT_XLS, params, out);
     }
 
     public void writeReportXLSX(String code, List<DataValue> params, OutputStream out)
-            throws Exception {
+        throws Exception {
         writeReport(code, true, AppConstant.REPORT_FORMAT_XLSX, params, out);
     }
 
     public void writeReportHTML(String code, List<DataValue> params, OutputStream out)
-            throws Exception {
+        throws Exception {
         writeReport(code, true, AppConstant.REPORT_FORMAT_HTML, params, out);
     }
 
     public void writeReportCSV(String code, List<DataValue> params, OutputStream out)
-            throws Exception {
+        throws Exception {
         writeReport(code, true, AppConstant.REPORT_FORMAT_CSV, params, out);
     }
 
@@ -131,7 +131,7 @@ public class ReportManager {
     private Report loadReport(String codeOrId, boolean isCode, ApplicationUser user) {
 
         Map<PropertyType, PropertyValue> props =
-                connector.getReportProperties(codeOrId, isCode, user);
+            connector.getReportProperties(codeOrId, isCode, user);
 
         if (props == null) {
             throw new CustomException("Report is not found");
@@ -140,7 +140,7 @@ public class ReportManager {
         Report report = new Report(isCode ? "" : codeOrId);
 
         LocaleElement locale =
-                new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
+            new LocaleElement(user.getLocale().getLanguage(), user.getLocale().getCountry());
 
         PropertyValue propPrint = props.get(PropertyType.Print);
         if (propPrint != null) {

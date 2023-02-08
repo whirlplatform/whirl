@@ -43,7 +43,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
 
     @Override
     public ApplicationElement loadApplication(String code, Version version)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         ApplicationElement application = loadApplication(code, version, false);
         if (version != null) {
             application.setVersion(version.toString());
@@ -67,7 +67,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
     }
 
     protected ApplicationElement deserialize(String data, boolean ignoreReferences)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         // применяем все конвертеры
         String finalData = applyConverters(data);
         try {
@@ -138,7 +138,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
     @Override
     public void saveApplicationDataFiles(String appCode, Version appVersion,
                                          Collection<FileElement> dataFiles)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         Path applicationPath;
         try {
             applicationPath = resolveApplicationPath(appCode, appVersion);
@@ -150,7 +150,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
 
     @Override
     public List<FileElement> getApplicationDataFiles(String appCode, Version appVersion)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         Path applicationPath;
         try {
             applicationPath = resolveApplicationPath(appCode, appVersion);
@@ -164,11 +164,11 @@ public abstract class AbstractMetadataStore implements MetadataStore {
     public InputStream getApplicationFileInputStream(String appCode, Version appVersion,
                                                      FileElementCategory category,
                                                      String fileName)
-            throws MetadataStoreException {
+        throws MetadataStoreException {
         try {
             Path applicationPath = resolveApplicationPath(appCode, appVersion);
             InputStream result =
-                    ApplicationFilesUtil.getInputStream(applicationPath, category, fileName);
+                ApplicationFilesUtil.getInputStream(applicationPath, category, fileName);
             return result;
         } catch (IOException e) {
             throw new MetadataStoreException(e);
@@ -197,7 +197,7 @@ public abstract class AbstractMetadataStore implements MetadataStore {
         try {
             final Path srcAppPath = resolveApplicationPath(source.getCode(), source.getVersion());
             final Path dstAppPath =
-                    resolveApplicationPath(destination.getCode(), destination.getVersion());
+                resolveApplicationPath(destination.getCode(), destination.getVersion());
             for (FileElement srcFile : toCopy) {
                 ApplicationFilesUtil.copyApplicationFile(srcAppPath, srcFile, dstAppPath);
             }
@@ -207,5 +207,5 @@ public abstract class AbstractMetadataStore implements MetadataStore {
     }
 
     protected abstract Path resolveApplicationPath(String appCode, Version appVersion)
-            throws MetadataStoreException, IOException;
+        throws MetadataStoreException, IOException;
 }

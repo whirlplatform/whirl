@@ -93,15 +93,15 @@ public abstract class EditGridBuilderOverlay {
      * @param parameters
      * @deprecated loadWithParameters
      */
-//    @Deprecated
-////    public static void loadParameters(EditGridBuilder instance, DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
+    //    @Deprecated
+    //    public static void loadParameters(EditGridBuilder instance, DataValue[] parameters) {
+    //        instance.load(Arrays.asList(parameters));
+    //    }
 
 
-////    public static void loadWithParameters(EditGridBuilder instance, DataValue[] parameters) {
-//        instance.load(Arrays.asList(parameters));
-//    }
+    //    public static void loadWithParameters(EditGridBuilder instance, DataValue[] parameters) {
+    //        instance.load(Arrays.asList(parameters));
+    //    }
 
     /**
      * Перечитать данные для грида и обновить компонент
@@ -115,9 +115,9 @@ public abstract class EditGridBuilderOverlay {
      * {@link RowModelDataOverlay
      * RowModelData}[]
      */
-////    public static RowModelData[] getAllItems(EditGridBuilder instance) {
-//        return instance.getAllItems().toArray(new RowModelData[0]);
-//    }
+    //    public static RowModelData[] getAllItems(EditGridBuilder instance) {
+    //        return instance.getAllItems().toArray(new RowModelData[0]);
+    //    }
 
     /**
      * Получить строку грида по идентификатору записи
@@ -126,7 +126,7 @@ public abstract class EditGridBuilderOverlay {
      * @return Значение {@link RowModelDataOverlay
      * RowModelData}
      */
-////    public abstract RowModelData getItemById(String id);
+    //    public abstract RowModelData getItemById(String id);
 
     /**
      * Получить информацию о строках грида: идентификатор, selected, checked,
@@ -137,9 +137,9 @@ public abstract class EditGridBuilderOverlay {
      * @return {@link RowListValueOverlay
      * RowListValue}
      */
-////    public static RowListValue getDataValue(EditGridBuilder instance) {
-//        return instance.getFieldValue();
-//    }
+    //    public static RowListValue getDataValue(EditGridBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
 
     /**
      * Установить значения грида
@@ -148,10 +148,10 @@ public abstract class EditGridBuilderOverlay {
      * RowListValue}
      * @deprecated EditGridBuilder.setDataValue
      */
-////    @Deprecated
-//    public static void setValue(EditGridBuilder instance, RowListValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    @Deprecated
+    //    public static void setValue(EditGridBuilder instance, RowListValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Установить значения грида при помощи
@@ -159,9 +159,9 @@ public abstract class EditGridBuilderOverlay {
      *
      * @return RowListValue
      */
-////    public static void setDataValue(EditGridBuilder instance, RowListValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static void setDataValue(EditGridBuilder instance, RowListValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Установить фокус на грид
@@ -179,6 +179,6 @@ public abstract class EditGridBuilderOverlay {
     /**
      * Очищает фильтр грида.
      */
-////    public abstract void clearFilter();
+    //    public abstract void clearFilter();
 
 }

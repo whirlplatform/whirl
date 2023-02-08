@@ -100,7 +100,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
         List<String> subQueries = new ArrayList<String>();
 
         sqlColumnEventAccess.addAll(
-                createConditionSubQueries("EX_", "EVENT_", sqlConditions, subColumns, subQueries));
+            createConditionSubQueries("EX_", "EVENT_", sqlConditions, subColumns, subQueries));
 
         // если нет ни одного условия, хотя они должны быть так как мы уже
         // проверили вначале?
@@ -112,7 +112,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
         _log.info(query);
 
         try (ResultSet rs = connection.getDatabaseDriver()
-                .executeQuery(query, null, false, connection)) {
+            .executeQuery(query, null, false, connection)) {
             if (rs.next()) {
                 // достаем вычисленные значения
                 for (String col : sqlColumnEventAccess) {
@@ -175,7 +175,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
             return null;
         }
         NamedParamResolver resolver =
-                new NamedParamResolver(driver, value, processParams(params, objectName));
+            new NamedParamResolver(driver, value, processParams(params, objectName));
         return resolver.getResultSql();
     }
 

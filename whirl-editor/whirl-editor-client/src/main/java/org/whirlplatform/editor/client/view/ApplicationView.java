@@ -82,7 +82,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
         fieldCode.setEnabled(false);
         labelCode = new FieldLabel(fieldCode, EditorMessage.Util.MESSAGE.application_code());
         container.add(labelCode,
-                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+            new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
         guest = new CheckBox();
         //labelUrl = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
         //container.add(labelUrl,
@@ -91,7 +91,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
         fieldTitle = new PropertyValueField();
         labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
         container.add(labelTitle,
-                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+            new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
         initJavaScriptFields();
         initCssFields();
@@ -101,14 +101,14 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
         fieldHtmlHeader = new TextArea();
         labelHtmlHeader = new FieldLabel(fieldHtmlHeader,
-                EditorMessage.Util.MESSAGE.application_html_header());
+            EditorMessage.Util.MESSAGE.application_html_header());
         container.add(labelHtmlHeader,
-                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+            new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     private void checkSaved() {
         if (javaScriptFiles.isComplete() && cssFiles.isComplete() && javaFiles.isComplete()
-                && imageFiles.isComplete()) {
+            && imageFiles.isComplete()) {
             completeCommand.execute();
         }
     }
@@ -133,8 +133,8 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
 
         }, EditorMessage.Util.MESSAGE.application_javascript());
-//        container.add(javaScriptLabel,
-//                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+        //        container.add(javaScriptLabel,
+        //                new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
     }
 
     private void initCssFields() {
@@ -376,7 +376,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
     @Override
     public void setEnableAll(boolean enable) {
         labelCode.setEnabled(false);
-//        labelUrl.setEnabled(enable);
+        //        labelUrl.setEnabled(enable);
         labelTitle.setEnabled(enable);
         javaScriptLabel.setEnabled(enable);
         javaLabel.setEnabled(enable);

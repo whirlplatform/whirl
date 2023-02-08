@@ -53,7 +53,7 @@ public class SchemaElement extends AbstractElement {
         }
         // удаление прав
         if (getDataSource() != null
-                && getDataSource().getApplication() != null) {
+            && getDataSource().getApplication() != null) {
             ApplicationElement application = dataSource.getApplication();
             application.removeTableColumnRights(table);
             application.removeTableRights(table);

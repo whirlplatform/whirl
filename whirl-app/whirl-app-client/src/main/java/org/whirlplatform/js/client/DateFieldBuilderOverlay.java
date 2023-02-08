@@ -32,7 +32,7 @@ public abstract class DateFieldBuilderOverlay {
      */
     public static void setValue(DateFieldBuilder instance,
                                 JavaScriptObject value) {
-        JsDate jsDate = ((JavaScriptObject) value).cast();
+        JsDate jsDate = value.cast();
         Date date = new Date((long) jsDate.getTime());
         instance.setValue(date);
     }
@@ -48,8 +48,8 @@ public abstract class DateFieldBuilderOverlay {
         JsDate jsDate = null;
         if (date != null) {
             jsDate = JsDate.create(date.getYear() + 1900, date.getMonth(),
-                    date.getDate(), date.getHours(), date.getMinutes(),
-                    date.getSeconds(), (int) (date.getTime() % 1000));
+                date.getDate(), date.getHours(), date.getMinutes(),
+                date.getSeconds(), (int) (date.getTime() % 1000));
         }
         return jsDate;
     }
@@ -133,9 +133,9 @@ public abstract class DateFieldBuilderOverlay {
      * А из него уже можно получить javascript Date :
      * dataValue.{@link DataValueOverlay#getDateValue(DataValueImpl) getDateValue()}
      */
-////    public static DataValue getDataValue(DateFieldBuilder instance) {
-//        return instance.getFieldValue();
-//    }
+    //    public static DataValue getDataValue(DateFieldBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
 
     /**
      * Установить значение компонента, используя обёрточный тип {@link DataValueOverlay DataValue}

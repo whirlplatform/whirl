@@ -62,18 +62,18 @@ public class HorizontalInsert extends Component {
     }
 
     public static class DefaultHorizontalInsertAppearance implements
-            HorizontalInsertAppearance {
+        HorizontalInsertAppearance {
 
         private HorizontalInsertStyle style;
         private Template template;
 
         public DefaultHorizontalInsertAppearance() {
             this(GWT
-                    .create(HorizontalInsertResources.class));
+                .create(HorizontalInsertResources.class));
         }
 
         public DefaultHorizontalInsertAppearance(
-                HorizontalInsertResources resources) {
+            HorizontalInsertResources resources) {
             this.style = resources.style();
             this.style.ensureInjected();
 

@@ -21,6 +21,6 @@ public abstract class HorizontalLayoutDataOverlay {
                                                    int marginTop, int marginRight, int marginBottom,
                                                    int marginLeft) {
         return new HorizontalLayoutData(width, height, new Margins(marginTop,
-                marginRight, marginBottom, marginLeft));
+            marginRight, marginBottom, marginLeft));
     }
 }

@@ -8,7 +8,7 @@ import com.sencha.gxt.widget.core.client.selection.AbstractStoreSelectionModel;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
 public class CheckSelectionModel extends
-        AbstractStoreSelectionModel<ListModelData> {
+    AbstractStoreSelectionModel<ListModelData> {
 
     private HandlerRegistration handlerRegistrartion;
     private CheckBoxList checkList;
@@ -25,14 +25,14 @@ public class CheckSelectionModel extends
             handlerRegistrartion = null;
         }
         handlerRegistrartion = checkList
-                .addCheckChangedHandler(new CheckChangedHandler<ListModelData>() {
+            .addCheckChangedHandler(new CheckChangedHandler<ListModelData>() {
 
-                    @Override
-                    public void onCheckChanged(
-                            CheckChangedEvent<ListModelData> event) {
-                        select(event.getItems(), true);
-                    }
-                });
+                @Override
+                public void onCheckChanged(
+                    CheckChangedEvent<ListModelData> event) {
+                    select(event.getItems(), true);
+                }
+            });
         bind(checkList.getStore());
     }
 

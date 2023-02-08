@@ -79,7 +79,7 @@ public class ChangesSorterVisitContext implements VisitContext {
 
     @SuppressWarnings("unchecked")
     private <T extends AbstractElement> void collectRightCollections(
-            Collection<RightCollectionElement> source) {
+        Collection<RightCollectionElement> source) {
         for (RightCollectionElement rightsCollection : source) {
             T parent = (T) rightsCollection.getElement();
             this.collectElementIdToMap(parents, parent, rightsCollection);
@@ -121,8 +121,8 @@ public class ChangesSorterVisitContext implements VisitContext {
     }
 
     private <T extends AbstractElement, E extends AbstractElement> void collectElementIdToMap(
-            Map<String, String> map,
-            T parent, E element) {
+        Map<String, String> map,
+        T parent, E element) {
         if (element != null) {
             if (map.containsKey(element.getId())) {
                 duplicatedIdWarning(element);
@@ -147,7 +147,7 @@ public class ChangesSorterVisitContext implements VisitContext {
     public <E extends AbstractElement> String getParentId(final E element) {
         final String id = element.getId();
         if (!parents.containsKey(id)) {
-        //parentWarning(element);
+            //parentWarning(element);
             return null;
         }
         return parents.get(id);

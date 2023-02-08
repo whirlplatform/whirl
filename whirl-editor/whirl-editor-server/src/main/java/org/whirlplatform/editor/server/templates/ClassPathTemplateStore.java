@@ -30,8 +30,8 @@ public class ClassPathTemplateStore implements TemplateStore {
     @Inject
     public ClassPathTemplateStore() {
         reflections =
-                new Reflections(TemplateStore.class.getPackage().getName() + "." + packageEvents,
-                        new ResourcesScanner());
+            new Reflections(TemplateStore.class.getPackage().getName() + "." + packageEvents,
+                new ResourcesScanner());
         eventTemplates = reflections.getResources(Pattern.compile(".*\\.wrt"));
     }
 

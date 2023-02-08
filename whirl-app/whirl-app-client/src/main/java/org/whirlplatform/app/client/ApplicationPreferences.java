@@ -8,10 +8,10 @@ import java.util.Map.Entry;
 
 public class ApplicationPreferences {
 
+    private static final List<String> applicationStyles = new ArrayList<String>();
+    private static final List<String> applicationScripts = new ArrayList<String>();
+    private static final List<String> applicationCSS = new ArrayList<String>();
     private static Map<String, String> preferences = new HashMap<>();
-    private static List<String> applicationStyles = new ArrayList<String>();
-    private static List<String> applicationScripts = new ArrayList<String>();
-    private static List<String> applicationCSS = new ArrayList<String>();
 
     public static void clear() {
         preferences = new HashMap<>();

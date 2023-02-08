@@ -114,7 +114,7 @@ public class LoginPanelBuilder extends ComponentBuilder {
     private static void login(String login, String password) {
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             InfoHelper.error("login", AppMessage.Util.MESSAGE.alert(),
-                    AppMessage.Util.MESSAGE.login_header());
+                AppMessage.Util.MESSAGE.login_header());
             return;
         }
 
@@ -136,9 +136,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
             @Override
             public void onFailure(Throwable caught) {
                 if (caught instanceof ClientRestException
-                        && ((ClientRestException) caught).getData() != null
-                        && ((ClientRestException) caught).getData().getType()
-                        == ExceptionData.ExceptionType.PASSWORDCHANGE) {
+                    && ((ClientRestException) caught).getData() != null
+                    && ((ClientRestException) caught).getData().getType()
+                    == ExceptionData.ExceptionType.PASSWORDCHANGE) {
                     ExceptionData pce = ((ClientRestException) caught).getData();
                     String pwdServiceUrl = pce.getPasswordChangeServiceUrl();
                     String currentUrl = URL.encodeComponent(Window.Location.getHref());
@@ -196,10 +196,10 @@ public class LoginPanelBuilder extends ComponentBuilder {
                 if (part.getType().equals(LoginPanelBuilder.LocatorParams.TYPE_LOGIN_FIELD)) {
                     return loginField;
                 } else if (part.getType()
-                        .equals(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD)) {
+                    .equals(LoginPanelBuilder.LocatorParams.TYPE_PASSWORD_FIELD)) {
                     return passwordField;
                 } else if (part.getType()
-                        .equals(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON)) {
+                    .equals(LoginPanelBuilder.LocatorParams.TYPE_SUBMIT_BUTTON)) {
                     return submitButton;
                 }
             }
@@ -303,9 +303,9 @@ public class LoginPanelBuilder extends ComponentBuilder {
 
     private static class LocatorParams {
 
-        private static String TYPE_LOGIN_FIELD = "LoginField";
-        private static String TYPE_PASSWORD_FIELD = "PasswordField";
-        private static String TYPE_SUBMIT_BUTTON = "SubmitButton";
+        private static final String TYPE_LOGIN_FIELD = "LoginField";
+        private static final String TYPE_PASSWORD_FIELD = "PasswordField";
+        private static final String TYPE_SUBMIT_BUTTON = "SubmitButton";
 
     }
 

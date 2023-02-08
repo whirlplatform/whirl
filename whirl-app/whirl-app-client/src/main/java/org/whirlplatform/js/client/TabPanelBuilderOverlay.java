@@ -24,7 +24,7 @@ public abstract class TabPanelBuilderOverlay {
     public static void addChild(TabPanelBuilder instance, int index,
                                 ComponentBuilder builder) {
         builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
-                new DataValueImpl(DataType.NUMBER, index));
+            new DataValueImpl(DataType.NUMBER, index));
         instance.addChild(builder);
     }
 

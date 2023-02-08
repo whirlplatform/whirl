@@ -17,13 +17,13 @@ public class ApplicationTreeDropTarget extends DropTarget {
 
     public AbstractElement getDropTargetElement(DndDropEvent event) {
         Element element = event.getDragEndEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         return getDropTargetElement(element);
     }
 
     public AbstractElement getDropTargetElement(DndDragMoveEvent event) {
         Element element = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         return getDropTargetElement(element);
     }
 
@@ -32,7 +32,7 @@ public class ApplicationTreeDropTarget extends DropTarget {
         AbstractElement result = null;
         if (((Tree<AbstractElement, ?>) getWidget()).findNode(element) != null) {
             result = ((Tree<AbstractElement, ?>) getWidget()).findNode(element)
-                    .getModel();
+                .getModel();
         }
         return result;
     }

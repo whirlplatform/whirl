@@ -11,8 +11,8 @@ import com.google.gwt.dom.client.Style.Unit;
 
 public class CountElement {
 
-    private Element element;
-    private DivElement countEl;
+    private final Element element;
+    private final DivElement countEl;
 
     public CountElement(Element el) {
         element = el;

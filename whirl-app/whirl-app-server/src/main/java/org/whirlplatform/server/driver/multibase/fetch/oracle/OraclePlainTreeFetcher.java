@@ -13,7 +13,7 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
 public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
-        implements TreeFetcher<PlainTableElement> {
+    implements TreeFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(OraclePlainTreeFetcher.class);
 
     public OraclePlainTreeFetcher(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
@@ -25,7 +25,7 @@ public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
                                           TreeClassLoadConfig loadConfig) {
 
         PlainListFetcherHelper temp =
-                new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp).getData();
     }
 

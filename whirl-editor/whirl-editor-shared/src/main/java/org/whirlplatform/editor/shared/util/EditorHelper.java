@@ -119,7 +119,7 @@ public class EditorHelper {
             case ReportType:
                 setProperty(comp, defaultLocale, PropertyType.ShowReportParams, true);
                 setProperty(comp, defaultLocale, PropertyType.ReportFormat,
-                        AppConstant.REPORT_FORMAT_HTML);
+                    AppConstant.REPORT_FORMAT_HTML);
                 break;
             case TabPanelType:
                 setProperty(comp, defaultLocale, PropertyType.Width, 1);

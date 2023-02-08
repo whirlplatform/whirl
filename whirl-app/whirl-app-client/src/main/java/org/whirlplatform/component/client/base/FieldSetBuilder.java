@@ -26,7 +26,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "FieldSet", namespace = "Whirl")
 public class FieldSetBuilder extends SimpleContainerBuilder implements
-        Containable {
+    Containable {
 
     @JsConstructor
     public FieldSetBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -49,7 +49,7 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
         container = new FieldSet();
 
         DataValue collapsibleData = builderProperties
-                .get(PropertyType.Collapsible.getCode());
+            .get(PropertyType.Collapsible.getCode());
         if (collapsibleData != null) {
             Boolean collapsible = collapsibleData.getBoolean();
             if (collapsible != null && collapsible) {
@@ -68,7 +68,7 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
             public void onCollapse(CollapseEvent event) {
                 int margin = container.getElement().getMargins(Side.BOTTOM);
                 container.getElement().getStyle()
-                        .setMarginBottom(margin + 1, Unit.PX);
+                    .setMarginBottom(margin + 1, Unit.PX);
             }
         });
         ((FieldSet) container).addExpandHandler(new ExpandHandler() {
@@ -76,7 +76,7 @@ public class FieldSetBuilder extends SimpleContainerBuilder implements
             public void onExpand(ExpandEvent event) {
                 int margin = container.getElement().getMargins(Side.BOTTOM);
                 container.getElement().getStyle()
-                        .setMarginBottom(margin - 1, Unit.PX);
+                    .setMarginBottom(margin - 1, Unit.PX);
             }
         });
         return container;

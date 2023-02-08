@@ -20,9 +20,9 @@ import com.sencha.gxt.widget.core.client.form.ValueBaseField;
 
 public class FieldClearDecorator {
 
-    private Element crossEl;
+    private final Element crossEl;
+    private final Command command;
     private ValueBaseField<?> field;
-    private Command command;
     private HandlerRegistration registration;
 
     public FieldClearDecorator(ValueBaseField<?> field, Command clearCommand) {
@@ -30,9 +30,9 @@ public class FieldClearDecorator {
         this.command = clearCommand;
 
         ClearDecoratorTemplate template = GWT
-                .create(ClearDecoratorTemplate.class);
+            .create(ClearDecoratorTemplate.class);
         ClearDecoratorResources resource = GWT
-                .create(ClearDecoratorResources.class);
+            .create(ClearDecoratorResources.class);
         resource.style().ensureInjected();
         SafeHtml str = template.render(resource.style());
         crossEl = XDOM.create(str);

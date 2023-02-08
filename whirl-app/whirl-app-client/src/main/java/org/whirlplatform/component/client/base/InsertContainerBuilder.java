@@ -9,7 +9,7 @@ import org.whirlplatform.component.client.Containable;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 public abstract class InsertContainerBuilder extends ComponentBuilder implements
-        Containable {
+    Containable {
 
     protected List<ComponentBuilder> children;
     protected InsertResizeContainer container;

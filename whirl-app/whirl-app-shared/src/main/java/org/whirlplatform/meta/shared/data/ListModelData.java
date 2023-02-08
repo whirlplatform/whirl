@@ -3,7 +3,7 @@ package org.whirlplatform.meta.shared.data;
 public interface ListModelData extends RowModelData {
 
     static org.whirlplatform.meta.shared.data.ListModelData fromRowModelData(
-            org.whirlplatform.meta.shared.data.RowModelData model) {
+        org.whirlplatform.meta.shared.data.RowModelData model) {
         ListModelData result = new ListModelDataImpl();
         result.setId(model.getId());
         result.setDeletable(model.isDeletable());

@@ -12,7 +12,7 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 public class DummyAppFreeComponents extends AbstractDummyElement {
     private static final String ID_PREFIX = "dummy-application-freecomponents-";
     private static final String TITLE =
-            EditorMessage.Util.MESSAGE.dummy_application_freecomponents();
+        EditorMessage.Util.MESSAGE.dummy_application_freecomponents();
 
     public DummyAppFreeComponents() {
         super();

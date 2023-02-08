@@ -15,10 +15,10 @@ public interface MetadataStore {
     ApplicationElement loadApplication(String code, Version version) throws MetadataStoreException;
 
     ApplicationElement loadApplication(String code, Version version, boolean ignoreReferences)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     void saveApplication(ApplicationElement application, Version version, ApplicationUser user)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     String serialize(ApplicationElement application) throws MetadataStoreException;
 
@@ -28,10 +28,10 @@ public interface MetadataStore {
 
     void saveApplicationDataFiles(String appCode, Version appVersion,
                                   Collection<FileElement> dataFiles)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     List<FileElement> getApplicationDataFiles(String appCode, Version appVersion)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     InputStream getApplicationFileInputStream(String appCode, Version appVersion,
                                               FileElementCategory category,
@@ -39,11 +39,11 @@ public interface MetadataStore {
 
     void saveApplicationAs(ApplicationElement application, Version oldVersion, Version newVersion,
                            ApplicationUser user)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     void copyFileElements(ApplicationStoreData source, ApplicationStoreData destination,
                           List<FileElement> toCopy)
-            throws MetadataStoreException;
+        throws MetadataStoreException;
 
     /**
      * Возвращает последнюю версию приложения с кодом appCode.

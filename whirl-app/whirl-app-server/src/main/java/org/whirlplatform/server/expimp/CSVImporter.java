@@ -27,7 +27,7 @@ public class CSVImporter extends Importer {
 
     public void importFromStream(InputStream input) throws IOException {
         CSVReader reader = new CSVReader(new InputStreamReader(input, "UTF-8"),
-                ';');
+            ';');
         String[] header = reader.readNext();
         int size = header.length;
         Map<Integer, FieldMetadata> headerMap = new HashMap<Integer, FieldMetadata>();
@@ -36,9 +36,9 @@ public class CSVImporter extends Importer {
             for (FieldMetadata f : metadata.getFields()) {
                 String column = header[i];
                 if (column != null
-                        && ((f.getName() != null && column.equalsIgnoreCase(f
-                        .getName().trim())) || (f.getRawLabel() != null && column
-                        .equalsIgnoreCase(f.getRawLabel().trim())))) {
+                    && ((f.getName() != null && column.equalsIgnoreCase(f
+                    .getName().trim())) || (f.getRawLabel() != null && column
+                    .equalsIgnoreCase(f.getRawLabel().trim())))) {
                     headerMap.put(i, f);
                 }
             }

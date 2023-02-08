@@ -33,21 +33,21 @@ public class PackageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
 
         resp.setHeader("Content-disposition",
-                "attachment; filename=\"package.zip\"");
+            "attachment; filename=\"package.zip\"");
         resp.setContentType("application/zip");
 
         ApplicationStoreData data = (ApplicationStoreData) req.getSession()
-                .getAttribute(Packager.SESSION_KEY);
+            .getAttribute(Packager.SESSION_KEY);
 
         try {
             ApplicationElement application = metadataStore
-                    .loadApplication(data.getCode(), data.getVersion());
+                .loadApplication(data.getCode(), data.getVersion());
             if (application == null) {
                 resp.sendError(HttpServletResponse.SC_NO_CONTENT,
-                        "Application for import have not chosen");
+                    "Application for import have not chosen");
                 return;
             }
             ZipOutputStream out = new ZipOutputStream(resp.getOutputStream());

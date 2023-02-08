@@ -23,7 +23,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 
 @JsType(name = "ContextMenuItem", namespace = "Whirl")
 public class ContextMenuItemBuilder extends ComponentBuilder
-        implements ClickEvent.HasClickHandlers {
+    implements ClickEvent.HasClickHandlers {
 
     @JsIgnore
     public ContextMenuItemBuilder() {
@@ -79,7 +79,7 @@ public class ContextMenuItemBuilder extends ComponentBuilder
 
     public void setImageUrl(String imageUrl) {
         ((MenuItem) componentInstance).setIcon(
-                IconHelper.getImageResource(UriUtils.fromString(imageUrl), 16, 16));
+            IconHelper.getImageResource(UriUtils.fromString(imageUrl), 16, 16));
     }
 
     @Override

@@ -62,7 +62,7 @@ import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 public class PropertyFormView extends AccordionLayoutContainer
-        implements IPropertyFormView, ReverseViewInterface<PropertyFormPresenter> {
+    implements IPropertyFormView, ReverseViewInterface<PropertyFormPresenter> {
 
     private PropertyFormPresenter presenter;
 
@@ -76,7 +76,7 @@ public class PropertyFormView extends AccordionLayoutContainer
     private PropertyValueField requestNoDataField;
 
     private AccordionLayoutAppearance appearance = GWT
-            .create(AccordionLayoutAppearance.class);
+        .create(AccordionLayoutAppearance.class);
     private Comparator<RowElement> rowComparator = new Comparator<RowElement>() {
         @Override
         public int compare(RowElement o1, RowElement o2) {
@@ -128,7 +128,7 @@ public class PropertyFormView extends AccordionLayoutContainer
 
         IdentityValueProvider<RowElement> identity = new IdentityValueProvider<RowElement>();
         final CheckBoxSelectionModel<RowElement> sm =
-                new CheckBoxSelectionModel<RowElement>(identity);
+            new CheckBoxSelectionModel<RowElement>(identity);
         sm.setSelectionMode(SelectionMode.SINGLE);
         sm.addSelectionHandler(new SelectionHandler<RowElement>() {
             @Override
@@ -149,10 +149,10 @@ public class PropertyFormView extends AccordionLayoutContainer
         List<ColumnConfig<RowElement, ?>> columns = new ArrayList<ColumnConfig<RowElement, ?>>();
         columns.add(sm.getColumn());
         columns.add(new ColumnConfig<RowElement, Integer>(props.row(), 100,
-                EditorMessage.Util.MESSAGE.property_form_row_index()));
+            EditorMessage.Util.MESSAGE.property_form_row_index()));
         ColumnConfig<RowElement, Double> cc1 =
-                new ColumnConfig<RowElement, Double>(props.height(), 100,
-                        EditorMessage.Util.MESSAGE.property_form_row_h());
+            new ColumnConfig<RowElement, Double>(props.height(), 100,
+                EditorMessage.Util.MESSAGE.property_form_row_h());
         cc1.setCell(new AbstractCell<Double>() {
             @Override
             public void render(com.google.gwt.cell.client.Cell.Context context, Double value,
@@ -169,7 +169,7 @@ public class PropertyFormView extends AccordionLayoutContainer
         GridEditing<RowElement> editing = new GridInlineEditing<RowElement>(grid);
 
         NumberField<Double> editor = new NumberField<Double>(
-                new NumberPropertyEditor.DoublePropertyEditor(NumberFormat.getDecimalFormat()));
+            new NumberPropertyEditor.DoublePropertyEditor(NumberFormat.getDecimalFormat()));
         editing.addEditor(cc1, editor);
         grid.setSelectionModel(sm);
 
@@ -200,7 +200,7 @@ public class PropertyFormView extends AccordionLayoutContainer
         colsStore.addSortInfo(new StoreSortInfo<ColumnElement>(colComparator, SortDir.ASC));
         IdentityValueProvider<ColumnElement> identity = new IdentityValueProvider<ColumnElement>();
         CheckBoxSelectionModel<ColumnElement> sm =
-                new CheckBoxSelectionModel<ColumnElement>(identity);
+            new CheckBoxSelectionModel<ColumnElement>(identity);
         sm.setSelectionMode(SelectionMode.SINGLE);
         sm.addSelectionHandler(new SelectionHandler<ColumnElement>() {
             @Override
@@ -219,13 +219,13 @@ public class PropertyFormView extends AccordionLayoutContainer
             }
         });
         List<ColumnConfig<ColumnElement, ?>> columns =
-                new ArrayList<ColumnConfig<ColumnElement, ?>>();
+            new ArrayList<ColumnConfig<ColumnElement, ?>>();
         columns.add(sm.getColumn());
         columns.add(new ColumnConfig<ColumnElement, Integer>(props.column(), 100,
-                EditorMessage.Util.MESSAGE.property_form_column_index()));
+            EditorMessage.Util.MESSAGE.property_form_column_index()));
         ColumnConfig<ColumnElement, Double> cc1 =
-                new ColumnConfig<ColumnElement, Double>(props.width(), 100,
-                        EditorMessage.Util.MESSAGE.property_form_column_w());
+            new ColumnConfig<ColumnElement, Double>(props.width(), 100,
+                EditorMessage.Util.MESSAGE.property_form_column_w());
         cc1.setCell(new AbstractCell<Double>() {
             @Override
             public void render(com.google.gwt.cell.client.Cell.Context context, Double value,
@@ -241,7 +241,7 @@ public class PropertyFormView extends AccordionLayoutContainer
         final Grid<ColumnElement> grid = new Grid<ColumnElement>(colsStore, columnModel);
         GridEditing<ColumnElement> editing = new GridInlineEditing<ColumnElement>(grid);
         NumberField<Double> editor = new NumberField<Double>(
-                new NumberPropertyEditor.DoublePropertyEditor(NumberFormat.getDecimalFormat()));
+            new NumberPropertyEditor.DoublePropertyEditor(NumberFormat.getDecimalFormat()));
         editing.addEditor(cc1, editor);
 
         grid.setSelectionModel(sm);
@@ -290,14 +290,14 @@ public class PropertyFormView extends AccordionLayoutContainer
                 } else {
                     rec.revert();
                     Info.display(EditorMessage.Util.MESSAGE.error(),
-                            EditorMessage.Util.MESSAGE.property_form_sql_already_exists());
+                        EditorMessage.Util.MESSAGE.property_form_sql_already_exists());
                 }
             }
         });
         IdentityValueProvider<RequestElement> identity =
-                new IdentityValueProvider<RequestElement>();
+            new IdentityValueProvider<RequestElement>();
         final CheckBoxSelectionModel<RequestElement> sm =
-                new CheckBoxSelectionModel<RequestElement>(identity);
+            new CheckBoxSelectionModel<RequestElement>(identity);
         sm.setSelectionMode(SelectionMode.SINGLE);
         sm.addSelectionHandler(new SelectionHandler<RequestElement>() {
             @Override
@@ -315,25 +315,25 @@ public class PropertyFormView extends AccordionLayoutContainer
             }
         });
         List<ColumnConfig<RequestElement, ?>> columns =
-                new ArrayList<ColumnConfig<RequestElement, ?>>();
+            new ArrayList<ColumnConfig<RequestElement, ?>>();
         columns.add(sm.getColumn());
         ColumnConfig<RequestElement, String> cc1 =
-                new ColumnConfig<RequestElement, String>(props.sql(), 100,
-                        EditorMessage.Util.MESSAGE.property_form_sql_query());
+            new ColumnConfig<RequestElement, String>(props.sql(), 100,
+                EditorMessage.Util.MESSAGE.property_form_sql_query());
         ColumnConfig<RequestElement, Integer> cc2 =
-                new ColumnConfig<RequestElement, Integer>(props.top(), 50,
-                        EditorMessage.Util.MESSAGE.property_form_sql_top_index());
+            new ColumnConfig<RequestElement, Integer>(props.top(), 50,
+                EditorMessage.Util.MESSAGE.property_form_sql_top_index());
         ColumnConfig<RequestElement, Integer> cc3 =
-                new ColumnConfig<RequestElement, Integer>(props.bottom(), 50,
-                        EditorMessage.Util.MESSAGE.property_form_sql_bottom_index());
+            new ColumnConfig<RequestElement, Integer>(props.bottom(), 50,
+                EditorMessage.Util.MESSAGE.property_form_sql_bottom_index());
         ColumnConfig<RequestElement, PropertyValue> cc4 =
-                new ColumnConfig<RequestElement, PropertyValue>(
-                        props.emptyText(), 100,
-                        EditorMessage.Util.MESSAGE.property_form_sql_no_data());
+            new ColumnConfig<RequestElement, PropertyValue>(
+                props.emptyText(), 100,
+                EditorMessage.Util.MESSAGE.property_form_sql_no_data());
         ColumnConfig<RequestElement, DataSourceElement> cc5 =
-                new ColumnConfig<RequestElement, DataSourceElement>(
-                        props.dataSource(), 100,
-                        EditorMessage.Util.MESSAGE.property_form_sql_datasource());
+            new ColumnConfig<RequestElement, DataSourceElement>(
+                props.dataSource(), 100,
+                EditorMessage.Util.MESSAGE.property_form_sql_datasource());
         columns.add(cc1);
         columns.add(cc2);
         columns.add(cc3);
@@ -346,13 +346,13 @@ public class PropertyFormView extends AccordionLayoutContainer
         editing.setClicksToEdit(ClicksToEdit.TWO);
         editing.addEditor(cc1, new TextArea());
         editing.addEditor(cc2,
-                new NumberField<Integer>(new NumberPropertyEditor.IntegerPropertyEditor(null)));
+            new NumberField<Integer>(new NumberPropertyEditor.IntegerPropertyEditor(null)));
         editing.addEditor(cc3,
-                new NumberField<Integer>(new NumberPropertyEditor.IntegerPropertyEditor(null)));
+            new NumberField<Integer>(new NumberPropertyEditor.IntegerPropertyEditor(null)));
         editing.addEditor(cc4, new PropertyValueFieldConverter(requestNoDataField),
-                requestNoDataField);
+            requestNoDataField);
         editing.addEditor(cc5,
-                new DataSourceComboBox(new DataSourceStore(getPresenter().getEventBus())));
+            new DataSourceComboBox(new DataSourceStore(getPresenter().getEventBus())));
         grid.setSelectionModel(sm);
         SelectHandler sh1 = new SelectHandler() {
             @Override
@@ -362,7 +362,7 @@ public class PropertyFormView extends AccordionLayoutContainer
                     boolean duplicate = false;
                     for (RequestElement m : reqsStore.getAll()) {
                         if (selectedCells.getTop() == m.getTop()
-                                && selectedCells.getBottom() == m.getBottom()) {
+                            && selectedCells.getBottom() == m.getBottom()) {
                             duplicate = true;
                             break;
                         }
@@ -383,7 +383,7 @@ public class PropertyFormView extends AccordionLayoutContainer
                         setRequests(getPresenter().getElement().getType(), ls);
                     } else {
                         Info.display(EditorMessage.Util.MESSAGE.error(),
-                                EditorMessage.Util.MESSAGE.property_form_sql_already_exists());
+                            EditorMessage.Util.MESSAGE.property_form_sql_already_exists());
                     }
                 }
             }

@@ -14,14 +14,14 @@ public class ContextMenuItemElement extends AbstractElement {
 
     // Нет смысла каждый раз создавать новый
     private static final Comparator<ContextMenuItemElement> comparator =
-            new Comparator<ContextMenuItemElement>() {
-                @Override
-                public int compare(ContextMenuItemElement o1, ContextMenuItemElement o2) {
-                    int ind1 = o1 == null ? -1 : o1.getIndex();
-                    int ind2 = o2 == null ? -1 : o2.getIndex();
-                    return ind1 - ind2;
-                }
-            };
+        new Comparator<ContextMenuItemElement>() {
+            @Override
+            public int compare(ContextMenuItemElement o1, ContextMenuItemElement o2) {
+                int ind1 = o1 == null ? -1 : o1.getIndex();
+                int ind2 = o2 == null ? -1 : o2.getIndex();
+                return ind1 - ind2;
+            }
+        };
 
     private Set<EventElement> events = new HashSet<EventElement>();
     private ComponentElement parentComponent;

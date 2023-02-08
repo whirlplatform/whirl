@@ -49,7 +49,7 @@ public class InlineEditor {
         // Не всегда setValue меняет текст внутри field
         field.setText(currentElement.getName());
         field.setWidth(
-                tree.getView().getElementContainer(node).getWidth(true) - el.getOffsetLeft());
+            tree.getView().getElementContainer(node).getWidth(true) - el.getOffsetLeft());
         RootPanel.get().add(field);
         field.getElement().makePositionable(true);
         field.setPagePosition(el.getAbsoluteLeft(), el.getAbsoluteTop() - 3);

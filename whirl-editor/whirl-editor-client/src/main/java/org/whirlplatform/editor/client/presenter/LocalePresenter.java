@@ -16,7 +16,7 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 
 @Presenter(view = LocaleView.class)
 public class LocalePresenter extends BasePresenter<LocalePresenter.ILocaleView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private ApplicationElement application;
 

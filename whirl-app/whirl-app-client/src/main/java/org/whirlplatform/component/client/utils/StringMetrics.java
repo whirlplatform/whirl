@@ -44,7 +44,7 @@ public class StringMetrics {
      */
     public static int getWidth(String text, String size) {
         return getWidth(text, size, "normal",
-                "arial,tahoma,helvetica,sans-serif");
+            "arial,tahoma,helvetica,sans-serif");
     }
 
     /**

@@ -43,7 +43,7 @@ public class I18NMessage {
      */
     public static String getSpecifiedMessage(String name, Locale locale) {
         Map<String, String> messages = ContextUtil.lookupAll("Whirl/message/"
-                + locale.getLanguage() + "/", String.class);
+            + locale.getLanguage() + "/", String.class);
         if (messages.containsKey(name)) {
             return messages.get(name);
         }

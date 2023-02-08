@@ -24,8 +24,8 @@ import org.whirlplatform.meta.shared.editor.EventParameterElement;
 
 @Presenter(view = EventParameterView.class)
 public class EventParameterPresenter
-        extends BasePresenter<EventParameterPresenter.IEventParameterView, EditorEventBus>
-        implements ElementPresenter {
+    extends BasePresenter<EventParameterPresenter.IEventParameterView, EditorEventBus>
+    implements ElementPresenter {
 
     private EventParameterElement parameter;
 
@@ -35,7 +35,7 @@ public class EventParameterPresenter
         }
         parameter = (EventParameterElement) element;
         view.setHeaderText(
-                EditorMessage.Util.MESSAGE.editing_event_parameter() + parameter.getName());
+            EditorMessage.Util.MESSAGE.editing_event_parameter() + parameter.getName());
 
         view.clearFields();
         view.setType(parameter.getType());
@@ -142,7 +142,7 @@ public class EventParameterPresenter
     }
 
     public interface IEventParameterView
-            extends ReverseViewInterface<EventParameterPresenter>, IsWidget {
+        extends ReverseViewInterface<EventParameterPresenter>, IsWidget {
 
         void setHeaderText(String text);
 

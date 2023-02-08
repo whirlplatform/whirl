@@ -14,7 +14,7 @@ import org.whirlplatform.meta.shared.SortValue;
 
 public class SortRowCell extends AbstractCell<SortValue> {
 
-    private ListStore<SortValue> store;
+    private final ListStore<SortValue> store;
 
     public SortRowCell(ListStore<SortValue> store) {
         super("click");
@@ -26,20 +26,20 @@ public class SortRowCell extends AbstractCell<SortValue> {
                        SortValue value, SafeHtmlBuilder sb) {
         sb.appendHtmlConstant("<div>");
         sb.appendHtmlConstant("<span>")
-                .appendEscaped(value.getField().getRawLabel())
-                .appendHtmlConstant("</span>");
+            .appendEscaped(value.getField().getRawLabel())
+            .appendHtmlConstant("</span>");
         String imgSrc = null;
         if (value.getOrder() == SortType.ASC) {
             imgSrc = ApplicationBundle.INSTANCE.arrow_up().getSafeUri()
-                    .asString();
+                .asString();
         }
         if (value.getOrder() == SortType.DESC) {
             imgSrc = ApplicationBundle.INSTANCE.arrow_down().getSafeUri()
-                    .asString();
+                .asString();
         }
         if (imgSrc != null) {
             sb.append(SafeHtmlUtils.fromTrustedString("<img src=\"" + imgSrc
-                    + "\" style=\"vertical-align: bottom;\">"));
+                + "\" style=\"vertical-align: bottom;\">"));
         }
         sb.appendHtmlConstant("</div>");
     }

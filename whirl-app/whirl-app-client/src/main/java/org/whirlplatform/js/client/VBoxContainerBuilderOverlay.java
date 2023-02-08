@@ -27,23 +27,23 @@ public abstract class VBoxContainerBuilderOverlay {
                                        ComponentBuilder builder,
                                        BoxLayoutData data) {
         builder.setProperty(PropertyType.LayoutDataIndex.getCode(),
-                new DataValueImpl(DataType.NUMBER, index));
+            new DataValueImpl(DataType.NUMBER, index));
 
         if (data != null) {
             builder.setProperty(PropertyType.LayoutDataMinSize.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMinSize()));
+                new DataValueImpl(DataType.NUMBER, data.getMinSize()));
             builder.setProperty(PropertyType.LayoutDataMaxSize.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMaxSize()));
+                new DataValueImpl(DataType.NUMBER, data.getMaxSize()));
             builder.setProperty(PropertyType.LayoutDataFlex.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getFlex()));
+                new DataValueImpl(DataType.NUMBER, data.getFlex()));
             builder.setProperty(PropertyType.LayoutDataMarginTop.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getTop()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getTop()));
             builder.setProperty(PropertyType.LayoutDataMarginRight.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getRight()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getRight()));
             builder.setProperty(PropertyType.LayoutDataMarginBottom.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getBottom()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getBottom()));
             builder.setProperty(PropertyType.LayoutDataMarginLeft.getCode(),
-                    new DataValueImpl(DataType.NUMBER, data.getMargins().getLeft()));
+                new DataValueImpl(DataType.NUMBER, data.getMargins().getLeft()));
         }
         instance.addChild(builder);
     }

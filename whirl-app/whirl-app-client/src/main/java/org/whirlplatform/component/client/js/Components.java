@@ -33,11 +33,11 @@ public class Components {
      */
     @EsReturn("Component")
     public static ComponentBuilder findByCodeInContainer(
-            @EsParam("Component") ComponentBuilder container,
-            String code) {
+        @EsParam("Component") ComponentBuilder container,
+        String code) {
         if (container instanceof Containable) {
             return BuilderManager
-                    .findBuilder((Containable) container, code, true);
+                .findBuilder((Containable) container, code, true);
         } else {
             return null;
         }

@@ -52,7 +52,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
     private Timer reloadTimer = new Timer(true);
     private int cacheTimeout;
     private Table<String, Version, AtomicReference<ApplicationReference>> cache =
-            HashBasedTable.create();
+        HashBasedTable.create();
     private Table<String, Version, Date> lastAccessTime = HashBasedTable.create();
 
     private ExecutorService executorService;
@@ -91,12 +91,12 @@ public class DefaultMetadataContainer implements MetadataContainer {
                     // если никто не запускал послденее время приложение, то не
                     // вытаскиваем
                     if (new Date(System.currentTimeMillis() - lastAccessTimeoutMillis())
-                            .after(lastAccessTime.get(c.getRowKey(), c.getColumnKey()))) {
+                        .after(lastAccessTime.get(c.getRowKey(), c.getColumnKey()))) {
                         continue;
                     }
 
                     ApplicationLoadCallable callable =
-                            new ApplicationLoadCallable(c.getRowKey(), version);
+                        new ApplicationLoadCallable(c.getRowKey(), version);
                     calls.add(callable);
                 }
 
@@ -145,11 +145,11 @@ public class DefaultMetadataContainer implements MetadataContainer {
 
     private AtomicReference<ApplicationReference> initialLoadApplication(String code,
                                                                          Version version)
-            throws MetadataStoreException, EvolutionException {
+        throws MetadataStoreException, EvolutionException {
         ApplicationElement application = metadataStore.loadApplication(code, version);
         CompilationData compilation = initCompilationData(application);
         AtomicReference<ApplicationReference> result =
-                new AtomicReference<>(new ApplicationReference(application, compilation));
+            new AtomicReference<>(new ApplicationReference(application, compilation));
         applyDatabaseEvolutions(application, code, version);
         putCache(code, version, result);
         return result;
@@ -179,13 +179,13 @@ public class DefaultMetadataContainer implements MetadataContainer {
     }
 
     private void reloadApplication(ApplicationElement app, String code, Version version)
-            throws EvolutionException {
+        throws EvolutionException {
         _log.info(String.format("Reloading the application %s[%s], id=%s", app.getCode(),
-                app.getVersion(),
-                app.getId()));
+            app.getVersion(),
+            app.getId()));
         ApplicationReference reference = new ApplicationReference(app, initCompilationData(app));
         _log.info(String.format("Updating the application cache: code=%s, version=%s", code,
-                version));
+            version));
         applyDatabaseEvolutions(app, code, version);
         getCache(code, version).set(reference);
     }
@@ -198,7 +198,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
                     continue;
                 }
                 evolutionManager.applyApplicationEvolution(dataSource.getAlias(),
-                        dataSource.getEvolution().getInputStreamProvider().path());
+                    dataSource.getEvolution().getInputStreamProvider().path());
             }
         }
     }
@@ -206,7 +206,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
     @Override
     public AtomicReference<ApplicationReference> getApplication(String code,
                                                                 Version originalVersion)
-            throws ContainerException {
+        throws ContainerException {
         try {
             Version version = originalVersion;
             if (version == null) {
@@ -226,13 +226,13 @@ public class DefaultMetadataContainer implements MetadataContainer {
                 }
             } else {
                 _log.info(String.format("The application %s[%s] was loaded from the cache", code,
-                        strVersion));
+                    strVersion));
             }
             lastAccessTime.put(code, assureNotNull(version), new Date());
             return result;
         } catch (MetadataStoreException | EvolutionException e) {
             final String message =
-                    String.format("Cannot load the application '%s' from container", code);
+                String.format("Cannot load the application '%s' from container", code);
             _log.error(message, e);
             throw new ContainerException(message, e);
         }
@@ -310,11 +310,11 @@ public class DefaultMetadataContainer implements MetadataContainer {
             try {
                 ApplicationElement app = metadataStore.loadApplication(code, version);
                 ApplicationReference appRef =
-                        new ApplicationReference(app, initCompilationData(app));
+                    new ApplicationReference(app, initCompilationData(app));
                 cache.get(code, assureNotNull(version)).set(appRef);
             } catch (Exception e) {
                 _log.warn(String.format("Application '%s [%s]' reload problem: ", code, version),
-                        e);
+                    e);
             }
             return null;
         }

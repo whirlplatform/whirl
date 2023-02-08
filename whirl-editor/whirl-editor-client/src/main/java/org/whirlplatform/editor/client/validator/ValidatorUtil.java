@@ -1,4 +1,3 @@
-
 package org.whirlplatform.editor.client.validator;
 
 import com.google.gwt.user.client.ui.HasValue;
@@ -23,7 +22,7 @@ public class ValidatorUtil {
 
     public static Validator<String> createCodeValidator() {
         return new InvertedRegExValidator(CODE_REGEX,
-                EditorMessage.Util.MESSAGE.error_name_format());
+            EditorMessage.Util.MESSAGE.error_name_format());
     }
 
     public static Validator<String> createCountryValidator() {
@@ -32,7 +31,7 @@ public class ValidatorUtil {
 
     public static Validator<String> createLanguageValidator() {
         return new RegExValidator(LANGUAGE_REGEX,
-                EditorMessage.Util.MESSAGE.error_language_format());
+            EditorMessage.Util.MESSAGE.error_language_format());
     }
 
     public static Validator<String> createVersionValidator(HasValue<Boolean> branch) {

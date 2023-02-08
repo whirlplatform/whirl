@@ -9,7 +9,7 @@ import org.whirlplatform.meta.shared.editor.RightType;
 import org.whirlplatform.meta.shared.editor.db.DynamicTableElement;
 
 public class AppTreeDynamicTablePart extends AbstractAppTreePart<DynamicTableElement>
-        implements AppTreePart<DynamicTableElement> {
+    implements AppTreePart<DynamicTableElement> {
 
     public AppTreeDynamicTablePart(AppTree appTree, AppTreePresenter treePresenter,
                                    DynamicTableElement table) {
@@ -94,9 +94,9 @@ public class AppTreeDynamicTablePart extends AbstractAppTreePart<DynamicTableEle
     public boolean doEditElementRights(AbstractElement element) {
         if (element == handledElement) {
             treePresenter.riseEditRights(Collections.singleton(element),
-                    Collections.unmodifiableCollection(
-                            Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
-                                    RightType.VIEW, RightType.RESTRICT)));
+                Collections.unmodifiableCollection(
+                    Arrays.asList(RightType.ADD, RightType.DELETE, RightType.EDIT,
+                        RightType.VIEW, RightType.RESTRICT)));
         }
         return false;
     }

@@ -58,6 +58,14 @@ import org.whirlplatform.rpc.shared.SessionToken;
  */
 public class AppEntryPoint implements EntryPoint {
 
+    private static final ScheduledCommand loginSuccessCommand = new ScheduledCommand() {
+
+        @Override
+        public void execute() {
+            // TODO
+        }
+
+    };
     /**
      * Родительский контейнер
      */
@@ -65,21 +73,13 @@ public class AppEntryPoint implements EntryPoint {
     /**
      * Команда испольующаяся для старта постороения компонентов приложения.
      */
-    private static ScheduledCommand buildApplicationCommand = new ScheduledCommand() {
+    private static final ScheduledCommand buildApplicationCommand = new ScheduledCommand() {
 
         @Override
         public void execute() {
             // убираем логин на странице
             AppEntryPoint.getRootContainer().clearContainer();
             AppEntryPoint.startBuildApp();
-        }
-
-    };
-    private static ScheduledCommand loginSuccessCommand = new ScheduledCommand() {
-
-        @Override
-        public void execute() {
-            // TODO
         }
 
     };
@@ -165,14 +165,14 @@ public class AppEntryPoint implements EntryPoint {
                 rootContainer.clearContainer();
                 if (application.getStartMessage() != null) {
                     InfoHelper.warning("start-message", AppMessage.Util.MESSAGE.alert(),
-                            application.getStartMessage());
+                        application.getStartMessage());
                 }
                 if (!application.isBlocked()) {
                     buildApplication(application);
                 } else {
                     ClientLoginUtils.logout();
                     InfoHelper.error("application-block", AppMessage.Util.MESSAGE.alert(),
-                            application.getStartMessage());
+                        application.getStartMessage());
                 }
             }
 
@@ -182,7 +182,7 @@ public class AppEntryPoint implements EntryPoint {
 
                 if (caught instanceof ClientRestException
                     && ((ClientRestException) caught).getData() != null
-                        && ((ClientRestException) caught).getData().getType()
+                    && ((ClientRestException) caught).getData().getType()
                     == ExceptionData.ExceptionType.WRONGAPP) {
                     wrongApplicationMessage(((ClientRestException) caught).getData());
                 } else {
@@ -190,7 +190,7 @@ public class AppEntryPoint implements EntryPoint {
                 }
             }
         }).getApplication(SessionToken.get(), getApplicationCode(), getApplicationVersion(),
-                LocaleInfo.getCurrentLocale().getLocaleName());
+            LocaleInfo.getCurrentLocale().getLocaleName());
     }
 
     /**
@@ -228,7 +228,7 @@ public class AppEntryPoint implements EntryPoint {
     }
 
     private static void saveSessionTokenId(String tokenId)
-            throws StorageQuotaExceededException, SerializationException {
+        throws StorageQuotaExceededException, SerializationException {
         StorageExt storage = StorageExt.getSessionStorage();
         StorageKey<String> key = new StorageKey<>(AppConstant.TOKEN, String.class);
         storage.put(key, tokenId);
@@ -250,7 +250,7 @@ public class AppEntryPoint implements EntryPoint {
         } else if (application == null) {
             // Если приложение не загружено, вывести сообщение
             InfoHelper.error("application-load", AppMessage.Util.MESSAGE.alert(),
-                    AppMessage.Util.MESSAGE.errorAppData());
+                AppMessage.Util.MESSAGE.errorAppData());
             return false;
         }
 
@@ -306,7 +306,7 @@ public class AppEntryPoint implements EntryPoint {
         };
 
         DataServiceAsync.Util.getDataService(callback)
-                .getComponents(SessionToken.get(), data.getRootComponentId());
+            .getComponents(SessionToken.get(), data.getRootComponentId());
     }
 
     private static void fireCreateEvents(ApplicationData data) {
@@ -338,7 +338,7 @@ public class AppEntryPoint implements EntryPoint {
 
     private static void wrongApplicationMessage(final ExceptionData e) {
         final com.sencha.gxt.widget.core.client.Window w =
-                new com.sencha.gxt.widget.core.client.Window();
+            new com.sencha.gxt.widget.core.client.Window();
         w.setHeading(AppMessage.Util.MESSAGE.alert());
         VerticalLayoutContainer panel = new VerticalLayoutContainer();
         panel.getElement().setAttribute("style", "background-color: white;");
@@ -351,7 +351,7 @@ public class AppEntryPoint implements EntryPoint {
             HTML messageList = new HTML(AppMessage.Util.MESSAGE.errorWrongApplicationList());
             messageList.getElement().getStyle().setFontSize(14, Unit.PX);
             messageList.getElement()
-                    .setAttribute("style", "font: 14px 'Times New Roman', Times, serif");
+                .setAttribute("style", "font: 14px 'Times New Roman', Times, serif");
             panel.add(message);
         }
 
@@ -382,7 +382,7 @@ public class AppEntryPoint implements EntryPoint {
             HTML tab = new HTML(e.getMessage());
             tab.getElement().getStyle().setFontSize(14, Unit.PX);
             tab.getElement().setAttribute("style",
-                    "font: 14px 'Times New Roman', Times, serif; background-color: white;");
+                "font: 14px 'Times New Roman', Times, serif; background-color: white;");
             VerticalLayoutContainer table = new VerticalLayoutContainer();
             panel.setBorders(true);
             table.setBorders(true);

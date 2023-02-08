@@ -5,7 +5,7 @@ import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 
 public abstract class AbstractMetadataStateStore<T extends Serializable>
-        implements StateStore<T> {
+    implements StateStore<T> {
 
     protected StateScope scope;
     protected ClassMetadata metadata;

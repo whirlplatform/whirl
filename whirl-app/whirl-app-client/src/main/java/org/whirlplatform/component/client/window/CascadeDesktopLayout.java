@@ -32,7 +32,7 @@ public class CascadeDesktopLayout extends LimitedDesktopLayout implements Deskto
         }
 
         super.layoutDesktop(requestWindow, requestType, element, windows, containerWidth,
-                containerHeight);
+            containerHeight);
     }
 
     @Override

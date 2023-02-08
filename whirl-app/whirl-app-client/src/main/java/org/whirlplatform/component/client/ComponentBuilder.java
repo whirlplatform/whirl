@@ -49,11 +49,11 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "Component", namespace = "Whirl")
 public abstract class ComponentBuilder//
-        implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers,
-        DetachEvent.HasDetachHandlers,
-        FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers,
-        ShowEvent.HasShowHandlers, HideEvent.HasHideHandlers, HasLayoutData,
-        CloseProvider, TitleProvider, HasCode {
+    implements HasHandlers, AttachEvent.HasAttachHandlers, CreateEvent.HasCreateHandlers,
+    DetachEvent.HasDetachHandlers,
+    FocusEvent.HasFocusHandlers, LocatorAware, WrapperAware, BlurEvent.HasBlurHandlers,
+    ShowEvent.HasShowHandlers, HideEvent.HasHideHandlers, HasLayoutData,
+    CloseProvider, TitleProvider, HasCode {
 
     @JsIgnore
     public static final String CBUILDER = "CBUILDER";
@@ -66,7 +66,7 @@ public abstract class ComponentBuilder//
     protected Set<String> replaceableProperties = new HashSet<String>();
     protected String contextMenuId;
     protected List<ContextMenuItemBuilder> contextMenuItems =
-            new ArrayList<ContextMenuItemBuilder>();
+        new ArrayList<ContextMenuItemBuilder>();
     private String id;
     private boolean created = false;
     private boolean hidden = false;
@@ -334,41 +334,41 @@ public abstract class ComponentBuilder//
 
         });
         componentInstance.addShowHandler(
-                new com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler() {
+            new com.sencha.gxt.widget.core.client.event.ShowEvent.ShowHandler() {
 
-                    @Override
-                    public void onShow(com.sencha.gxt.widget.core.client.event.ShowEvent event) {
-                        fireEvent(new ShowEvent());
-                    }
+                @Override
+                public void onShow(com.sencha.gxt.widget.core.client.event.ShowEvent event) {
+                    fireEvent(new ShowEvent());
+                }
 
-                });
+            });
         componentInstance.addHideHandler(
-                new com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler() {
+            new com.sencha.gxt.widget.core.client.event.HideEvent.HideHandler() {
 
-                    @Override
-                    public void onHide(com.sencha.gxt.widget.core.client.event.HideEvent event) {
-                        fireEvent(new HideEvent());
-                    }
+                @Override
+                public void onHide(com.sencha.gxt.widget.core.client.event.HideEvent event) {
+                    fireEvent(new HideEvent());
+                }
 
-                });
+            });
         componentInstance.addFocusHandler(
-                new com.sencha.gxt.widget.core.client.event.FocusEvent.FocusHandler() {
+            new com.sencha.gxt.widget.core.client.event.FocusEvent.FocusHandler() {
 
-                    @Override
-                    public void onFocus(com.sencha.gxt.widget.core.client.event.FocusEvent event) {
-                        fireEvent(new FocusEvent());
-                    }
+                @Override
+                public void onFocus(com.sencha.gxt.widget.core.client.event.FocusEvent event) {
+                    fireEvent(new FocusEvent());
+                }
 
-                });
+            });
         componentInstance.addBlurHandler(
-                new com.sencha.gxt.widget.core.client.event.BlurEvent.BlurHandler() {
+            new com.sencha.gxt.widget.core.client.event.BlurEvent.BlurHandler() {
 
-                    @Override
-                    public void onBlur(com.sencha.gxt.widget.core.client.event.BlurEvent event) {
-                        fireEvent(new BlurEvent());
-                    }
+                @Override
+                public void onBlur(com.sencha.gxt.widget.core.client.event.BlurEvent event) {
+                    fireEvent(new BlurEvent());
+                }
 
-                });
+            });
     }
 
     /**
@@ -868,7 +868,7 @@ public abstract class ComponentBuilder//
         if (locator.hasParameter(LocatorParams.PARAMETER_ID)) {
             final String value = locator.getParameter(parameter);
             if (LocatorParams.PARAMETER_ID.equals(parameter) && !Util.isEmptyString(id)
-                    && id.equals(value)) {
+                && id.equals(value)) {
                 return true;
             }
         }

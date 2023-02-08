@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.form;
 
 import java.io.IOException;
@@ -78,9 +77,9 @@ public class ClientFormWriter extends FormWriter {
         if (cell.getComponent() != null) {
             ComponentModel cm = cell.getComponent();
             cm.setValue(PropertyType.LayoutDataFormRow.getCode(),
-                    new DataValueImpl(DataType.NUMBER, cell.getRow().getFinalRow()));
+                new DataValueImpl(DataType.NUMBER, cell.getRow().getFinalRow()));
             cm.setValue(PropertyType.LayoutDataFormColumn.getCode(),
-                    new DataValueImpl(DataType.NUMBER, cell.getColumn().getFinalCol()));
+                new DataValueImpl(DataType.NUMBER, cell.getColumn().getFinalCol()));
         }
         model.setComponent(cell.getComponent());
 

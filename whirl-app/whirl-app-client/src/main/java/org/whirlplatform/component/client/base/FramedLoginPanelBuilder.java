@@ -53,9 +53,9 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
         StringBuilder html = new StringBuilder();
 
         html.append(
-                "<table cellspacing=\"0\" "
-                    + "cellpadding=\"0\" border=\"0\" "
-                    + "width=\"100%\" height=\"100%\" id=\"login-page\">");
+            "<table cellspacing=\"0\" "
+                + "cellpadding=\"0\" border=\"0\" "
+                + "width=\"100%\" height=\"100%\" id=\"login-page\">");
         html.append("<tbody>");
         html.append("<tr class=\"xs-header\">");
         Element elHeader = DOM.getElementById("login-header-template");
@@ -64,7 +64,7 @@ public class FramedLoginPanelBuilder extends LoginPanelBuilder {
             loginHeader = elHeader.getInnerHTML();
         } else {
             loginHeader = "<div id=\"login-header\" style=\"font-weight: bold; font-size: 16px;\">"
-                    + AppMessage.Util.MESSAGE.login_auth() + "</div>";
+                + AppMessage.Util.MESSAGE.login_auth() + "</div>";
         }
         html.append("<td align=\"center\">" + loginHeader + "</td><td>");
         html.append("</td></tr>");

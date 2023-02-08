@@ -23,7 +23,7 @@ public class JavaFunctionMessage extends AbstractMessage {
         StringBuilder builder = new StringBuilder();
 
         builder.append("{\"type\": \"javaFunction\", \"code\": \"").append(event.getCode())
-                .append("\", ");
+            .append("\", ");
         builder.append("\"params\": ").append(getParamsString()).append("}");
 
         return getFullLogMessage(builder.toString());

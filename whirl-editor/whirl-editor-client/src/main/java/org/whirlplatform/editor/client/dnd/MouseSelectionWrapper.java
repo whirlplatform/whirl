@@ -110,8 +110,8 @@ public class MouseSelectionWrapper implements HasMouseSelectionHandlers {
         }
         // deselect
         ensureHandlers().fireEvent(
-                new MouseSelectionEvent(false, event.getX(), event.getY(), -1,
-                        -1));
+            new MouseSelectionEvent(false, event.getX(), event.getY(), -1,
+                -1));
         hideSurface();
         if (!selection) {
             startX = event.getClientX();
@@ -133,7 +133,7 @@ public class MouseSelectionWrapper implements HasMouseSelectionHandlers {
             selection = false;
             hideSurface();
             ensureHandlers().fireEvent(
-                    new MouseSelectionEvent(true, x, y, width, height));
+                new MouseSelectionEvent(true, x, y, width, height));
         }
         removeMouseMoveHandler();
         removeMouseUpHandler();
@@ -147,14 +147,14 @@ public class MouseSelectionWrapper implements HasMouseSelectionHandlers {
         int endX = event.getClientX();
         int endY = event.getClientY();
         if (endX < widget.getAbsoluteLeft()
-                || endX > widget.getAbsoluteLeft() + widget.getOffsetWidth()
-                || endY < widget.getAbsoluteTop()
-                || endY > widget.getAbsoluteTop() + widget.getOffsetHeight()) {
+            || endX > widget.getAbsoluteLeft() + widget.getOffsetWidth()
+            || endY < widget.getAbsoluteTop()
+            || endY > widget.getAbsoluteTop() + widget.getOffsetHeight()) {
             return;
         }
         if (!selection
-                && (Math.abs(startX - endX) > DISTANCE || Math.abs(startY
-                - endY) > DISTANCE)) {
+            && (Math.abs(startX - endX) > DISTANCE || Math.abs(startY
+            - endY) > DISTANCE)) {
             event.preventDefault();
             selection = true;
             surface.show();
@@ -181,9 +181,9 @@ public class MouseSelectionWrapper implements HasMouseSelectionHandlers {
 
     @Override
     public HandlerRegistration addMouseSelectionHandler(
-            MouseSelectionHandler handler) {
+        MouseSelectionHandler handler) {
         return ensureHandlers().addHandler(MouseSelectionEvent.getType(),
-                handler);
+            handler);
     }
 
     private void hideSurface() {

@@ -24,6 +24,6 @@ public class RestExceptionMapper implements ExceptionMapper<CustomException> {
     public Response toResponse(CustomException exception) {
         log.error(exception.getMessage(), exception);
         return Response.status(400).entity(exception.getData())
-                .type(MediaType.APPLICATION_JSON_TYPE).build();
+            .type(MediaType.APPLICATION_JSON_TYPE).build();
     }
 }

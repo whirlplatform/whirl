@@ -105,13 +105,13 @@ public abstract class TextFieldBuilderOverlay {
      */
     public abstract void setStyleName(String styleName);
 
-////    public static DataValue getDataValue(TextFieldBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(TextFieldBuilder instance, DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static DataValue getDataValue(TextFieldBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(TextFieldBuilder instance, DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Получить значение текстового поля

@@ -21,7 +21,7 @@ public class DBFunctionMessage extends AbstractMessage {
     public String getMessage() {
         StringBuilder builder = new StringBuilder();
         builder.append("{\"type\": \"dbFunction\", \"function\": \"").append(event.getFunction())
-                .append("\", ");
+            .append("\", ");
         builder.append("\"params\": ").append(getParamsString()).append("}");
         return getFullLogMessage(builder.toString());
     }

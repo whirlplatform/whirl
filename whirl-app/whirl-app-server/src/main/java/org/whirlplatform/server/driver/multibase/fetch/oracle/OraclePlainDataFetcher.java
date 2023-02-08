@@ -28,7 +28,7 @@ import org.whirlplatform.server.driver.multibase.fetch.base.PlainTableFetcherHel
 import org.whirlplatform.server.global.SrvConstant;
 
 public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
-        implements DataFetcher<PlainTableElement> {
+    implements DataFetcher<PlainTableElement> {
 
     public OraclePlainDataFetcher(ConnectionWrapper connectionWrapper,
                                   DataSourceDriver datasourceDriver) {
@@ -40,7 +40,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
     public DBReader getTableReader(ClassMetadata metadata, PlainTableElement table,
                                    ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp =
-                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
         DBCommand selectCmd = createSelectCommand(table, loadConfig, temp);
         DBReader reader = new DBReader();
@@ -72,9 +72,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         if (!temp.where.isEmpty()) {
             countCommand.addWhereConstraints(temp.where);
         }
-//        if (!all) {
-//            countCommand.where(new OracleRowNumExpr(temp.dbDatabase).isLessOrEqual(10000));
-//        }
+        //        if (!all) {
+        //            countCommand.where(new OracleRowNumExpr(temp.dbDatabase).isLessOrEqual(10000));
+        //        }
         return countCommand;
     }
 
@@ -100,7 +100,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         if (loadConfig instanceof TreeClassLoadConfig) {
             TreeClassLoadConfig tmpConf = (TreeClassLoadConfig) loadConfig;
             if ((tmpConf.getParentColumn() != null && tmpConf.getParent() != null)
-                    || StringUtils.isEmpty(tmpConf.getQuery())) {
+                || StringUtils.isEmpty(tmpConf.getQuery())) {
                 all = true;
             }
         }
@@ -120,13 +120,13 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         }
 
         DBColumnExpr rowNumber =
-                new DBFuncExpr(orderListExpr, "ROW_NUMBER() OVER (ORDER BY ?)", null, null, false,
-                        DataType.INTEGER).as("rn");
+            new DBFuncExpr(orderListExpr, "ROW_NUMBER() OVER (ORDER BY ?)", null, null, false,
+                DataType.INTEGER).as("rn");
         subCommand.select(rowNumber);
 
-//        if (!all) {
-//            subCommand.where(new OracleRowNumExpr(temp.dbDatabase).isLessOrEqual(10000));
-//        }
+        //        if (!all) {
+        //            subCommand.where(new OracleRowNumExpr(temp.dbDatabase).isLessOrEqual(10000));
+        //        }
 
         DBQuery subQuery = new DBQuery(subCommand);
         //        subQuery.setAlias("a");
@@ -139,9 +139,9 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
 
         if (!all) {
             topCommand.where(rowNumber.isBetween(
-                    1 + (loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage(),
-                    ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
-                            + loadConfig.getRowsPerPage()));
+                1 + (loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage(),
+                ((loadConfig.getPageNum() - 1) * loadConfig.getRowsPerPage())
+                    + loadConfig.getRowsPerPage()));
         }
 
         addFunctionFields(topCommand, table, loadConfig, temp);
@@ -159,7 +159,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
             if (!StringUtils.isEmpty(function)) {
                 String expr = resolveValue(function, loadConfig.getParameters());
                 cmd.select(
-                        temp.dbDatabase.getValueExpr(expr, DataType.UNKNOWN).as(c.getColumnName()));
+                    temp.dbDatabase.getValueExpr(expr, DataType.UNKNOWN).as(c.getColumnName()));
             }
         }
     }
@@ -173,8 +173,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
             for (SortValue s : loadConfig.getSorts()) {
                 // Если тип поля - список, сортировать по строке
                 if (org.whirlplatform.meta.shared.data.DataType.LIST == s.getField().getType()
-                        || org.whirlplatform.meta.shared.data.DataType.FILE
-                        == s.getField().getType()) {
+                    || org.whirlplatform.meta.shared.data.DataType.FILE
+                    == s.getField().getType()) {
                     orderString.append(s.getField().getLabelExpression());
                 } else {
                     orderString.append(s.getField().getName());
@@ -191,7 +191,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
             for (TableColumnElement column : table.getSortedColumns()) {
                 if (column.isDefaultOrder() && column != table.getDeleteColumn()) {
                     if (org.whirlplatform.meta.shared.data.DataType.LIST == column.getType()
-                            || org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
+                        || org.whirlplatform.meta.shared.data.DataType.FILE == column.getType()) {
                         orderString.append(column.getLabelExpression());
                     } else {
                         orderString.append(column.getColumnName());
@@ -215,7 +215,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         if (col.getConfigColumn() != null) {
             setModelValue(model, field, reader);
             model.setStyle(field.getName(),
-                    reader.getString(reader.getFieldIndex(col.getConfigColumn())));
+                reader.getString(reader.getFieldIndex(col.getConfigColumn())));
             return;
         }
         int colInd = reader.getFieldIndex(field.getName());
@@ -236,8 +236,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         model.setStyle(field.getName(), formattedMap.get(SrvConstant.STYLE));
         if (field.getType() == org.whirlplatform.meta.shared.data.DataType.DATE && value != null) {
             DateTimeFormat fmt =
-                    new DateTimeFormat("dd.MM.yyyy hh:mm:ss", new DefaultDateTimeFormatInfo()) {
-                    };
+                new DateTimeFormat("dd.MM.yyyy hh:mm:ss", new DefaultDateTimeFormatInfo()) {
+                };
             model.set(field.getName(), fmt.parse(value));
         } else {
             model.set(field.getName(), convertValueFromString(value, objValue, field.getType()));

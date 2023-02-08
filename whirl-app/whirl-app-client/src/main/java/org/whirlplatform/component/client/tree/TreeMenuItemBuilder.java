@@ -23,7 +23,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "TreeMenuItem", namespace = "Whirl")
 public class TreeMenuItemBuilder extends ComponentBuilder implements
-        ClickEvent.HasClickHandlers, Containable {
+    ClickEvent.HasClickHandlers, Containable {
 
     private String imageUrl;
     private ComponentMenuItem menuItem;

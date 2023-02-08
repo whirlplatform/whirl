@@ -91,62 +91,62 @@ public class EsDocProcessor extends AbstractProcessor {
             }
 
             EsDocProcessor.Type type =
-                    new EsDocProcessor.Type(namespace(packageElement, typeElement),
-                            typeName(typeElement),
-                            comment(typeElement, ""));
+                new EsDocProcessor.Type(namespace(packageElement, typeElement),
+                    typeName(typeElement),
+                    comment(typeElement, ""));
             types.put(type.getNamespace(), type);
             debug("Discovered JsType [%s]", type);
 
             List<? extends Element> elements = typeElement.getEnclosedElements();
             Predicate<Element> jsRelevant = e -> e != null
-                    && e.getAnnotation(JsIgnore.class) == null
-                    && e.getModifiers().contains(Modifier.PUBLIC);
+                && e.getAnnotation(JsIgnore.class) == null
+                && e.getModifiers().contains(Modifier.PUBLIC);
 
             // Constructor
             ElementFilter.constructorsIn(elements)
-                    .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsConstructor.class) != null))
-                    .findFirst()
-                    .ifPresent(e -> type.setConstructor(
-                            new EsDocProcessor.Constructor(parameters(e), comment(e, PADDING))));
+                .stream()
+                .filter(jsRelevant.and(e -> e.getAnnotation(JsConstructor.class) != null))
+                .findFirst()
+                .ifPresent(e -> type.setConstructor(
+                    new EsDocProcessor.Constructor(parameters(e), comment(e, PADDING))));
 
             // Properties - Fields
             ElementFilter.fieldsIn(elements)
-                    .stream()
-                    .filter(jsRelevant)
-                    .forEach(e -> {
-                        boolean setter = !e.getModifiers().contains(Modifier.FINAL);
-                        type.addProperty(
-                                new EsDocProcessor.Property(propertyName(e), comment(e, PADDING),
-                                        true, setter, _static(e)));
-                    });
+                .stream()
+                .filter(jsRelevant)
+                .forEach(e -> {
+                    boolean setter = !e.getModifiers().contains(Modifier.FINAL);
+                    type.addProperty(
+                        new EsDocProcessor.Property(propertyName(e), comment(e, PADDING),
+                            true, setter, _static(e)));
+                });
 
             // Properties - Methods (only getters are supported)
             ElementFilter.methodsIn(elements)
-                    .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null))
-                    .forEach(e -> type.addProperty(
-                            new Property(propertyName(e), comment(e, PADDING), true, false,
-                                    _static(e))));
+                .stream()
+                .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) != null))
+                .forEach(e -> type.addProperty(
+                    new Property(propertyName(e), comment(e, PADDING), true, false,
+                        _static(e))));
 
             // Methods
             ElementFilter.methodsIn(elements)
-                    .stream()
-                    .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) == null))
-                    .forEach(e -> type.addMethod(
-                            new EsDocProcessor.Method(methodName(e), parameters(e),
-                                    comment(e, PADDING), _static(e))));
+                .stream()
+                .filter(jsRelevant.and(e -> e.getAnnotation(JsProperty.class) == null))
+                .forEach(e -> type.addMethod(
+                    new EsDocProcessor.Method(methodName(e), parameters(e),
+                        comment(e, PADDING), _static(e))));
         }
 
         if (!types.isEmpty()) {
             types.asMap().forEach((namespace, nsTypes) -> {
                 debug("Generating documentation for %s.es6", namespace);
                 resource(TEMPLATE, namespace, namespace + ".es6",
-                        () -> {
-                            Map<String, Object> context = new HashMap<>();
-                            context.put(TYPES, nsTypes);
-                            return context;
-                        });
+                    () -> {
+                        Map<String, Object> context = new HashMap<>();
+                        context.put(TYPES, nsTypes);
+                        return context;
+                    });
             });
 
             info("Successfully generated ES6 documentation.");
@@ -164,8 +164,8 @@ public class EsDocProcessor extends AbstractProcessor {
             namespace = jsPackage.namespace();
         } else {
             namespace = AUTO.equals(jsType.namespace())
-                    ? packageElement.getQualifiedName().toString()
-                    : jsType.namespace();
+                ? packageElement.getQualifiedName().toString()
+                : jsType.namespace();
         }
         return namespace;
     }
@@ -177,57 +177,57 @@ public class EsDocProcessor extends AbstractProcessor {
 
             // process comment line by line
             List<String> lines =
-                    stream(Splitter.on('\n').trimResults().split(comment).spliterator(), false)
+                stream(Splitter.on('\n').trimResults().split(comment).spliterator(), false)
 
-                            // not supported by ESDoc
-                            .filter(line -> !(line.contains("@author")
-                                    || line.contains("@version")))
+                    // not supported by ESDoc
+                    .filter(line -> !(line.contains("@author")
+                        || line.contains("@version")))
 
-                            // process @param and @return in methods
-                            .map(line -> {
-                                String result = line;
-                                if (element instanceof ExecutableElement) {
-                                    ExecutableElement method = (ExecutableElement) element;
+                    // process @param and @return in methods
+                    .map(line -> {
+                        String result = line;
+                        if (element instanceof ExecutableElement) {
+                            ExecutableElement method = (ExecutableElement) element;
 
-                                    if (line.startsWith(PARAM_TAG)) {
-                                        String paramType;
-                                        String lineWithoutParam =
-                                                line.substring(PARAM_TAG.length());
-                                        VariableElement parameter =
-                                                getParameter(method, parameters.size());
-                                        if (parameter != null) {
-                                            EsParam esParam =
-                                                    parameter.getAnnotation(EsParam.class);
-                                            if (esParam != null) {
-                                                paramType = esParam.value();
-                                            } else {
-                                                paramType =
-                                                        simpleName(parameter.asType().toString());
-                                            }
-                                            result = PARAM_TAG + " {" + paramType + "}"
-                                                + lineWithoutParam;
-                                        }
-                                        parameters.add(line); // parameters++
-
-                                    } else if (line.startsWith(RETURN_TAG)) {
-                                        String returnType;
-                                        EsReturn esReturn = method.getAnnotation(EsReturn.class);
-                                        if (esReturn != null) {
-                                            returnType = esReturn.value();
-                                        } else {
-                                            returnType =
-                                                    simpleName(method.getReturnType().toString());
-                                        }
-                                        result = RETURN_TAG + " {" + returnType + "}"
-                                            + line.substring(RETURN_TAG.length());
+                            if (line.startsWith(PARAM_TAG)) {
+                                String paramType;
+                                String lineWithoutParam =
+                                    line.substring(PARAM_TAG.length());
+                                VariableElement parameter =
+                                    getParameter(method, parameters.size());
+                                if (parameter != null) {
+                                    EsParam esParam =
+                                        parameter.getAnnotation(EsParam.class);
+                                    if (esParam != null) {
+                                        paramType = esParam.value();
+                                    } else {
+                                        paramType =
+                                            simpleName(parameter.asType().toString());
                                     }
+                                    result = PARAM_TAG + " {" + paramType + "}"
+                                        + lineWithoutParam;
                                 }
-                                return result;
-                            })
+                                parameters.add(line); // parameters++
 
-                            // format comment and collect into list
-                            .map(line -> padding + " * " + line)
-                            .collect(toList());
+                            } else if (line.startsWith(RETURN_TAG)) {
+                                String returnType;
+                                EsReturn esReturn = method.getAnnotation(EsReturn.class);
+                                if (esReturn != null) {
+                                    returnType = esReturn.value();
+                                } else {
+                                    returnType =
+                                        simpleName(method.getReturnType().toString());
+                                }
+                                result = RETURN_TAG + " {" + returnType + "}"
+                                    + line.substring(RETURN_TAG.length());
+                            }
+                        }
+                        return result;
+                    })
+
+                    // format comment and collect into list
+                    .map(line -> padding + " * " + line)
+                    .collect(toList());
 
             // remove trailing empty lines
             List<String> reversed = Lists.reverse(lines);
@@ -284,7 +284,7 @@ public class EsDocProcessor extends AbstractProcessor {
         JsType annotation = element.getAnnotation(JsType.class);
         if (annotation != null) {
             return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() :
-                    annotation.name();
+                annotation.name();
         } else {
             return element.getSimpleName().toString();
         }
@@ -313,7 +313,7 @@ public class EsDocProcessor extends AbstractProcessor {
         JsMethod annotation = element.getAnnotation(JsMethod.class);
         if (annotation != null) {
             return AUTO.equals(annotation.name()) ? element.getSimpleName().toString() :
-                    annotation.name();
+                annotation.name();
         } else {
             return element.getSimpleName().toString();
         }
@@ -321,9 +321,9 @@ public class EsDocProcessor extends AbstractProcessor {
 
     private String parameters(ExecutableElement element) {
         return element.getParameters()
-                .stream()
-                .map(variable -> variable.getSimpleName().toString())
-                .collect(joining(", "));
+            .stream()
+            .map(variable -> variable.getSimpleName().toString())
+            .collect(joining(", "));
 
     }
 

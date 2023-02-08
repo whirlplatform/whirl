@@ -22,7 +22,7 @@ public abstract class AbstractQueryExecutor implements QueryExecutor {
 
     protected Map<String, DataValue> collectResultSetValue(DBDatabaseDriver driver,
                                                            ResultSet resultSet)
-            throws SQLException {
+        throws SQLException {
         Map<String, DataValue> resultValues = new LinkedHashMap<>();
         ResultSetMetaData metaData = resultSet.getMetaData();
         for (int i = 1; i <= metaData.getColumnCount(); i++) {
@@ -34,7 +34,7 @@ public abstract class AbstractQueryExecutor implements QueryExecutor {
     }
 
     protected DataValue getResultSetValue(DBDatabaseDriver driver, ResultSet resultSet, int column)
-            throws SQLException {
+        throws SQLException {
         int sqlType = resultSet.getMetaData().getColumnType(column);
         org.apache.empire.data.DataType empType = TypesUtil.toEmpireType(sqlType);
         DataType type = TypesUtil.fromEimpireType(empType);

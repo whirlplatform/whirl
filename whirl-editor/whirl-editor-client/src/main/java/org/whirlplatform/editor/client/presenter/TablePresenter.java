@@ -29,7 +29,7 @@ import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 @Presenter(view = TableView.class)
 public class TablePresenter extends BasePresenter<TablePresenter.ITableView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private PlainTableElement table;
     private TextButton saveButton;
@@ -69,15 +69,15 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
                         table.setView(viewElement);
                     }
                     viewElement.setName(
-                            EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
+                        EditorMessage.Util.MESSAGE.save() + " - " + view.getViewName());
                     viewElement.setViewName(view.getViewName());
-//                    viewElement.setSource(view.getViewSource());
+                    //                    viewElement.setSource(view.getViewSource());
                 }
 
                 eventBus.syncServerApplication();
 
                 InfoHelper.display(EditorMessage.Util.MESSAGE.success(),
-                        EditorMessage.Util.MESSAGE.info_table_saved());
+                    EditorMessage.Util.MESSAGE.info_table_saved());
             }
         });
         panel.addButton(saveButton);
@@ -96,26 +96,26 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
 
     public void newColumn() {
         eventBus.addElementCallback(table, new NewTableColumnElement(),
-                new Callback<AbstractElement, Throwable>() {
+            new Callback<AbstractElement, Throwable>() {
 
-                    @Override
-                    public void onFailure(Throwable reason) {
-                        InfoHelper.throwInfo("add-event", reason);
-                    }
+                @Override
+                public void onFailure(Throwable reason) {
+                    InfoHelper.throwInfo("add-event", reason);
+                }
 
-                    @Override
-                    public void onSuccess(AbstractElement result) {
-                        ((TableColumnElement) result).setIndex(view.getColumns().size());
-                        view.addColumn((TableColumnElement) result);
-                    }
-                });
+                @Override
+                public void onSuccess(AbstractElement result) {
+                    ((TableColumnElement) result).setIndex(view.getColumns().size());
+                    view.addColumn((TableColumnElement) result);
+                }
+            });
     }
 
     public void onEditRightsElement() {
         eventBus.editRights(Collections.unmodifiableCollection(table.getColumns()),
-                Collections.unmodifiableCollection(
-                        Arrays.asList(/* RightType.ADD, RightType.DELETE, */RightType.EDIT,
-                                RightType.VIEW)));
+            Collections.unmodifiableCollection(
+                Arrays.asList(/* RightType.ADD, RightType.DELETE, */RightType.EDIT,
+                    RightType.VIEW)));
     }
 
     public void onSynchronizeCloneFields() {
@@ -158,8 +158,8 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
             }
         });
         view.setHeaderText(
-                EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - "
-                        + table.getName());
+            EditorMessage.Util.MESSAGE.editing_table() + table.getTableName() + " - "
+                + table.getName());
         view.setTableTitle(table.getTitle());
         view.setCode(table.getCode());
         view.setEmptyRow(table.isEmptyRow());
@@ -170,7 +170,7 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
         view.setTableName(table.getTableName());
         if (table.getView() != null) {
             view.setViewName(table.getView().getViewName());
-//            view.setViewSource(table.getView().getSource());
+            //            view.setViewSource(table.getView().getSource());
         }
         view.setIdColumn(table.getIdColumn());
         view.setDeleteColumn(table.getDeleteColumn());
@@ -210,9 +210,9 @@ public class TablePresenter extends BasePresenter<TablePresenter.ITableView, Edi
 
         void setViewName(String viewName);
 
-//        String getViewSource();
+        //        String getViewSource();
 
-//        void setViewSource(String viewSource);
+        //        void setViewSource(String viewSource);
 
         void clearUI();
 

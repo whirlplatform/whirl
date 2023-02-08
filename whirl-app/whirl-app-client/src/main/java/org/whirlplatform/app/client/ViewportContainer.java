@@ -6,7 +6,7 @@ import org.whirlplatform.component.client.Containable;
 
 public class ViewportContainer implements Containable {
 
-    private Viewport viewport;
+    private final Viewport viewport;
     private ComponentBuilder topComponent;
 
     public ViewportContainer(Viewport viewport) {

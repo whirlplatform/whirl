@@ -40,7 +40,7 @@ public class RowDoubleClickEvent extends GwtEvent<RowDoubleClickHandler> {
     public interface HasRowDoubleClickHandlers {
 
         HandlerRegistration addRowDoubleClickHandler(
-                RowDoubleClickHandler handler);
+            RowDoubleClickHandler handler);
 
     }
 

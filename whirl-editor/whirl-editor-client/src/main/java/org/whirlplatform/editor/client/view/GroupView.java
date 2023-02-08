@@ -39,7 +39,7 @@ import org.whirlplatform.meta.shared.editor.GroupElement;
 public class GroupView extends ContentPanel implements IGroupView {
 
     private static final GroupProperties properties = GWT
-            .create(GroupProperties.class);
+        .create(GroupProperties.class);
     private GroupPresenter presenter;
     private Grid<GroupElement> grid;
     private ListStore<GroupElement> store;
@@ -61,13 +61,13 @@ public class GroupView extends ContentPanel implements IGroupView {
 
     private void createGrid() {
         ColumnConfig<GroupElement, String> nameColumn = new ColumnConfig<GroupElement, String>(
-                properties.name(), 400, EditorMessage.Util.MESSAGE.group_name());
+            properties.name(), 400, EditorMessage.Util.MESSAGE.group_name());
         ColumnConfig<GroupElement, String> groupColumn = new ColumnConfig<GroupElement, String>(
-                properties.groupName(), 200,
-                EditorMessage.Util.MESSAGE.group_group());
+            properties.groupName(), 200,
+            EditorMessage.Util.MESSAGE.group_group());
 
         List<ColumnConfig<GroupElement, ?>> columns =
-                new ArrayList<ColumnConfig<GroupElement, ?>>();
+            new ArrayList<ColumnConfig<GroupElement, ?>>();
         columns.add(nameColumn);
         columns.add(groupColumn);
 
@@ -115,24 +115,24 @@ public class GroupView extends ContentPanel implements IGroupView {
             @Override
             public void onSelect(SelectEvent event) {
                 presenter.getEventBus().addElementCallback(null,
-                        new NewGroupElement(),
-                        new Callback<AbstractElement, Throwable>() {
+                    new NewGroupElement(),
+                    new Callback<AbstractElement, Throwable>() {
 
-                            @Override
-                            public void onSuccess(AbstractElement result) {
-                                store.add(0, (GroupElement) result);
-                                editing.startEditing(new GridCell(0, 0));
-                            }
+                        @Override
+                        public void onSuccess(AbstractElement result) {
+                            store.add(0, (GroupElement) result);
+                            editing.startEditing(new GridCell(0, 0));
+                        }
 
-                            @Override
-                            public void onFailure(Throwable reason) {
-                            }
-                        });
+                        @Override
+                        public void onFailure(Throwable reason) {
+                        }
+                    });
             }
 
         });
         TextButton remove = new TextButton(
-                EditorMessage.Util.MESSAGE.group_remove());
+            EditorMessage.Util.MESSAGE.group_remove());
         remove.addSelectHandler(new SelectHandler() {
 
             @Override

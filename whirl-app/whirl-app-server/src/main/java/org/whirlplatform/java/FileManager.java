@@ -18,7 +18,7 @@ public class FileManager {
 
     public File getFile(String fileName) {
         return new File(rootFolder.getAbsolutePath() + File.separator
-                + fileName);
+            + fileName);
     }
 
     // Если запрошенной директории нет, возвращает null
@@ -28,7 +28,7 @@ public class FileManager {
             file = rootFolder;
         } else {
             file = new File(rootFolder.getAbsolutePath() + File.separator
-                    + folder);
+                + folder);
         }
         return file == null ? null : file.listFiles();
     }
@@ -39,13 +39,13 @@ public class FileManager {
         File file;
         if (dirName == null || dirName.isEmpty()) {
             file = new File(rootFolder.getAbsolutePath() + File.separator
-                    + fileName);
+                + fileName);
         } else {
             Path dirPath = FileSystems.getDefault().getPath(
-                    rootFolder.getAbsolutePath() + File.separator + dirName);
+                rootFolder.getAbsolutePath() + File.separator + dirName);
             Files.createDirectories(dirPath);
             file = new File(rootFolder.getAbsolutePath() + File.separator
-                    + dirName + File.separator + fileName);
+                + dirName + File.separator + fileName);
 
         }
         return file.createNewFile() ? file : null; // Если файл уже существует,

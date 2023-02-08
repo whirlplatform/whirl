@@ -38,13 +38,13 @@ public class ContextMenuItemView extends ContentPanel implements IContextMenuIte
         labelField = new PropertyValueField();
         labelLabel = new FieldLabel(labelField, EditorMessage.Util.MESSAGE.title());
         container.add(labelLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
 
         imageUrlField = new TextField();
         imageUrlLabel =
-                new FieldLabel(imageUrlField, EditorMessage.Util.MESSAGE.context_menu_item_image());
+            new FieldLabel(imageUrlField, EditorMessage.Util.MESSAGE.context_menu_item_image());
         container.add(imageUrlLabel, new VerticalLayoutData(1, -1, new Margins(10,
-                10, 0, 10)));
+            10, 0, 10)));
     }
 
     @Override

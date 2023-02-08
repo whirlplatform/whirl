@@ -33,8 +33,8 @@ public class SqlManager {
     private void initSubRequests(Sql parent) {
         for (Sql r : allRow) {
             if (r.getTop().getRow() >= parent.getTop().getRow()
-                    && r.getBottom().getRow() <= parent.getBottom().getRow()
-                    && r != parent && r.getParent() == null) {
+                && r.getBottom().getRow() <= parent.getBottom().getRow()
+                && r != parent && r.getParent() == null) {
                 r.setParent(parent);
                 initSubRequests(r);
             }
@@ -43,8 +43,8 @@ public class SqlManager {
 
     public void addRowSql(Sql sql) {
         ranges.put(
-                Range.closed(sql.getTop().getRow(), sql.getBottom().getRow()),
-                sql);
+            Range.closed(sql.getTop().getRow(), sql.getBottom().getRow()),
+            sql);
         allRow.add(sql);
     }
 

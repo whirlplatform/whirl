@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 public class LayoutComponent extends CenterLayoutContainer
-        implements HasValueChangeHandlers<PropertyType> {
+    implements HasValueChangeHandlers<PropertyType> {
 
     private Map<PropertyType, PropertyValue> properties;
     private NumberField<Double> marginTop;

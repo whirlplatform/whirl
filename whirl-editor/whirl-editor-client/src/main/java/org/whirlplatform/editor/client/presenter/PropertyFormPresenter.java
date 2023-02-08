@@ -24,7 +24,7 @@ import org.whirlplatform.meta.shared.editor.RowElement;
 
 @Presenter(view = PropertyFormView.class)
 public class PropertyFormPresenter
-        extends BasePresenter<PropertyFormPresenter.IPropertyFormView, EditorEventBus> {
+    extends BasePresenter<PropertyFormPresenter.IPropertyFormView, EditorEventBus> {
 
     private FormElement currentElement;
     private CellRangeElement selectedCellsArea;
@@ -41,9 +41,9 @@ public class PropertyFormPresenter
         List<RowElement> rowsHeight = new ArrayList<RowElement>();
         rowsHeight.addAll(view.getRowsHeight());
         final LocaleElement locale =
-                currentElement.getProperty(PropertyType.Rows).getDefaultLocale();
+            currentElement.getProperty(PropertyType.Rows).getDefaultLocale();
         Double rowsProp =
-                currentElement.getProperty(PropertyType.Rows).getValue(locale).getDouble();
+            currentElement.getProperty(PropertyType.Rows).getValue(locale).getDouble();
         int rows = rowsProp == null ? 0 : rowsProp.intValue();
         if (rows > rowsHeight.size()) {
             RowElement model = new RowElement();
@@ -135,9 +135,9 @@ public class PropertyFormPresenter
         List<ColumnElement> columnsWidth = new ArrayList<ColumnElement>();
         columnsWidth.addAll(view.getColumnsWidth());
         final LocaleElement locale =
-                currentElement.getProperty(PropertyType.Columns).getDefaultLocale();
+            currentElement.getProperty(PropertyType.Columns).getDefaultLocale();
         Double columnsProp =
-                currentElement.getProperty(PropertyType.Columns).getValue(locale).getDouble();
+            currentElement.getProperty(PropertyType.Columns).getValue(locale).getDouble();
         int columns = (columnsProp == null) ? 0 : columnsProp.intValue();
         if (columns > columnsWidth.size()) {
             ColumnElement model = new ColumnElement();
@@ -241,7 +241,7 @@ public class PropertyFormPresenter
     }
 
     public interface IPropertyFormView
-            extends ReverseViewInterface<PropertyFormPresenter>, IsWidget {
+        extends ReverseViewInterface<PropertyFormPresenter>, IsWidget {
 
         List<RowElement> getRowsHeight();
 

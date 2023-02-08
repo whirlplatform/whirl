@@ -33,7 +33,7 @@ public class InjectServletConfig extends GuiceServletContextListener {
 
     private Configuration configuration = new JndiConfiguration();
 
-    private Set<ObjectName> mBeans = new HashSet<ObjectName>();//
+    private Set<ObjectName> mBeans = new HashSet<ObjectName>();
 
     @Override
     protected Injector getInjector() {
@@ -50,7 +50,7 @@ public class InjectServletConfig extends GuiceServletContextListener {
         super.contextInitialized(servletContextEvent);
         initMBeans(servletContextEvent.getServletContext());
         initDatabase((Injector) servletContextEvent.getServletContext()
-                .getAttribute(Injector.class.getName()));
+            .getAttribute(Injector.class.getName()));
 
     }
 

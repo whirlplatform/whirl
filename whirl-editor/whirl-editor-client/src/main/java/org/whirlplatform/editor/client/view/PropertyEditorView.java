@@ -123,7 +123,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             public void onValueChange(ValueChangeEvent<PropertyType> event) {
                 PropertyValue value = layoutPanel.getProperty(event.getValue());
                 presenter.onChangeComponentProperty(event.getValue(), defaultLocale, false,
-                        value.getValue(defaultLocale).getObject());
+                    value.getValue(defaultLocale).getObject());
             }
         });
     }
@@ -249,7 +249,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 img.setAttribute("src", EditorBundle.INSTANCE.redToggle().getSafeUri().asString());
             } else {
                 img.setAttribute("src",
-                        EditorBundle.INSTANCE.greenToggle().getSafeUri().asString());
+                    EditorBundle.INSTANCE.greenToggle().getSafeUri().asString());
             }
         }
 
@@ -314,8 +314,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     }
 
                     LocaleElement key =
-                            value.getDefaultLocale() != null ? value.getDefaultLocale() :
-                                    textField.getCurrentKey();
+                        value.getDefaultLocale() != null ? value.getDefaultLocale() :
+                            textField.getCurrentKey();
                     restoreValue(textField, key);
                 }
                 rebuild(true);
@@ -331,10 +331,10 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             } else if (DataType.FILE.equals(dataValue.getType())) {
                 // У нас не может быть свойства типа файл
             } else if (DataType.LIST.equals(dataValue.getType())
-                    && dataValue.getListModelData() != null) {
+                && dataValue.getListModelData() != null) {
                 ListModelData l = dataValue.getListModelData();
                 AbstractElement e = ((ComboBox<AbstractElement>) typeField).getStore()
-                        .findModelWithKey(l.getId());
+                    .findModelWithKey(l.getId());
                 ((ComboBox<AbstractElement>) typeField).setValue(e);
                 ((ComboBox<AbstractElement>) typeField).setText(l.getLabel());
             } else if (DataType.NUMBER.equals(dataValue.getType())) {
@@ -345,12 +345,12 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 } else {
                     for (LocaleElement locale : value.getLocales()) {
                         ((MultiSetField<LocaleElement>) typeField).setValue(locale,
-                                value.getValue(locale).getString());
+                            value.getValue(locale).getString());
                     }
 
                     LocaleElement key =
-                            value.getDefaultLocale() != null ? value.getDefaultLocale() :
-                                    ((MultiSetField<LocaleElement>) typeField).getCurrentKey();
+                        value.getDefaultLocale() != null ? value.getDefaultLocale() :
+                            ((MultiSetField<LocaleElement>) typeField).getCurrentKey();
                     restoreValue((MultiSetField<LocaleElement>) typeField, key);
                 }
             } else {
@@ -386,7 +386,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
          */
         private PropertyValueField createStringField() {
             PropertyValueField field =
-                    new PropertyValueField(GWT.create(MultiSetCellTinyResources.class));
+                new PropertyValueField(GWT.create(MultiSetCellTinyResources.class));
             if (propertyType.isSimple()) {
                 field.setLocales(defaultLocale, Collections.emptyList());
             } else {
@@ -413,20 +413,20 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 field = new TableComboBox(new TableStore(presenter.getEventBus()));
             } else if (propertyType == PropertyType.ImageUrl) {
                 ListStore<AbstractElement> store = new ListStore<AbstractElement>(
-                        new ModelKeyProvider<AbstractElement>() {
+                    new ModelKeyProvider<AbstractElement>() {
 
-                            @Override
-                            public String getKey(AbstractElement item) {
-                                return item.getId();
-                            }
+                        @Override
+                        public String getKey(AbstractElement item) {
+                            return item.getId();
+                        }
 
-                        });
+                    });
                 store.addAll(presenter.getApplication().getImageFiles());
                 FileElement img = new FileElement();
                 img.setId("");
                 img.setName(EditorMessage.Util.MESSAGE.property_no_data());
                 field = new ComboBox<AbstractElement>(store,
-                        new ElementLabelProvider<AbstractElement>());
+                    new ElementLabelProvider<AbstractElement>());
                 ((ComboBox<? extends AbstractElement>) field).setTriggerAction(TriggerAction.ALL);
             }
             return field;
@@ -442,7 +442,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
 
         private Field<String> createParametersField() {
             return new ParameterEditorComponent(
-                    new ComponentStore(getPresenter().getEventBus(), false));
+                new ComponentStore(getPresenter().getEventBus(), false));
         }
 
         /**
@@ -517,7 +517,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                         // presenter.onChangeComponentProperty(propertyType, l,
                         // false, value);
                         presenter.onChangeComponentProperty(propertyType, l,
-                                propertyValue.isReplaceable(), value);
+                            propertyValue.isReplaceable(), value);
                     }
 
                 });
@@ -535,8 +535,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                 @Override
                 public void onValueChange(ValueChangeEvent<String> event) {
                     presenter
-                            .onChangeComponentProperty(propertyType, textField.getCurrentKey(),
-                                    true, event.getValue());
+                        .onChangeComponentProperty(propertyType, textField.getCurrentKey(),
+                            true, event.getValue());
                 }
             });
             textField.addFocusHandler(new FocusHandler() {

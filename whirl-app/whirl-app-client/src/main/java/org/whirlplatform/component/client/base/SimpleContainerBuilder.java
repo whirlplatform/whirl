@@ -18,7 +18,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "SimpleContainer", namespace = "Whirl")
 public class SimpleContainerBuilder extends ComponentBuilder implements
-        Containable {
+    Containable {
 
     protected SimpleContainer container;
     private ComponentBuilder topComponent;

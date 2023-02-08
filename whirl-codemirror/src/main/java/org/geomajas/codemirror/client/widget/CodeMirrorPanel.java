@@ -62,7 +62,7 @@ public class CodeMirrorPanel extends SimplePanel {
             getElement().getChild(1).removeFromParent();
         }
         editor = CodeMirrorWrapper.fromTextArea(textArea,
-                config == null ? Config.getDefault() : config);
+            config == null ? Config.getDefault() : config);
         refreshCodeMirror();
     }
 

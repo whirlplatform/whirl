@@ -25,7 +25,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "Html", namespace = "Whirl")
 public class HtmlBuilder extends ComponentBuilder
-        implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
+    implements ClickEvent.HasClickHandlers, DoubleClickEvent.HasDoubleClickHandlers {
 
     private HTML html;
 
@@ -65,17 +65,17 @@ public class HtmlBuilder extends ComponentBuilder
 
         // Иначе событие при клике в редакторе не обрабатывается
         html.sinkEvents(Event
-                .getTypeInt(com.google.gwt.event.dom.client.ClickEvent
-                        .getType().getName()));
+            .getTypeInt(com.google.gwt.event.dom.client.ClickEvent
+                .getType().getName()));
         html.sinkEvents(Event
-                .getTypeInt(com.google.gwt.event.dom.client.DragStartEvent
-                        .getType().getName()));
+            .getTypeInt(com.google.gwt.event.dom.client.DragStartEvent
+                .getType().getName()));
         html.sinkEvents(Event
-                .getTypeInt(com.google.gwt.event.dom.client.DragEndEvent
-                        .getType().getName()));
+            .getTypeInt(com.google.gwt.event.dom.client.DragEndEvent
+                .getType().getName()));
         html.sinkEvents(Event
-                .getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType()
-                        .getName()));
+            .getTypeInt(com.google.gwt.event.dom.client.DropEvent.getType()
+                .getName()));
         return wrapper;
     }
 
@@ -96,7 +96,7 @@ public class HtmlBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.TextDecoration.getCode())) {
             if (value != null && !Util.isEmptyString(value.getString())) {
                 html.getElement().<XElement>cast()
-                        .applyStyles("textDecoration:" + value.getString());
+                    .applyStyles("textDecoration:" + value.getString());
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.FontFamily.getCode())) {
@@ -200,7 +200,7 @@ public class HtmlBuilder extends ComponentBuilder
 
             @Override
             public void onDoubleClick(
-                    com.google.gwt.event.dom.client.DoubleClickEvent event) {
+                com.google.gwt.event.dom.client.DoubleClickEvent event) {
                 if (isEnabled()) {
                     fireEvent(new DoubleClickEvent());
                 }

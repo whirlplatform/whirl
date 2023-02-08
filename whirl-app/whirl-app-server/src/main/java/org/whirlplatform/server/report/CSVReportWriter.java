@@ -1,4 +1,3 @@
-
 package org.whirlplatform.server.report;
 
 import au.com.bytecode.opencsv.CSVWriter;
@@ -149,8 +148,8 @@ public class CSVReportWriter extends FormWriter {
             int colSpan = rowSpanBaseColSpan.get(baseCol);
 
             if (row <= baseRow + rowSpan - 1
-                    && (baseRow == row && col > baseCol && col <= baseCol + colSpan - 1)
-                    || (baseRow < row && col >= baseCol && col <= baseCol + colSpan - 1)) {
+                && (baseRow == row && col > baseCol && col <= baseCol + colSpan - 1)
+                || (baseRow < row && col >= baseCol && col <= baseCol + colSpan - 1)) {
                 return true;
             }
         }
@@ -167,7 +166,7 @@ public class CSVReportWriter extends FormWriter {
             int rowSpan = rowSpanBaseSpan.get(baseCol);
             int colSpan = rowSpanBaseColSpan.get(baseCol);
             if (baseRow < row && row == baseRow + rowSpan - 1 && col >= baseCol
-                    && col <= baseCol + colSpan - 1) {
+                && col <= baseCol + colSpan - 1) {
                 return true;
             }
         }
@@ -205,15 +204,15 @@ public class CSVReportWriter extends FormWriter {
         ComponentModel component = cell.getComponent();
         if (component != null) {
             if (ComponentType.LabelType == component.getType()
-                    || ComponentType.HtmlType == component.getType()) {
+                || ComponentType.HtmlType == component.getType()) {
                 String valueStr = !component.containsValue(PropertyType.Html.getCode()) ? null
-                        : component.getValue(PropertyType.Html.getCode()).getString();
+                    : component.getValue(PropertyType.Html.getCode()).getString();
                 String type = !component.containsValue(PropertyType.ReportDataType.getCode()) ? null
-                        : component.getValue(PropertyType.ReportDataType.getCode()).getString();
+                    : component.getValue(PropertyType.ReportDataType.getCode()).getString();
                 String fmt =
-                        !component.containsValue(PropertyType.ReportDataFormat.getCode()) ? null
-                                : component.getValue(PropertyType.ReportDataFormat.getCode())
-                                .getString();
+                    !component.containsValue(PropertyType.ReportDataFormat.getCode()) ? null
+                        : component.getValue(PropertyType.ReportDataFormat.getCode())
+                        .getString();
 
                 if (valueStr == null || valueStr.isEmpty()) {
                     return "";

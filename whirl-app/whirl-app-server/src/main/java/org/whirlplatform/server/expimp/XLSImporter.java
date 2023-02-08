@@ -75,7 +75,7 @@ public class XLSImporter extends Importer implements HSSFListener {
      */
     public void process(POIFSFileSystem fs) throws IOException {
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(
-                this);
+            this);
         formatListener = new FormatTrackingHSSFListener(listener);
 
         HSSFEventFactory factory = new HSSFEventFactory();
@@ -85,7 +85,7 @@ public class XLSImporter extends Importer implements HSSFListener {
             request.addListenerForAllRecords(formatListener);
         } else {
             workbookBuildingListener = new SheetRecordCollectingListener(
-                    formatListener);
+                formatListener);
             request.addListenerForAllRecords(workbookBuildingListener);
         }
 
@@ -188,8 +188,8 @@ public class XLSImporter extends Importer implements HSSFListener {
             String column = thisStr.toUpperCase();
             for (FieldMetadata f : metadata.getFields()) {
                 if (column != null
-                        && (column.equalsIgnoreCase(f.getName()) || column
-                        .equalsIgnoreCase(f.getRawLabel()))) {
+                    && (column.equalsIgnoreCase(f.getName()) || column
+                    .equalsIgnoreCase(f.getRawLabel()))) {
                     headerMap.put(thisColumn, f);
                 }
             }

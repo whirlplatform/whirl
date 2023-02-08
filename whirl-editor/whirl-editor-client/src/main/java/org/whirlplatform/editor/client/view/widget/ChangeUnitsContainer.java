@@ -135,7 +135,7 @@ public class ChangeUnitsContainer extends SimpleContainer {
                     return "";
                 }
                 Object valueObject = (object.getRightValue() == null) ? object.getLeftValue() :
-                        object.getRightValue();
+                    object.getRightValue();
                 return decipher(valueObject);
             }
         };
@@ -213,12 +213,12 @@ public class ChangeUnitsContainer extends SimpleContainer {
 
     private String decipherRightElement(final RightElement object) {
         return buildDisplayName("Right", object.getType().toString(),
-                object.getCondition().getValue().toString());
+            object.getCondition().getValue().toString());
     }
 
     private String decipherPropertyValue(final PropertyValue object) {
         return buildDisplayName("PropertyValue", object.getDefaultValue().toString(),
-                object.getDefaultValue().getType().toString());
+            object.getDefaultValue().getType().toString());
     }
 
     private String decipherDataValue(final DataValue object) {

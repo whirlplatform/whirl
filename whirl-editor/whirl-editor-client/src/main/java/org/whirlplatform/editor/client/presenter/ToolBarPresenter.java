@@ -102,7 +102,7 @@ public class ToolBarPresenter extends BasePresenter<ToolBarPresenter.IToolBarVie
 
     public void runPackageCreation() {
         final ApplicationStoreData data =
-                new ApplicationStoreData(currentApplication, currentVersion);
+            new ApplicationStoreData(currentApplication, currentVersion);
         EditorDataService.Util.getDataService().createPackage(data, new AsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {

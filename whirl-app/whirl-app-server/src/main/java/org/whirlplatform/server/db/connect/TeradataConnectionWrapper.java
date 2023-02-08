@@ -12,7 +12,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 public class TeradataConnectionWrapper extends ConnectionWrapper {
 
     private static Logger _log = LoggerFactory
-            .getLogger(TeradataConnectionWrapper.class);
+        .getLogger(TeradataConnectionWrapper.class);
 
     public TeradataConnectionWrapper(String alias, Connection connection,
                                      ApplicationUser user) {

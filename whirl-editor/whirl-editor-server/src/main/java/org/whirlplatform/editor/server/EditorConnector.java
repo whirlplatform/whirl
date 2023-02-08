@@ -18,17 +18,17 @@ import org.whirlplatform.server.login.ApplicationUser;
 public interface EditorConnector {
 
     ApplicationElement newApplication(ApplicationBasicInfo appInfo, ApplicationUser user)
-            throws RPCException;
+        throws RPCException;
 
     boolean isEditorAllowed(String appCode, String userId) throws RPCException;
 
     Collection<ApplicationStoreData> getApplicationList(ApplicationUser user) throws RPCException;
 
     ApplicationElement loadApplication(ApplicationStoreData applicationData, ApplicationUser user)
-            throws RPCException;
+        throws RPCException;
 
     void saveApplication(ApplicationElement application, Version version, ApplicationUser user)
-            throws RPCException;
+        throws RPCException;
 
     Collection<RowModelData> getTableImportList(DataSourceElement datasource, SchemaElement schema,
                                                 ApplicationUser user) throws RPCException;
@@ -36,10 +36,10 @@ public interface EditorConnector {
     Collection<PlainTableElement> importTables(DataSourceElement datasource, SchemaElement schema,
                                                Collection<RowModelData> models,
                                                ApplicationUser user, ApplicationElement application)
-            throws RPCException;
+        throws RPCException;
 
     ApplicationsDiff diff(ApplicationStoreData left, ApplicationStoreData target)
-            throws RPCException;
+        throws RPCException;
 
     ApplicationsDiff diff(ApplicationElement left, ApplicationElement target) throws RPCException;
 
@@ -47,7 +47,7 @@ public interface EditorConnector {
 
     void saveApplicationAs(ApplicationElement application, Version oldVersion, Version newVersion,
                            ApplicationUser user)
-            throws RPCException;
+        throws RPCException;
 
     String getNextId();
 

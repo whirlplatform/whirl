@@ -5,7 +5,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.storage.client.StorageHelper;
 
 public class SelectionClientStateStore<T extends DataValue> extends
-        AbstractMetadataStateStore<T> {
+    AbstractMetadataStateStore<T> {
 
     public SelectionClientStateStore(StateScope scope, ClassMetadata metadata) {
         super(scope, metadata);

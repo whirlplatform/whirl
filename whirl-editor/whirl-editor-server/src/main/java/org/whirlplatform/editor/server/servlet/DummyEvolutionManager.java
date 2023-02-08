@@ -10,7 +10,7 @@ public class DummyEvolutionManager implements EvolutionManager {
 
     @Override
     public void applyApplicationEvolution(String alias, String scriptPath)
-            throws EvolutionException {
+        throws EvolutionException {
         // do nothing
     }
 

@@ -70,7 +70,7 @@ public class MouseSelectionEvent extends GwtEvent<MouseSelectionHandler> {
     public interface HasMouseSelectionHandlers {
 
         HandlerRegistration addMouseSelectionHandler(
-                MouseSelectionHandler handler);
+            MouseSelectionHandler handler);
 
     }
 

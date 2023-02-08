@@ -56,10 +56,10 @@ public class ImportServlet extends HttpServlet {
             List<FileItem> items = upload.parseRequest(req);
             for (FileItem item : items) {
                 if (!item.isFormField() && item.getFieldName() != null
-                        && item.getFieldName().equals("file")) {
+                    && item.getFieldName().equals("file")) {
                     InputStream stream = item.getInputStream();
                     ApplicationElement application =
-                            metadataStore.deserialize(IOUtils.toString(stream, "UTF-8"));
+                        metadataStore.deserialize(IOUtils.toString(stream, "UTF-8"));
                     req.getSession().setAttribute("APPLICATION", application);
                     saveFilesIntoTheContext(req.getSession(), application.getJavaFiles());
                     saveFilesIntoTheContext(req.getSession(), application.getJavaScriptFiles());
@@ -76,7 +76,7 @@ public class ImportServlet extends HttpServlet {
     }
 
     private void saveFilesIntoTheContext(HttpSession session, Collection<FileElement> files)
-            throws IOException {
+        throws IOException {
         for (final FileElement file : files) {
             saveFileIntoContext(session, file);
         }

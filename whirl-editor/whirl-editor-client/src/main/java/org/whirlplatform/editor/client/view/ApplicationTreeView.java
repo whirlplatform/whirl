@@ -29,8 +29,8 @@ import org.whirlplatform.meta.shared.editor.EventElement;
 import org.whirlplatform.meta.shared.editor.EventParameterElement;
 
 public class ApplicationTreeView extends VBoxLayoutContainer
-        implements HasSelectionHandlers<AbstractElement>,
-        IApplicationTreeView, ReverseViewInterface<ApplicationTreePresenter> {
+    implements HasSelectionHandlers<AbstractElement>,
+    IApplicationTreeView, ReverseViewInterface<ApplicationTreePresenter> {
 
     private ApplicationTreePresenter presenter;
     private AppTree tree;
@@ -44,8 +44,8 @@ public class ApplicationTreeView extends VBoxLayoutContainer
             @Override
             public void doOpenElement(AbstractElement element) {
                 if (!(element instanceof ComponentElement)
-                        || (element instanceof ComponentElement
-                        && ((ComponentElement) element).getType().isContainer())) {
+                    || (element instanceof ComponentElement
+                    && ((ComponentElement) element).getType().isContainer())) {
                     //Если контейнер, то можно открыть для редактирования. Иначе - редактировать только свойства.
                     presenter.openElement(tree.getSelectedElement());
                 }
@@ -76,42 +76,42 @@ public class ApplicationTreeView extends VBoxLayoutContainer
             @Override
             protected void onDragMove(DndDragMoveEvent event) {
                 event.getStatusProxy()
-                        .setStatus(tree.canDragDrop(getDropTargetElement(event), event.getData()));
+                    .setStatus(tree.canDragDrop(getDropTargetElement(event), event.getData()));
             }
         };
         dropTarget.setAllowSelfAsSource(true);
 
         @SuppressWarnings("unused")
         TreeDragSource<AbstractElement> source =
-                new TreeDragSource<AbstractElement>((Tree<AbstractElement, ?>) tree) {
-                    @Override
-                    protected void onDragDrop(DndDropEvent event) {
+            new TreeDragSource<AbstractElement>((Tree<AbstractElement, ?>) tree) {
+                @Override
+                protected void onDragDrop(DndDropEvent event) {
+                }
+
+                @Override
+                protected void onDragStart(DndDragStartEvent event) {
+                    super.onDragStart(event);
+                    AbstractElement selectedItem = tree.getSelectedElement();
+                    if (selectedItem instanceof ComponentElement
+                        || selectedItem instanceof EventParameterElement
+                        || selectedItem instanceof EventElement
+                        || selectedItem instanceof ContextMenuItemElement) {
+                        event.setData(tree.getSelectedElement());
+                    } else {
+                        event.setCancelled(true);
                     }
 
-                    @Override
-                    protected void onDragStart(DndDragStartEvent event) {
-                        super.onDragStart(event);
-                        AbstractElement selectedItem = tree.getSelectedElement();
-                        if (selectedItem instanceof ComponentElement
-                                || selectedItem instanceof EventParameterElement
-                                || selectedItem instanceof EventElement
-                                || selectedItem instanceof ContextMenuItemElement) {
-                            event.setData(tree.getSelectedElement());
-                        } else {
-                            event.setCancelled(true);
-                        }
-
-                    }
-                };
+                }
+            };
     }
 
     @SuppressWarnings("unchecked")
     private void initListeners() {
         ((Tree<AbstractElement, String>) tree).getSelectionModel()
-                .addSelectionHandler(event -> {
-                    AbstractElement element = event.getSelectedItem();
-                    presenter.onSelectElement(element);
-                });
+            .addSelectionHandler(event -> {
+                AbstractElement element = event.getSelectedItem();
+                presenter.onSelectElement(element);
+            });
     }
 
     @Override

@@ -46,21 +46,14 @@ import org.whirlplatform.meta.shared.data.RowModelData;
 
 public class ColumnModelHelper implements LocatorAware {
 
+    private final Store<RowModelData> store;
+    private final boolean showCell;
+    private final ColumnConfigStore columnConfigStore;
+    private final Map<ColumnConfig<RowModelData, ?>, AbstractFieldBuilder> builders = new HashMap<>();
     private ClassMetadata metadata;
-
     private ColumnModel<RowModelData> columnModel;
-
     private GridEditing<RowModelData> editing;
-
     private ColumnConfig<RowModelData, ?> firstColumn;
-
-    private Store<RowModelData> store;
-
-    private boolean showCell;
-
-    private ColumnConfigStore columnConfigStore;
-
-    private Map<ColumnConfig<RowModelData, ?>, AbstractFieldBuilder> builders = new HashMap<>();
 
     public ColumnModelHelper(ClassMetadata metadata, Store<RowModelData> store, boolean showCell,
                              ColumnConfigStore columnConfigStore) {
@@ -74,7 +67,7 @@ public class ColumnModelHelper implements LocatorAware {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public ColumnModel<RowModelData> build() {
         List<ColumnConfig<RowModelData, ?>> configs =
-                new ArrayList<ColumnConfig<RowModelData, ?>>();
+            new ArrayList<ColumnConfig<RowModelData, ?>>();
 
         if (firstColumn != null) {
             configs.add(firstColumn);
@@ -95,9 +88,9 @@ public class ColumnModelHelper implements LocatorAware {
             }
 
             final ColumnConfig<RowModelData, Object> columnConfig =
-                    new ColumnConfig<RowModelData, Object>(
-                            new RowModelDataValueProvider<Object>(field.getName()), width,
-                            SafeHtmlUtils.fromTrustedString(field.getLabel()));
+                new ColumnConfig<RowModelData, Object>(
+                    new RowModelDataValueProvider<Object>(field.getName()), width,
+                    SafeHtmlUtils.fromTrustedString(field.getLabel()));
 
             columnConfig.setHidden(field.isHidden());
 
@@ -124,10 +117,10 @@ public class ColumnModelHelper implements LocatorAware {
                         if (value == null || Util.isEmptyString(value.getName())) {
                             return;
                         }
-                        String link = new String("<span title=\"" + value.getName()
-                                +
-                                "\" style=\"cursor: pointer; text-decoration: underline; color: #1936A1;\">"
-                                + value.getName() + "</span>");
+                        String link = "<span title=\"" + value.getName()
+                            +
+                            "\" style=\"cursor: pointer; text-decoration: underline; color: #1936A1;\">"
+                            + value.getName() + "</span>";
                         sb.appendHtmlConstant(link);
                     }
 
@@ -143,9 +136,9 @@ public class ColumnModelHelper implements LocatorAware {
                             RowModelData model = store.findModelWithKey((String) context.getKey());
                             if (model != null) {
                                 String url =
-                                        FileLinkHelper.getTableFileLinkById(metadata.getClassId(),
-                                                field.getName(),
-                                                model.getId());
+                                    FileLinkHelper.getTableFileLinkById(metadata.getClassId(),
+                                        field.getName(),
+                                        model.getId());
 
                                 com.google.gwt.user.client.Window.open(url, "_blank", null);
                             }
@@ -167,7 +160,7 @@ public class ColumnModelHelper implements LocatorAware {
                                        SafeHtmlBuilder sb) {
                         if (value != null) {
                             sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-                                    .render(format.format(value, null)).asString()));
+                                .render(format.format(value, null)).asString()));
                         }
                     }
                 };
@@ -202,7 +195,7 @@ public class ColumnModelHelper implements LocatorAware {
                                            SafeHtmlBuilder sb) {
                             if (value != null && value.toString() != null) {
                                 sb.appendHtmlConstant(
-                                        addQTip(SafeHtmlUtils.htmlEscape(value.toString())));
+                                    addQTip(SafeHtmlUtils.htmlEscape(value.toString())));
                             }
                         }
                     };
@@ -220,7 +213,7 @@ public class ColumnModelHelper implements LocatorAware {
                         public void render(Cell.Context context, Number value, SafeHtmlBuilder sb) {
                             if (value != null) {
                                 sb.appendHtmlConstant(addQTip(SimpleSafeHtmlRenderer.getInstance()
-                                        .render(format.format(value)).asString()));
+                                    .render(format.format(value)).asString()));
                             }
                         }
                     };
@@ -238,7 +231,7 @@ public class ColumnModelHelper implements LocatorAware {
                                            SafeHtmlBuilder sb) {
                             if (value != null && value instanceof String) {
                                 sb.appendHtmlConstant(
-                                        addQTip(SafeHtmlUtils.htmlEscape((String) value)));
+                                    addQTip(SafeHtmlUtils.htmlEscape((String) value)));
                             }
                         }
                     };

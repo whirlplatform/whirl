@@ -25,31 +25,31 @@ public class ExportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         doExport(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         doExport(req, resp);
     }
 
     public void doExport(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
+        throws IOException {
         ServletOutputStream out = resp.getOutputStream();
         resp.setContentType("application/xml;");
         resp.setCharacterEncoding("UTF-8");
 
         ApplicationElement app = (ApplicationElement) req.getSession()
-                .getAttribute("APPLICATION");
+            .getAttribute("APPLICATION");
 
         String code = "application";
         if (app.getCode() != null) {
             code = app.getCode();
         }
         resp.setHeader("Content-Disposition",
-                "attachment;filename=\"application-" + code + ".xml\"");
+            "attachment;filename=\"application-" + code + ".xml\"");
         try {
             out.write(metadataStore.serialize(app).getBytes("UTF-8"));
             out.flush();

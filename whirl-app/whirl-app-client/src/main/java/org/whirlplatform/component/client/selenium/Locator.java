@@ -20,7 +20,7 @@ import org.whirlplatform.meta.shared.component.ComponentType;
  */
 public class Locator {
 
-    private String type;
+    private final String type;
 
     private Map<String, String> params = new HashMap<>();
 
@@ -79,8 +79,8 @@ public class Locator {
 
         int firstOpenBracket = locatorString.indexOf("[");
         List<String> paramsString = getBalancedSubstrings(
-                firstOpenBracket == -1 ? locatorString :
-                        locatorString.substring(0, firstOpenBracket), '(', ')', false);
+            firstOpenBracket == -1 ? locatorString :
+                locatorString.substring(0, firstOpenBracket), '(', ')', false);
         if (paramsString.size() == 1) {
             result.params = parseParams(paramsString.get(0));
         }
@@ -192,7 +192,7 @@ public class Locator {
             result.append(")");
         }
         if (part != null) {
-            result.append("[").append(part.toString()).append("]");
+            result.append("[").append(part).append("]");
         }
         return result.toString();
     }

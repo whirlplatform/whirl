@@ -21,7 +21,7 @@ import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
 public class BasePlainTableFetcher extends BasePlainDataFetcher
-        implements TableFetcher<PlainTableElement> {
+    implements TableFetcher<PlainTableElement> {
 
     private static Logger _log = LoggerFactory.getLogger(BasePlainTableFetcher.class);
 
@@ -33,15 +33,15 @@ public class BasePlainTableFetcher extends BasePlainDataFetcher
     public LoadData<RowModelData> getTableData(ClassMetadata metadata, PlainTableElement table,
                                                ClassLoadConfig loadConfig) {
         PlainTableFetcherHelper temp =
-                new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
+            new PlainTableFetcherHelper(getConnection(), getDataSourceDriver());
         return getTableData(metadata, table, loadConfig, temp);
     }
 
     protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(
-            ClassMetadata metadata,
-            PlainTableElement table,
-            ClassLoadConfig loadConfig,
-            H temp) {
+        ClassMetadata metadata,
+        PlainTableElement table,
+        ClassLoadConfig loadConfig,
+        H temp) {
         List<RowModelData> result = new ArrayList<RowModelData>();
         temp.prepare(metadata, table, loadConfig);
 

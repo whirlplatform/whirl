@@ -23,17 +23,17 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 public class EditGridToolBar extends ToolBar {
 
-    private ClassMetadata metadata;
+    private final ClassMetadata metadata;
 
-    private boolean showData;
-    private boolean showSearch;
-    private boolean showExport;
-    private boolean showRefresh;
+    private final boolean showData;
+    private final boolean showSearch;
+    private final boolean showExport;
+    private final boolean showRefresh;
 
-    private boolean hideGroups;
+    private final boolean hideGroups;
 
-    private LoadConfigProvider configProvider;
-    private ParameterHelper paramHelper;
+    private final LoadConfigProvider configProvider;
+    private final ParameterHelper paramHelper;
 
     private TextButton viewBtn;
     private TextButton insertBtn;
@@ -59,8 +59,8 @@ public class EditGridToolBar extends ToolBar {
                            LoadConfigProvider configProvider,
                            ParameterHelper paramHelper) {
         this(metadata, hideGroups, showData, showSearch, showExport, showMethod, showRefresh,
-                configProvider,
-                paramHelper, null);
+            configProvider,
+            paramHelper, null);
 
     }
 
@@ -95,7 +95,7 @@ public class EditGridToolBar extends ToolBar {
 
     private void initData(FlexTable dataTable) {
         if (showData && (metadata.isViewable() || metadata.isInsertable() || metadata.isUpdatable()
-                || metadata.isDeletable())) {
+            || metadata.isDeletable())) {
             ButtonGroup dataGroup = null;
             // FlexTable dataTable = null;
             if (!hideGroups) {
@@ -107,7 +107,7 @@ public class EditGridToolBar extends ToolBar {
             // view
             if (metadata.isViewable() && !metadata.isUpdatable()) {
                 viewBtn = createButton(AppMessage.Util.MESSAGE.view(),
-                        ApplicationBundle.INSTANCE.view());
+                    ApplicationBundle.INSTANCE.view());
                 if (!hideGroups) {
                     viewBtn.setText(AppMessage.Util.MESSAGE.view());
                     addToGroup(dataTable, viewBtn);
@@ -119,9 +119,9 @@ public class EditGridToolBar extends ToolBar {
             // insert
             if (metadata.isInsertable()) {
                 insertBtn = createButton(AppMessage.Util.MESSAGE.insert(),
-                        ApplicationBundle.INSTANCE.add());
+                    ApplicationBundle.INSTANCE.add());
                 copyBtn = createButton(AppMessage.Util.MESSAGE.copy(),
-                        ApplicationBundle.INSTANCE.copy());
+                    ApplicationBundle.INSTANCE.copy());
                 if (!hideGroups) {
                     insertBtn.setText(AppMessage.Util.MESSAGE.insert());
                     copyBtn.setText(AppMessage.Util.MESSAGE.copy());
@@ -136,7 +136,7 @@ public class EditGridToolBar extends ToolBar {
             // update
             if (metadata.isUpdatable()) {
                 updateBtn = createButton(AppMessage.Util.MESSAGE.update(),
-                        ApplicationBundle.INSTANCE.edit());
+                    ApplicationBundle.INSTANCE.edit());
                 if (!hideGroups) {
                     updateBtn.setText(AppMessage.Util.MESSAGE.update());
                     addToGroup(dataTable, updateBtn);
@@ -148,7 +148,7 @@ public class EditGridToolBar extends ToolBar {
             // delete
             if (metadata.isDeletable()) {
                 deleteBtn = createButton(AppMessage.Util.MESSAGE.delete(),
-                        ApplicationBundle.INSTANCE.delete());
+                    ApplicationBundle.INSTANCE.delete());
                 if (!hideGroups) {
                     deleteBtn.setText(AppMessage.Util.MESSAGE.delete());
                     addToGroup(dataTable, deleteBtn);
@@ -170,11 +170,11 @@ public class EditGridToolBar extends ToolBar {
         if (showSearch) {
             // search
             searchBtn = createButton(AppMessage.Util.MESSAGE.filter(),
-                    ApplicationBundle.INSTANCE.search());
+                ApplicationBundle.INSTANCE.search());
 
             // sort
             sortBtn =
-                    createButton(AppMessage.Util.MESSAGE.sort(), ApplicationBundle.INSTANCE.sort());
+                createButton(AppMessage.Util.MESSAGE.sort(), ApplicationBundle.INSTANCE.sort());
 
             // refresh
             // refreshBtn = createButton(AppMessage.Util.MESSAGE.refresh(),
@@ -216,15 +216,15 @@ public class EditGridToolBar extends ToolBar {
             GridExportImport exportImport = new GridExportImport(configProvider, paramHelper);
 
             expCsvBtn = exportImport.create(metadata, GridExportImport.ExpImpType.EXPORT_CSV,
-                    AppMessage.Util.MESSAGE.expimp_exportCSV(),
-                    false);
+                AppMessage.Util.MESSAGE.expimp_exportCSV(),
+                false);
             expExcelBtn = exportImport.create(metadata, GridExportImport.ExpImpType.EXPORT_XLS,
-                    AppMessage.Util.MESSAGE.expimp_exportXLS(), false);
+                AppMessage.Util.MESSAGE.expimp_exportXLS(), false);
             impCsvBtn = exportImport.create(metadata, GridExportImport.ExpImpType.IMPORT_CSV,
-                    AppMessage.Util.MESSAGE.expimp_importCSV(),
-                    false);
+                AppMessage.Util.MESSAGE.expimp_importCSV(),
+                false);
             impExcelBtn = exportImport.create(metadata, GridExportImport.ExpImpType.IMPORT_XLS,
-                    AppMessage.Util.MESSAGE.expimp_importXLS(), false);
+                AppMessage.Util.MESSAGE.expimp_importXLS(), false);
 
             if (!hideGroups) {
                 ButtonGroup group = new ButtonGroup();
@@ -250,7 +250,7 @@ public class EditGridToolBar extends ToolBar {
         if (showRefresh) {
             // refresh
             refreshBtn = createButton(AppMessage.Util.MESSAGE.refresh(),
-                    ApplicationBundle.INSTANCE.refresh());
+                ApplicationBundle.INSTANCE.refresh());
             if (!hideGroups) {
                 refreshBtn.setText(AppMessage.Util.MESSAGE.refresh());
                 addToGroup(groupTable, refreshBtn);

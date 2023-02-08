@@ -35,7 +35,7 @@ import com.google.gwt.user.client.EventListener;
  * {@link com.google.gwt.user.client.ui.Panel panels}.
  */
 public class Widget extends UIObject implements EventListener, HasAttachHandlers,
-        IsWidget {
+    IsWidget {
 
     /**
      * A bit-map of the events that should be sunk when the widget is attached to the DOM. (We delay
@@ -76,7 +76,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
      * @return {@link HandlerRegistration} used to remove the handler
      */
     public final <H extends EventHandler> HandlerRegistration addBitlessDomHandler(
-            final H handler, DomEvent.Type<H> type) {
+        final H handler, DomEvent.Type<H> type) {
         assert handler != null : "handler must not be null";
         assert type != null : "type must not be null";
         sinkBitlessEvent(type.getName());
@@ -93,7 +93,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
      * @return {@link HandlerRegistration} used to remove the handler
      */
     public final <H extends EventHandler> HandlerRegistration addDomHandler(
-            final H handler, DomEvent.Type<H> type) {
+        final H handler, DomEvent.Type<H> type) {
         assert handler != null : "handler must not be null";
         assert type != null : "type must not be null";
         int typeInt = Event.getTypeInt(type.getName());
@@ -114,7 +114,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
      * @return {@link HandlerRegistration} used to remove the handler
      */
     public final <H extends EventHandler> HandlerRegistration addHandler(
-            final H handler, GwtEvent.Type<H> type) {
+        final H handler, GwtEvent.Type<H> type) {
         return ensureHandlers().addHandler(type, handler);
     }
 
@@ -173,7 +173,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
                 if (oldParent != null && oldParent.isAttached()) {
                     onDetach();
                     assert !isAttached() : "Failure of " + this.getClass().getName()
-                            + " to call super.onDetach()";
+                        + " to call super.onDetach()";
                 }
             } finally {
                 // Put this in a finally in case onDetach throws an exception.
@@ -182,13 +182,13 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
         } else {
             if (oldParent != null) {
                 throw new IllegalStateException(
-                        "Cannot set a new parent without first clearing the old parent");
+                    "Cannot set a new parent without first clearing the old parent");
             }
             this.parent = parent;
             if (parent.isAttached()) {
                 onAttach();
                 assert isAttached() : "Failure of " + this.getClass().getName()
-                        + " to call super.onAttach()";
+                    + " to call super.onAttach()";
             }
         }
     }
@@ -246,7 +246,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
             ((HasWidgets) parent).remove(this);
         } else if (parent != null) {
             throw new IllegalStateException(
-                    "This widget's parent does not implement HasWidgets");
+                "This widget's parent does not implement HasWidgets");
         }
     }
 
@@ -368,7 +368,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
     protected void onAttach() {
         if (isAttached()) {
             throw new IllegalStateException(
-                    "Should only call onAttach when the widget is detached from the browser's document");
+                "Should only call onAttach when the widget is detached from the browser's document");
         }
 
         attached = true;
@@ -414,7 +414,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
     protected void onDetach() {
         if (!isAttached()) {
             throw new IllegalStateException(
-                    "Should only call onDetach when the widget is attached to the browser's document");
+                "Should only call onDetach when the widget is attached to the browser's document");
         }
 
         try {
@@ -454,7 +454,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
      */
     HandlerManager ensureHandlers() {
         return handlerManager == null ? handlerManager = createHandlerManager()
-                : handlerManager;
+            : handlerManager;
     }
 
     HandlerManager getHandlerManager() {

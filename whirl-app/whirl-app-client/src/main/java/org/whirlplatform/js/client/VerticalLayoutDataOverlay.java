@@ -18,7 +18,7 @@ public abstract class VerticalLayoutDataOverlay {
                                                  int marginTop, int marginRight, int marginBottom,
                                                  int marginLeft) {
         return new VerticalLayoutData(width, height, new Margins(marginTop,
-                marginRight, marginBottom, marginLeft));
+            marginRight, marginBottom, marginLeft));
     }
 
 }

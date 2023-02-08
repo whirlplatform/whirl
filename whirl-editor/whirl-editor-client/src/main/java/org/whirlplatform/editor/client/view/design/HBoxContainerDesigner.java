@@ -19,10 +19,10 @@ public class HBoxContainerDesigner extends IndexContainerDesigner {
     protected void initRootDropTarget(final ComponentElement element,
                                       final ComponentBuilder builder) {
         HorizontalLayoutDropTarget target = new HorizontalLayoutDropTarget(
-                (InsertResizeContainer) builder.getComponent()) {
+            (InsertResizeContainer) builder.getComponent()) {
             protected void onDragDrop(DndDropEvent event) {
                 HBoxContainerDesigner.super.onRootDrop(element, builder, event.getData(),
-                        getIndex());
+                    getIndex());
                 super.onDragDrop(event);
             }
 

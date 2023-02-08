@@ -14,10 +14,10 @@ public class ElementChildComparator implements Comparator<ComponentElement> {
     @Override
     public int compare(ComponentElement o1, ComponentElement o2) {
         DataValue val1 = o1.getProperty(PropertyType.LayoutDataIndex)
-                .getValue(o1.getProperty(PropertyType.LayoutDataIndex).getDefaultLocale());
+            .getValue(o1.getProperty(PropertyType.LayoutDataIndex).getDefaultLocale());
         Integer index1 = parse(val1);
         DataValue val2 = o2.getProperty(PropertyType.LayoutDataIndex)
-                .getValue(o2.getProperty(PropertyType.LayoutDataIndex).getDefaultLocale());
+            .getValue(o2.getProperty(PropertyType.LayoutDataIndex).getDefaultLocale());
         Integer index2 = parse(val2);
         return index1 - index2;
     }

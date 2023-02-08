@@ -28,7 +28,7 @@ import org.whirlplatform.meta.shared.data.DataValueImpl;
  */
 @JsType(namespace = "Whirl", name = "TextArea")
 public class TextAreaBuilder extends AbstractFieldBuilder implements
-        NativeParameter<String>, Parameter<DataValue> {
+    NativeParameter<String>, Parameter<DataValue> {
 
     private XTextArea field;
 

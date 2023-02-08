@@ -20,7 +20,7 @@ public class BoxLayoutDataOverlay {
     public static BoxLayoutData constructor(int minSize, int maxSize,
                                             double flex, int margins) {
         return constructor(minSize, maxSize, flex, margins, margins, margins,
-                margins);
+            margins);
     }
 
 
@@ -42,7 +42,7 @@ public class BoxLayoutDataOverlay {
                                             int marginBottom,
                                             int marginLeft) {
         BoxLayoutData data = new BoxLayoutData(new Margins(marginTop,
-                marginRight, marginBottom, marginLeft));
+            marginRight, marginBottom, marginLeft));
         data.setMinSize(minSize < 0 ? 0 : minSize);
         data.setMaxSize(maxSize < 0 ? Integer.MAX_VALUE : maxSize);
         data.setFlex(flex < 0 ? 0 : flex);

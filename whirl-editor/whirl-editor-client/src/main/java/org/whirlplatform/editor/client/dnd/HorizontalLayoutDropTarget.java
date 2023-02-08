@@ -63,7 +63,7 @@ public class HorizontalLayoutDropTarget extends DropTarget {
     @Override
     protected void onDragMove(DndDragMoveEvent event) {
         XElement target = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         if (!horizontalLayout.getElement().isOrHasChild(target)) {
             event.setCancelled(true);
             event.getStatusProxy().setStatus(false);
@@ -78,10 +78,10 @@ public class HorizontalLayoutDropTarget extends DropTarget {
         event.getStatusProxy().setStatus(true);
         NativeEvent e = event.getDragMoveEvent().getNativeEvent().cast();
         Element el = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         Widget w = horizontalLayout.findWidget(el);
         if (w != null
-                && (feedback == Feedback.INSERT || feedback == Feedback.BOTH)) {
+            && (feedback == Feedback.INSERT || feedback == Feedback.BOTH)) {
             int width = el.getOffsetWidth();
             int mid = width / 2;
             mid += el.getAbsoluteLeft();

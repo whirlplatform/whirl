@@ -13,7 +13,7 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 
 class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
 
-    private FieldMetadata tableField;
+    private final FieldMetadata tableField;
 
 
     public TableTreeComboBoxBuilder(FieldMetadata tableField,

@@ -21,7 +21,7 @@ public class ByWhirl extends By implements Serializable {
     @Override
     public List<WebElement> findElements(SearchContext context) {
         throw new UnsupportedOperationException(
-                "Method findElement not supported by ByWhirl locator.");
+            "Method findElement not supported by ByWhirl locator.");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ByWhirl extends By implements Serializable {
             JavascriptExecutor executor = (JavascriptExecutor) context;
             try {
                 WebElement element = (WebElement) executor.executeScript(
-                        "return __Whirl.Selenium.getElementByLocator(arguments[0]);", locator);
+                    "return __Whirl.Selenium.getElementByLocator(arguments[0]);", locator);
                 if (element != null) {
                     return element;
                 }

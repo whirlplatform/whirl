@@ -92,17 +92,17 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 
     public void onNewApplication(final ApplicationBasicInfo appInfo) {
         EditorDataService.Util.getDataService()
-                .newApplication(appInfo, new AsyncCallback<ApplicationElement>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        InfoHelper.throwInfo("on-new-application", caught);
-                    }
+            .newApplication(appInfo, new AsyncCallback<ApplicationElement>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    InfoHelper.throwInfo("on-new-application", caught);
+                }
 
-                    @Override
-                    public void onSuccess(ApplicationElement result) {
-                        eventBus.loadApplication(result, appInfo.getVersion());
-                    }
-                });
+                @Override
+                public void onSuccess(ApplicationElement result) {
+                    eventBus.loadApplication(result, appInfo.getVersion());
+                }
+            });
     }
 
     public void onLoadApplication(ApplicationElement application, Version version) {
@@ -139,7 +139,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 }
             });
         } else if (parent instanceof NullFreeComponentElement
-                && element instanceof NewComponentElement) {
+            && element instanceof NewComponentElement) {
             // Перетаскивание компонента в корень свободных компонентов
             onAddElementCallback(parent, element, new Callback<ComponentElement, Throwable>() {
                 @Override
@@ -156,14 +156,14 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 }
             });
         } else if (parent instanceof ComponentElement
-                &&
-                (element instanceof ComponentElement || element instanceof NewComponentElement)) {
+            &&
+            (element instanceof ComponentElement || element instanceof NewComponentElement)) {
             // подчиненный компонент в уже существующем
             final ComponentElement added;
             LocaleElement l = currentApplication.getDefaultLocale();
             if (element instanceof NewComponentElement) {
                 added = EditorHelper.newComponentElement(((NewComponentElement) element).getType(),
-                        currentApplication.getDefaultLocale());
+                    currentApplication.getDefaultLocale());
             } else {
                 added = (ComponentElement) element;
             }
@@ -171,41 +171,41 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             if (!currentApplication.getApplicationComponents().contains(element)) {
                 added.setName(added.getName() + " " + count);
             }
-//            PropertyValue propValue = null;
-//            PropertyType propertyType = null;
-//            switch (added.getType()) {
-//                case ButtonType:
-//                case LabelType:
-//                case HtmlType:
-//                    propertyType = PropertyType.Html;
-//                    propValue = added.getProperty(propertyType);
-//                    break;
-//                case TabItemType:
-//                    propertyType = PropertyType.Title;
-//                    propValue = added.getProperty(propertyType);
-//                    break;
-//            }
-//            if (propValue != null) {
-//                String val = null;
-//                DataValue dataValue = propValue.getValue(l);
-//                if (dataValue != null && (val = dataValue.getString()) != null) {
-//                    val = val + " " + count;
-//                }
-//                added.setProperty(propertyType, new PropertyValue(DataType.STRING, l, val));
-//            }
+            //            PropertyValue propValue = null;
+            //            PropertyType propertyType = null;
+            //            switch (added.getType()) {
+            //                case ButtonType:
+            //                case LabelType:
+            //                case HtmlType:
+            //                    propertyType = PropertyType.Html;
+            //                    propValue = added.getProperty(propertyType);
+            //                    break;
+            //                case TabItemType:
+            //                    propertyType = PropertyType.Title;
+            //                    propValue = added.getProperty(propertyType);
+            //                    break;
+            //            }
+            //            if (propValue != null) {
+            //                String val = null;
+            //                DataValue dataValue = propValue.getValue(l);
+            //                if (dataValue != null && (val = dataValue.getString()) != null) {
+            //                    val = val + " " + count;
+            //                }
+            //                added.setProperty(propertyType, new PropertyValue(DataType.STRING, l, val));
+            //            }
             PropertyValue hAlign = added.getProperty(PropertyType.LayoutDataHorizontalAlign);
             if (hAlign.getValue(l) == null
-                    || (hAlign.getValue(l).getType() == DataType.STRING
-                    && hAlign.getValue(l).toString().isEmpty())) {
+                || (hAlign.getValue(l).getType() == DataType.STRING
+                && hAlign.getValue(l).toString().isEmpty())) {
                 added.setProperty(PropertyType.LayoutDataHorizontalAlign,
-                        new PropertyValue(DataType.STRING, l, "Center"));
+                    new PropertyValue(DataType.STRING, l, "Center"));
             }
             PropertyValue vAlign = added.getProperty(PropertyType.LayoutDataVerticalAlign);
             if (vAlign.getValue(l) == null
-                    || vAlign.getValue(l).getType() == DataType.STRING
-                    && vAlign.getValue(l).toString().isEmpty()) {
+                || vAlign.getValue(l).getType() == DataType.STRING
+                && vAlign.getValue(l).toString().isEmpty()) {
                 added.setProperty(PropertyType.LayoutDataVerticalAlign,
-                        new PropertyValue(DataType.STRING, l, "Middle"));
+                    new PropertyValue(DataType.STRING, l, "Middle"));
             }
             onAddChildComponent((ComponentElement) parent, added);
             onSyncServerApplication();
@@ -219,12 +219,12 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 }
             });
         } else if (parent instanceof NullFreeComponentElement
-                && element instanceof ComponentElement) {
+            && element instanceof ComponentElement) {
             // перенос существующего компонента в свободные
             onAddFreeComponent((ComponentElement) element);
             onSyncServerApplication();
         } else if (parent instanceof NullRootComponentElement
-                && element instanceof ComponentElement) {
+            && element instanceof ComponentElement) {
             // перенос существующего компонента в корневой
             onAddFreeComponent(currentApplication.getRootComponent());
             if (currentApplication.getFreeComponents().contains(element)) {
@@ -291,7 +291,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 }
             });
         } else if (parent instanceof ApplicationElement
-                && element instanceof NewDataSourceElement) {
+            && element instanceof NewDataSourceElement) {
             onAddElementCallback(parent, element, new Callback<AbstractElement, Throwable>() {
                 @Override
                 public void onFailure(Throwable reason) {
@@ -350,7 +350,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             ComponentElement component = (ComponentElement) parent;
             NewPropertyElement prop = (NewPropertyElement) element;
             LocaleElement l = prop.getLocale() == null ? currentApplication.getDefaultLocale() :
-                    prop.getLocale();
+                prop.getLocale();
             if (prop.getValue() == null) {
                 component.removeProperty(prop.getType());
             } else {
@@ -380,8 +380,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 
             }
         } else if (parent instanceof ReportElement && element instanceof NewComponentElement
-                &&
-                ComponentType.FormBuilderType.equals(((NewComponentElement) element).getType())) {
+            &&
+            ComponentType.FormBuilderType.equals(((NewComponentElement) element).getType())) {
             onAddElementCallback(parent, element, new Callback<ComponentElement, Throwable>() {
                 @Override
                 public void onFailure(Throwable reason) {
@@ -446,7 +446,7 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 }
             } else {
                 InfoHelper.info("on-add-element", EditorMessage.Util.MESSAGE.warn(),
-                        EditorMessage.Util.MESSAGE.error_application_is_main());
+                    EditorMessage.Util.MESSAGE.error_application_is_main());
             }
         } else if (parent instanceof ComponentElement && element instanceof EventElement) {
             ComponentElement comp = (ComponentElement) parent;
@@ -467,22 +467,22 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             app.addFreeEvent(event);
             fireAddElementUi(app, event);
         } else if (parent instanceof ComponentElement
-                && element instanceof NewContextMenuItemElement) {
+            && element instanceof NewContextMenuItemElement) {
             onAddElementCallback(parent, element,
-                    new Callback<ContextMenuItemElement, Throwable>() {
-                        @Override
-                        public void onFailure(Throwable reason) {
-                            InfoHelper.throwInfo("on-add-element", reason);
-                        }
+                new Callback<ContextMenuItemElement, Throwable>() {
+                    @Override
+                    public void onFailure(Throwable reason) {
+                        InfoHelper.throwInfo("on-add-element", reason);
+                    }
 
-                        @Override
-                        public void onSuccess(ContextMenuItemElement result) {
-                            ((ComponentElement) parent).addContextMenuItem(result);
-                            fireAddElementUi(parent, result);
-                        }
-                    });
+                    @Override
+                    public void onSuccess(ContextMenuItemElement result) {
+                        ((ComponentElement) parent).addContextMenuItem(result);
+                        fireAddElementUi(parent, result);
+                    }
+                });
         } else if (parent instanceof ComponentElement
-                && element instanceof ContextMenuItemElement) {
+            && element instanceof ContextMenuItemElement) {
             ComponentElement comp = (ComponentElement) parent;
             ContextMenuItemElement item = (ContextMenuItemElement) element;
             comp.removeContextMenuItem(item);
@@ -508,22 +508,22 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             comp.addEvent(event);
             fireAddElementUi(comp, event);
         } else if (parent instanceof ContextMenuItemElement
-                && element instanceof NewContextMenuItemElement) {
+            && element instanceof NewContextMenuItemElement) {
             onAddElementCallback(parent, element,
-                    new Callback<ContextMenuItemElement, Throwable>() {
-                        @Override
-                        public void onFailure(Throwable reason) {
-                            InfoHelper.throwInfo("on-add-element", reason);
-                        }
+                new Callback<ContextMenuItemElement, Throwable>() {
+                    @Override
+                    public void onFailure(Throwable reason) {
+                        InfoHelper.throwInfo("on-add-element", reason);
+                    }
 
-                        @Override
-                        public void onSuccess(ContextMenuItemElement result) {
-                            ((ContextMenuItemElement) parent).addChild(result);
-                            fireAddElementUi(parent, result);
-                        }
-                    });
+                    @Override
+                    public void onSuccess(ContextMenuItemElement result) {
+                        ((ContextMenuItemElement) parent).addChild(result);
+                        fireAddElementUi(parent, result);
+                    }
+                });
         } else if (parent instanceof ContextMenuItemElement
-                && element instanceof ContextMenuItemElement) {
+            && element instanceof ContextMenuItemElement) {
             ContextMenuItemElement item = (ContextMenuItemElement) parent;
             ContextMenuItemElement childItem = (ContextMenuItemElement) element;
             item.removeChild(childItem);
@@ -536,8 +536,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
         eventBus.addElementUI(parent, addedElement);
         eventBus.selectTreeElement(addedElement);
         if (addedElement instanceof ComponentElement
-                || (addedElement instanceof EventParameterElement
-                        && ((EventParameterElement) addedElement).getComponentId() != null)) {
+            || (addedElement instanceof EventParameterElement
+            && ((EventParameterElement) addedElement).getComponentId() != null)) {
             // skipped
         } else {
             eventBus.openElement(addedElement);
@@ -614,45 +614,45 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
     private void removeElement(AbstractElement parent, AbstractElement element) {
         AbstractElement removedElement = null;
         if (parent instanceof NullRootComponentElement && element instanceof ComponentElement
-                && currentApplication.getRootComponent() == element) {
+            && currentApplication.getRootComponent() == element) {
             // удаляем корневой компонент
             currentApplication.setRootComponent(null);
             onAddFreeComponent((ComponentElement) element);
             removedElement = element;
         } else if (parent instanceof NullFreeComponentElement && element instanceof ComponentElement
-                && currentApplication.getFreeComponents().contains(element)) {
+            && currentApplication.getFreeComponents().contains(element)) {
             // удаляем свободный компонент
             currentApplication.removeFreeComponent((ComponentElement) element);
             removedElement = element;
         } else if (parent instanceof ComponentElement && element instanceof ComponentElement
-                && ((ComponentElement) parent).getChildren().contains(element)) {
+            && ((ComponentElement) parent).getChildren().contains(element)) {
             // удаляем подчиненный компонент
             // TODO пересчитываем индексы
             onRemoveChildComponent((ComponentElement) element);
             ((ComponentElement) element).removeFromParent();
             removedElement = element;
         } else if (parent instanceof EventElement && element instanceof EventElement
-                && ((EventElement) parent).getSubEvents().contains(element)) {
+            && ((EventElement) parent).getSubEvents().contains(element)) {
             // удаляем подчиненное событие
             ((EventElement) parent).removeSubEvent((EventElement) element);
             removedElement = element;
         } else if (parent instanceof EventElement && element instanceof EventParameterElement
-                && ((EventElement) parent).getParameters().contains(element)) {
+            && ((EventElement) parent).getParameters().contains(element)) {
             // удаляем параметр события
             ((EventElement) parent).removeParameter((EventParameterElement) element);
             removedElement = element;
         } else if (parent instanceof ComponentElement && element instanceof EventElement
-                && ((ComponentElement) parent).getEvents().contains(element)) {
+            && ((ComponentElement) parent).getEvents().contains(element)) {
             // удаляем событие
             ((ComponentElement) parent).removeEvent((EventElement) element);
             removedElement = element;
         } else if (parent instanceof ApplicationElement && element instanceof EventElement
-                && ((ApplicationElement) parent).getFreeEvents().contains(element)) {
+            && ((ApplicationElement) parent).getFreeEvents().contains(element)) {
             // удаляем событие приложения
             ((ApplicationElement) parent).removeFreeEvent((EventElement) element);
             removedElement = element;
         } else if (parent instanceof ApplicationElement && element instanceof DataSourceElement
-                && ((ApplicationElement) parent).getDataSources().contains(element)) {
+            && ((ApplicationElement) parent).getDataSources().contains(element)) {
             // удаляем источник данных
             ((ApplicationElement) parent).removeDataSource((DataSourceElement) element);
             removedElement = element;
@@ -669,10 +669,10 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             ((ApplicationElement) parent).removeReference((ApplicationElement) element);
             removedElement = element;
         } else if (parent instanceof ComponentElement
-                && element instanceof ContextMenuItemElement) {
+            && element instanceof ContextMenuItemElement) {
             ((ComponentElement) parent).removeContextMenuItem((ContextMenuItemElement) element);
         } else if (parent instanceof ContextMenuItemElement
-                && element instanceof ContextMenuItemElement) {
+            && element instanceof ContextMenuItemElement) {
             ((ContextMenuItemElement) parent).removeChild((ContextMenuItemElement) element);
         }
 
@@ -687,16 +687,16 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
     private void onRemoveChildComponent(ComponentElement child) {
         ComponentElement parent = child.getParent();
         if (parent.getType() == ComponentType.HorizontalContainerType
-                || parent.getType() == ComponentType.VerticalContainerType
-                || parent.getType() == ComponentType.HBoxContainerType
-                || parent.getType() == ComponentType.VBoxContainerType
-                || parent.getType() == ComponentType.TreeMenuType
-                || parent.getType() == ComponentType.HorizontalMenuType
-                || parent.getType() == ComponentType.HorizontalMenuItemType
-                || parent.getType() == ComponentType.TabPanelType) {
+            || parent.getType() == ComponentType.VerticalContainerType
+            || parent.getType() == ComponentType.HBoxContainerType
+            || parent.getType() == ComponentType.VBoxContainerType
+            || parent.getType() == ComponentType.TreeMenuType
+            || parent.getType() == ComponentType.HorizontalMenuType
+            || parent.getType() == ComponentType.HorizontalMenuItemType
+            || parent.getType() == ComponentType.TabPanelType) {
 
             Double tmpIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                    .getValue(currentApplication.getDefaultLocale()).getDouble();
+                .getValue(currentApplication.getDefaultLocale()).getDouble();
 
             // если индекс нулевой, то просто выходим
             if (tmpIndex == null || tmpIndex < 0) {
@@ -707,8 +707,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 
             for (int i = childIndex; i < items.size() - 1; i++) {
                 eventBus.addElement(items.get(i + 1),
-                        new NewPropertyElement(PropertyType.LayoutDataIndex,
-                                currentApplication.getDefaultLocale(), i));
+                    new NewPropertyElement(PropertyType.LayoutDataIndex,
+                        currentApplication.getDefaultLocale(), i));
             }
         }
     }
@@ -744,10 +744,10 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                 while (iter.hasNext()) {
                     ComponentElement e = iter.next();
                     String location = e.getProperty(PropertyType.LayoutDataLocation)
-                            .getValue(currentApplication.getDefaultLocale()).getString();
+                        .getValue(currentApplication.getDefaultLocale()).getString();
                     if (location == null
-                            || location.equals(child.getProperty(PropertyType.LayoutDataLocation)
-                                    .getValue(currentApplication.getDefaultLocale()).getString())) {
+                        || location.equals(child.getProperty(PropertyType.LayoutDataLocation)
+                        .getValue(currentApplication.getDefaultLocale()).getString())) {
 
                         eventBus.removeElementUI(parent, e);
                         parent.removeChild(e);
@@ -755,23 +755,23 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     }
                 }
             } else if (parent.getType() == ComponentType.HorizontalContainerType
-                    || parent.getType() == ComponentType.VerticalContainerType
-                    || parent.getType() == ComponentType.HBoxContainerType
-                    || parent.getType() == ComponentType.VBoxContainerType
-                    || parent.getType() == ComponentType.TreeMenuType
-                    || parent.getType() == ComponentType.HorizontalMenuType
-                    || parent.getType() == ComponentType.HorizontalMenuItemType
-                    || parent.getType() == ComponentType.TabPanelType) {
+                || parent.getType() == ComponentType.VerticalContainerType
+                || parent.getType() == ComponentType.HBoxContainerType
+                || parent.getType() == ComponentType.VBoxContainerType
+                || parent.getType() == ComponentType.TreeMenuType
+                || parent.getType() == ComponentType.HorizontalMenuType
+                || parent.getType() == ComponentType.HorizontalMenuItemType
+                || parent.getType() == ComponentType.TabPanelType) {
                 Iterator<ComponentElement> iter = parent.getChildren().iterator();
 
                 Double tmpIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                        .getValue(currentApplication.getDefaultLocale()).getDouble();
+                    .getValue(currentApplication.getDefaultLocale()).getDouble();
 
                 int childIndex;
                 if (tmpIndex == null) {
                     childIndex = parent.getChildren().size();
                     eventBus.addElement(child, new NewPropertyElement(PropertyType.LayoutDataIndex,
-                            currentApplication.getDefaultLocale(), childIndex));
+                        currentApplication.getDefaultLocale(), childIndex));
                 } else {
                     childIndex = tmpIndex.intValue();
                 }
@@ -789,27 +789,27 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                         index++;
                     }
                     eventBus.addElement(e, new NewPropertyElement(PropertyType.LayoutDataIndex,
-                            currentApplication.getDefaultLocale(), index));
+                        currentApplication.getDefaultLocale(), index));
                     index++;
                 }
                 if (index < childIndex) {
                     eventBus.addElement(child, new NewPropertyElement(PropertyType.LayoutDataIndex,
-                            currentApplication.getDefaultLocale(), index));
+                        currentApplication.getDefaultLocale(), index));
                 }
             } else if (parent.getType() == ComponentType.FormBuilderType) {
                 Iterator<ComponentElement> iter = parent.getChildren().iterator();
                 long childRow = Math.round(child.getProperty(PropertyType.LayoutDataFormRow)
-                        .getValue(currentApplication.getDefaultLocale()).getDouble());
+                    .getValue(currentApplication.getDefaultLocale()).getDouble());
                 long childCol = Math.round(child.getProperty(PropertyType.LayoutDataFormColumn)
-                        .getValue(currentApplication.getDefaultLocale()).getDouble());
+                    .getValue(currentApplication.getDefaultLocale()).getDouble());
                 while (iter.hasNext()) {
                     ComponentElement e = iter.next();
                     boolean rowEq =
-                            childRow == Math.round(e.getProperty(PropertyType.LayoutDataFormRow)
-                                    .getValue(currentApplication.getDefaultLocale()).getDouble());
+                        childRow == Math.round(e.getProperty(PropertyType.LayoutDataFormRow)
+                            .getValue(currentApplication.getDefaultLocale()).getDouble());
                     boolean colEq =
-                            childCol == Math.round(e.getProperty(PropertyType.LayoutDataFormColumn)
-                                    .getValue(currentApplication.getDefaultLocale()).getDouble());
+                        childCol == Math.round(e.getProperty(PropertyType.LayoutDataFormColumn)
+                            .getValue(currentApplication.getDefaultLocale()).getDouble());
                     if (rowEq && colEq) {
 
                         eventBus.removeElement(parent, e, false);
@@ -818,8 +818,8 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
                     }
                 }
             } else if (parent.getType() == ComponentType.HorizontalMenuType
-                    || parent.getType() == ComponentType.TreeMenuType
-                    || parent.getType() == ComponentType.HorizontalMenuItemType) {
+                || parent.getType() == ComponentType.TreeMenuType
+                || parent.getType() == ComponentType.HorizontalMenuItemType) {
                 // Перенести установку LayoutData в одно место!
             } else {
                 Iterator<ComponentElement> iter = parent.getChildren().iterator();
@@ -891,63 +891,63 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
 
     private void saveApplication(SaveData saveData) {
         EditorDataService.Util.getDataService()
-                .saveApplication(saveData, new AsyncCallback<SaveResult>() {
-                    @Override
-                    public void onSuccess(SaveResult result) {
-                        // Или в цикле перебрать все компоненты и поставить им
-                        // новый id?
-                        currentApplication = result.getApplication();
-                        currentVersion = result.getVersion();
-                        eventBus.loadApplication(currentApplication, currentVersion);
-                        eventBus.restoreApplicationState(result.getState());
-                        ProgressHelper.hide();
-                        Info.display(AppMessage.Util.MESSAGE.success(),
-                                EditorMessage.Util.MESSAGE.info_application_saved());
-                    }
+            .saveApplication(saveData, new AsyncCallback<SaveResult>() {
+                @Override
+                public void onSuccess(SaveResult result) {
+                    // Или в цикле перебрать все компоненты и поставить им
+                    // новый id?
+                    currentApplication = result.getApplication();
+                    currentVersion = result.getVersion();
+                    eventBus.loadApplication(currentApplication, currentVersion);
+                    eventBus.restoreApplicationState(result.getState());
+                    ProgressHelper.hide();
+                    Info.display(AppMessage.Util.MESSAGE.success(),
+                        EditorMessage.Util.MESSAGE.info_application_saved());
+                }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        ProgressHelper.hide();
-                        if (caught instanceof RPCException
-                                && ((RPCException) caught).isSessionExpired()) {
-                            eventBus.showLoginPanel();
-                            InfoHelper.error("save-application", EditorMessage.Util.MESSAGE.error(),
-                                    caught.getMessage());
-                        } else {
-                            InfoHelper.throwInfo("save-application", caught);
-                        }
+                @Override
+                public void onFailure(Throwable caught) {
+                    ProgressHelper.hide();
+                    if (caught instanceof RPCException
+                        && ((RPCException) caught).isSessionExpired()) {
+                        eventBus.showLoginPanel();
+                        InfoHelper.error("save-application", EditorMessage.Util.MESSAGE.error(),
+                            caught.getMessage());
+                    } else {
+                        InfoHelper.throwInfo("save-application", caught);
                     }
-                });
+                }
+            });
     }
 
     private void saveApplicationAs(SaveData saveData, Version oldVersion) {
         EditorDataService.Util.getDataService().saveApplicationAs(saveData, oldVersion,
-                new AsyncCallback<SaveResult>() {
-                    @Override
-                    public void onSuccess(SaveResult result) {
-                        currentApplication = result.getApplication();
-                        currentVersion = result.getVersion();
-                        eventBus.loadApplication(currentApplication, currentVersion);
-                        eventBus.restoreApplicationState(result.getState());
-                        ProgressHelper.hide();
-                        Info.display(AppMessage.Util.MESSAGE.success(),
-                                EditorMessage.Util.MESSAGE.info_application_saved());
-                    }
+            new AsyncCallback<SaveResult>() {
+                @Override
+                public void onSuccess(SaveResult result) {
+                    currentApplication = result.getApplication();
+                    currentVersion = result.getVersion();
+                    eventBus.loadApplication(currentApplication, currentVersion);
+                    eventBus.restoreApplicationState(result.getState());
+                    ProgressHelper.hide();
+                    Info.display(AppMessage.Util.MESSAGE.success(),
+                        EditorMessage.Util.MESSAGE.info_application_saved());
+                }
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        ProgressHelper.hide();
-                        if (caught instanceof RPCException
-                                && ((RPCException) caught).isSessionExpired()) {
-                            eventBus.showLoginPanel();
-                            InfoHelper.error("save-application-as",
-                                    EditorMessage.Util.MESSAGE.error(),
-                                    caught.getMessage());
-                        } else {
-                            InfoHelper.throwInfo("save-application-as", caught);
-                        }
+                @Override
+                public void onFailure(Throwable caught) {
+                    ProgressHelper.hide();
+                    if (caught instanceof RPCException
+                        && ((RPCException) caught).isSessionExpired()) {
+                        eventBus.showLoginPanel();
+                        InfoHelper.error("save-application-as",
+                            EditorMessage.Util.MESSAGE.error(),
+                            caught.getMessage());
+                    } else {
+                        InfoHelper.throwInfo("save-application-as", caught);
                     }
-                });
+                }
+            });
     }
 
     // Удаление из контейнера и перестроение индексов компонентов в
@@ -958,16 +958,16 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             component.removeFromParent();
 
             if (parent.getType() == ComponentType.HorizontalContainerType
-                    || parent.getType() == ComponentType.VerticalContainerType) {
+                || parent.getType() == ComponentType.VerticalContainerType) {
                 int index = component.getProperty(PropertyType.LayoutDataIndex)
-                        .getValue(currentApplication.getDefaultLocale()).getInteger();
+                    .getValue(currentApplication.getDefaultLocale()).getInteger();
                 for (ComponentElement child : component.getParent().getChildren()) {
                     int childIndex = child.getProperty(PropertyType.LayoutDataIndex)
-                            .getValue(currentApplication.getDefaultLocale()).getInteger();
+                        .getValue(currentApplication.getDefaultLocale()).getInteger();
                     if (childIndex > index) {
                         eventBus.addElement(child,
-                                new NewPropertyElement(PropertyType.LayoutDataIndex,
-                                        currentApplication.getDefaultLocale(), --childIndex));
+                            new NewPropertyElement(PropertyType.LayoutDataIndex,
+                                currentApplication.getDefaultLocale(), --childIndex));
                     }
                 }
             }
@@ -975,12 +975,12 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
     }
 
     public void onGetAvailableComponents(
-            Callback<Collection<ComponentElement>, Throwable> callback) {
+        Callback<Collection<ComponentElement>, Throwable> callback) {
         callback.onSuccess(currentApplication.getAvailableComponents());
     }
 
     public void onGetAvailableTables(
-            Callback<Collection<AbstractTableElement>, Throwable> callback) {
+        Callback<Collection<AbstractTableElement>, Throwable> callback) {
         callback.onSuccess(currentApplication.getAvailableTables());
     }
 
@@ -994,9 +994,9 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
     }
 
     public <T extends AbstractElement> void onGetElementRights(
-            Collection<T> elements,
-            Callback<Collection<RightCollectionElement>,
-                Throwable> callback) {
+        Collection<T> elements,
+        Callback<Collection<RightCollectionElement>,
+            Throwable> callback) {
         Set<RightCollectionElement> result = new HashSet<RightCollectionElement>();
         for (T e : elements) {
             if (e instanceof AbstractTableElement) {
@@ -1040,19 +1040,19 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
         }
         EditorDataServiceAsync service = EditorDataService.Util.getDataService();
         service.syncServerApplication(currentApplication, currentVersion,
-                new AsyncCallback<SaveResult>() {
+            new AsyncCallback<SaveResult>() {
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        InfoHelper.throwInfo("save-application-as-xml", caught);
-                    }
+                @Override
+                public void onFailure(Throwable caught) {
+                    InfoHelper.throwInfo("save-application-as-xml", caught);
+                }
 
-                    @Override
-                    public void onSuccess(SaveResult result) {
-                        Window.open(GWT.getHostPageBaseURL() + "export", "_blank", null);
-                    }
+                @Override
+                public void onSuccess(SaveResult result) {
+                    Window.open(GWT.getHostPageBaseURL() + "export", "_blank", null);
+                }
 
-                });
+            });
     }
 
     public void onLoadApplicationFromXML() {
@@ -1067,32 +1067,32 @@ public class ElementEventHandler extends BaseEventHandler<EditorEventBus> {
             @Override
             public void onSuccess(SaveResult result) {
                 eventBus.loadApplication(result.getApplication(),
-                        VersionUtil.createVersion("xml-import"));
+                    VersionUtil.createVersion("xml-import"));
             }
         });
     }
 
     public void onSyncServerApplication() {
         EditorDataService.Util.getDataService()
-                .syncServerApplication(currentApplication, currentVersion,
-                        new AsyncCallback<SaveResult>() {
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                InfoHelper.throwInfo("sync-server-application", caught);
-                            }
+            .syncServerApplication(currentApplication, currentVersion,
+                new AsyncCallback<SaveResult>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        InfoHelper.throwInfo("sync-server-application", caught);
+                    }
 
-                            @Override
-                            public void onSuccess(SaveResult result) {
-                                syncFiles(currentApplication.getJavaScriptFiles(),
-                                        result.getApplication().getJavaScriptFiles());
-                                syncFiles(currentApplication.getCssFiles(),
-                                        result.getApplication().getCssFiles());
-                                syncFiles(currentApplication.getJavaFiles(),
-                                        result.getApplication().getJavaFiles());
-                                syncFiles(currentApplication.getImageFiles(),
-                                        result.getApplication().getImageFiles());
-                            }
-                        });
+                    @Override
+                    public void onSuccess(SaveResult result) {
+                        syncFiles(currentApplication.getJavaScriptFiles(),
+                            result.getApplication().getJavaScriptFiles());
+                        syncFiles(currentApplication.getCssFiles(),
+                            result.getApplication().getCssFiles());
+                        syncFiles(currentApplication.getJavaFiles(),
+                            result.getApplication().getJavaFiles());
+                        syncFiles(currentApplication.getImageFiles(),
+                            result.getApplication().getImageFiles());
+                    }
+                });
     }
 
     private void syncFiles(Collection<FileElement> destFiles, Collection<FileElement> srcFiles) {

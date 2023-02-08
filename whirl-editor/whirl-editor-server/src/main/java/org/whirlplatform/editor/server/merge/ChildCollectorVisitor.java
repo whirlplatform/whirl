@@ -31,7 +31,7 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.meta.shared.editor.db.ViewElement;
 
 public class ChildCollectorVisitor
-        extends GraphVisitor<ChildCollectorVisitor.ChildCollectorVisitorContext> {
+    extends GraphVisitor<ChildCollectorVisitor.ChildCollectorVisitorContext> {
 
     public Set<AbstractElement> collect(AbstractElement element) {
         ChildCollectorVisitorContext ctx = new ChildCollectorVisitorContext();

@@ -22,7 +22,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(namespace = "Whirl", name = "TabItem")
 public class TabItemBuilder extends ComponentBuilder implements Containable,
-        Closable {
+    Closable {
 
     private ComponentBuilder topComponent;
 
@@ -117,7 +117,7 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
     public void addChild(ComponentBuilder child) {
         container.setWidget(child.getComponent());
         if (getTitle() == null || getTitle().isEmpty()
-                && child instanceof TitleProvider) {
+            && child instanceof TitleProvider) {
             setTitle(child.getTitle());
         }
         topComponent = child;
@@ -182,7 +182,7 @@ public class TabItemBuilder extends ComponentBuilder implements Containable,
      */
     public boolean isActive() {
         return parentBuilder != null
-                && ((TabPanelBuilder) parentBuilder).getActive() == this;
+            && ((TabPanelBuilder) parentBuilder).getActive() == this;
     }
 
     @Override

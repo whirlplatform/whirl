@@ -8,7 +8,7 @@ import com.google.gwt.resources.client.ImageResource;
 public interface ApplicationBundle extends ClientBundle {
 
     ApplicationBundle INSTANCE = GWT
-            .create(ApplicationBundle.class);
+        .create(ApplicationBundle.class);
 
     @Source("add.gif")
     ImageResource add();

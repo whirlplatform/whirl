@@ -28,25 +28,25 @@ public class TaskBar extends ToolBar {
         setMinButtonWidth(30);
     }
 
-//    public void syncWindows(Iterator<Window> windows) {
-//        int i = 0;
-//        while (windows.hasNext()) {
-//            Window w = windows.next();
-//            boolean equal = false;
-//            if (getWidgetCount() < i + 1
-//                    || (equal = ((TaskButton) getWidget(i)).getWindow() == w)) {
-//                insert(new TaskButton(w), i);
-//
-//            }
-//            if (equal) {
-//                remove(i + 1);
-//            }
-//        }
-//        while (i < getWidgetCount()) {
-//            remove(i);
-//            i++;
-//        }
-//    }
+    //    public void syncWindows(Iterator<Window> windows) {
+    //        int i = 0;
+    //        while (windows.hasNext()) {
+    //            Window w = windows.next();
+    //            boolean equal = false;
+    //            if (getWidgetCount() < i + 1
+    //                    || (equal = ((TaskButton) getWidget(i)).getWindow() == w)) {
+    //                insert(new TaskButton(w), i);
+    //
+    //            }
+    //            if (equal) {
+    //                remove(i + 1);
+    //            }
+    //        }
+    //        while (i < getWidgetCount()) {
+    //            remove(i);
+    //            i++;
+    //        }
+    //    }
 
     public void syncWindows(Set<Window> windows) {
         Iterator<Widget> iterRemove = iterator();

@@ -1,5 +1,24 @@
 package org.whirlplatform.integration;
 
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.WRITE;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,27 +26,14 @@ import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import sun.misc.BASE64Decoder;
 
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.file.*;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import static java.nio.file.StandardOpenOption.*;
-
 public class SideexReportParser implements AutoCloseable {
+    private static final Logger _log = LoggerFactory.getLogger(SideexReportParser.class);
     private final URL resource;
-    private String stringJson;
     private final String token;
+    private final JSONObject jsonObject;
+    private String stringJson;
     private Path toPath;
     private File tmpDir;
-    private final JSONObject jsonObject;
     private Integer countCaseSuccess;
     private Integer countCaseFailed;
     private Integer countSuitSuccess;
@@ -36,8 +42,6 @@ public class SideexReportParser implements AutoCloseable {
     private JSONArray cases;
     private JSONArray suites;
     private JSONObject snapshots;
-
-    private static final Logger _log = LoggerFactory.getLogger(SideexReportParser.class);
 
     SideexReportParser(URL resource, String token) {
         this.resource = resource;
@@ -62,14 +66,17 @@ public class SideexReportParser implements AutoCloseable {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-        try (ZipInputStream zipInputStream = new ZipInputStream(Channels.newInputStream(Channels.newChannel(url.openStream())))) {
+        try (ZipInputStream zipInputStream = new ZipInputStream(
+            Channels.newInputStream(Channels.newChannel(url.openStream())))) {
             ZipEntry entry = zipInputStream.getNextEntry();
 
             toPath = createTempDirectory().toPath().resolve(entry.getName());
             if (entry.isDirectory()) {
                 Files.createDirectory(toPath);
-            } else try (FileChannel fileChannel = FileChannel.open(toPath, WRITE, CREATE)) {
-                fileChannel.transferFrom(Channels.newChannel(zipInputStream), 0, Long.MAX_VALUE);
+            } else {
+                try (FileChannel fileChannel = FileChannel.open(toPath, WRITE, CREATE)) {
+                    fileChannel.transferFrom(Channels.newChannel(zipInputStream), 0, Long.MAX_VALUE);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -166,7 +173,8 @@ public class SideexReportParser implements AutoCloseable {
             for (int j = 0; j < records.length(); j++) {
                 JSONObject recordObj = (JSONObject) records.get(j);
                 if (recordObj.getString("status").equals("fail")) {
-                    resultString.append("Suite title: ").append(getSuiteTitle(caseObj.getString("suiteIdText"))).append("\n");
+                    resultString.append("Suite title: ").append(getSuiteTitle(caseObj.getString("suiteIdText")))
+                        .append("\n");
                     resultString.append("Case title: ").append(caseObj.getString("title")).append("\n");
                     resultString.append("Operation: ").append(recordObj.getString("name")).append("\n");
                     resultString.append("Target: ").append(recordObj.getString("target").trim()).append("\n");

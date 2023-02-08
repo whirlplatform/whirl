@@ -1,4 +1,3 @@
-
 package org.whirlplatform.editor.server.servlet;
 
 import com.google.inject.AbstractModule;

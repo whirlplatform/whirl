@@ -16,7 +16,7 @@ import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 @Presenter(view = DataSourceView.class)
 public class DataSourcePresenter extends BasePresenter<IDataSourceView, EditorEventBus>
-        implements ElementPresenter {
+    implements ElementPresenter {
 
     private DataSourceElement datasource;
 

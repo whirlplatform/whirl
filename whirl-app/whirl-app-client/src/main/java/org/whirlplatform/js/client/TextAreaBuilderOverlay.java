@@ -105,13 +105,13 @@ public abstract class TextAreaBuilderOverlay {
      */
     public abstract void setStyleName(String styleName);
 
-////    public static DataValue getDataValue(TextAreaBuilder instance) {
-//        return instance.getFieldValue();
-//    }
-//
-////    public static void setDataValue(TextAreaBuilder instance, DataValue value) {
-//        instance.setFieldValue(value);
-//    }
+    //    public static DataValue getDataValue(TextAreaBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
+    //
+    //    public static void setDataValue(TextAreaBuilder instance, DataValue value) {
+    //        instance.setFieldValue(value);
+    //    }
 
     /**
      * Получение значения текстовой области

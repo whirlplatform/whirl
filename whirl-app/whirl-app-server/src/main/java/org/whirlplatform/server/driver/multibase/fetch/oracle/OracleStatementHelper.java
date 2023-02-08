@@ -29,7 +29,7 @@ public class OracleStatementHelper extends AbstractFetcher {
 
     public void setStatementParams(CallableStatement stmt, List<String> paramNames,
                                    Map<String, DataValue> params)
-            throws SQLException, IOException {
+        throws SQLException, IOException {
         List<DataValue> paramsDataValue = new ArrayList<DataValue>();
         for (String paramName : paramNames) {
             if (params.containsKey(paramName)) {
@@ -124,7 +124,7 @@ public class OracleStatementHelper extends AbstractFetcher {
         CallableStatement cst = null;
         try {
             cst = getConnection().prepareCall(
-                    "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
+                "{call dbms_lob.createTemporary(?, false, dbms_lob.SESSION)}");
             cst.registerOutParameter(1, Types.CLOB);
             cst.execute();
             return cst.getClob(1);

@@ -67,9 +67,9 @@ public abstract class ComboBoxBuilderOverlay {
      *
      * @return {@link DataValueOverlay DataValue}
      */
-////    public static DataValue getDataValue(ComboBoxBuilder instance) {
-//        return instance.getFieldValue();
-//    }
+    //    public static DataValue getDataValue(ComboBoxBuilder instance) {
+    //        return instance.getFieldValue();
+    //    }
 
     /**
      * Установить текущее значение комбобокса

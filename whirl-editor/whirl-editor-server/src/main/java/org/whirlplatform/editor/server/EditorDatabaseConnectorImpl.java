@@ -58,7 +58,7 @@ public class EditorDatabaseConnectorImpl implements EditorDatabaseConnector {
 
     @Override
     public ConnectionWrapper aliasConnection(String alias, ApplicationUser user)
-            throws RPCException {
+        throws RPCException {
         try {
             return connectionProvider.getConnection(alias, user);
         } catch (ConnectException e) {

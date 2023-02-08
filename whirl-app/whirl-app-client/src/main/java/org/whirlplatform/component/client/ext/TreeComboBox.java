@@ -35,14 +35,13 @@ import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 
 public class TreeComboBox extends ComboBox<ListModelData> {
 
+    private final TreeStore<ListModelData> treeStore;
+    private final List<ListModelData> checkedItems;
+    private final TreeLoader<ListModelData> loader;
     Element innerElement;
-
     private CountElement ce;
     private XTree<ListModelData, String> tree;
-    private TreeStore<ListModelData> treeStore;
     private Composite composite;
-    private List<ListModelData> checkedItems;
-    private TreeLoader<ListModelData> loader;
 
     public TreeComboBox(ComboBoxCell<ListModelData> cell, Cell<String> treeCell,
                         TreeStore<ListModelData> store,
@@ -171,7 +170,6 @@ public class TreeComboBox extends ComboBox<ListModelData> {
                 enableCheckListener();
             }
             updateText();
-            return;
         }
     }
 

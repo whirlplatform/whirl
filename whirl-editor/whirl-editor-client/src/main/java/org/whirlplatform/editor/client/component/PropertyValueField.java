@@ -36,7 +36,7 @@ public class PropertyValueField extends MultiSetField<LocaleElement> {
 
     public PropertyValue getPropertyValue() {
         PropertyValue value =
-                new PropertyValue(DataType.STRING, defaultLocale, getValue(defaultLocale));
+            new PropertyValue(DataType.STRING, defaultLocale, getValue(defaultLocale));
         for (LocaleElement locale : locales) {
             value.setValue(locale, new DataValueImpl(DataType.STRING, getValue(locale)));
         }

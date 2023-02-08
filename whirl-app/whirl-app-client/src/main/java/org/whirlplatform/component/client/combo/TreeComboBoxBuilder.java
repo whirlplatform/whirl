@@ -244,20 +244,20 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             public void load(ListModelData loadConfig,
                              final AsyncCallback<List<ListModelData>> callback) {
                 AsyncCallback<LoadData<ListModelData>> proxyCallback =
-                        new AsyncCallback<LoadData<ListModelData>>() {
-                            @Override
-                            public void onSuccess(LoadData<ListModelData> result) {
-                                callback.onSuccess(result.getData());
-                            }
+                    new AsyncCallback<LoadData<ListModelData>>() {
+                        @Override
+                        public void onSuccess(LoadData<ListModelData> result) {
+                            callback.onSuccess(result.getData());
+                        }
 
-                            @Override
-                            public void onFailure(Throwable caught) {
-                                callback.onFailure(caught);
-                            }
-                        };
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            callback.onFailure(caught);
+                        }
+                    };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                        .getListClassData(SessionToken.get(), getClassMetadata(),
-                                getLoadConfig(loadConfig));
+                    .getListClassData(SessionToken.get(), getClassMetadata(),
+                        getLoadConfig(loadConfig));
             }
         };
         return proxy;
@@ -272,7 +272,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     protected ClassLoadConfig getLoadConfig(RowModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
-                paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
+            paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
 
         if (useSearchParameters) {
             DataValue v = new DataValueImpl(DataType.STRING, comboBox.getText());
@@ -305,7 +305,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         };
 
         ComboBoxCell cell = new ComboBoxCell(new ListStore<ListModelData>(keyProvider),
-                new StringLabelProvider()) {
+            new StringLabelProvider()) {
             @Override
             protected void onSelect(Object item) {
             }
@@ -315,10 +315,10 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             private void renderContains(SafeHtmlBuilder builder, String object) {
                 String q = comboBox.getText();
                 if (isQuery() && !(!Util.isEmptyString(object)
-                        && object.toLowerCase().contains(q.toLowerCase()))) {
+                    && object.toLowerCase().contains(q.toLowerCase()))) {
                     builder.append(
-                            SafeHtmlUtils.fromTrustedString(
-                                    "<span style=\"color: darkgray;\">" + object + "</span>"));
+                        SafeHtmlUtils.fromTrustedString(
+                            "<span style=\"color: darkgray;\">" + object + "</span>"));
                 } else {
                     builder.append(SafeHtmlUtils.fromTrustedString(object));
                 }

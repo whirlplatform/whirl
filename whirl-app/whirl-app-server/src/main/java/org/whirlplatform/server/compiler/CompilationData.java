@@ -37,7 +37,7 @@ public class CompilationData {
             return true;
         }
         return !sourceCache.containsKey(className)
-                || !StringUtils.equals(source, sourceCache.get(className));
+            || !StringUtils.equals(source, sourceCache.get(className));
     }
 
     public void cacheSource(String className, String source) {

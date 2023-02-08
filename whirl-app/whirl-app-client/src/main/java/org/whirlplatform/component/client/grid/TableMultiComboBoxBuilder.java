@@ -14,7 +14,7 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 
 class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelData>> {
 
-    private FieldMetadata tableField;
+    private final FieldMetadata tableField;
 
 
     public TableMultiComboBoxBuilder(FieldMetadata tableField,

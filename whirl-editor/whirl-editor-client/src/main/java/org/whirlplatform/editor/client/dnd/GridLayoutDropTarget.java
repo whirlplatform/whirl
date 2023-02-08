@@ -97,7 +97,7 @@ public class GridLayoutDropTarget extends DropTarget {
     @Override
     protected void onDragMove(DndDragMoveEvent event) {
         XElement target = event.getDragMoveEvent().getNativeEvent()
-                .getEventTarget().cast();
+            .getEventTarget().cast();
         if (!gridLayout.getElement().isOrHasChild(target)) {
             event.setCancelled(true);
             event.getStatusProxy().setStatus(false);
@@ -116,7 +116,7 @@ public class GridLayoutDropTarget extends DropTarget {
             return;
         }
         TableCellElement cellEl = el.findParent(TableCellElement.TAG_TD, -1)
-                .cast();
+            .cast();
         if (cellEl != null) {
             Element tr = cellEl.getParentElement();
             Element tbody = tr.getParentElement();

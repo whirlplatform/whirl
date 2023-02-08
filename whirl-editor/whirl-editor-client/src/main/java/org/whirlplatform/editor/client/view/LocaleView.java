@@ -41,7 +41,7 @@ import org.whirlplatform.meta.shared.editor.LocaleElement;
 public class LocaleView extends ContentPanel implements ILocaleView {
 
     private static final LocaleProperties properties = GWT
-            .create(LocaleProperties.class);
+        .create(LocaleProperties.class);
     private LocaleElement newLocale = null;
     private LocalePresenter presenter;
     private Grid<LocaleElement> grid;
@@ -65,11 +65,11 @@ public class LocaleView extends ContentPanel implements ILocaleView {
 
     private void createGrid() {
         ColumnConfig<LocaleElement, String> cc1 = new ColumnConfig<LocaleElement, String>(
-                properties.language(), 100,
-                EditorMessage.Util.MESSAGE.locale_lang());
+            properties.language(), 100,
+            EditorMessage.Util.MESSAGE.locale_lang());
         ColumnConfig<LocaleElement, String> cc2 = new ColumnConfig<LocaleElement, String>(
-                properties.country(), 100,
-                EditorMessage.Util.MESSAGE.locale_country());
+            properties.country(), 100,
+            EditorMessage.Util.MESSAGE.locale_country());
 
         List<ColumnConfig<LocaleElement, ?>> l = new ArrayList<ColumnConfig<LocaleElement, ?>>();
         l.add(cc1);
@@ -147,13 +147,13 @@ public class LocaleView extends ContentPanel implements ILocaleView {
 
         });
         TextButton remove = new TextButton(
-                EditorMessage.Util.MESSAGE.locale_remove());
+            EditorMessage.Util.MESSAGE.locale_remove());
         remove.addSelectHandler(new SelectHandler() {
 
             @Override
             public void onSelect(SelectEvent event) {
                 List<LocaleElement> l = grid.getSelectionModel()
-                        .getSelectedItems();
+                    .getSelectedItems();
                 for (LocaleElement le : l) {
                     removeLocale(le);
                 }
@@ -169,27 +169,27 @@ public class LocaleView extends ContentPanel implements ILocaleView {
 
     private void createButtons() {
         addButton(new TextButton(EditorMessage.Util.MESSAGE.apply(),
-                new SelectHandler() {
+            new SelectHandler() {
 
-                    @Override
-                    public void onSelect(SelectEvent event) {
-                        store.commitChanges();
-                        editing.cancelEditing();
-                        presenter.getEventBus().updateLocales(store.getAll());
-                        presenter.getEventBus().closeElementView();
-                    }
+                @Override
+                public void onSelect(SelectEvent event) {
+                    store.commitChanges();
+                    editing.cancelEditing();
+                    presenter.getEventBus().updateLocales(store.getAll());
+                    presenter.getEventBus().closeElementView();
+                }
 
-                }));
+            }));
         addButton(new TextButton(EditorMessage.Util.MESSAGE.close(),
-                new SelectHandler() {
+            new SelectHandler() {
 
-                    @Override
-                    public void onSelect(SelectEvent event) {
-                        editing.cancelEditing();
-                        presenter.getEventBus().closeElementView();
-                    }
+                @Override
+                public void onSelect(SelectEvent event) {
+                    editing.cancelEditing();
+                    presenter.getEventBus().closeElementView();
+                }
 
-                }));
+            }));
     }
 
     private void addLocale(LocaleElement element) {

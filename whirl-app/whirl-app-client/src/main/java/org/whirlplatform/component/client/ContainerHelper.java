@@ -30,7 +30,7 @@ public class ContainerHelper {
     private static final int LAYOUT_DATA_MAX_SIZE = 5000;
 
     public static BorderLayoutData getBorderLayoutData(
-            Map<String, DataValue> builderProperties) {
+        Map<String, DataValue> builderProperties) {
         BorderLayoutData data = new BorderLayoutData();
 
         DataValue sizeData = builderProperties.get(PropertyType.LayoutDataSize.getCode());
@@ -83,7 +83,7 @@ public class ContainerHelper {
     }
 
     public static GridLayoutData getGridLayoutData(
-            Map<String, DataValue> properties) {
+        Map<String, DataValue> properties) {
         GridLayoutData data = new GridLayoutData();
 
         setWidth(data, properties);
@@ -110,7 +110,7 @@ public class ContainerHelper {
     }
 
     public static HorizontalLayoutData getHorizontalLayoutData(
-            Map<String, DataValue> properties) {
+        Map<String, DataValue> properties) {
         HorizontalLayoutData data = new HorizontalLayoutData();
 
         setWidth(data, properties);
@@ -121,7 +121,7 @@ public class ContainerHelper {
     }
 
     public static VerticalLayoutData getVerticalLayoutData(
-            Map<String, DataValue> properties) {
+        Map<String, DataValue> properties) {
         VerticalLayoutData data = new VerticalLayoutData();
 
         setWidth(data, properties);
@@ -185,7 +185,7 @@ public class ContainerHelper {
         Margins margins = new Margins();
 
         DataValue marginTop = properties.get(PropertyType.LayoutDataMarginTop
-                .getCode());
+            .getCode());
         if (marginTop != null) {
             Double top = marginTop.getDouble();
             if (top != null) {
@@ -193,7 +193,7 @@ public class ContainerHelper {
             }
         }
         DataValue marginRight = properties.get(PropertyType.LayoutDataMarginRight
-                .getCode());
+            .getCode());
         if (marginRight != null) {
             Double right = marginRight.getDouble();
             if (right != null) {
@@ -201,7 +201,7 @@ public class ContainerHelper {
             }
         }
         DataValue marginBottom = properties
-                .get(PropertyType.LayoutDataMarginBottom.getCode());
+            .get(PropertyType.LayoutDataMarginBottom.getCode());
         if (marginBottom != null) {
             Double bot = marginBottom.getDouble();
             if (bot != null) {
@@ -209,7 +209,7 @@ public class ContainerHelper {
             }
         }
         DataValue marginLeft = properties.get(PropertyType.LayoutDataMarginLeft
-                .getCode());
+            .getCode());
         if (marginLeft != null) {
             Double left = marginLeft.getDouble();
             if (left != null) {
@@ -251,7 +251,7 @@ public class ContainerHelper {
         String id = model.getId();
 
         ComponentBuilder builder =
-                ComponentTypeUtil.findBuilder(model.getType(), model.getValues());
+            ComponentTypeUtil.findBuilder(model.getType(), model.getValues());
 
         if (builder != null) {
             builder.setId(id);
@@ -261,7 +261,7 @@ public class ContainerHelper {
                 w.ensureDebugId(id);
             }
             builder.setProperties(model
-                    .getValues(), false);
+                .getValues(), false);
             builder.setReplaceableProperties(model.getReplaceableProperties());
 
             // Контекстное меню
@@ -303,7 +303,7 @@ public class ContainerHelper {
     public static ComponentBuilder buildComponent(ComponentModel model,
                                                   Containable container) {
         return buildComponent(model, container,
-                Collections.emptyList());
+            Collections.emptyList());
     }
 
 }

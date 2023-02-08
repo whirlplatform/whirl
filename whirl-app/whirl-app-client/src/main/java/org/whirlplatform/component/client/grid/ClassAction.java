@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.Store;
 import com.sencha.gxt.data.shared.event.StoreUpdateEvent;
 import com.sencha.gxt.data.shared.event.StoreUpdateEvent.StoreUpdateHandler;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,19 +35,16 @@ import org.whirlplatform.rpc.shared.SessionToken;
  */
 //TODO перенести в component/client
 public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
-        InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
-        DeleteEvent.HasDeleteHandlers {
+    InsertEvent.HasInsertHandlers, UpdateEvent.HasUpdateHandlers,
+    DeleteEvent.HasDeleteHandlers {
 
-    private ClassMetadata metadata;
+    private final ClassMetadata metadata;
 
-    private ClassStore<RowModelData, ClassLoadConfig> store;
-
+    private final ClassStore<RowModelData, ClassLoadConfig> store;
+    private final ParameterHelper paramHelper;
     private HandlerManager handlerManager;
-
     private StoreUpdateHandler<RowModelData> storeUpdateHandler;
     private HandlerRegistration updateHandlerRegistration;
-
-    private ParameterHelper paramHelper;
 
     public ClassAction(ClassMetadata metadata,
                        ClassStore<RowModelData, ClassLoadConfig> store,
@@ -110,7 +107,7 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
         // UpdateHandler нужен, т.к. при inline редактировании не будут
         // обновляться данные в БД
         updateHandlerRegistration = store
-                .addStoreUpdateHandler(storeUpdateHandler);
+            .addStoreUpdateHandler(storeUpdateHandler);
     }
 
     public Store<RowModelData> getStore() {
@@ -149,13 +146,13 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
                     insertStore(model);
                 }
                 InfoHelper.display(null,
-                        AppMessage.Util.MESSAGE.successSqlExecuted());
+                    AppMessage.Util.MESSAGE.successSqlExecuted());
                 fireEvent(new InsertEvent());
             }
 
         };
         DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.INSERT,
-                Arrays.asList(model), getParameters());
+            Collections.singletonList(model), getParameters());
         DataServiceAsync.Util.getDataService(callback).insert(SessionToken.get(), metadata, config);
     }
 
@@ -168,9 +165,9 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
     public void update(final RowModelData model, final boolean notifyStore) {
         if (!metadata.isUpdatable()) {
             InfoHelper
-                    .display(null, AppMessage.Util.MESSAGE.notEditableTable());
+                .display(null, AppMessage.Util.MESSAGE.notEditableTable());
             throw new UnsupportedOperationException(
-                    AppMessage.Util.MESSAGE.notEditableTable());
+                AppMessage.Util.MESSAGE.notEditableTable());
         }
         check(model);
 
@@ -188,16 +185,16 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
                 }
                 model.setUnchanged();
                 InfoHelper.display(null,
-                        AppMessage.Util.MESSAGE.successSqlExecuted());
+                    AppMessage.Util.MESSAGE.successSqlExecuted());
                 fireEvent(new UpdateEvent());
             }
 
         };
 
         DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.UPDATE,
-                Arrays.asList(model), getParameters());
+            Collections.singletonList(model), getParameters());
         DataServiceAsync.Util.getDataService(callback).update(SessionToken.get(), metadata,
-                config);
+            config);
     }
 
     private void updateStore(RowModelData model) {
@@ -213,9 +210,9 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
                        final boolean notifyStore) {
         if (!metadata.isDeletable()) {
             InfoHelper.display(null,
-                    AppMessage.Util.MESSAGE.notDeletableTable());
+                AppMessage.Util.MESSAGE.notDeletableTable());
             throw new UnsupportedOperationException(
-                    AppMessage.Util.MESSAGE.notDeletableTable());
+                AppMessage.Util.MESSAGE.notDeletableTable());
         }
         if (models == null) {
             throw new IllegalArgumentException("Models value can not be null");
@@ -237,16 +234,16 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
                     deleteStore(models);
                 }
                 InfoHelper.display(null,
-                        AppMessage.Util.MESSAGE.successSqlExecuted());
+                    AppMessage.Util.MESSAGE.successSqlExecuted());
                 fireEvent(new DeleteEvent());
             }
 
         };
 
         DataModifyConfig config = new DataModifyConfig(DataModifyConfig.DataModifyType.DELETE,
-                models, getParameters());
+            models, getParameters());
         DataServiceAsync.Util.getDataService(callback).delete(SessionToken.get(), metadata,
-                config);
+            config);
     }
 
     private void deleteStore(List<RowModelData> models) {
@@ -291,6 +288,6 @@ public class ClassAction implements HasHandlers, LoadEvent.HasLoadHandlers,
 
     private Map<String, DataValue> getParameters() {
         return paramHelper == null ? new HashMap<String, DataValue>()
-                : paramHelper.getValues();
+            : paramHelper.getValues();
     }
 }

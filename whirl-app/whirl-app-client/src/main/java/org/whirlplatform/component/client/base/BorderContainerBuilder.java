@@ -24,9 +24,9 @@ import org.whirlplatform.meta.shared.data.DataValue;
  */
 @JsType(name = "BorderContainer", namespace = "Whirl")
 public class BorderContainerBuilder extends ComponentBuilder implements
-        Containable {
+    Containable {
 
-    private static ChildStyle containerChildStyle;
+    private static final ChildStyle containerChildStyle;
 
     static {
         ChildBundle bundle = GWT.create(ChildBundle.class);
@@ -34,8 +34,8 @@ public class BorderContainerBuilder extends ComponentBuilder implements
         containerChildStyle.ensureInjected();
     }
 
+    private final List<ComponentBuilder> children = new ArrayList<ComponentBuilder>();
     private BorderLayoutContainer borderContainer;
-    private List<ComponentBuilder> children = new ArrayList<ComponentBuilder>();
 
     @JsConstructor
     public BorderContainerBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -87,7 +87,7 @@ public class BorderContainerBuilder extends ComponentBuilder implements
             children.remove(child);
             child.setParentBuilder(null);
             child.getComponent().getElement()
-                    .removeClassName(containerChildStyle.borderContainerChild());
+                .removeClassName(containerChildStyle.borderContainerChild());
         }
     }
 

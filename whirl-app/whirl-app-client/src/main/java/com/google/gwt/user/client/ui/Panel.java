@@ -61,7 +61,7 @@ public abstract class Panel extends Widget implements HasWidgets.ForIsWidget {
      */
     public void add(Widget child) {
         throw new UnsupportedOperationException(
-                "This panel does not support no-arg add()");
+            "This panel does not support no-arg add()");
     }
 
     public void add(IsWidget child) {

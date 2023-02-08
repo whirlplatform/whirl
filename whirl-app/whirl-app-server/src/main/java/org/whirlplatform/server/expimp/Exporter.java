@@ -12,14 +12,14 @@ import org.whirlplatform.meta.shared.data.DataType;
 public abstract class Exporter {
 
     public abstract void write(OutputStream stream) throws SQLException,
-            IOException;
+        IOException;
 
     protected Object getColumnValue(FieldMetadata field, DBReader reader) {
         Object object;
 
         if (DataType.LIST == field.getType() || DataType.FILE == field.getType()) {
             object =
-                    reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
+                reader.getString(reader.getFieldIndex(field.getName() + LABEL_EXPRESSION_NAME));
         } else if (DataType.DATE == field.getType()) {
             object = reader.getDateTime(reader.getFieldIndex(field.getName()));
         } else {

@@ -65,12 +65,12 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
         panel.setCloseContextMenu(true);
         panel.addSelectionHandler(new SelectionHandler() {
             public void onSelection(
-                    final com.google.gwt.event.logical.shared.SelectionEvent event) {
+                final com.google.gwt.event.logical.shared.SelectionEvent event) {
                 Scheduler.get().scheduleDeferred(new ScheduledCommand() {
                     @Override
                     public void execute() {
                         ((ResizeContainer) event.getSelectedItem())
-                                .forceLayout();
+                            .forceLayout();
                     }
                 });
 
@@ -87,7 +87,7 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
                     }
                 }
                 for (Entry<ComponentBuilder, TabItemBuilder> b : builderToTabItem
-                        .entrySet()) {
+                    .entrySet()) {
                     if (b.getValue().getComponent() == widget) {
                         builder = b.getKey();
                     }
@@ -154,14 +154,14 @@ public class TabPanelBuilder extends ComponentBuilder implements Containable {
                 title = "...";
             }
             itemBuilder.setProperty(PropertyType.Title.getCode(),
-                    new DataValueImpl(DataType.STRING, title));
+                new DataValueImpl(DataType.STRING, title));
             itemBuilder.setProperty(PropertyType.LayoutDataIndex.getCode(),
-                    new DataValueImpl(DataType.NUMBER, panel.getWidgetCount()));
+                new DataValueImpl(DataType.NUMBER, panel.getWidgetCount()));
             itemBuilder.addChild(child);
             builderToTabItem.put(child, itemBuilder);
         }
         panel.insert(itemBuilder.getComponent(),
-                itemBuilder.getIndexPosition(), itemBuilder.getTabItemConfig());
+            itemBuilder.getIndexPosition(), itemBuilder.getTabItemConfig());
         children.add(child);
         child.setParentBuilder(this);
         if (child.getProperties().containsKey(PropertyType.Active.getCode())) {

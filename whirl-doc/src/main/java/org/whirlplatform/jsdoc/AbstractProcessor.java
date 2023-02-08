@@ -234,8 +234,8 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
             w.close();
         } catch (IOException e) {
             throw new ProcessingException(
-                    String.format("Error writing code for %s.%s: %s", packageName, className,
-                            e.getMessage()));
+                String.format("Error writing code for %s.%s: %s", packageName, className,
+                    e.getMessage()));
         }
     }
 
@@ -252,7 +252,7 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
                                  final StringBuffer content) {
         try {
             FileObject mf =
-                    filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, resourceName);
+                filer.createResource(StandardLocation.SOURCE_OUTPUT, packageName, resourceName);
             Writer w = mf.openWriter();
             BufferedWriter bw = new BufferedWriter(w);
             bw.append(content);
@@ -260,8 +260,8 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
             w.close();
         } catch (IOException e) {
             throw new ProcessingException(
-                    String.format("Error writing content for %s.%s: %s", packageName, resourceName,
-                            e.getMessage()));
+                String.format("Error writing content for %s.%s: %s", packageName, resourceName,
+                    e.getMessage()));
         }
     }
 
@@ -293,7 +293,7 @@ public abstract class AbstractProcessor extends javax.annotation.processing.Abst
     public void error(ProcessingException processingException) {
         if (processingException.getElement() != null) {
             messager.printMessage(ERROR, processingException.getMessage(),
-                    processingException.getElement());
+                processingException.getElement());
         } else {
             messager.printMessage(ERROR, processingException.getMessage());
         }

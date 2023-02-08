@@ -11,15 +11,15 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 public interface ApplicationDataProvider {
 
     void getAvailableComponents(
-            Callback<Collection<ComponentElement>, Throwable> callback);
+        Callback<Collection<ComponentElement>, Throwable> callback);
 
     void getAvailableTables(
-            Callback<Collection<AbstractTableElement>, Throwable> callback);
+        Callback<Collection<AbstractTableElement>, Throwable> callback);
 
     void getAvailableColumns(PlainTableElement table,
                              Callback<Collection<TableColumnElement>, Throwable> callback);
 
     void getDataSources(
-            Callback<Collection<DataSourceElement>, Throwable> callback);
+        Callback<Collection<DataSourceElement>, Throwable> callback);
 
 }

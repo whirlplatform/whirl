@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.TextArea;
 public class CodeMirrorWrapper {
 
     private static final NullAutoCompletionHandler NULL_AUTO_COMPLETION_HANDLER =
-            new NullAutoCompletionHandler();
+        new NullAutoCompletionHandler();
 
     private JavaScriptObject codeMirrorJs;
     private String mode;
@@ -76,30 +76,32 @@ public class CodeMirrorWrapper {
     }
 
     // ---------------------------------------------------------------
-
+    // CHECKSTYLE:OFF
+    @SuppressWarnings("checkstyle:linelength")
     private static native JavaScriptObject fromTextAreaJs(CodeMirrorWrapper wrapper,
                                                           TextAreaElement tae,
                                                           JavaScriptObject config) /*-{
-var options = {
-               extraKeys: {
-                           "Ctrl-Space": function (editor) {
-                            $wnd.CodeMirror.showHint(editor, function (editor, callback) {
-                                var result = [];
-                                var cursor = editor.doc.getCursor();
-                                var index = editor.indexFromPos(cursor);
-                                $entry(wrapper.@org.geomajas.codemirror.client.CodeMirrorWrapper::getCompletions(Ljava/lang/String;IIILcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(editor.getValue(), cursor.line, cursor.ch, index, result, callback));
-                            }, {async: true});
-                           }
-                          }
-               };
- for (var property in config) {
-    if (config.hasOwnProperty(property)) {
-        options[property] = config[property];
-    }
-}
-var cm = $wnd.CodeMirror.fromTextArea(tae, options);
-return cm;
-}-*/;
+        var options = {
+            extraKeys: {
+                "Ctrl-Space": function (editor) {
+                    $wnd.CodeMirror.showHint(editor, function (editor, callback) {
+                        var result = [];
+                        var cursor = editor.doc.getCursor();
+                        var index = editor.indexFromPos(cursor);
+                        $entry(wrapper.@org.geomajas.codemirror.client.CodeMirrorWrapper::getCompletions(Ljava/lang/String;IIILcom/google/gwt/core/client/JavaScriptObject;Lcom/google/gwt/core/client/JavaScriptObject;)(editor.getValue(), cursor.line, cursor.ch, index, result, callback));
+                    }, {async: true});
+                }
+            }
+        };
+        for (var property in config) {
+            if (config.hasOwnProperty(property)) {
+                options[property] = config[property];
+            }
+        }
+        var cm = $wnd.CodeMirror.fromTextArea(tae, options);
+        return cm;
+    }-*/;
+    // CHECKSTYLE:ON
 
     private static native Object callFunction(JavaScriptObject jso, String name) /*-{
         return jso[name].apply(jso);
@@ -251,17 +253,17 @@ return cm;
                                 final int index, final JavaScriptObject completionList,
                                 final JavaScriptObject callback) {
         autoCompletionHandler.getCompletions(editorText, new EditorPosition(line, ch), index,
-                new AutoCompletionCallback() {
-                    public void completionsReady(AutoCompletionResult result) {
-                        for (AutoCompletionChoice choice : result.getChoices()) {
-                            addElement(completionList, createAutoCompletionResult(choice));
-                        }
-                        int fromLineNumber = result.getFromPosition().getLineNumber();
-                        int fromColumnNumber = result.getFromPosition().getColumnNumber();
-                        doAutoCompleteCallback(callback, completionList, fromLineNumber,
-                                fromColumnNumber);
+            new AutoCompletionCallback() {
+                public void completionsReady(AutoCompletionResult result) {
+                    for (AutoCompletionChoice choice : result.getChoices()) {
+                        addElement(completionList, createAutoCompletionResult(choice));
                     }
-                });
+                    int fromLineNumber = result.getFromPosition().getLineNumber();
+                    int fromColumnNumber = result.getFromPosition().getColumnNumber();
+                    doAutoCompleteCallback(callback, completionList, fromLineNumber,
+                        fromColumnNumber);
+                }
+            });
     }
 
     /**
@@ -295,7 +297,7 @@ return cm;
         JavaScriptObject from = choice.getReplaceTextFrom().toJavaScriptObject();
         JavaScriptObject to = choice.getReplaceTextTo().toJavaScriptObject();
         return createAutoCompletionResult(choice.getText(), choice.getDisplayText(),
-                choice.getCssClassName(), from, to);
+            choice.getCssClassName(), from, to);
     }
 
     /**
