@@ -69,10 +69,12 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
     public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
         rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
     }
+
     @Override
     public void rollbackMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
         rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
     }
+
     private void rollbackEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
         throws EvolutionException {
 
