@@ -1,7 +1,7 @@
 /**
  * @type function_input   Входные данные вызванного события
  */
-CREATE TYPE whirl.function_input AS (
+CREATE TYPE function_input AS (
         parameter_value hstore,
         parameter_list_title hstore,
         parameter_row_list hstore,
