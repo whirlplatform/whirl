@@ -31,6 +31,7 @@ public class ServerUnitTest {
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("postgres:" + DATABASE_VERSION))
         .withUsername("postgres")
+            .withPassword("password")
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
@@ -57,7 +58,10 @@ public class ServerUnitTest {
 
         //postgres.getHost();
 
+        // jdbc:postgresql://localhost:62654/whirl
+        // jdbc:postgresql://whirl:password@localhost:62654/whirl
         connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
+        //connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getUsername() + ":" + postgres.getPassword() + "@" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         _log.info(connection.toString());
 
         connectionProvider = Mockito.mock(ConnectionProvider.class);
