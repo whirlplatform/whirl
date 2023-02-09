@@ -18,4 +18,14 @@ public class DummyEvolutionManager implements EvolutionManager {
     public void applyMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
         // do nothing
     }
+
+    @Override
+    public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
+        // do nothing
+    }
+
+    @Override
+    public void rollbackMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
+        // do nothing
+    }
 }

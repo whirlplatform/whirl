@@ -55,11 +55,12 @@ public class ServerUnitTest {
         props.setProperty("user", "whirl");
         props.setProperty("password", "password");
 
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://localhost:" + postgres.getMappedPort(5432) + "/whirl", props);
+        //postgres.getHost();
+
+        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         _log.info(connection.toString());
 
         connectionProvider = Mockito.mock(ConnectionProvider.class);
-        _log.info(connection.toString());
         Mockito.when(connectionProvider.getConnection(Mockito.any())).thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
 
         configuration = Mockito.mock(Configuration.class);
@@ -88,7 +89,7 @@ public class ServerUnitTest {
         props.setProperty("user", "whirl");
         props.setProperty("password", "password");
 
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://localhost:" + postgres.getMappedPort(5432) + "/whirl", props);
+        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         Mockito.when(connectionProvider.getConnection(Mockito.any())).thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
         evolutionManager.rollbackMetadataEvolution(alias, scriptPath);
 
