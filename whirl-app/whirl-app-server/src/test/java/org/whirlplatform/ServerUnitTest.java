@@ -57,14 +57,14 @@ public class ServerUnitTest {
         _log.info(postgres.getJdbcUrl());
 
         props = new Properties();
-        props.setProperty("user", "postgres");
+        props.setProperty("user", "whirl");
         props.setProperty("password", "password");
 
         //postgres.getHost();
 
         // jdbc:postgresql://localhost:62654/whirl
         // jdbc:postgresql://whirl:password@localhost:62654/whirl
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/postgres", props);
+        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         //connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getUsername() + ":" + postgres.getPassword() + "@" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         _log.info(connection.toString());
 
@@ -79,6 +79,7 @@ public class ServerUnitTest {
 
         // Check amount of tables
         String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
