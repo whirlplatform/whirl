@@ -53,7 +53,7 @@ public class ServerUnitTest {
         _log.info(postgres.getJdbcUrl());
 
         props = new Properties();
-        props.setProperty("user", "whirl");
+        props.setProperty("user", "postgres");
         props.setProperty("password", "password");
 
         //postgres.getHost();
