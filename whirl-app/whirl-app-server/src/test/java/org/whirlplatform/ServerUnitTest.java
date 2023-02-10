@@ -35,7 +35,8 @@ public class ServerUnitTest {
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
-            "/docker-entrypoint-initdb.d/");
+            "/docker-entrypoint-initdb.d/")
+        .withLogConsumer(out -> _log.info(out.getUtf8String()));
 
     String alias = "metadata";
     String scriptPath = "org/whirlplatform/sql/changelog.xml";
