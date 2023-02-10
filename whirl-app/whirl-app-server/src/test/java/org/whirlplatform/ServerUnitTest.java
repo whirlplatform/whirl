@@ -1,5 +1,7 @@
 package org.whirlplatform;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -33,6 +35,7 @@ public class ServerUnitTest {
         .withUsername("postgres")
             .withPassword("password")
         .withNetworkAliases("postgresql")
+        .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
             "/docker-entrypoint-initdb.d/")
