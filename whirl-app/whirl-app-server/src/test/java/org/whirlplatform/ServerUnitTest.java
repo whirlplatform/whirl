@@ -31,7 +31,6 @@ public class ServerUnitTest {
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("postgres:" + DATABASE_VERSION))
         .withUsername("postgres")
-            .withPassword("password")
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
