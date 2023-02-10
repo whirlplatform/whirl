@@ -11,7 +11,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.internal_next_index;
+                DROP FUNCTION internal_next_index;
             </sql>
         </rollback>
     </changeSet>
@@ -22,7 +22,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.add_parameter_varchar;
+                DROP FUNCTION add_parameter_varchar;
             </sql>
         </rollback>
     </changeSet>
@@ -33,7 +33,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.add_parameter_boolean;
+                DROP FUNCTION add_parameter_boolean;
             </sql>
         </rollback>
     </changeSet>
@@ -44,7 +44,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.add_parameter_number;
+                DROP FUNCTION add_parameter_number;
             </sql>
         </rollback>
     </changeSet>
@@ -55,7 +55,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.add_parameter_component;
+                DROP FUNCTION add_parameter_component;
             </sql>
         </rollback>
     </changeSet>
@@ -66,7 +66,7 @@
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION whirl.add_parameter_date;
+                DROP FUNCTION add_parameter_date;
             </sql>
         </rollback>
     </changeSet>
