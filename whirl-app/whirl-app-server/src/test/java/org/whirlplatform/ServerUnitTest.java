@@ -57,15 +57,22 @@ public class ServerUnitTest {
 
         _log.info(postgres.getJdbcUrl());
 
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE DATABASE whirl OWNER whirl");
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl");
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE SCHEMA whirl AUTHORIZATION whirl");
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "SET search_path TO whirl");
+        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE EXTENSION IF NOT EXISTS hstore");
+
         props = new Properties();
-        props.setProperty("user", "postgres");
+        props.setProperty("user", "whirl");
         props.setProperty("password", "password");
 
         //postgres.getHost();
 
         // jdbc:postgresql://localhost:62654/whirl
         // jdbc:postgresql://whirl:password@localhost:62654/whirl
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/test", props);
+        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         //connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getUsername() + ":" + postgres.getPassword() + "@" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         _log.info(connection.toString());
 
