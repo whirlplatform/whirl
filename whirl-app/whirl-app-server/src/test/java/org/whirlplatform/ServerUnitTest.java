@@ -99,7 +99,7 @@ public class ServerUnitTest {
         assertTrue("Amount of tables should be greater than 0 !", amountOfTables > 0);
 
         _log.info("Migration test finished!");
-        Thread.sleep(100000000000l);
+        //Thread.sleep(100000000000l);
         rollbackTest();
     }
 
