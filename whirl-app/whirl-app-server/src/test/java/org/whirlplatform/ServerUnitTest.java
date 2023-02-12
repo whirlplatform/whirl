@@ -35,7 +35,7 @@ public class ServerUnitTest {
         .withUsername("postgres")
         //.withPassword("password")
         .withNetworkAliases("postgresql")
-        .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
+        //.withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
             "/docker-entrypoint-initdb.d/")
@@ -55,7 +55,7 @@ public class ServerUnitTest {
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
 
-        _log.info(postgres.getJdbcUrl());
+        //_log.info(postgres.getJdbcUrl());
 
         postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
         postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE DATABASE whirl OWNER whirl");
@@ -99,6 +99,7 @@ public class ServerUnitTest {
         assertTrue("Amount of tables should be greater than 0 !", amountOfTables > 0);
 
         _log.info("Migration test finished!");
+        Thread.sleep(100000000000l);
         rollbackTest();
     }
 
