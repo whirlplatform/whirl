@@ -36,7 +36,7 @@ public class ServerUnitTest {
         .withUsername("postgres")
         //.withPassword("password")
         .withNetworkAliases("postgresql")
-        //.withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
+        .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
             "/docker-entrypoint-initdb.d/", BindMode.READ_WRITE)
