@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.whirlplatform.server.config.Configuration;
@@ -38,7 +39,7 @@ public class ServerUnitTest {
         //.withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
-            "/docker-entrypoint-initdb.d/")
+            "/docker-entrypoint-initdb.d/", BindMode.READ_WRITE)
         .withLogConsumer(out -> _log.info(out.getUtf8String()))
         ;
 
@@ -57,12 +58,12 @@ public class ServerUnitTest {
 
         //_log.info(postgres.getJdbcUrl());
 
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE DATABASE whirl OWNER whirl");
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl");
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE SCHEMA whirl AUTHORIZATION whirl");
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "SET search_path TO whirl");
-        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE EXTENSION IF NOT EXISTS hstore");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE DATABASE whirl OWNER whirl");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE SCHEMA whirl AUTHORIZATION whirl");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "SET search_path TO whirl");
+//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE EXTENSION IF NOT EXISTS hstore");
 
         props = new Properties();
         props.setProperty("user", "whirl");
@@ -88,7 +89,7 @@ public class ServerUnitTest {
         // Check amount of tables
         String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
         //String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema = 'whirl'").toString();
-        _log.info(str);
+        //_log.info(str);
         //Thread.sleep(100000000000l);
 
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));

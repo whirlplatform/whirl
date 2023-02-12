@@ -228,8 +228,8 @@
             <sqlFile path="types/function_input_rollback.sql"
                      relativeToChangelogFile="true"/>
 
-            <sqlFile path="hstore_extension_rollback.sql"
-                     relativeToChangelogFile="true"/>
+<!--            <sqlFile path="hstore_extension_rollback.sql"-->
+<!--                     relativeToChangelogFile="true"/>-->
         </rollback>
     </changeSet>
 </databaseChangeLog>
