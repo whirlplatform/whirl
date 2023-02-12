@@ -65,7 +65,7 @@ public class ServerUnitTest {
 
         // jdbc:postgresql://localhost:62654/whirl
         // jdbc:postgresql://whirl:password@localhost:62654/whirl
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
+        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/test", props);
         //connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getUsername() + ":" + postgres.getPassword() + "@" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
         _log.info(connection.toString());
 
