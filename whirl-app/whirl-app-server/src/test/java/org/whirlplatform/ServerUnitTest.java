@@ -39,7 +39,7 @@ public class ServerUnitTest {
         .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
-            "/docker-entrypoint-initdb.d/", BindMode.READ_WRITE)
+            "/docker-entrypoint-initdb.d/", BindMode.READ_ONLY)
         .withLogConsumer(out -> _log.info(out.getUtf8String()))
         ;
 
