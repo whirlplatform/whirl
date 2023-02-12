@@ -56,6 +56,8 @@ public class ServerUnitTest {
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
 
+        _log.info(postgres.execInContainer("ls"));
+
         //_log.info(postgres.getJdbcUrl());
 
 //        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
