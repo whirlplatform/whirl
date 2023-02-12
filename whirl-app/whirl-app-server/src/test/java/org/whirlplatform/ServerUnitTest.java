@@ -32,14 +32,15 @@ public class ServerUnitTest {
     @ClassRule
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("postgres:" + DATABASE_VERSION))
-        .withUsername("whirl")
+        .withUsername("postgres")
         .withPassword("password")
         .withNetworkAliases("postgresql")
         .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
         .withFileSystemBind("../../docker/db/postgresql/",
             "/docker-entrypoint-initdb.d/")
-        .withLogConsumer(out -> _log.info(out.getUtf8String()));
+        .withLogConsumer(out -> _log.info(out.getUtf8String()))
+        ;
 
     String alias = "metadata";
     String scriptPath = "org/whirlplatform/sql/changelog.xml";
@@ -78,12 +79,16 @@ public class ServerUnitTest {
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
         // Check amount of tables
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+        //String str1 = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema = 'whirl'").toString();
+        _log.info(str);
+        //Thread.sleep(100000000000l);
 
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
         _log.info("Amount of tables: " + amountOfTables);
+
         assertTrue("Amount of tables should be greater than 0 !", amountOfTables > 0);
 
         _log.info("Migration test finished!");
