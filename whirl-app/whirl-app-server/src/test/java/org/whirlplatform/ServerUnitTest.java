@@ -86,8 +86,8 @@ public class ServerUnitTest {
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
         // Check amount of tables
-        //String str1 = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema = 'whirl'").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+        //String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema = 'whirl'").toString();
         _log.info(str);
         //Thread.sleep(100000000000l);
 
