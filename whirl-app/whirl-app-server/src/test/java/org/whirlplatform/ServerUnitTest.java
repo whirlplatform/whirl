@@ -73,7 +73,11 @@ public class ServerUnitTest {
 
         postgres.withFileSystemBind("../../docker/db/postgresql/",
                 "/docker-entrypoint-initdb.d/");
+
+        _log.info(postgres.execInContainer("ls /docker-entrypoint-initdb.d"));
+
         // docker/db/postgresql/
+        // PGDATABASE=whirl PGHOST=postgres PGPORT=5432 PGUSER=whirl whirl/docker/db/postgresql/01-create-db.sh
 
 
         props = new Properties();
