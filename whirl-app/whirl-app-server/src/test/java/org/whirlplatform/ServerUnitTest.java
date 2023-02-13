@@ -71,6 +71,9 @@ public class ServerUnitTest {
 //        postgres.execInContainer("psql", "-U", "postgres", "-c", "SET search_path TO whirl");
 //        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE EXTENSION IF NOT EXISTS hstore");
 
+        postgres.withFileSystemBind("../../docker/db/postgresql/",
+                "/docker-entrypoint-initdb.d/");
+        // docker/db/postgresql/
 
 
         props = new Properties();
