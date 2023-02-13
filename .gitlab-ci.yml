@@ -18,8 +18,10 @@ default:
     - whirl
   timeout: 3h
 
+
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
 
 Check Checkstyle:
   stage: check
