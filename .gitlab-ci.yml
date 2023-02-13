@@ -45,7 +45,7 @@ Check Tests:
       when: always
   allow_failure: false
   script:
-    - ls
+    - ls docker/db/postgresql
     - chmod 777 -R docker/db/postgresql
     - mvn $MAVEN_OPTS test -Dgwt.skipCompilation=true
   artifacts:
