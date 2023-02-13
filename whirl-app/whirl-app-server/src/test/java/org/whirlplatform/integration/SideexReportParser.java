@@ -14,6 +14,7 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
-import sun.misc.BASE64Decoder;
 
 public class SideexReportParser implements AutoCloseable {
     private static final Logger _log = LoggerFactory.getLogger(SideexReportParser.class);
@@ -240,10 +240,9 @@ public class SideexReportParser implements AutoCloseable {
             File file = new File(pathToImage.toString(), p);
 
             try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()))) {
-                BASE64Decoder decoder = new BASE64Decoder();
                 base64ImageString = snapshots.getJSONObject(imId.getKey()).getString("url");
                 base64ImageString = base64ImageString.replaceFirst("data:image/png;base64,", "");
-                imageByte = decoder.decodeBuffer(base64ImageString);
+                imageByte = Base64.getDecoder().decode(base64ImageString);
                 bos.write(imageByte);
                 bos.flush();
             } catch (Exception e) {
