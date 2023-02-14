@@ -8,12 +8,12 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.empire.commons.ObjectUtils;
@@ -168,20 +168,15 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             return;
         }
 
-        Set<String> properties = new HashSet<String>();
-        Set<String> others = ComponentProperties.getReplaceableProperties(component.getType());
-        if (others != null) {
-            properties.addAll(others);
-        }
+        Set<String> properties = Optional.ofNullable(ComponentProperties.getReplaceableProperties(component.getType()))
+            .orElse(Collections.emptySet());
 
         component.setValue("Type",
             new DataValueImpl(DataType.STRING, component.getType().toString()));
 
-        Iterator<String> iter = properties.iterator();
-        while (iter.hasNext()) {
-            String p = iter.next();
+        properties.forEach(p -> {
             if (!component.containsValue(p) || !component.isReplaceableProperty(p)) {
-                continue;
+                return;
             }
             String original = component.getValue(p).getString();
             String result = changeParameter(p, original, params);
@@ -216,7 +211,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             } else {
                 component.setValue(p, new DataValueImpl(DataType.STRING, result));
             }
-        }
+        });
 
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем

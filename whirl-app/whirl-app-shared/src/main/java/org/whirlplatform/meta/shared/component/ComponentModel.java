@@ -75,13 +75,11 @@ public class ComponentModel implements Cloneable, Serializable, IsSerializable {
         replaceableProperties.add(property);
     }
 
-    @JsonIgnore
-    public Collection<String> getReplaceableProperties() {
+    public Set<String> getReplaceableProperties() {
         return Collections.unmodifiableSet(replaceableProperties);
     }
 
-    @JsonIgnore
-    public void setReplaceableProperties(Collection<String> properties) {
+    public void setReplaceableProperties(Set<String> properties) {
         replaceableProperties.clear();
         replaceableProperties.addAll(properties);
     }
