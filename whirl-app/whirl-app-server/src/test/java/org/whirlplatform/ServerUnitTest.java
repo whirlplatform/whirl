@@ -56,35 +56,8 @@ public class ServerUnitTest {
     public void migrationTest()
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
-        //get current working directory
         _log.info("Current working directory: " + Paths.get(".").toAbsolutePath().normalize().toString());
-
-//        _log.info(postgres.execInContainer("ls"));
-//        _log.info(postgres.execInContainer("ls /docker-entrypoint-initdb.d"));
-
-        //chmod 777 -R whirl/docker/db/postgresql
-
-
-        //_log.info(postgres.getJdbcUrl());
-
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE ROLE whirl WITH LOGIN PASSWORD 'password'");
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE DATABASE whirl OWNER whirl");
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl");
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE SCHEMA whirl AUTHORIZATION whirl");
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "SET search_path TO whirl");
-//        postgres.execInContainer("psql", "-U", "postgres", "-c", "CREATE EXTENSION IF NOT EXISTS hstore");
-
-//        postgres.withFileSystemBind("docker/db/postgresql/",
-//                "/docker-entrypoint-initdb.d/");
-        _log.info(postgres.execInContainer("ls /docker-entrypoint-initdb.d/"));
-        postgres.execInContainer("PGDATABASE=whirl PGHOST=postgres PGPORT=5432 PGUSER=postgres docker/db/postgresql/01-create-db.sh");
-
-//        _log.info(postgres.execInContainer("cd docker-entrypoint-initdb.d"));
-//        _log.info(postgres.execInContainer("ls"));
-
-        // docker/db/postgresql/
-        // PGDATABASE=whirl PGHOST=postgres PGPORT=5432 PGUSER=whirl whirl/docker/db/postgresql/01-create-db.sh
-
+        _log.info(postgres.execInContainer("ls", "/docker-entrypoint-initdb.d/"));
 
         props = new Properties();
         props.setProperty("user", "whirl");
