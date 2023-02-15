@@ -2,6 +2,7 @@ package org.whirlplatform;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -55,6 +56,8 @@ public class ServerUnitTest {
     public void migrationTest()
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
+        //get current working directory
+        _log.info("Current working directory: " + Paths.get(".").toAbsolutePath().normalize().toString());
 
 //        _log.info(postgres.execInContainer("ls"));
 //        _log.info(postgres.execInContainer("ls /docker-entrypoint-initdb.d"));
@@ -108,7 +111,7 @@ public class ServerUnitTest {
         String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
         //String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema = 'whirl'").toString();
         //_log.info(str);
-        Thread.sleep(100000000000l);
+//        Thread.sleep(100000000000l);
 
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");

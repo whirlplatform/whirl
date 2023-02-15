@@ -21,7 +21,6 @@ default:
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
 
 Check Checkstyle:
   stage: check
@@ -48,7 +47,6 @@ Check Tests:
   allow_failure: false
   script:
     - ls docker/db/postgresql
-    - chmod 777 -R docker/db/postgresql
     - mvn $MAVEN_OPTS test -Dgwt.skipCompilation=true
   artifacts:
     reports:
