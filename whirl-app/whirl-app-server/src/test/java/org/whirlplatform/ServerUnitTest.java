@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.utility.MountableFile;
 import org.whirlplatform.server.config.Configuration;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
@@ -39,8 +40,8 @@ public class ServerUnitTest {
         .withNetworkAliases("postgresql")
         .withEnv("POSTGRES_HOST_AUTH_METHOD", "trust")
         .withExposedPorts(5432)
-        .withFileSystemBind("../../docker/db/postgresql/",
-            "/docker-entrypoint-initdb.d/", BindMode.READ_ONLY)
+        .withCopyToContainer(MountableFile.forHostPath("../../docker/db/postgresql/"),
+            "/docker-entrypoint-initdb.d/")
         .withLogConsumer(out -> _log.info(out.getUtf8String()))
         ;
 
