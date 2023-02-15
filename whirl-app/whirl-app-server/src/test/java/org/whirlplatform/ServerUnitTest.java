@@ -59,6 +59,10 @@ public class ServerUnitTest {
         _log.info("Current working directory: " + Paths.get(".").toAbsolutePath().normalize().toString());
         _log.info(postgres.execInContainer("ls", "/docker-entrypoint-initdb.d/"));
 
+        _log.info("List of files in ../../docker/db/postgresql/");
+        Files.list(Paths.get("../../docker/db/postgresql/"))
+            .forEach(_log::info);
+
         props = new Properties();
         props.setProperty("user", "whirl");
         props.setProperty("password", "password");
