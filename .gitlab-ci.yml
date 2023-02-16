@@ -1,6 +1,7 @@
 stages:
   - check
   - build
+  - verify
   - docker
   - deploy
 
@@ -17,6 +18,10 @@ default:
   tags:
     - whirl
   timeout: 3h
+  after_script:
+    # Очищаем артефакты которые на надо кешировать
+    - rm --recursive --force .m2/repository/org/whirlplatform
+
 
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
@@ -29,8 +34,8 @@ Check Checkstyle:
       when: always
   allow_failure: false
   script:
-    - mvn $MAVEN_OPTS checkstyle:checkstyle-aggregate
-    - mvn $MAVEN_OPTS checkstyle:check
+    - mvn ${MAVEN_OPTS} checkstyle:checkstyle-aggregate
+    - mvn ${MAVEN_OPTS} checkstyle:check
   artifacts:
     paths:
       - target/site/*
@@ -40,12 +45,15 @@ Check Checkstyle:
 Check Tests:
   stage: check
   rules:
+    # Run on "develop" branch
+    - if: $CI_COMMIT_REF_NAME == 'develop'
+      when: always
     # Run on source event = merge requests
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
       when: always
   allow_failure: false
   script:
-    - mvn $MAVEN_OPTS test -Dgwt.skipCompilation=true
+    - mvn ${MAVEN_OPTS} test -Dgwt.skipCompilation=true
   artifacts:
     reports:
       junit:
@@ -60,21 +68,23 @@ Check Tests:
     REVISION: "" # Should be set by the job.
     CHANGELIST: "" # Should be set by the job.
     SHA: "" # Should be set by the job.
+    MAVEN_GOALS: "package"
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
-    - mvn $MAVEN_OPTS -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
 
-Check Build:
+Check Build+Verify:
   extends: .build
   rules:
     # Run on source event = merge request
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
       when: always
-      variables:
-        REVISION: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
-        CHANGELIST: "-SNAPSHOT"
-        SHA: ${CI_COMMIT_SHORT_SHA}
+  variables:
+    REVISION: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
+    CHANGELIST: "-SNAPSHOT"
+    SHA: ${CI_COMMIT_SHORT_SHA}
+    MAVEN_GOALS: "package verify"
   allow_failure: false
   needs:
     - job: Check Checkstyle
@@ -100,6 +110,28 @@ Package:
     paths:
       - "**/*.war"
     when: on_success
+    expire_in: 36 hours
+
+# Verify integration tests.
+Verify:
+  stage: verify
+  rules:
+    # On all branches
+    - if: $CI_COMMIT_REF_NAME == 'develop'
+      when: always
+    - if: $CI_COMMIT_BRANCH
+      when: manual
+  allow_failure: false
+  needs:
+    - job: Package
+      artifacts: true
+  script:
+    - mvn $MAVEN_OPTS compile failsafe:integration-test -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+  artifacts:
+    reports:
+      junit:
+        - "**/target/surefire-reports/*.xml"
+    when: always
     expire_in: 36 hours
 
 # Creating and pushing docker image.

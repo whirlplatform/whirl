@@ -27,7 +27,7 @@
 
     <build>
         <plugins>
-            <!-- Disable maven-compiler-plugin-->
+            <!-- Disable maven-compiler-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -35,7 +35,7 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!-- Disable maven-resources-plugin-->
+            <!-- Disable maven-resources-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -43,10 +43,18 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!-- Disable maven-surefire-plugin-->
+            <!-- Disable maven-surefire-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- Disable maven-failsafe-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
