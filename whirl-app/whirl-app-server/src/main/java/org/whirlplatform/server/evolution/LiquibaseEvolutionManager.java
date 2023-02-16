@@ -65,4 +65,36 @@ public class LiquibaseEvolutionManager implements EvolutionManager {
         }
     }
 
+    @Override
+    public void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException {
+        rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
+    }
+
+    @Override
+    public void rollbackMetadataEvolution(String alias, String scriptPath) throws EvolutionException {
+        rollbackEvolution(alias, scriptPath, new ClassLoaderResourceAccessor());
+    }
+
+    private void rollbackEvolution(String alias, String scriptPath, ResourceAccessor resourceAccessor)
+        throws EvolutionException {
+
+        Boolean applyEvolutions = configuration.<Boolean>lookup("Whirl/ds/" + alias
+            + "/evolutions/enabled");
+        if (applyEvolutions == null || !applyEvolutions) {
+            return;
+        }
+
+        try (ConnectionWrapper connection = connectionProvider.getConnection(alias)) {
+            Database database = DatabaseFactory.getInstance()
+                .findCorrectDatabaseImplementation(new JdbcConnection(connection));
+
+            Liquibase liquibase = new liquibase.Liquibase(scriptPath, resourceAccessor,
+                database);
+
+            liquibase.rollback(2000, scriptPath);
+        } catch (LiquibaseException | SQLException | ConnectException e) {
+            _log.error(e);
+            throw new EvolutionException(e);
+        }
+    }
 }

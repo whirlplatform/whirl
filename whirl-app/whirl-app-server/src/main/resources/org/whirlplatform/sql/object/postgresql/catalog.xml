@@ -5,48 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="row_value" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/row_value.sql"
-                 relativeToChangelogFile="true"/>
-        <rollback>
-            <sqlFile path="procedure/row_value_rollback.sql"
-                     relativeToChangelogFile="true"/>
-        </rollback>
-    </changeSet>
-
-    <changeSet id="row_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/row_list.sql"
-                 relativeToChangelogFile="true"/>
-        <rollback>
-            <sqlFile path="procedure/row_list_rollback.sql"
-                     relativeToChangelogFile="true"/>
-        </rollback>
-    </changeSet>
-
-    <changeSet id="function_result" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/function_result.sql"
-                 relativeToChangelogFile="true"/>
-        <rollback>
-            <sqlFile path="procedure/function_result_rollback.sql"
-                     relativeToChangelogFile="true"/>
-        </rollback>
-    </changeSet>
-
-    <changeSet id="function_input" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <sqlFile path="procedure/function_input.sql"
-                 relativeToChangelogFile="true"/>
-        <rollback>
-            <sqlFile path="procedure/function_input_rollback.sql"
-                     relativeToChangelogFile="true"/>
-        </rollback>
-    </changeSet>
-
     <changeSet author="whirl" id="internal_next_index" runOnChange="true" failOnError="true" dbms="postgresql">
         <createProcedure procedureName="internal_next_index"
                          path="procedure/internal_next_index.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="internal_next_index"/>
+            <sql>
+                DROP FUNCTION internal_next_index;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -55,7 +21,9 @@
                          path="procedure/add_parameter_varchar.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_varchar"/>
+            <sql>
+                DROP FUNCTION add_parameter_varchar;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -64,7 +32,9 @@
                          path="procedure/add_parameter_boolean.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_boolean"/>
+            <sql>
+                DROP FUNCTION add_parameter_boolean;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -73,7 +43,9 @@
                          path="procedure/add_parameter_number.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_number"/>
+            <sql>
+                DROP FUNCTION add_parameter_number;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -82,7 +54,9 @@
                          path="procedure/add_parameter_component.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_component"/>
+            <sql>
+                DROP FUNCTION add_parameter_component;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -91,7 +65,9 @@
                          path="procedure/add_parameter_date.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_date"/>
+            <sql>
+                DROP FUNCTION add_parameter_date;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -100,7 +76,9 @@
                          path="procedure/add_parameter_list.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="add_parameter_list"/>
+            <sql>
+                DROP FUNCTION add_parameter_list;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -109,7 +87,9 @@
                          path="procedure/as_result.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="as_result"/>
+            <sql>
+                DROP FUNCTION as_result;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -118,7 +98,9 @@
                          path="procedure/parse_row_list.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="parse_row_list"/>
+            <sql>
+                DROP FUNCTION parse_row_list;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -127,7 +109,9 @@
                          path="procedure/set_message.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="set_message"/>
+            <sql>
+                DROP FUNCTION set_message;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -136,7 +120,9 @@
                          path="procedure/set_next_event.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="set_next_event"/>
+            <sql>
+                DROP FUNCTION set_next_event;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -145,7 +131,9 @@
                          path="procedure/parse_function_input.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="parse_function_input"/>
+            <sql>
+                DROP FUNCTION parse_function_input;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -154,7 +142,9 @@
                          path="procedure/get_parameters_count.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameters_count"/>
+            <sql>
+                DROP FUNCTION get_parameters_count;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -163,7 +153,9 @@
                          path="procedure/get_parameter_text.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_text"/>
+            <sql>
+                DROP FUNCTION get_parameter_text;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -172,7 +164,9 @@
                          path="procedure/get_parameter_number.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_number"/>
+            <sql>
+                DROP FUNCTION get_parameter_number;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -181,7 +175,9 @@
                          path="procedure/get_parameter_list_id.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_list_id"/>
+            <sql>
+                DROP FUNCTION get_parameter_list_id;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -190,7 +186,9 @@
                          path="procedure/get_parameter_date.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_date"/>
+            <sql>
+                DROP FUNCTION get_parameter_date;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -199,7 +197,9 @@
                          path="procedure/get_parameter_codes.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_codes"/>
+            <sql>
+                DROP FUNCTION get_parameter_codes;
+            </sql>
         </rollback>
     </changeSet>
 
@@ -208,7 +208,9 @@
                          path="procedure/get_parameter_boolean.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
-            <dropProcedure procedureName="get_parameter_boolean"/>
+            <sql>
+                DROP FUNCTION get_parameter_boolean;
+            </sql>
         </rollback>
     </changeSet>
 </databaseChangeLog>

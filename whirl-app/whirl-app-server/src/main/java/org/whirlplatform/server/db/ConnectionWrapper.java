@@ -35,6 +35,10 @@ public abstract class ConnectionWrapper implements Connection, HasDataSourceDriv
         this.user = user;
     }
 
+    public ConnectionWrapper() {
+
+    }
+
     public abstract DBDatabaseDriver getDatabaseDriver();
 
 

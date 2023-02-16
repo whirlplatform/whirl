@@ -6,4 +6,8 @@ public interface EvolutionManager {
 
     void applyMetadataEvolution(String alias, String scriptPath) throws EvolutionException;
 
+    void rollbackApplicationEvolution(String alias, String scriptPath) throws EvolutionException;
+
+    void rollbackMetadataEvolution(String alias, String scriptPath) throws EvolutionException;
+
 }

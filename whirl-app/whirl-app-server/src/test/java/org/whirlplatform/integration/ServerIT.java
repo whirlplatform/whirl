@@ -51,8 +51,10 @@ public class ServerIT {
         .withNetwork(net)
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
-        .withFileSystemBind("../../docker/db/postgresql/",
-            "/docker-entrypoint-initdb.d/");
+        .withCopyToContainer(MountableFile.forHostPath("../../docker/db/postgresql/"),
+                "/docker-entrypoint-initdb.d/")
+        ;
+
     @ClassRule
     public static FixedHostPortGenericContainer<?> tomcat = new FixedHostPortGenericContainer<>(
         "tomcat:9-jdk8")
@@ -112,6 +114,7 @@ public class ServerIT {
         fileParams.put(file.getName(), file);
 
         String port = sideex.getFirstMappedPort().toString();
+        _log.info(postgres.getHost());
         String url = "http://127.0.0.1:" + port + "/sideex-webservice/";
 
         HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");

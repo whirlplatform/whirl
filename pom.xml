@@ -391,6 +391,7 @@
                 <type>jar</type>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -404,10 +405,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
-                <version>1.7.1</version>
+                <version>1.11.22</version>
                 <type>jar</type>
                 <scope>test</scope>
             </dependency>
