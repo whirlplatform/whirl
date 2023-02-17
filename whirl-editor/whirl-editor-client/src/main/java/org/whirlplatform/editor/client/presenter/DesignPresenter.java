@@ -67,7 +67,7 @@ import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.component.surface.BlueDottedSurfaceResources;
 import org.whirlplatform.editor.client.component.surface.DefaultSurfaceAppearance;
-import org.whirlplatform.editor.client.component.surface.GrayBorderSurfaceResources;
+import org.whirlplatform.editor.client.component.surface.GreenDashedSurfaceResources;
 import org.whirlplatform.editor.client.component.surface.Surface;
 import org.whirlplatform.editor.client.component.surface.Surface.SurfaceAppearance;
 import org.whirlplatform.editor.client.dnd.BorderLayoutDropTarget;
@@ -536,7 +536,7 @@ public class DesignPresenter extends BasePresenter<DesignPresenter.IDesignView, 
     private void setBuilderSelected(Element el, boolean selected) {
         Surface surface = setElementSelected(el,
             new DefaultSurfaceAppearance(
-                GWT.<GrayBorderSurfaceResources>create(GrayBorderSurfaceResources.class)),
+                GWT.<GreenDashedSurfaceResources>create(GreenDashedSurfaceResources.class)),
             selected);
         if (surface != null) {
             surface.getElement().getStyle().setZIndex(2);

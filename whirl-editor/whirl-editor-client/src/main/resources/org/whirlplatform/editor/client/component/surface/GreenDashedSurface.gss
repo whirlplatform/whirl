@@ -1,7 +1,8 @@
 .surface {
-  border: 1px dashed #888;
+  border: 1px dashed #aaed9e;
   background-color: transparent;
   z-index: 99999;
   overflow: hidden;
   position: absolute;
+  box-shadow: 0 0 10px #aaed9e;
 }
