@@ -126,7 +126,7 @@ Verify:
     - job: Package
       artifacts: true
   script:
-    - mvn $MAVEN_OPTS compile failsafe:integration-test -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+    - mvn $MAVEN_OPTS compile failsafe:verify -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
   artifacts:
     reports:
       junit:
