@@ -20,7 +20,7 @@ default:
   timeout: 3h
   after_script:
     # Очищаем артефакты которые на надо кешировать
-    - rm --recursive --force .m2/repository/org/whirlplatform
+    - rm -rf .m2/repository/org/whirlplatform
 
 
 variables:
