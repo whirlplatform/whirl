@@ -14,25 +14,22 @@ public class HelpDecorator {
         String propertyType = "api/" + type + ".html";
         ToolTipConfig tipConfig = new ToolTipConfig();
 
-        ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
-            @Override
-            public SafeHtml renderToolTip(Object data) {
-                StringBuilder html = new StringBuilder();
-                String style = "<style type=\"text/css\">" +
-                    " iframe {" +
-                    " width: 100%;" +
-                    " height: 65px;" +
-                    " border:none;" +
-                    " }" +
-                    " </style>";
-                html
-                    .append(style)
-                    .append("<iframe src=").append(propertyType)
-                    .append(" loading=\"lazy\"")
-                    .append(" scrolling=\"no\"")
-                    .append("></iframe>");
-                return SafeHtmlUtils.fromSafeConstant(html.toString());
-            }
+        ToolTipConfig.ToolTipRenderer renderer = data -> {
+            StringBuilder html = new StringBuilder();
+            String style = "<style type=\"text/css\">"
+                    +" iframe {"
+                    +" width: 100%;"
+                    +" height: 65px;"
+                    +" border:none;"
+                    +" }"
+                    +" </style>";
+            html
+                .append(style)
+                .append("<iframe src=").append(propertyType)
+                .append(" loading=\"lazy\"")
+                .append(" scrolling=\"no\"")
+                .append("></iframe>");
+            return SafeHtmlUtils.fromSafeConstant(html.toString());
         };
         tipConfig.setRenderer(renderer);
         ToolTip toolTip = new ToolTip(target, tipConfig);
