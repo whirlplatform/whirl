@@ -42,7 +42,7 @@ public class ServerIT {
     private static Logger _log = LoggerFactory.getLogger(ServerIT.class);
     private static Network net = Network.newNetwork();
     private static String RESOURCE_PATH_DOCKER = "tests/SideEx-Webservice.Dockerfile";
-    private static String RESOURCE_PATH_CONFIG = "tests/SideEx-Webservice.Dockerfile";
+    private static String RESOURCE_PATH_CONFIG = "tests/prepare-test/config.json";
     private static int DATABASE_VERSION = 10;
     @ClassRule
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
@@ -67,23 +67,18 @@ public class ServerIT {
             "/usr/local/tomcat/conf/Catalina/localhost/context.xml.default")
         .waitingFor(Wait.forLogMessage(".*Server startup.*\\s", 1)
             .withStartupTimeout(Duration.ofMinutes(2)))
-        //.withCopyToContainer(MountableFile.forHostPath(Paths.get(APP_PATH), 0777),
-        //    "/usr/local/whirl")
-
         .withCopyToContainer(MountableFile.forClasspathResource(APP_PATH, 0777),
             "/usr/local/whirl")
-
-        //working right now
-        //.withCopyToContainer(MountableFile.forHostPath(APP_PATH, 0777),
-        //    "/usr/local/whirl")
-        .dependsOn(postgres);
+        .dependsOn(postgres)
+            ;
 
     @ClassRule
     public static GenericContainer<?> selenium = new GenericContainer<>(
         DockerImageName.parse("selenium/hub:3.141.59"))
         .withNetwork(net)
         .withNetworkAliases("hub")
-        .dependsOn(tomcat);
+        .dependsOn(tomcat)
+            ;
 
     @ClassRule
     public static GenericContainer<?> nodeChrome = new GenericContainer<>(
@@ -91,7 +86,8 @@ public class ServerIT {
         .withNetwork(net)
         .withNetworkAliases("node-chrome")
         .withEnv("HUB_HOST", "hub")
-        .dependsOn(selenium);
+        .dependsOn(selenium)
+            ;
 
     @ClassRule
     public static GenericContainer<?> sideex = new GenericContainer<>(
@@ -104,7 +100,8 @@ public class ServerIT {
         .withExposedPorts(50000)
         .waitingFor(Wait.forLogMessage(".*SideeX WebService is up and running.*\\s", 1)
             .withStartupTimeout(Duration.ofMinutes(2)))
-        .dependsOn(nodeChrome);
+        .dependsOn(nodeChrome)
+            ;
 
     static void makeConnection(URL resource)
         throws URISyntaxException, IOException, ParseException, InterruptedException {
@@ -114,8 +111,7 @@ public class ServerIT {
         fileParams.put(file.getName(), file);
 
         String port = sideex.getFirstMappedPort().toString();
-        _log.info(postgres.getHost());
-        String url = "http://127.0.0.1:" + port + "/sideex-webservice/";
+        String url = "http://" + sideex.getHost() + ":" + port + "/sideex-webservice/";
 
         HttpPost runTestSuitesPost = new HttpPost(url + "runTestSuites");
         HttpEntity data = MultipartEntityBuilder
@@ -175,6 +171,5 @@ public class ServerIT {
     public void openSideex() throws IOException, InterruptedException, URISyntaxException, ParseException {
         URL resource = getClass().getClassLoader().getResource("test-cases.zip");
         makeConnection(resource);
-        //Thread.sleep(1000000000);
     }
 }
