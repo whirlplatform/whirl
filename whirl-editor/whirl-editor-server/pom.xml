@@ -208,6 +208,10 @@
                             <directory>${project.basedir}/../../whirl-doc/target/docs/dbdoc/</directory>
                             <targetPath>/api/db/dbdoc</targetPath>
                         </resource>
+                        <resource>
+                            <directory>${project.basedir}/../../whirl-doc/target/docs/propertytype/</directory>
+                            <targetPath>/api/propertytype</targetPath>
+                        </resource>
                     </webResources>
                 </configuration>
             </plugin>
