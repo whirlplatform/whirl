@@ -15,6 +15,7 @@ services:
     volumes:
       - ${WHIRL_CONF:-./}conf/postgresql/context.xml.default:/usr/local/tomcat/conf/Catalina/localhost/context.xml.default # Tomcats global context configuration location.
       - ${WHIRL_WORK:-../.whirl-work}:/usr/local/whirl # Whirl applications location.
+      - ${WHIRL_LOGS:-../target/docker/log}:/usr/local/tomcat/logs # Tomcats logs location
     links:
       - postgresql:postgresql
     depends_on:
