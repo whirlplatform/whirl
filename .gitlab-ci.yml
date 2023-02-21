@@ -238,4 +238,4 @@ Deploy To DEV:
       --profile packaged
       --project-name whirl-develop
       up --force-recreate --build --detach
-      - ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} "sudo docker system prune --all --force"
+    - ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} "sudo docker system prune --all --force"
