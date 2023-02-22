@@ -34,7 +34,7 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
-            this.where.add(createContains(this.labelExpression, query));
+            this.where.add(createContainsForCombobox(this.labelExpression, query));
         }
 
         if (config instanceof TreeClassLoadConfig) {
