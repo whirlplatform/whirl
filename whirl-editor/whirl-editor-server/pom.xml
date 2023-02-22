@@ -212,6 +212,10 @@
                             <directory>${project.basedir}/../../whirl-doc/target/docs/propertytype/</directory>
                             <targetPath>/api/propertytype</targetPath>
                         </resource>
+                        <resource>
+                            <directory>${project.basedir}/../../whirl-doc/target/docs/componenttype/</directory>
+                            <targetPath>/api/componenttype</targetPath>
+                        </resource>
                     </webResources>
                 </configuration>
             </plugin>

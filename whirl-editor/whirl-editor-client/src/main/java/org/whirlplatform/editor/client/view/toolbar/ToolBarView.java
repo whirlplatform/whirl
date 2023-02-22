@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.sencha.gxt.widget.core.client.Window;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.button.ToggleButton;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
@@ -21,6 +22,7 @@ import com.sencha.gxt.widget.core.client.toolbar.LabelToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.SeparatorToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
 import org.whirlplatform.component.client.utils.InfoHelper;
+import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter.IToolBarView;
@@ -81,6 +83,8 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         add(new SeparatorToolItem());
         add(new ToolBarShowIconsButton(getPresenter()));
         add(createHelpMenu());
+        add(createHelpToggleButton());
+        // здесь кнока Toggle
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
         add(new LabelToolItem(SafeHtmlUtils.fromTrustedString("&nbsp;")));
@@ -105,6 +109,23 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         button.setToolTip(EditorMessage.Util.MESSAGE.help_js_api());
 
         return button;
+    }
+
+    public static ToggleButton toggleButton;
+
+    private ToggleButton createHelpToggleButton() {
+        toggleButton = new ToggleButton();
+        toggleButton.setText("Help");
+
+        toggleButton.isAllowDepress();
+        //toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.renderDocs(toggleButton.isAllowDepress()));
+        toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.disableEnableTips());
+
+        //toggleButton.addValueChangeHandler()
+        //toggleButton.addHandler()
+        //toggleButton.addValueChangeHandler(event -> PalletePresenter.bind());
+        //toggleButton.addC
+        return toggleButton;
     }
 
     private FormPanel createImportForm() {

@@ -6,9 +6,13 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.tips.ToolTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 
+import java.util.ArrayList;
+
 public class HelpDecorator {
     private HelpDecorator() {
     }
+
+    public static ArrayList<ToolTip> listOfToolTips = new ArrayList<>();
 
     public static void pinTips(Widget target, String type) {
         String propertyType = "api/" + type + ".html";
@@ -36,5 +40,18 @@ public class HelpDecorator {
         };
         tipConfig.setRenderer(renderer);
         ToolTip toolTip = new ToolTip(target, tipConfig);
+        listOfToolTips.add(toolTip);
+    }
+
+    public static void disableTips() {
+        for(ToolTip toolTip: listOfToolTips) {
+            toolTip.disable();
+        }
+    }
+
+    public static void enableTips() {
+        for(ToolTip toolTip: listOfToolTips) {
+            toolTip.enable();
+        }
     }
 }

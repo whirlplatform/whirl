@@ -84,6 +84,21 @@
                         <inputFileExtensions>md, markdown</inputFileExtensions>
                     </configuration>
                 </execution>
+                <execution>
+                    <id>component</id>
+                    <phase>process-resources</phase>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                    <configuration>
+                        <inputDirectory>${project.basedir}/src/main/resources/doc/componenttype/</inputDirectory>
+                        <outputDirectory>${project.basedir}/target/docs/componenttype</outputDirectory>
+                        <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
+                        <inputEncoding>UTF-8</inputEncoding>
+                        <outputEncoding>UTF-8</outputEncoding>
+                        <inputFileExtensions>md, markdown</inputFileExtensions>
+                    </configuration>
+                </execution>
             </executions>
             </plugin>
 

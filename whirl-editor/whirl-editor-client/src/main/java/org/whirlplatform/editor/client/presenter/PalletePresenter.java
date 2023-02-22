@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.whirlplatform.editor.client.EditorEventBus;
 import org.whirlplatform.editor.client.main.ComponentPreferences;
+import org.whirlplatform.editor.client.view.HelpDecorator;
 import org.whirlplatform.editor.client.view.PalleteView;
+import org.whirlplatform.editor.client.view.PropertyEditorView;
+import org.whirlplatform.editor.client.view.toolbar.ToolBarView;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
 @Presenter(view = PalleteView.class)
@@ -27,6 +30,7 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
             .collect(Collectors.toList());
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
+            HelpDecorator.disableTips();
             initDND(c, t);
         }
     }

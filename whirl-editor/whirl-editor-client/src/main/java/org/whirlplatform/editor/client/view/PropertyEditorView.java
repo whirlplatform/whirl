@@ -290,6 +290,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
 
             createFields();
             HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
+            HelpDecorator.disableTips();
         }
 
         public void clearField() {

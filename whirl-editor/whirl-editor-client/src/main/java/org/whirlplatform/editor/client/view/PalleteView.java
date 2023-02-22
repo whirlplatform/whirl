@@ -9,6 +9,7 @@ import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.CssFloatLayoutContainer;
+import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.image.ComponentIcon;
 import org.whirlplatform.editor.client.presenter.PalletePresenter.IPalleteView;
 import org.whirlplatform.meta.shared.component.ComponentType;
@@ -39,6 +40,11 @@ public class PalleteView extends CssFloatLayoutContainer implements IPalleteView
         CssFloatData data = new CssFloatData();
         data.setMargins(new Margins(2));
         add(button, data);
+
+        HelpDecorator.pinTips(button, "component" + text.toLowerCase());
+
+        ToggleButtonGenerateDocs.listOfComponents.add(button);
+
         return button;
     }
 
