@@ -309,7 +309,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
     /**
      * Добавляет апострофы в выражение "LIKE".
-     * Использовать вместе c labelExpression, если тип данных "UNKNOWN", т.к. empire-db не добавляет апострофы автоматически.
+     * Использовать вместе c labelExpression, если тип данных "UNKNOWN",
+     * т.к. empire-db не добавляет апострофы автоматически.
      */
     protected DBCompareExpr createContainsForCombobox(DBColumnExpr column, Object value) {
         Object v;
@@ -323,7 +324,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
     /**
      * Добавляет апострофы в выражение "NOT LIKE".
-     * Использовать вместе c labelExpression, если тип данных "UNKNOWN", т.к. empire-db не добавляет апострофы автоматически.
+     * Использовать вместе c labelExpression, если тип данных "UNKNOWN",
+     * т.к. empire-db не добавляет апострофы автоматически.
      */
     private DBCompareExpr createNotContainsForCombobox(DBColumnExpr column, Object value) {
         Object v;
