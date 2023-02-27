@@ -115,7 +115,8 @@ public class ToolBarView extends ToolBar implements IToolBarView {
 
     private ToggleButton createHelpToggleButton() {
         toggleButton = new ToggleButton();
-        toggleButton.setText("Help");
+        toggleButton.setIcon(ComponentBundle.INSTANCE.helpTips());
+        //toggleButton.setText("Help");
 
         toggleButton.isAllowDepress();
         //toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.renderDocs(toggleButton.isAllowDepress()));

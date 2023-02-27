@@ -6,10 +6,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.DOM;
@@ -180,6 +177,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     propertiesContainer.add(cell, vData);
             }
         }
+        HelpDecorator.disableTips();
     }
 
     private Element createHRElement() {
@@ -281,16 +279,20 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             propertyType = type;
 
             toggle = new ToggleWidget(this);
-            toggle.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    toggle.setReplaceable(changeReplaceable());
-                }
-            });
+//            toggle.addClickHandler(new ClickHandler() {
+//                @Override
+//                public void onClick(ClickEvent event) {
+//                    toggle.setReplaceable(changeReplaceable());
+//                }
+//            });
+
+            //Try this
+            toggle.addHandler(event -> toggle.setReplaceable(changeReplaceable()), FocusEvent.getType());
+
+            //toggle.addAttachHandler((FocusHandler) event -> toggle.setReplaceable(changeReplaceable()));
 
             createFields();
             HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
-            HelpDecorator.disableTips();
         }
 
         public void clearField() {

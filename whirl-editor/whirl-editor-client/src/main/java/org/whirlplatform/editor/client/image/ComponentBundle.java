@@ -209,6 +209,9 @@ public interface ComponentBundle extends ClientBundle {
     @Source("help_api.png")
     ImageResource helpApi();
 
+    @Source("help-tips.png")
+    ImageResource helpTips();
+
     @Source("hint.png")
     ImageResource hint();
 

@@ -30,9 +30,9 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
             .collect(Collectors.toList());
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
-            HelpDecorator.disableTips();
             initDND(c, t);
         }
+        HelpDecorator.disableTips();
     }
 
     private void initDND(Component component, ComponentType type) {
