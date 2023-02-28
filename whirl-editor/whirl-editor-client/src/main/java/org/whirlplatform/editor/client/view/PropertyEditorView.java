@@ -45,6 +45,7 @@ import java.util.Map.Entry;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.ClickEvent.ClickHandler;
 import org.whirlplatform.component.client.event.ClickEvent.HasClickHandlers;
+import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.component.LayoutComponent;
 import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellTinyResources;
 import org.whirlplatform.editor.client.component.MultiSetField;
@@ -59,6 +60,7 @@ import org.whirlplatform.editor.client.util.ElementLabelProvider;
 import org.whirlplatform.editor.client.util.PropertiesLists;
 import org.whirlplatform.editor.client.util.TableComboBox;
 import org.whirlplatform.editor.client.util.TableStore;
+import org.whirlplatform.editor.client.view.toolbar.ToolBarView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -177,7 +179,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     propertiesContainer.add(cell, vData);
             }
         }
-        HelpDecorator.disableTips();
+        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
     }
 
     private Element createHRElement() {
@@ -285,14 +287,11 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
 //                    toggle.setReplaceable(changeReplaceable());
 //                }
 //            });
-
-            //Try this
-            toggle.addHandler(event -> toggle.setReplaceable(changeReplaceable()), FocusEvent.getType());
-
-            //toggle.addAttachHandler((FocusHandler) event -> toggle.setReplaceable(changeReplaceable()));
+            //toggle.addHandler(event -> toggle.setReplaceable(changeReplaceable()), FocusEvent.getType());
 
             createFields();
-            HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
+            HelpDecorator.pinPropertyTips(this, type.getCode().toLowerCase());
+            ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
         }
 
         public void clearField() {

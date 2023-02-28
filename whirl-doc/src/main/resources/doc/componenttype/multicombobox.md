@@ -1,1 +1,1 @@
-multicomboboxtype
+Расширенная версия элемента 'combobox'. В поле 'multicombobox' возможно выбирать несколько опций

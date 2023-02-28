@@ -84,7 +84,6 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         add(new ToolBarShowIconsButton(getPresenter()));
         add(createHelpMenu());
         add(createHelpToggleButton());
-        // здесь кнока Toggle
         add(new FillToolItem());
         add(new DisplayCurrentUserWidget());
         add(new LabelToolItem(SafeHtmlUtils.fromTrustedString("&nbsp;")));
@@ -111,21 +110,12 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         return button;
     }
 
-    public static ToggleButton toggleButton;
+    public static ToggleButton toggleButton = new ToggleButton();
 
     private ToggleButton createHelpToggleButton() {
         toggleButton = new ToggleButton();
         toggleButton.setIcon(ComponentBundle.INSTANCE.helpTips());
-        //toggleButton.setText("Help");
-
-        toggleButton.isAllowDepress();
-        //toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.renderDocs(toggleButton.isAllowDepress()));
-        toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.disableEnableTips());
-
-        //toggleButton.addValueChangeHandler()
-        //toggleButton.addHandler()
-        //toggleButton.addValueChangeHandler(event -> PalletePresenter.bind());
-        //toggleButton.addC
+        toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.disableEnableTips(toggleButton.getValue()));
         return toggleButton;
     }
 

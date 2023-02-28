@@ -41,7 +41,7 @@ public class PalleteView extends CssFloatLayoutContainer implements IPalleteView
         data.setMargins(new Margins(2));
         add(button, data);
 
-        HelpDecorator.pinTips(button, "componenttype/" + text.toLowerCase());
+        HelpDecorator.pinComponentTips(button, text.toLowerCase());
 
         return button;
     }

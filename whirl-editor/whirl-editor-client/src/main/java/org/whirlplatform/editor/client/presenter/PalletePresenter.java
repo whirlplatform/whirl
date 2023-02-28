@@ -9,12 +9,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.whirlplatform.editor.client.EditorEventBus;
+import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.main.ComponentPreferences;
 import org.whirlplatform.editor.client.view.HelpDecorator;
 import org.whirlplatform.editor.client.view.PalleteView;
 import org.whirlplatform.editor.client.view.PropertyEditorView;
 import org.whirlplatform.editor.client.view.toolbar.ToolBarView;
 import org.whirlplatform.meta.shared.component.ComponentType;
+
 
 @Presenter(view = PalleteView.class)
 public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteView, EditorEventBus> {
@@ -32,7 +34,7 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
             Component c = view.addComponentType(t);
             initDND(c, t);
         }
-        HelpDecorator.disableTips();
+        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
     }
 
     private void initDND(Component component, ComponentType type) {
