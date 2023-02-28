@@ -3,8 +3,15 @@ package org.whirlplatform.editor.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +49,7 @@ import org.whirlplatform.meta.shared.EventType;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.RandomUUID;
+import org.whirlplatform.meta.shared.component.TipPropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.data.RowModelData;
@@ -614,5 +622,30 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             .collect(Collectors.toList());
         return result;
 
+    }
+
+    @Override
+    public List<TipPropertyType> readDocFile() throws IOException {
+        List<File> listFile = Files.walk(Paths.get("D:\\Project\\whirl\\whirl-app\\whirl-app-shared\\src\\main" +
+                "\\resources\\doc"))
+            .filter(Files::isRegularFile)
+            .map(Path::toFile)
+            .collect(Collectors.toList());
+
+//        Map<String, String> mapHTMLFiles = new HashMap<>();
+        List<TipPropertyType> tipList = new ArrayList<>();
+        for (File fl : listFile){
+            StringBuilder sb = new StringBuilder();
+            try(BufferedReader reader = new BufferedReader(new FileReader(fl))) {
+                while (reader.ready()) {
+                    sb.append(reader.readLine().replaceAll("\n",""));
+                }
+                String filName = fl.getName().replaceAll("\\.html", "");
+                tipList.add(new TipPropertyType(filName, sb.toString()));
+//                mapHTMLFiles.put(filName.toLowerCase(), sb.toString());
+            }
+        }
+//        return mapHTMLFiles;
+        return tipList;
     }
 }
