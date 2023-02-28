@@ -48,43 +48,27 @@
             <version>2.4.0</version>
             <executions>
                 <execution>
-                    <id>database</id>
                     <phase>process-resources</phase>
                     <goals>
                         <goal>generate</goal>
                     </goals>
-                    <configuration>
-                        <inputDirectory>${project.basedir}/src/main/resources/doc/database/</inputDirectory>
-                        <outputDirectory>${project.basedir}/target/docs/dbdoc</outputDirectory>
-                        <headerHtmlFile>${project.basedir}/src/main/resources/doc/database/header.html</headerHtmlFile>
-                        <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
-                        <inputEncoding>UTF-8</inputEncoding>
-                        <outputEncoding>UTF-8</outputEncoding>
-                        <inputFileExtensions>md, markdown</inputFileExtensions>
-                        <attributes>
-                            <attribute>TableBlock|style="background: #DCDCDC; border-collapse: collapse;"</attribute>
-                            <attribute>TableBody|style="border: 1px solid black; padding: 4px;"</attribute>
-                            <attribute>TableCell|style="border: 1px solid black; padding: 2px;"</attribute>
-                            <attribute>Code|style="background:#D3D3D3"</attribute>
-                        </attributes>
-                    </configuration>
-                </execution>
-                <execution>
-                    <id>property</id>
-                    <phase>process-resources</phase>
-                    <goals>
-                        <goal>generate</goal>
-                    </goals>
-                    <configuration>
-                        <inputDirectory>${project.basedir}/src/main/resources/doc/propertytype/</inputDirectory>
-                        <outputDirectory>${project.basedir}/target/docs/propertytype</outputDirectory>
-                        <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
-                        <inputEncoding>UTF-8</inputEncoding>
-                        <outputEncoding>UTF-8</outputEncoding>
-                        <inputFileExtensions>md, markdown</inputFileExtensions>
-                    </configuration>
                 </execution>
             </executions>
+            <configuration>
+                <inputDirectory>${project.basedir}/src/main/resources/doc/database/</inputDirectory>
+                <outputDirectory>${project.basedir}/target/docs/dbdoc</outputDirectory>
+                <transformRelativeMarkdownLinks>true</transformRelativeMarkdownLinks>
+                <inputEncoding>UTF-8</inputEncoding>
+                <outputEncoding>UTF-8</outputEncoding>
+                <headerHtmlFile>${project.basedir}/src/main/resources/doc/database/header.html</headerHtmlFile>
+                <inputFileExtensions>md, markdown</inputFileExtensions>
+                <attributes>
+                    <attribute>TableBlock|style="background: #DCDCDC; border-collapse: collapse;"</attribute>
+                    <attribute>TableBody|style="border: 1px solid black; padding: 4px;"</attribute>
+                    <attribute>TableCell|style="border: 1px solid black; padding: 2px;"</attribute>
+                    <attribute>Code|style="background:#D3D3D3"</attribute>
+                </attributes>
+            </configuration>
             </plugin>
 
             <plugin>
