@@ -279,18 +279,10 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
 
         public CompositeCell(PropertyType type) {
             propertyType = type;
-
             toggle = new ToggleWidget(this);
-//            toggle.addClickHandler(new ClickHandler() {
-//                @Override
-//                public void onClick(ClickEvent event) {
-//                    toggle.setReplaceable(changeReplaceable());
-//                }
-//            });
-            //toggle.addHandler(event -> toggle.setReplaceable(changeReplaceable()), FocusEvent.getType());
-
             createFields();
-            HelpDecorator.pinPropertyTips(this, type.getCode().toLowerCase());
+
+            HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase(), 75);
             ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
         }
 

@@ -16,11 +16,8 @@ public class HelpDecorator {
 
     public static ArrayList<ToolTip> listOfToolTips = new ArrayList<>();
 
-    public static ArrayList<ToolTip> listOfComponentToolTips = new ArrayList<>();
-    public static ArrayList<ToolTip> listOfPropertyToolTips = new ArrayList<>();
-
-    public static void pinPropertyTips(Widget target, String type) {
-        String propertyType = "api/propertytype/" + type + ".html";
+    public static void pinTips(Widget target, String type, int frameHeight) {
+        String elementType = "api/" + type + ".html";
 
         ToolTipConfig tipConfig = new ToolTipConfig();
         ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
@@ -30,43 +27,13 @@ public class HelpDecorator {
                 String style = "<style type=\"text/css\">"
                         + " iframe {"
                         + " width: 100%;"
-                        + " height: 75px;"
+                        + " height: " + frameHeight + "px;"
                         + " border:none;"
                         + " }"
                         + " </style>";
                 html
                         .append(style)
-                        .append("<iframe src=").append(propertyType)
-                        .append(" loading=\"lazy\"")
-                        .append(" scrolling=\"no\"")
-                        .append("></iframe>");
-                return SafeHtmlUtils.fromSafeConstant(html.toString());
-            }
-        };
-
-        tipConfig.setRenderer(renderer);
-        ToolTip toolTip = new ToolTip(target, tipConfig);
-        listOfToolTips.add(toolTip);
-    }
-
-    public static void pinComponentTips(Widget target, String type) {
-        String componentType = "api/componenttype/" + type + ".html";
-
-        ToolTipConfig tipConfig = new ToolTipConfig();
-        ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
-            @Override
-            public SafeHtml renderToolTip(Object data) {
-                StringBuilder html = new StringBuilder();
-                String style = "<style type=\"text/css\">"
-                        + " iframe {"
-                        + " width: 100%;"
-                        + " height: 120px;"
-                        + " border:none;"
-                        + " }"
-                        + " </style>";
-                html
-                        .append(style)
-                        .append("<iframe src=").append(componentType)
+                        .append("<iframe src=").append(elementType)
                         .append(" loading=\"lazy\"")
                         .append(" scrolling=\"no\"")
                         .append("></iframe>");
