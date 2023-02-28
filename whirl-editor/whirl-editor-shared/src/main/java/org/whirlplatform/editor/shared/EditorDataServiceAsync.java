@@ -9,6 +9,7 @@ import org.whirlplatform.editor.shared.templates.BaseTemplate;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.ClientUser;
 import org.whirlplatform.meta.shared.Version;
+import org.whirlplatform.meta.shared.component.TipPropertyType;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
