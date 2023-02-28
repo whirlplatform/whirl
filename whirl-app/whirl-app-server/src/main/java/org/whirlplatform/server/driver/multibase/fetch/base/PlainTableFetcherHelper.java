@@ -322,21 +322,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         return column.upper().like("'%" + v + "%'");
     }
 
-    /**
-     * Добавляет апострофы в выражение "NOT LIKE".
-     * Использовать вместе c labelExpression, если тип данных "UNKNOWN",
-     * т.к. empire-db не добавляет апострофы автоматически.
-     */
-    private DBCompareExpr createNotContainsForCombobox(DBColumnExpr column, Object value) {
-        Object v;
-        if (value instanceof String) {
-            v = ((String) value).toUpperCase();
-        } else {
-            v = value;
-        }
-        return column.upper().notLike("'%" + v + "%'");
-    }
-
     private DBCompareExpr createNotContains(DBColumnExpr column, Object value) {
         Object v;
         if (value instanceof String) {
