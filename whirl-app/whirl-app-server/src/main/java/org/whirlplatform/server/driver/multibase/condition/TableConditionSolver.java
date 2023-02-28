@@ -117,7 +117,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
                 // sqlRestrictConditions.add(condition);
                 // break;
                 default:
-                    throw new IllegalArgumentException("Unsupported type");
+                    break;
             }
         } else if (currentColumn && nowColumn != null) {
             switch (currentType) {
@@ -128,7 +128,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
                     sqlColumnViewConditions.put(nowColumn, condition);
                     break;
                 default:
-                    throw new IllegalArgumentException("Unsupported type");
+                    break;
             }
         }
     }

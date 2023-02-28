@@ -73,7 +73,7 @@ public class TranslitUtil {
                             replace = "yo";
                             break;
                         default:
-                            throw new IllegalArgumentException("Unsupported symbol");
+                            break;
                     }
                 } else if (charBuffer[i - 1] == 'Ь' || charBuffer[i - 1] == 'ь') {
                     switch (symbol) {
@@ -84,7 +84,7 @@ public class TranslitUtil {
                             replace = "yi";
                             break;
                         default:
-                            throw new IllegalArgumentException("Unsupported symbol");
+                            break;
                     }
                 }
                 if (replace == null) {

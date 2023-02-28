@@ -457,7 +457,7 @@ public final class Version implements Comparable<Version>, Serializable {
                     }
                     break;
                 default:
-                    throw new IllegalArgumentException("Unsupported 'scope'");
+                    break;
             }
         }
         throw new IllegalStateException();

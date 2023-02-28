@@ -29,7 +29,7 @@ public class ReflectionMerger implements Merger {
                     mergeChange(left, c);
                     break;
                 default:
-                    throw new IllegalArgumentException("Unsupported type");
+                    break;
             }
             merge(left, c.getNestedChanges());
         }

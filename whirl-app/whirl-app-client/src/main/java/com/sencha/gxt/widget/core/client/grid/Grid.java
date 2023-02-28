@@ -681,7 +681,7 @@ public class Grid<M> extends Component
                 onMouseUp(ce);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported type");
+                break;
         }
         view.handleComponentEvent(ce);
     }

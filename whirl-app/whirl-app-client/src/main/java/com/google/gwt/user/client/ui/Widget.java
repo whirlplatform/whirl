@@ -217,7 +217,7 @@ public class Widget extends UIObject implements EventListener, HasAttachHandlers
                 }
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported 'event'");
+                break;
         }
         DomEvent.fireNativeEvent(event, this, this.getElement());
     }

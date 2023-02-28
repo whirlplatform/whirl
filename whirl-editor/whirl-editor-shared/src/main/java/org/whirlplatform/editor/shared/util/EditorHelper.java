@@ -159,7 +159,7 @@ public class EditorHelper {
                 setProperty(comp, defaultLocale, PropertyType.MinChars, 2);
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported type");
+                break;
         }
         setProperty(comp, defaultLocale, PropertyType.Enabled, true);
 
