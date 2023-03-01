@@ -17,7 +17,7 @@ public class HelpDecorator {
     public static ArrayList<ToolTip> listOfToolTips = new ArrayList<>();
 
     public static void pinTips(Widget target, String type, int frameHeight) {
-        String elementType = "api/" + type + ".html";
+        String elementType = "api/" + type.replaceFirst(":","") + ".html";
 
         ToolTipConfig tipConfig = new ToolTipConfig();
         ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
