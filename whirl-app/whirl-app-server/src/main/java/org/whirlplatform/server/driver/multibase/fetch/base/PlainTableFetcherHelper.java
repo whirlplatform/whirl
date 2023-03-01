@@ -36,8 +36,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
-    public Map<FieldMetadata, TableColumnElement> tableColumns =
-        new HashMap<FieldMetadata, TableColumnElement>();
+    public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<>();
     public boolean ready = false;
     public DBDatabase dbDatabase;
     public DBTable dbTable;
@@ -308,6 +307,21 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         return column.upper().like("%" + v + "%");
     }
 
+    /**
+     * Добавляет апострофы в выражение "LIKE".
+     * Использовать вместе c labelExpression, если тип данных "UNKNOWN",
+     * т.к. empire-db не добавляет апострофы автоматически.
+     */
+    protected DBCompareExpr createContainsForCombobox(DBColumnExpr column, Object value) {
+        Object v;
+        if (value instanceof String) {
+            v = ((String) value).toUpperCase();
+        } else {
+            v = value;
+        }
+        return column.upper().like("'%" + v + "%'");
+    }
+
     private DBCompareExpr createNotContains(DBColumnExpr column, Object value) {
         Object v;
         if (value instanceof String) {
@@ -355,7 +369,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
             v = value;
         }
         return createContains(column.reverse(),
-            this.dbDatabase.getValueExpr(v, DataType.TEXT).reverse());
+                this.dbDatabase.getValueExpr(v, DataType.TEXT).reverse());
     }
 
     /*
