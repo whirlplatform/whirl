@@ -70,7 +70,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers,
     ChangeEvent.HasChangeHandlers, HasState {
 
-    protected static final String SEARCH_QUERY = "SEARCH_QUERY";
+    protected static final String SEARCH_QUERY = "SEARCH_TEXT";
     protected int minChars = 2;
     protected int delayTimeMs;
     protected String classId;
