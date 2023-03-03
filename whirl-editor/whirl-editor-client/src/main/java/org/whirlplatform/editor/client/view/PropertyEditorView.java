@@ -282,7 +282,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             toggle = new ToggleWidget(this);
             createFields();
 
-            HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase(), 75);
+            HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
             ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
         }
 

@@ -1,13 +1,14 @@
 package org.whirlplatform.editor.client.view;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.http.client.*;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.widget.core.client.event.FocusEvent;
 import com.sencha.gxt.widget.core.client.tips.ToolTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 
 import java.util.ArrayList;
+
+import static com.google.gwt.core.client.GWT.getHostPageBaseURL;
 
 public class HelpDecorator {
 
@@ -16,34 +17,27 @@ public class HelpDecorator {
 
     public static ArrayList<ToolTip> listOfToolTips = new ArrayList<>();
 
-    public static void pinTips(Widget target, String type, int frameHeight) {
+    public static void pinTips(Widget target, String type) {
         String elementType = "api/" + type.replaceFirst(":","") + ".html";
-
-        ToolTipConfig tipConfig = new ToolTipConfig();
-        ToolTipConfig.ToolTipRenderer renderer = new ToolTipConfig.ToolTipRenderer() {
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, getHostPageBaseURL() + elementType);
+        builder.setCallback(new RequestCallback() {
             @Override
-            public SafeHtml renderToolTip(Object data) {
-                StringBuilder html = new StringBuilder();
-                String style = "<style type=\"text/css\">"
-                        + " iframe {"
-                        + " width: 100%;"
-                        + " height: " + frameHeight + "px;"
-                        + " border:none;"
-                        + " }"
-                        + " </style>";
-                html
-                        .append(style)
-                        .append("<iframe src=").append(elementType)
-                        .append(" loading=\"lazy\"")
-                        .append(" scrolling=\"no\"")
-                        .append("></iframe>");
-                return SafeHtmlUtils.fromSafeConstant(html.toString());
+            public void onResponseReceived(Request request, Response response) {
+                String htm = "<div style=\"width: 300px;\">"+response.getText()+ "</div>";
+                ToolTipConfig tipConfig = new ToolTipConfig();
+                tipConfig.setBody(SafeHtmlUtils.fromSafeConstant(htm));
+                ToolTip toolTip = new ToolTip(target, tipConfig);
+                listOfToolTips.add(toolTip);
             }
-        };
-
-        tipConfig.setRenderer(renderer);
-        ToolTip toolTip = new ToolTip(target, tipConfig);
-        listOfToolTips.add(toolTip);
+            @Override
+            public void onError(Request request, Throwable exception) {
+            }
+        });
+        try {
+            builder.send();
+        } catch (RequestException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void disableTips() {
