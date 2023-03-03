@@ -117,7 +117,7 @@ Verify:
   stage: verify
   rules:
     # On all branches
-    - if: $CI_COMMIT_REF_NAME == 'develop'
+    - if: $CI_COMMIT_BRANCH == 'develop'
       when: always
     - if: $CI_COMMIT_BRANCH
       when: manual
