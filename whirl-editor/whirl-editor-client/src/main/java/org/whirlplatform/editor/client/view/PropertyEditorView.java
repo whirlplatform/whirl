@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.dom.DomQuery;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
+import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
@@ -42,9 +43,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.whirlplatform.component.client.base.CaptchaBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.ClickEvent.ClickHandler;
 import org.whirlplatform.component.client.event.ClickEvent.HasClickHandlers;
+import org.whirlplatform.component.client.report.ReportBuilder;
+import org.whirlplatform.component.client.window.TaskBar;
 import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.component.LayoutComponent;
 import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellTinyResources;
@@ -145,6 +150,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
         initLocales();
         Margins margins = new Margins(0, 2, 0, 2);
         VerticalLayoutData vData = new VerticalLayoutData(1, 20, margins);
+
+        HelpDecorator.clearTips();
         for (Entry<PropertyType, PropertyValue> prop : properties.entrySet()) {
             switch (prop.getKey()) {
                 case LayoutDataMarginTop:
@@ -179,7 +186,8 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     propertiesContainer.add(cell, vData);
             }
         }
-        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
+        //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
+        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "property");
     }
 
     private Element createHRElement() {
@@ -283,7 +291,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             createFields();
 
             HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
-            ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
+            //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "property");
         }
 
         public void clearField() {
