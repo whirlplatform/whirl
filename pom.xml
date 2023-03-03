@@ -86,13 +86,6 @@
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>net.ltgt.gwt.maven</groupId>
