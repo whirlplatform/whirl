@@ -33,7 +33,9 @@ public class HelpDecorator {
                 if(ToolBarView.toggleButton.getValue()) {
                     toolTip.enable();
                     XElement element = (XElement) target.getElement();
-                    element.applyStyles("color: green;");
+                    element.applyStyles("box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;");
+                    //element.applyStyles("color: green;");
+                    //box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
                 } else {
                     toolTip.disable();
                     XElement element = (XElement) target.getElement();
@@ -57,6 +59,7 @@ public class HelpDecorator {
         }
         for(Widget widget: listOfTargetElements) {
             XElement element = (XElement) widget.getElement();
+            element.applyStyles("box-shadow: none;");
             element.applyStyles("color: black;");
         }
     }
@@ -68,6 +71,7 @@ public class HelpDecorator {
         for(Widget widget: listOfTargetElements) {
             XElement element = (XElement) widget.getElement();
             element.applyStyles("color: green;");
+            element.applyStyles("box-shadow: 1px 1px 1px green, -1px -1px 1px green;");
         }
     }
 }
