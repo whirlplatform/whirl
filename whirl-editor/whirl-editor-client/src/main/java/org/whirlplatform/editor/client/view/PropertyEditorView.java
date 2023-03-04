@@ -151,7 +151,6 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
         Margins margins = new Margins(0, 2, 0, 2);
         VerticalLayoutData vData = new VerticalLayoutData(1, 20, margins);
 
-        HelpDecorator.clearTips();
         for (Entry<PropertyType, PropertyValue> prop : properties.entrySet()) {
             switch (prop.getKey()) {
                 case LayoutDataMarginTop:
@@ -186,8 +185,6 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
                     propertiesContainer.add(cell, vData);
             }
         }
-        //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue());
-        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "property");
     }
 
     private Element createHRElement() {

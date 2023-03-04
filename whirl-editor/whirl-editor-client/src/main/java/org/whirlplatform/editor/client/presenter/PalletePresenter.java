@@ -31,13 +31,10 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
             .filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v))
             .collect(Collectors.toList());
 
-        HelpDecorator.clearTips();
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
             initDND(c, t);
         }
-        //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), ?);
-        ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "component");
     }
 
     private void initDND(Component component, ComponentType type) {

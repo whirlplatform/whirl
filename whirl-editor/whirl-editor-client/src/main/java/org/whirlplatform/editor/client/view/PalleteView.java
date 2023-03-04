@@ -53,8 +53,6 @@ public class PalleteView extends CssFloatLayoutContainer implements IPalleteView
 
         HelpDecorator.pinTips(button, "componenttype/" + text.toLowerCase());
 
-        //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "component");
-
         return button;
     }
 

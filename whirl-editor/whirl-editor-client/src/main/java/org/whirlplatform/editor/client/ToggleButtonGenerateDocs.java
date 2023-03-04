@@ -1,15 +1,14 @@
 package org.whirlplatform.editor.client;
 
-import com.google.gwt.user.client.ui.Widget;
 import org.whirlplatform.editor.client.view.HelpDecorator;
 
 public class ToggleButtonGenerateDocs {
 
-    public static void disableEnableTips(boolean isDepressed, String type) {
+    public static void disableEnableTips(boolean isDepressed) {
         if(isDepressed) {
-            HelpDecorator.enableTip(type);
+            HelpDecorator.enableTips();
         } else {
-            HelpDecorator.disableTip(type);
+            HelpDecorator.disableTips();
         }
     }
 }
