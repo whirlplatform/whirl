@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.core.client.dom.DomQuery;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
-import com.sencha.gxt.core.client.dom.XElement;
 import com.sencha.gxt.core.client.util.Margins;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
@@ -44,13 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.whirlplatform.component.client.base.CaptchaBuilder;
 import org.whirlplatform.component.client.event.ClickEvent;
 import org.whirlplatform.component.client.event.ClickEvent.ClickHandler;
 import org.whirlplatform.component.client.event.ClickEvent.HasClickHandlers;
-import org.whirlplatform.component.client.report.ReportBuilder;
-import org.whirlplatform.component.client.window.TaskBar;
-import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.component.LayoutComponent;
 import org.whirlplatform.editor.client.component.MultiSetCellDefaultAppearance.MultiSetCellTinyResources;
 import org.whirlplatform.editor.client.component.MultiSetField;
@@ -65,7 +60,6 @@ import org.whirlplatform.editor.client.util.ElementLabelProvider;
 import org.whirlplatform.editor.client.util.PropertiesLists;
 import org.whirlplatform.editor.client.util.TableComboBox;
 import org.whirlplatform.editor.client.util.TableStore;
-import org.whirlplatform.editor.client.view.toolbar.ToolBarView;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -288,7 +282,6 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
             createFields();
 
             HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
-            //ToggleButtonGenerateDocs.disableEnableTips(ToolBarView.toggleButton.getValue(), "property");
         }
 
         public void clearField() {

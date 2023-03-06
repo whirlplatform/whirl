@@ -9,12 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.whirlplatform.editor.client.EditorEventBus;
-import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.main.ComponentPreferences;
-import org.whirlplatform.editor.client.view.HelpDecorator;
 import org.whirlplatform.editor.client.view.PalleteView;
-import org.whirlplatform.editor.client.view.PropertyEditorView;
-import org.whirlplatform.editor.client.view.toolbar.ToolBarView;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
 

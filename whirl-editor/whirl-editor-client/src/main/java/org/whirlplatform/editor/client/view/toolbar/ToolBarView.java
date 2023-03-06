@@ -22,10 +22,10 @@ import com.sencha.gxt.widget.core.client.toolbar.LabelToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.SeparatorToolItem;
 import com.sencha.gxt.widget.core.client.toolbar.ToolBar;
 import org.whirlplatform.component.client.utils.InfoHelper;
-import org.whirlplatform.editor.client.ToggleButtonGenerateDocs;
 import org.whirlplatform.editor.client.image.ComponentBundle;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter;
 import org.whirlplatform.editor.client.presenter.ToolBarPresenter.IToolBarView;
+import org.whirlplatform.editor.client.view.HelpDecorator;
 import org.whirlplatform.editor.client.view.context.ContextTextButton;
 import org.whirlplatform.editor.client.view.widget.DisplayCurrentUserWidget;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
@@ -115,8 +115,15 @@ public class ToolBarView extends ToolBar implements IToolBarView {
     private ToggleButton createHelpToggleButton() {
         toggleButton = new ToggleButton();
         toggleButton.setIcon(ComponentBundle.INSTANCE.helpTips());
-        toggleButton.addSelectHandler(event -> ToggleButtonGenerateDocs.disableEnableTips(toggleButton.getValue()));
+        toggleButton.addSelectHandler(event -> disableEnableTips(toggleButton.getValue()));
         return toggleButton;
+    }
+    public static void disableEnableTips(boolean isDepressed) {
+        if(isDepressed) {
+            HelpDecorator.enableTips();
+        } else {
+            HelpDecorator.disableTips();
+        }
     }
 
     private FormPanel createImportForm() {
