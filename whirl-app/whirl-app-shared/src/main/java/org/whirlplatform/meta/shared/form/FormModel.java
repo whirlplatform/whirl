@@ -7,10 +7,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"id", "width", "height", "columns", "rows"})
 public class FormModel implements Serializable {

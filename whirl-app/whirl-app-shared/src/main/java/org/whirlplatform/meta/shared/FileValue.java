@@ -2,10 +2,8 @@ package org.whirlplatform.meta.shared;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 public class FileValue implements Serializable, Cloneable {
 
     private String tempId;

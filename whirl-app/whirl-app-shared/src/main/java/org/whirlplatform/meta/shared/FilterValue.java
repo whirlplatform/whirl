@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
 @SuppressWarnings("serial")
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,

@@ -1,9 +1,6 @@
 package org.whirlplatform.meta.shared.data;
 
-import lombok.Data;
-
 @SuppressWarnings("serial")
-@Data
 public class RowValueImpl implements RowValue {
 
     private String id;

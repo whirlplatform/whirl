@@ -1,9 +1,6 @@
 package org.whirlplatform.meta.shared.editor;
 
-import lombok.Data;
-
 @SuppressWarnings("serial")
-@Data
 public class CellRangeElement extends AbstractElement {
 
     private int top;

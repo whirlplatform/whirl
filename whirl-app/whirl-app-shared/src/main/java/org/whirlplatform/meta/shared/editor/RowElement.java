@@ -1,10 +1,8 @@
 package org.whirlplatform.meta.shared.editor;
 
-import lombok.Data;
 import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 @SuppressWarnings("serial")
-@Data
 public class RowElement extends AbstractElement {
 
     private int row;

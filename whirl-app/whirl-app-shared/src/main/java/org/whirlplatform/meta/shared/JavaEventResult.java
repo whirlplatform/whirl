@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
@@ -14,7 +13,6 @@ import org.whirlplatform.meta.shared.data.EventParameterImpl;
 import org.whirlplatform.meta.shared.data.ParameterType;
 
 @SuppressWarnings("serial")
-@Data
 public class JavaEventResult implements EventResult, Serializable {
 
     private String nextEventCode;

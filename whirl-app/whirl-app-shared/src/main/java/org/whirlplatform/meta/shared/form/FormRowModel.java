@@ -8,10 +8,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "genId")
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,

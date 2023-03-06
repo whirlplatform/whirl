@@ -2,12 +2,10 @@ package org.whirlplatform.meta.shared.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
 @SuppressWarnings("serial")
-@Data
 public class ReportElement extends ComponentElement {
 
     private List<FieldMetadata> fields = new ArrayList<FieldMetadata>();

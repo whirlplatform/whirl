@@ -1,10 +1,8 @@
 package org.whirlplatform.meta.shared.editor;
 
 import java.io.Serializable;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 public class CellRowCol implements Serializable {
 
     /*

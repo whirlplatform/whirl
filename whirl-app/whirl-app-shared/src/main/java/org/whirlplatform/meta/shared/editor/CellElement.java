@@ -1,13 +1,11 @@
 package org.whirlplatform.meta.shared.editor;
 
-import lombok.Data;
-
 @SuppressWarnings("serial")
-@Data
 public class CellElement extends AbstractElement {
 
     private int colSpan = 1;
     private int rowSpan = 1;
+
     private int borderTop;
     private int borderRight;
     private int borderBottom;

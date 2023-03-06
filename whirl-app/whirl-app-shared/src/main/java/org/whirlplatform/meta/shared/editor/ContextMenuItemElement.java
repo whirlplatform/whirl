@@ -7,11 +7,9 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 
 @SuppressWarnings("serial")
-@Data
 public class ContextMenuItemElement extends AbstractElement {
 
     // Нет смысла каждый раз создавать новый

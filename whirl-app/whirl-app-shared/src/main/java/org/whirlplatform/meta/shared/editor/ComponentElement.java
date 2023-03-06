@@ -8,12 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import lombok.Data;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 
 @SuppressWarnings("serial")
-@Data
 public class ComponentElement extends AbstractElement {
 
     private ComponentType type;

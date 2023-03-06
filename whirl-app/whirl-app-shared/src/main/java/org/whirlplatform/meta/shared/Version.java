@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import lombok.Data;
 
 /**
  * This class is an implementation of the full <em>semantic version 2.0.0</em>
@@ -35,7 +34,6 @@ import lombok.Data;
  *
  * @author Simon Taddiken
  */
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, creatorVisibility = Visibility.ANY,
     getterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE,

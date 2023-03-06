@@ -1,5 +1,11 @@
 package org.whirlplatform;
 
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Properties;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -15,12 +21,6 @@ import org.whirlplatform.server.evolution.EvolutionManager;
 import org.whirlplatform.server.evolution.LiquibaseEvolutionManager;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Properties;
-
-import static org.junit.Assert.assertTrue;
 
 public class ServerEvolutionTest {
 
