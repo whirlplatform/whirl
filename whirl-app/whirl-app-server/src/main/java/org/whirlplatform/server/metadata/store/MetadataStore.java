@@ -1,7 +1,8 @@
 package org.whirlplatform.server.metadata.store;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.io.OutputStream;
 import java.util.List;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
@@ -26,13 +27,6 @@ public interface MetadataStore {
 
     List<ApplicationStoreData> all() throws MetadataStoreException;
 
-    void saveApplicationDataFiles(String appCode, Version appVersion,
-                                  Collection<FileElement> dataFiles)
-        throws MetadataStoreException;
-
-    List<FileElement> getApplicationDataFiles(String appCode, Version appVersion)
-        throws MetadataStoreException;
-
     InputStream getApplicationFileInputStream(String appCode, Version appVersion,
                                               FileElementCategory category,
                                               String fileName) throws MetadataStoreException;
@@ -44,6 +38,11 @@ public interface MetadataStore {
     void copyFileElements(ApplicationStoreData source, ApplicationStoreData destination,
                           List<FileElement> toCopy)
         throws MetadataStoreException;
+
+    /**
+     * Запаковывает все содержимое директории приложения в zip-файл.
+     */
+    void packageToZip(String appCode, Version appVersion, OutputStream out) throws MetadataStoreException, IOException;
 
     /**
      * Возвращает последнюю версию приложения с кодом appCode.

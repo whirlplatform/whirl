@@ -2,10 +2,14 @@ package org.whirlplatform.server.metadata.store.file;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystem;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardWatchEventKinds;
@@ -19,10 +23,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
+import java.util.zip.Deflater;
+import java.util.zip.ZipEntry;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.io.IOUtils;
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.Version.VersionFormatException;
@@ -471,6 +481,36 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         long timestamp = appFile.toFile().lastModified();
         data.setModified(timestamp);
         return data;
+    }
+
+    @Override
+    public void packageToZip(String appCode, Version appVersion, OutputStream out)
+        throws MetadataStoreException, IOException {
+        final Path path = Optional.ofNullable(resolveApplicationPath(appCode, appVersion))
+            .map(Path::normalize).orElse(null);
+        if (path == null) {
+            throw new MetadataStoreException("Application not found");
+        }
+        try (ZipArchiveOutputStream archive = new ZipArchiveOutputStream(out)) {
+            archive.setLevel(Deflater.BEST_SPEED);
+            archive.setMethod(ZipEntry.DEFLATED);
+            Files.walk(path, FileVisitOption.FOLLOW_LINKS).forEach(p -> {
+                File file = p.toFile();
+                if (!file.isDirectory()) {
+                    ZipArchiveEntry entry = new ZipArchiveEntry(file, path.relativize(p).toString());
+                    try (FileInputStream fis = new FileInputStream(file)) {
+                        archive.putArchiveEntry(entry);
+                        IOUtils.copy(fis, archive);
+                        archive.closeArchiveEntry();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+            archive.finish();
+        } catch (IOException e) {
+            throw new MetadataStoreException("Archive creation problem", e);
+        }
     }
 
     @Override
