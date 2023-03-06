@@ -40,12 +40,18 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
         if (config instanceof TreeClassLoadConfig) {
             TableColumnElement c =
                 table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
-            DBColumn parentColumn = this.dbTable.addColumn(c.getColumnName(),
-                TypesUtil.toEmpireType(c.getType(),
-                    c.getListTable() == null ? null
-                        : getDataSourceDriver().createDataFetcher(c.getListTable())
-                        .getIdColumnType(table)),
-                c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+            // добавить проверку на наличие кол
+            DBColumn parentColumn;
+            if (this.dbTable.getColumn(c.getColumnName()).getName().equals(c.getColumnName())){
+                parentColumn = this.dbTable.getColumn(c.getColumnName());
+            } else {
+                parentColumn = this.dbTable.addColumn(c.getColumnName(),
+                        TypesUtil.toEmpireType(c.getType(),
+                                c.getListTable() == null ? null
+                                        : getDataSourceDriver().createDataFetcher(c.getListTable())
+                                        .getIdColumnType(table)),
+                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
+            }
 
             RowModelData parent = ((TreeClassLoadConfig) config).getParent();
             if (parent != null) {
