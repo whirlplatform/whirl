@@ -1,11 +1,9 @@
 package org.whirlplatform.meta.shared.editor;
 
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 @SuppressWarnings("serial")
-@Data
 public class RequestElement extends CellRangeElement {
 
     private DataSourceElement datasource;

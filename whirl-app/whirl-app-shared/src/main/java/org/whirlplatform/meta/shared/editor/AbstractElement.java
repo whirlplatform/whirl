@@ -1,10 +1,8 @@
 package org.whirlplatform.meta.shared.editor;
 
 import java.io.Serializable;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 public abstract class AbstractElement implements Serializable, ElementVisitable {
 
     protected String id;

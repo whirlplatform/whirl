@@ -13,11 +13,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 @SuppressWarnings("serial")
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonSubTypes(@JsonSubTypes.Type(TreeClassLoadConfig.class))

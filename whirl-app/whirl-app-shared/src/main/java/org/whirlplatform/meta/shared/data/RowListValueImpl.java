@@ -2,10 +2,8 @@ package org.whirlplatform.meta.shared.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 public class RowListValueImpl extends DataValueImpl implements RowListValue {
 
     private List<RowValue> rowList = new ArrayList<RowValue>();

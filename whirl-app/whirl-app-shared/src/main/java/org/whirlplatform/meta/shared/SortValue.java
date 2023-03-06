@@ -1,10 +1,8 @@
 package org.whirlplatform.meta.shared;
 
 import java.io.Serializable;
-import lombok.Data;
 
 @SuppressWarnings("serial")
-@Data
 public class SortValue implements Serializable {
 
     private SortType order;

@@ -3,12 +3,10 @@ package org.whirlplatform.meta.shared;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
 @SuppressWarnings("serial")
-@Data
 public class DataModifyConfig implements Serializable {
     private DataModifyType type;
     private List<RowModelData> models;

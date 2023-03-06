@@ -1,9 +1,6 @@
 package org.whirlplatform.meta.shared.editor;
 
-import lombok.Data;
-
 @SuppressWarnings("serial")
-@Data
 public class GroupElement extends AbstractElement {
     private String groupName;
 

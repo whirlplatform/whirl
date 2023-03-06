@@ -12,12 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import lombok.Data;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 @SuppressWarnings("serial")
-@Data
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ComponentModel implements Cloneable, Serializable {

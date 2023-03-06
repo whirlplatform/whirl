@@ -9,12 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import lombok.Data;
+
 
 /**
  * Данные о текущем приложении
  */
-@Data
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class ApplicationData implements Serializable {

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import lombok.Data;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.EventType;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -14,7 +13,6 @@ import org.whirlplatform.meta.shared.data.EventParameterImpl;
 import org.whirlplatform.meta.shared.editor.db.DataSourceElement;
 
 @SuppressWarnings("serial")
-@Data
 public class EventElement extends AbstractElement {
 
     private EventType type;

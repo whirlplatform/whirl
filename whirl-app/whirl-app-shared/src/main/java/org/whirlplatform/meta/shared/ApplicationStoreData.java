@@ -1,12 +1,10 @@
 package org.whirlplatform.meta.shared;
 
 import java.io.Serializable;
-import lombok.Data;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.version.VersionUtil;
 
 @SuppressWarnings("serial")
-@Data
 public class ApplicationStoreData implements Serializable {
     private String id;
     private String code;

@@ -1,10 +1,7 @@
 package org.whirlplatform.meta.shared.editor.db;
 
 
-import lombok.Data;
-
 @SuppressWarnings("serial")
-@Data
 public abstract class DatabaseTableElement extends AbstractTableElement {
     protected SchemaElement schema;
 

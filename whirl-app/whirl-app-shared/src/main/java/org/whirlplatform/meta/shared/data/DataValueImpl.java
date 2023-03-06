@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 import java.util.Date;
-import lombok.Data;
 import org.whirlplatform.meta.shared.FileValue;
 
 @SuppressWarnings("serial")
-@Data
 public class DataValueImpl implements DataValue {
 
     private DataType type;
