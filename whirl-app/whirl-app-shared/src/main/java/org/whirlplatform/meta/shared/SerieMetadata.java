@@ -3,7 +3,9 @@ package org.whirlplatform.meta.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
+@Data
 public class SerieMetadata implements Serializable {
 
     private static final long serialVersionUID = 8713692653697232849L;

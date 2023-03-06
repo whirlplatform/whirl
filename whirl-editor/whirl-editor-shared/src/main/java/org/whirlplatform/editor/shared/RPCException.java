@@ -1,12 +1,11 @@
 package org.whirlplatform.editor.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 
 /**
  * Исключение при ошибке в RPC-методе, возвращаемое на клиента
  */
-public class RPCException extends Exception implements Serializable, IsSerializable {
+public class RPCException extends Exception implements Serializable {
 
     public static final String errType = "err";
     public static final String infoType = "info";

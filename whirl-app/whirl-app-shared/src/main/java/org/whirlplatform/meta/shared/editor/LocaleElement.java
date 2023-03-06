@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared.editor;
 
 import java.io.Serializable;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class LocaleElement implements Serializable, Cloneable {
 
     private String language;

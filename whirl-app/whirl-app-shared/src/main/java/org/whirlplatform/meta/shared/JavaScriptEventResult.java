@@ -3,8 +3,10 @@ package org.whirlplatform.meta.shared;
 import com.google.gwt.user.client.Command;
 import java.util.Map;
 import java.util.TreeMap;
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.EventParameter;
 
+@Data
 public class JavaScriptEventResult implements EventResult {
 
     private String nextEventCode;

@@ -2,9 +2,11 @@ package org.whirlplatform.meta.shared.form;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import lombok.Data;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 
 @SuppressWarnings("serial")
+@Data
 public class FormCellModel implements Serializable, Cloneable {
 
     private String id;

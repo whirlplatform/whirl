@@ -1,10 +1,12 @@
 package org.whirlplatform.meta.shared.editor;
 
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.EventParameterImpl;
 import org.whirlplatform.meta.shared.data.ParameterType;
 
 @SuppressWarnings("serial")
+@Data
 public class EventParameterElement extends AbstractElement {
 
     private int index = -1;

@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.EventParameter;
 
 @SuppressWarnings("serial")
+@Data
 @JsonAutoDetect(fieldVisibility = Visibility.ANY,
     creatorVisibility = Visibility.ANY,
     getterVisibility = Visibility.NONE,

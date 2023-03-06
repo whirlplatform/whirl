@@ -3,16 +3,17 @@ package org.whirlplatform.meta.shared.form;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"id", "width", "height", "columns", "rows"})
-public class FormModel implements Serializable, IsSerializable {
+public class FormModel implements Serializable {
 
     private String id;
 

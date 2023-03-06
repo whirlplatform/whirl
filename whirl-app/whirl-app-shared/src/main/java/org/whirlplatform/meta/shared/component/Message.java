@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared.component;
 
 import java.io.Serializable;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class Message implements Serializable, Cloneable {
 
     private String id;

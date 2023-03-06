@@ -1,12 +1,13 @@
 package org.whirlplatform.meta.shared;
 
 import java.io.Serializable;
+import lombok.Data;
 import org.whirlplatform.rpc.shared.SessionToken;
 
 /**
  * Пользователь
  */
-//@SuppressWarnings("serial")
+@Data
 public class ClientUser implements Serializable {
 
     private static final long serialVersionUID = -6627494423245563572L;

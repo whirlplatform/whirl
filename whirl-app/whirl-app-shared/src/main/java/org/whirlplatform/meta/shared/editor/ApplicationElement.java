@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import lombok.Data;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -19,6 +20,7 @@ import org.whirlplatform.meta.shared.editor.db.SchemaElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 
 @SuppressWarnings("serial")
+@Data
 public class ApplicationElement extends AbstractElement {
 
     private Map<String, String> parameters = new HashMap<String, String>();
