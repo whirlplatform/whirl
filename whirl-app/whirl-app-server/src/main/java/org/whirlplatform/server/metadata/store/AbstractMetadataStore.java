@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.xml.transform.Result;
 import javax.xml.transform.TransformerException;
@@ -136,31 +135,6 @@ public abstract class AbstractMetadataStore implements MetadataStore {
     }
 
     @Override
-    public void saveApplicationDataFiles(String appCode, Version appVersion,
-                                         Collection<FileElement> dataFiles)
-        throws MetadataStoreException {
-        Path applicationPath;
-        try {
-            applicationPath = resolveApplicationPath(appCode, appVersion);
-            ApplicationFilesUtil.saveApplicationDataFiles(dataFiles, applicationPath);
-        } catch (IOException e) {
-            throw new MetadataStoreException(e);
-        }
-    }
-
-    @Override
-    public List<FileElement> getApplicationDataFiles(String appCode, Version appVersion)
-        throws MetadataStoreException {
-        Path applicationPath;
-        try {
-            applicationPath = resolveApplicationPath(appCode, appVersion);
-            return ApplicationFilesUtil.getApplicationDataFiles(applicationPath);
-        } catch (IOException e) {
-            throw new MetadataStoreException(e);
-        }
-    }
-
-    @Override
     public InputStream getApplicationFileInputStream(String appCode, Version appVersion,
                                                      FileElementCategory category,
                                                      String fileName)
@@ -205,6 +179,8 @@ public abstract class AbstractMetadataStore implements MetadataStore {
             throw new MetadataStoreException("Error copying", e);
         }
     }
+
+
 
     protected abstract Path resolveApplicationPath(String appCode, Version appVersion)
         throws MetadataStoreException, IOException;

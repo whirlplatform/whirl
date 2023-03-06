@@ -4,8 +4,6 @@ import java.util.zip.ZipOutputStream;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 
-
-//TODO implement
 public class ZipPackager implements Packager {
 
     public ZipPackager() {
