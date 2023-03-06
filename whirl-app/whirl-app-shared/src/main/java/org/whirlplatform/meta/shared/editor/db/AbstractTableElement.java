@@ -1,10 +1,12 @@
 package org.whirlplatform.meta.shared.editor.db;
 
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @SuppressWarnings("serial")
+@Data
 public abstract class AbstractTableElement extends AbstractElement {
 
     protected PropertyValue title = new PropertyValue(DataType.STRING);

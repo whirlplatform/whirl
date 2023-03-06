@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared;
 
 import java.io.Serializable;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class TableConfig implements Serializable {
 
     private ClassMetadata metadata;

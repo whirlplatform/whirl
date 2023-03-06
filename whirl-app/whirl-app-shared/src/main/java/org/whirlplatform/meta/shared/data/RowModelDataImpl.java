@@ -7,9 +7,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import lombok.Data;
 import org.whirlplatform.meta.shared.FileValue;
 
 @SuppressWarnings("serial")
+@Data
 public class RowModelDataImpl implements RowModelData {
 
     protected String id;

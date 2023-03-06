@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.Data;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.editor.ElementVisitor.VisitContext;
 
 @SuppressWarnings("serial")
+@Data
 public class FormElement extends ComponentElement {
 
     // TODO пересмотреть полностью установку этих значений

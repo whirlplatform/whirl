@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared;
 
 import java.io.Serializable;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class PageConfig implements Serializable {
 
     private int page = 1;

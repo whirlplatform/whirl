@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 
 @SuppressWarnings("serial")
+@Data
 public class PropertyValue implements Serializable, Cloneable {
 
     private boolean replaceable = false;

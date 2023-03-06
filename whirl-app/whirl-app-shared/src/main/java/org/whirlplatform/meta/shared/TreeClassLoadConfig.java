@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared;
 
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
 @SuppressWarnings("serial")
+@Data
 public class TreeClassLoadConfig extends ClassLoadConfig {
 
     private String isLeafColumn;

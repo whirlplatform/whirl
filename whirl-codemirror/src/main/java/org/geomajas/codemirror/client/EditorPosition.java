@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.MoreObjects;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 
 /**
@@ -14,7 +13,7 @@ import java.io.Serializable;
  * Represents a CodeMirror editor position, which is identified by the zero-based line number and
  * column number.
  */
-public class EditorPosition implements Serializable, IsSerializable {
+public class EditorPosition implements Serializable {
 
     private int lineNumber;
 

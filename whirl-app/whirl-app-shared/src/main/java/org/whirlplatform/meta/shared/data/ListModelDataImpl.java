@@ -2,8 +2,10 @@ package org.whirlplatform.meta.shared.data;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class ListModelDataImpl extends RowModelDataImpl
     implements ListModelData {
 

@@ -5,19 +5,20 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "genId")
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,
     getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE)
-public class FormRowModel implements Serializable, IsSerializable, Cloneable {
+public class FormRowModel implements Serializable, Cloneable {
 
     private int row;
     private double height = -1;

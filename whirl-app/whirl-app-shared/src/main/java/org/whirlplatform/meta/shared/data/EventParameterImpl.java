@@ -1,6 +1,9 @@
 package org.whirlplatform.meta.shared.data;
 
+import lombok.Data;
+
 @SuppressWarnings("serial")
+@Data
 public class EventParameterImpl implements EventParameter {
 
     protected ParameterType type;

@@ -9,8 +9,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import lombok.Data;
 import org.whirlplatform.meta.shared.data.RowModelData;
 
+@Data
 @JsonTypeInfo(use = Id.MINIMAL_CLASS)
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,

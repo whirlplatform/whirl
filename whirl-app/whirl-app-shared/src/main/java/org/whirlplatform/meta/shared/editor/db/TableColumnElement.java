@@ -1,7 +1,7 @@
 package org.whirlplatform.meta.shared.editor.db;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
+import lombok.Data;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
@@ -9,6 +9,7 @@ import org.whirlplatform.meta.shared.editor.ElementVisitor;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 
 @SuppressWarnings("serial")
+@Data
 public class TableColumnElement extends AbstractElement implements Cloneable {
 
     private int index;
@@ -280,7 +281,7 @@ public class TableColumnElement extends AbstractElement implements Cloneable {
         visitor.visit(ctx, this);
     }
 
-    public enum Order implements Serializable, IsSerializable {
+    public enum Order implements Serializable {
 
         ASC, DESC
 

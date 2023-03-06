@@ -9,9 +9,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import lombok.Data;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 @SuppressWarnings("serial")
+@Data
 public class PlainTableElement extends DatabaseTableElement {
 
     private String tableName;

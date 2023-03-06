@@ -2,12 +2,9 @@ package org.whirlplatform.meta.shared.component;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gwt.event.shared.GwtEvent.Type;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,13 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import lombok.Data;
 import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 @SuppressWarnings("serial")
+@Data
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class ComponentModel implements Cloneable, Serializable, IsSerializable {
+public class ComponentModel implements Cloneable, Serializable {
 
     protected List<ComponentModel> children = new ArrayList<ComponentModel>();
     protected Map<String, List<EventMetadata>> events = new HashMap<>();

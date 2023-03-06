@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared.editor.db;
 
+import lombok.Data;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 @SuppressWarnings("serial")
+@Data
 public class ViewElement extends SourceElement implements Cloneable {
 
     private SchemaElement schema;

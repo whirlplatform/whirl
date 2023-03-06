@@ -1,8 +1,10 @@
 package org.whirlplatform.meta.shared.editor;
 
 import java.io.IOException;
+import lombok.Data;
 
 @SuppressWarnings("serial")
+@Data
 public class FileElement extends AbstractElement {
 
     private String fileName;

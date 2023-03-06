@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Data;
 import org.whirlplatform.meta.shared.editor.AbstractElement;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.DatabaseEvolution;
 import org.whirlplatform.meta.shared.editor.ElementVisitor;
 
 @SuppressWarnings("serial")
+@Data
 public class DataSourceElement extends AbstractElement {
 
     private ApplicationElement application;
