@@ -2,6 +2,7 @@ package org.whirlplatform.server.metadata.store.simple;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -63,14 +64,7 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
     @Override
     public List<ApplicationStoreData> all() throws MetadataStoreException {
         List<ApplicationStoreData> result = new ArrayList<>();
-        Path applicationsRoot = null;
-//        try {
-        applicationsRoot = resolveApplicationPath(null, null);
-//        } catch (IOException e) {
-//            final String message = "Cannot find applications root";
-//            log.error(message, e);
-//            throw new MetadataStoreException(message, e);
-//        }
+        Path applicationsRoot = resolveApplicationPath(null, null);
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(applicationsRoot)) {
             applicationsRoot = resolveApplicationPath(null, null);
             for (Path file : stream) {
@@ -120,8 +114,13 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
     }
 
     @Override
+    public void packageToZip(String appCode, Version appVersion, OutputStream out)
+        throws MetadataStoreException, IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Version getLastVersion(String appCode) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

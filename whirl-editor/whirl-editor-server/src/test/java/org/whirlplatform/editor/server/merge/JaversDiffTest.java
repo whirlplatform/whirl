@@ -1,6 +1,7 @@
 package org.whirlplatform.editor.server.merge;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
@@ -47,6 +48,11 @@ public class JaversDiffTest {
         @Override
         protected Path resolveApplicationPath(String appCode, Version version) {
             return null;
+        }
+
+        @Override
+        public void packageToZip(String appCode, Version appVersion, OutputStream out)
+            throws MetadataStoreException, IOException {
         }
 
         @Override
