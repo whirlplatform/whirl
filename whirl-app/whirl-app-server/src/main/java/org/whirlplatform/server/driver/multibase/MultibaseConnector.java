@@ -311,7 +311,7 @@ public class MultibaseConnector extends AbstractConnector {
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
             return new ArrayList<RowModelData>();
         }
-
+       // metadata.setViewable(true);
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 

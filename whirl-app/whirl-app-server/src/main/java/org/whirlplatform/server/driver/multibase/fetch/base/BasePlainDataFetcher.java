@@ -55,7 +55,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
         // ограничеия
         DBCommand command = temp.dbDatabase.createCommand();
         command.select(temp.dbPrimaryKey);
-        for (FieldMetadata f : temp.tableColumns.keySet()) {
+        command.select(temp.labelExpression);
+        for (FieldMetadata f : temp.tableColumns.keySet()) { // только две колонки id parent_id, нет title
             if (f.isView()) {
                 if (f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
                     DBColumnExpr expression =

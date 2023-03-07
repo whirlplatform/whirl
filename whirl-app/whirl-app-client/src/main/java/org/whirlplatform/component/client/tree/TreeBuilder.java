@@ -512,9 +512,13 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected ClassMetadata getClassMetadata() {
+        // простввить edit, view - true
         ClassMetadata metadata = new ClassMetadata(dataSourceId);
         if (parentColumn != null && !parentColumn.isEmpty()) {
-            metadata.addField(new FieldMetadata(parentColumn, DataType.STRING, null));
+            FieldMetadata fm = new FieldMetadata(parentColumn, DataType.STRING, null);
+            fm.setView(true);
+            fm.setEdit(true);
+            metadata.addField(fm);
         }
         if (imageColumn != null && !imageColumn.isEmpty()) {
             metadata.addField(new FieldMetadata(imageColumn, DataType.STRING, null));
