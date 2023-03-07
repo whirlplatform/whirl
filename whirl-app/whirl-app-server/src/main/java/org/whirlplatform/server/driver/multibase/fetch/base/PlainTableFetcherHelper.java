@@ -34,6 +34,8 @@ import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.utils.TypesUtil;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<>();
     public boolean ready = false;
@@ -49,6 +51,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public DBColumnExpr imageExpression;
     public DBColumnExpr checkExpression;
     public DBColumnExpr selectExpression;
+
+    public DBColumnExpr labelExpression;
 
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
                                    DataSourceDriver datasourceDriver) {
@@ -75,6 +79,10 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                 table.getTableName();
 
         this.dbTable = new DBTable(viewName, this.dbDatabase, "t");
+
+        this.labelExpression =
+                dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
+                        .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
 
         if (table.getIdColumn() != null) {
             // добавляем колонку первичного ключа если ее еще нет
