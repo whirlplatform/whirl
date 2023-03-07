@@ -465,14 +465,14 @@
                 <context.db.metadata.driverClass>org.postgresql.Driver</context.db.metadata.driverClass>
 
                 <!-- JDBC connection URL -->
-                <context.db.metadata.connectionURL>jdbc:postgresql://dev.whirl-platform.ru:5432/whirl
+                <context.db.metadata.connectionURL>jdbc:postgresql://localhost:5432/whirl
                 </context.db.metadata.connectionURL>
 
                 <!-- Database username -->
                 <context.db.metadata.username>whirl</context.db.metadata.username>
 
                 <!-- Database passowrd -->
-                <context.db.metadata.password>art1culation2</context.db.metadata.password>
+                <context.db.metadata.password>password</context.db.metadata.password>
 
                 <!-- Database schema to work to -->
                 <context.db.metadata.schema>whirl</context.db.metadata.schema>
