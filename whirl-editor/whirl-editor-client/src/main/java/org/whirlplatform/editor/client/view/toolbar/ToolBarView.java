@@ -118,8 +118,10 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         toggleButton.addSelectHandler(event -> disableEnableTips(toggleButton.getValue()));
         return toggleButton;
     }
+
     public static void disableEnableTips(boolean isDepressed) {
-        if(isDepressed) {
+
+        if (isDepressed) {
             HelpDecorator.enableTips();
         } else {
             HelpDecorator.disableTips();

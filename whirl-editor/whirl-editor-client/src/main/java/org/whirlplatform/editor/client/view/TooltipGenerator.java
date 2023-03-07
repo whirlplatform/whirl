@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.tips.ToolTip;
 import com.sencha.gxt.widget.core.client.tips.ToolTipConfig;
 
-public class TooltipGenerator extends ToolTip{
+public class TooltipGenerator extends ToolTip {
 
     private ToolTipConfig tipConfig;
     private PropertyEditorView.CompositeCell property;
@@ -14,10 +14,10 @@ public class TooltipGenerator extends ToolTip{
 
     public TooltipGenerator(Widget target) {
         super(target);
-        if (target instanceof PropertyEditorView.CompositeCell){
+        if (target instanceof PropertyEditorView.CompositeCell) {
             property = (PropertyEditorView.CompositeCell) target;
 
-        } else if (target instanceof PropertyEditorView){
+        } else if (target instanceof PropertyEditorView) {
             propertyEditorView = (PropertyEditorView) target;
         }
 
