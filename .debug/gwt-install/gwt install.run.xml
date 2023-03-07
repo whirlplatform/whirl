@@ -13,6 +13,7 @@
               <option value="clean" />
               <option value="install" />
               <option value="-Dmaven.test.skip" />
+              <option value="-Dgwt.skipCompilation=true" />
             </list>
           </option>
           <option name="pomFileName" />
