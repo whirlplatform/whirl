@@ -302,14 +302,14 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public List<RowModelData> getTreeClassData(ClassMetadata metadata,
+    public List<ListModelData> getTreeClassData(ClassMetadata metadata,
                                                TreeClassLoadConfig loadConfig,
                                                ApplicationUser user) {
 
         if (metadata.getClassId() == null) {
             // чтобы при использовании HorizontalMenu и MenuTreePanel без
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
-            return new ArrayList<RowModelData>();
+            return new ArrayList<ListModelData>();
         }
 
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);

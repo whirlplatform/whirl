@@ -9,6 +9,7 @@ import org.apache.empire.db.DBColumnExpr;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
@@ -38,9 +39,15 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
         }
 
         if (config instanceof TreeClassLoadConfig) {
-            TableColumnElement c =
-                table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
+            TableColumnElement c = table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
+
             // добавить проверку на наличие кол
+//            if(c.isNotNull()) {
+//
+//            } else {
+//                table.getColumn(config).
+//            }
+
             DBColumn parentColumn;
             if (this.dbTable.getColumn(c.getColumnName()).getName().equals(c.getColumnName())){
                 parentColumn = this.dbTable.getColumn(c.getColumnName());
@@ -53,13 +60,12 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
                         c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
 
-            RowModelData parent = ((TreeClassLoadConfig) config).getParent();
+            ListModelData parent = ((TreeClassLoadConfig) config).getParent();
             if (parent != null) {
                 this.where.add(createEquals(parentColumn, parent.getId()));
             } else if (StringUtils.isEmpty(query)) {
-                this.where.add(createEmpty(parentColumn));
+                this.where.add(createNotEmpty(parentColumn));
             }
         }
     }
-
 }
