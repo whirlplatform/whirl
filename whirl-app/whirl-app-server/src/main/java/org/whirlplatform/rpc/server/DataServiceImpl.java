@@ -257,8 +257,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
         return connector().getTableClassData(metadata, loadConfig, user);
     }
 
-    @Override
-    public List<RowModelData> getTreeClassData(SessionToken token, ClassMetadata metadata,
+    public List<ListModelData> getTreeClassData(SessionToken token, ClassMetadata metadata,
                                                TreeClassLoadConfig loadConfig) {
         ApplicationUser user = getApplicationUser(token);
         return connector().getTreeClassData(metadata, loadConfig, user);

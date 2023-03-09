@@ -50,7 +50,10 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
             empty.setLabel(I18NMessage.getMessage(I18NMessage.getRequestLocale()).noData());
             result.add(empty);
         }
+
         DBCommand selectCmd = createSelectListCommand(loadConfig, temp);
+        //_log.info("List creation query: " + selectCmd.getSelect());
+
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
         try (Profile p = new ProfileImpl(m)) {
             _log.debug("List select:\n" + selectCmd.getSelect());
@@ -71,33 +74,59 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
 
     protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
                                                 PlainListFetcherHelper temp) {
-        DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr valueColumn = temp.labelExpression;
-
-        DBCommand subCommand = temp.dbDatabase.createCommand();
-        subCommand.select(idColumn);
-        subCommand.select(valueColumn);
-        if (!temp.where.isEmpty()) {
-            subCommand.addWhereConstraints(temp.where);
-        }
-        subCommand.orderBy(temp.labelExpression.lower().asc());
-
-        DBQuery subQuery = new DBQuery(subCommand);
-        idColumn = subQuery.findQueryColumn(idColumn);
-        valueColumn = subQuery.findQueryColumn(valueColumn);
-
-        DBCommand topCommand = temp.dbDatabase.createCommand();
-        topCommand.select(idColumn);
-        topCommand.select(valueColumn);
 
         if (loadConfig instanceof TreeClassLoadConfig) {
+            DBColumnExpr idColumn = temp.dbPrimaryKey;
+            DBColumnExpr valueColumn = temp.labelExpression;
+
+            DBCommand subCommand = temp.dbDatabase.createCommand();
+            subCommand.select(idColumn);
+            subCommand.select(valueColumn);
+
+            if (!temp.where.isEmpty()) {
+                subCommand.addWhereConstraints(temp.where);
+            }
+            subCommand.orderBy(temp.labelExpression.lower().asc());
+
+            DBQuery subQuery = new DBQuery(subCommand);
+            idColumn = subQuery.findQueryColumn(idColumn);
+            valueColumn = subQuery.findQueryColumn(valueColumn);
+
+            DBCommand topCommand = temp.dbDatabase.createCommand();
+            topCommand.select(idColumn);
+            topCommand.select(valueColumn);
+
             if (((TreeClassLoadConfig) loadConfig).getParent() != null) {
                 subCommand.limitRows(10000);
             }
-        } else {
-            topCommand.limitRows(100);
-        }
 
-        return topCommand;
+            _log.info("Tree creation query: " + topCommand.getSelect());
+            return topCommand;
+        } else {
+            DBColumnExpr idColumn = temp.dbPrimaryKey;
+            DBColumnExpr valueColumn = temp.labelExpression;
+
+            DBCommand subCommand = temp.dbDatabase.createCommand();
+            subCommand.select(idColumn);
+            subCommand.select(valueColumn);
+
+            if (!temp.where.isEmpty()) {
+                subCommand.addWhereConstraints(temp.where);
+            }
+            subCommand.orderBy(temp.labelExpression.lower().asc());
+
+            DBQuery subQuery = new DBQuery(subCommand);
+            idColumn = subQuery.findQueryColumn(idColumn);
+            valueColumn = subQuery.findQueryColumn(valueColumn);
+
+            DBCommand topCommand = temp.dbDatabase.createCommand();
+            topCommand.select(idColumn);
+            topCommand.select(valueColumn);
+
+            topCommand.limitRows(100);
+
+            _log.info("List creation query: " + topCommand.getSelect());
+            return topCommand;
+        }
     }
 }
