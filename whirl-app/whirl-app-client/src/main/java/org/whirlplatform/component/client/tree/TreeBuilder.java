@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -322,7 +323,7 @@ public class TreeBuilder extends ComponentBuilder
         TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
             @Override
             public boolean hasChildren(ListModelData parent) {
-                return parent.<Boolean>get(isLeafColumn);
+                return Optional.ofNullable(parent.<Boolean>get(isLeafColumn)).orElse(false);
             }
 
             @Override
