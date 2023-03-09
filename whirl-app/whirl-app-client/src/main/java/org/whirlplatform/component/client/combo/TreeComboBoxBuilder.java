@@ -269,7 +269,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return metadata;
     }
 
-    protected ClassLoadConfig getLoadConfig(RowModelData parent) {
+    protected ClassLoadConfig getLoadConfig(ListModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();

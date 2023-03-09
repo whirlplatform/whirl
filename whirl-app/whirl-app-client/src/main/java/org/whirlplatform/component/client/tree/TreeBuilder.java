@@ -513,6 +513,7 @@ public class TreeBuilder extends ComponentBuilder
 
     protected ClassMetadata getClassMetadata() {
         ClassMetadata metadata = new ClassMetadata(dataSourceId);
+        metadata.setViewable(true);
         if (parentColumn != null && !parentColumn.isEmpty()) {
             FieldMetadata fm = new FieldMetadata(parentColumn, DataType.STRING, null);
             fm.setView(true);

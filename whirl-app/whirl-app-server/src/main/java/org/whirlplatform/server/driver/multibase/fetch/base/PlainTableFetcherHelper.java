@@ -22,6 +22,7 @@ import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.GroupElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
 import org.whirlplatform.meta.shared.editor.RightElement;
@@ -35,6 +36,8 @@ import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<>();
     public boolean ready = false;
@@ -45,6 +48,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public DBColumn topDbPrimaryKey;
     public List<DBCompareExpr> where = new ArrayList<DBCompareExpr>();
     public DBColumnExpr countColumn;
+    public DBColumnExpr labelExpression;
 
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
                                    DataSourceDriver datasourceDriver) {
@@ -59,6 +63,10 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     protected void prepare(ClassMetadata metadata, PlainTableElement table,
                            ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
+
+        this.labelExpression =
+                dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
+                        .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
 
         String viewName =
             table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName())
@@ -336,7 +344,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         return column.cmp(DBCmpType.NULL, null);
     }
 
-    private DBCompareExpr createNotEmpty(DBColumnExpr column) {
+    protected DBCompareExpr createNotEmpty(DBColumnExpr column) {
         return column.cmp(DBCmpType.NOTNULL, null);
     }
 

@@ -82,7 +82,7 @@ public interface DataService {
 
     @POST
     @Path("/getTreeClassData")
-    List<RowModelData> getTreeClassData(@FormParam("token") SessionToken token,
+    List<ListModelData> getTreeClassData(@FormParam("token") SessionToken token,
                                         @FormParam("metadata") ClassMetadata metadata,
                                         @FormParam("loadConfig") TreeClassLoadConfig loadConfig);
 
