@@ -121,9 +121,9 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка со ссылкой на картинку
      */
-    private String imageColumn;
+    private String imageExpression; // imageColumn
     /**
-     * Флаг, указывающий, что элемент выбираемый
+     * Флаг, указывающий, что элемент выбираемый imageColumn
      */
     private Boolean checkable;
     /**
@@ -198,8 +198,8 @@ public class TreeBuilder extends ComponentBuilder
 
             @Override
             public ImageResource getIcon(ListModelData model) {
-                if (imageColumn != null) {
-                    String data = model.get(imageColumn);
+                if (imageExpression != null) {
+                    String data = model.get(imageExpression);
                     if (data != null) {
                         SafeUri url = UriUtils.fromString(data);
                         return IconHelper.getImageResource(url, 16, 16);
@@ -246,8 +246,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode()) && value != null) {
             stateExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.ImageColumn.getCode()) && value != null) {
-            imageColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.ImageExpression.getCode()) && value != null) {
+            imageExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.SelectColumn.getCode()) && value != null) {
             selectColumn = value.getString();
@@ -517,8 +517,8 @@ public class TreeBuilder extends ComponentBuilder
             fm.setView(true);
             metadata.addField(fm);
         }
-        if (imageColumn != null && !imageColumn.isEmpty()) {
-            metadata.addField(new FieldMetadata(imageColumn, DataType.STRING, null));
+        if (imageExpression != null && !imageExpression.isEmpty()) {
+            metadata.addField(new FieldMetadata(imageExpression, DataType.STRING, null));
         }
         return metadata;
     }
