@@ -6,7 +6,7 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 public class TreeClassLoadConfig extends ClassLoadConfig {
 
     private String isLeafColumn;
-    private String stateColumn;
+    private String stateExpression;
     private String checkExpression;
     // New property
     private String selectColumn;
@@ -34,12 +34,12 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.isLeafColumn = leafExpression;
     }
 
-    public String getStateColumn() {
-        return stateColumn;
+    public String getStateExpression() {
+        return stateExpression;
     }
 
-    public void setStateColumn(String stateColumn) {
-        this.stateColumn = stateColumn;
+    public void setStateExpression(String stateExpression) {
+        this.stateExpression = stateExpression;
     }
 
     public String getCheckExpression() {
