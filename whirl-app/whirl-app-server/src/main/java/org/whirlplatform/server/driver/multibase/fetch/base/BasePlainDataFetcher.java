@@ -47,7 +47,7 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
                                             PlainTableFetcherHelper temp) {
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
-            if (((TreeClassLoadConfig) loadConfig).getParentColumn() != null
+            if (((TreeClassLoadConfig) loadConfig).getParentExpression() != null
                 && ((TreeClassLoadConfig) loadConfig).getParent() != null) {
                 all = true;
             }

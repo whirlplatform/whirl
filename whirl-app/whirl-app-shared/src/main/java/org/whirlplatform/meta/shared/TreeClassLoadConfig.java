@@ -1,6 +1,6 @@
 package org.whirlplatform.meta.shared;
 
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.ListModelData;
 
 @SuppressWarnings("serial")
 public class TreeClassLoadConfig extends ClassLoadConfig {
@@ -11,8 +11,8 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
     // New property
     private String selectColumn;
     private String labelExpression;
-    private String parentColumn;
-    private RowModelData parent;
+    private String parentExpression;
+    private ListModelData parent;
 
     public TreeClassLoadConfig() {
         super();
@@ -58,19 +58,19 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.labelExpression = labelExpression;
     }
 
-    public String getParentColumn() {
-        return parentColumn;
+    public String getParentExpression() {
+        return parentExpression;
     }
 
-    public void setParentColumn(String parentColumn) {
-        this.parentColumn = parentColumn;
+    public void setParentExpression(String parentExpression) {
+        this.parentExpression = parentExpression;
     }
 
-    public RowModelData getParent() {
+    public ListModelData getParent() {
         return parent;
     }
 
-    public void setParent(RowModelData parent) {
+    public void setParent(ListModelData parent) {
         this.parent = parent;
     }
 }

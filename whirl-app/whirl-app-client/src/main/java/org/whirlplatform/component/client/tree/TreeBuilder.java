@@ -37,11 +37,7 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import com.sencha.gxt.widget.core.client.tree.TreeSelectionModel;
 import com.sencha.gxt.widget.core.client.tree.TreeView;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -109,7 +105,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка родителя
      */
-    private String parentColumn;
+    private String parentExpression; // parentColumn
     /**
      * Колонка со значением для чекбокса (checked/unchecked)
      */
@@ -241,8 +237,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
             isLeafColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.ParentColumn.getCode()) && value != null) {
-            parentColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.ParentExpression.getCode()) && value != null) {
+            parentExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode()) && value != null) {
             checkColumn = value.getString();
@@ -322,7 +318,8 @@ public class TreeBuilder extends ComponentBuilder
         TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
             @Override
             public boolean hasChildren(ListModelData parent) {
-                return parent.<Boolean>get(isLeafColumn);
+                return Optional.ofNullable(parent.<Boolean>get(isLeafColumn)).orElse(true);
+
             }
 
             @Override
@@ -355,7 +352,7 @@ public class TreeBuilder extends ComponentBuilder
             hasChanged = false;
             for (ListModelData m : models) {
 
-                String parentId = m.get(parentColumn);
+                String parentId = m.get(parentExpression);
                 if (added.containsKey(m.getId())) {
                     continue;
                 }
@@ -514,10 +511,10 @@ public class TreeBuilder extends ComponentBuilder
     protected ClassMetadata getClassMetadata() {
         // простввить edit, view - true
         ClassMetadata metadata = new ClassMetadata(dataSourceId);
-        if (parentColumn != null && !parentColumn.isEmpty()) {
-            FieldMetadata fm = new FieldMetadata(parentColumn, DataType.STRING, null);
+        metadata.setViewable(true);
+        if (parentExpression != null && !parentExpression.isEmpty()) {
+            FieldMetadata fm = new FieldMetadata(parentExpression, DataType.STRING, null);
             fm.setView(true);
-            fm.setEdit(true);
             metadata.addField(fm);
         }
         if (imageColumn != null && !imageColumn.isEmpty()) {
@@ -534,7 +531,7 @@ public class TreeBuilder extends ComponentBuilder
         config.setStateColumn(stateColumn);
         config.setCheckColumn(checkColumn);
         config.setSelectColumn(selectColumn);
-        config.setParentColumn(parentColumn);
+        config.setParentExpression(parentExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setLabelExpression(labelExpression);
