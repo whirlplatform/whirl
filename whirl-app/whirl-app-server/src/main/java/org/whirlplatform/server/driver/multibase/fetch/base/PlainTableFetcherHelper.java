@@ -64,9 +64,8 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                            ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
 
-        this.labelExpression =
-                dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
-                        .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
+        this.labelExpression = dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
+                        .as(LABEL_EXPRESSION_NAME);
 
         String viewName =
             table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName())
