@@ -334,7 +334,7 @@ public class ComponentProperties {
                         add(PropertyType.SingleSelection);
                         add(PropertyType.WhereSql);
                         add(PropertyType.CheckStyle);
-                        add(PropertyType.ImageColumn);
+                        add(PropertyType.ImageExpression);
                         add(PropertyType.Parameters);
                         add(PropertyType.SearchField);
                         add(PropertyType.MinChars);

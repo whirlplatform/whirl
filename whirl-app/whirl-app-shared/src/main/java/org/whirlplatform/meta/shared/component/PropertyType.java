@@ -136,7 +136,7 @@ public enum PropertyType implements Serializable {
     Url("Url", DataType.STRING, true),
     WhereSql("WhereSql", DataType.STRING, false, true),
     EventColumn("EventColumn", DataType.STRING, false, true),
-    ImageColumn("ImageColumn", DataType.STRING, false, true),
+    ImageExpression("ImageExpression", DataType.STRING, false, true),
     Collapsible("Collapsible", DataType.BOOLEAN, false),
     ReportDataType("ReportDataType", DataType.STRING, false),
     ReportDataFormat("ReportDataFormat", DataType.STRING, false),
