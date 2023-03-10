@@ -113,7 +113,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка хранящая состояние выбора
      */
-    private String selectColumn;
+    private String selectExpression; // selectColumn
     /**
      * Колонка со значением для ветки (expand/collapse)
      */
@@ -249,8 +249,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.ImageExpression.getCode()) && value != null) {
             imageExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.SelectColumn.getCode()) && value != null) {
-            selectColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.SelectExpression.getCode()) && value != null) {
+            selectExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Checkable.getCode()) && value != null) {
             checkable = Boolean.TRUE.equals(value.getBoolean());
@@ -481,7 +481,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected void restoreState(List<ListModelData> list) {
-        if (checkExpression == null && stateExpression == null && selectColumn == null) {
+        if (checkExpression == null && stateExpression == null && selectExpression == null) {
             return;
         }
         ListModelData firstChecked = null;
@@ -497,7 +497,7 @@ public class TreeBuilder extends ComponentBuilder
             if (m.<Boolean>get(stateExpression) && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
-            if (m.<Boolean>get(selectColumn)) {
+            if (m.<Boolean>get(selectExpression)) {
                 // tree.getSelectionModel().setSelection(Arrays.asList(m));
                 tree.getSelectionModel().select(m, true);
 
@@ -530,7 +530,7 @@ public class TreeBuilder extends ComponentBuilder
         config.setIsLeafExpression(isLeafExpression);
         config.setStateExpression(stateExpression);
         config.setCheckExpression(checkExpression);
-        config.setSelectColumn(selectColumn);
+        config.setSelectExpression(selectExpression);
         config.setParentExpression(parentExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);

@@ -9,7 +9,7 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
     private String stateExpression;
     private String checkExpression;
     // New property
-    private String selectColumn;
+    private String selectExpression;
     private String labelExpression;
     private String parentExpression;
     private ListModelData parent;
@@ -18,12 +18,12 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         super();
     }
 
-    public String getSelectColumn() {
-        return selectColumn;
+    public String getSelectExpression() {
+        return selectExpression;
     }
 
-    public void setSelectColumn(String selectExpression) {
-        this.selectColumn = selectExpression;
+    public void setSelectExpression(String selectExpression) {
+        this.selectExpression = selectExpression;
     }
 
     public String getIsLeafExpression() {
