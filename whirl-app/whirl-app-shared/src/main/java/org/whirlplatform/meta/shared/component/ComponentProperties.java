@@ -320,7 +320,7 @@ public class ComponentProperties {
                 put(ComponentType.TreePanelType.getType(), new HashSet<PropertyType>() {
                     {
                         add(PropertyType.LabelExpression);
-                        add(PropertyType.SelectColumn);
+                        add(PropertyType.SelectExpression);
                         add(PropertyType.DataSource);
                         add(PropertyType.IsLeafExpression);
                         add(PropertyType.ParentExpression);
