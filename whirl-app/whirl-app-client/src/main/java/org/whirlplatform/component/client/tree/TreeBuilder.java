@@ -117,7 +117,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка со значением для ветки (expand/collapse)
      */
-    private String stateColumn;
+    private String stateExpression; // stateColumn
     /**
      * Колонка со ссылкой на картинку
      */
@@ -243,8 +243,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode()) && value != null) {
             checkExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.StateColumn.getCode()) && value != null) {
-            stateColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode()) && value != null) {
+            stateExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ImageColumn.getCode()) && value != null) {
             imageColumn = value.getString();
@@ -481,7 +481,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected void restoreState(List<ListModelData> list) {
-        if (checkExpression == null && stateColumn == null && selectColumn == null) {
+        if (checkExpression == null && stateExpression == null && selectColumn == null) {
             return;
         }
         ListModelData firstChecked = null;
@@ -494,7 +494,7 @@ public class TreeBuilder extends ComponentBuilder
                 tree.setChecked(m, CheckState.CHECKED);
             }
             // Раскрываем ветку
-            if (m.<Boolean>get(stateColumn) && !tree.isLeaf(m)) {
+            if (m.<Boolean>get(stateExpression) && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
             if (m.<Boolean>get(selectColumn)) {
@@ -528,7 +528,7 @@ public class TreeBuilder extends ComponentBuilder
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafColumn(isLeafColumn);
-        config.setStateColumn(stateColumn);
+        config.setStateExpression(stateExpression);
         config.setCheckExpression(checkExpression);
         config.setSelectColumn(selectColumn);
         config.setParentExpression(parentExpression);
