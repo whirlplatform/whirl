@@ -123,7 +123,7 @@ public class TreeBuilder extends ComponentBuilder
      */
     private String imageExpression; // imageColumn
     /**
-     * Флаг, указывающий, что элемент выбираемый imageColumn
+     * Флаг, указывающий, что элемент выбираемый imageExpression
      */
     private Boolean checkable;
     /**
