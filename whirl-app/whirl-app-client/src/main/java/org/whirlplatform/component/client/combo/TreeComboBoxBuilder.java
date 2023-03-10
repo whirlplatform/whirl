@@ -67,7 +67,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
      */
     protected String parentExpression;
     protected String isLeafColumn;
-    private String stateColumn;
+    private String stateExpression;
     private TreeStore<ListModelData> store;
 
     @JsConstructor
@@ -197,8 +197,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                 comboBox.setSingleSelectionCheckMode();
             }
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.StateColumn.getCode())) {
-            stateColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode())) {
+            stateExpression = value.getString();
             return true;
         }
         return super.setProperty(name, value);
@@ -283,7 +283,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
         config.setParameters(params);
         config.setIsLeafColumn(isLeafColumn);
-        config.setStateColumn(stateColumn);
+        config.setStateExpression(stateExpression);
         config.setParentExpression(parentExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);
@@ -397,12 +397,12 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     }
 
     private void restoreState(List<ListModelData> models) {
-        if (stateColumn == null) {
+        if (stateExpression == null) {
             return;
         }
         Tree<ListModelData, String> tree = comboBox.getTree();
         for (ListModelData m : models) {
-            if (m.<Boolean>get(stateColumn) && tree.findNode(m) != null && !tree.isLeaf(m)) {
+            if (m.<Boolean>get(stateExpression) && tree.findNode(m) != null && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
         }
