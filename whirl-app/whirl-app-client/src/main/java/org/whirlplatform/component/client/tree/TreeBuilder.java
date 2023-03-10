@@ -109,7 +109,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка со значением для чекбокса (checked/unchecked)
      */
-    private String checkColumn;
+    private String checkExpression; // checkColumn
     /**
      * Колонка хранящая состояние выбора
      */
@@ -240,8 +240,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.ParentExpression.getCode()) && value != null) {
             parentExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode()) && value != null) {
-            checkColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode()) && value != null) {
+            checkExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.StateColumn.getCode()) && value != null) {
             stateColumn = value.getString();
@@ -481,13 +481,13 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected void restoreState(List<ListModelData> list) {
-        if (checkColumn == null && stateColumn == null && selectColumn == null) {
+        if (checkExpression == null && stateColumn == null && selectColumn == null) {
             return;
         }
         ListModelData firstChecked = null;
         for (ListModelData m : list) {
             // Отмечаем чекбокс
-            if (m.<Boolean>get(checkColumn)) {
+            if (m.<Boolean>get(checkExpression)) {
                 if (firstChecked == null) {
                     firstChecked = m;
                 }
@@ -529,7 +529,7 @@ public class TreeBuilder extends ComponentBuilder
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafColumn(isLeafColumn);
         config.setStateColumn(stateColumn);
-        config.setCheckColumn(checkColumn);
+        config.setCheckExpression(checkExpression);
         config.setSelectColumn(selectColumn);
         config.setParentExpression(parentExpression);
         config.setParent(parent);

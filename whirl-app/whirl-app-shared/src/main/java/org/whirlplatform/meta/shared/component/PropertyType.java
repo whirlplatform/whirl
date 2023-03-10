@@ -61,7 +61,7 @@ public enum PropertyType implements Serializable {
     Alt("Alt", DataType.BOOLEAN, false),
     BoxLabel("BoxLabel", DataType.STRING, true),
     Checkable("Checkable", DataType.BOOLEAN, false),
-    CheckColumn("CheckColumn", DataType.STRING, false, true),
+    CheckExpression("CheckExpression", DataType.STRING, false, true),
     SelectColumn("SelectColumn", DataType.STRING, false),
     CheckStyle("CheckStyle", DataType.STRING, false, true),
     GroupName("GroupName", DataType.STRING, true, true),

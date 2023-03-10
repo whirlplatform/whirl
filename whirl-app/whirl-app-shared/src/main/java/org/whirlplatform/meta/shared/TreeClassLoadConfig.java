@@ -7,7 +7,7 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
 
     private String isLeafColumn;
     private String stateColumn;
-    private String checkColumn;
+    private String checkExpression;
     // New property
     private String selectColumn;
     private String labelExpression;
@@ -42,12 +42,12 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.stateColumn = stateColumn;
     }
 
-    public String getCheckColumn() {
-        return checkColumn;
+    public String getCheckExpression() {
+        return checkExpression;
     }
 
-    public void setCheckColumn(String checkColumn) {
-        this.checkColumn = checkColumn;
+    public void setCheckExpression(String checkExpression) {
+        this.checkExpression = checkExpression;
     }
 
     public String getLabelExpression() {
