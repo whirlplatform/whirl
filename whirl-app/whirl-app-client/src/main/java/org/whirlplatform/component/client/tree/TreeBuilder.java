@@ -92,7 +92,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Выражение для вычисления наличия родителей
      */
-    protected String isLeafColumn;
+    protected String isLeafExpression; // isLeafColumn
     protected boolean restoreState;
     protected StorageWrapper<RowListValue> stateStore;
     protected StateStore<RowListValue> selectionStateStore;
@@ -234,8 +234,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode()) && value != null) {
             labelExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode()) && value != null) {
-            isLeafColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.IsLeafExpression.getCode()) && value != null) {
+            isLeafExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ParentExpression.getCode()) && value != null) {
             parentExpression = value.getString();
@@ -318,7 +318,7 @@ public class TreeBuilder extends ComponentBuilder
         TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
             @Override
             public boolean hasChildren(ListModelData parent) {
-                return Optional.ofNullable(parent.<Boolean>get(isLeafColumn)).orElse(true);
+                return Optional.ofNullable(parent.<Boolean>get(isLeafExpression)).orElse(true);
 
             }
 
@@ -527,7 +527,7 @@ public class TreeBuilder extends ComponentBuilder
     protected TreeClassLoadConfig getLoadConfig(ListModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
-        config.setIsLeafColumn(isLeafColumn);
+        config.setIsLeafExpression(isLeafExpression);
         config.setStateExpression(stateExpression);
         config.setCheckExpression(checkExpression);
         config.setSelectColumn(selectColumn);
