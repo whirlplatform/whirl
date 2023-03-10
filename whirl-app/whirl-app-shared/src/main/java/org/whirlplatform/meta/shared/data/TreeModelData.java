@@ -1,6 +1,6 @@
 package org.whirlplatform.meta.shared.data;
 
-public interface TreeModelData {
+public interface TreeModelData extends ListModelData {
 
         String getParent();
         void setParent(String parentId);

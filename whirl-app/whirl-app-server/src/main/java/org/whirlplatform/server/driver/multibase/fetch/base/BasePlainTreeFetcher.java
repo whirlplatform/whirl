@@ -1,20 +1,33 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.empire.db.DBColumnExpr;
+import org.apache.empire.db.DBCommand;
+import org.apache.empire.db.DBQuery;
+import org.apache.empire.db.DBReader;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
+import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.TreeFetcher;
+import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
+import org.whirlplatform.server.log.Profile;
+import org.whirlplatform.server.log.impl.ProfileImpl;
+import org.whirlplatform.server.log.impl.TableDataMessage;
 
 public class BasePlainTreeFetcher extends BasePlainListFetcher
     implements TreeFetcher<PlainTableElement> {
-    private static Logger logger = LoggerFactory.getLogger(BasePlainTreeFetcher.class);
+    private static Logger _log = LoggerFactory.getLogger(BasePlainTreeFetcher.class);
 
     public BasePlainTreeFetcher(ConnectionWrapper connection, DataSourceDriver fetcher) {
         super(connection, fetcher);
@@ -26,11 +39,11 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         PlainTreeFetcherHelper temp = new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, config);
 
-        List<ListModelData> result = new ArrayList<ListModelData>();
+        List<TreeModelData> result = new ArrayList<TreeModelData>();
 
         // Добавление пустой записи, если надо
         if (table.isEmptyRow()) {
-            ListModelData empty = new ListModelDataImpl();
+            TreeModelData empty = new TreeModelDataImpl();
             empty.setId(null);
             empty.setLabel(I18NMessage.getMessage(I18NMessage.getRequestLocale()).noData());
             result.add(empty);
@@ -46,7 +59,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
             DBReader selectReader = createAndOpenReader(selectCmd);
             while (selectReader.moveNext()) {
-                ListModelData model = new ListModelDataImpl();
+                TreeModelData model = new TreeModelDataImpl();
 
                 // TODO: Доставать не по индексам
                 model.setId(selectReader.getString(0));
@@ -54,7 +67,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
                 result.add(model);
             }
             selectReader.close();
-            List<ListModelData> data = new ArrayList<ListModelData>(result);
+            List<TreeModelData> data = new ArrayList<TreeModelData>(result);
             return data;
         }
     }
