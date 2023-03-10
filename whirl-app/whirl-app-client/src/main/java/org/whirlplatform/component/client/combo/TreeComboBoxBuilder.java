@@ -49,7 +49,6 @@ import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.data.RowListValue;
 import org.whirlplatform.meta.shared.data.RowListValueImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.data.RowValue;
 import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
@@ -66,7 +65,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     /**
      * Колонка указывающая на родителя.
      */
-    protected String parentColumn;
+    protected String parentExpression;
     protected String isLeafColumn;
     private String stateColumn;
     private TreeStore<ListModelData> store;
@@ -152,7 +151,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
             hasChanged = false;
             for (ListModelData m : models) {
 
-                String parentId = m.get(parentColumn);
+                String parentId = m.get(parentExpression);
                 if (added.containsKey(m.getId())) {
                     continue;
                 }
@@ -182,8 +181,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode())) {
             isLeafColumn = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.ParentColumn.getCode())) {
-            parentColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.ParentExpression.getCode())) {
+            parentExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.WhereSql.getCode())) {
             whereSql = value.getString();
@@ -285,7 +284,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         config.setParameters(params);
         config.setIsLeafColumn(isLeafColumn);
         config.setStateColumn(stateColumn);
-        config.setParentColumn(parentColumn);
+        config.setParentExpression(parentExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setAll(true);

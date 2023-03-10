@@ -109,7 +109,7 @@ public enum PropertyType implements Serializable {
     Code("Code", DataType.STRING, false, true),
 
     LabelExpression("LabelExpression", DataType.STRING, false, true),
-    ParentColumn("ParentColumn", DataType.STRING, false, true),
+    ParentExpression("ParentExpression", DataType.STRING, false, true),
     Period("Period", DataType.NUMBER, false),
     ReadOnly("ReadOnly", DataType.BOOLEAN, false),
     RegEx("RegEx", DataType.STRING, false),
