@@ -48,7 +48,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     ListParameter<RowListValue>, HasState {
 
     private String labelExpression;
-    private String checkColumn;
+    private String checkExpression;
     private String checkedIds;
     private HandlerRegistration checkedRegistration;
     private String whereSql;
@@ -102,15 +102,15 @@ public class CheckGroupBuilder extends ComponentBuilder implements
 
             @Override
             public void setValue(RowModelData object, Boolean value) {
-                if (checkColumn != null) {
-                    object.set(checkColumn, value);
+                if (checkExpression != null) {
+                    object.set(checkExpression, value);
                 }
             }
 
             @Override
             public Boolean getValue(RowModelData object) {
-                if (checkColumn != null) {
-                    return object.get(checkColumn);
+                if (checkExpression != null) {
+                    return object.get(checkExpression);
                 }
                 return null;
             }
@@ -162,8 +162,8 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
             labelExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode())) {
-            checkColumn = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode())) {
+            checkExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.StringValue.getCode())) {
             checkedIds = value.getString();
@@ -199,8 +199,8 @@ public class CheckGroupBuilder extends ComponentBuilder implements
      * Инициализация списка CheckGroup
      */
     private void initStore() {
-        if (checkColumn != null) {
-            metadata.addField(new FieldMetadata(checkColumn, DataType.BOOLEAN,
+        if (checkExpression != null) {
+            metadata.addField(new FieldMetadata(checkExpression, DataType.BOOLEAN,
                 null));
         }
         store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
