@@ -22,6 +22,7 @@ import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.GroupElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
 import org.whirlplatform.meta.shared.editor.RightElement;
@@ -47,7 +48,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public DBColumn topDbPrimaryKey;
     public List<DBCompareExpr> where = new ArrayList<DBCompareExpr>();
     public DBColumnExpr countColumn;
-
     public DBColumnExpr labelExpression;
 
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
@@ -64,16 +64,15 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                            ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
 
+        this.labelExpression = dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
+                        .as(LABEL_EXPRESSION_NAME);
+
         String viewName =
             table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName())
                 ? table.getView().getViewName() :
                 table.getTableName();
 
         this.dbTable = new DBTable(viewName, this.dbDatabase, "t");
-
-        this.labelExpression =
-                dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
-                        .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
 
         if (table.getIdColumn() != null) {
             // добавляем колонку первичного ключа если ее еще нет
@@ -344,7 +343,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         return column.cmp(DBCmpType.NULL, null);
     }
 
-    private DBCompareExpr createNotEmpty(DBColumnExpr column) {
+    protected DBCompareExpr createNotEmpty(DBColumnExpr column) {
         return column.cmp(DBCmpType.NOTNULL, null);
     }
 

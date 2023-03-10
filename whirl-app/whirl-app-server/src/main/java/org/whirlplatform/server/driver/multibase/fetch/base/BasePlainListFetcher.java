@@ -50,8 +50,12 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
             empty.setLabel(I18NMessage.getMessage(I18NMessage.getRequestLocale()).noData());
             result.add(empty);
         }
+
         DBCommand selectCmd = createSelectListCommand(loadConfig, temp);
+        _log.info("List creation query: " + selectCmd.getSelect());
+
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
+
         try (Profile p = new ProfileImpl(m)) {
             _log.debug("List select:\n" + selectCmd.getSelect());
             DBReader selectReader = createAndOpenReader(selectCmd);
@@ -77,6 +81,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
         subCommand.select(valueColumn);
+
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
         }
@@ -90,13 +95,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
         topCommand.select(idColumn);
         topCommand.select(valueColumn);
 
-        if (loadConfig instanceof TreeClassLoadConfig) {
-            if (((TreeClassLoadConfig) loadConfig).getParent() != null) {
-                subCommand.limitRows(10000);
-            }
-        } else {
-            topCommand.limitRows(100);
-        }
+        topCommand.limitRows(100);
 
         return topCommand;
     }

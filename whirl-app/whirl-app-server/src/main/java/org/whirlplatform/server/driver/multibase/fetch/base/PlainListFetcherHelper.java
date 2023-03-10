@@ -9,6 +9,7 @@ import org.apache.empire.db.DBColumnExpr;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
+import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
@@ -28,38 +29,9 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.labelExpression =
-            dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
-                .as(metadata.getTitle() + LABEL_EXPRESSION_NAME);
-
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
             this.where.add(createContainsForCombobox(this.labelExpression, query));
         }
-
-        if (config instanceof TreeClassLoadConfig) {
-            TableColumnElement c =
-                table.getColumn(((TreeClassLoadConfig) config).getParentExpression());
-            // добавить проверку на наличие кол
-            DBColumn parentExpression;
-            if (this.dbTable.getColumn(c.getColumnName()).getName().equals(c.getColumnName())){
-                parentExpression = this.dbTable.getColumn(c.getColumnName());
-            } else {
-                parentExpression = this.dbTable.addColumn(c.getColumnName(),
-                        TypesUtil.toEmpireType(c.getType(),
-                                c.getListTable() == null ? null
-                                        : getDataSourceDriver().createDataFetcher(c.getListTable())
-                                        .getIdColumnType(table)),
-                        c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
-            }
-
-            RowModelData parent = ((TreeClassLoadConfig) config).getParent();
-            if (parent != null) {
-                this.where.add(createEquals(parentExpression, parent.getId()));
-            } else if (StringUtils.isEmpty(query)) {
-                this.where.add(createEmpty(parentExpression));
-            }
-        }
     }
-
 }
