@@ -91,7 +91,7 @@ public enum PropertyType implements Serializable {
     HideTrigger("HideTrigger", DataType.BOOLEAN, false),
     Key("Key", DataType.STRING, false, true),
     KeyValidate("KeyValidate", DataType.BOOLEAN, false),
-    IsLeafColumn("IsLeafColumn", DataType.STRING, false, true),
+    IsLeafExpression("IsLeafExpression", DataType.STRING, false, true),
     SkipInitialLoad("SkipInitialLoad", DataType.BOOLEAN, false, true),
     LoadAll("LoadAll", DataType.BOOLEAN, false),
     MaxLength("MaxLength", DataType.NUMBER, false),

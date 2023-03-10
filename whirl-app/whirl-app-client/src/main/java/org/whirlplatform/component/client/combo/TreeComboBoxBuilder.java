@@ -66,7 +66,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
      * Колонка указывающая на родителя.
      */
     protected String parentExpression;
-    protected String isLeafColumn;
+    protected String isLeafExpression;
     private String stateExpression;
     private TreeStore<ListModelData> store;
 
@@ -118,7 +118,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         TreeLoader<ListModelData> ldr = new TreeLoader<ListModelData>(proxy) {
             @Override
             public boolean hasChildren(ListModelData parent) {
-                return parent.<Boolean>get(isLeafColumn);
+                return parent.<Boolean>get(isLeafExpression);
             }
 
             @Override
@@ -178,8 +178,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
-        if (name.equalsIgnoreCase(PropertyType.IsLeafColumn.getCode())) {
-            isLeafColumn = value.getString();
+        if (name.equalsIgnoreCase(PropertyType.IsLeafExpression.getCode())) {
+            isLeafExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ParentExpression.getCode())) {
             parentExpression = value.getString();
@@ -282,7 +282,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         }
 
         config.setParameters(params);
-        config.setIsLeafColumn(isLeafColumn);
+        config.setIsLeafExpression(isLeafExpression);
         config.setStateExpression(stateExpression);
         config.setParentExpression(parentExpression);
         config.setParent(parent);

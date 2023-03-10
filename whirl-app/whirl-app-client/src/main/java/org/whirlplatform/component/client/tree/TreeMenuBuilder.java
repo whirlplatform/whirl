@@ -201,8 +201,8 @@ public class TreeMenuBuilder extends TreeBuilder
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
                 if (getClassMetadata().getClassId() != null
-                    && parent.getProperties().containsKey(isLeafColumn)) {
-                    return parent.<Boolean>get(isLeafColumn);
+                    && parent.getProperties().containsKey(isLeafExpression)) {
+                    return parent.<Boolean>get(isLeafExpression);
                 } else {
                     HorizontalMenuItemBuilder cb = (HorizontalMenuItemBuilder) findBuilder(parent);
                     return cb != null && cb.getChildren().length > 0;
