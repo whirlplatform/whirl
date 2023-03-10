@@ -301,7 +301,7 @@ public class ComponentProperties {
                         add(PropertyType.DataSource);
                         add(PropertyType.StringValue);
                         add(PropertyType.DisplayValue);
-                        add(PropertyType.IsLeafColumn);
+                        add(PropertyType.IsLeafExpression);
                         add(PropertyType.StateExpression);
                         add(PropertyType.ParentExpression);
                         add(PropertyType.StateScope);
@@ -322,7 +322,7 @@ public class ComponentProperties {
                         add(PropertyType.LabelExpression);
                         add(PropertyType.SelectColumn);
                         add(PropertyType.DataSource);
-                        add(PropertyType.IsLeafColumn);
+                        add(PropertyType.IsLeafExpression);
                         add(PropertyType.ParentExpression);
                         add(PropertyType.CheckExpression);
                         add(PropertyType.StateExpression);
