@@ -303,7 +303,7 @@ public class ComponentProperties {
                         add(PropertyType.DisplayValue);
                         add(PropertyType.IsLeafColumn);
                         add(PropertyType.StateColumn);
-                        add(PropertyType.ParentColumn);
+                        add(PropertyType.ParentExpression);
                         add(PropertyType.StateScope);
                         add(PropertyType.SaveState);
                         add(PropertyType.RestoreState);
@@ -323,7 +323,7 @@ public class ComponentProperties {
                         add(PropertyType.SelectColumn);
                         add(PropertyType.DataSource);
                         add(PropertyType.IsLeafColumn);
-                        add(PropertyType.ParentColumn);
+                        add(PropertyType.ParentExpression);
                         add(PropertyType.CheckColumn);
                         add(PropertyType.StateColumn);
                         add(PropertyType.Checkable);

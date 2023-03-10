@@ -43,14 +43,14 @@ public abstract class AbstractPlainDataFetcher extends AbstractMultiFetcher {
                                       PlainTableFetcherHelper temp) {
         // Колонка родителя в иерархии
 
-        String parentField = loadConfig.getParentColumn();
+        String parentField = loadConfig.getParentExpression();
         if (!StringUtils.isEmpty(parentField)) {
             RowModelData parent = loadConfig.getParent();
-            DBColumn parentColumn = temp.dbTable.getColumn(parentField);
+            DBColumn parentExpression = temp.dbTable.getColumn(parentField);
             if (parent != null) {
-                whereCmd.where(parentColumn.is(parent.getId()));
+                whereCmd.where(parentExpression.is(parent.getId()));
             } else {
-                whereCmd.where(parentColumn.cmp(DBCmpType.NULL, null));
+                whereCmd.where(parentExpression.cmp(DBCmpType.NULL, null));
             }
         }
     }
