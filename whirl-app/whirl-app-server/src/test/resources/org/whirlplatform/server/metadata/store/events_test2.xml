@@ -3551,7 +3551,7 @@ ${function}(ctx){
                         <value locale="ru" type="NUMBER">2.0</value>
                       </locales>
                     </property>
-                    <property name="ParentColumn" type="STRING" replace="false">
+                    <property name="ParentExpression" type="STRING" replace="false">
                       <defaultLocale locale="ru"/>
                       <locales>
                         <value locale="ru" type="STRING"><![CDATA[DFPARENT]]></value>

@@ -99,7 +99,7 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         boolean all = loadConfig.isAll();
         if (loadConfig instanceof TreeClassLoadConfig) {
             TreeClassLoadConfig tmpConf = (TreeClassLoadConfig) loadConfig;
-            if ((tmpConf.getParentColumn() != null && tmpConf.getParent() != null)
+            if ((tmpConf.getParentExpression() != null && tmpConf.getParent() != null)
                 || StringUtils.isEmpty(tmpConf.getQuery())) {
                 all = true;
             }

@@ -39,20 +39,14 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
         }
 
         if (config instanceof TreeClassLoadConfig) {
-            TableColumnElement c = table.getColumn(((TreeClassLoadConfig) config).getParentColumn());
-
+            TableColumnElement c =
+                table.getColumn(((TreeClassLoadConfig) config).getParentExpression());
             // добавить проверку на наличие кол
-//            if(c.isNotNull()) {
-//
-//            } else {
-//                table.getColumn(config).
-//            }
-
-            DBColumn parentColumn;
+            DBColumn parentExpression;
             if (this.dbTable.getColumn(c.getColumnName()).getName().equals(c.getColumnName())){
-                parentColumn = this.dbTable.getColumn(c.getColumnName());
+                parentExpression = this.dbTable.getColumn(c.getColumnName());
             } else {
-                parentColumn = this.dbTable.addColumn(c.getColumnName(),
+                parentExpression = this.dbTable.addColumn(c.getColumnName(),
                         TypesUtil.toEmpireType(c.getType(),
                                 c.getListTable() == null ? null
                                         : getDataSourceDriver().createDataFetcher(c.getListTable())
@@ -62,10 +56,11 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
             ListModelData parent = ((TreeClassLoadConfig) config).getParent();
             if (parent != null) {
-                this.where.add(createEquals(parentColumn, parent.getId()));
+                this.where.add(createEquals(parentExpression, parent.getId()));
             } else if (StringUtils.isEmpty(query)) {
-                this.where.add(createNotEmpty(parentColumn));
+                this.where.add(createEmpty(parentExpression));
             }
         }
     }
+
 }

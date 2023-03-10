@@ -11,7 +11,7 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
     // New property
     private String selectColumn;
     private String labelExpression;
-    private String parentColumn;
+    private String parentExpression;
     private ListModelData parent;
 
     public TreeClassLoadConfig() {
@@ -58,12 +58,12 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
         this.labelExpression = labelExpression;
     }
 
-    public String getParentColumn() {
-        return parentColumn;
+    public String getParentExpression() {
+        return parentExpression;
     }
 
-    public void setParentColumn(String parentColumn) {
-        this.parentColumn = parentColumn;
+    public void setParentExpression(String parentExpression) {
+        this.parentExpression = parentExpression;
     }
 
     public ListModelData getParent() {
