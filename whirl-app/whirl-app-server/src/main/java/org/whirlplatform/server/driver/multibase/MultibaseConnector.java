@@ -309,6 +309,7 @@ public class MultibaseConnector extends AbstractConnector {
         if (metadata.getClassId() == null) {
             // чтобы при использовании HorizontalMenu и MenuTreePanel без
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
+
             return new ArrayList<ListModelData>();
         }
 
