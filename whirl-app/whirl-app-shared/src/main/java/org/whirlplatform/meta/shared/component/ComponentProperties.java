@@ -240,7 +240,7 @@ public class ComponentProperties {
                     {
                         add(PropertyType.DataSource);
                         add(PropertyType.LabelExpression);
-                        add(PropertyType.CheckColumn);
+                        add(PropertyType.CheckExpression);
                         add(PropertyType.StringValue);
                         add(PropertyType.WhereSql);
                         add(PropertyType.StateScope);
@@ -324,7 +324,7 @@ public class ComponentProperties {
                         add(PropertyType.DataSource);
                         add(PropertyType.IsLeafColumn);
                         add(PropertyType.ParentExpression);
-                        add(PropertyType.CheckColumn);
+                        add(PropertyType.CheckExpression);
                         add(PropertyType.StateColumn);
                         add(PropertyType.Checkable);
                         add(PropertyType.StateScope);
