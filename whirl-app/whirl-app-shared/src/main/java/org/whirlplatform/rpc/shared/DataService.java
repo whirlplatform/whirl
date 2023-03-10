@@ -23,6 +23,7 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.form.FormModel;
 
 /**
@@ -82,9 +83,9 @@ public interface DataService {
 
     @POST
     @Path("/getTreeClassData")
-    List<RowModelData> getTreeClassData(@FormParam("token") SessionToken token,
-                                        @FormParam("metadata") ClassMetadata metadata,
-                                        @FormParam("loadConfig") TreeClassLoadConfig loadConfig);
+    List<TreeModelData> getTreeClassData(@FormParam("token") SessionToken token,
+                                         @FormParam("metadata") ClassMetadata metadata,
+                                         @FormParam("loadConfig") TreeClassLoadConfig loadConfig);
 
     @POST
     @Path("/insert")

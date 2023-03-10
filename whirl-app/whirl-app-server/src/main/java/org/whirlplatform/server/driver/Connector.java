@@ -19,6 +19,7 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.editor.PropertyValue;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
 import org.whirlplatform.meta.shared.form.FormModel;
@@ -54,8 +55,8 @@ public interface Connector {
     /**
      * Собирает в БД данные для формирования строк дерева
      */
-    List<RowModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig,
-                                        ApplicationUser user);
+    List<TreeModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig,
+                                         ApplicationUser user);
 
     /**
      * Вставляет записи в таблицу
