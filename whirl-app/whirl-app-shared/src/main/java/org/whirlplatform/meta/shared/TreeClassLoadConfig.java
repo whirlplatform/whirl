@@ -1,6 +1,8 @@
 package org.whirlplatform.meta.shared;
 
+
 import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
 
 @SuppressWarnings("serial")
 public class TreeClassLoadConfig extends ClassLoadConfig {
@@ -11,7 +13,7 @@ public class TreeClassLoadConfig extends ClassLoadConfig {
     // New property
     private String selectExpression;
     private String labelExpression;
-    private String parentExpression;
+private String parentExpression;
     private ListModelData parent;
 
     public TreeClassLoadConfig() {
