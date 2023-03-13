@@ -8,6 +8,7 @@ import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
@@ -27,8 +28,8 @@ public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
     }
 
     @Override
-    public List<ListModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
-                                               TreeClassLoadConfig loadConfig) {
+    public List<TreeModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
+                                           TreeClassLoadConfig loadConfig) {
 
         PlainTreeFetcherHelper temp =
                 new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
@@ -48,7 +49,7 @@ public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
             result.add(0, empty);
         }
 
-        List<ListModelData> resultData = new ArrayList<>(result);
+        List<TreeModelData> resultData = new ArrayList<>(); //(result);
         //resultData.setRows(data.getRows());
         return resultData;
     }
