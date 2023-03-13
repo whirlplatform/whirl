@@ -1,5 +1,7 @@
 package org.whirlplatform.meta.shared.data;
 
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+
 public interface TreeModelData extends ListModelData {
     String getParent();
 
