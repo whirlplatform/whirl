@@ -73,15 +73,21 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
         }
     }
 
-    protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
+    protected DBCommand createSelectListCommand(TreeClassLoadConfig loadConfig,
                                                 PlainTreeFetcherHelper temp) {
 
         DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr valueColumn = temp.labelExpression;
+        DBColumnExpr labelExpressionColumn = temp.labelExpression;
+        DBColumnExpr stateExpressionColumn = temp.stateExpression;
+        DBColumnExpr imageExpressionColumn = temp.imageExpression;
+        DBColumnExpr checkExpressionColumn = temp.checkExpression;
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
-        subCommand.select(valueColumn);
+        subCommand.select(labelExpressionColumn);
+        subCommand.select(stateExpressionColumn);
+        subCommand.select(imageExpressionColumn);
+        subCommand.select(checkExpressionColumn);
 
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
@@ -90,13 +96,19 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
 
         DBQuery subQuery = new DBQuery(subCommand);
         idColumn = subQuery.findQueryColumn(idColumn);
-        valueColumn = subQuery.findQueryColumn(valueColumn);
+        labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
+        stateExpressionColumn = subQuery.findQueryColumn(stateExpressionColumn);
+        imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
+        checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
 
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
-        topCommand.select(valueColumn);
+        topCommand.select(labelExpressionColumn);
+        topCommand.select(stateExpressionColumn);
+        topCommand.select(imageExpressionColumn);
+        topCommand.select(checkExpressionColumn);
 
-        if (((TreeClassLoadConfig) loadConfig).getParent() != null) {
+        if (loadConfig.getParent() != null) {
             subCommand.limitRows(10000);
         }
 

@@ -319,7 +319,6 @@ public class TreeBuilder extends ComponentBuilder
             @Override
             public boolean hasChildren(ListModelData parent) {
                 return Optional.ofNullable(parent.<Boolean>get(isLeafExpression)).orElse(true);
-
             }
 
             @Override

@@ -29,6 +29,9 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
+        this.labelExpression = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
+                .as(LABEL_EXPRESSION_NAME);
+
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
             this.where.add(createContainsForCombobox(this.labelExpression, query));

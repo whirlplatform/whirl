@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
 
 @SuppressWarnings("serial")
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -24,38 +25,95 @@ import org.whirlplatform.meta.shared.data.DataValue;
 public class ClassLoadConfig implements Serializable {
 
     private PageConfig page = new PageConfig();
-
     private String whereSql;
-
     private String query;
-
     private boolean all = false;
-
     private List<FilterValue> filters = new ArrayList<FilterValue>();
-
     private List<SortValue> sorts = new ArrayList<SortValue>();
-
     private Map<String, DataValue> parameters = new HashMap<String, DataValue>();
-
     @Deprecated
     private boolean useSearchParameters = false;
-
     private boolean reloadMetadata;
 
     private FieldMetadata tableField;
 
     private String labelExpression;
+    private String isLeafExpression;
+    private String stateExpression;
+    private String checkExpression;
+    // New property
+    private String selectExpression;
+    private String parentExpression;
+    private String imageExpression;
+    private ListModelData parent;
 
     public ClassLoadConfig() {
     }
 
-    public String getLabelExpression() {
-        return this.labelExpression;
+    public String getImageExpression() {
+        return imageExpression;
     }
 
-    public void setLabelExpression(String newLabelExpression) {
-        this.labelExpression = newLabelExpression;
+    public void setImageExpression(String imageExpression) {
+        this.imageExpression = imageExpression;
     }
+
+    public String getSelectExpression() {
+        return selectExpression;
+    }
+
+    public void setSelectExpression(String selectExpression) {
+        this.selectExpression = selectExpression;
+    }
+
+    public String getIsLeafExpression() {
+        return isLeafExpression;
+    }
+
+    public void setIsLeafExpression(String leafExpression) {
+        this.isLeafExpression = leafExpression;
+    }
+
+    public String getStateExpression() {
+        return stateExpression;
+    }
+
+    public void setStateExpression(String stateExpression) {
+        this.stateExpression = stateExpression;
+    }
+
+    public String getCheckExpression() {
+        return checkExpression;
+    }
+
+    public void setCheckExpression(String checkExpression) {
+        this.checkExpression = checkExpression;
+    }
+
+    public String getLabelExpression() {
+        return labelExpression;
+    }
+
+    public void setLabelExpression(String labelExpression) {
+        this.labelExpression = labelExpression;
+    }
+
+    public String getParentExpression() {
+        return parentExpression;
+    }
+
+    public void setParentExpression(String parentExpression) {
+        this.parentExpression = parentExpression;
+    }
+
+    public ListModelData getParent() {
+        return parent;
+    }
+
+    public void setParent(ListModelData parent) {
+        this.parent = parent;
+    }
+
 
     public int getPageNum() {
         return page.getPage();
