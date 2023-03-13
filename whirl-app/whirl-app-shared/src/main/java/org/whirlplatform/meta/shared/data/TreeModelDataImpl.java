@@ -7,13 +7,13 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     private String image;
 
-    private String check;
+    private boolean isCheck;
 
-    private String select;
+    private boolean isSelect;
 
-    private String leaf;
+    private boolean islLeaf;
 
-    private String state;
+    private boolean isState;
 
 
     public TreeModelDataImpl() {
@@ -30,44 +30,46 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
     }
 
     @Override
-    public String getSelect() {
-        return select;
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+
+    @Override
+    public void setIsCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 
     @Override
-    public void setSelect(String select) {
-        this.select = select;
+    public boolean isSelect() {
+        return isSelect;
     }
 
     @Override
-    public String getLeaf() {
-        return leaf;
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
     }
 
     @Override
-    public void setLeaf(String leaf) {
-        this.leaf = leaf;
+    public boolean isLeaf() {
+        return islLeaf;
     }
 
     @Override
-    public String getState() {
-        return state;
+    public void setIsLeaf(boolean isLeaf) {
+        this.islLeaf = isLeaf;
     }
 
     @Override
-    public void setState(String state) {
-        this.state = state;
+    public boolean isState() {
+        return isState;
     }
 
     @Override
-    public String getCheck() {
-        return check;
+    public void setState(boolean isState) {
+    this.isState = isState;
     }
 
-    @Override
-    public void setCheck(String check) {
-        this.check = check;
-    }
 
     @Override
     public String getImage() {
