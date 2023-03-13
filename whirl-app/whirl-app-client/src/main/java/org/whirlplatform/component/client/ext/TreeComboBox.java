@@ -31,26 +31,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.TreeModelData;
+import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 
 public class TreeComboBox extends ComboBox<ListModelData> {
 
-    private final TreeStore<ListModelData> treeStore;
-    private final List<ListModelData> checkedItems;
-    private final TreeLoader<ListModelData> loader;
+    private final TreeStore<TreeModelData> treeStore;
+    private final List<TreeModelData> checkedItems;
+    private final TreeLoader<TreeModelData> loader;
     Element innerElement;
     private CountElement ce;
-    private XTree<ListModelData, String> tree;
+    private XTree<TreeModelData, String> tree;
     private Composite composite;
 
     public TreeComboBox(ComboBoxCell<ListModelData> cell, Cell<String> treeCell,
-                        TreeStore<ListModelData> store,
-                        TreeLoader<ListModelData> loader) {
+                        TreeStore<TreeModelData> store,
+                        TreeLoader<TreeModelData> loader) {
         super(cell);
         treeStore = store;
         this.loader = loader;
-        checkedItems = new ArrayList<ListModelData>();
-        ListModelData md = new ListModelDataImpl();
+        checkedItems = new ArrayList<TreeModelData>();
+        TreeModelData md = new TreeModelDataImpl();
         md.setLabel("");
         cell.getStore().add(md);
         this.setTriggerAction(TriggerAction.ALL);
@@ -59,13 +60,13 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     }
 
     private void createTreePanel(Cell<String> cell) {
-        tree = new XTree<ListModelData, String>(treeStore, new TreeValueProvider());
+        tree = new XTree<TreeModelData, String>(treeStore, new TreeValueProvider());
         tree.setCheckable(true);
-        tree.setLoader((TreeLoader<ListModelData>) getLoader());
+        tree.setLoader((TreeLoader<TreeModelData>) getLoader());
         tree.setCell(cell);
-        tree.addCheckChangeHandler(new CheckChangeHandler<ListModelData>() {
+        tree.addCheckChangeHandler(new CheckChangeHandler<TreeModelData>() {
             @Override
-            public void onCheckChange(CheckChangeEvent<ListModelData> event) {
+            public void onCheckChange(CheckChangeEvent<TreeModelData> event) {
                 if (event.getChecked() == CheckState.CHECKED) {
                     if (!checkedItems.contains(event.getItem())) {
                         checkedItems.add(event.getItem());
@@ -75,9 +76,9 @@ public class TreeComboBox extends ComboBox<ListModelData> {
                 }
             }
         });
-        tree.addValueChangeHandler(new ValueChangeHandler<ListModelData>() {
+        tree.addValueChangeHandler(new ValueChangeHandler<TreeModelData>() {
             @Override
-            public void onValueChange(ValueChangeEvent<ListModelData> event) {
+            public void onValueChange(ValueChangeEvent<TreeModelData> event) {
                 updateText();
             }
         });
@@ -118,15 +119,15 @@ public class TreeComboBox extends ComboBox<ListModelData> {
         tree.enableEvents();
     }
 
-    public List<ListModelData> getSelection() {
-        return Collections.unmodifiableList(new ArrayList<ListModelData>(checkedItems));
+    public List<TreeModelData> getSelection() {
+        return Collections.unmodifiableList(new ArrayList<TreeModelData>(checkedItems));
     }
 
-    public void setSelection(List<ListModelData> items) {
+    public void setSelection(List<TreeModelData> items) {
         int count = checkedItems.size();
         checkedItems.clear();
         if (items != null) {
-            for (final ListModelData d : items) {
+            for (final TreeModelData d : items) {
                 if (d.getId() != null) {
                     checkedItems.add(d);
                 }
@@ -138,7 +139,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
         }
     }
 
-    public ListModelData getSelectedItem() {
+    public TreeModelData getSelectedItem() {
         return tree.getSelectionModel().getSelectedItem();
     }
 
@@ -149,7 +150,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
                 if (!fireEvent) {
                     disableCheckListener();
                 }
-                tree.setChecked(item, checked);
+                tree.setChecked((TreeModelData) item, checked);
                 if (!fireEvent) {
                     enableCheckListener();
                 }
@@ -161,11 +162,11 @@ public class TreeComboBox extends ComboBox<ListModelData> {
         }
 
         if (CheckState.CHECKED.equals(checked)) {
-            checkedItems.add(item);
+            checkedItems.add((TreeModelData)item);
             if (!fireEvent) {
                 disableCheckListener();
             }
-            tree.setChecked(item, checked);
+            tree.setChecked((TreeModelData)item, checked);
             if (!fireEvent) {
                 enableCheckListener();
             }
@@ -202,7 +203,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     private void onTreeDataChanged() {
         disableCheckListener();
 
-        for (ListModelData model : treeStore.getAll()) {
+        for (TreeModelData model : treeStore.getAll()) {
             if (checkedItems.contains(model)) {
                 tree.setChecked(model, CheckState.CHECKED);
                 tree.refresh(model);
@@ -227,7 +228,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     }
 
     @Override
-    public ListModelData getValue() {
+    public TreeModelData getValue() {
         return checkedItems.size() > 0 ? checkedItems.get(0) : null;
     }
 
@@ -255,33 +256,33 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     }
 
     @Override
-    public Loader<ListModelData, List<ListModelData>> getLoader() {
+    public Loader<TreeModelData, List<TreeModelData>> getLoader() {
         return loader;
     }
 
-    public Tree<ListModelData, String> getTree() {
+    public Tree<TreeModelData, String> getTree() {
         return tree;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    @Override
-    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<ListModelData> handler) {
-        return tree.addValueChangeHandler(handler);
-    }
+//    @SuppressWarnings({"unchecked", "rawtypes"})
+//    @Override
+//    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<TreeModelData> handler) {
+//        return tree.addValueChangeHandler(handler);
+//    }
 
     public void setSingleSelectionCheckMode() {
         tree.setSingleSelectionCheckMode();
     }
 
-    private class TreeValueProvider implements ValueProvider<ListModelData, String> {
+    private class TreeValueProvider implements ValueProvider<TreeModelData, String> {
 
         @Override
-        public String getValue(ListModelData object) {
+        public String getValue(TreeModelData object) {
             return object.getLabel();
         }
 
         @Override
-        public void setValue(ListModelData object, String value) {
+        public void setValue(TreeModelData object, String value) {
         }
 
         @Override

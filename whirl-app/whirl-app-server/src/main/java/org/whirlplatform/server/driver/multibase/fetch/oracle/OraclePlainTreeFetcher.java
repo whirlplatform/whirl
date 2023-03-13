@@ -49,7 +49,7 @@ public class OraclePlainTreeFetcher extends OraclePlainListFetcher
             result.add(0, empty);
         }
 
-        List<ListModelData> resultData = new ArrayList<>(result);
+        List<TreeModelData> resultData = new ArrayList<>(); //(result);
         //resultData.setRows(data.getRows());
         return resultData;
     }

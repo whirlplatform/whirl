@@ -53,11 +53,7 @@ import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
 
@@ -71,11 +67,11 @@ public class TreeMenuBuilder extends TreeBuilder
     // TODO переписать, выкинуть наследование от TreeBuilder
 
     private String eventColumn;
-    private XTree<ListModelData, String> tree;
+    private XTree<TreeModelData, String> tree;
     private HandlerRegistration registration;
     private List<ComponentBuilder> children;
-    private Map<ComponentBuilder, ListModelData> builderMap;
-    private IconProvider<ListModelData> iconProvider;
+    private Map<ComponentBuilder, TreeModelData> builderMap;
+    private IconProvider<TreeModelData> iconProvider;
 
     @JsConstructor
     public TreeMenuBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -95,10 +91,10 @@ public class TreeMenuBuilder extends TreeBuilder
     @Override
     protected Component init(Map<String, DataValue> builderProperties) {
         children = new ArrayList<ComponentBuilder>();
-        builderMap = new HashMap<ComponentBuilder, ListModelData>();
-        iconProvider = new IconProvider<ListModelData>() {
+        builderMap = new HashMap<ComponentBuilder, TreeModelData>();
+        iconProvider = new IconProvider<TreeModelData>() {
             @Override
-            public ImageResource getIcon(ListModelData model) {
+            public ImageResource getIcon(TreeModelData model) {
                 // для потомков, добавленных вручную (MenuItemBuilder), можно
                 // выставить иконку
                 if (model.getId().startsWith("temp")) {
@@ -135,7 +131,7 @@ public class TreeMenuBuilder extends TreeBuilder
     @Override
     public void addChild(ComponentBuilder child) {
         if (child instanceof HorizontalMenuItemBuilder) {
-            ListModelData root = getModelData((HorizontalMenuItemBuilder) child);
+            TreeModelData root = getModelData((HorizontalMenuItemBuilder) child);
 
             children.add(child);
             builderMap.put(child, root);
@@ -192,12 +188,12 @@ public class TreeMenuBuilder extends TreeBuilder
         return registration;
     }
 
-    protected TreeLoader<ListModelData> initLoader(final TreeStore<ListModelData> store) {
-        RpcProxy<ListModelData, List<ListModelData>> proxy = createProxy();
+    protected TreeLoader<TreeModelData> initLoader(final TreeStore<TreeModelData> store) {
+        RpcProxy<TreeModelData, List<TreeModelData>> proxy = createProxy();
 
-        TreeLoader<ListModelData> loader = new TreeLoader<ListModelData>(proxy) {
+        TreeLoader<TreeModelData> loader = new TreeLoader<TreeModelData>(proxy) {
             @Override
-            public boolean hasChildren(ListModelData parent) {
+            public boolean hasChildren(TreeModelData parent) {
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
                 if (getClassMetadata().getClassId() != null
@@ -210,7 +206,7 @@ public class TreeMenuBuilder extends TreeBuilder
             }
 
             @Override
-            protected void onLoadSuccess(ListModelData loadConfig, List<ListModelData> result) {
+            protected void onLoadSuccess(TreeModelData loadConfig, List<TreeModelData> result) {
                 super.onLoadSuccess(loadConfig, result);
 
                 loadLocalData();
@@ -219,7 +215,7 @@ public class TreeMenuBuilder extends TreeBuilder
             }
 
             @Override
-            protected void onLoadFailure(ListModelData loadConfig, Throwable t) {
+            protected void onLoadFailure(TreeModelData loadConfig, Throwable t) {
                 super.onLoadFailure(loadConfig, t);
 
                 loadLocalData();
@@ -227,15 +223,15 @@ public class TreeMenuBuilder extends TreeBuilder
             }
 
             @Override
-            protected void loadData(ListModelData config) {
+            protected void loadData(TreeModelData config) {
                 if (builderMap.containsValue(config)) {
                     // добавляем в результат loader-а локальные данные
                     // (MenuItemBuilder)
                     ComponentBuilder builder = findBuilder(config);
-                    List<ListModelData> result = new ArrayList<ListModelData>();
+                    List<TreeModelData> result = new ArrayList<TreeModelData>();
                     if (builder != null) {
                         for (ComponentBuilder c : ((HorizontalMenuItemBuilder) builder).getChildren()) {
-                            ListModelData m = builderMap.get(c);
+                            TreeModelData m = builderMap.get(c);
                             if (m == null) {
                                 m = getModelData((HorizontalMenuItemBuilder) c);
                                 builderMap.put(c, m);
@@ -249,17 +245,17 @@ public class TreeMenuBuilder extends TreeBuilder
                 }
             }
         };
-        loader.addLoadHandler(new ChildTreeStoreBinding<ListModelData>(store));
+        loader.addLoadHandler(new ChildTreeStoreBinding<TreeModelData>(store));
         return loader;
     }
 
     @Override
-    protected XTree<ListModelData, String> initTree(TreeLoader<ListModelData> loader) {
+    protected XTree<TreeModelData, String> initTree(TreeLoader<TreeModelData> loader) {
         tree = super.initTree(loader);
 
         // Чтобы событие вызывалось не только при смене выбранного элемента, но
         // и при клике
-        tree.setSelectionModel(new TreeSelectionModel<ListModelData>() {
+        tree.setSelectionModel(new TreeSelectionModel<TreeModelData>() {
             @Override
             protected void onMouseClick(com.google.gwt.event.dom.client.ClickEvent ce) {
                 fireSelectionChangeOnClick = true;
@@ -272,19 +268,19 @@ public class TreeMenuBuilder extends TreeBuilder
         if (checkChangedHandler != null) {
             checkChangedHandler.removeHandler();
         }
-        checkChangedHandler = tree.addCheckChangedHandler(new CheckChangedHandler<ListModelData>() {
+        checkChangedHandler = tree.addCheckChangedHandler(new CheckChangedHandler<TreeModelData>() {
             @Override
-            public void onCheckChanged(CheckChangedEvent<ListModelData> event) {
+            public void onCheckChanged(CheckChangedEvent<TreeModelData> event) {
                 tree.fireEvent(new SelectEvent());
             }
         });
 
         tree.getSelectionModel()
-            .addSelectionChangedHandler(new SelectionChangedHandler<ListModelData>() {
+            .addSelectionChangedHandler(new SelectionChangedHandler<TreeModelData>() {
 
                 @Override
-                public void onSelectionChanged(SelectionChangedEvent<ListModelData> event) {
-                    for (Entry<ComponentBuilder, ListModelData> entry : builderMap.entrySet()) {
+                public void onSelectionChanged(SelectionChangedEvent<TreeModelData> event) {
+                    for (Entry<ComponentBuilder, TreeModelData> entry : builderMap.entrySet()) {
                         if (event.getSelection().size() > 0
                             && entry.getValue() == event.getSelection().get(0)) {
                             entry.getKey().fireEvent(new ClickEvent());
@@ -309,7 +305,7 @@ public class TreeMenuBuilder extends TreeBuilder
                             registration.removeHandler();
                         }
 
-                        ListModelData model = getStore().getChild(context.getIndex());
+                        TreeModelData model = getStore().getChild(context.getIndex());
                         String eventCode = model.get(eventColumn);
 
                         ComponentBuilder cb = findBuilder(model);
@@ -354,9 +350,9 @@ public class TreeMenuBuilder extends TreeBuilder
         return metadata;
     }
 
-    private ComponentBuilder findBuilder(ListModelData model) {
+    private ComponentBuilder findBuilder(TreeModelData model) {
         ComponentBuilder builder = null;
-        for (Entry<ComponentBuilder, ListModelData> cb : builderMap.entrySet()) {
+        for (Entry<ComponentBuilder, TreeModelData> cb : builderMap.entrySet()) {
             if (cb.getValue().equals(model)) {
                 builder = cb.getKey();
                 break;
@@ -370,8 +366,8 @@ public class TreeMenuBuilder extends TreeBuilder
         return UriUtils.fromString(url);
     }
 
-    private ListModelData getModelData(HorizontalMenuItemBuilder cb) {
-        ListModelData model = new ListModelDataImpl();
+    private TreeModelData getModelData(HorizontalMenuItemBuilder cb) {
+        TreeModelData model = new TreeModelDataImpl();
         model.setId("temp" + Random.nextInt());
         // if (nameExpression == null) {
         // nameExpression = "labelColumn";
@@ -383,9 +379,9 @@ public class TreeMenuBuilder extends TreeBuilder
     }
 
     private void buildTree(HorizontalMenuItemBuilder item) {
-        ListModelData root = builderMap.get(item);
+        TreeModelData root = builderMap.get(item);
         for (ComponentBuilder cb : item.getChildren()) {
-            ListModelData model = getModelData((HorizontalMenuItemBuilder) cb);
+            TreeModelData model = getModelData((HorizontalMenuItemBuilder) cb);
             builderMap.put(cb, model);
             store.add(root, model);
 
@@ -415,7 +411,7 @@ public class TreeMenuBuilder extends TreeBuilder
     private void loadLocalData() {
         for (int i = 0; i < children.size(); i++) {
             ComponentBuilder cb = children.get(i);
-            ListModelData model = builderMap.get(cb);
+            TreeModelData model = builderMap.get(cb);
             if (store.findModel(model) == null) {
                 store.insert(i, model);
                 buildTree((HorizontalMenuItemBuilder) cb);
@@ -433,7 +429,7 @@ public class TreeMenuBuilder extends TreeBuilder
     }
 
     @JsIgnore
-    public Tree<ListModelData, String> getTree() {
+    public Tree<TreeModelData, String> getTree() {
         return tree;
     }
 
@@ -526,7 +522,7 @@ public class TreeMenuBuilder extends TreeBuilder
 
     @JsIgnore
     @Override
-    public TreeStore<ListModelData> getStore() {
+    public TreeStore<TreeModelData> getStore() {
         return super.getStore();
     }
 

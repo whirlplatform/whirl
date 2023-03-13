@@ -22,7 +22,6 @@ import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.editor.GroupElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
 import org.whirlplatform.meta.shared.editor.RightElement;

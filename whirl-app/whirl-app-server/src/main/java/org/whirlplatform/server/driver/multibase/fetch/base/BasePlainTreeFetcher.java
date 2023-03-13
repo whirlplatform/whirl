@@ -10,8 +10,6 @@ import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.RowModelData;
 import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;

@@ -162,7 +162,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         } else if (name.equalsIgnoreCase(PropertyType.LabelExpression.getCode())) {
             labelExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.CheckColumn.getCode())) {
+        } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode())) {
             checkColumn = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.StringValue.getCode())) {
