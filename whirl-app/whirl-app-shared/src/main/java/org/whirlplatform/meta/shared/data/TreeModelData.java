@@ -6,18 +6,14 @@ public interface TreeModelData extends ListModelData {
 
         String getParent();
         void setParent(String parentId);
-
-        String getSelect();
-        void setSelect(String select);
-
-        String getLeaf();
-        void setLeaf(String leaf);
-
-        String getState();
-        void setState(String state);
-
-        String getCheck();
-        void setCheck(String check);
+        boolean isCheck();
+        void setIsCheck(boolean isCheck);
+        boolean isSelect();
+        void setIsSelect(boolean isSelect);
+        boolean isLeaf();
+        void setIsLeaf(boolean isLeaf);
+        boolean isState();
+        void setState(boolean isState);
 
         String getImage();
         void setImage(String image);
