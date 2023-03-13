@@ -255,7 +255,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                         }
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                    .getListClassData(SessionToken.get(), getClassMetadata(),
+                    .getTreeClassData(SessionToken.get(), getClassMetadata(),
                         getLoadConfig(loadConfig));
             }
         };
@@ -268,7 +268,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return metadata;
     }
 
-    protected ClassLoadConfig getLoadConfig(ListModelData parent) {
+    protected TreeClassLoadConfig getLoadConfig(ListModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();

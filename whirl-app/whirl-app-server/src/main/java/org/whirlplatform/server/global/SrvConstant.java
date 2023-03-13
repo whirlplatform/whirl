@@ -15,4 +15,11 @@ public class SrvConstant {
     public static final String STYLE = "STYLE";
 
     public static final String LABEL_EXPRESSION_NAME = "label_expression";
+
+    public static final String STATE_EXPRESSION_NAME = "state_expression";
+
+    public static final String IMAGE_EXPRESSION_NAME = "image_expression";
+
+    public static final String CHECK_EXPRESSION_NAME = "check_expression";
+
 }
