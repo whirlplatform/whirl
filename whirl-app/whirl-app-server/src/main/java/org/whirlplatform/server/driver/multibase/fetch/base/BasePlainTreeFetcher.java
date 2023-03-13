@@ -1,7 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.empire.db.DBColumnExpr;
@@ -10,11 +9,9 @@ import org.apache.empire.db.DBQuery;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
+import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
@@ -26,7 +23,7 @@ import org.whirlplatform.server.log.Profile;
 import org.whirlplatform.server.log.impl.ProfileImpl;
 import org.whirlplatform.server.log.impl.TableDataMessage;
 
-public class BasePlainTreeFetcher extends BasePlainTableFetcher
+public class BasePlainTreeFetcher extends BasePlainListFetcher
     implements TreeFetcher<PlainTableElement> {
     private static Logger _log = LoggerFactory.getLogger(BasePlainTreeFetcher.class);
 
@@ -35,16 +32,16 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
     }
 
     @Override
-    public List<ListModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
+    public List<TreeModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
                                            TreeClassLoadConfig config) {
         PlainTreeFetcherHelper temp = new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, config);
 
-        List<ListModelData> result = new ArrayList<ListModelData>();
+        List<TreeModelData> result = new ArrayList<TreeModelData>();
 
         // Добавление пустой записи, если надо
         if (table.isEmptyRow()) {
-            ListModelData empty = new ListModelDataImpl();
+            TreeModelData empty = new TreeModelDataImpl();
             empty.setId(null);
             empty.setLabel(I18NMessage.getMessage(I18NMessage.getRequestLocale()).noData());
             result.add(empty);
@@ -60,7 +57,7 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
 
             DBReader selectReader = createAndOpenReader(selectCmd);
             while (selectReader.moveNext()) {
-                ListModelData model = new ListModelDataImpl();
+                TreeModelData model = new TreeModelDataImpl();
 
                 // TODO: Доставать не по индексам
                 model.setId(selectReader.getString(0));
@@ -68,26 +65,20 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
                 result.add(model);
             }
             selectReader.close();
-            List<ListModelData> data = new ArrayList<ListModelData>(result);
+            List<TreeModelData> data = new ArrayList<TreeModelData>(result);
             return data;
         }
     }
 
-    protected DBCommand createSelectListCommand(TreeClassLoadConfig loadConfig,
+    protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
                                                 PlainTreeFetcherHelper temp) {
 
         DBColumnExpr idColumn = temp.dbPrimaryKey;
-        DBColumnExpr labelExpressionColumn = temp.labelExpression;
-        DBColumnExpr stateExpressionColumn = temp.stateExpression;
-        DBColumnExpr imageExpressionColumn = temp.imageExpression;
-        DBColumnExpr checkExpressionColumn = temp.checkExpression;
+        DBColumnExpr valueColumn = temp.labelExpression;
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
-        subCommand.select(labelExpressionColumn);
-        subCommand.select(stateExpressionColumn);
-        subCommand.select(imageExpressionColumn);
-        subCommand.select(checkExpressionColumn);
+        subCommand.select(valueColumn);
 
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
@@ -96,19 +87,13 @@ public class BasePlainTreeFetcher extends BasePlainTableFetcher
 
         DBQuery subQuery = new DBQuery(subCommand);
         idColumn = subQuery.findQueryColumn(idColumn);
-        labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
-        stateExpressionColumn = subQuery.findQueryColumn(stateExpressionColumn);
-        imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
-        checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
+        valueColumn = subQuery.findQueryColumn(valueColumn);
 
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
-        topCommand.select(labelExpressionColumn);
-        topCommand.select(stateExpressionColumn);
-        topCommand.select(imageExpressionColumn);
-        topCommand.select(checkExpressionColumn);
+        topCommand.select(valueColumn);
 
-        if (loadConfig.getParent() != null) {
+        if (((TreeClassLoadConfig) loadConfig).getParent() != null) {
             subCommand.limitRows(10000);
         }
 
