@@ -1,0 +1,737 @@
+/**
+ * Sencha GXT 4.0.0 - Sencha for GWT
+ * Copyright (c) 2006-2015, Sencha Inc.
+ *
+ * licensing@sencha.com
+ * http://www.sencha.com/products/gxt/license/
+ *
+ * ================================================================================
+ * Open Source License
+ * ================================================================================
+ * This version of Sencha GXT is licensed under the terms of the Open Source GPL v3
+ * license. You may use this license only if you are prepared to distribute and
+ * share the source code of your application under the GPL v3 license:
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * If you are NOT prepared to distribute and share the source code of your
+ * application under the GPL v3 license, other commercial and oem licenses
+ * are available for an alternate download of Sencha GXT.
+ *
+ * Please see the Sencha GXT Licensing page at:
+ * http://www.sencha.com/products/gxt/license/
+ *
+ * For clarification or additional options, please contact:
+ * licensing@sencha.com
+ * ================================================================================
+ *
+ *
+ * ================================================================================
+ * Disclaimer
+ * ================================================================================
+ * THIS SOFTWARE IS DISTRIBUTED "AS-IS" WITHOUT ANY WARRANTIES, CONDITIONS AND
+ * REPRESENTATIONS WHETHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE
+ * IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, MERCHANTABLE QUALITY,
+ * FITNESS FOR A PARTICULAR PURPOSE, DURABILITY, NON-INFRINGEMENT, PERFORMANCE AND
+ * THOSE ARISING BY STATUTE OR FROM CUSTOM OR USAGE OF TRADE OR COURSE OF DEALING.
+ * ================================================================================
+ */
+
+/**
+ * Base color: aae632 - hsla(80, 78%, 55%, 1)
+ * Substitutions:
+ * 157FCC - hsla(205, 81%, 44%, 1) - hsla(80, 81%, 44%, 1) - 8ecb15
+ * 126DAF - hsla(205, 81%, 38%, 1) - hsla(80, 81%, 38%, 1) - 7baf12
+ * 4B9CD7 - hsla(205, 64%, 57%, 1) - hsla(80, 64%, 57%, 1) - a9d84b
+ * 4792C8 - hsla(205, 54%, 53%, 1) - hsla(80, 54%, 53%, 1) - 9dc846
+ * 2A6D9E - hsla(205, 58%, 39%, 1) - hsla(80, 58%, 39%, 1) - 779d2a
+ * 3892D3 - hsla(205, 64%, 52%, 1) - hsla(80, 64%, 52%, 1) - 9fd336
+ * 3386C2 - hsla(205, 58%, 48%, 1) - hsla(80, 58%, 48%, 1) - 92c133
+ * 307FB8 - hsla(205, 59%, 45%, 1) - hsla(80, 59%, 45%, 1) - 89b62f
+ * 276796 - hsla(205, 59%, 37%, 1) - hsla(80, 59%, 37%, 1) - 719627
+ * 3F7BA7 - hsla(205, 45%, 45%, 1) - hsla(80, 45%, 45%, 1) - 84a63f
+ * 3291d6 - hsla(205, 67%, 52%, 1) - hsla(80, 67%, 52%, 1) - a0d733
+ * 027dce - hsla(204, 98%, 41%, 1) - hsla(79, 98%, 41%, 1) - 8ecf02
+ * add2ed - hsla(205, 64%, 80%, 1) - hsla(80, 64%, 80%, 1) - d7edab
+ * 037ecf - hsla(204, 97%, 41%, 1) - hsla(79, 97%, 41%, 1) - 8ece03
+ * 1C94C4 - hsla(197, 75%, 44%, 1) - hsla(72, 75%, 44%, 1) - a3c41c
+ * 5fa7db - hsla(205, 63%, 62%, 1) - hsla(80, 63%, 62%, 1) - b2db61
+ * 007cd1 - hsla(204, 100%, 41%, 1) - hsla(79, 100%, 41%, 1) - 8fd100
+ * e2eff8 - hsla(205, 61%, 93%, 1) - hsla(80, 61%, 93%, 1) - f1f8e2
+ * c1ddf1 - hsla(205, 63%, 85%, 1) - hsla(80, 63%, 85%, 1) - e1f1c1
+ * eef6fb - hsla(203, 62%, 96%, 1) - hsla(78, 62%, 96%, 1) - f7fbee
+ * d6e8f6 - hsla(206, 64%, 90%, 1) - hsla(81, 64%, 90%, 1) - eaf6d5
+ * D6E3F2 - hsla(212, 52%, 89%, 1) - hsla(87, 52%, 89%, 1) - e4f2d4
+ * 15428b - hsla(217, 74%, 31%, 1) - hsla(92, 74%, 31%, 1) - 4b8a15
+ * 8bb8f3 - hsla(214, 81%, 75%, 1) - hsla(89, 81%, 75%, 1) - c1f38c
+ * eaf3fa - hsla(206, 62%, 95%, 1) - hsla(81, 62%, 95%, 1) - f5faea
+ * dfeaf2 - hsla(205, 42%, 91%, 1) - hsla(80, 42%, 91%, 1) - ebf2de
+ * 99bbe8 - hsla(214, 63%, 75%, 1) - hsla(89, 63%, 75%, 1) - c1e797
+ * 358AC8 - hsla(205, 58%, 50%, 1) - hsla(80, 58%, 50%, 1) - 98c936
+ *
+ * Base font: lab grotesque
+ * Substitutions:
+ * helvetica - 'Lab Grotesque Regular'
+ */
+theme {
+  name = "energygreenneptune"
+  basePackage = "com.sencha.gxt.theme.energygreenneptune"
+
+  headerText {
+    color = "#ffffff"
+    family = "helvetica, arial, verdana, sans-serif"
+    size = "13px"
+    weight = "bold"
+  }
+
+  panelBackgroundColor = "#ffffff"
+
+  borderColor = "#8ecb15"
+
+  details {
+    borderColor = theme.borderColor
+    backgroundColor = theme.panelBackgroundColor
+    disabledOpacity = 0.5
+    disabledTextColor = ""
+
+    button {
+      borderRadius = 4
+      border = util.border('solid', '#7baf12', 1)
+      overBorder = util.border('solid', '#7baf12', 1)
+      pressedBorder = util.border('solid', '#7baf12', 1)
+      // focusBoxShadow = "none"
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+      padding = util.padding(1);
+      arrowColor = "#ffffff"
+
+      backgroundColor = "#a9d84b"
+      overBackgroundColor = "#9dc846"
+      pressedBackgroundColor = "#779d2a"
+      gradient = '#a9d84b 0%, #9fd336 50%, #98c936 51%, #9fd336'
+      overGradient = '#9dc846, #92c133 50%, #89b62f 51%, #92c133'
+      pressedGradient = '#779d2a, #719627 50%, #779d2a 51%, #84a63f'
+
+      font = util.fontStyle("helvetica,arial,verdana,sans-serif", '12px', '#FFFFFF', 'bold');
+      smallFontSize = 12
+      smallLineHeight = 18
+      mediumFontSize = 14
+      mediumLineHeight = 24
+      largeFontSize = 16
+      largeLineHeight = 32
+    }
+
+    buttonGroup {
+      borderRadius = 3
+      border = util.border('solid', '#ebf2de', 3)
+      headerGradient = util.solidGradientString('#ebf2de')
+
+      font = util.fontStyle("'Lab Grotesque Regular', arial, verdana, sans-serif", '13px', '#666666');
+      headerPadding = util.padding(2);
+
+      bodyPadding = util.padding(4);
+      bodyBackgroundColor = '#FFFFFF'
+    }
+
+    field {
+      backgroundColor = "#ffffff"
+      borderColor = "#c0c0c0"
+      borderWidth = 1
+      borderStyle = "solid"
+      emptyTextColor = "#808080"
+      focusBorderColor = "#9fd336"
+      height = 24
+      invalidBackgroundColor = "#ffffff"
+      invalidBorderColor = '#D94E37'
+      invalidBorderWidth = 1
+      lineHeight = "18px"
+      padding = util.padding(2, 6, 1, 6)
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000');
+      checkBox {
+         boxLabel = text;
+         padding {
+           bottom = 0
+           left = 19
+           right = 10
+           top = 0
+         }
+      }
+      radio {
+        boxLabel = text
+        padding {
+          bottom = 0
+          left = 19
+          right = 10
+          top = 0
+        }
+      }
+      slider {
+        trackHeight = 8
+        trackBorder = util.border('solid', "#d4d4d4", 1)
+        trackBackgroundColor = "#f5f5f5"
+        trackRadius = 4
+
+        thumbWidth = 15
+        thumbHeight = thumbWidth
+        thumbRadius = 8
+        thumbBorder = util.border("solid", "#777777", 1)
+        thumbBackgroundColor = "#f5f5f5"
+      }
+
+      sideLabel {
+        text = field.text
+        textAlign = 'left'
+        padding = util.padding(0, 0, 3)
+        labelPadding = util.padding(5, 5, 0, 0)
+        fieldPadding = util.padding(0)
+      }
+      topLabel {
+        text = field.text
+        textAlign = 'left'
+        padding = util.padding(0, 0, 5)
+        labelPadding = util.padding(6, 0, 0)
+        fieldPadding = util.padding(0)
+      }
+    }
+
+    datePicker {
+      border = util.border("solid", "#e1e1e1", 1)
+      backgroundColor = '#ffffff'
+
+      headerPadding = util.padding(8, 6)
+      headerBackgroundColor = "#f5f5f5"
+      headerText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '12px', '#9fd336', 'bold')
+      headerTextPadding = util.padding(0, 5)
+
+      dayOfWeekBackgroundColor = '#ffffff'
+      dayOfWeekText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000', 'bold')
+      dayOfWeekLineHeight = '24px'
+      dayOfWeekPadding = util.padding(0, 9, 0, 0)
+
+      dayBorder = util.border('solid', '#ffffff', 1)
+      dayText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000')
+      dayLineHeight = '23px'
+      dayPadding = util.padding(0, 3, 0, 0)
+
+      dayDisabledBackgroundColor = '#eeeeee'
+      dayDisabledText = util.extend(dayText, {
+        color = '#808080'
+      })
+
+      dayNextBackgroundColor = '#ffffff'
+      dayNextText = util.extend(dayText, {
+        color = '#bfbfbf'
+      })
+
+      dayPreviousBackgroundColor = '#ffffff'
+      dayPreviousText = dayNextText
+
+      itemOverBorder = util.border('solid', '#ffffff', 1)
+      itemOverColor = "#000000"
+      itemOverBackgroundColor = "#f5faea"
+
+      itemSelectedBorder = util.border('solid', '#9fd336', 1)
+      itemSelectedBackgroundColor = '#eaf6d5'
+      itemSelectedText = util.extend(dayText, {
+        weight = 'bold'
+      })
+
+      monthLeftButtonColor = "#ffffff"
+      monthLeftButtonOpacity = 1
+      monthLeftButtonMargin = util.margin(0, 0)
+      monthRightButtonColor = "#ffffff"
+      monthRightButtonMargin = util.margin(0, 0)
+      monthRightButtonOpacity = 1
+
+      todayBorder = util.border('solid', '#8b0000', 1)
+
+      footerPadding = util.padding(3, 0)
+      footerBackgroundColor = '#f5f5f5'
+
+      buttonMargin = util.margin(0, 3, 0, 2)
+
+      width = "212px"
+    }
+
+    panel {
+
+      font = util.extend(headerText, {
+        family = "'Lab Grotesque Regular',arial,verdana,sans-serif"
+      })
+
+      border = util.border('none')
+
+      frameWidth = 0
+      frameHeight = 0
+
+
+      headerLineHeight = "15px"
+      headerPadding = util.padding(10);
+      padding = util.padding(0)
+
+      backgroundColor = panelBackgroundColor
+      headerBackgroundColor = "#8ecb15"
+
+      headerGradient = util.solidGradientString('#8ecb15')
+    }
+
+    framedPanel = util.extend(panel, {
+      borderRadius = 4
+      border = util.border('solid', theme.borderColor, 5)
+
+      headerLineHeight = "15px"
+      headerPadding = util.padding(util.abs(panel.headerPadding.top - borderRadius), panel.headerPadding.right, panel.headerPadding.bottom)
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    })
+
+    window = util.extend(framedPanel, {
+      border = util.border('solid', '#a0d733', 5)
+      backgroundColor = "#ffffff"
+      headerGradient = util.solidGradientString("#a0d733")
+      headerLineHeight = "15px"
+    })
+
+    messagebox {
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px')
+      messagePadding = util.padding(10, 10, 5)
+      bodyPadding = util.padding(5, 10, 10)
+      iconPadding = util.padding(10)
+    }
+
+    borderLayout {
+      panelBackgroundColor = "#9fd336"
+      collapsePanelBackgroundColor = "#8ecb15"
+      collapsePanelBorder = util.border('solid', theme.borderColor, 1)
+    }
+    splitbar {
+      dragColor = "#B4B4B4"
+      handleOpacity = 0.5
+      handleWidth = 8
+      handleHeight = 48
+    }
+
+    accordionLayout = util.extend(panel, {
+      headerGradient = util.solidGradientString("#ebf2de")
+      headerBackgroundColor = "#ebf2de"
+      headerBarMargin = util.margin(0)
+      headerPadding = util.padding(8, 10)
+      font = util.extend(headerText, {
+        color = '#666666'
+      })
+      panelPadding {
+        bottom = 1
+        left = 0
+        right = 0
+        top = 0
+      }
+      firstPanelPadding = panelPadding
+      border = util.border('solid', '#ffffff', 0, 0, 1)
+    })
+
+    fieldset {
+      backgroundColor = "#f6f6f6"
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px')
+      border = util.border('solid', '#b5b8c8', 1)
+
+      legendPadding = util.padding(5)
+      padding = util.padding(5)
+      collapseIconColor = tools.primaryColor
+      collapseOverIconColor = tools.primaryOverColor
+      expandIconColor = collapseIconColor
+      expandOverIconColor = collapseOverIconColor
+
+    }
+
+    toolbar {
+      backgroundColor = "#ffffff"
+      gradient = util.solidGradientString("#ffffff")
+      border = util.border('none')
+      padding = util.padding(3)
+
+      buttonOverride = util.extend(theme.details.button, {
+        border = util.border('solid', '#cecece', 1)
+        overBorder = util.border('solid', '#cecece', 1)
+        pressedBorder = util.border('solid', '#cecece', 1)
+
+        arrowColor = "#666666"
+        // focusBoxShadow = "none"
+
+        backgroundColor = "#F6F6F6"
+        overBackgroundColor = "#EDEDED"
+        pressedBackgroundColor = "#E1E1E1"
+        gradient = '#F6F6F6 0%, #F5F5F5 50%, #E8E8E8 51%, #F5F5F5 100%'
+        overGradient = '#EDEDED 0%, #EBEBEB 50%, #DFDFDF 51%, #EBEBEB 100%'
+        pressedGradient = '#E1E1E1 0%, #D5D5D5 50%, #E1E1E1 51%, #E4E4E4 100%'
+
+        font = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '12px', '#666666', 'bold');
+      })
+      htmlEditorIconColor = "#666666"
+
+      labelItem {
+        text = field.text
+        lineHeight = '17px'
+        padding = util.padding(2, 2, 0)
+      }
+      separatorBorder {
+        bottom = 0
+        color = "#d0d0d0"
+        left = 0
+        right = 0
+        style = "solid"
+        top = 0
+      }
+      separatorHeight = 16
+    }
+    status {
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '12px', '#000000')
+      lineHeight = '16px'
+      padding = util.padding(0, 5)
+      border = util.border('solid', '#cccccc #d9d9d9 #d9d9d9', 1)
+    }
+
+    tools {
+      primaryColor = util.mixColors("#ffffff", "#8ecb15", 0.5)
+      primaryOpacity = 1
+      primaryOverColor = util.mixColors("#ffffff", "#8ecb15", 0.3)
+      primaryOverOpacity = 1
+      primaryClickColor = util.mixColors("#ffffff", "#8ecb15", 0.25)
+      primaryClickOpacity = 1
+      warningColor = "#D94E37"
+      allowColor = "#C6E38A"
+
+      tabs {
+        tabCloseOver = "#ffffff"
+      }
+    }
+
+    tabs {
+      activeHeadingText = util.extend(headingText, {
+        color = "#8ecf02"
+      })
+      activeTabItemBackgroundColor = "#d7edab"
+      activeTabItemBorderBottom = "1px"
+      activeTabItemBorderTop = "1px"
+      activeTabItemMarginBottom = "-1px"
+
+      activeTabCloseIconOpacity = 0.8
+      activeTabCloseOverIconOpacity = 1
+      tabCloseIconOpacity = 0.6
+      tabCloseOverIconOpacity = 1
+
+      borderRadius = 3
+      borderColor = "#8ece03"
+      bodyBackgroundColor = "#ffffff"
+      closeIconWidth = 11
+      gradient = util.solidGradientString("#d7edab")
+      headingColor = "#a3c41c"
+      headingText = util.extend(theme.headerText, {
+        color = "#ffffff"
+      })
+      hoverGradient = util.solidGradientString("#b2db61")
+      hoverHeadingText = headingText
+      hoverTabItemBackgroundColor = "#b2db61"
+      iconLeftOffset = 6
+      iconTopOffset = 5
+      iconWidth = 16
+      inactiveGradient = util.solidGradientString("#a9d84b")
+      inactiveLastStopColor = "#a9d84b"
+      inactiveTabItemBackgroundColor = "#a9d84b"
+      lastStopColor = "#d7edab"
+      overTabItemBorderBottom = "1px"
+      overTabItemBorderTop = "1px"
+      overTabItemOpacity = 1
+      padding = util.padding(10)
+      paddingWithClosable = util.padding(padding.right + closeIconWidth - 2)
+      paddingWithIcon = util.padding(padding.left + iconWidth/2)
+      plainActiveHeadingText = activeHeadingText
+      plainHeadingText = headingText
+      plainHoverHeadingText = hoverHeadingText
+      plainTabBarBorderBottom = 1
+      plainTabBarBorderTop = 1
+      plainTabStripSpacerBorder = 1
+      plainTabStripSpacerHeight = 2
+      scrollerBackgroundColor = "#8fd100"
+      scrollerLeftDisabledOpacity = 0.7
+      scrollerLeftOverOpacity = 0.7
+      scrollerRightDisabledOpacity = 0.7
+      scrollerRightOverOpacity = 0.7
+      scrollerWidth = 18
+      tabHeight = 31
+      tabBarBorder = "none"
+      tabBarBottomHeight = 4
+      tabBodyBorder = "none"
+      tabItemBorderBottom = "none"
+      tabItemBorderLeft = "none"
+      tabItemBorderTop = "none"
+      tabItemBorderRight = "none"
+      tabSpacing = 1
+      tabStripBottomBorder = "none"
+      tabStripBackgroundColor = "#8ece03"
+      tabStripGradient = util.solidGradientString('#8ece03')
+      tabStripPadding = util.padding(0)
+      tabStripTopBorder = "none"
+      tabTextPadding = util.padding(10, 0)
+    }
+
+    tree {
+      checkboxMargin = util.margin(4, 3, 0, 2)
+
+      dragOverBackgroundColor = '#f1f8e2'
+
+      dropBackgroundColor = '#f1f8e2'
+
+      iconMargin = util.margin(0, 3, 0, 2)
+
+      itemHeight = '25px'
+
+      nodePadding = util.padding(0, 6, 0, 3)
+
+      overBackgroundColor = '#f1f8e2'
+
+      selectedBackgroundColor = '#e1f1c1'
+
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000')
+    }
+
+    info {
+      backgroundColor = "#ffffff"
+      borderRadius = 8
+      opacity = 1.0
+      border = util.border('solid', '#cccccc', 2)
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+      headerPadding = util.padding(0,0,8,0)
+      headerText = util.fontStyle("'Lab Grotesque Regular', Arial, Verdana, sans-serif", '15px', '#555555', 'bold');
+      messagePadding = util.padding(0)
+      messageText = util.fontStyle("'Lab Grotesque Regular', Arial, Verdana, sans-serif", '14px', '#555555');
+      margin = util.margin(2,0,0,0)
+      padding = util.padding(2,7)
+    }
+    tip {
+      backgroundColor = "#f5faea"
+      borderRadius = 3
+      opacity = 1
+      border = util.border('solid', '#e1e1e1', 1)
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+      headerPadding = util.padding(0)
+      headerText = util.fontStyle("'Lab Grotesque Regular', Arial, Verdana, sans-serif", '12px', '#000000', 'bold');
+      messagePadding = util.padding(0,0,0)
+      messageText = util.fontStyle("'Lab Grotesque Regular', Arial, Verdana, sans-serif", '12px');
+      margin = util.margin(0)
+      padding = util.padding(3)
+    }
+    errortip = tip
+
+    grid {
+      bodyBorder {
+        bottom = 0
+        color = "#d0d0d0"
+        left = 0
+        right = 0
+        style = "solid"
+        top = 0
+      }
+      columnHeader {
+        backgroundColor = '#f5f5f5'
+        borderWidth = 1
+        borderColor = '#c0c0c0'
+        borderStyle = 'solid'
+        gradient = '#f5f5f5 0%, #f5f5f5 100%'
+        overBackgroundColor = '#f7fbee'
+        overGradient = '#f7fbee 0%, #f7fbee 100%'
+
+        text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#666666', 'bold')
+        padding = util.padding(7, 10)
+        lineHeight = "15px"
+
+        menuButtonWidth = 18
+
+        menuBackgroundColor = '#f5f5f5'
+        menuGradient = gradient
+        menuBorder = util.border('solid', '#c0c0c0', 0,0,0,1)
+        menuHoverBackgroundColor = '#f7fbee'
+        menuHoverGradient = overGradient
+        menuHoverBorder = menuBorder
+        menuActiveBackgroundColor = '#ebf2de'
+        menuActiveGradient = "#ebf2de 0%, #ebf2de 100%"
+        menuActiveBorder = menuBorder
+      }
+
+      cellPadding = util.padding(5,10,4)
+      cellText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000')
+      cellLineHeight = "15px"
+      cellVBorderColor = '#ededed'
+      cellHBorderColor = '#ededed'
+      cellBorderWidth = 1
+      cellBackgroundColor = '#ffffff'
+      cellAltBackgroundColor = '#fafafa'
+
+      cellOverVBorderColor = '#ededed'
+      cellOverVBorderStyle = 'solid'
+      cellOverHBorderColor = '#f1f8e2'
+      cellOverHBorderStyle = 'solid'
+
+      cellOverBackgroundColor = '#f1f8e2'
+
+      cellSelectedVBorderColor = '#ededed'
+      cellSelectedVBorderStyle = 'solid'
+      cellSelectedHBorderColor = '#f1f8e2'
+      cellSelectedHBorderStyle = 'solid'
+
+      cellSelectedBackgroundColor = '#e1f1c1'
+
+      specialColumnGradient = ""
+      specialColumnGradientSelected = ""
+
+      group {
+        backgroundColor = '#f5f5f5'
+        border = util.border('solid', '#c0c0c0', 0, 0, 1)
+        text = columnHeader.text
+        padding = util.padding(8, 4)
+        iconSpacing = 11 + 6 // icon is 11px wide, plus 6px padding
+        summary {
+          text = util.extend(columnHeader.text, {
+            color = '#000000'
+          })
+          backgroundColor = '#ffffff'
+        }
+      }
+
+      rowNumberer {
+        text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000')
+        padding = util.padding(5,3,4)
+      }
+
+      rowEditor {
+        backgroundColor = '#ebf2de'
+        border = util.border('solid', '#e1e1e1', 1, 0);
+      }
+
+      footer {
+        text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px', '#000000', 'bold')
+        backgroundColor = '#ffffff'
+        cellBorder = util.border('solid', '#ededed', 1, 0, 0)
+      }
+    }
+    listview {
+      text = util.fontStyle("'Lab Grotesque Regular', arial, verdana, sans-serif",'13px');
+      lineHeight = '22px'
+      backgroundColor = '#ffffff'
+      border = util.border('solid', '#e1e1e1', 1)
+
+      item {
+        backgroundColor = "#ffffff"
+        padding = util.padding(0,6)
+        border = util.border('none')
+        gradient = util.solidGradientString('#ffffff')
+      }
+
+      overItem {
+        backgroundColor = "#eaf6d5"
+        padding = util.padding(0,6)
+        border = util.border('none')
+        gradient = util.solidGradientString('#eaf6d5')
+      }
+
+      selectedItem {
+        backgroundColor = "#e1f1c1"
+        padding = util.padding(0,6)
+        border = util.border('none')
+        gradient = util.solidGradientString('#e1f1c1')
+      }
+    }
+    menu {
+      backgroundColor = "#ffffff"
+      border = util.border('solid', '#e1e1e1', 1)
+      padding = util.padding(0)
+      gradient = util.solidGradientString('#ffffff')
+      lastGradientColor = '#ffffff'
+
+      itemText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px')
+      itemLineHeight = '24px'
+      itemPadding = util.padding(0)
+
+      activeItemText = itemText
+      activeItemBackgroundColor = '#eaf6d5'
+      activeItemGradient = util.solidGradientString('#eaf6d5')
+      activeItemBorder = util.border('none')
+
+      bar {
+        backgroundColor = menu.backgroundColor
+        border = util.border('none')
+        padding = util.padding(0)
+        gradient = menu.gradient
+
+
+        itemText = menu.itemText
+        itemLineHeight = menu.itemLineHeight
+        itemPadding = util.padding(1, 8)
+
+        hoverItemText = itemText
+        hoverItemBackgroundColor = menu.activeItemBackgroundColor
+        hoverItemGradient = menu.activeItemGradient
+        hoverItemBorder = util.border('none')
+
+        activeItemText = itemText
+        activeItemBackgroundColor = menu.activeItemBackgroundColor
+        activeItemGradient = menu.activeItemGradient
+        activeItemBorder = util.border('none')
+      }
+
+      scrollerHeight = 8
+      separator {
+        height = 1
+        margin = util.margin(2, 3)
+        color = '#e1e1e1'
+      }
+
+      header {
+        border = util.border('solid', '#c1e797', 0, 0, 1)
+        backgroundColor = '#e4f2d4'
+
+        itemText = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '10px', '#4b8a15', 'bold')
+        itemLineHeight = '13px'
+
+        itemPadding = util.padding(3)
+      }
+    }
+    mask {
+      opacity = 0.7
+      backgroundColor = '#ffffff'
+      box {
+        padding = util.padding(5)
+        borderColor = ''
+        borderStyle = 'none'
+        borderWidth = 0
+        borderRadius = 3
+        radiusMinusBorderWidth = util.max(0, borderRadius - borderWidth)
+        backgroundColor = '#e5e5e5'
+        text = util.fontStyle("'Lab Grotesque Regular', arial, verdana, sans-serif", '13px', '#666666')
+        textPadding = util.padding(21, 0, 0)
+        loadingImagePosition = 'center 0'
+      }
+    }
+    progressbar {
+      border = util.border('none')
+      text = util.fontStyle("'Lab Grotesque Regular', arial, verdana, sans-serif", '13px', '#666666', 'bold')
+      backgroundGradient = ''//transparent
+      textPadding = util.padding(3, 0)
+      textAlign = 'center'
+      barTextColor = text.color
+      barGradient = util.solidGradientString('#e1f1c1')
+      barBorder = util.border('none')
+    }
+
+    statusproxy {
+      text = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '13px')
+      border = util.border('solid', '#dddddd #bbbbbb #bbbbbb #dddddd', 1)
+      backgroundColor = '#ffffff'
+      opacity = 0.85
+    }
+    colorpalette {
+      itemSize = 16
+      itemPadding = util.padding(2)
+      backgroundColor = '#ffffff'
+      itemBorder = util.border('solid', '#e1e1e1', 1)
+      selectedBackgroundColor = '#e6e6e6'
+      selectedBorder = util.border('solid', '#c1f38c', 1)
+    }
+  }
+}

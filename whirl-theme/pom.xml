@@ -162,6 +162,37 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-theme-energy-green-neptune</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${java.home}/bin/java
+                            </executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>
+                                    -DphantomBin=${project.build.directory}/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
+                                </argument>
+                                <argument>com.sencha.gxt.themebuilder.ThemeBuilder</argument>
+                                <!-- Build all generated sources into the classes directory, so they end up in the final jar -->
+                                <argument>-gen</argument>
+                                <argument>${project.build.directory}/generated-classes</argument>
+                                <!-- These next several arguments are optional, and are here to make it easier to debug issues in the theme -->
+                                <argument>-imageFile</argument>
+                                <argument>${project.build.directory}/energy-green-neptune-snapshot.png</argument>
+                                <argument>-manifestFile</argument>
+                                <argument>${project.build.directory}/energy-green-neptune-snapshot.json</argument>
+                                <argument>-sourcesOnly</argument>
+                                <argument>true</argument>
+                                <!-- List theme config files here -->
+                                <argument>${project.basedir}/src/theme/energy-green-neptune.theme</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
