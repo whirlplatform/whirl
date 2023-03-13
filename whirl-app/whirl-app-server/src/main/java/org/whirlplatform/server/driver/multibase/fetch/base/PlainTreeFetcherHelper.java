@@ -13,7 +13,7 @@ import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.utils.TypesUtil;
 
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.*;
 
 public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
     public PlainTreeFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
@@ -24,10 +24,20 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.labelExpression = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
-                        .as(LABEL_EXPRESSION_NAME);
+//        this.labelExpression = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
+//                        .as(LABEL_EXPRESSION_NAME);
+        this.stateExpression = dbDatabase.getValueExpr(config.getStateExpression(), DataType.UNKNOWN)
+                .as(STATE_EXPRESSION_NAME);
 
-        //this.parentExpression...
+        this.imageExpression = dbDatabase.getValueExpr(config.getImageExpression() , DataType.UNKNOWN)
+                .as(IMAGE_EXPRESSION_NAME);
+
+        this.checkExpression = dbDatabase.getValueExpr(config.getImageExpression() , DataType.UNKNOWN)
+                .as(CHECK_EXPRESSION_NAME);
+
+        //config.getStateExpression()
+
+        // https://icons.iconarchive.com/icons/ampeross/qetto-2/16/photos-icon.png
 
         String query = config.getQuery();
 
