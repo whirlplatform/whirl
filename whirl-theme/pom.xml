@@ -59,6 +59,14 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
+            <!-- JAR plugin. Create jar from generated-classes folder. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <classesDirectory>${project.build.directory}/generated-classes</classesDirectory>
+                </configuration>
+            </plugin>
             <!-- First, download the PhantomJS bin that can run locally. See the profiles section for how the right version
             is selected. If a local version is used in>stead, this isn't necessary, but each computer that runs this maven
             script will need a copy of phantom to correctly generate the theme. -->
@@ -77,7 +85,7 @@
                             <url>
                                 https://repo1.maven.org/maven2/com/github/klieber/phantomjs/${phantomjs.version}/phantomjs-${phantomjs.version}-${platform}${archive}
                             </url>
-                            <outputDirectory>${basedir}/target/phantomjs</outputDirectory>
+                            <outputDirectory>${project.build.directory}/phantomjs</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -99,30 +107,58 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <skip>true</skip>
                             <executable>${java.home}/bin/java
                             </executable>
                             <arguments>
                                 <argument>-classpath</argument>
                                 <classpath/>
                                 <argument>
-                                    -DphantomBin=${basedir}/target/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
+                                    -DphantomBin=${project.build.directory}/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
                                 </argument>
                                 <argument>com.sencha.gxt.themebuilder.ThemeBuilder</argument>
-                                <!-- Build all generated sources into the classes directory so they end up in the final jar -->
+                                <!-- Build all generated sources into the classes directory, so they end up in the final jar -->
                                 <argument>-gen</argument>
-                                <argument>${basedir}/target/classes</argument>
+                                <argument>${project.build.directory}/generated-classes</argument>
                                 <!-- These next several arguments are optional, and are here to make it easier to debug issues in the theme -->
                                 <argument>-imageFile</argument>
-                                <argument>${basedir}/target/snapshot.png</argument>
+                                <argument>${project.build.directory}/triton-snapshot.png</argument>
                                 <argument>-manifestFile</argument>
-                                <argument>${basedir}/target/snapshot.json</argument>
-                                <argument>-out</argument>
-                                <argument>${basedir}/target/theme.jar</argument>
-                                <argument>-warDir</argument>
-                                <argument>${basedir}/target/war</argument>
+                                <argument>${project.build.directory}/triton-snapshot.json</argument>
+                                <argument>-sourcesOnly</argument>
+                                <argument>true</argument>
                                 <!-- List theme config files here -->
-                                <argument>${basedir}/src/triton.theme</argument>
+                                <argument>${project.basedir}/src/theme/triton.theme</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-theme-neptune</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${java.home}/bin/java
+                            </executable>
+                            <arguments>
+                                <argument>-classpath</argument>
+                                <classpath/>
+                                <argument>
+                                    -DphantomBin=${project.build.directory}/phantomjs/phantomjs-${phantomjs.version}-${platform}/${phantomjs.bin.path}phantomjs${phantomjs.bin.exec}
+                                </argument>
+                                <argument>com.sencha.gxt.themebuilder.ThemeBuilder</argument>
+                                <!-- Build all generated sources into the classes directory, so they end up in the final jar -->
+                                <argument>-gen</argument>
+                                <argument>${project.build.directory}/generated-classes</argument>
+                                <!-- These next several arguments are optional, and are here to make it easier to debug issues in the theme -->
+                                <argument>-imageFile</argument>
+                                <argument>${project.build.directory}/neptune-snapshot.png</argument>
+                                <argument>-manifestFile</argument>
+                                <argument>${project.build.directory}/neptune-snapshot.json</argument>
+                                <argument>-sourcesOnly</argument>
+                                <argument>true</argument>
+                                <!-- List theme config files here -->
+                                <argument>${project.basedir}/src/theme/neptune.theme</argument>
                             </arguments>
                         </configuration>
                     </execution>
