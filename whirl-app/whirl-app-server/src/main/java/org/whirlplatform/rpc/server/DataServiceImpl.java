@@ -36,12 +36,7 @@ import org.whirlplatform.meta.shared.TableConfig;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.EventParameter;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ParameterType;
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.form.FormModel;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.rpc.shared.DataService;
@@ -257,8 +252,8 @@ public class DataServiceImpl implements DataService, DirectRestService {
         return connector().getTableClassData(metadata, loadConfig, user);
     }
 
-    public List<ListModelData> getTreeClassData(SessionToken token, ClassMetadata metadata,
-                                               TreeClassLoadConfig loadConfig) {
+    public List<TreeModelData> getTreeClassData(SessionToken token, ClassMetadata metadata,
+                                                TreeClassLoadConfig loadConfig) {
         ApplicationUser user = getApplicationUser(token);
         return connector().getTreeClassData(metadata, loadConfig, user);
     }

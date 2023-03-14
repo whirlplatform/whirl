@@ -29,11 +29,7 @@ import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.RowModelData;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.CellRowCol;
@@ -302,15 +298,15 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public List<ListModelData> getTreeClassData(ClassMetadata metadata,
-                                               TreeClassLoadConfig loadConfig,
-                                               ApplicationUser user) {
+    public List<TreeModelData> getTreeClassData(ClassMetadata metadata,
+                                                TreeClassLoadConfig loadConfig,
+                                                ApplicationUser user) {
 
         if (metadata.getClassId() == null) {
             // чтобы при использовании HorizontalMenu и MenuTreePanel без
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
 
-            return new ArrayList<ListModelData>();
+            return new ArrayList<TreeModelData>();
         }
 
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
