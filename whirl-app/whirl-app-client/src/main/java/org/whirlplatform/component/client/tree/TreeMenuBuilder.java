@@ -196,7 +196,7 @@ public class TreeMenuBuilder extends TreeBuilder
             public boolean hasChildren(TreeModelData parent) {
                 // если DataSource не установлен, то используются только
                 // локальные данные (MenuItemBuilder)
-                if (getClassMetadata().getClassId() != null
+                if (getDataSourceId() != null
                     && parent.getProperties().containsKey(isLeafExpression)) {
                     return parent.<Boolean>get(isLeafExpression);
                 } else {
@@ -340,9 +340,9 @@ public class TreeMenuBuilder extends TreeBuilder
         return tree;
     }
 
-    @Override
+
     protected ClassMetadata getClassMetadata() {
-        ClassMetadata metadata = super.getClassMetadata();
+        ClassMetadata metadata = new ClassMetadata(getDataSourceId());
 
         if (eventColumn != null) {
             metadata.addField(new FieldMetadata(eventColumn, DataType.STRING, null));

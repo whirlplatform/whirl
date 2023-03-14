@@ -58,7 +58,6 @@ import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.state.StateStore;
 import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -98,11 +97,11 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка родителя
      */
-    private String parentExpression; // parentColumn
+    private String parentExpression;
     /**
      * Колонка со значением для чекбокса (checked/unchecked)
      */
-    private String checkExpression; // checkColumn
+    private String checkExpression;
     /**
      * Колонка хранящая состояние выбора
      */
@@ -303,7 +302,11 @@ public class TreeBuilder extends ComponentBuilder
     private void setDataSourceId(String dataSourceId) {
         this.dataSourceId = dataSourceId;
         selectionStateStore =
-            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, getClassMetadata());
+            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, new ClassMetadata(dataSourceId));
+    }
+
+    protected String getDataSourceId() {
+        return dataSourceId;
     }
 
     protected TreeLoader<TreeModelData> initLoader(final TreeStore<TreeModelData> store) {
@@ -379,8 +382,8 @@ public class TreeBuilder extends ComponentBuilder
                         @Override
                         public void execute() {
                             DataServiceAsync.Util.getDataService(callback)
-                                .getTreeClassData(SessionToken.get(),
-                                    getClassMetadata(), getLoadConfig(parent));
+                                .getTreeClassData(SessionToken.get(),dataSourceId
+                                   , getLoadConfig(parent));
                             lastParameters = Collections.emptyList();
                         }
                     });
@@ -493,23 +496,12 @@ public class TreeBuilder extends ComponentBuilder
             if (m.isSelect()) {
                 // tree.getSelectionModel().setSelection(Arrays.asList(m));
                 tree.getSelectionModel().select(m, true);
+
             }
         }
         if (firstChecked != null) {
             tree.scrollIntoView(firstChecked);
         }
-    }
-
-    protected ClassMetadata getClassMetadata() {
-        // простввить edit, view - true
-        ClassMetadata metadata = new ClassMetadata(dataSourceId);
-        metadata.setViewable(true);
-        if (parentExpression != null && !parentExpression.isEmpty()) {
-            FieldMetadata fm = new FieldMetadata(parentExpression, DataType.STRING, null);
-            fm.setView(true);
-            metadata.addField(fm);
-        }
-        return metadata;
     }
 
     @SuppressWarnings("rawtypes")

@@ -72,7 +72,7 @@ public interface DataService {
     @POST
     @Path("/getListClassData")
     LoadData<ListModelData> getListClassData(@FormParam("token") SessionToken token,
-                                             @FormParam("metadata") ClassMetadata metadata,
+                                             @FormParam("metadata") String dataSourceId,
                                              @FormParam("loadConfig") ClassLoadConfig loadConfig);
 
     @POST
@@ -84,7 +84,7 @@ public interface DataService {
     @POST
     @Path("/getTreeClassData")
     List<TreeModelData> getTreeClassData(@FormParam("token") SessionToken token,
-                                         @FormParam("metadata") ClassMetadata metadata,
+                                         @FormParam("metadata") String dataSourceId,
                                          @FormParam("loadConfig") TreeClassLoadConfig loadConfig);
 
     @POST

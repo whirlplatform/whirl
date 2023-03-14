@@ -25,10 +25,8 @@ import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.state.StateStore;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.RowListValue;
@@ -52,7 +50,6 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     private String checkedIds;
     private HandlerRegistration checkedRegistration;
     private String whereSql;
-    private ClassMetadata metadata;
     private StorageWrapper<RowListValue> stateStore;
     private StateStore<RowListValue> selectionStateStore;
     private boolean saveState;
@@ -62,6 +59,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     private ValueProvider<RowModelData, Boolean> valueProvider;
     private ClassStore<ListModelData, ClassLoadConfig> store;
     private CheckBoxList list;
+    private String classId;
 
     @JsConstructor
     public CheckGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -192,19 +190,15 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     }
 
     private void setDataSourceId(String classId) {
-        this.metadata = new ClassMetadata(classId);
+        this.classId = classId;
     }
 
     /**
      * Инициализация списка CheckGroup
      */
     private void initStore() {
-        if (checkExpression != null) {
-            metadata.addField(new FieldMetadata(checkExpression, DataType.BOOLEAN,
-                null));
-        }
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-            new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(
+            new ListClassProxy(classId));
         checkedRegistration = store
             .addStoreDataChangeHandler(new StoreDataChangeHandler<ListModelData>() {
                 @Override
@@ -243,6 +237,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         }
         config.setWhereSql(whereSql);
         config.setLabelExpression(labelExpression);
+//        config.setCheckExpression(checkExpression);
         return config;
     }
 
@@ -365,7 +360,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore = new SelectionClientStateStore<RowListValue>(
-                StateScope.LOCAL, metadata);
+                StateScope.LOCAL, new ClassMetadata(classId));
         }
         return selectionStateStore;
     }

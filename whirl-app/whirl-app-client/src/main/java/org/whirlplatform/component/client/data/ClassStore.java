@@ -18,8 +18,6 @@ import org.whirlplatform.meta.shared.data.RowModelData;
 public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
     extends ListStore<T> {
 
-    protected ClassMetadata metadata;
-
     protected RpcProxy<?, LoadData<T>> proxy;
 
     protected Loader<C, LoadData<T>> loader;
@@ -28,10 +26,8 @@ public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
         super(new ClassKeyProvider());
     }
 
-    public ClassStore(ClassMetadata metadata, RpcProxy<C, LoadData<T>> proxy) {
+    public ClassStore( RpcProxy<C, LoadData<T>> proxy) {
         this();
-        this.metadata = metadata;
-
         this.proxy = proxy;
         loader = new Loader<C, LoadData<T>>(proxy);
         loader.addLoadHandler(new LoadHandler<C, LoadData<T>>() {
