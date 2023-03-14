@@ -87,7 +87,6 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected boolean useSearchParameters;
     protected boolean reloadMetadata;
     protected String labelExpression;
-    private ClassMetadata metadata;
     // private boolean required = false;
     private boolean editable;
 
@@ -261,9 +260,8 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     private void createStore() {
-        metadata = new ClassMetadata(getClassList());
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-            new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(
+            new ListClassProxy(classId));
     }
 
     protected void bindStore() {
@@ -565,7 +563,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected StateStore<DataValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore =
-                new SelectionClientStateStore<DataValue>(StateScope.LOCAL, metadata);
+                new SelectionClientStateStore<DataValue>(StateScope.LOCAL, new ClassMetadata(classId));
         }
         return selectionStateStore;
     }

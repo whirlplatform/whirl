@@ -70,7 +70,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     private ToggleGroup group;
     private SimpleContainer container;
     private SideErrorHandler errorHandler;
-    private ClassMetadata metadata;
+    private String classId;
     private String labelExpression;
     private String whereSql;
     private Orientation orientation; // Сделать в базе обязательным
@@ -86,6 +86,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
             }
         };
     private ParameterHelper paramHelper;
+    private String dataSourceId;
 
     @JsConstructor
     public RadioGroupBuilder(@JsOptional Map<String, DataValue> builderProperties) {
@@ -207,17 +208,18 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     }
 
     private void setDataSourceId(String dataSourceId) {
-        metadata = new ClassMetadata(dataSourceId);
+        this.dataSourceId = dataSourceId;
+        this.classId = dataSourceId;
         selectionStateStore =
-            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, new ClassMetadata(classId));
     }
 
     /**
      * Загрузка списка радиогруппы
      */
     private void loadData() {
-        store = new ClassStore<ListModelData, ClassLoadConfig>(metadata,
-            new ListClassProxy(metadata));
+        store = new ClassStore<ListModelData, ClassLoadConfig>(
+            new ListClassProxy(classId));
         store.getLoader().addLoadHandler(loadHandler);
 
         store.getLoader().load(getLoadConfig());
@@ -452,7 +454,7 @@ public class RadioGroupBuilder extends ComponentBuilder implements Clearable,
     protected StateStore<RowListValue> getSelectionStore() {
         if (selectionStateStore == null) {
             selectionStateStore =
-                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, metadata);
+                new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, new ClassMetadata(classId));
         }
         return selectionStateStore;
     }

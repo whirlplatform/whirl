@@ -43,7 +43,7 @@ public interface Connector {
     /**
      * Собирает в БД данные для формирования строк списка
      */
-    LoadData<ListModelData> getListClassData(ClassMetadata metadata, ClassLoadConfig loadConfig,
+    LoadData<ListModelData> getListClassData(String dataSourceId, ClassLoadConfig loadConfig,
                                              ApplicationUser user);
 
     /**
@@ -55,7 +55,7 @@ public interface Connector {
     /**
      * Собирает в БД данные для формирования строк дерева
      */
-    List<TreeModelData> getTreeClassData(ClassMetadata metadata, TreeClassLoadConfig loadConfig,
+    List<TreeModelData> getTreeClassData(String dataSourceId, TreeClassLoadConfig loadConfig,
                                          ApplicationUser user);
 
     /**

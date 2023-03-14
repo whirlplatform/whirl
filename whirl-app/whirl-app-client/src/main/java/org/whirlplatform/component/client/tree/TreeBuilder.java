@@ -58,7 +58,6 @@ import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.state.StateStore;
 import org.whirlplatform.component.client.utils.SimpleEditorError;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -302,7 +301,11 @@ public class TreeBuilder extends ComponentBuilder
     private void setDataSourceId(String dataSourceId) {
         this.dataSourceId = dataSourceId;
         selectionStateStore =
-            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, getClassMetadata());
+            new SelectionClientStateStore<RowListValue>(StateScope.LOCAL, new ClassMetadata(dataSourceId));
+    }
+
+    protected String getDataSourceId() {
+        return dataSourceId;
     }
 
     protected TreeLoader<TreeModelData> initLoader(final TreeStore<TreeModelData> store) {
@@ -379,8 +382,8 @@ public class TreeBuilder extends ComponentBuilder
                         @Override
                         public void execute() {
                             DataServiceAsync.Util.getDataService(callback)
-                                .getTreeClassData(SessionToken.get(),
-                                    getClassMetadata(), getLoadConfig(parent));
+                                .getTreeClassData(SessionToken.get(),dataSourceId
+                                   , getLoadConfig(parent));
                             lastParameters = Collections.emptyList();
                         }
                     });
@@ -499,21 +502,6 @@ public class TreeBuilder extends ComponentBuilder
         if (firstChecked != null) {
             tree.scrollIntoView(firstChecked);
         }
-    }
-
-    protected ClassMetadata getClassMetadata() {
-        // простввить edit, view - true
-        ClassMetadata metadata = new ClassMetadata(dataSourceId);
-        metadata.setViewable(true);
-        if (parentExpression != null && !parentExpression.isEmpty()) {
-            FieldMetadata fm = new FieldMetadata(parentExpression, DataType.STRING, null);
-            fm.setView(true);
-            metadata.addField(fm);
-        }
-        if (imageExpression != null && !imageExpression.isEmpty()) {
-            metadata.addField(new FieldMetadata(imageExpression, DataType.STRING, null));
-        }
-        return metadata;
     }
 
     @SuppressWarnings("rawtypes")

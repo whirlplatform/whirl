@@ -5,7 +5,6 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.client.loader.RpcProxy;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
-import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.rpc.client.DataServiceAsync;
@@ -14,10 +13,10 @@ import org.whirlplatform.rpc.shared.SessionToken;
 public class ListClassProxy extends
     RpcProxy<ClassLoadConfig, LoadData<ListModelData>> {
 
-    private final ClassMetadata metadata;
+    private String classId;
 
-    public ListClassProxy(ClassMetadata metadata) {
-        this.metadata = metadata;
+    public ListClassProxy(String classId) {
+        this.classId = classId;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class ListClassProxy extends
             @Override
             public void execute() {
                 DataServiceAsync.Util.getDataService(callback)
-                    .getListClassData(SessionToken.get(), metadata,
+                    .getListClassData(SessionToken.get(), classId,
                         loadConfig);
             }
         });

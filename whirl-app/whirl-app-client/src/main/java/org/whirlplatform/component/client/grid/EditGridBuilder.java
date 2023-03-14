@@ -512,7 +512,7 @@ public class EditGridBuilder extends ComponentBuilder
             columnConfigStore = new ColumnConfigStore(StateScope.LOCAL, metadata, getId());
         }
 
-        store = new ClassStore<RowModelData, ClassLoadConfig>(metadata,
+        store = new ClassStore<RowModelData, ClassLoadConfig>(
             new TableClassProxy(metadata));
         store.getLoader().addLoadHandler(handler);
         columnModel = new ColumnModelHelper(metadata, store, cellToolTip, columnConfigStore);
