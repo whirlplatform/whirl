@@ -479,14 +479,16 @@ public class TreeBuilder extends ComponentBuilder
         TreeModelData firstChecked = null;
         for (TreeModelData m : list) {
             // Отмечаем чекбокс
-            if (m.<Boolean>get(checkExpression)) {
+//          if (m.<Boolean>get(checkExpression)) { // isCheck()
+            if (m.isCheck()) { // isCheck()
                 if (firstChecked == null) {
                     firstChecked = m;
                 }
                 tree.setChecked(m, CheckState.CHECKED);
             }
             // Раскрываем ветку
-            if (m.<Boolean>get(stateExpression) && !tree.isLeaf(m)) {
+//          if (m.<Boolean>get(stateExpression) && !tree.isLeaf(m)) { // isState()
+            if (m.isState() && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
             if (m.<Boolean>get(selectExpression)) {
