@@ -253,16 +253,17 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public LoadData<ListModelData> getListClassData(ClassMetadata metadata,
+    public LoadData<ListModelData> getListClassData(String dataSourceId,
                                                     ClassLoadConfig loadConfig,
                                                     ApplicationUser user) {
+        ClassMetadata metadata = getClassMetadata(dataSourceId, Collections.emptyMap(), user);
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 
         // TODO надо запрашивать здесь getClassMetadata
-        //        if (!metadata.isViewable()) {
-        //            return new LoadData<>();
-        //        }
+                if (!metadata.isViewable()) {
+                    return new LoadData<>();
+                }
 
         try (ConnectionWrapper conn = aliasConnection(
             ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
@@ -298,10 +299,11 @@ public class MultibaseConnector extends AbstractConnector {
     }
 
     @Override
-    public List<TreeModelData> getTreeClassData(ClassMetadata metadata,
+    public List<TreeModelData> getTreeClassData(String dataSourceId,
                                                 TreeClassLoadConfig loadConfig,
                                                 ApplicationUser user) {
 
+        ClassMetadata metadata = getClassMetadata(dataSourceId, Collections.emptyMap(), user);
         if (metadata.getClassId() == null) {
             // чтобы при использовании HorizontalMenu и MenuTreePanel без
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
@@ -312,10 +314,10 @@ public class MultibaseConnector extends AbstractConnector {
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
         assertTrue(table != null, "Table definition not found: " + metadata.getTitle());
 
-        // TODO надо запрашивать здесь getClassMetadata
-        //        if (!metadata.isViewable()) {
-        //            return new ArrayList<>();
-        //        }
+//         TODO надо запрашивать здесь getClassMetadata
+                if (!metadata.isViewable()) {
+                    return new ArrayList<>();
+                }
 
         try (ConnectionWrapper conn = aliasConnection(
             ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {

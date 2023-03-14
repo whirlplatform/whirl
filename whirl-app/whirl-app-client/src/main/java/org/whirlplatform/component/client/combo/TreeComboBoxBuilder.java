@@ -247,18 +247,18 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                         }
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                    .getListClassData(SessionToken.get(), getClassMetadata(),
+                    .getListClassData(SessionToken.get(), classId,
                         getLoadConfig((TreeModelData) loadConfig));
             }
         };
         return proxy;
     }
 
-    protected ClassMetadata getClassMetadata() {
-        ClassMetadata metadata = new ClassMetadata(classId);
-        //        metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
-        return metadata;
-    }
+//    protected ClassMetadata getClassMetadata() {
+//        ClassMetadata metadata = new ClassMetadata(classId);
+//        //        metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
+//        return metadata;
+//    }
 
     protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
