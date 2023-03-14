@@ -33,12 +33,11 @@
             <version>${project.version}</version>
             <classifier>sources</classifier>
         </dependency>
-<!--        Пока не используем -->
-<!--        <dependency>-->
-<!--            <groupId>${project.groupId}</groupId>-->
-<!--            <artifactId>whirl-theme</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-theme</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -74,8 +73,8 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <moduleName>org.whirlplatform.app.Application</moduleName>
-                    <moduleShortName>application</moduleShortName>
+                    <moduleName>org.whirlplatform.app.BlueApplication</moduleName>
+                    <moduleShortName>applicationblue</moduleShortName>
                     <skipModule>true</skipModule>
                     <compilerArgs>
                         <arg>-gen</arg>
@@ -86,6 +85,52 @@
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
                     </jvmArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>application-gwt-compile-gray</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.app.GrayApplication</moduleName>
+                            <moduleShortName>applicationgray</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>application-gwt-compile-neptune</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.app.NeptuneApplication</moduleName>
+                            <moduleShortName>applicationneptune</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>application-gwt-compile-tritone</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.app.TritonApplication</moduleName>
+                            <moduleShortName>applicationtriton</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>application-gwt-compile-neptune-energy-green</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.app.NeptuneEnergyGreenApplication</moduleName>
+                            <moduleShortName>applicationneptuneenergygreen</moduleShortName>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

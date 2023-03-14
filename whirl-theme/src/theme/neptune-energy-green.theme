@@ -73,12 +73,12 @@
  * helvetica - 'Lab Grotesque Regular'
  */
 theme {
-  name = "energygreenneptune"
-  basePackage = "com.sencha.gxt.theme.energygreenneptune"
+  name = "neptuneenergygreen"
+  basePackage = "com.sencha.gxt.theme.neptuneenergygreen"
 
   headerText {
     color = "#ffffff"
-    family = "helvetica, arial, verdana, sans-serif"
+    family = "'Lab Grotesque Regular', arial, verdana, sans-serif"
     size = "13px"
     weight = "bold"
   }
@@ -110,7 +110,7 @@ theme {
       overGradient = '#9dc846, #92c133 50%, #89b62f 51%, #92c133'
       pressedGradient = '#779d2a, #719627 50%, #779d2a 51%, #84a63f'
 
-      font = util.fontStyle("helvetica,arial,verdana,sans-serif", '12px', '#FFFFFF', 'bold');
+      font = util.fontStyle("'Lab Grotesque Regular',arial,verdana,sans-serif", '12px', '#FFFFFF', 'bold');
       smallFontSize = 12
       smallLineHeight = 18
       mediumFontSize = 14

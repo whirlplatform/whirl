@@ -56,12 +56,11 @@
             <version>${project.version}</version>
             <classifier>sources</classifier>
         </dependency>
-<!--        Пока не используем -->
-<!--        <dependency>-->
-<!--            <groupId>${project.groupId}</groupId>-->
-<!--            <artifactId>whirl-theme</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>whirl-theme</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -141,8 +140,8 @@
                 <groupId>net.ltgt.gwt.maven</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
                 <configuration>
-                    <moduleName>org.whirlplatform.editor.Editor</moduleName>
-                    <moduleShortName>editor</moduleShortName>
+                    <moduleName>org.whirlplatform.editor.BlueEditor</moduleName>
+                    <moduleShortName>editorblue</moduleShortName>
                     <skipModule>true</skipModule>
                     <compilerArgs>
                         <arg>-gen</arg>
@@ -153,6 +152,53 @@
                         <jvmArg>-Djava.io.tmpdir=${project.build.directory}/tmp</jvmArg>
                     </jvmArgs>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>editor-gwt-compile-gray</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.editor.GrayEditor</moduleName>
+                            <moduleShortName>editorgray</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>editor-gwt-compile-neptune</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.editor.NeptuneEditor</moduleName>
+                            <moduleShortName>editorneptune</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>editor-gwt-compile-triton</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.editor.TritonEditor</moduleName>
+                            <moduleShortName>editortriton</moduleShortName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>editor-gwt-compile-neptune-energy-green</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <moduleName>org.whirlplatform.editor.NeptuneEnergyGreenEditor</moduleName>
+                            <moduleShortName>editorneptuneenergygreen</moduleShortName>
+                        </configuration>
+                    </execution>
+                </executions>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

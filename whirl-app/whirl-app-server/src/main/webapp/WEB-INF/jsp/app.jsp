@@ -226,6 +226,6 @@
     <script type="text/javascript">
         document.getElementById('loading-msg').innerHTML = '<%=I18NMessage.getMessage(l).page_loadingInnerHTML()%>';
     </script>
-    <script type="text/javascript" src="application/application.nocache.js"></script>
+    <script type="text/javascript" src="applicationblue/applicationblue.nocache.js"></script>
 </body>
 </html>

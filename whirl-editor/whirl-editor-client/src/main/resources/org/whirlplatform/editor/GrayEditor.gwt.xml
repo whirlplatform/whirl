@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- When updating your version of GWT, you should also update this DTD reference, 
+	so that your app can take advantage of the latest GWT module capabilities. -->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN"
+        "http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
+
+<module rename-to="editorgray">
+    <inherits name="com.google.gwt.core.Core"/>
+    <inherits name="com.google.gwt.user.Debug"/>
+    <inherits name="com.google.common.collect.Collect"/>
+    <inherits name="com.google.gwt.i18n.I18N"/>
+
+    <!-- Other module inherits -->
+	<inherits name="org.whirlplatform.event.Event"/>
+    <inherits name="org.whirlplatform.component.Component"/>
+    <inherits name="org.whirlplatform.java.Java"/>
+
+	<inherits name='com.sencha.gxt.theme.gray.Gray'/>
+
+    <inherits name="com.mvp4g.Mvp4gModule"/>
+    <inherits name="org.geomajas.codemirror.CodeMirror"/>
+
+	<!-- Specify the app entry point class. -->
+    <entry-point class="com.mvp4g.client.Mvp4gEntryPoint"/>
+
+	<set-configuration-property name="CssResource.enableGss"
+		value="true" />
+	<set-configuration-property name="CssResource.conversionMode"
+		value="strict" />
+
+	<!-- Collapse properties for fewer permutations -->
+	<collapse-property name="gxt.device" values="phone, tablet, desktop" />
+
+	<!-- group themes -->
+	<collapse-property name="gxt.theme" values="*" />
+
+	<!-- group modern browsers -->
+	<collapse-property name="gxt.user.agent"
+		values="air, safari*, chrome*, gecko*, ie11" />
+	<collapse-property name="user.agent" values="safari*, gecko*" />
+
+	<!-- group ie -->
+	<collapse-property name="gxt.user.agent" values="ie8, ie9, ie10" />
+	<collapse-property name="user.agent" values="ie*" />
+
+	<!-- Specify the paths for translatable code -->
+    <source path="client"/>
+    <source path="shared"/>
+
+	<extend-property name="locale" values="en" />
+	<extend-property name="locale" values="ru"/>
+</module>

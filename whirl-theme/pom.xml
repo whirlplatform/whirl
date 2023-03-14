@@ -163,7 +163,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-theme-energy-green-neptune</id>
+                        <id>generate-theme-neptune-energy-green</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>exec</goal>
@@ -183,13 +183,13 @@
                                 <argument>${project.build.directory}/generated-classes</argument>
                                 <!-- These next several arguments are optional, and are here to make it easier to debug issues in the theme -->
                                 <argument>-imageFile</argument>
-                                <argument>${project.build.directory}/energy-green-neptune-snapshot.png</argument>
+                                <argument>${project.build.directory}/neptune-energy-green-snapshot.png</argument>
                                 <argument>-manifestFile</argument>
-                                <argument>${project.build.directory}/energy-green-neptune-snapshot.json</argument>
+                                <argument>${project.build.directory}/neptune-energy-green-snapshot.json</argument>
                                 <argument>-sourcesOnly</argument>
                                 <argument>true</argument>
                                 <!-- List theme config files here -->
-                                <argument>${project.basedir}/src/theme/energy-green-neptune.theme</argument>
+                                <argument>${project.basedir}/src/theme/neptune-energy-green.theme</argument>
                             </arguments>
                         </configuration>
                     </execution>

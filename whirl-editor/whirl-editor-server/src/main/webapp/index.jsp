@@ -33,16 +33,16 @@
     <link type="text/css" rel="stylesheet" href="index.css">
 
     <script type="text/javascript" src="cke/ckeditor.js"></script>
-    <script type="text/javascript" src="editor/codemirror/lib/codemirror.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/xml/xml.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/css/css.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/clike/clike.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/javascript/javascript.js"></script>
-    <script type="text/javascript" src="editor/codemirror/mode/sql/sql.js"></script>
-    <script type="text/javascript" src="editor/codemirror/addon/edit/closetag.js"></script>
-    <script type="text/javascript" src="editor/codemirror/addon/hint/show-hint.js"></script>
-    <script type="text/javascript" src="editor/codemirror/addon/hint/javascript-hint.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/css/css.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/mode/sql/sql.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/addon/edit/closetag.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/addon/hint/show-hint.js"></script>
+    <script type="text/javascript" src="editorblue/codemirror/addon/hint/javascript-hint.js"></script>
 
 </head>
 
@@ -56,6 +56,6 @@
         style="position: absolute; width: 0; height: 0; border: 0"></iframe>
 
 
-<script type="text/javascript" language="javascript" src="editor/editor.nocache.js"></script>
+<script type="text/javascript" language="javascript" src="editorblue/editorblue.nocache.js"></script>
 </body>
 </html>
