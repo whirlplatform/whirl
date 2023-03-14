@@ -10,10 +10,12 @@ import com.google.gwt.text.shared.SafeHtmlRenderer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.cell.core.client.SimpleSafeHtmlCell;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell;
-import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.util.Util;
 import com.sencha.gxt.data.client.loader.RpcProxy;
-import com.sencha.gxt.data.shared.*;
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.data.shared.StringLabelProvider;
+import com.sencha.gxt.data.shared.TreeStore;
 import com.sencha.gxt.data.shared.loader.ChildTreeStoreBinding;
 import com.sencha.gxt.data.shared.loader.LoadEvent;
 import com.sencha.gxt.data.shared.loader.TreeLoader;
@@ -60,10 +62,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     private String expandExpression;
     private TreeStore<TreeModelData> store;
 
-    protected LabelProvider<TreeModelData> treeLabelProvider;
-
-    private ValueProvider<TreeModelData, String> valueProvider;
-
     @JsConstructor
     public TreeComboBoxBuilder(@JsOptional Map<String, DataValue> builderProperties) {
         super(builderProperties);
@@ -86,28 +84,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         restoreState = false;
 
         initParamHelper();
-
-//        valueProvider = new ValueProvider<TreeModelData, String>() {
-//
-//            @Override
-//            public String getValue(TreeModelData object) {
-//                //return object.get(labelExpression);
-//                return object.getLabel();
-//            }
-//
-//            @Override
-//            public void setValue(TreeModelData object, String value) {
-//            }
-//
-//            @Override
-//            public String getPath() {
-//                return null;
-//            }
-//
-//        };
-
-        //initLabelProvider();
-        initTreeLabelProvider();
+        initLabelProvider();
 
         checkedModels = new CheckedModels();
         store = new TreeStore<TreeModelData>(new ListKeyProvider());
@@ -115,18 +92,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         initCountElement();
         return comboBox;
     }
-
-    protected void initTreeLabelProvider() {
-        treeLabelProvider = new LabelProvider<TreeModelData>() {
-
-            @Override
-            public String getLabel(TreeModelData item) {
-                return item.getLabel() == null ? "" : item.getLabel();
-            }
-
-        };
-    }
-
 
     @JsIgnore
     @Override
@@ -282,11 +247,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                         }
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                    .getTreeClassData(
-                            SessionToken.get(),
-                            classId,
-                            getLoadConfig((TreeModelData) loadConfig)
-                    );
+                    .getListClassData(SessionToken.get(), classId,
+                        getLoadConfig((TreeModelData) loadConfig));
             }
         };
         return proxy;
@@ -298,7 +260,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 //        return metadata;
 //    }
 
-    protected TreeClassLoadConfig getLoadConfig(TreeModelData parent) {
+    protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
@@ -312,11 +274,9 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         }
 
         config.setParameters(params);
-        config.setLabelExpression(labelExpression);
         config.setIsLeafExpression(isLeafExpression);
         config.setExpandExpression(expandExpression);
         config.setParentExpression(parentExpression);
-        //config.setImageExpression(imageExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setAll(true);
@@ -327,15 +287,15 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private TreeComboBox initCombo(TreeLoader<TreeModelData> loader) {
-        ModelKeyProvider<TreeModelData> keyProvider = new ModelKeyProvider<TreeModelData>() {
+        ModelKeyProvider<ListModelData> keyProvider = new ModelKeyProvider<ListModelData>() {
 
             @Override
-            public String getKey(TreeModelData item) {
+            public String getKey(ListModelData item) {
                 return String.valueOf(item.hashCode());
             }
         };
 
-        ComboBoxCell cell = new ComboBoxCell(new ListStore<TreeModelData>(keyProvider),
+        ComboBoxCell cell = new ComboBoxCell(new ListStore<ListModelData>(keyProvider),
             new StringLabelProvider()) {
             @Override
             protected void onSelect(Object item) {
