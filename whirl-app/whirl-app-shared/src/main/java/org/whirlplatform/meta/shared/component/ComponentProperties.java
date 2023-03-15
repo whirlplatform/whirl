@@ -302,7 +302,7 @@ public class ComponentProperties {
                         add(PropertyType.StringValue);
                         add(PropertyType.DisplayValue);
                         add(PropertyType.IsLeafExpression);
-                        add(PropertyType.StateExpression);
+                        add(PropertyType.ExpandExpression);
                         add(PropertyType.ParentExpression);
                         add(PropertyType.StateScope);
                         add(PropertyType.SaveState);
@@ -325,7 +325,7 @@ public class ComponentProperties {
                         add(PropertyType.IsLeafExpression);
                         add(PropertyType.ParentExpression);
                         add(PropertyType.CheckExpression);
-                        add(PropertyType.StateExpression);
+                        add(PropertyType.ExpandExpression);
                         add(PropertyType.Checkable);
                         add(PropertyType.StateScope);
                         add(PropertyType.SaveState);

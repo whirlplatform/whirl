@@ -7,7 +7,6 @@ import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -25,8 +24,8 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.stateExpression = dbDatabase.getValueExpr(config.getStateExpression(), DataType.UNKNOWN)
-                .as(STATE_EXPRESSION_NAME);
+        this.expandExpression = dbDatabase.getValueExpr(config.getExpandExpression(), DataType.UNKNOWN)
+                .as(EXPAND_EXPRESSION_NAME);
 
         this.imageExpression = dbDatabase.getValueExpr(config.getImageExpression(), DataType.UNKNOWN)
                 .as(IMAGE_EXPRESSION_NAME);

@@ -61,28 +61,22 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
                 // TODO: Доставать не по индексам
                 model.setId(selectReader.getString(0));
+
                 model.setLabel(selectReader.getString(1));
+                //model.setLabel(selectReader.getString(temp.labelExpression));
+                //model.setLabel(selectReader.getString(selectCmd.getSelectExprList()[1]));
 
-                String stateResult = selectReader.getString(2);
-                if(stateResult == null || stateResult.isEmpty() || stateResult == "false") {
-                    model.setState(false);
-                } else {
-                    model.setState(true);
-                }
+                model.setIsExpand(Boolean.parseBoolean(selectReader.getString(2)));
+                //String expandResult = selectReader.getString(temp.expandExpression);
 
-                String checkResult = selectReader.getString(3);
-                if(checkResult == null || checkResult.isEmpty() || checkResult == "false") {
-                    model.setIsCheck(false);
-                } else {
-                    model.setIsCheck(true);
-                }
+                model.setIsCheck(Boolean.parseBoolean(selectReader.getString(3)));
+                //String checkResult = selectReader.getString(temp.checkExpression);
 
-                String selectResult = selectReader.getString(5);
-                if(selectResult == null || selectResult.isEmpty() || selectResult == "false") {
-                    model.setIsSelect(false);
-                } else {
-                    model.setIsSelect(true);
-                }
+                model.setImage(selectReader.getString(4));
+
+                model.setIsSelect(Boolean.parseBoolean(selectReader.getString(5)));
+                //String selectResult = selectReader.getString(temp.selectExpression);
+
                 result.add(model);
             }
             selectReader.close();
@@ -96,7 +90,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
         DBColumnExpr idColumn = temp.dbPrimaryKey;
         DBColumnExpr labelExpressionColumn = temp.labelExpression;
-        DBColumnExpr stateExpressionColumn = temp.stateExpression;
+        DBColumnExpr expandExpressionColumn = temp.expandExpression;
         DBColumnExpr checkExpressionColumn = temp.checkExpression;
         DBColumnExpr imageExpressionColumn = temp.imageExpression;
         DBColumnExpr selectExpressionColumn = temp.selectExpression;
@@ -104,7 +98,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
         subCommand.select(labelExpressionColumn);
-        subCommand.select(stateExpressionColumn);
+        subCommand.select(expandExpressionColumn);
         subCommand.select(checkExpressionColumn);
         subCommand.select(imageExpressionColumn);
         subCommand.select(selectExpressionColumn);
@@ -117,7 +111,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         DBQuery subQuery = new DBQuery(subCommand);
         idColumn = subQuery.findQueryColumn(idColumn);
         labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
-        stateExpressionColumn = subQuery.findQueryColumn(stateExpressionColumn);
+        expandExpressionColumn = subQuery.findQueryColumn(expandExpressionColumn);
         checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
         imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
         selectExpressionColumn = subQuery.findQueryColumn(selectExpressionColumn);
@@ -125,7 +119,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
         topCommand.select(labelExpressionColumn);
-        topCommand.select(stateExpressionColumn);
+        topCommand.select(expandExpressionColumn);
         topCommand.select(checkExpressionColumn);
         topCommand.select(imageExpressionColumn);
         topCommand.select(selectExpressionColumn);

@@ -106,15 +106,15 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Колонка хранящая состояние выбора
      */
-    private String selectExpression; // selectColumn
+    private String selectExpression;
     /**
      * Колонка со значением для ветки (expand/collapse)
      */
-    private String stateExpression; // stateColumn
+    private String expandExpression;
     /**
      * Колонка со ссылкой на картинку
      */
-    private String imageExpression; // imageColumn
+    private String imageExpression;
     /**
      * Флаг, указывающий, что элемент выбираемый imageExpression
      */
@@ -192,7 +192,8 @@ public class TreeBuilder extends ComponentBuilder
             @Override
             public ImageResource getIcon(TreeModelData model) {
                 if (imageExpression != null) {
-                    String data = model.get(imageExpression);
+                    //String data = model.get(imageExpression);
+                    String data = model.getImage();
                     if (data != null) {
                         SafeUri url = UriUtils.fromString(data);
                         return IconHelper.getImageResource(url, 16, 16);
@@ -236,8 +237,8 @@ public class TreeBuilder extends ComponentBuilder
         } else if (name.equalsIgnoreCase(PropertyType.CheckExpression.getCode()) && value != null) {
             checkExpression = value.getString();
             return true;
-        } else if (name.equalsIgnoreCase(PropertyType.StateExpression.getCode()) && value != null) {
-            stateExpression = value.getString();
+        } else if (name.equalsIgnoreCase(PropertyType.ExpandExpression.getCode()) && value != null) {
+            expandExpression = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.ImageExpression.getCode()) && value != null) {
             imageExpression = value.getString();
@@ -473,7 +474,7 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     protected void restoreState(List<TreeModelData> list) {
-        if (checkExpression == null && stateExpression == null && selectExpression == null) {
+        if (checkExpression == null && expandExpression == null && selectExpression == null) {
             return;
         }
         TreeModelData firstChecked = null;
@@ -486,7 +487,7 @@ public class TreeBuilder extends ComponentBuilder
                 tree.setChecked(m, CheckState.CHECKED);
             }
             // Раскрываем ветку
-            if (m.isState() && !tree.isLeaf(m)) {
+            if (m.isExpand() && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
             if (m.isSelect()) {
@@ -508,9 +509,6 @@ public class TreeBuilder extends ComponentBuilder
             fm.setView(true);
             metadata.addField(fm);
         }
-        if (imageExpression != null && !imageExpression.isEmpty()) {
-            metadata.addField(new FieldMetadata(imageExpression, DataType.STRING, null));
-        }
         return metadata;
     }
 
@@ -519,13 +517,15 @@ public class TreeBuilder extends ComponentBuilder
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafExpression(isLeafExpression);
-        config.setStateExpression(stateExpression);
+        config.setExpandExpression(expandExpression);
         config.setCheckExpression(checkExpression);
         config.setSelectExpression(selectExpression);
         config.setParentExpression(parentExpression);
         config.setParent(parent);
         config.setWhereSql(whereSql);
         config.setLabelExpression(labelExpression);
+        config.setImageExpression(imageExpression);
+        // image -> поставить сюда
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());
