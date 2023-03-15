@@ -7,17 +7,28 @@ import org.whirlplatform.meta.shared.data.TreeModelData;
 @SuppressWarnings("serial")
 public class TreeClassLoadConfig extends ClassLoadConfig {
 
+    private ListModelData parent;
+    private String parentExpression;
     private String isLeafExpression;
-    private String stateExpression;
+    private String expandExpression;
     private String checkExpression;
-    // New property
     private String selectExpression;
     private String labelExpression;
-private String parentExpression;
-    private ListModelData parent;
+    private String imageExpression;
+
 
     public TreeClassLoadConfig() {
         super();
+    }
+
+    @Override
+    public String getImageExpression() {
+        return imageExpression;
+    }
+
+    @Override
+    public void setImageExpression(String imageExpression) {
+        this.imageExpression = imageExpression;
     }
 
     public String getSelectExpression() {
@@ -36,12 +47,12 @@ private String parentExpression;
         this.isLeafExpression = leafExpression;
     }
 
-    public String getStateExpression() {
-        return stateExpression;
+    public String getExpandExpression() {
+        return expandExpression;
     }
 
-    public void setStateExpression(String stateExpression) {
-        this.stateExpression = stateExpression;
+    public void setExpandExpression(String expandExpression) {
+        this.expandExpression = expandExpression;
     }
 
     public String getCheckExpression() {
