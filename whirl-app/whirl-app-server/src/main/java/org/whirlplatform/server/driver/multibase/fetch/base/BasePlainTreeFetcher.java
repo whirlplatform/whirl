@@ -60,7 +60,6 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
                 TreeModelData model = new TreeModelDataImpl();
 
                 // TODO: Доставать не по индексам
-                // вот тут добавляется в TreeModelData - всё, что нужно
                 model.setId(selectReader.getString(0));
                 model.setLabel(selectReader.getString(1));
 
@@ -77,10 +76,17 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
                 } else {
                     model.setIsCheck(true);
                 }
+
+                String selectResult = selectReader.getString(5);
+                if(selectResult == null || selectResult.isEmpty() || selectResult == "false") {
+                    model.setIsSelect(false);
+                } else {
+                    model.setIsSelect(true);
+                }
                 result.add(model);
             }
             selectReader.close();
-            List<TreeModelData> data = new ArrayList<TreeModelData>(result);
+            List<TreeModelData> data = new ArrayList<>(result);
             return data;
         }
     }
@@ -93,6 +99,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         DBColumnExpr stateExpressionColumn = temp.stateExpression;
         DBColumnExpr checkExpressionColumn = temp.checkExpression;
         DBColumnExpr imageExpressionColumn = temp.imageExpression;
+        DBColumnExpr selectExpressionColumn = temp.selectExpression;
 
         DBCommand subCommand = temp.dbDatabase.createCommand();
         subCommand.select(idColumn);
@@ -100,6 +107,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         subCommand.select(stateExpressionColumn);
         subCommand.select(checkExpressionColumn);
         subCommand.select(imageExpressionColumn);
+        subCommand.select(selectExpressionColumn);
 
         if (!temp.where.isEmpty()) {
             subCommand.addWhereConstraints(temp.where);
@@ -112,6 +120,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         stateExpressionColumn = subQuery.findQueryColumn(stateExpressionColumn);
         checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
         imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
+        selectExpressionColumn = subQuery.findQueryColumn(selectExpressionColumn);
 
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
@@ -119,8 +128,9 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         topCommand.select(stateExpressionColumn);
         topCommand.select(checkExpressionColumn);
         topCommand.select(imageExpressionColumn);
+        topCommand.select(selectExpressionColumn);
 
-        if (((TreeClassLoadConfig) loadConfig).getParent() != null) {
+        if (loadConfig.getParent() != null) {
             subCommand.limitRows(10000);
         }
 
