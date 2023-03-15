@@ -51,9 +51,9 @@ import org.whirlplatform.rpc.shared.SessionToken;
  * Древовидный список
  */
 @JsType(name = "TreeComboBox", namespace = "Whirl")
-public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
+public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, TreeComboBox> {
 
-    protected TreeLoader<ListModelData> loader;
+    protected TreeLoader<TreeModelData> loader;
     /**
      * Колонка указывающая на родителя.
      */
@@ -92,6 +92,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         initCountElement();
         return comboBox;
     }
+
 
     @JsIgnore
     @Override
@@ -197,27 +198,31 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     }
 
     @Override
+    public TreeModelData getModel() {
+        return new TreeModelDataImpl();
+    }
+    @Override
     protected void parseValue(String value, boolean labels) {
         super.parseValue(value, labels);
         if (checkedModels.isReady()) {
-            for (ListModelData m : checkedModels.models) {
-                comboBox.setChecked((TreeModelData) m, CheckState.CHECKED, false);
+            for (TreeModelData m : checkedModels.models) {
+                comboBox.setChecked( m, CheckState.CHECKED, false);
             }
         }
     }
 
     @Override
     protected void addListener() {
-        comboBox.addValueChangeHandler(new ValueChangeHandler<ListModelData>() {
+        comboBox.addValueChangeHandler(new ValueChangeHandler<TreeModelData>() {
             @Override
-            public void onValueChange(ValueChangeEvent<ListModelData> event) {
+            public void onValueChange(ValueChangeEvent<TreeModelData> event) {
                 saveState();
             }
         });
 
-        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<ListModelData>() {
+        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<TreeModelData>() {
             @Override
-            public void onBeforeQuery(BeforeQueryEvent<ListModelData> event) {
+            public void onBeforeQuery(BeforeQueryEvent<TreeModelData> event) {
                 if (isQuery()) {
                     comboBox.getTree().mask();
                     comboBox.getLoader().load();
@@ -229,15 +234,15 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected RpcProxy<TreeModelData, List<TreeModelData>> createProxy() {
-        RpcProxy proxy = new RpcProxy<ListModelData, List<ListModelData>>() {
+        RpcProxy proxy = new RpcProxy<TreeModelData, List<TreeModelData>>() {
 
             @Override
-            public void load(ListModelData loadConfig,
-                             final AsyncCallback<List<ListModelData>> callback) {
-                AsyncCallback<LoadData<ListModelData>> proxyCallback =
-                    new AsyncCallback<LoadData<ListModelData>>() {
+            public void load(TreeModelData loadConfig,
+                             final AsyncCallback<List<TreeModelData>> callback) {
+                AsyncCallback<LoadData<TreeModelData>> proxyCallback =
+                    new AsyncCallback<LoadData<TreeModelData>>() {
                         @Override
-                        public void onSuccess(LoadData<ListModelData> result) {
+                        public void onSuccess(LoadData<TreeModelData> result) {
                             callback.onSuccess(result.getData());
                         }
 
@@ -248,7 +253,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
                     .getListClassData(SessionToken.get(), classId,
-                        getLoadConfig((TreeModelData) loadConfig));
+                        getLoadConfig(loadConfig));
             }
         };
         return proxy;
@@ -287,15 +292,15 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private TreeComboBox initCombo(TreeLoader<TreeModelData> loader) {
-        ModelKeyProvider<ListModelData> keyProvider = new ModelKeyProvider<ListModelData>() {
+        ModelKeyProvider<TreeModelData> keyProvider = new ModelKeyProvider<TreeModelData>() {
 
             @Override
-            public String getKey(ListModelData item) {
+            public String getKey(TreeModelData item) {
                 return String.valueOf(item.hashCode());
             }
         };
 
-        ComboBoxCell cell = new ComboBoxCell(new ListStore<ListModelData>(keyProvider),
+        ComboBoxCell cell = new ComboBoxCell(new ListStore<TreeModelData>(keyProvider),
             new StringLabelProvider()) {
             @Override
             protected void onSelect(Object item) {
@@ -337,7 +342,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     @Override
     public RowListValue getFieldValue() {
         RowListValue list = new RowListValueImpl();
-        for (ListModelData model : comboBox.getSelection()) {
+        for (TreeModelData model : comboBox.getSelection()) {
             RowValue row = new RowValueImpl(model.getId());
             row.setChecked(true);
             list.addRowValue(row);
@@ -569,13 +574,13 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public TreeModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public void setValue(TreeModelData value) {
         throw new UnsupportedOperationException();
     }
 
@@ -589,10 +594,10 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
     }
 
 
-    private class ListKeyProvider implements ModelKeyProvider<ListModelData> {
+    private class ListKeyProvider implements ModelKeyProvider<TreeModelData> {
 
         @Override
-        public String getKey(ListModelData item) {
+        public String getKey(TreeModelData item) {
             return item.getId();
         }
     }
