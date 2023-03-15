@@ -30,11 +30,10 @@ import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 
-public class TreeComboBox extends ComboBox<ListModelData> {
+public class TreeComboBox extends ComboBox<TreeModelData> {
 
     private final TreeStore<TreeModelData> treeStore;
     private final List<TreeModelData> checkedItems;
@@ -44,7 +43,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     private XTree<TreeModelData, String> tree;
     private Composite composite;
 
-    public TreeComboBox(ComboBoxCell<ListModelData> cell, Cell<String> treeCell,
+    public TreeComboBox(ComboBoxCell<TreeModelData> cell, Cell<String> treeCell,
                         TreeStore<TreeModelData> store,
                         TreeLoader<TreeModelData> loader) {
         super(cell);
@@ -102,10 +101,10 @@ public class TreeComboBox extends ComboBox<ListModelData> {
             }
         });
 
-        addBeforeSelectionHandler(new BeforeSelectionHandler<ListModelData>() {
+        addBeforeSelectionHandler(new BeforeSelectionHandler<TreeModelData>() {
 
             @Override
-            public void onBeforeSelection(BeforeSelectionEvent<ListModelData> event) {
+            public void onBeforeSelection(BeforeSelectionEvent<TreeModelData> event) {
                 event.cancel();
             }
         });
@@ -143,14 +142,14 @@ public class TreeComboBox extends ComboBox<ListModelData> {
         return tree.getSelectionModel().getSelectedItem();
     }
 
-    public void setChecked(ListModelData item, CheckState checked, boolean fireEvent) {
+    public void setChecked(TreeModelData item, CheckState checked, boolean fireEvent) {
         if (checkedItems.contains(item)) {
             if (CheckState.UNCHECKED.equals(checked) || CheckState.PARTIAL.equals(checked)) {
                 checkedItems.remove(item);
                 if (!fireEvent) {
                     disableCheckListener();
                 }
-                tree.setChecked((TreeModelData) item, checked);
+                tree.setChecked(item, checked);
                 if (!fireEvent) {
                     enableCheckListener();
                 }
@@ -233,7 +232,7 @@ public class TreeComboBox extends ComboBox<ListModelData> {
     }
 
     @Override
-    public void setValue(ListModelData value) {
+    public void setValue(TreeModelData value) {
         // Устанавливается через setChecked
     }
 

@@ -12,7 +12,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
 
-class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ComboBox<ListModelData>> {
+class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ListModelData,ComboBox<ListModelData>> {
 
     private final FieldMetadata tableField;
 

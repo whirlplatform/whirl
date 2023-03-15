@@ -61,9 +61,9 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
  * Список
  */
 @JsType(name = "ComboBox", namespace = "Whirl")
-public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends AbstractFieldBuilder
+public class ComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>> extends AbstractFieldBuilder
     implements Editable,
-    NativeParameter<ListModelData>, Parameter<DataValue>, SelectEvent.HasSelectHandlers,
+    NativeParameter<K>, Parameter<DataValue>, SelectEvent.HasSelectHandlers,
     ChangeEvent.HasChangeHandlers, HasState {
 
     protected static final String SEARCH_QUERY = "SEARCH_TEXT";
@@ -72,9 +72,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     protected String classId;
     protected String whereSql;
     protected T comboBox;
-    protected ClassStore<ListModelData, ClassLoadConfig> store;
+    protected ClassStore<K, ClassLoadConfig> store;
     protected ParameterHelper paramHelper;
-    protected LabelProvider<ListModelData> labelProvider;
+    protected LabelProvider<K> labelProvider;
     protected StorageWrapper<DataValue> stateStore;
     protected StateStore<DataValue> selectionStateStore;
     protected boolean saveState;
@@ -114,7 +114,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         initParamHelper();
         initLabelProvider();
 
-        comboBox = (T) new ComboBox<ListModelData>(store, labelProvider);
+        comboBox = (T) new ComboBox<K>(store, labelProvider);
         comboBox.setMinChars(minChars);
         comboBox.setForceSelection(true);
         comboBox.setQueryDelay(delayTimeMs);
@@ -131,16 +131,22 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     protected void initLabelProvider() {
-        labelProvider = new LabelProvider<ListModelData>() {
+        labelProvider = new LabelProvider<K>() {
 
             @Override
-            public String getLabel(ListModelData item) {
+            public String getLabel(K item) {
                 return item.getLabel() == null ? "" : item.getLabel();
             }
 
         };
     }
 
+    @JsIgnore
+    public K getModel() {
+        Object r;
+        r = new ListModelDataImpl();
+        return (K)r;
+    }
     @JsIgnore
     @Override
     public boolean setProperty(String name, DataValue value) {
@@ -156,9 +162,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             if (value == null || Util.isEmptyString(value.getString())) {
                 comboBox.setValue(null);
             } else {
-                ListModelData model = comboBox.getValue();
+                K model = comboBox.getValue();
                 if (model == null) {
-                    model = new ListModelDataImpl();
+                    model = getModel(); // метод для инициализации и переопределения в классах наследниках
                 }
                 model.setId(value.getString());
                 comboBox.setValue(model);
@@ -167,9 +173,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         } else if (name.equalsIgnoreCase(PropertyType.DisplayValue.getCode())) {
             if (value != null && !Util.isEmptyString(value.getString())
                 && comboBox.getValue() != null) {
-                ListModelData model = comboBox.getValue();
+                K model = comboBox.getValue();
                 if (model == null) {
-                    model = new ListModelDataImpl();
+                    model = getModel();
                 }
                 model.setLabel(value.getString());
                 comboBox.setValue(model);
@@ -256,23 +262,23 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     }
 
     private void createStore() {
-        store = new ClassStore<ListModelData, ClassLoadConfig>(
-            new ListClassProxy(classId));
+        store = new ClassStore<K, ClassLoadConfig>(
+                new ListClassProxy(classId));
     }
 
     protected void bindStore() {
         comboBox.setStore(store);
     }
 
-    protected ClassStore<ListModelData, ClassLoadConfig> getStore() {
+    protected ClassStore<K, ClassLoadConfig> getStore() {
         return store;
     }
 
     protected void addListener() {
-        comboBox.addSelectionHandler(new SelectionHandler<ListModelData>() {
+        comboBox.addSelectionHandler(new SelectionHandler<K>() {
 
             @Override
-            public void onSelection(SelectionEvent<ListModelData> event) {
+            public void onSelection(SelectionEvent<K> event) {
                 comboBox.setValue(event.getSelectedItem(), true);
 
                 fireEvent(new SelectEvent());
@@ -301,9 +307,9 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
 
         });
 
-        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<ListModelData>() {
+        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<K>() {
             @Override
-            public void onBeforeQuery(BeforeQueryEvent<ListModelData> event) {
+            public void onBeforeQuery(BeforeQueryEvent<K> event) {
                 if (event.getQuery().length() >= minChars) {
                     store.clear();
                     comboBox.expand();
@@ -313,10 +319,10 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
             }
         });
 
-        comboBox.addValueChangeHandler(new ValueChangeHandler<ListModelData>() {
+        comboBox.addValueChangeHandler(new ValueChangeHandler<K>() {
 
             @Override
-            public void onValueChange(ValueChangeEvent<ListModelData> event) {
+            public void onValueChange(ValueChangeEvent<K> event) {
                 saveState();
                 fireEvent(new ChangeEvent());
             }
@@ -331,12 +337,12 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
         });
 
         store.getLoader()
-            .addLoadHandler(new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+            .addLoadHandler(new LoadHandler<ClassLoadConfig, LoadData<K>>() {
 
                 @Override
-                public void onLoad(LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                public void onLoad(LoadEvent<ClassLoadConfig, LoadData<K>> event) {
 
-                    List<ListModelData> result = event.getLoadResult().getData();
+                    List<K> result = event.getLoadResult().getData();
                     if (!comboBox.isExpanded() && result != null && result.size() == 1) {
                         comboBox.setValue(result.get(0));
                         comboBox.collapse();
@@ -417,14 +423,14 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
-        ListModelData model = comboBox.getValue();
+    public K getValue() {
+        K model = comboBox.getValue();
         return model;
     }
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public void setValue(K value) {
         comboBox.setValue(value, true);
     }
 
@@ -447,7 +453,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     public boolean isValid(boolean invalidate) {
         if (isRequired()) {
             Object value = null;
-            ListModelData model = comboBox.getValue();
+            K model = comboBox.getValue();
             if (model != null) {
                 value = model.getId();
             }
@@ -471,7 +477,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected ComboBox<ListModelData> getRealComponent() {
+    protected ComboBox<K> getRealComponent() {
         return comboBox;
     }
 
@@ -488,7 +494,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
     @Override
     public void setFieldValue(DataValue value) {
         if (value != null && DataType.LIST.equals(value.getType())) {
-            comboBox.setValue(value.getListModelData(), true);
+            comboBox.setValue((K) value.getListModelData(), true);
         } else {
             comboBox.setValue(null);
         }
@@ -616,7 +622,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
                 Element item = list.get(idx);
                 if (item.isOrHasChild(element)) {
                     locator = getLocator(comboBox.getElement());
-                    ListModelData d = comboBox.getStore().get(idx);
+                    K d = comboBox.getStore().get(idx);
                     part = new Locator(LocatorParams.TYPE_ITEM);
                     part.setParameter(LocatorParams.PARAMETER_ID, d.getId());
                     part.setParameter(LocatorParams.PARAMETER_LABEL, d.getLabel());
@@ -672,7 +678,7 @@ public class ComboBoxBuilder<T extends ComboBox<ListModelData>> extends Abstract
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
                     && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     String label = part.getParameter(LocatorParams.PARAMETER_LABEL);
-                    for (ListModelData m : store.getAll()) {
+                    for (K m : store.getAll()) {
                         if (label.equals(m.getLabel())) {
                             element = comboBox.getListView().getElement(store.indexOf(m));
                             break;
