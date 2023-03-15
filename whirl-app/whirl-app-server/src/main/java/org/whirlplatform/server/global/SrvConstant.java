@@ -22,4 +22,6 @@ public class SrvConstant {
 
     public static final String CHECK_EXPRESSION_NAME = "check_expression";
 
+    public static final String SELECT_EXPRESSION_NAME = "select_expression";
+
 }
