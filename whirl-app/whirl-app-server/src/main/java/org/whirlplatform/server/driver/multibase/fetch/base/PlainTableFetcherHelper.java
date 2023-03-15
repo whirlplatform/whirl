@@ -36,7 +36,6 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
 import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
-import static org.whirlplatform.server.global.SrvConstant.STATE_EXPRESSION_NAME;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<>();
@@ -49,11 +48,10 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public List<DBCompareExpr> where = new ArrayList<DBCompareExpr>();
     public DBColumnExpr countColumn;
     public DBColumnExpr labelExpression;
-    public DBColumnExpr stateExpression;
+    public DBColumnExpr expandExpression;
     public DBColumnExpr imageExpression;
     public DBColumnExpr checkExpression;
     public DBColumnExpr selectExpression;
-    //checkExpression
 
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
                                    DataSourceDriver datasourceDriver) {

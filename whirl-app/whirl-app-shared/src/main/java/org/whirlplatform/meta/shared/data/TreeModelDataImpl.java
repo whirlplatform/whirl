@@ -13,7 +13,7 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     private boolean islLeaf;
 
-    private boolean isState;
+    private boolean isExpand;
 
 
     public TreeModelDataImpl() {
@@ -61,13 +61,13 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
     }
 
     @Override
-    public boolean isState() {
-        return isState;
+    public boolean isExpand() {
+        return isExpand;
     }
 
     @Override
-    public void setState(boolean isState) {
-    this.isState = isState;
+    public void setIsExpand(boolean isExpand) {
+    this.isExpand = isExpand;
     }
 
 

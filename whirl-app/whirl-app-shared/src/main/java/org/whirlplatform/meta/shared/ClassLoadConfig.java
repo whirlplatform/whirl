@@ -36,12 +36,10 @@ public class ClassLoadConfig implements Serializable {
     private boolean reloadMetadata;
 
     private FieldMetadata tableField;
-
     private String labelExpression;
     private String isLeafExpression;
-    private String stateExpression;
+    private String expandExpression;
     private String checkExpression;
-    // New property
     private String selectExpression;
     private String parentExpression;
     private String imageExpression;
@@ -74,12 +72,12 @@ public class ClassLoadConfig implements Serializable {
         this.isLeafExpression = leafExpression;
     }
 
-    public String getStateExpression() {
-        return stateExpression;
+    public String getExpandExpression() {
+        return expandExpression;
     }
 
-    public void setStateExpression(String stateExpression) {
-        this.stateExpression = stateExpression;
+    public void setExpandExpression(String expandExpression) {
+        this.expandExpression = expandExpression;
     }
 
     public String getCheckExpression() {

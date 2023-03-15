@@ -132,7 +132,7 @@ public enum PropertyType implements Serializable {
     ShowPagingToolbar("ShowPagingToolbar", DataType.BOOLEAN, false),
     ShowRefreshButtons("ShowRefreshButtons", DataType.BOOLEAN, false),
     SingleSelection("SingleSelection", DataType.BOOLEAN, false),
-    StateExpression("StateExpression", DataType.STRING, false, true),
+    ExpandExpression("ExpandExpression", DataType.STRING, false, true),
     Template("Template", DataType.STRING, false),
     Url("Url", DataType.STRING, true),
     WhereSql("WhereSql", DataType.STRING, false, true),

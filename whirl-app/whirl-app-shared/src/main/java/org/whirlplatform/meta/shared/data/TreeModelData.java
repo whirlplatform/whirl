@@ -16,8 +16,8 @@ public interface TreeModelData extends ListModelData {
         boolean isLeaf();
         void setIsLeaf(boolean isLeaf);
 
-        boolean isState();
-        void setState(boolean isState);
+        boolean isExpand();
+        void setIsExpand(boolean isState);
 
         String getImage();
         void setImage(String image);

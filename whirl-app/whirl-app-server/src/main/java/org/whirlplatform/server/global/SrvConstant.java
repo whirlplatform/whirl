@@ -16,7 +16,7 @@ public class SrvConstant {
 
     public static final String LABEL_EXPRESSION_NAME = "label_expression";
 
-    public static final String STATE_EXPRESSION_NAME = "state_expression";
+    public static final String EXPAND_EXPRESSION_NAME = "expand_expression";
 
     public static final String IMAGE_EXPRESSION_NAME = "image_expression";
 
