@@ -51,13 +51,7 @@ import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
-import org.whirlplatform.meta.shared.data.RowListValue;
-import org.whirlplatform.meta.shared.data.RowListValueImpl;
-import org.whirlplatform.meta.shared.data.RowValue;
-import org.whirlplatform.meta.shared.data.RowValueImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 /**
@@ -66,17 +60,17 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  * @param <T>
  */
 @JsType(name = "MultiComboBox", namespace = "Whirl")
-public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends ComboBoxBuilder<T>
+public class MultiComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>> extends ComboBoxBuilder<K,T>
     implements
     ListParameter<RowListValue> {
 
     protected CountElement ce;
-    protected ListView<ListModelData, ?> listView;
+    protected ListView<K, ?> listView;
     protected CheckedModels checkedModels;
     protected boolean singleSelection;
     protected boolean readOnly;
-    private Map<ListModelData, Boolean> modelCheck;
-    private ValueProvider<ListModelData, Boolean> valueProvider;
+    private Map<K, Boolean> modelCheck;
+    private ValueProvider<K, Boolean> valueProvider;
     private CheckBoxCell cell;
 
     @JsConstructor
@@ -109,19 +103,19 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         initParamHelper();
         initLabelProvider();
 
-        modelCheck = new HashMap<ListModelData, Boolean>();
+        modelCheck = new HashMap<K, Boolean>();
         checkedModels = new CheckedModels();
-        valueProvider = new ValueProvider<ListModelData, Boolean>() {
+        valueProvider = new ValueProvider<K, Boolean>() {
 
             @JsIgnore
             @Override
-            public Boolean getValue(ListModelData object) {
+            public Boolean getValue(K object) {
                 return modelCheck.get(object);
             }
 
             @JsIgnore
             @Override
-            public void setValue(ListModelData object, Boolean value) {
+            public void setValue(K object, Boolean value) {
                 modelCheck.put(object, value);
             }
 
@@ -134,7 +128,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
         cell = new CheckBoxCell() {
 
-            private ListModelData cellModel;
+            private  ListModelData cellModel;
 
             @Override
             public void render(Context context, Boolean value, SafeHtmlBuilder sb) {
@@ -168,7 +162,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                         getInputElement(e).setChecked(false);
                         return;
                     }
-                    ListModelData model = listView.getStore().get(idx);
+                    K model = listView.getStore().get(idx);
                     if (model.getId() == null) {
                         return;
                     }
@@ -193,12 +187,12 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 }
             }
         };
-        listView = new ListView<ListModelData, Boolean>(null, valueProvider, cell);
+        listView = new ListView<K, Boolean>(null, valueProvider, cell);
         listView.getSelectionModel().setSelectionMode(SelectionMode.SIMPLE);
-        comboBox = (T) new ComboBox<ListModelData>(
-            new ComboBoxCell<ListModelData>(null, labelProvider, listView) {
+        comboBox = (T) new ComboBox<K>(
+            new ComboBoxCell<K>(null, labelProvider, listView) {
                 @Override
-                protected void onSelect(ListModelData item) {
+                protected void onSelect(K item) {
                 }
             });
         comboBox.setQueryDelay(delayTimeMs);
@@ -223,13 +217,13 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     @Override
     protected void bindStore() {
-        final ClassStore<ListModelData, ClassLoadConfig> store = getStore();
+        final ClassStore<K, ClassLoadConfig> store = getStore();
         if (!(comboBox.getStore() != store || comboBox.getListView().getStore() != store)) {
             return;
         }
 
         // Чтобы отмеченные элементы отображались в начале списка
-        StoreSortInfo<ListModelData> sortInfo = new StoreSortInfo<ListModelData>(
+        StoreSortInfo<K> sortInfo = new StoreSortInfo<K>(
             new Comparator<ListModelData>() {
                 @Override
                 public int compare(ListModelData o1, ListModelData o2) {
@@ -246,16 +240,16 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             }, SortDir.ASC);
         store.addSortInfo(sortInfo);
         store.getLoader().addLoadHandler(
-            new LoadHandler<ClassLoadConfig, LoadData<ListModelData>>() {
+            new LoadHandler<ClassLoadConfig, LoadData<K>>() {
 
                 @Override
                 public void onLoad(
-                    LoadEvent<ClassLoadConfig, LoadData<ListModelData>> event) {
+                    LoadEvent<ClassLoadConfig, LoadData<K>> event) {
                     // Если в комбобокс не введено значение, добавляем
                     // отмеченные элементы
                     if (event.getLoadConfig().getQuery() == null
                         || event.getLoadConfig().getQuery().isEmpty()) {
-                        for (ListModelData m : checkedModels.models) {
+                        for (K m : checkedModels.models) {
                             if (!store.getAll().contains(m)) {
                                 store.add(m);
                             }
@@ -287,9 +281,9 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             }
         });
 
-        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<ListModelData>() {
+        comboBox.addBeforeQueryHandler(new BeforeQueryHandler<K>() {
             @Override
-            public void onBeforeQuery(BeforeQueryEvent<ListModelData> event) {
+            public void onBeforeQuery(BeforeQueryEvent<K> event) {
                 if (event.getQuery().length() >= minChars) {
                     load(false);
                     event.setCancelled(true);
@@ -307,13 +301,13 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public K getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public void setValue(K value) {
         throw new UnsupportedOperationException();
     }
 
@@ -375,10 +369,10 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     public void setFieldValue(RowListValue value) {
         int size = checkedModels.models.size();
         checkedModels.models.clear();
-        ListModelData m = null;
+        K m = null;
         if (value != null) {
             for (RowValue r : value.getRowList()) {
-                m = new ListModelDataImpl();
+                m = getModel();
                 m.setId(r.getId());
                 m.setLabel(r.getLabel());
                 checkedModels.models.add(m);
@@ -427,6 +421,12 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
         return super.setProperty(name, value);
     }
 
+    @JsIgnore
+    public K getModel() {
+        Object r;
+            r = new ListModelDataImpl();
+    return (K)r;
+    }
     protected void parseValue(String value, boolean labels) {
         if (Util.isEmptyString(value)) {
             checkedModels.models.clear();
@@ -436,9 +436,9 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
             CSVParser parser = new CSVParser();
             String[] array = parser.parseLine(value);
             for (int i = 0; i < array.length; i++) {
-                ListModelData model;
+                K model;
                 if (checkedModels.models.size() < i + 1) {
-                    model = new ListModelDataImpl();
+                    model =  getModel();
                     checkedModels.models.add(model);
                 } else {
                     model = checkedModels.models.get(i);
@@ -462,7 +462,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
 
     private void calcSingleSelection() {
         if (singleSelection && checkedModels.models.size() > 1) {
-            ListModelData model = checkedModels.models.get(checkedModels.models.size() - 1);
+            K model = checkedModels.models.get(checkedModels.models.size() - 1);
             checkedModels.models.clear();
             checkedModels.models.add(model);
         }
@@ -512,7 +512,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 Element item = list.get(idx);
                 if (item.isOrHasChild(element)) {
                     locator = getLocator(comboBox.getElement());
-                    ListModelData d = comboBox.getStore().get(idx);
+                    K d = comboBox.getStore().get(idx);
                     part = new Locator(LocatorParams.TYPE_ITEM);
                     part.setParameter(LocatorParams.PARAMETER_ID, d.getId());
                     part.setParameter(LocatorParams.PARAMETER_LABEL, d.getLabel());
@@ -569,7 +569,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
                 } else if (part.hasParameter(LocatorParams.PARAMETER_LABEL)
                     && Util.isEmptyString(part.getParameter(LocatorParams.PARAMETER_LABEL))) {
                     String label = part.getParameter(LocatorParams.PARAMETER_LABEL);
-                    for (ListModelData m : store.getAll()) {
+                    for (K m : store.getAll()) {
                         if (label.equals(m.getLabel())) {
                             element = listView.getElement(store.indexOf(m));
                             break;
@@ -756,7 +756,7 @@ public class MultiComboBoxBuilder<T extends ComboBox<ListModelData>> extends Com
     }
 
     class CheckedModels {
-        List<ListModelData> models = new ArrayList<>();
+        List<K> models = new ArrayList<>();
         boolean idReady = false;
         boolean labelReady = false;
 

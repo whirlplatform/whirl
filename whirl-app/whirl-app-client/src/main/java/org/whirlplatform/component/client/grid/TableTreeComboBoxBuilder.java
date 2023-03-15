@@ -8,7 +8,7 @@ import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.TreeModelData;
 
 
 class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
@@ -21,6 +21,7 @@ class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
         super(builderProperties);
         this.tableField = tableField;
     }
+
 
     @Override
     protected ClassLoadConfig getLoadConfig(boolean dontUseQuery) {
@@ -225,13 +226,13 @@ class TableTreeComboBoxBuilder extends TreeComboBoxBuilder {
 
     @JsIgnore
     @Override
-    public ListModelData getValue() {
+    public TreeModelData getValue() {
         throw new UnsupportedOperationException();
     }
 
     @JsIgnore
     @Override
-    public void setValue(ListModelData value) {
+    public void setValue(TreeModelData value) {
         throw new UnsupportedOperationException();
     }
 
