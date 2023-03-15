@@ -34,6 +34,9 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
         this.checkExpression = dbDatabase.getValueExpr(config.getCheckExpression(), DataType.UNKNOWN)
                 .as(CHECK_EXPRESSION_NAME);
 
+        this.selectExpression = dbDatabase.getValueExpr(config.getSelectExpression(), DataType.UNKNOWN)
+                .as(SELECT_EXPRESSION_NAME);
+
         String query = config.getQuery();
 
         TableColumnElement c = table.getColumn(((TreeClassLoadConfig) config).getParentExpression());
@@ -57,7 +60,7 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
                     c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
         }
 
-        ListModelData parent = ((TreeClassLoadConfig) config).getParent();
+        ListModelData parent = config.getParent();
         if (parent != null) {
             this.where.add(createEquals(parentColumn, parent.getId()));
         } else if (StringUtils.isEmpty(query)) {

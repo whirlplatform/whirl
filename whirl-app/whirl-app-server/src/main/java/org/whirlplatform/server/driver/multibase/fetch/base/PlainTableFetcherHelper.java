@@ -52,6 +52,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public DBColumnExpr stateExpression;
     public DBColumnExpr imageExpression;
     public DBColumnExpr checkExpression;
+    public DBColumnExpr selectExpression;
     //checkExpression
 
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
