@@ -25,11 +25,9 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -110,7 +108,8 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         TreeLoader<TreeModelData> ldr = new TreeLoader<TreeModelData>(proxy) {
             @Override
             public boolean hasChildren(TreeModelData parent) {
-                return parent.<Boolean>get(isLeafExpression);
+                //return parent.<Boolean>get(isLeafExpression);
+                return Optional.ofNullable(parent.<Boolean>get(isLeafExpression)).orElse(true);
             }
 
             @Override
@@ -247,7 +246,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
                         }
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                    .getListClassData(SessionToken.get(), getClassMetadata(),
+                    .getTreeClassData(SessionToken.get(), getClassMetadata(),
                         getLoadConfig((TreeModelData) loadConfig));
             }
         };
@@ -260,7 +259,7 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeComboBox> {
         return metadata;
     }
 
-    protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
+    protected TreeClassLoadConfig getLoadConfig(TreeModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
