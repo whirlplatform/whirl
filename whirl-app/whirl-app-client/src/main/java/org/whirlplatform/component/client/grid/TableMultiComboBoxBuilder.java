@@ -1,7 +1,6 @@
 package org.whirlplatform.component.client.grid;
 
 import com.sencha.gxt.widget.core.client.Component;
-import com.sencha.gxt.widget.core.client.form.ComboBox;
 import java.util.Map;
 import jsinterop.annotations.JsIgnore;
 import org.whirlplatform.component.client.combo.MultiComboBoxBuilder;
@@ -12,7 +11,7 @@ import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
 
-class TableMultiComboBoxBuilder extends MultiComboBoxBuilder<ListModelData,ComboBox<ListModelData>> {
+class TableMultiComboBoxBuilder extends MultiComboBoxBuilder {
 
     private final FieldMetadata tableField;
 
