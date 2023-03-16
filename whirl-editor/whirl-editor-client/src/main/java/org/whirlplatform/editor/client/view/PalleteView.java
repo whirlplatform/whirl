@@ -34,11 +34,13 @@ public class PalleteView extends CssFloatLayoutContainer implements IPalleteView
         button.setWidth(115);
         button.setIcon(ComponentIcon.getIcon(type.getType()));
         button.setIconAlign(IconAlign.TOP);
-        // VerticalLayoutData data = new VerticalLayoutData();
-        // MarginData data = new MarginData();
+
         CssFloatData data = new CssFloatData();
         data.setMargins(new Margins(2));
         add(button, data);
+
+        HelpDecorator.pinTips(button, "componenttype/" + text.toLowerCase());
+
         return button;
     }
 

@@ -13,6 +13,7 @@ import org.whirlplatform.editor.client.main.ComponentPreferences;
 import org.whirlplatform.editor.client.view.PalleteView;
 import org.whirlplatform.meta.shared.component.ComponentType;
 
+
 @Presenter(view = PalleteView.class)
 public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteView, EditorEventBus> {
 
@@ -25,6 +26,7 @@ public class PalletePresenter extends BasePresenter<PalletePresenter.IPalleteVie
         List<ComponentType> types = Arrays.stream(ComponentType.values())
             .filter(v -> !ComponentPreferences.PALETTE_EXCLUSIONS.contains(v))
             .collect(Collectors.toList());
+
         for (ComponentType t : types) {
             Component c = view.addComponentType(t);
             initDND(c, t);
