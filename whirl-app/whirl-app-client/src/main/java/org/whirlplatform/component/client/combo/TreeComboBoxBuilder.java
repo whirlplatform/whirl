@@ -34,11 +34,13 @@ import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
+import org.whirlplatform.component.client.data.ClassStore;
+import org.whirlplatform.component.client.data.ListClassProxy;
+import org.whirlplatform.component.client.data.TreeClassProxy;
 import org.whirlplatform.component.client.ext.TreeComboBox;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.tree.CheckStyleHelper;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
-import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -51,7 +53,7 @@ import org.whirlplatform.rpc.shared.SessionToken;
  * Древовидный список
  */
 @JsType(name = "TreeComboBox", namespace = "Whirl")
-public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, TreeComboBox> {
+public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelData, TreeComboBox> {
 
     protected TreeLoader<TreeModelData> loader;
     /**
@@ -87,18 +89,26 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, Tre
         initLabelProvider();
 
         checkedModels = new CheckedModels();
-        store = new TreeStore<TreeModelData>(new ListKeyProvider());
+        createStore();
         comboBox = initCombo(initLoader(store));
         initCountElement();
         return comboBox;
     }
-
 
     @JsIgnore
     @Override
     public Component create() {
         Component c = super.create();
         return c;
+    }
+
+    @Override
+    public TreeModelData createNewModel() {
+        return new TreeModelDataImpl();
+    }
+    @Override
+    protected void createStore() {
+        store = new TreeStore<TreeModelData>(new ListKeyProvider());
     }
 
     private boolean isQuery() {
@@ -198,10 +208,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, Tre
     }
 
     @Override
-    public TreeModelData getModel() {
-        return new TreeModelDataImpl();
-    }
-    @Override
     protected void parseValue(String value, boolean labels) {
         super.parseValue(value, labels);
         if (checkedModels.isReady()) {
@@ -258,12 +264,6 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, Tre
         };
         return proxy;
     }
-
-//    protected ClassMetadata getClassMetadata() {
-//        ClassMetadata metadata = new ClassMetadata(classId);
-//        //        metadata.addField(new FieldMetadata(nameField, DataType.STRING, null));
-//        return metadata;
-//    }
 
     protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
@@ -348,6 +348,11 @@ public class TreeComboBoxBuilder extends MultiComboBoxBuilder<TreeModelData, Tre
             list.addRowValue(row);
         }
         return list;
+    }
+
+    @Override
+    public void setFieldValue(DataValue value) {
+
     }
 
     @JsIgnore

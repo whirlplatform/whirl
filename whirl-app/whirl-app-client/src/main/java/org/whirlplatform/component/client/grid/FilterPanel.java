@@ -597,7 +597,7 @@ public class FilterPanel extends VerticalLayoutContainer
             } else if (DataType.LIST == type) {
                 // w = new SimpleComboBox<String>(
                 // new StringLabelProvider<String>());
-                ComboBoxBuilder<?,?> comboBuilder = new ComboBoxBuilder<>();
+                ComboBoxBuilder comboBuilder = new ComboBoxBuilder();
                 ListModelData sourse = new ListModelDataImpl();
                 sourse.setId(fieldData.getClassId());
                 comboBuilder.setProperty("DataSource", new DataValueImpl(DataType.LIST, sourse));
