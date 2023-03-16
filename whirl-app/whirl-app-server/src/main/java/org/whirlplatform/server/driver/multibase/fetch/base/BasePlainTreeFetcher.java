@@ -59,23 +59,19 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
             while (selectReader.moveNext()) {
                 TreeModelData model = new TreeModelDataImpl();
 
-                // TODO: Доставать не по индексам
+                // TODO: Доставать не по индексам - done
                 model.setId(selectReader.getString(0));
+                model.setLabel(selectReader.getString(temp.labelExpression));
+                model.setIsExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
+                model.setIsCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
+                model.setImage(selectReader.getString(temp.imageExpression));
+                model.setIsSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
 
-                model.setLabel(selectReader.getString(1));
-                //model.setLabel(selectReader.getString(temp.labelExpression));
-                //model.setLabel(selectReader.getString(selectCmd.getSelectExprList()[1]));
-
-                model.setIsExpand(Boolean.parseBoolean(selectReader.getString(2)));
-                //String expandResult = selectReader.getString(temp.expandExpression);
-
-                model.setIsCheck(Boolean.parseBoolean(selectReader.getString(3)));
-                //String checkResult = selectReader.getString(temp.checkExpression);
-
-                model.setImage(selectReader.getString(4));
-
-                model.setIsSelect(Boolean.parseBoolean(selectReader.getString(5)));
-                //String selectResult = selectReader.getString(temp.selectExpression);
+                //model.setLabel(selectReader.getString(1));
+                //model.setIsExpand(Boolean.parseBoolean(selectReader.getString(2)));
+                //model.setIsCheck(Boolean.parseBoolean(selectReader.getString(3)));
+                //model.setImage(selectReader.getString(4));
+                //model.setIsSelect(Boolean.parseBoolean(selectReader.getString(5)));
 
                 result.add(model);
             }
@@ -95,26 +91,26 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         DBColumnExpr imageExpressionColumn = temp.imageExpression;
         DBColumnExpr selectExpressionColumn = temp.selectExpression;
 
-        DBCommand subCommand = temp.dbDatabase.createCommand();
-        subCommand.select(idColumn);
-        subCommand.select(labelExpressionColumn);
-        subCommand.select(expandExpressionColumn);
-        subCommand.select(checkExpressionColumn);
-        subCommand.select(imageExpressionColumn);
-        subCommand.select(selectExpressionColumn);
+//        DBCommand subCommand = temp.dbDatabase.createCommand();
+//        subCommand.select(idColumn);
+//        subCommand.select(labelExpressionColumn);
+//        subCommand.select(expandExpressionColumn);
+//        subCommand.select(checkExpressionColumn);
+//        subCommand.select(imageExpressionColumn);
+//        subCommand.select(selectExpressionColumn);
 
-        if (!temp.where.isEmpty()) {
-            subCommand.addWhereConstraints(temp.where);
-        }
-        subCommand.orderBy(temp.labelExpression.lower().asc());
+//        if (!temp.where.isEmpty()) {
+//            subCommand.addWhereConstraints(temp.where);
+//        }
+//        subCommand.orderBy(temp.labelExpression.lower().asc());
 
-        DBQuery subQuery = new DBQuery(subCommand);
-        idColumn = subQuery.findQueryColumn(idColumn);
-        labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
-        expandExpressionColumn = subQuery.findQueryColumn(expandExpressionColumn);
-        checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
-        imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
-        selectExpressionColumn = subQuery.findQueryColumn(selectExpressionColumn);
+//        DBQuery subQuery = new DBQuery(subCommand);
+//        idColumn = subQuery.findQueryColumn(idColumn);
+//        labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
+//        expandExpressionColumn = subQuery.findQueryColumn(expandExpressionColumn);
+//        checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
+//        imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
+//        selectExpressionColumn = subQuery.findQueryColumn(selectExpressionColumn);
 
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
@@ -124,8 +120,13 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         topCommand.select(imageExpressionColumn);
         topCommand.select(selectExpressionColumn);
 
+        if (!temp.where.isEmpty()) {
+            topCommand.addWhereConstraints(temp.where);
+        }
+        topCommand.orderBy(temp.labelExpression.lower().asc());
+
         if (loadConfig.getParent() != null) {
-            subCommand.limitRows(10000);
+            topCommand.limitRows(10000);
         }
 
         return topCommand;
