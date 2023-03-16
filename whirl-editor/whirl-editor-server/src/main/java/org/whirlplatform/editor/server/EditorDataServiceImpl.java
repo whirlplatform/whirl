@@ -614,6 +614,5 @@ public class EditorDataServiceImpl extends RemoteServiceServlet implements Edito
             .collect(Collectors.toList());
         return result;
 
-
     }
 }

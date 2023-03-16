@@ -146,6 +146,7 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
         initLocales();
         Margins margins = new Margins(0, 2, 0, 2);
         VerticalLayoutData vData = new VerticalLayoutData(1, 20, margins);
+
         for (Entry<PropertyType, PropertyValue> prop : properties.entrySet()) {
             switch (prop.getKey()) {
                 case LayoutDataMarginTop:
@@ -279,16 +280,10 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
 
         public CompositeCell(PropertyType type) {
             propertyType = type;
-
             toggle = new ToggleWidget(this);
-            toggle.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    toggle.setReplaceable(changeReplaceable());
-                }
-            });
-
             createFields();
+
+            HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
         }
 
         public void clearField() {

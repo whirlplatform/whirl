@@ -3,6 +3,7 @@ package org.whirlplatform.editor.shared;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import org.whirlplatform.editor.shared.merge.ApplicationsDiff;

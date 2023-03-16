@@ -17,7 +17,6 @@ public enum PropertyType implements Serializable {
     BorderColor("BorderColor", DataType.STRING, true, true),
     Color("Color", DataType.STRING, true, true),
     Columns("Columns", DataType.NUMBER, true),
-    ContextMenu("ContextMenu", DataType.LIST, true),
     Enabled("Enabled", DataType.BOOLEAN, true),
     FontFamily("FontFamily", DataType.STRING, true, true),
     FontSize("FontSize", DataType.STRING, true, true),
@@ -83,7 +82,8 @@ public enum PropertyType implements Serializable {
         ComponentType.RadioType,
         ComponentType.CheckBoxType)),
     Delay("Delay", DataType.NUMBER, false),
-    Editable("Editable", DataType.BOOLEAN, false), Cleanable("Cleanable", DataType.BOOLEAN, false),
+    Editable("Editable", DataType.BOOLEAN, false),
+    Cleanable("Cleanable", DataType.BOOLEAN, false),
     FrameEditing("FrameEditing", DataType.BOOLEAN, false),
     Grid("Grid", DataType.BOOLEAN, false),
     HideButtonGroups("HideButtonGroups", DataType.BOOLEAN, false),
@@ -128,7 +128,6 @@ public enum PropertyType implements Serializable {
     ShowFindButtons("ShowFindButtons", DataType.BOOLEAN, false),
     ShowLoadMask("ShowLoadMask", DataType.BOOLEAN, false),
     ShowMethodButtons("ShowMethodButtons", DataType.BOOLEAN, false),
-    ShowToolbar("ShowToolbar", DataType.BOOLEAN, false),
     ShowPagingToolbar("ShowPagingToolbar", DataType.BOOLEAN, false),
     ShowRefreshButtons("ShowRefreshButtons", DataType.BOOLEAN, false),
     SingleSelection("SingleSelection", DataType.BOOLEAN, false),
@@ -146,7 +145,7 @@ public enum PropertyType implements Serializable {
     UseSearchParameters("UseSearchParameters", DataType.BOOLEAN, false),
     IncludeMask("IncludeMask", DataType.BOOLEAN, false),
     MinChars("MinChars", DataType.NUMBER, false),
-    SearchField("SearchField", DataType.BOOLEAN, false),
+    SearchField("SearchField", DataType.BOOLEAN, false), //TODO удалить
     MoveColumns("MoveColumns", DataType.BOOLEAN, false),
 
     // Свойства отчета

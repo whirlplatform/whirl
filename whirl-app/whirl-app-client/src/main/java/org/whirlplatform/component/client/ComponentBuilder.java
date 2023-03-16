@@ -64,7 +64,6 @@ public abstract class ComponentBuilder//
     protected ComponentBuilder parentBuilder;
     protected Map<String, DataValue> builderProperties = new FastMap<DataValue>();
     protected Set<String> replaceableProperties = new HashSet<String>();
-    protected String contextMenuId;
     protected List<ContextMenuItemBuilder> contextMenuItems =
         new ArrayList<ContextMenuItemBuilder>();
     private String id;
@@ -268,9 +267,6 @@ public abstract class ComponentBuilder//
             if (value != null && value.getBoolean() != null) {
                 refreshable = value.getBoolean();
             }
-            return true;
-        } else if (name.equalsIgnoreCase(PropertyType.ContextMenu.getCode()) && value != null) {
-            contextMenuId = value.getString();
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.Closable.getCode())) {
             if (value != null && value.getBoolean() != null) {
