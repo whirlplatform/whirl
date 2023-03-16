@@ -118,4 +118,63 @@ public class FilterValue implements Serializable {
         return metadata.toString() + ": " + getFirstValue() + " - " + getSecondValue();
     }
 
+    public void setMetadata(FieldMetadata metadata) {
+        this.metadata = metadata;
+    }
+
+    public String getStringValue() {
+        return stringValue;
+    }
+
+    public void setStringValue(String stringValue) {
+        this.stringValue = stringValue;
+    }
+
+    public Double getNumberValueFirst() {
+        return numberValueFirst;
+    }
+
+    public void setNumberValueFirst(Double numberValueFirst) {
+        this.numberValueFirst = numberValueFirst;
+    }
+
+    public Double getNumberValueSecond() {
+        return numberValueSecond;
+    }
+
+    public void setNumberValueSecond(Double numberValueSecond) {
+        this.numberValueSecond = numberValueSecond;
+    }
+
+    public Date getDateValueFirst() {
+        return dateValueFirst;
+    }
+
+    public void setDateValueFirst(Date dateValueFirst) {
+        this.dateValueFirst = dateValueFirst;
+    }
+
+    public Date getDateValueSecond() {
+        return dateValueSecond;
+    }
+
+    public void setDateValueSecond(Date dateValueSecond) {
+        this.dateValueSecond = dateValueSecond;
+    }
+
+    public Boolean getBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(Boolean booleanValue) {
+        this.booleanValue = booleanValue;
+    }
+
+    public ListModelData getListValue() {
+        return listValue;
+    }
+
+    public void setListValue(ListModelData listValue) {
+        this.listValue = listValue;
+    }
 }

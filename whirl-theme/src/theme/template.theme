@@ -1,0 +1,970 @@
+theme {
+  basePackage = "com.theme"
+  name = "theme"
+  details {
+    // Default color to use for backgrounds, usually within panels and the like
+    backgroundColor = "#000000"
+    // Default color to use on borders in the theme
+    borderColor = "#000000"
+    // Opactiy value to use on disabled elements/widgets
+    disabledOpacity = 0.6
+    // Text color to use in disabled widgets. Can be left blank to not set a color and instead let widgets retain their defaults
+    disabledTextColor = "gray"
+    accordionLayout {
+      // background color for the panel body
+      backgroundColor = "#ffffff"
+      // border around the contentpanel
+      border = util.border("solid", "#000000", 1)
+      // padding applied only to the first panel
+      firstPanelPadding = util.padding(5)
+      // panel heading text style
+      font = util.fontStyle("sans-serif", "medium")
+      // background color to fill behind the header gradient
+      headerBackgroundColor = "#ccffff"
+      // header bar margin
+      headerBarMargin = util.margin(0)
+      // header gradient string
+      headerGradient = "#ccffff, #ccffff"
+      // header padding
+      headerPadding = util.padding(10)
+      // entire panel padding
+      padding = util.padding(0)
+      // panel padding
+      panelPadding = util.padding(10)
+    }
+    borderLayout {
+      // background color for the collapsed panels
+      collapsePanelBackgroundColor = "#157FCC"
+      // border styling for a non-mini collapsed region
+      collapsePanelBorder = util.border("solid", "#DFEAF2", 1)
+      // background for the borderlayoutcontainer, visible in margins and collapsed regions
+      panelBackgroundColor = "#DFEAF2"
+    }
+    button {
+      // Color of the menu arrow
+      arrowColor = "#ffffff"
+      // the normal state background color
+      backgroundColor = "#4B9CD7"
+      // the buttons border
+      border = util.border("solid", "#126DAF", 1)
+      // border radius of the button
+      borderRadius = 3
+      // the buttons text
+      font = util.fontStyle("sans-serif", "12px", "#FFFFFF")
+      // the normal state gradient
+      gradient = "#4B9CD7 0%, #3892D3 50%, #358AC8 51%, #3892D3"
+      // the large font size
+      largeFontSize = 16
+      // the large line height
+      largeLineHeight = 32
+      // the medium font size
+      mediumFontSize = 14
+      // the medium line height
+      mediumLineHeight = 24
+      // the mouseover state background color
+      overBackgroundColor = "#4792C8"
+      // the buttons border when hovered
+      overBorder = util.border("solid", "#126DAF", 1)
+      // the mouseover state gradient
+      overGradient = "#4792C8, #3386C2 50%, #307FB8 51%, #3386C2"
+      // the button's padding
+      padding = util.padding(3)
+      // the pressed state background color
+      pressedBackgroundColor = "#2A6D9E"
+      // the buttons border when pressed
+      pressedBorder = util.border("solid", "#126DAF", 1)
+      // the pressed state gradient
+      pressedGradient = "#2A6D9E, #276796 50%, #2A6D9E 51%, #3F7BA7"
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+      // the small font size
+      smallFontSize = 12
+      // the small line height
+      smallLineHeight = 18
+    }
+    buttonGroup {
+      // the body background color
+      bodyBackgroundColor = "#FFFFFF"
+      // the group's body padding
+      bodyPadding = util.padding(4)
+      // the groups border
+      border = util.border("solid", "#dfeaf2", 3)
+      // border radius of the button group
+      borderRadius = 3
+      // the groups text
+      font = util.fontStyle("helvetica, arial, verdana, sans-serif", "13px", "#666666")
+      // the header gradient
+      headerGradient = "#4B9CD7 0%, #3892D3 50%, #358AC8 51%, #3892D3"
+      // the group's header padding
+      headerPadding = util.padding(2)
+    }
+    colorpalette {
+      // background color behind all of the items
+      backgroundColor = "#ffffff"
+      // border around each color swatch
+      itemBorder = util.border("solid", "#e1e1e1", 1)
+      // padding between each color swatch
+      itemPadding = util.padding(3)
+      // height and width of each color swatch
+      itemSize = 14
+      // background to surround a selected or hovered color swatch
+      selectedBackgroundColor = "#e6e6e6"
+      // border to draw around a selected or hovered color swatch
+      selectedBorder = util.border("solid", "#666666", 1)
+    }
+    datePicker {
+      // Optional: Optional additional CSS classes to add to the top level element of this widget
+      additionalCssStyles = ""
+      // DatePicker background color
+      backgroundColor = "#ffffff"
+      // DatePicker border
+      border = util.border("solid", "#000000", 1)
+      // button margins
+      buttonMargin = util.margin(0, 3)
+      // day border
+      dayBorder = util.border("solid", "#ffffff", 1)
+      // disabled day background color
+      dayDisabledBackgroundColor = "#e8e8e8"
+      // disabled day font style
+      dayDisabledText = util.fontStyle("sans-serif", "12px", "#000000")
+      // day line height
+      dayLineHeight = "24px"
+      // next month day background color
+      dayNextBackgroundColor = "#ffffff"
+      // next month day font style
+      dayNextText = util.fontStyle("sans-serif", "12px", "#000000")
+      // day of week header background color
+      dayOfWeekBackgroundColor = "#ffffff"
+      // day of week header line height
+      dayOfWeekLineHeight = "24px"
+      // day of week header padding
+      dayOfWeekPadding = util.padding(5)
+      // day of week header font style
+      dayOfWeekText = util.fontStyle("sans-serif", "12px", "#000000")
+      // day padding
+      dayPadding = util.padding(5)
+      // previous month day background color
+      dayPreviousBackgroundColor = "#ffffff"
+      // previous month day font style
+      dayPreviousText = util.fontStyle("sans-serif", "12px", "#000000")
+      // day font style
+      dayText = util.fontStyle("sans-serif", "12px", "#000000")
+      // footer background color
+      footerBackgroundColor = "#e1e1e1"
+      // footer padding
+      footerPadding = util.padding(5)
+      // header background color
+      headerBackgroundColor = "#f5f5f5"
+      // padding in the header
+      headerPadding = util.padding(8, 6)
+      // header font styling
+      headerText = util.fontStyle("sans-serif", "12px", "#000000")
+      // header text padding
+      headerTextPadding = util.padding(5)
+      // over background color
+      itemOverBackgroundColor = "#d6e8f6"
+      // hovered item border
+      itemOverBorder = util.border("solid", "#0000ff", 1)
+      // over text color
+      itemOverColor = "#000000"
+      // selected item background color
+      itemSelectedBackgroundColor = "#d6e8f6"
+      // selected item border
+      itemSelectedBorder = util.border("solid", "#0000ff", 1)
+      // selected item font style
+      itemSelectedText = util.fontStyle("sans-serif", "12px", "#000000")
+      // left month button margin
+      monthLeftButtonMargin = util.margin(0)
+      // left month button opacity
+      monthLeftButtonOpacity = 0.7
+      // right month button margin
+      monthRightButtonMargin = util.margin(0)
+      // right month button opacity
+      monthRightButtonOpacity = 1
+      // current date border
+      todayBorder = util.border("solid", "#ff0000", 1)
+      // width of the DatePicker widget
+      width = "212px"
+    }
+    errortip {
+      // background color
+      backgroundColor = "#ffffff"
+      // border parameters
+      border = util.border("solid", "#cccccc", 1)
+      // border radius
+      borderRadius = 6
+      // padding around the header text
+      headerPadding = util.padding(0)
+      // info header text style
+      headerText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // margin
+      margin = util.margin(0)
+      // padding around the message text
+      messagePadding = util.padding(0)
+      // info message text style
+      messageText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // tooltip opacity, 0.0-1.0
+      opacity = 1
+      // padding
+      padding = util.padding(2)
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    }
+    field {
+      // background color of the inside of the field
+      backgroundColor = "#ffffff"
+      // border color of the field
+      borderColor = "#000000"
+      // border style of the field
+      borderStyle = "solid"
+      // border width of the field
+      borderWidth = 1
+      // color of the empty placeholder text
+      emptyTextColor = "#808080"
+      // border color of the field when focused
+      focusBorderColor = "#cccccc"
+      // height of textfields (other than text area
+      height = 18
+      // background color of the field when invalid
+      invalidBackgroundColor = "#cccccc"
+      // border color of the field when invalid
+      invalidBorderColor = "#ff0000"
+      // border width of the field when invalid
+      invalidBorderWidth = 1
+      // line-height of textfields
+      lineHeight = "18px"
+      // padding around fields
+      padding = util.padding(8, 12)
+      // text styling for fields
+      text = util.fontStyle("sans-serif", "medium")
+      checkBox {
+        // text styling check box labels
+        boxLabel = util.fontStyle("tahoma, arial, helvetica, sans-serif", "12px")
+        // padding around the entire label, image sits in left padding
+        padding = util.padding(0)
+      }
+      radio {
+        // text styling radio labels
+        boxLabel = util.fontStyle("tahoma, arial, helvetica, sans-serif", "12px")
+      }
+      sideLabel {
+        // spacing around the field within the label
+        fieldPadding = util.padding(0)
+        // spacing around the label text
+        labelPadding = util.padding(3, 0, 0)
+        // spacing around the entire field label
+        padding = util.padding(0, 0, 5)
+        // text styling for field labels
+        text = util.fontStyle("sans-serif", "medium")
+        // alignment for the label text, may be 'center', 'left', or 'right'
+        textAlign = "left"
+      }
+      slider {
+        // background color for thumb
+        thumbBackgroundColor = "#f5f5f5"
+        // border
+        thumbBorder = util.border("solid", "#777777", 1)
+        // height of thumb
+        thumbHeight = 15
+        // border radius for thumb
+        thumbRadius = 8
+        // width of thumb
+        thumbWidth = 15
+        // background color for slider track
+        trackBackgroundColor = "#f5f5f5"
+        // border
+        trackBorder = util.border("solid", "#d4d4d4", 1)
+        // height of track, not the entire field
+        trackHeight = 8
+        // border radius for track
+        trackRadius = 4
+      }
+      topLabel {
+        // spacing around the field within the label
+        fieldPadding = util.padding(0)
+        // spacing around the label text
+        labelPadding = util.padding(3, 0, 0)
+        // spacing around the entire field label
+        padding = util.padding(0, 0, 5)
+        // text styling for field labels
+        text = util.fontStyle("sans-serif", "medium")
+        // alignment for the label text, may be 'center', 'left', or 'right'
+        textAlign = "left"
+      }
+    }
+    fieldset {
+      // Background color
+      backgroundColor = "#ffffff"
+      // border styling and colors around the fieldset
+      border = util.border("solid", "#bbbbbb", 1)
+      // primary color of collapse icon
+      collapseIconColor = util.mixColors("#ffffff", "#157FCC", 0.5)
+      // collapse icon color when hovered
+      collapseOverIconColor = "#dddddd"
+      // primary color of expand icon
+      expandIconColor = util.mixColors("#ffffff", "#157FCC", 0.5)
+      // expand icon color when hovered
+      expandOverIconColor = "#dddddd"
+      // legend padding
+      legendPadding = util.padding(5)
+      // padding
+      padding = util.padding(5)
+      // text details for the fieldset's legend
+      text = util.fontStyle("sans-serif", "large")
+    }
+    framedPanel {
+      // background color for the panel body
+      backgroundColor = "#ffffff"
+      // border around the contentpanel
+      border = util.border("solid", "#000000", 1)
+      // border radius of the framed panel
+      borderRadius = 1
+      // panel heading text style
+      font = util.fontStyle("sans-serif", "medium")
+      // background color to fill behind the header gradient
+      headerBackgroundColor = "#ccffff"
+      // header gradient string
+      headerGradient = "#ccffff, #ccffff"
+      // header line height
+      headerLineHeight = "15px"
+      // header padding
+      headerPadding = util.padding(10)
+      // entire panel padding
+      padding = util.padding(0)
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    }
+    grid {
+      // border around the body of the grid
+      bodyBorder = util.border("none")
+      // cell background for alt rows, if enabled
+      cellAltBackgroundColor = "#cccccc"
+      // cell background
+      cellBackgroundColor = "#ffffff"
+      // width of borders between grid rows (and cells, if column lines enabled)
+      cellBorderWidth = 1
+      // border color between grid rows
+      cellHBorderColor = "#666666"
+      // line height for grid cell text
+      cellLineHeight = "15px"
+      // mouseover background color for grid rows
+      cellOverBackgroundColor = "#ccffff"
+      // mouseover border color between grid rows
+      cellOverHBorderColor = "#666666"
+      // mouseover border style between grid rows
+      cellOverHBorderStyle = "solid"
+      // mouseover border color between grid cells (if column lines enabled)
+      cellOverVBorderColor = "#666666"
+      // mouseover border style between grid cells (if column lines enabled)
+      cellOverVBorderStyle = "solid"
+      // cell padding
+      cellPadding = util.padding(4, 3, 3, 5)
+      // background color for selected rows/columns
+      cellSelectedBackgroundColor = "#ccccff"
+      // border color between grid rows for selected rows/columns
+      cellSelectedHBorderColor = "#666666"
+      // border style between grid rows for selected rows/columns
+      cellSelectedHBorderStyle = "solid"
+      // border color between grid cells for selected rows/columns (if column lines enabled)
+      cellSelectedVBorderColor = "#666666"
+      // border style between grid cells for selected rows/columns (if column lines enabled)
+      cellSelectedVBorderStyle = "solid"
+      // Styling to use for grid cell text
+      cellText = util.fontStyle("sans-serif", "13px")
+      // border color between grid cells (if column lines enabled)
+      cellVBorderColor = "#666666"
+      // gradient to use as a background for columns such as RowNumberer and CheckBoxSelectionModel
+      specialColumnGradient = util.solidGradientString("#e8e8e8")
+      // gradient to use as a background for columns such as RowNumberer and CheckBoxSelectionModel when selected
+      specialColumnGradientSelected = util.solidGradientString("#666666")
+      columnHeader {
+        // column header background color for browsers that dont support gradients
+        backgroundColor = "#add2ed"
+        // color of borders around header cells
+        borderColor = "#222222"
+        // style of borders around header cells
+        borderStyle = "solid"
+        // width of borders between header cells
+        borderWidth = 1
+        // css gradient string for column headers
+        gradient = util.solidGradientString("#add2ed")
+        // line height for grid headers
+        lineHeight = "15px"
+        // active background color of the menu icon for browsers that dont support gradients
+        menuActiveBackgroundColor = "#add2ed"
+        // active border around the menu icon
+        menuActiveBorder = util.border("solid", "#222222", 0, 0, 0, 1)
+        // active background gradient of the menu icon
+        menuActiveGradient = util.solidGradientString("#add2ed")
+        // background color of the menu icon for browsers that dont support gradients
+        menuBackgroundColor = "#e8e8e8"
+        // border around the menu icon
+        menuBorder = util.border("solid", "#222222", 0, 0, 0, 1)
+        // width of the menu icon
+        menuButtonWidth = 18
+        // background gradient of the menu icon
+        menuGradient = util.solidGradientString("#e8e8e8")
+        // mouseover background color of the menu icon for browsers that dont support gradients
+        menuHoverBackgroundColor = "#828282"
+        // mouseover border around the menu icon
+        menuHoverBorder = util.border("solid", "#222222", 0, 0, 0, 1)
+        // mouseover background gradient of the menu icon
+        menuHoverGradient = util.solidGradientString("#828282")
+        // column header with mouseover background color for browsers that dont support gradients
+        overBackgroundColor = "#5fa7db"
+        // css gradient string for column header with mouseover
+        overGradient = util.solidGradientString("#5fa7db")
+        // column header padding
+        padding = util.padding(4, 3, 4, 5)
+        // Styling to use for grid headers
+        text = util.fontStyle("sans-serif", "13px", "#666666", "bold")
+      }
+      footer {
+        // background color for footer cells
+        backgroundColor = "#ffffff"
+        // border around footer cells
+        cellBorder = util.border("solid", "#666666", 1, 0, 0)
+        // text style to use on footer text
+        text = util.fontStyle("sans-serif", "13px")
+      }
+      group {
+        // background color for group row
+        backgroundColor = "#ffffff"
+        // border around group row
+        border = util.border("solid", "#000000", 0, 0, 1)
+        // spacing to the side of the text to allow for the icon
+        iconSpacing = 17
+        // padding around the group row
+        padding = util.padding(8, 4)
+        // styling for group row text
+        text = util.fontStyle("san-serif", "13px", "#000000", "bold")
+        summary {
+          // background color for group summary row
+          backgroundColor = "#ffffff"
+          // styling for group summary cell text
+          text = util.fontStyle("san-serif", "13px", "#000000", "bold")
+        }
+      }
+      rowEditor {
+        // background color
+        backgroundColor = "#DFEAF2"
+        // border parameters
+        border = util.border("solid", "#e1e1e1", 1, 0)
+      }
+      rowNumberer {
+        // row numberer text padding
+        padding = util.padding(4, 3, 3, 5)
+        // styling to use for row numberer text
+        text = util.fontStyle("sans-serif", "13px")
+      }
+    }
+    info {
+      // background color
+      backgroundColor = "#000000"
+      // border parameters
+      border = util.border("none")
+      // border radius
+      borderRadius = 6
+      // padding around the header text
+      headerPadding = util.padding(4)
+      // info header text style
+      headerText = util.fontStyle("sans-serif", "large", "#ffffff", "bold")
+      // margin
+      margin = util.margin(4, 0, 0, 0)
+      // padding around the message text
+      messagePadding = util.padding(4)
+      // info message text style
+      messageText = util.fontStyle("sans-serif", "medium", "#ffffff", "normal")
+      // popup opacity, 0.0-1.0
+      opacity = 0.8
+      // padding
+      padding = util.padding(4)
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    }
+    listview {
+      // listview background color
+      backgroundColor = "#ffffff"
+      // listview body border
+      border = util.border("solid", "#444444", 1)
+      // height of text in listview
+      lineHeight = "normal"
+      // listview text styling
+      text = util.fontStyle("sans-serif", "medium")
+      item {
+        // item background color for non-gradient supporting browsers
+        backgroundColor = "#ffffff"
+        border = util.border("none")
+        // Optional: item text color
+        color = "#000000"
+        gradient = util.solidGradientString("#ffffff")
+        padding = util.padding(0, 4)
+      }
+      overItem {
+        // item background color for non-gradient supporting browsers
+        backgroundColor = "#ffffff"
+        border = util.border("none")
+        // Optional: item text color
+        color = "#000000"
+        gradient = util.solidGradientString("#ffffff")
+        padding = util.padding(0, 4)
+      }
+      selectedItem {
+        // item background color for non-gradient supporting browsers
+        backgroundColor = "#ffffff"
+        border = util.border("none")
+        // Optional: item text color
+        color = "#000000"
+        gradient = util.solidGradientString("#ffffff")
+        padding = util.padding(0, 4)
+      }
+    }
+    mask {
+      // color of the element that covers masked content
+      backgroundColor = "#000000"
+      // opacity of the element that covers masked content
+      opacity = 0.5
+      box {
+        // background color for the mask's message
+        backgroundColor = "#dddddd"
+        // border color for the mask's message
+        borderColor = "#555555"
+        // border radius for the mask's message
+        borderRadius = 0
+        // border style for the mask's message
+        borderStyle = "solid"
+        // border width for the mask's message
+        borderWidth = 2
+        // css background-position for the loading image, if any
+        loadingImagePosition = "center 0"
+        // padding between the border and the content of the mask message
+        padding = util.padding(5)
+        // helper for leftover space in css3 versus sliced images
+        radiusMinusBorderWidth = util.max(0, borderRadius - borderWidth)
+        // font style for mask text
+        text = util.fontStyle("sans-serif", "normal", "#555555")
+        // padding around the text, useful to provide space for loading image
+        textPadding = util.padding(21, 0, 0)
+      }
+    }
+    menu {
+      // background color for active items for browsers that dont support gradients
+      activeItemBackgroundColor = "#cccccc"
+      // border for active items
+      activeItemBorder = util.border("solid", "#333333", 1)
+      // gradient for active items (top to bottom)
+      activeItemGradient = util.solidGradientString("#cccccc")
+      // item text styling
+      activeItemText = util.fontStyle("sans-serif", "medium")
+      // background color for the menu list
+      backgroundColor = "#ffffff"
+      // border around the menu popup
+      border = util.border("solid", "#000000", 1)
+      // background gradient (left to right) for the menu list
+      gradient = util.solidGradientString("#ffffff")
+      // item line height
+      itemLineHeight = "normal"
+      // padding around each individual menu item
+      itemPadding = util.padding(1, 8)
+      // item text styling
+      itemText = util.fontStyle("sans-serif", "medium")
+      // helper for sliced browsers to have a background color after the sliced image runs out for wide menus
+      lastGradientColor = "#ffffff"
+      // spacing between the border and the list of contents
+      padding = util.padding(0)
+      // height of the bottom/top scroller items
+      scrollerHeight = 16
+      bar {
+        // active menu bar item background color for browsers that dont support gradients
+        activeItemBackgroundColor = "#ffffff"
+        // active menu bar item horder
+        activeItemBorder = util.border("none")
+        // active menu bar item background gradient
+        activeItemGradient = util.solidGradientString("#ffffff")
+        // active item text styling
+        activeItemText = util.fontStyle("sans-serif", "medium")
+        // background color of the menu bar for browsers that dont support gradients
+        backgroundColor = "#ffffff"
+        // menu bar border
+        border = util.border("none")
+        // background gradient of the menubar
+        gradient = util.solidGradientString("#ffffff")
+        // hovered menu bar item background color for browsers that dont support gradients
+        hoverItemBackgroundColor = "#ffffff"
+        // hovered menu bar item border
+        hoverItemBorder = util.border("none")
+        // hovered menu bar item background gradient
+        hoverItemGradient = util.solidGradientString("#ffffff")
+        // hovered item text styling
+        hoverItemText = util.fontStyle("sans-serif", "medium")
+        // height of each menubar item
+        itemLineHeight = "normal"
+        // menu bar item text padding
+        itemPadding = util.padding(0)
+        // item text styling
+        itemText = util.fontStyle("sans-serif", "medium")
+        // spacing between the border and the items
+        padding = util.padding(1, 8)
+      }
+      header {
+        // background color for header text
+        backgroundColor = "#dddddd"
+        // border around the header text
+        border = util.border("solid", "#333333", 0, 0, 1)
+        itemLineHeight = "normal"
+        // padding between header text and border
+        itemPadding = util.padding(3)
+        // header text styling
+        itemText = util.fontStyle("sans-serif", "medium")
+      }
+      separator {
+        // separator line color
+        color = "#cccccc"
+        // separator height in px
+        height = 1
+        // separator margins
+        margin = util.margin(2, 3)
+      }
+    }
+    messagebox {
+      // padding around the body of the message box
+      bodyPadding = util.padding(5, 10, 10)
+      // padding around the icon
+      iconPadding = util.padding(10)
+      // padding around the message box
+      messagePadding = util.padding(10, 10, 5)
+      // style of the text in the body of the message box
+      text = util.fontStyle("sans-serif", "normal")
+    }
+    panel {
+      // background color for the panel body
+      backgroundColor = "#ffffff"
+      // border around the contentpanel
+      border = util.border("solid", "#000000", 1)
+      // panel heading text style
+      font = util.fontStyle("sans-serif", "medium")
+      // background color to fill behind the header gradient
+      headerBackgroundColor = "#ccffff"
+      // header gradient string
+      headerGradient = "#ccffff, #ccffff"
+      // header Line Height
+      headerLineHeight = "15px"
+      // header padding
+      headerPadding = util.padding(10)
+      // entire panel padding
+      padding = util.padding(0)
+    }
+    progressbar {
+      // background gradient for the empty progressbar
+      backgroundGradient = util.solidGradientString("#ffffff")
+      // border around the progressbar as it fills
+      barBorder = util.border("solid", "#000000", 0, 1, 0, 0)
+      // gradient for the progress bar as it fills
+      barGradient = util.solidGradientString("#add8e6")
+      // text color for the text covered by the progress bar as it fills
+      barTextColor = "#000000"
+      // border around the entire progressbar
+      border = util.border("solid", "#000000", 1)
+      // font style for the progressbar text
+      text = util.fontStyle("sans-serif", "medium", "#000000", "bold")
+      // alignment for the progressbar text, may be 'center', 'left', or 'right'
+      textAlign = "center"
+      // padding around the progressbar, typically with zero left/right padding to prevent offsetting the bar itself
+      textPadding = util.padding(4, 0)
+    }
+    resizable {
+      // Optional: offset for centering around widget borders
+      handleOffset = 0.0 - 4
+      // Optional: size of resizable drag handle
+      handleSize = 6
+    }
+    splitbar {
+      // color of split bar drag
+      dragColor = "#b4b4b4"
+      // height of the split bar handle in easy/west (width of the handle on east/west)
+      handleHeight = 48
+      // split bar drag handle opacity (0.0 to 1.0)
+      handleOpacity = 0.5
+      // width of the split bar handle in east/west (height of the handle on north/south)
+      handleWidth = 8
+    }
+    status {
+      // status box border, only applies to BoxStatusAppearance
+      border = util.border("solid", "#dddddd #ffffff #ffffff #dddddd", 1)
+      // line height of the status widget
+      lineHeight = "normal"
+      // padding around the status text
+      padding = util.padding(0, 2)
+      // status box text
+      text = util.fontStyle("sans-serif", "small")
+    }
+    statusproxy {
+      // background color for the dnd proxy
+      backgroundColor = "#ffffff"
+      // border around the dnd proxy
+      border = util.border("solid", "#dddddd #bbbbbb #bbbbbb #dddddd", 1)
+      // opacity of the status proxy
+      opacity = 0.85
+      // dnd proxy test styling
+      text = util.fontStyle("sans-serif", "normal")
+    }
+    tabs {
+      // active tab heading text style
+      activeHeadingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      activeTabCloseIconOpacity = 0.8
+      activeTabCloseOverIconOpacity = 1
+      // active tab background color
+      activeTabItemBackgroundColor = "#add2ed"
+      // active tab item bottom border
+      activeTabItemBorderBottom = "1px"
+      // active tab item border top
+      activeTabItemBorderTop = "1px"
+      // Optional: active tab item border bottom (defaults to 0px)
+      activeTabItemMarginBottom = "0px"
+      // background color of tab body
+      bodyBackgroundColor = "#ffffff"
+      // border color or tab panel
+      borderColor = "#037ecf"
+      // border radius of tabs
+      borderRadius = 3
+      // tab gradient string (top to bottom)
+      gradient = util.solidGradientString("#add2ed")
+      // tab heading text style
+      headingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // hover tab gradient string (top to bottom)
+      hoverGradient = util.solidGradientString("#5fa7db")
+      // hovered tab heading text style
+      hoverHeadingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // hover tab background color
+      hoverTabItemBackgroundColor = "#5fa7db"
+      // left offset for tab icon
+      iconLeftOffset = 6
+      // top offset for tab icon
+      iconTopOffset = 5
+      // inactive tab gradient string (top to bottom)
+      inactiveGradient = util.solidGradientString("#4b9cd7")
+      // last color in inactive gradient
+      inactiveLastStopColor = "#4b9cd7"
+      // inactive tab background
+      inactiveTabItemBackgroundColor = "#4b9cd7"
+      // last color in gradient
+      lastStopColor = "#add2ed"
+      // over (hovered) tab item border bottom
+      overTabItemBorderBottom = "1px"
+      // over (hovered) tab item border top
+      overTabItemBorderTop = "1px"
+      // padding
+      padding = util.padding(0)
+      // padding
+      paddingWithClosable = util.padding(0)
+      // padding
+      paddingWithIcon = util.padding(0)
+      // active plain tab heading text style
+      plainActiveHeadingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // plain tab heading text style
+      plainHeadingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // hovered plain tab heading text style
+      plainHoverHeadingText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // bottom border for plain tab bar
+      plainTabBarBorderBottom = 1
+      // top border for plain tab bar
+      plainTabBarBorderTop = 1
+      // border size of tab bar strip spacer
+      plainTabStripSpacerBorder = 1
+      // space between tab and plain tab body
+      plainTabStripSpacerHeight = 2
+      // background color of the tab scrollers
+      scrollerBackgroundColor = "#037ecf"
+      // left scroller opacity when disabled
+      scrollerLeftDisabledOpacity = 0.5
+      // left scroller opacity when hovered
+      scrollerLeftOverOpacity = 0.7
+      // right scroller opacity when disabled
+      scrollerRightDisabledOpacity = 1
+      // right scroller opacity when hovered
+      scrollerRightOverOpacity = 0.7
+      // width of scroller
+      scrollerWidth = 18
+      // tab bar border
+      tabBarBorder = "none"
+      // Spacing between tab bar and body
+      tabBarBottomHeight = 4
+      // border of tab panel body
+      tabBodyBorder = "none"
+      tabCloseIconOpacity = 0.6
+      tabCloseOverIconOpacity = 1
+      // height of tabs
+      tabHeight = 31
+      // tab item bottom border
+      tabItemBorderBottom = "none"
+      // tab item left border
+      tabItemBorderLeft = "none"
+      // tab item right border
+      tabItemBorderRight = "none"
+      // tab item top border
+      tabItemBorderTop = "none"
+      // spacing between tabs
+      tabSpacing = 1
+      // tab strip background color
+      tabStripBackgroundColor = "#ffffff"
+      // tab strip bottom border
+      tabStripBottomBorder = "none"
+      // tab strip background gradient string (top to bottom)
+      tabStripGradient = util.solidGradientString("#037ecf")
+      // padding
+      tabStripPadding = util.padding(0)
+      // tab strip top border
+      tabStripTopBorder = "none"
+      // padding
+      tabTextPadding = util.padding(0)
+    }
+    tip {
+      // background color
+      backgroundColor = "#ffffff"
+      // border parameters
+      border = util.border("solid", "#cccccc", 1)
+      // border radius
+      borderRadius = 6
+      // padding around the header text
+      headerPadding = util.padding(0)
+      // info header text style
+      headerText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // margin
+      margin = util.margin(0)
+      // padding around the message text
+      messagePadding = util.padding(0)
+      // info message text style
+      messageText = util.fontStyle("sans-serif", "medium", "#000000", "normal")
+      // tooltip opacity, 0.0-1.0
+      opacity = 1
+      // padding
+      padding = util.padding(2)
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    }
+    toolbar {
+      // background color of the toolbar for browsers that dont support gradients
+      backgroundColor = "#ffffff"
+      // border around the toolbar
+      border = util.border("none")
+      // background gradient of the toolbar
+      gradient = util.solidGradientString("#ffffff")
+      // padding between the toolbar's border and its contents
+      padding = util.padding(2)
+      // border around the separator
+      separatorBorder = util.border("none")
+      // height of the separator
+      separatorHeight = 14
+      buttonOverride {
+        // Color of the menu arrow
+        arrowColor = "#ffffff"
+        // the normal state background color
+        backgroundColor = "#4B9CD7"
+        // the buttons border
+        border = util.border("solid", "#126DAF", 1)
+        // border radius of the button
+        borderRadius = 3
+        // the buttons text
+        font = util.fontStyle("sans-serif", "12px", "#FFFFFF")
+        // the normal state gradient
+        gradient = "#4B9CD7 0%, #3892D3 50%, #358AC8 51%, #3892D3"
+        // the large font size
+        largeFontSize = 16
+        // the large line height
+        largeLineHeight = 32
+        // the medium font size
+        mediumFontSize = 14
+        // the medium line height
+        mediumLineHeight = 24
+        // the mouseover state background color
+        overBackgroundColor = "#4792C8"
+        // the buttons border when hovered
+        overBorder = util.border("solid", "#126DAF", 1)
+        // the mouseover state gradient
+        overGradient = "#4792C8, #3386C2 50%, #307FB8 51%, #3386C2"
+        // the button's padding
+        padding = util.padding(3)
+        // the pressed state background color
+        pressedBackgroundColor = "#2A6D9E"
+        // the buttons border when pressed
+        pressedBorder = util.border("solid", "#126DAF", 1)
+        // the pressed state gradient
+        pressedGradient = "#2A6D9E, #276796 50%, #2A6D9E 51%, #3F7BA7"
+        // helper for leftover space in css3 versus sliced images
+        radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+        // the small font size
+        smallFontSize = 12
+        // the small line height
+        smallLineHeight = 18
+      }
+      labelItem {
+        // LabelToolItem text styling
+        lineHeight = "medium"
+        // label padding
+        padding = util.padding(2, 2, 0)
+        // LabelToolItem text styling
+        text = util.fontStyle("sans-serif", "medium")
+      }
+    }
+    tools {
+      // color used for allowed actions, such as allowed drop zones with DnD
+      allowColor = "#00ff00"
+      // icon color when clicked
+      primaryClickColor = util.mixColors("#ffffff", "#157FCC", 0.25)
+      // icon opacity when clicked
+      primaryClickOpacity = 1
+      // primary color of icons
+      primaryColor = util.mixColors("#ffffff", "#157FCC", 0.5)
+      // primary opacity of icons
+      primaryOpacity = 1
+      // icon color when hover
+      primaryOverColor = util.mixColors("#ffffff", "#157FCC", 0.3)
+      // opacity when hover
+      primaryOverOpacity = 1
+      // color used for warning actions, such as exclamation icon
+      warningColor = "#ff0000"
+    }
+    tree {
+      // checkbox icon margin
+      checkboxMargin = util.margin(0)
+      // tree node drag over background color
+      dragOverBackgroundColor = "#e2eff8"
+      // tree node drop background color
+      dropBackgroundColor = "#e2eff8"
+      // margins for tree element icon
+      iconMargin = util.margin(4, 3, 0, 2)
+      // tree item height
+      itemHeight = "25px"
+      // tree node padding
+      nodePadding = util.padding(0, 6)
+      // tree node over background color
+      overBackgroundColor = "#e2eff8"
+      // tree node selected background color
+      selectedBackgroundColor = "#c1ddf1"
+      // tree node text style
+      text = util.fontStyle("sans-serif", "large", "#ffffff", "bold")
+    }
+    window {
+      // background color for the panel body
+      backgroundColor = "#ffffff"
+      // border around the contentpanel
+      border = util.border("solid", "#000000", 1)
+      // border radius of the framed panel
+      borderRadius = 1
+      // panel heading text style
+      font = util.fontStyle("sans-serif", "medium")
+      // background color to fill behind the header gradient
+      headerBackgroundColor = "#ccffff"
+      // header gradient string
+      headerGradient = "#ccffff, #ccffff"
+      // header line height
+      headerLineHeight = "15px"
+      // header padding
+      headerPadding = util.padding(10)
+      // entire panel padding
+      padding = util.padding(0)
+      // helper for leftover space in css3 versus sliced images
+      radiusMinusBorderWidth = util.radiusMinusBorderWidth(border, borderRadius)
+    }
+  }
+}

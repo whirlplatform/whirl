@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import org.whirlplatform.meta.shared.Theme;
 import org.whirlplatform.meta.shared.component.RandomUUID;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -60,6 +61,8 @@ public class ApplicationElement extends AbstractElement {
         new HashMap<EventElement, RightCollectionElement>();
 
     private boolean available = true;
+
+    private Theme theme;
 
     public ApplicationElement() {
     }
@@ -671,6 +674,14 @@ public class ApplicationElement extends AbstractElement {
         this.available = available;
     }
 
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
     public AbstractTableElement findTableElementById(final String tableId) {
         for (AbstractTableElement table : this.getAvailableTables()) {
             if (table.getId().equals(tableId)) {
@@ -730,19 +741,6 @@ public class ApplicationElement extends AbstractElement {
             }
         }
         return null;
-    }
-
-    public String findTableIdByCode(String code) {
-        String result = code;
-        if (code != null) {
-            for (AbstractTableElement table : getAvailableTables()) {
-                if (code.equals(table.getCode())) {
-                    result = table.getId();
-                    break;
-                }
-            }
-        }
-        return result;
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
@@ -19,6 +20,7 @@ import org.dom4j.io.XMLWriter;
 import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.ListViewType;
+import org.whirlplatform.meta.shared.Theme;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -101,6 +103,9 @@ public class XMLApplicationExporter {
 
         property = propertiesEl.addElement("htmlHeader");
         property.addCDATA(application.getHtmlHeader());
+
+        property = propertiesEl.addElement("theme");
+        setElementText(property, Optional.ofNullable(application.getTheme()).map(Theme::name).orElse(null));
 
         Element defaultLocaleEl = applicationEl.addElement("defaultLocale");
         writeLocale(defaultLocaleEl, application.getDefaultLocale());

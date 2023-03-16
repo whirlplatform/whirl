@@ -117,6 +117,7 @@ public class MultibaseConnector extends AbstractConnector {
             for (FileElement file : application.getCssFiles()) {
                 data.addCss(file.getFileName());
             }
+            data.setTheme(application.getTheme());
 
             return data;
         } catch (ContainerException e) {

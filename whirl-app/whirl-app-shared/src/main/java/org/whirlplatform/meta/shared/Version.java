@@ -1661,6 +1661,34 @@ public final class Version implements Comparable<Version>, Serializable {
         return compareTo(other) < 0;
     }
 
+    public void setMajor(int major) {
+        this.major = major;
+    }
+
+    public void setMinor(int minor) {
+        this.minor = minor;
+    }
+
+    public void setPatch(int patch) {
+        this.patch = patch;
+    }
+
+    public void setPreReleaseParts(String[] preReleaseParts) {
+        this.preReleaseParts = preReleaseParts;
+    }
+
+    public void setBuildMetaDataParts(String[] buildMetaDataParts) {
+        this.buildMetaDataParts = buildMetaDataParts;
+    }
+
+    public int getHash() {
+        return hash;
+    }
+
+    public void setHash(int hash) {
+        this.hash = hash;
+    }
+
     /**
      * This exception indicates that a version- or a part of a version string could not be parsed
      * according to the semantic version specification.

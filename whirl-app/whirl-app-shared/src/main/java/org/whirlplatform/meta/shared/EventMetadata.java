@@ -169,4 +169,16 @@ public class EventMetadata implements Serializable, Cloneable {
     public void setCreateNew(boolean createNew) {
         this.createNew = createNew;
     }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public TreeMap<Integer, EventParameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(TreeMap<Integer, EventParameter> parameters) {
+        this.parameters = parameters;
+    }
 }

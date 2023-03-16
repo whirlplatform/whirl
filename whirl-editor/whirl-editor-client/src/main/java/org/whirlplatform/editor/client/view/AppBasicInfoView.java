@@ -9,7 +9,9 @@ import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.Verti
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 import com.sencha.gxt.widget.core.client.form.TextField;
+import java.util.Arrays;
 import org.whirlplatform.component.client.utils.InfoHelper;
 import org.whirlplatform.component.client.utils.ProgressHelper;
 import org.whirlplatform.editor.client.presenter.AppBasicInfoPresenter;
@@ -20,6 +22,7 @@ import org.whirlplatform.editor.client.view.widget.VersionField;
 import org.whirlplatform.editor.client.view.widget.WidgetUtil;
 import org.whirlplatform.editor.shared.i18n.EditorMessage;
 import org.whirlplatform.editor.shared.metadata.ApplicationBasicInfo;
+import org.whirlplatform.meta.shared.Theme;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
 
@@ -38,7 +41,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private static final String NAME = EditorMessage.Util.MESSAGE.new_application_name();
     private static final String CODE = EditorMessage.Util.MESSAGE.new_application_code();
     private static final String TITLE = EditorMessage.Util.MESSAGE.new_application_title();
-    //    private static final String URL = EditorMessage.Util.MESSAGE.new_application_guest();
+    private static final String THEME = EditorMessage.Util.MESSAGE.new_application_theme();
     private static final String LOCALE = EditorMessage.Util.MESSAGE.new_application_locale();
     private static final String VERSION = EditorMessage.Util.MESSAGE.new_application_version();
     private static final String TITLE_NEW_APP =
@@ -47,6 +50,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
     private AppBasicInfoPresenter presenter;
     private TextField name;
     private TextField title;
+    private SimpleComboBox<Theme> theme;
     private TextField code;
     //    private TextField url;
     private LocaleField locale;
@@ -94,7 +98,11 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
         code = WidgetUtil.createTextField(false);
         code.addValidator(ValidatorUtil.createCodeValidator());
         title = WidgetUtil.createTextField(false);
-        //url = WidgetUtil.createTextField(true);
+
+        theme = new SimpleComboBox<Theme>(item -> item.name());
+        theme.add(Arrays.asList(Theme.values()));
+// TODO       theme.addValidator(item -> );
+
         locale = new LocaleField();
         version = new VersionField();
         container.add(new FieldLabel(name, NAME),
@@ -122,6 +130,7 @@ public class AppBasicInfoView extends Window implements IAppBasicInfoView {
         appInfo.setCode(code.getValue());
         appInfo.setName(name.getValue());
         appInfo.setTitle(title.getValue());
+
         //appInfo.setUrl(url.getValue());
         appInfo.setLocale(locale.getValue());
         appInfo.setVersion(version.getValue());

@@ -27,6 +27,22 @@ public class ClassLoadConfig implements Serializable {
 
     private String whereSql;
 
+    public PageConfig getPage() {
+        return page;
+    }
+
+    public void setPage(PageConfig page) {
+        this.page = page;
+    }
+
+    public void setFilters(List<FilterValue> filters) {
+        this.filters = filters;
+    }
+
+    public void setSorts(List<SortValue> sorts) {
+        this.sorts = sorts;
+    }
+
     private String query;
 
     private boolean all = false;

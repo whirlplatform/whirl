@@ -3,10 +3,8 @@
 <%@page import="org.apache.commons.lang.LocaleUtils"%>
 <%@page import="org.whirlplatform.server.login.AccountAuthenticator"%>
 <%@page import="org.whirlplatform.server.login.LoginData"%>
-<%@page
-    import="org.whirlplatform.server.login.impl.GuestAccountAuthenticator"%>
+<%@page import="org.whirlplatform.server.login.impl.GuestAccountAuthenticator"%>
 <%@page import="org.whirlplatform.meta.shared.AppConstant"%>
-<%@page import="org.whirlplatform.server.global.SrvConstant"%>
 <%@page import="org.whirlplatform.rpc.shared.SessionToken"%>
 <%@page import="org.whirlplatform.meta.shared.ApplicationData"%>
 <%@page import="org.whirlplatform.server.login.ApplicationUser"%>
@@ -17,6 +15,10 @@
 <%@page import="org.apache.commons.lang.LocaleUtils"%>
 <%@page import="org.whirlplatform.server.driver.Connector"%>
 <%@page import="org.whirlplatform.meta.shared.Version"%>
+<%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="org.whirlplatform.meta.shared.Theme" %>
+<%@ page import="org.checkerframework.checker.nullness.Opt" %>
+<%@ page import="java.util.Optional" %>
 
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -45,6 +47,8 @@
     
     Configuration configuration = (Configuration) request.getAttribute("configuration");
     String sessionTimeout = configuration.lookup("Whirl/sessiontimeout") == null?"500":String.valueOf(configuration.<Integer> lookup("Whirl/sessiontimeout"));
+
+    String theme = Theme.BLUE.getPath();
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -88,7 +92,7 @@
         String applicationCode = request.getParameter("application");
         String branchParam = request.getParameter("branch");
         String versionParam = request.getParameter("version");
-        if (applicationCode != null && !"".equals(applicationCode)) {
+        if (!StringUtils.isEmpty(applicationCode)) {
             try {
                 Version version = null;
                 if (branchParam != null && !"".equals(branchParam)) {
@@ -99,13 +103,15 @@
                 ApplicationData app = connector.getApplication(applicationCode, version, user);
                 // приложение существует и не заблокировано и (гостевое или не гостевое и пользователь авторизован
                 if (app != null && !app.isBlocked() && (app.isGuest() || (!app.isGuest() && !user.isGuest()))) {
+                    theme = Optional.ofNullable(app.getTheme()).map(Theme::getPath).orElse(theme);
+
                     // javascript
                     for (String script : app.getScripts()) {
 %>
 <script type="text/javascript"
     src="resource?action=download&code=<%=applicationCode%>&path=javascript&fileName=<%=script%>"></script>
 <%
-    }
+                    }
 
                     // css
                     for (String css : app.getCss()) {
@@ -113,11 +119,11 @@
 <link type="text/css" rel="stylesheet"
     href="resource?action=download&code=<%=applicationCode%>&path=css&fileName=<%=css%>">
 <%
-    }
+                    }
                     if (app.getHeaderHtml() != null && !app.getHeaderHtml().isEmpty()) {
 %><%=app.getHeaderHtml()%>
 <%
-    }
+                    }
                 }
             } catch (CustomException e) {
             }
@@ -226,6 +232,6 @@
     <script type="text/javascript">
         document.getElementById('loading-msg').innerHTML = '<%=I18NMessage.getMessage(l).page_loadingInnerHTML()%>';
     </script>
-    <script type="text/javascript" src="applicationblue/applicationblue.nocache.js"></script>
+    <script type="text/javascript" src="application<%=theme%>/application<%=theme%>.nocache.js"></script>
 </body>
 </html>

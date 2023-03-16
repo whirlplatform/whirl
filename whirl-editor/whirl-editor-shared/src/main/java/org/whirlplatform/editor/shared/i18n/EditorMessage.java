@@ -142,6 +142,8 @@ public interface EditorMessage extends Messages {
 
     String new_application_title();
 
+    String new_application_theme();
+
     String new_application_locale();
 
     String new_application_version();

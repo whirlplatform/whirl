@@ -148,4 +148,23 @@ public class ClassMetadata implements Serializable {
         }
     }
 
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
+    public List<FieldMetadata> getAll() {
+        return all;
+    }
+
+    public void setAll(List<FieldMetadata> all) {
+        this.all = all;
+    }
+
+    public Map<String, FieldMetadata> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<String, FieldMetadata> map) {
+        this.map = map;
+    }
 }

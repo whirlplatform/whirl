@@ -42,6 +42,8 @@ public class ApplicationData implements Serializable {
 
     private Map<String, List<EventMetadata>> events = new HashMap<String, List<EventMetadata>>();
 
+    private Theme theme;
+
     public ApplicationData() {
     }
 
@@ -188,4 +190,35 @@ public class ApplicationData implements Serializable {
         return result;
     }
 
+    public String getLogoutPageUrl() {
+        return logoutPageUrl;
+    }
+
+    public void setLogoutPageUrl(String logoutPageUrl) {
+        this.logoutPageUrl = logoutPageUrl;
+    }
+
+    public List<String> getCssList() {
+        return cssList;
+    }
+
+    public void setCssList(List<String> cssList) {
+        this.cssList = cssList;
+    }
+
+    public Map<String, List<EventMetadata>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Map<String, List<EventMetadata>> events) {
+        this.events = events;
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
 }

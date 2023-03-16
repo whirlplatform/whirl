@@ -12,7 +12,7 @@ public enum EventType implements Serializable {
 
     private boolean server;
 
-    private EventType(boolean server) {
+    EventType(boolean server) {
         this.server = server;
     }
 

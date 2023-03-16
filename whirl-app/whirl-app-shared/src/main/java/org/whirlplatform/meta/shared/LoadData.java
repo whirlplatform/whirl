@@ -134,4 +134,16 @@ public class LoadData<T extends RowModelData> {
     public List<T> subList(int fromIndex, int toIndex) {
         return data.subList(fromIndex, toIndex);
     }
+
+    public PageConfig getPage() {
+        return page;
+    }
+
+    public void setPage(PageConfig page) {
+        this.page = page;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
 }

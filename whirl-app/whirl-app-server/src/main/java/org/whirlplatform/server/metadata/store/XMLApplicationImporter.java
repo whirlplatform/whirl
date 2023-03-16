@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.empire.commons.StringUtils;
 import org.dom4j.Document;
@@ -24,6 +25,7 @@ import org.whirlplatform.meta.shared.EventType;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.ListViewType;
+import org.whirlplatform.meta.shared.Theme;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -160,6 +162,9 @@ public class XMLApplicationImporter {
                 application.setGuest(Boolean.valueOf(prop.getText()));
             } else if ("htmlHeader".equalsIgnoreCase(name)) {
                 application.setHtmlHeader(prop.getText());
+            } else if ("theme".equalsIgnoreCase(name)) {
+                application.setTheme(Optional.ofNullable(prop.getText())
+                    .map(Theme::valueOf).orElse(null));
             }
         }
 
