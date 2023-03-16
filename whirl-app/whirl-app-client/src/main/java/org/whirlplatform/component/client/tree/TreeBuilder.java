@@ -382,8 +382,11 @@ public class TreeBuilder extends ComponentBuilder
                         @Override
                         public void execute() {
                             DataServiceAsync.Util.getDataService(callback)
-                                .getTreeClassData(SessionToken.get(),dataSourceId
-                                   , getLoadConfig(parent));
+                                .getTreeClassData(
+                                        SessionToken.get(),
+                                        dataSourceId,
+                                        getLoadConfig(parent)
+                                );
                             lastParameters = Collections.emptyList();
                         }
                     });
