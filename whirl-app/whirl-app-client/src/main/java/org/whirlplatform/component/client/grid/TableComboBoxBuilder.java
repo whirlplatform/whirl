@@ -11,7 +11,7 @@ import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 
-class TableComboBoxBuilder extends ComboBoxBuilder<ListModelData,ComboBox<ListModelData>> {
+class TableComboBoxBuilder extends ComboBoxBuilder {
 
     private final FieldMetadata tableField;
 
