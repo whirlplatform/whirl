@@ -300,14 +300,14 @@ public class MultibaseConnector extends AbstractConnector {
 
     @Override
     public List<TreeModelData> getTreeClassData(String dataSourceId,
-                                                TreeClassLoadConfig loadConfig,
+                                                ClassLoadConfig loadConfig,
                                                 ApplicationUser user) {
 
         ClassMetadata metadata = getClassMetadata(dataSourceId, Collections.emptyMap(), user);
         if (metadata.getClassId() == null) {
             // чтобы при использовании HorizontalMenu и MenuTreePanel без
             // DataSource, не было ошибки об отсутствии таблицы в справочнике
-            return new ArrayList<TreeModelData>();
+            return new ArrayList<>();
         }
 
         AbstractTableElement table = findTableElement(metadata.getClassId(), user);
@@ -320,8 +320,13 @@ public class MultibaseConnector extends AbstractConnector {
 
         try (ConnectionWrapper conn = aliasConnection(
             ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createTreeFetcher(table).getTreeData(metadata, table,
-                (TreeClassLoadConfig) decode(loadConfig, user));
+            return conn.getDataSourceDriver()
+                    .createTreeFetcher(table)
+                    .getTreeData(
+                        metadata,
+                        table,
+                        decode(loadConfig, user)
+                    );
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());

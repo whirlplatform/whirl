@@ -85,7 +85,7 @@ public interface DataService {
     @Path("/getTreeClassData")
     List<TreeModelData> getTreeClassData(@FormParam("token") SessionToken token,
                                          @FormParam("metadata") String dataSourceId,
-                                         @FormParam("loadConfig") TreeClassLoadConfig loadConfig);
+                                         @FormParam("loadConfig") ClassLoadConfig loadConfig);
 
     @POST
     @Path("/insert")

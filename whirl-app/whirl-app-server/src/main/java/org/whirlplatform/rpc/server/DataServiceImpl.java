@@ -253,7 +253,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
     }
 
     public List<TreeModelData> getTreeClassData(SessionToken token, String dataSourceId,
-                                                TreeClassLoadConfig loadConfig) {
+                                                ClassLoadConfig loadConfig) {
         ApplicationUser user = getApplicationUser(token);
         return connector().getTreeClassData(dataSourceId, loadConfig, user);
     }

@@ -2,9 +2,10 @@ package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
 import org.whirlplatform.meta.shared.data.RowModelData;
@@ -13,7 +14,6 @@ import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.driver.multibase.fetch.TreeFetcher;
-import org.whirlplatform.server.driver.multibase.fetch.base.PlainListFetcherHelper;
 import org.whirlplatform.server.driver.multibase.fetch.base.PlainTreeFetcherHelper;
 import org.whirlplatform.server.i18n.I18NMessage;
 import org.whirlplatform.server.log.Logger;
@@ -29,7 +29,7 @@ public class OraclePlainTreeFetcher extends OraclePlainTableFetcher
 
     @Override
     public List<TreeModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
-                                           TreeClassLoadConfig loadConfig) {
+                                           ClassLoadConfig loadConfig) {
 
         PlainTreeFetcherHelper temp =
                 new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
