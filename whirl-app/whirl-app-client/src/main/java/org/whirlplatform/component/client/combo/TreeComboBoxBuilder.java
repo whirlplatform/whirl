@@ -350,11 +350,6 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         return list;
     }
 
-    @Override
-    public void setFieldValue(DataValue value) {
-
-    }
-
     @JsIgnore
     @Override
     public void setFieldValue(RowListValue value) {
