@@ -38,7 +38,7 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
 
         String query = config.getQuery();
 
-        TableColumnElement c = table.getColumn(((TreeClassLoadConfig) config).getParentExpression());
+        TableColumnElement c = table.getColumn(config.getParentExpression());
 
         // добавить проверку на наличие кол
 //            if(c.isNotNull()) {

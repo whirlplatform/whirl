@@ -57,8 +57,8 @@ import org.whirlplatform.component.client.state.SelectionClientStateStore;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.state.StateStore;
 import org.whirlplatform.component.client.utils.SimpleEditorError;
+import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.*;
@@ -204,7 +204,7 @@ public class TreeBuilder extends ComponentBuilder
 
         SimpleContainer container = new SimpleContainer();
         errorHandler = new SideErrorHandler(container);
-        store = new TreeStore<TreeModelData>(new ClassKeyProvider());
+        store = new TreeStore<>(new ClassKeyProvider());
 
         // tree = initTree(initLoader(store));
         loader = initLoader(store);
@@ -369,7 +369,6 @@ public class TreeBuilder extends ComponentBuilder
                 tree.setExpanded(md, true);
             }
         }
-
     }
 
     protected RpcProxy<TreeModelData, List<TreeModelData>> createProxy() {
@@ -508,8 +507,8 @@ public class TreeBuilder extends ComponentBuilder
     }
 
     @SuppressWarnings("rawtypes")
-    protected TreeClassLoadConfig getLoadConfig(TreeModelData parent) {
-        TreeClassLoadConfig config = new TreeClassLoadConfig();
+    protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
+        ClassLoadConfig config = new ClassLoadConfig();
         config.setParameters(paramHelper.getValues(lastParameters));
         config.setIsLeafExpression(isLeafExpression);
         config.setExpandExpression(expandExpression);

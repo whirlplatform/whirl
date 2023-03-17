@@ -55,7 +55,7 @@ public interface Connector {
     /**
      * Собирает в БД данные для формирования строк дерева
      */
-    List<TreeModelData> getTreeClassData(String dataSourceId, TreeClassLoadConfig loadConfig,
+    List<TreeModelData> getTreeClassData(String dataSourceId, ClassLoadConfig loadConfig,
                                          ApplicationUser user);
 
     /**

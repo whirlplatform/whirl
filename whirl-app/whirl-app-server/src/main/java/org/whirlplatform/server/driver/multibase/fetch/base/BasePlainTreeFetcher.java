@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
-import org.apache.empire.db.DBQuery;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.TreeModelData;
 import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
@@ -33,7 +31,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
     @Override
     public List<TreeModelData> getTreeData(ClassMetadata metadata, PlainTableElement table,
-                                           TreeClassLoadConfig config) {
+                                           ClassLoadConfig config) {
         PlainTreeFetcherHelper temp = new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, config);
 

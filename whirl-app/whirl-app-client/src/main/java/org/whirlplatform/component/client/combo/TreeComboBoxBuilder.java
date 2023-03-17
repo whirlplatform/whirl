@@ -32,15 +32,10 @@ import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
-import org.whirlplatform.component.client.data.ClassStore;
-import org.whirlplatform.component.client.data.ListClassProxy;
-import org.whirlplatform.component.client.data.TreeClassProxy;
 import org.whirlplatform.component.client.ext.TreeComboBox;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.tree.CheckStyleHelper;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
-import org.whirlplatform.meta.shared.LoadData;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
@@ -263,8 +258,8 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         return proxy;
     }
 
-    protected TreeClassLoadConfig getLoadConfig(TreeModelData parent) {
-        TreeClassLoadConfig config = new TreeClassLoadConfig();
+    protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
+        ClassLoadConfig config = new ClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
 
