@@ -37,8 +37,7 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
                                                ClassLoadConfig loadConfig) {
         @SuppressWarnings("unused")
         Date start = new Date();
-        PlainListFetcherHelper temp =
-            new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
+        PlainListFetcherHelper temp = new PlainListFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, loadConfig);
 
         List<ListModelData> result = new ArrayList<ListModelData>();
@@ -55,20 +54,21 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
         _log.info("List creation query: " + selectCmd.getSelect());
 
         TableDataMessage m = new TableDataMessage(getUser(), selectCmd.getSelect());
-
         try (Profile p = new ProfileImpl(m)) {
             _log.debug("List select:\n" + selectCmd.getSelect());
+
             DBReader selectReader = createAndOpenReader(selectCmd);
             while (selectReader.moveNext()) {
                 ListModelData model = new ListModelDataImpl();
 
-                // TODO: Доставать не по индексам
-                model.setId(selectReader.getString(0));
-                model.setLabel(selectReader.getString(1));
+                model.setId(selectReader.getString(temp.dbPrimaryKey));
+                model.setLabel(selectReader.getString(temp.labelExpression));
+
                 result.add(model);
             }
             selectReader.close();
-            LoadData<ListModelData> data = new LoadData<ListModelData>(result);
+
+            LoadData<ListModelData> data = new LoadData<>(result);
             return data;
         }
     }
@@ -78,22 +78,14 @@ public class BasePlainListFetcher extends BasePlainTableFetcher
         DBColumnExpr idColumn = temp.dbPrimaryKey;
         DBColumnExpr valueColumn = temp.labelExpression;
 
-        DBCommand subCommand = temp.dbDatabase.createCommand();
-        subCommand.select(idColumn);
-        subCommand.select(valueColumn);
-
-        if (!temp.where.isEmpty()) {
-            subCommand.addWhereConstraints(temp.where);
-        }
-        subCommand.orderBy(temp.labelExpression.lower().asc());
-
-        DBQuery subQuery = new DBQuery(subCommand);
-        idColumn = subQuery.findQueryColumn(idColumn);
-        valueColumn = subQuery.findQueryColumn(valueColumn);
-
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);
         topCommand.select(valueColumn);
+
+        if (!temp.where.isEmpty()) {
+            topCommand.addWhereConstraints(temp.where);
+        }
+        topCommand.orderBy(temp.labelExpression.lower().asc());
 
         topCommand.limitRows(100);
 

@@ -119,7 +119,6 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         TreeLoader<TreeModelData> ldr = new TreeLoader<TreeModelData>(proxy) {
             @Override
             public boolean hasChildren(TreeModelData parent) {
-                //return parent.<Boolean>get(isLeafExpression);
                 return Optional.ofNullable(parent.<Boolean>get(isLeafExpression)).orElse(true);
             }
 
@@ -248,7 +247,6 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
                     new AsyncCallback<List<TreeModelData>>() {
                         @Override
                         public void onSuccess(List<TreeModelData> result) {
-                            //callback.onSuccess(result.getData());
                             callback.onSuccess(result);
                         }
 
