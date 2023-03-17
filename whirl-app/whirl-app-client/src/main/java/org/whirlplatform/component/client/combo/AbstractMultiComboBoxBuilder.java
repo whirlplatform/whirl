@@ -220,45 +220,6 @@ public abstract class AbstractMultiComboBoxBuilder<K extends ListModelData, T ex
         if (!(comboBox.getStore() != store || comboBox.getListView().getStore() != store)) {
             return;
         }
-
-        // Чтобы отмеченные элементы отображались в начале списка
-        StoreSortInfo<K> sortInfo = new StoreSortInfo<K>(
-            new Comparator<K>() {
-                @Override
-                public int compare(K o1, K o2) {
-                    if (checkedModels.models.contains(o1)
-                        && !checkedModels.models.contains(o2)) {
-                        return -1;
-                    } else if (!checkedModels.models.contains(o1)
-                        && checkedModels.models.contains(o2)) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            }, SortDir.ASC);
-        store.addSortInfo(sortInfo);
-        store.getLoader().addLoadHandler(
-            new LoadHandler<ClassLoadConfig, LoadData<K>>() {
-
-                @Override
-                public void onLoad(
-                    LoadEvent<ClassLoadConfig, LoadData<K>> event) {
-                    // Если в комбобокс не введено значение, добавляем
-                    // отмеченные элементы
-                    if (event.getLoadConfig().getQuery() == null
-                        || event.getLoadConfig().getQuery().isEmpty()) {
-                        for (K m : checkedModels.models) {
-                            if (!store.getAll().contains(m)) {
-                                store.add(m);
-                            }
-                        }
-                    }
-                    // Чтобы в комбобоксе не выделялся текст при загрузке
-                    // данных
-                    comboBox.select(comboBox.getText().length(), 0);
-                }
-            });
         comboBox.setStore(store);
     }
 

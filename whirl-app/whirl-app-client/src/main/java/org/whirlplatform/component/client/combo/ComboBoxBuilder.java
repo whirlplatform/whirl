@@ -1,5 +1,6 @@
 package org.whirlplatform.component.client.combo;
 
+import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
@@ -44,12 +45,11 @@ public class ComboBoxBuilder extends AbstractComboBoxBuilder<ListModelData, Comb
                 new ListClassProxy(classId));
     }
 
+    @JsIgnore
     @Override
-    public void setFieldValue(DataValue value) {
-        if (value != null && DataType.LIST.equals(value.getType())) {
-            comboBox.setValue(value.getListModelData(), true);
-        } else {
-            comboBox.setValue(null);
-        }
+    public Component create() {
+        Component c = super.create();
+        comboBox.getListView().setLoader(store.getLoader());
+        return c;
     }
 }

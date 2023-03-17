@@ -246,8 +246,6 @@ public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends
         createStore();
         bindStore();
         addListener();
-        comboBox.getListView().setLoader(store.getLoader());
-
         restoreSelectionState();
         return comp;
     }
