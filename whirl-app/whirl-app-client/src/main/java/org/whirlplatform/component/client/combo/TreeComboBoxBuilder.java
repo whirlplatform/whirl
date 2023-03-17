@@ -25,11 +25,9 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -121,7 +119,8 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         TreeLoader<TreeModelData> ldr = new TreeLoader<TreeModelData>(proxy) {
             @Override
             public boolean hasChildren(TreeModelData parent) {
-                return parent.<Boolean>get(isLeafExpression);
+                //return parent.<Boolean>get(isLeafExpression);
+                return Optional.ofNullable(parent.<Boolean>get(isLeafExpression)).orElse(true);
             }
 
             @Override
@@ -245,11 +244,12 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
             @Override
             public void load(TreeModelData loadConfig,
                              final AsyncCallback<List<TreeModelData>> callback) {
-                AsyncCallback<LoadData<TreeModelData>> proxyCallback =
-                    new AsyncCallback<LoadData<TreeModelData>>() {
+                AsyncCallback<List<TreeModelData>> proxyCallback =
+                    new AsyncCallback<List<TreeModelData>>() {
                         @Override
-                        public void onSuccess(LoadData<TreeModelData> result) {
-                            callback.onSuccess(result.getData());
+                        public void onSuccess(List<TreeModelData> result) {
+                            //callback.onSuccess(result.getData());
+                            callback.onSuccess(result);
                         }
 
                         @Override
@@ -258,14 +258,14 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
                         }
                     };
                 DataServiceAsync.Util.getDataService(proxyCallback)
-                    .getListClassData(SessionToken.get(), classId,
+                    .getTreeClassData(SessionToken.get(), classId,
                         getLoadConfig(loadConfig));
             }
         };
         return proxy;
     }
 
-    protected ClassLoadConfig getLoadConfig(TreeModelData parent) {
+    protected TreeClassLoadConfig getLoadConfig(TreeModelData parent) {
         TreeClassLoadConfig config = new TreeClassLoadConfig();
         Map<String, DataValue> params =
             paramHelper == null ? new HashMap<String, DataValue>() : paramHelper.getValues();
@@ -279,6 +279,8 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         }
 
         config.setParameters(params);
+
+        config.setLabelExpression(labelExpression);
         config.setIsLeafExpression(isLeafExpression);
         config.setExpandExpression(expandExpression);
         config.setParentExpression(parentExpression);
