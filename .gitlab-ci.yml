@@ -72,7 +72,7 @@ Check Tests:
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
-    - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+    - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -Dmaven.javadoc.skip=true --batch-mode --show-version
 
 Check Build+Verify:
   extends: .build
