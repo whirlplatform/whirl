@@ -520,7 +520,6 @@ public class TreeBuilder extends ComponentBuilder
         config.setWhereSql(whereSql);
         config.setLabelExpression(labelExpression);
         config.setImageExpression(imageExpression);
-        // image -> поставить сюда
         config.setAll(true);
         if (parent == null && isQuery()) {
             config.setQuery(tree.getSearchText());
