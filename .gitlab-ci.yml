@@ -93,7 +93,7 @@ Check Build+Verify:
       artifacts: false
   artifacts:
     paths:
-      - "**/target/failsafe-reports/*.xml"
+      - "**/target/failsafe-reports/**/*"
     reports:
       junit:
         - "**/target/failsafe-reports/*.xml"
@@ -139,7 +139,7 @@ Verify:
     - mvn $MAVEN_OPTS compile failsafe:verify -Dsurefire.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
   artifacts:
     paths:
-      - "**/target/failsafe-reports/*.xml"
+      - "**/target/failsafe-reports/**/*"
     reports:
       junit:
         - "**/target/failsafe-reports/*.xml"
