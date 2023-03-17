@@ -84,7 +84,7 @@ public class TreeBuilder extends ComponentBuilder
     /**
      * Выражение для вычисления наличия родителей
      */
-    protected String isLeafExpression; // isLeafColumn
+    protected String isLeafExpression;
     protected boolean restoreState;
     protected StorageWrapper<RowListValue> stateStore;
     protected StateStore<RowListValue> selectionStateStore;

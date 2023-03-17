@@ -37,7 +37,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         PlainTreeFetcherHelper temp = new PlainTreeFetcherHelper(getConnection(), getDataSourceDriver());
         temp.prepare(metadata, table, config);
 
-        List<TreeModelData> result = new ArrayList<TreeModelData>();
+        List<TreeModelData> result = new ArrayList<>();
 
         // Добавление пустой записи, если надо
         if (table.isEmptyRow()) {
@@ -59,19 +59,12 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
             while (selectReader.moveNext()) {
                 TreeModelData model = new TreeModelDataImpl();
 
-                // TODO: Доставать не по индексам - done
-                model.setId(selectReader.getString(0));
+                model.setId(selectReader.getString(temp.dbPrimaryKey));
                 model.setLabel(selectReader.getString(temp.labelExpression));
                 model.setIsExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
                 model.setIsCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
                 model.setImage(selectReader.getString(temp.imageExpression));
                 model.setIsSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
-
-                //model.setLabel(selectReader.getString(1));
-                //model.setIsExpand(Boolean.parseBoolean(selectReader.getString(2)));
-                //model.setIsCheck(Boolean.parseBoolean(selectReader.getString(3)));
-                //model.setImage(selectReader.getString(4));
-                //model.setIsSelect(Boolean.parseBoolean(selectReader.getString(5)));
 
                 result.add(model);
             }
@@ -83,34 +76,12 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
     protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
                                                 PlainTreeFetcherHelper temp) {
-
         DBColumnExpr idColumn = temp.dbPrimaryKey;
         DBColumnExpr labelExpressionColumn = temp.labelExpression;
         DBColumnExpr expandExpressionColumn = temp.expandExpression;
         DBColumnExpr checkExpressionColumn = temp.checkExpression;
         DBColumnExpr imageExpressionColumn = temp.imageExpression;
         DBColumnExpr selectExpressionColumn = temp.selectExpression;
-
-//        DBCommand subCommand = temp.dbDatabase.createCommand();
-//        subCommand.select(idColumn);
-//        subCommand.select(labelExpressionColumn);
-//        subCommand.select(expandExpressionColumn);
-//        subCommand.select(checkExpressionColumn);
-//        subCommand.select(imageExpressionColumn);
-//        subCommand.select(selectExpressionColumn);
-
-//        if (!temp.where.isEmpty()) {
-//            subCommand.addWhereConstraints(temp.where);
-//        }
-//        subCommand.orderBy(temp.labelExpression.lower().asc());
-
-//        DBQuery subQuery = new DBQuery(subCommand);
-//        idColumn = subQuery.findQueryColumn(idColumn);
-//        labelExpressionColumn = subQuery.findQueryColumn(labelExpressionColumn);
-//        expandExpressionColumn = subQuery.findQueryColumn(expandExpressionColumn);
-//        checkExpressionColumn = subQuery.findQueryColumn(checkExpressionColumn);
-//        imageExpressionColumn = subQuery.findQueryColumn(imageExpressionColumn);
-//        selectExpressionColumn = subQuery.findQueryColumn(selectExpressionColumn);
 
         DBCommand topCommand = temp.dbDatabase.createCommand();
         topCommand.select(idColumn);

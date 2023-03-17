@@ -11,7 +11,7 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     private boolean isSelect;
 
-    private boolean islLeaf;
+    private boolean isLeaf;
 
     private boolean isExpand;
 
@@ -52,12 +52,12 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     @Override
     public boolean isLeaf() {
-        return islLeaf;
+        return isLeaf;
     }
 
     @Override
     public void setIsLeaf(boolean isLeaf) {
-        this.islLeaf = isLeaf;
+        this.isLeaf = isLeaf;
     }
 
     @Override
