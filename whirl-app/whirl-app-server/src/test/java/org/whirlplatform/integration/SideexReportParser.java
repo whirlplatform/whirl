@@ -53,9 +53,9 @@ public class SideexReportParser implements AutoCloseable {
     }
 
     private File createTempDirectory() throws IOException {
-        String reportsFolder = "target/surefire-reports/tempReportsDir";
-        FileUtils.deleteDirectory(new File(Paths.get(reportsFolder).toUri()));
-        this.tmpDir = new File(Files.createDirectory(Paths.get(reportsFolder)).toUri());
+        Path reportsFolder = Paths.get("target/failsafe-reports/sideex-reports");
+        FileUtils.deleteDirectory(reportsFolder.toFile());
+        this.tmpDir = Files.createDirectories(reportsFolder).toFile();
         return tmpDir;
     }
 

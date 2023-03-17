@@ -72,7 +72,7 @@ Check Tests:
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
-    - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+    - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -Dmaven.javadoc.skip=true --batch-mode --show-version
 
 Check Build+Verify:
   extends: .build
@@ -84,13 +84,21 @@ Check Build+Verify:
     REVISION: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
     CHANGELIST: "-SNAPSHOT"
     SHA: ${CI_COMMIT_SHORT_SHA}
-    MAVEN_GOALS: "verify"
+    MAVEN_GOALS: "verify -Dsurefire.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version"
   allow_failure: false
   needs:
     - job: Check Checkstyle
       artifacts: false
     - job: Check Tests
       artifacts: false
+  artifacts:
+    paths:
+      - "**/target/failsafe-reports/**/*"
+    reports:
+      junit:
+        - "**/target/failsafe-reports/*.xml"
+    when: always
+    expire_in: 36 hours
 
 Package:
   extends:
@@ -128,11 +136,13 @@ Verify:
     - job: Package
       artifacts: true
   script:
-    - mvn $MAVEN_OPTS compile failsafe:verify -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --show-version
+    - mvn $MAVEN_OPTS compile failsafe:verify -Dsurefire.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version
   artifacts:
+    paths:
+      - "**/target/failsafe-reports/**/*"
     reports:
       junit:
-        - "**/target/surefire-reports/*.xml"
+        - "**/target/failsafe-reports/*.xml"
     when: always
     expire_in: 36 hours
 
@@ -199,7 +209,7 @@ Publish Docker Release LATEST:
     SHA: ""
 
 # Deploy to dev server with docker compose.
-Deploy To DEV:
+Deploy:
   stage: deploy
   rules:
     # build on all branches
@@ -214,30 +224,30 @@ Deploy To DEV:
   before_script:
     - command -v ssh-agent >/dev/null || apk add openssh-client
     - eval $(ssh-agent -s)
-    - cat "${DEV_AUTHORIZED_KEY}" | ssh-add -
+    - cat "${ENV_AUTHORIZED_KEY}" | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
     # Create config folder on remote server.
-    - ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} 'mkdir -p ~/conf/dev'
-    # Copy confinguration files to remote server to folder ~/conf/dev
-    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${DEV_USER}@${DEV_HOST}:~/conf/dev
-    # Copy database initialization files to remote server to folder ~/conf/dev
-    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${DEV_USER}@${DEV_HOST}:~/conf/dev
-    # replace password="password" in ~/conf/dev/conf/postgresql/context.xml.default on remote server
+    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'mkdir -p ~/conf/whirl'
+    # Copy confinguration files to remote server to folder ~/conf/whirl
+    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
+    # Copy database initialization files to remote server to folder ~/conf/whirl
+    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
+    # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
     - >-
-      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST}
-      "sed -i 's/password=\"password\"/password=\"${DEV_POSTGRES_PASSWORD}\"/g' ~/conf/dev/conf/postgresql/context.xml.default"
-    # replace PASSWORD 'password' in ~/conf/dev/db/postgresql/01-create-db.sh on remote server
+      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
+      "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+    # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
     - >-
-      ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST}
-      "sed -i \"s/'password'/'${DEV_POSTGRES_PASSWORD}'/g\" ~/conf/dev/db/postgresql/01-create-db.sh"
+      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
+      "sed -i \"s/'password'/'${ENV_POSTGRES_PASSWORD}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
     - >-
-      docker --host "ssh://${DEV_USER}@${DEV_HOST}"
+      docker --host "ssh://${ENV_USER}@${ENV_HOST}"
       compose
       --file ./docker/docker-compose.yml
-      --env-file ${DEV_ENV_FILE}
+      --env-file ${ENV_ENV_FILE}
       --profile packaged
       --project-name whirl-develop
       up --force-recreate --build --detach
-    - ssh -o StrictHostKeyChecking=no ${DEV_USER}@${DEV_HOST} "sudo docker system prune --all --force"
+    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} "sudo docker system prune --all --force"
