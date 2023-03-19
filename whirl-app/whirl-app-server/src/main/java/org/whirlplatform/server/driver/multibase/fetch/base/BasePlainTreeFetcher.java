@@ -70,7 +70,7 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
         }
     }
 
-    protected DBCommand createSelectListCommand(ClassLoadConfig loadConfig,
+    protected DBCommand createSelectListCommand(TreeClassLoadConfig loadConfig,
                                                 PlainTreeFetcherHelper temp) {
 
         DBColumnExpr idColumn = temp.dbPrimaryKey;

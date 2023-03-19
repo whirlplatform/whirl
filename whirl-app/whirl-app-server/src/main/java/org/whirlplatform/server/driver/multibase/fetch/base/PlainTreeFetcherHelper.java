@@ -16,7 +16,7 @@ import org.whirlplatform.server.utils.TypesUtil;
 
 import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
-public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
+public class PlainTreeFetcherHelper extends PlainListFetcherHelper {
     public PlainTreeFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
     }
