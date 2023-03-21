@@ -394,7 +394,7 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         }
         Tree<TreeModelData, String> tree = comboBox.getTree();
         for (TreeModelData m : models) {
-            if (m.<Boolean>get(expandExpression) && tree.findNode(m) != null && !tree.isLeaf(m)) {
+            if (m.isExpand() && tree.findNode(m) != null && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
         }
