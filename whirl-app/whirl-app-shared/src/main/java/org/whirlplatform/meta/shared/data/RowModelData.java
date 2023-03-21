@@ -13,7 +13,7 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = Id.CLASS)
 @JsonSubTypes({@JsonSubTypes.Type(RowModelDataImpl.class),
-    @JsonSubTypes.Type(ListModelDataImpl.class)})
+    @JsonSubTypes.Type(ListModelDataImpl.class), @JsonSubTypes.Type(TreeModelDataImpl.class)})
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public interface RowModelData extends Serializable, Cloneable {
