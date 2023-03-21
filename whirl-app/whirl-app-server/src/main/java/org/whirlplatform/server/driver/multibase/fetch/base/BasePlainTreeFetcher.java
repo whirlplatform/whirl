@@ -2,7 +2,6 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.empire.db.DBColumnExpr;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBReader;
@@ -59,10 +58,10 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
                 model.setId(selectReader.getString(temp.dbPrimaryKey));
                 model.setLabel(selectReader.getString(temp.labelExpression));
-                model.setIsExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
-                model.setIsCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
+                model.setExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
+                model.setCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
                 model.setImage(selectReader.getString(temp.imageExpression));
-                model.setIsSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
+                model.setSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
 
                 result.add(model);
             }
