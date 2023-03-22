@@ -48,10 +48,14 @@ import org.whirlplatform.component.client.selenium.Locator;
 import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.utils.CSVParser;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
-import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 
 /**
@@ -59,7 +63,8 @@ import org.whirlplatform.meta.shared.i18n.AppMessage;
  *
  * @param <T>
  */
-public abstract class AbstractMultiComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>> extends AbstractComboBoxBuilder<K,T>
+public abstract class AbstractMultiComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>>
+        extends AbstractComboBoxBuilder<K, T>
     implements
     ListParameter<RowListValue> {
 

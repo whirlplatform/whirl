@@ -26,7 +26,7 @@ public class ClassStore<T extends RowModelData, C extends ClassLoadConfig>
         super(new ClassKeyProvider());
     }
 
-    public ClassStore( RpcProxy<C, LoadData<T>> proxy) {
+    public ClassStore(RpcProxy<C, LoadData<T>> proxy) {
         this();
         this.proxy = proxy;
         loader = new Loader<C, LoadData<T>>(proxy);

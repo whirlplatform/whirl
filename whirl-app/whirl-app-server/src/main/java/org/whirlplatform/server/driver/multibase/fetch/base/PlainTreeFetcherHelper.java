@@ -1,19 +1,21 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import static org.whirlplatform.server.global.SrvConstant.CHECK_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.EXPAND_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.IMAGE_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.SELECT_EXPRESSION_NAME;
+
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumn;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.editor.db.PlainTableElement;
 import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.utils.TypesUtil;
-
-import static org.whirlplatform.server.global.SrvConstant.*;
 
 public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
     public PlainTreeFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
@@ -41,11 +43,11 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
         TableColumnElement c = table.getColumn(config.getParentExpression());
 
         // добавить проверку на наличие кол
-//            if(c.isNotNull()) {
-//
-//            } else {
-//                table.getColumn(config).
-//            }
+        // if(c.isNotNull()) {
+        //
+        // } else {
+        //      table.getColumn(config).
+        // }
 
         DBColumn parentColumn;
         if (this.dbTable.getColumn(c.getColumnName()).getName().equals(c.getColumnName())) {

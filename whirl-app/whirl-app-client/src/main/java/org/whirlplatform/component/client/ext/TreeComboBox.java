@@ -161,11 +161,11 @@ public class TreeComboBox extends ComboBox<TreeModelData> {
         }
 
         if (CheckState.CHECKED.equals(checked)) {
-            checkedItems.add((TreeModelData)item);
+            checkedItems.add((TreeModelData) item);
             if (!fireEvent) {
                 disableCheckListener();
             }
-            tree.setChecked((TreeModelData)item, checked);
+            tree.setChecked((TreeModelData) item, checked);
             if (!fireEvent) {
                 enableCheckListener();
             }
@@ -263,11 +263,11 @@ public class TreeComboBox extends ComboBox<TreeModelData> {
         return tree;
     }
 
-//    @SuppressWarnings({"unchecked", "rawtypes"})
-//    @Override
-//    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<TreeModelData> handler) {
-//        return tree.addValueChangeHandler(handler);
-//    }
+    //    @SuppressWarnings({"unchecked", "rawtypes"})
+    //    @Override
+    //    public HandlerRegistration addValueChangeHandler(ValueChangeHandler<TreeModelData> handler) {
+    //        return tree.addValueChangeHandler(handler);
+    //    }
 
     public void setSingleSelectionCheckMode() {
         tree.setSingleSelectionCheckMode();

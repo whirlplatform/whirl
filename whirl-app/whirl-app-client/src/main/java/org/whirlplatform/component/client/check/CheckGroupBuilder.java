@@ -237,7 +237,7 @@ public class CheckGroupBuilder extends ComponentBuilder implements
         }
         config.setWhereSql(whereSql);
         config.setLabelExpression(labelExpression);
-//        config.setCheckExpression(checkExpression);
+        //config.setCheckExpression(checkExpression);
         return config;
     }
 

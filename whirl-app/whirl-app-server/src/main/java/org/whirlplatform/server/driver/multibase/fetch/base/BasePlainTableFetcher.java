@@ -37,7 +37,7 @@ public class BasePlainTableFetcher extends BasePlainDataFetcher
         return getTableData(metadata, table, loadConfig, temp);
     }
 
-    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData (
+    protected <H extends PlainTableFetcherHelper> LoadData<RowModelData> getTableData(
         ClassMetadata metadata,
         PlainTableElement table,
         ClassLoadConfig loadConfig,

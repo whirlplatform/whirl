@@ -25,9 +25,12 @@ import com.sencha.gxt.widget.core.client.event.BeforeQueryEvent.BeforeQueryHandl
 import com.sencha.gxt.widget.core.client.tree.Tree;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckCascade;
 import com.sencha.gxt.widget.core.client.tree.Tree.CheckState;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -37,7 +40,15 @@ import org.whirlplatform.component.client.state.StateScope;
 import org.whirlplatform.component.client.tree.CheckStyleHelper;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValue;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
+import org.whirlplatform.meta.shared.data.TreeModelData;
+import org.whirlplatform.meta.shared.data.TreeModelDataImpl;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.rpc.client.DataServiceAsync;
 import org.whirlplatform.rpc.shared.SessionToken;
@@ -99,6 +110,7 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
     public TreeModelData createNewModel() {
         return new TreeModelDataImpl();
     }
+
     @Override
     protected void createStore() {
         store = new TreeStore<TreeModelData>(new ListKeyProvider());
@@ -205,7 +217,7 @@ public class TreeComboBoxBuilder extends AbstractMultiComboBoxBuilder<TreeModelD
         super.parseValue(value, labels);
         if (checkedModels.isReady()) {
             for (TreeModelData m : checkedModels.models) {
-                comboBox.setChecked( m, CheckState.CHECKED, false);
+                comboBox.setChecked(m, CheckState.CHECKED, false);
             }
         }
     }

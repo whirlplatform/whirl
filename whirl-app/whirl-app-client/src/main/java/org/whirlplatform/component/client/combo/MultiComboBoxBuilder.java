@@ -6,6 +6,9 @@ import com.sencha.gxt.data.shared.loader.LoadEvent;
 import com.sencha.gxt.data.shared.loader.LoadHandler;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsOptional;
@@ -14,14 +17,9 @@ import org.whirlplatform.component.client.data.ClassStore;
 import org.whirlplatform.component.client.data.ListClassProxy;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.LoadData;
-import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.data.ListModelDataImpl;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Map;
 
 /**
  * Список с мультивыбором
@@ -57,6 +55,7 @@ public class MultiComboBoxBuilder extends AbstractMultiComboBoxBuilder<ListModel
         comboBox.getListView().setLoader(store.getLoader());
         return c;
     }
+
     @Override
     protected void bindStore() {
         super.bindStore();
