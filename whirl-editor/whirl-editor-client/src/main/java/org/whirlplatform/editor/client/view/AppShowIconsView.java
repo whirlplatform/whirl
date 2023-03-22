@@ -77,11 +77,12 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
     }
 
     private static native void copyToClipboard(String text)/*-{
-        navigator.clipboard.writeText(text).then(function () {
-            console.log('Async: Copying to clipboard was successful!');
-        }, function (err) {
-            console.error('Async: Could not copy text: ', err);
-        });
+            window.focus();
+            navigator.clipboard.writeText(text).then(function () {
+                console.log('Async: Copying to clipboard was successful!');
+            }, function (err) {
+                console.error('Async: Could not copy text: ', err);
+            });
     }-*/;
 
     public void buildUI() {
@@ -109,12 +110,16 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
                 String item = view.getSelectionModel().getSelectedItem();
                 if (item != null) {
                     if (event.getHideButton() == Dialog.PredefinedButton.OK) {
+
                         AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).enable();
+                        AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).focus();
                         copyToClipboard(item);
+
                     }
                 }
             }
         });
+        focus();
         add(con);
     }
 
