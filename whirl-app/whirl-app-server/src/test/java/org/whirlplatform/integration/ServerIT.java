@@ -165,6 +165,7 @@ public class ServerIT {
                 reportParser.close();
             }
         }
+        //Thread.sleep(100000000L);
     }
 
     @Test

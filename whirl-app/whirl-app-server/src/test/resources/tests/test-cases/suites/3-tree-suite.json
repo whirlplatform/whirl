@@ -1,0 +1,940 @@
+{
+  "time": 1679474516318,
+  "version": {
+    "sideex": [
+      3,
+      7,
+      3
+    ],
+    "format": [
+      2,
+      0,
+      0
+    ]
+  },
+  "suites": [
+    {
+      "title": "3-tree-suite",
+      "description": "tree-suite",
+      "enableOnPlaying": true,
+      "cases": [
+        {
+          "title": "tree-case",
+          "description": "tree-case",
+          "enableOnPlaying": true,
+          "networkSpeed": 4.56,
+          "records": [
+            {
+              "name": "open",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "${HOSTNAME}/app?application=tree-test"
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "setViewportSize",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": ""
+                  }
+                ],
+                "tac": ""
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "1311,927"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#login-field)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=login-field"
+                  },
+                  {
+                    "type": "name",
+                    "value": "name=login-field"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//form[@id='login_form']/table[1]/tbody[1]/tr[1]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='login-field']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#login-field"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYDMMkBbAbQAE0AEwC8AcgA2GAOZosAfU48xAXRaQARhIS8CasBoxCAnrv1Iz6obwBMauTQCuYMxRAYwzNxgh5QkaQA5CG4EZgdnN2FmKVksGHY0BAkhNywQsPxYuQSklLcwYxpM8AQqT0ooCQgUFGYqFBgIivAIDTkhMuYySikoekwsAHkkTqRukABfSgwoOj9WoIzmMFTK6tr6xqQ0aQYWvoHsEbHmGymZufHcLEcJCUucG7uH9ygoPF4VS88smTkAAR0WoAdy4qUmQA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "whirl-admin"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#pwd-field)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=pwd-field"
+                  },
+                  {
+                    "type": "name",
+                    "value": "name=pwd-field"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//form[@id='login_form']/table[1]/tbody[1]/tr[2]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tr[2]/td[2]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='pwd-field']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#pwd-field"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYDMMkBbAbQAE0AEwC8AcgA2GAOZosAfU48xAXRaQARhIS8CasBoxCAnrv1JeAJn1CrauTQCuYMxRAYwzNxgh5QkaQA5CG4EZgdnN2FmGgB3IRh2NAQJITcsELD8OISklLTKMGMaLJA6FBRYrgKQKAkICuYqFBgIz0KIDTkhBCpmSzcpKHpMLAB5JB6kZjIAX0oMKDo-cAggzOYwGrqGlCaWpDRpBnaQIZHsCan+kHn3JencLEcJCQWoHCeXt-uoPF4VO9PNldlVJgACdDSLByW5AA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "password"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-4']/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[2]/div[1]/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[7]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-j.EWFIG3-S-i > img.EWFIG3-S-a:nth-child(3)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMACzCAuhy7cCStAFsA5twDMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO2y5FwjGEiNMZNa5hBPWCgSpRJaTxBjXxAAjsFar9KlEWHEGF8Rrc8n84EhZAAmFAIuoxFBQRZgLQcADU4wiGAYEgAXjQ-iMoAioLkAFbsWrE4mVJA0MAaRrjRoSYISRpgcZoKjNNDjLCyKhQeladhUGLYGkoOLtGkaLAaDTtHHEqAAdiwaCwEAwugYlRpWioaD17CiOoArNhODikAgqO0sKEkAiMPT-P4Mf8-n82Xc0DRdbKoSgMBowOxKggoEgdd9iVR-DicSF2AitAiNFmjQhICgg7ICCMUHAtDSdd7GuxxkTGrIkCM4LJKujiXb-JI27UoNGaXBxrUEPHWf4wMScWSMHbieMIGG0AwoFEqGA4uNcxBdDEwKctCMNEh2P4HFgG0mHWgUDSXhSsO12o0EQh-FoNCgsDSoBodpwLoEgnGgshQDEUA4o0GiXrIDDtHUYrjBolQYGgtQMOwUBaDi7IYCMNDEhIUJ2po6r4nENLtCMLAjAwWBUBINAoBoMxwN6CI0tu-iwVAGD5A44wYP4cQYOmOq1JMOojLI7EjMSjTSW2GCDiJNKTJU4xRFoOlYH8mk0LUURAo0dojlQI5IEGcTsEg561FobhwEp4wIBoxJYn8zkMnamojDiyJaH8OosMGQr7gc7DtMxoRQMuvyvHA1zjHaUC1GgaCCAAlAABFgMgujQ+RgHlMRdOVXTdIYVznsgzAxIYuQQCgKDMAgjSVP0ugwCg4iGIEGRZAA8vVSDMLoIAAL6UEEdCWOA2x2A4zCcHAzV9m1HVdT1fUwAgeWdd1Wi9f1NJHbtp37Wgg1BPQo3jcwZCzUYUA0BNuBWMt9iOPgziuO4njeL4AT3aE4SRLECRJCkaTDdgOR5AU5RVIYzTsIwz3DJtrXtfgx17f1LiUEND3YGN7ANfgCIzXNUA4F9S22L9TjaIDHj4F4Ph+CwZMQxE0TxIkySpOk5PZLk+SFMUpSo9UlARPUf0gBjrQdNVfQDJEGujBMUwzHMCxLMsjQICMNIFCgLCVPYttofYfVoP44wsMQugsOk2DW1cGDjEQ+xaPlhUwMVpVVVQEc1ZQdVU59IBNZQLXbQTV1nTACsgGTmQU09+CyHTb2c9wCj0yY+AnAJcyZGAeQInljBoOeNd5FN01AA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "8,8"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": -2572,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 2
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-4']/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[2]/div[1]/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[7]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-j.EWFIG3-S-i > img.EWFIG3-S-a:nth-child(3)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMACzCAuhy7cCStAFsA5twDMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO2y5FwjGEiNMZNa5hBPWCgSpRJaTxBjXxAAjsFar9KlEWHEGF8RiMEHk-nAkLIAEwoRFgXSLdh-KFaADULFkVDi4xiUnGUAIBHY4zhjVq7BuAHYIIiEDEIFhdHE5gwNCg-qkRgAvXRw-4AKwk4wZ-iosn8EEa2gQWlqULAOKQ7CoJN0aCQukaYEqCDgVCw-ii40yLE6un8jQkbLglVkNBGDMqaFpdCqiIYVEF4wguiN7BlcAlBLQIzA-kFDDg7CSGEqdSwGBoYoQNFxNAYMUa9hQBEqEj+7EFCAI-jgOIgsiiW1qSAYeo0-j+jUq5okaHaDI0jQIUQ0lSgjSoVC0Giz43GSEqOLdiCpSEFVCiugIjUFOY0409USFUDASDgGEapV0OzF7TQ4zFAgSVA9lUHI8aGAwAY0DPLWCgQVBX8dt2DgOBZj+BkYjQGgEDFBksD+WoHhQYt2hGHdsSgCRoRQOIRlqVtGhQBk4C0eUqERL84EyfwugZKAAFZSMqNxanyX5XnPJBxiYqBajQNBBAASgAAnTGAkGzfIwDEmIunkrpukMK5NWQZgYkMXIIDQ5gEC7fpdBgFBxEMQIMiyAB5dSkGYXQQAAX0oII6EscBtjsBxmE4OBtPlPT8AMz0tGM0yEDE4KjJMmAxUiwzQpitBzKCehrNs5gyGcowoBoOzcCsTz7EcfBnFcdxPG8XwAlS0JwkiWIEiSFI0ks7AcjyApyiqQxmnYRhMuGfzdJQfSErCmAXEoCy0uwGz2A0-BESclyoBwAqPNsYqnG0cqPHwLwfD8FgZrqiJoniRJklSdJZuyXJ8kKYpSm66pKAieoSpAPrWg6ZS+gGSI-tGCYphmOYFiWZZGgQEYxQKFAWEqexkdHewTLQfxxhYYhdBYdJsERq4MHGIh9i0cTJOkuD6CUqg6ZUyg1IW-KQC0ygdMCkAosS0y3pAGbMjmjL8FkFacv27gFFWkx8BOKBsH6tBYwQRExMYPUlZVhzHKAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "7,8"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 2
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(third title3)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-4']/div[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[2]/div[1]/div[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=span[title=\"third title3\"]"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMACzCAuhy7cCSlHSyr1m7RRAYwzRmiTswaMABsEAZn0YIeUJADmAOQgBbBMw0QcSgtrX3wTMwACYJt7ShQwAE8bZn0rDCh6TCwAeTNkZjIAX0p0umdwCA9vUJB-QJAoKwgUFGYEAHcAMzRXWxgUGABrVPTM7Fz2fPwikqgaJDwsCSsrWZxcJZXZqDxuBVmjfBQEKGxzSxsAJgjOjAkkRmiEWRBCoA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "40,7"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(fourth title4)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-2']/div[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=span[title=\"fourth title4\"]"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEzCAuhy7cCSlHSyr1m7RRAYwzAGYYJSRmDRgANggAs+jBDyhIAcwByEALYJmGhA4lFa2-vim5owABKF2jpQoYACedsz6NhhQ9JhYAPJI7MjMZAC+lFl0ruAQXr7hIIHBIFA2ECgozAgA7sZo7gDMMCgwANYZWTnYBUVIJSDlBlA0c7hYEjY2FVA4axtbS1B43ArbRhFoqGBxCAQoCFDY7DeyjJfP1nYD0QAMPwtAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "10,10"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(TreeCombobox)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-8665CECE-13EF-4BD7-BF46-BC70B226D238']/div[1]/div[1]/ul[1]/li[2]/a[2]/em[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//li[2]/a[2]/em[1]/span[1]/span[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=li.EWFIG3-h-G > a.EWFIG3-h-q:nth-child(2) > em.EWFIG3-h-o > span.EWFIG3-h-F > span.EWFIG3-h-H"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgAOAGyqArAGEAorpgEAzDoBiMACwAhACIB2GJZPnVDrbYAMlgExfV1r4bKwgC6HFzcBKGcPJEs8gA2EaHxaNxeoRBpoQgAtkksKHRY+YUQxZEUIBhgzGBICAhQGDmyGK1UlRgQeKCQogByEDkIzKU4lFDxECgozAjiAGZoooYwDGuV8RhQ9JhYAPJIMkjMZAC+lNt0PeAQA0Mj+GOVk9Oz+PNLK2swC5vbu2wh2OpxAFyqUBoJ1wWAS8UuUBwMLhCKgeG4wQRNXwdQaAAIlqgwGA0GB4ggCChGth2CSyQgvIw0Ec6eTDAsMPIkIxWQhzGCgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "32,11"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "dragAndDrop",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<div/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-B220FA89-841F-4FFF-93D7-E5947BAF8976']/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[2]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-z-l"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgAhAEyqADADEAggA4AnDD0AWAlpgmt1mAYDMAEQDsMAKIBWAyafKdWw04AbMIAuhxc3ARhkLIANgiR0bIY7ACeiSxgSBlg7NyqYZw8URQgGGDMpRgQeKCQogByEAC2CMxFpVCxECgozAjiAGZoonYwAF4wsaWxGFD0mFgA8kgySMxkAL6Uc3S14BCNLW34uTNzC9gra8yqINtlUDTruFjysbE7UDiv75+PUDw3BCXwq+A0GnuQA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"StartPoint\":{\"X\":6,\"Y\":15},\"Movements\":[{\"TD\":63,\"OX\":1,\"OY\":0}]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseDownAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-5']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[11]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAKzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8AHYosYvCMlggRigBlgJFBGgArXESGjmBj09hYLAaGL-BBwLT0uAMEZwGj0xrbAnmNC1ekALy0En8-LlGEalX8UUaCB1DDi1xQGDgaAkKEqSTlDA0-hoEgQ9IQNFkI0qfwgCH8lWhb3+GigUAAlAACLAyJCO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgIdX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwOMejnC9MmwasUy3QhG2bKAcG3dtbD3JxtCPDx8C8Hw-BYedQnCSJYgSJIUjSCtn1yfJCmKUp32qSgIi-JoWnAjp41-QYeNGCYphmOYFiWVZ1k2DRtl2fZDmOU4LiuG47geJ4XjeD4vmeX5vkBCBgW+UFwUhHSRg9BA4QRXQUF0PFFnYf4RhGLQAGoWDOKg4nGGIpHGKACAIdhxjhRpanYW4CQgXQEBiCAsFxOI5itFB-lSEY5VxOEAXpCRxgJfwqDOftGm0BAtFqZywFc5MqF83E0CQXFGjASo+SoLBNXGTIWE6fFGgkOK4EqM4aBGAkRzCugql0BgqDlDFcVa9hCrgXLPLQEYwH8S04HYJIMC9WpQzFR03JoBgYglDQUAISoJH+dg5QQAhlVciAziiLZaiQBhGutf51U6iQ0HaAkNEaQCNEqOkqCoLQNAdcZxiQSpXLGxBgqQOUqCiXECEaOUaAR8YRyiDKoDAJA4DVUpcR2el2jQcZ6QEBIqAmyoIaiCGMAweaNAJR6sCgOU5X8a12DgOBZn+AkYjQGh7QJLB-lqR5sw6EZCecrQoAkcyUH1Wo-pRAl+X7KhdD5uBMhtDmoFkFAJrcWp8j+N4aaQcZZCgWo0DQQRg1DGBwyV+hIMghNKCTBC0z7Adc3zLRC2LCwyxgxc4-wXFkPXPDuAUFCTHwKmdTLhAoAwDRrmuOqYiDEdUG8NBtpexsgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "10,4"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 2,
+                "prw": 0,
+                "pdw": 23
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseMoveAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-5']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[11]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAKzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8AHYosYvCMlggRigBlgJFBGgArXESGjmBj09hYLAaGL-BBwLT0uAMEZwGj0xrbAnmNC1ekALy0En8-LlGEalX8UUaCB1DDi1xQGDgaAkKEqSTlDA0-hoEgQ9IQNFkI0qfwgCH8lWhb3+GigUAAlAACLAyJCO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgIdX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwOMejnC9MmwasUy3QhG2bKAcG3dtbD3JxtCPDx8C8Hw-BYedQnCSJYgSJIUjSCtn1yfJCmKUp32qSgIi-JoWnAjp41-QYeNGCYphmOYFiWVZ1k2DRtl2fZDmOU4LiuG47geJ4XjeD4vmeX5vkBCBgW+UFwUhHSRg9BA4QRXQUF0PFFnYf4RhGLQAGoWDOKg4nGGIpHGKACAIdhxjhRpanYW4CQgXQEBiCAsFxOI5itFB-lSEY5VxOEAXpCRxgJfwqDOftGm0BAtFqZywFc5MqF83E0CQXFGjASo+SoLBNXGTIWE6fFGgkOK4EqM4aBGAkRzCugql0BgqDlDFcVa9hCrgXLPLQEYwH8S04HYJIMC9WpQzFR03JoBgYglDQUAISoJH+dg5QQAhlVciAziiLZaiQBhGutf51U6iQ0HaAkNEaQCNEqOkqCoLQNAdcZxiQSpXLGxBgqQOUqCiXECEaOUaAR8YRyiDKoDAJA4DVUpcR2el2jQcZ6QEBIqAmyoIaiCGMAweaNAJR6sCgOU5X8a12DgOBZn+AkYjQGh7QJLB-lqR5sw6EZCecrQoAkcyUH1Wo-pRAl+X7KhdD5uBMhtDmoFkFAJrcWp8j+N4aaQcZZCgWo0DQQRg1DGBwyV+hIMghNKCTBC0z7Adc3zLRC2LCwyxgxc4-wXFkPXPDuAUFCTHwKmdTLhAoAwDRrmuOqYiDEdUG8NBtpexsgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"Movements\":[]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseUpAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-5']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[11]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAKzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8AHYosYvCMlggRigBlgJFBGgArXESGjmBj09hYLAaGL-BBwLT0uAMEZwGj0xrbAnmNC1ekALy0En8-LlGEalX8UUaCB1DDi1xQGDgaAkKEqSTlDA0-hoEgQ9IQNFkI0qfwgCH8lWhb3+GigUAAlAACLAyJCO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgIdX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwOMejnC9MmwasUy3QhG2bKAcG3dtbD3JxtCPDx8C8Hw-BYedQnCSJYgSJIUjSCtn1yfJCmKUp32qSgIi-JoWnAjp41-QYeNGCYphmOYFiWVZ1k2DRtl2fZDmOU4LiuG47geJ4XjeD4vmeX5vkBCBgW+UFwUhHSRg9BA4QRXQUF0PFFnYf4RhGLQAGoWDOKg4nGGIpHGKACAIdhxjhRpanYW4CQgXQEBiCAsFxOI5itFB-lSEY5VxOEAXpCRxgJfwqDOftGm0BAtFqZywFc5MqF83E0CQXFGjASo+SoLBNXGTIWE6fFGgkOK4EqM4aBGAkRzCugql0BgqDlDFcVa9hCrgXLPLQEYwH8S04HYJIMC9WpQzFR03JoBgYglDQUAISoJH+dg5QQAhlVciAziiLZaiQBhGutf51U6iQ0HaAkNEaQCNEqOkqCoLQNAdcZxiQSpXLGxBgqQOUqCiXECEaOUaAR8YRyiDKoDAJA4DVUpcR2el2jQcZ6QEBIqAmyoIaiCGMAweaNAJR6sCgOU5X8a12DgOBZn+AkYjQGh7QJLB-lqR5sw6EZCecrQoAkcyUH1Wo-pRAl+X7KhdD5uBMhtDmoFkFAJrcWp8j+N4aaQcZZCgWo0DQQRg1DGBwyV+hIMghNKCTBC0z7Adc3zLRC2LCwyxgxc4-wXFkPXPDuAUFCTHwKmdTLhAoAwDRrmuOqYiDEdUG8NBtpexsgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "11,4"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseDownAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-7']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[14]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAOzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8siixi8IyWCBGKAGWAkUEaACtcRIaOYGHT2FgsBoYv8EHAtHS4AwRnAaHTGttZOY0LU6QAvLQSfx82UYRqVfxRRoIbUMOLXFAYOBoCQoSpJWUMDT+GgSBB0hA0ACsI0qfwgCH8lWhb3+GigUAAlAACLAyJAO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgINX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwADZHjOcL0ybBqxTLdCEbZsoBwbd21sPcnG0I8PHwLwfD8Fh51CcJIliBIkhSNIK2fXJ8kKYpSnfapKAiL8mhacCOnjX9Bl40YJimGY5gWJZVnWTYNG2XZ9kOY5TguK4bjuB4nheN4Pi+Z5fm+QEIGBb5QXBSFdJGD0EDhBFdBQXQ8UWdh-hGEYtAAahYM4qDicYYikcYoAIAh2HGOFGlqdhblkCBdAQGIICwXE4jmS0UH+VIRllXE4QBOkJHGWR-CoM5+0abQEC0WoXLANzkyoPzcTQJBcUaMBKl5KgsA1cZMhYTp8UaCR4rgSozhoEZZBHcK6CqXQGCoWUMVxNr2CKuA8q8tARjAfwLTgdgkgwL1alDUUHXcmgGBicUNBQAhKgkf52FlBACCVNyIDOKItlqJAGCaq1-jVLqJDQdpZA0RpAI0SpaSoKgtA0e1xnGJBKjc8bEBCpBZSoKJcQIRpZRoRHxhHKJMqgMAkDgVVSlxHY6XaNBxjpAQEioSbKkhqJIYwDAFo0WQnqwKBZVlfwrXYOA4Fmf5ZBiNAaDtWQsH+WpHmzDoRiJlytCgCQLJQPVan+lFZD5fsqF0fm4Eya1OagR0UEmtxanyP43lppBxkdKBajQNBBGDUMYHDZX6DjKgo4TSgk0QtM+wHXN8y0QtiwsMtYMXBP8FxFD13w7gFFQkx8BHVBvDQHbXqDE4oGwHFq7yesGyAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "3,1"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 1,
+                "prw": 0,
+                "pdw": 57
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseMoveAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-7']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[14]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAOzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8siixi8IyWCBGKAGWAkUEaACtcRIaOYGHT2FgsBoYv8EHAtHS4AwRnAaHTGttZOY0LU6QAvLQSfx82UYRqVfxRRoIbUMOLXFAYOBoCQoSpJWUMDT+GgSBB0hA0ACsI0qfwgCH8lWhb3+GigUAAlAACLAyJAO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgINX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwADZHjOcL0ybBqxTLdCEbZsoBwbd21sPcnG0I8PHwLwfD8Fh51CcJIliBIkhSNIK2fXJ8kKYpSnfapKAiL8mhacCOnjX9Bl40YJimGY5gWJZVnWTYNG2XZ9kOY5TguK4bjuB4nheN4Pi+Z5fm+QEIGBb5QXBSFdJGD0EDhBFdBQXQ8UWdh-hGEYtAAahYM4qDicYYikcYoAIAh2HGOFGlqdhblkCBdAQGIICwXE4jmS0UH+VIRllXE4QBOkJHGWR-CoM5+0abQEC0WoXLANzkyoPzcTQJBcUaMBKl5KgsA1cZMhYTp8UaCR4rgSozhoEZZBHcK6CqXQGCoWUMVxNr2CKuA8q8tARjAfwLTgdgkgwL1alDUUHXcmgGBicUNBQAhKgkf52FlBACCVNyIDOKItlqJAGCaq1-jVLqJDQdpZA0RpAI0SpaSoKgtA0e1xnGJBKjc8bEBCpBZSoKJcQIRpZRoRHxhHKJMqgMAkDgVVSlxHY6XaNBxjpAQEioSbKkhqJIYwDAFo0WQnqwKBZVlfwrXYOA4Fmf5ZBiNAaDtWQsH+WpHmzDoRiJlytCgCQLJQPVan+lFZD5fsqF0fm4Eya1OagR0UEmtxanyP43lppBxkdKBajQNBBGDUMYHDZX6DjKgo4TSgk0QtM+wHXN8y0QtiwsMtYMXBP8FxFD13w7gFFQkx8BHVBvDQHbXqDE4oGwHFq7yesGyAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"Movements\":[]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseUpAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-7']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[14]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAOzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4ABwADACcMSwQNDT+aMFgmFgsUP4IEEhEwVAMCERaaABmrmAAnnnMAO4CjLgEAGw0VADcpWhaXm2dPQBG0ADWWkgYEljsuBJI-gAU7PQQuJoQWggsNFha3WMoCO0ALORcIxhIjTGTWuYQz1goEqUSWs8QY98QAI7BWp-SpRFhxBh-MDjPL-OBIM66CSNFCNf7jAH-LTsMAAZn8siixi8IyWCBGKAGWAkUEaACtcRIaOYGHT2FgsBoYv8EHAtHS4AwRnAaHTGttZOY0LU6QAvLQSfx82UYRqVfxRRoIbUMOLXFAYOBoCQoSpJWUMDT+GgSBB0hA0ACsI0qfwgCH8lWhb3+GigUAAlAACLAyJAO-JgIMxLrRrrdQzXJDsZDMGKGXIQFAoZgINX9XEwFAwFyUQIZLIAeWTqfwuhAAF9KEE6JZwNs7A5mJw4Bn-Fmc-g85UC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEItF4olkql0gvsDk8gVylUavV9yA+gNIkGCCieMg2aHEGFwADZHjOcL0ybBqxTLdCEbZsoBwbd21sPcnG0I8PHwLwfD8Fh51CcJIliBIkhSNIK2fXJ8kKYpSnfapKAiL8mhacCOnjX9Bl40YJimGY5gWJZVnWTYNG2XZ9kOY5TguK4bjuB4nheN4Pi+Z5fm+QEIGBb5QXBSFdJGD0EDhBFdBQXQ8UWdh-hGEYtAAahYM4qDicYYikcYoAIAh2HGOFGlqdhblkCBdAQGIICwXE4jmS0UH+VIRllXE4QBOkJHGWR-CoM5+0abQEC0WoXLANzkyoPzcTQJBcUaMBKl5KgsA1cZMhYTp8UaCR4rgSozhoEZZBHcK6CqXQGCoWUMVxNr2CKuA8q8tARjAfwLTgdgkgwL1alDUUHXcmgGBicUNBQAhKgkf52FlBACCVNyIDOKItlqJAGCaq1-jVLqJDQdpZA0RpAI0SpaSoKgtA0e1xnGJBKjc8bEBCpBZSoKJcQIRpZRoRHxhHKJMqgMAkDgVVSlxHY6XaNBxjpAQEioSbKkhqJIYwDAFo0WQnqwKBZVlfwrXYOA4Fmf5ZBiNAaDtWQsH+WpHmzDoRiJlytCgCQLJQPVan+lFZD5fsqF0fm4Eya1OagR0UEmtxanyP43lppBxkdKBajQNBBGDUMYHDZX6DjKgo4TSgk0QtM+wHXN8y0QtiwsMtYMXBP8FxFD13w7gFFQkx8BHVBvDQHbXqDE4oGwHFq7yesGyAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "5,2"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseDownAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-8']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[17]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMABzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4sgAMAJzRLBA0NP5owWCYWCxQ-ggQSETBUAwIRFpoAGauYACeucwA7gKMuAQAbDRUANwlaFperR3dAEbQANZaSBgSWOy4Ekj+ABTs9BC4mhBaCCw0WFpdoygIbQAs5FzDGEgN0RNa5hBPWCgSJRJaTxCjXxAAjsEar8KrIWLEGL8wGNcn84EhTroJA0UA0-mN-n8tOwwABmfwAdlkxi8w0WCGGKH6WAkUAaACscRIaOYGHT2FgsBpon8EHAtHS4AxhnAaHSGlt8eY0DU6QAvLQSfx82UYBoVfyyBoIbUMWJXFAYOBoCQoCqJWUMDT+GgSBB0hA0ACswwqvwgCH8FShrz+GigUAAlAACLAyJAOvJgIPRTrRzpdQxXJDsZDMaKGHIQFAoZgINV9HEwFAwFyUQLpTIAeWTqfwuhAAF9KEE6JZwFs7A5mJw4Bn-Fmc-g8xUC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEIlE4gkkik0gvsNlcvkypVqnV9yBev1IkGCFkeMgyabEGFwIMcVOeM5wvDJsGrFMt0IRtmygHBt3bWw9ycbQjw8fAvB8PwWHnUJwkiGJ4kSZJUgrZ8cjyAoihKd8qkoCIv0aZpwPaeNfwGPiRnGSZplmeZFhWNYNg0LYdj2A4jhOc5LmuW57keZ5XneT4nh+L4AQgIEvhBMEIT04YPQQWF4V0FBdFxBZ2D+YZhi0ABqFhTioWIxmiKQxigAgCHYMZYQaGp2BufEIF0BBoggLAcViWZLRQP4UmGWUcVhf46QkMZ8X8KhTn7BptAQLQalcsB3OTKh-JxNAkBxBowAqXkqCwDUxgyFgOjxBoJASuAKmg4Z8RHCK6EqXQGCoWV0Rxdr2GKuB8u8tBhjAfwLTgdhEgwL0alDUUHQ8mgGGicUNBQAgKgkP52FlBACCVdyIFOWRNhqJAGGaq0-jVbqJDQNp8Q0BpAI0CpaSoKgtA0e0xjGJAKncmhhQQUKkFlKhZBxAgGllGhEbGEdZCyqAwCQOBVRKHFtjpNo0DGOkBHiKhJoqSHZEhjAMAWjR8SerAoFlWV-Ctdg4DgGY-nxaI0BoO18SwP4agebN2mGYnXK0KAJEslA9Rqf7kXxPl+yoXQBbgDJrS5qBHRQSa3BqPJfleOmkDGR0oBqNA0EEYNQxgcMVfoOMqGjhNKCTJC0z7Adc3zLRC2LCwyzgxdE-wHFUPXAjuAUNCTHwY4oGwbE0B2hBdCDRhmpruuC4bIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "6,6"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 2,
+                "prw": 0,
+                "pdw": 21
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseMoveAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-8']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[17]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMABzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4sgAMAJzRLBA0NP5owWCYWCxQ-ggQSETBUAwIRFpoAGauYACeucwA7gKMuAQAbDRUANwlaFperR3dAEbQANZaSBgSWOy4Ekj+ABTs9BC4mhBaCCw0WFpdoygIbQAs5FzDGEgN0RNa5hBPWCgSJRJaTxCjXxAAjsEar8KrIWLEGL8wGNcn84EhTroJA0UA0-mN-n8tOwwABmfwAdlkxi8w0WCGGKH6WAkUAaACscRIaOYGHT2FgsBpon8EHAtHS4AxhnAaHSGlt8eY0DU6QAvLQSfx82UYBoVfyyBoIbUMWJXFAYOBoCQoCqJWUMDT+GgSBB0hA0ACswwqvwgCH8FShrz+GigUAAlAACLAyJAOvJgIPRTrRzpdQxXJDsZDMaKGHIQFAoZgINV9HEwFAwFyUQLpTIAeWTqfwuhAAF9KEE6JZwFs7A5mJw4Bn-Fmc-g8xUC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEIlE4gkkik0gvsNlcvkypVqnV9yBev1IkGCFkeMgyabEGFwIMcVOeM5wvDJsGrFMt0IRtmygHBt3bWw9ycbQjw8fAvB8PwWHnUJwkiGJ4kSZJUgrZ8cjyAoihKd8qkoCIv0aZpwPaeNfwGPiRnGSZplmeZFhWNYNg0LYdj2A4jhOc5LmuW57keZ5XneT4nh+L4AQgIEvhBMEIT04YPQQWF4V0FBdFxBZ2D+YZhi0ABqFhTioWIxmiKQxigAgCHYMZYQaGp2BufEIF0BBoggLAcViWZLRQP4UmGWUcVhf46QkMZ8X8KhTn7BptAQLQalcsB3OTKh-JxNAkBxBowAqXkqCwDUxgyFgOjxBoJASuAKmg4Z8RHCK6EqXQGCoWV0Rxdr2GKuB8u8tBhjAfwLTgdhEgwL0alDUUHQ8mgGGicUNBQAgKgkP52FlBACCVdyIFOWRNhqJAGGaq0-jVbqJDQNp8Q0BpAI0CpaSoKgtA0e0xjGJAKncmhhQQUKkFlKhZBxAgGllGhEbGEdZCyqAwCQOBVRKHFtjpNo0DGOkBHiKhJoqSHZEhjAMAWjR8SerAoFlWV-Ctdg4DgGY-nxaI0BoO18SwP4agebN2mGYnXK0KAJEslA9Rqf7kXxPl+yoXQBbgDJrS5qBHRQSa3BqPJfleOmkDGR0oBqNA0EEYNQxgcMVfoOMqGjhNKCTJC0z7Adc3zLRC2LCwyzgxdE-wHFUPXAjuAUNCTHwY4oGwbE0B2hBdCDRhmpruuC4bIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"Movements\":[]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseUpAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-8']/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/img[2]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[17]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-g:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMABzCAuhy7cCStAFsA5twBMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4sgAMAJzRLBA0NP5owWCYWCxQ-ggQSETBUAwIRFpoAGauYACeucwA7gKMuAQAbDRUANwlaFperR3dAEbQANZaSBgSWOy4Ekj+ABTs9BC4mhBaCCw0WFpdoygIbQAs5FzDGEgN0RNa5hBPWCgSJRJaTxCjXxAAjsEar8KrIWLEGL8wGNcn84EhTroJA0UA0-mN-n8tOwwABmfwAdlkxi8w0WCGGKH6WAkUAaACscRIaOYGHT2FgsBpon8EHAtHS4AxhnAaHSGlt8eY0DU6QAvLQSfx82UYBoVfyyBoIbUMWJXFAYOBoCQoCqJWUMDT+GgSBB0hA0ACswwqvwgCH8FShrz+GigUAAlAACLAyJAOvJgIPRTrRzpdQxXJDsZDMaKGHIQFAoZgINV9HEwFAwFyUQLpTIAeWTqfwuhAAF9KEE6JZwFs7A5mJw4Bn-Fmc-g8xUC0WYAgg8PR8W0IZy-QqzWkMwyE2jFAaMvcFYO-ZHPhnK53J5vL4AkEQmEIlE4gkkik0gvsNlcvkypVqnV9yBev1IkGCFkeMgyabEGFwIMcVOeM5wvDJsGrFMt0IRtmygHBt3bWw9ycbQjw8fAvB8PwWHnUJwkiGJ4kSZJUgrZ8cjyAoihKd8qkoCIv0aZpwPaeNfwGPiRnGSZplmeZFhWNYNg0LYdj2A4jhOc5LmuW57keZ5XneT4nh+L4AQgIEvhBMEIT04YPQQWF4V0FBdFxBZ2D+YZhi0ABqFhTioWIxmiKQxigAgCHYMZYQaGp2BufEIF0BBoggLAcViWZLRQP4UmGWUcVhf46QkMZ8X8KhTn7BptAQLQalcsB3OTKh-JxNAkBxBowAqXkqCwDUxgyFgOjxBoJASuAKmg4Z8RHCK6EqXQGCoWV0Rxdr2GKuB8u8tBhjAfwLTgdhEgwL0alDUUHQ8mgGGicUNBQAgKgkP52FlBACCVdyIFOWRNhqJAGGaq0-jVbqJDQNp8Q0BpAI0CpaSoKgtA0e0xjGJAKncmhhQQUKkFlKhZBxAgGllGhEbGEdZCyqAwCQOBVRKHFtjpNo0DGOkBHiKhJoqSHZEhjAMAWjR8SerAoFlWV-Ctdg4DgGY-nxaI0BoO18SwP4agebN2mGYnXK0KAJEslA9Rqf7kXxPl+yoXQBbgDJrS5qBHRQSa3BqPJfleOmkDGR0oBqNA0EEYNQxgcMVfoOMqGjhNKCTJC0z7Adc3zLRC2LCwyzgxdE-wHFUPXAjuAUNCTHwY4oGwbE0B2hBdCDRhmpruuC4bIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "7,6"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 2,
+                "prw": 0,
+                "pdw": 15
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<img/>)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-8']/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/img[3]"
+                  },
+                  {
+                    "type": "xpath:img",
+                    "value": "xpath=(//img[contains(@src,'http://localhost:8090/application/clear.cache.gif')])[17]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-S-e.EWFIG3-S-i > img.EWFIG3-S-a:nth-child(3)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMABzCAuhy7cCStAFsA5twDMCiiAxhmhjBDyhIWgHIQNCZpq2GUSKMwZgwNXGwA2GFAQ-gwYKGC4sgAMAJzRLBA0NP5owWCYWCxQ-ggQSETBUAwIRFpoAGauYACeucwA7gKMuAQAbDRUANwlaFperR3dAEbQANZaSBgSWOy4Ekj+ABTs9BC4mhBaCCw0WFpdoygIbQAs5FzDGEgN0RNa5hBPWCgSJRJaTxCjXxAAjsEar8KrIWLEGF9hsMELk-nAkKcAEwoRFgXQLdh-KFaADULFOVFiY2iUjGUAIBHYYzhDRq7BuAHYIIiENEIFhdLFZgwNCg-ilhgAvXRw-4AKwkYwZ-iop38EAa2gQWhqULAOKQ7CoJN0aCQugaYAqCDgVCw-lkYwyLA6un8DQkbLgFVONGGDIqaFpdEqiIYVEFYwguiN7BlcAlBLQwzA-kFDDg7ESGAqtSwGBoYoQNFxNAY0Qa9hQBAqEj+7EFCAI-jgOIgp1kmxqSAYeo0-j+DQq5okaDaDI0DQIsg0FSgDSoVC0GizYzGSAqOLdiCpSEFVFkugIDUFOY0Y09siFUDASDgGAaJV02zFbTQYzFAniVA9FUHI4aGAwAY0DPLWCgQVBX8dt2DgOAZj+BlojQGgEDFBksD+GoHhQYs2mGHdsSgCRoRQWJhhqVsGhQBk4C0eUqERL84AyfxOgZKAAFZSIqNwajyX5XnPJAxiYqAajQNBBAASgAAnTGAkGzPIwDE6JOnkzoukMK5NWQZhokMHIIDQ5gEC7PpdBgFBxEMQJ0kyAB5dSkGYXQQAAX0oII6EscAtjsBxmE4OBtPlPT8AMz0tGM0yEDE4KjJMmA0HMoJ6Gs2zmDIZyjCgGg7NwKxPPsRx8GcVx3E8bxfACBLQnCSIYniRJklSSzsGyXJ8jKSpDCadhGBSoZ-N0lB9MM0KYpcSgLMS7AbPYDT8ERJyXKgHBso82w8uYFA6BwSgdMCkAouG0yqjGhKMkm5L8FShaPFwbgFAWkx8GOKBsC6tBYwQRExMYPVXvehzHKAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "5,12"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="B3355A1B-7C88-412A-9B29-F63EF724692E" name="tree-test" metaversion="1">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[tree-test]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[tree-test]]></code>
+    <enabled>true</enabled>
+    <guest>false</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="5CFEBAE0-A22F-438C-9A65-8C71538FF84C" name="BorderContainer" type="BorderContainerBuilder">
+      <properties>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="8665CECE-13EF-4BD7-BF46-BC70B226D238" name="TabPanel 1" type="TabPanelBuilder">
+          <properties>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+          </properties>
+          <children>
+            <component id="8D23F395-A4FB-4E57-B54C-44DEC50EF83E" name="TabItem 1" type="TabItemBuilder">
+              <properties>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Title" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Tree]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <children>
+                <component id="323C8492-6670-4F2C-A26F-30C54DC4347E" name="Tree 1" type="TreeBuilder">
+                  <properties>
+                    <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LabelExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[CONCAT(title,id)]]></value>
+                      </locales>
+                    </property>
+                    <property name="Enabled" type="BOOLEAN" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="BOOLEAN">true</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                      </locales>
+                    </property>
+                    <property name="ImageExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[case when id=1 then 'webjars/famfamfam-silk/1.3/icons/medal_bronze_1.png' 			when id=4 then 'webjars/famfamfam-silk/1.3/icons/bomb.png' 			else 'webjars/famfamfam-silk/1.3/icons/book.png' 			end]]></value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                      </locales>
+                    </property>
+                    <property name="ExpandExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[id::int in (1,2,3,4)]]></value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="DataSource" type="LIST" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="LIST">
+                          <id>3924C7CB-FC94-4ED5-9C34-9C321121902D</id>
+                          <label><![CDATA[tree_table]]></label>
+                        </value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="Width" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">100.0</value>
+                      </locales>
+                    </property>
+                    <property name="CheckExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[id::int in (1,2,3,4)]]></value>
+                      </locales>
+                    </property>
+                    <property name="Height" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">150.0</value>
+                      </locales>
+                    </property>
+                    <property name="SelectExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[id::int in (1,2,3,4)]]></value>
+                      </locales>
+                    </property>
+                    <property name="ParentExpression" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[parent_id]]></value>
+                      </locales>
+                    </property>
+                  </properties>
+                </component>
+              </children>
+            </component>
+            <component id="34DEBE53-5970-479F-8815-748028F611AF" name="TabItem 2" type="TabItemBuilder">
+              <properties>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Title" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[TreeCombobox]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <children>
+                <component id="7E9B8DF5-F049-46F9-B89A-74FDAB897237" name="HorizontalContainer 1" type="HorizontalContainerBuilder">
+                  <properties>
+                    <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="Enabled" type="BOOLEAN" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="BOOLEAN">true</value>
+                      </locales>
+                    </property>
+                    <property name="Width" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                      </locales>
+                    </property>
+                    <property name="Height" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:Height" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:Width" type="NUMBER" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="NUMBER">1.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales>
+                        <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                      </locales>
+                    </property>
+                  </properties>
+                  <children>
+                    <component id="B220FA89-841F-4FFF-93D7-E5947BAF8976" name="TreeComboBox 1" type="TreeComboBoxBuilder">
+                      <properties>
+                        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">3.0</value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">3.0</value>
+                          </locales>
+                        </property>
+                        <property name="LabelExpression" type="STRING" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="STRING"><![CDATA[CONCAT(title,id)]]></value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">3.0</value>
+                          </locales>
+                        </property>
+                        <property name="DataSource" type="LIST" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="LIST">
+                              <id>3924C7CB-FC94-4ED5-9C34-9C321121902D</id>
+                              <label><![CDATA[tree_table]]></label>
+                            </value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">3.0</value>
+                          </locales>
+                        </property>
+                        <property name="Enabled" type="BOOLEAN" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="BOOLEAN">true</value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:Index" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">0.0</value>
+                          </locales>
+                        </property>
+                        <property name="MinChars" type="NUMBER" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="NUMBER">2.0</value>
+                          </locales>
+                        </property>
+                        <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                          </locales>
+                        </property>
+                        <property name="ParentExpression" type="STRING" replace="false">
+                          <defaultLocale locale="ru"/>
+                          <locales>
+                            <value locale="ru" type="STRING"><![CDATA[parent_id]]></value>
+                          </locales>
+                        </property>
+                      </properties>
+                    </component>
+                  </children>
+                </component>
+              </children>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </components>
+  <datasources>
+    <datasource id="B9051EAB-471F-4E5B-8560-52C8171B2D1B" name="metadata">
+      <alias>metadata</alias>
+      <databaseName>DATABASE</databaseName>
+      <schemas>
+        <schema id="93DEE324-B1ED-4D56-B1EF-66B4BDD3CD78" name="whirl_test">
+          <schemaName>whirl_test</schemaName>
+          <tables>
+            <table id="3924C7CB-FC94-4ED5-9C34-9C321121902D" name="tree_table">
+              <title replace="false">
+                <defaultLocale locale="ru"/>
+                <locales/>
+              </title>
+              <emptyRow>false</emptyRow>
+              <tableName>tree_table</tableName>
+              <idColumnId>4DC22D2E-4E1F-4753-8F8F-39CF613C4CA3</idColumnId>
+              <columns>
+                <column id="14F00766-92FE-473D-B885-8A8F0EFC8533" name="title - title">
+                  <index>1</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[title]]></value>
+                    </locales>
+                  </title>
+                  <columnName>title</columnName>
+                  <type><![CDATA[STRING]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>4000</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <color></color>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="EB93B903-A6DA-43F4-8F92-71C7E3B48CA8" name="parent_id - parent_id">
+                  <index>2</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[parent_id]]></value>
+                    </locales>
+                  </title>
+                  <columnName>parent_id</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <color></color>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+                <column id="4DC22D2E-4E1F-4753-8F8F-39CF613C4CA3" name="id - id">
+                  <index>0</index>
+                  <title replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales>
+                      <value locale="ru" type="STRING"><![CDATA[id]]></value>
+                    </locales>
+                  </title>
+                  <columnName>id</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>null</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <color></color>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="ru"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
+              </columns>
+            </table>
+          </tables>
+        </schema>
+      </schemas>
+    </datasource>
+  </datasources>
+  <groups>
+    <group id="29B48D2B-9712-4F03-A4A1-22AB52D5F8EC" name="test-group" groupName="test-group"/>
+  </groups>
+  <rights>
+    <tableRights>
+      <collection id="04A67CA9-3564-4ABC-91A3-C2681541C845" tableId="3924C7CB-FC94-4ED5-9C34-9C321121902D">
+        <application>
+          <right type="ADD">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="DELETE">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="RESTRICT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="29B48D2B-9712-4F03-A4A1-22AB52D5F8EC">
+            <right type="ADD">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+    </tableRights>
+    <tableColumnRights>
+      <collection id="47DBDAC1-CA32-4403-A1B3-65DFBAF4566A" tableColumnId="EB93B903-A6DA-43F4-8F92-71C7E3B48CA8">
+        <application>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="29B48D2B-9712-4F03-A4A1-22AB52D5F8EC">
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="27F5FF6D-C762-4BA3-AC71-0495B54C7E7C" tableColumnId="4DC22D2E-4E1F-4753-8F8F-39CF613C4CA3">
+        <application>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="29B48D2B-9712-4F03-A4A1-22AB52D5F8EC">
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="28B9F4A5-7112-4378-9E7C-4054854F8656" tableColumnId="14F00766-92FE-473D-B885-8A8F0EFC8533">
+        <application>
+          <right type="EDIT">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+          <right type="VIEW">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="29B48D2B-9712-4F03-A4A1-22AB52D5F8EC">
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+    </tableColumnRights>
+    <eventRights/>
+  </rights>
+</application>

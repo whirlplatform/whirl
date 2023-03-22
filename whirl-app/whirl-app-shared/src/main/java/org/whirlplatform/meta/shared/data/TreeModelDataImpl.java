@@ -7,13 +7,13 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     private String image;
 
-    private boolean check;
+    private boolean isCheck;
 
-    private boolean select;
+    private boolean isSelect;
 
-    private boolean leaf;
+    private boolean isExpand;
 
-    private boolean expand;
+//    private boolean isLeaf;
 
 
     public TreeModelDataImpl() {
@@ -25,48 +25,8 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
     }
 
     @Override
-    public void setParent(String parentId) {
-        this.parent = parentId;
-    }
-
-    @Override
-    public boolean isCheck() {
-        return check;
-    }
-
-    @Override
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
-
-    @Override
-    public boolean isSelect() {
-        return select;
-    }
-
-    @Override
-    public void setSelect(boolean select) {
-        this.select = select;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return leaf;
-    }
-
-    @Override
-    public void setLeaf(boolean leaf) {
-        this.leaf = leaf;
-    }
-
-    @Override
-    public boolean isExpand() {
-        return expand;
-    }
-
-    @Override
-    public void setExpand(boolean state) {
-        this.expand = state;
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     @Override
@@ -79,4 +39,43 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
         this.image = image;
     }
 
+    @Override
+    public boolean isIsCheck() {
+        return isCheck;
+    }
+
+    @Override
+    public void setIsCheck(boolean check) {
+        isCheck = check;
+    }
+
+    @Override
+    public boolean isIsSelect() {
+        return isSelect;
+    }
+
+    @Override
+    public void setIsSelect(boolean select) {
+        isSelect = select;
+    }
+
+//    @Override
+//    public boolean isIsLeaf() {
+//        return isLeaf;
+//    }
+//
+//    @Override
+//    public void setIsLeaf(boolean newLeaf) {
+//        isLeaf = newLeaf;
+//    }
+
+    @Override
+    public boolean isIsExpand() {
+        return isExpand;
+    }
+
+    @Override
+    public void setIsExpand(boolean expand) {
+        isExpand = expand;
+    }
 }
