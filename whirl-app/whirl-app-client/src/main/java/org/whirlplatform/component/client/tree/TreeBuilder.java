@@ -485,17 +485,17 @@ public class TreeBuilder extends ComponentBuilder
         TreeModelData firstChecked = null;
         for (TreeModelData m : list) {
             // Отмечаем чекбокс
-            if (m.isCheck()) {
+            if (m.isIsCheck()) {
                 if (firstChecked == null) {
                     firstChecked = m;
                 }
                 tree.setChecked(m, CheckState.CHECKED);
             }
             // Раскрываем ветку
-            if (m.isExpand() && !tree.isLeaf(m)) {
+            if (m.isIsExpand() && !tree.isLeaf(m)) {
                 tree.setExpanded(m, true);
             }
-            if (m.isSelect()) {
+            if (m.isIsSelect()) {
                 // tree.getSelectionModel().setSelection(Arrays.asList(m));
                 tree.getSelectionModel().select(m, true);
 

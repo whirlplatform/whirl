@@ -58,10 +58,10 @@ public class BasePlainTreeFetcher extends BasePlainListFetcher
 
                 model.setId(selectReader.getString(temp.dbPrimaryKey));
                 model.setLabel(selectReader.getString(temp.labelExpression));
-                model.setExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
-                model.setCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
+                model.setIsExpand(Boolean.parseBoolean(selectReader.getString(temp.expandExpression)));
+                model.setIsCheck(Boolean.parseBoolean(selectReader.getString(temp.checkExpression)));
                 model.setImage(selectReader.getString(temp.imageExpression));
-                model.setSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
+                model.setIsSelect(Boolean.parseBoolean(selectReader.getString(temp.selectExpression)));
 
                 result.add(model);
             }
