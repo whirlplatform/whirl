@@ -1,23 +1,28 @@
 package org.whirlplatform.meta.shared.data;
 
 public interface TreeModelData extends ListModelData {
+    String getParent();
 
-        String getParent();
-        void setParent(String parentId);
-        String getImage();
-        void setImage(String image);
+    void setParent(String parentId);
 
-        boolean isIsCheck();
-        void setIsCheck(boolean check);
+    String getImage();
 
-        boolean isIsSelect();
-        void setIsSelect(boolean select);
+    void setImage(String image);
 
-//        boolean isIsLeaf();
-//        void setIsLeaf(boolean leaf);
+    boolean isIsCheck();
 
-        boolean isIsExpand();
-        void setIsExpand(boolean state);
+    void setIsCheck(boolean check);
+
+    boolean isIsSelect();
+
+    void setIsSelect(boolean select);
+
+    // boolean isIsLeaf();
+    // void setIsLeaf(boolean leaf);
+
+    boolean isIsExpand();
+
+    void setIsExpand(boolean state);
 
 
 }

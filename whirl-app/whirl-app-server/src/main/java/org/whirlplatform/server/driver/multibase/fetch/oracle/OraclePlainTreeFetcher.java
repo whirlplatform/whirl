@@ -2,7 +2,6 @@ package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.LoadData;

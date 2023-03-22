@@ -1,5 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +36,6 @@ import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
-
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public Map<FieldMetadata, TableColumnElement> tableColumns = new HashMap<>();

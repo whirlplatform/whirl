@@ -50,7 +50,10 @@ import org.whirlplatform.meta.shared.LoadData;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.NativeParameter;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.i18n.AppMessage;
 import org.whirlplatform.storage.client.StorageHelper;
 import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
@@ -58,7 +61,8 @@ import org.whirlplatform.storage.client.StorageHelper.StorageWrapper;
 /**
  * Билдеар-родитель для всех компонентов {@link ComboBox}.
  */
-public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>> extends AbstractFieldBuilder
+public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends ComboBox<K>>
+        extends AbstractFieldBuilder
     implements Editable,
     NativeParameter<K>, Parameter<DataValue>, SelectEvent.HasSelectHandlers,
     ChangeEvent.HasChangeHandlers, HasState {
@@ -121,8 +125,11 @@ public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends
         comboBox.setLoadingIndicator(AppMessage.Util.MESSAGE.search());
         return comboBox;
     }
+
     protected abstract K createNewModel();
+
     protected abstract void createStore();
+
     @JsIgnore
     protected void initParamHelper() {
         paramHelper = new ParameterHelper();
@@ -476,7 +483,7 @@ public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends
 
     @JsIgnore
     @Override
-    public void setFieldValue(DataValue value){
+    public void setFieldValue(DataValue value) {
         if (value != null && DataType.LIST.equals(value.getType())) {
             comboBox.setValue((K) value.getListModelData(), true);
         } else {

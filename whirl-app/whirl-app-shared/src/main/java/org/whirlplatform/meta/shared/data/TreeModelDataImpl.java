@@ -13,7 +13,7 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
 
     private boolean isExpand;
 
-//    private boolean isLeaf;
+    //private boolean isLeaf;
 
 
     public TreeModelDataImpl() {
@@ -59,15 +59,15 @@ public class TreeModelDataImpl extends ListModelDataImpl implements TreeModelDat
         isSelect = select;
     }
 
-//    @Override
-//    public boolean isIsLeaf() {
-//        return isLeaf;
-//    }
-//
-//    @Override
-//    public void setIsLeaf(boolean newLeaf) {
-//        isLeaf = newLeaf;
-//    }
+    //    @Override
+    //    public boolean isIsLeaf() {
+    //        return isLeaf;
+    //    }
+    //
+    //    @Override
+    //    public void setIsLeaf(boolean newLeaf) {
+    //        isLeaf = newLeaf;
+    //    }
 
     @Override
     public boolean isIsExpand() {
