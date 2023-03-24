@@ -31,7 +31,8 @@
                 <artifactId>gwt-maven-plugin</artifactId>
                 <inherited>false</inherited>
                 <configuration>
-                    <moduleName/>
+                    <moduleName>org.whirlplatform.app.BlueApplication</moduleName>
+                    <moduleShortName>applicationblue</moduleShortName>
                     <launcherDir>${project.build.directory}/gwt/launcherDir</launcherDir>
                     <codeserverArgs>
                         <arg>-port</arg>
