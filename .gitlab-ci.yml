@@ -68,7 +68,7 @@ Check Tests:
     REVISION: "" # Should be set by the job.
     CHANGELIST: "" # Should be set by the job.
     SHA: "" # Should be set by the job.
-    MAVEN_GOALS: "package"
+    MAVEN_GOALS: "package --activate-profiles full-package"
   script:
     - apt-get update
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
