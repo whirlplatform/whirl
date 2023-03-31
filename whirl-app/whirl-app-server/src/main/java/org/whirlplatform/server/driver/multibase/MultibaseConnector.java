@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import javax.inject.Inject;
+import org.apache.empire.db.DBDatabaseDriver;
 import org.apache.empire.db.DBReader;
 import org.whirlplatform.meta.shared.ApplicationData;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
@@ -56,6 +57,7 @@ import org.whirlplatform.rpc.shared.ExceptionData.ExceptionType;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.ConnectionWrapper;
+import org.whirlplatform.server.db.NamedParamResolver;
 import org.whirlplatform.server.driver.AbstractConnector;
 import org.whirlplatform.server.expimp.CSVExporter;
 import org.whirlplatform.server.expimp.XLSExporter;
@@ -269,10 +271,13 @@ public class MultibaseConnector extends AbstractConnector {
             return new LoadData<>();
         }
 
+        ClassLoadConfig decodedConfig = decode(loadConfig, user);
+
+
         try (ConnectionWrapper conn = aliasConnection(
             ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
-            return conn.getDataSourceDriver().createListFetcher(table).getListData(metadata, table,
-                decode(loadConfig, user));
+
+            return conn.getDataSourceDriver().createListFetcher(table).getListData(metadata, table, decodedConfig);
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());
@@ -392,6 +397,9 @@ public class MultibaseConnector extends AbstractConnector {
 
     public FormModel getForm(String formId, List<DataValue> params, ApplicationUser user)
         throws CustomException {
+
+        params.addAll(initialParams(user));
+
         try (ClientFormWriter writer = new ClientFormWriter(connectionProvider,
             getFormRepresent(formId, params, user), params, user)) {
             writer.write(null);
@@ -442,7 +450,7 @@ public class MultibaseConnector extends AbstractConnector {
         }
 
         for (ComponentElement child : element.getChildren()) {
-            ComponentModel model = componentElementsToModels(child, params,
+            ComponentModel model = componentElementsToModels(child, new ArrayList<>(params.values()),
                 applicationLocale(user.getApplication(), user.getLocaleElement()), user);
             Integer row = (model.getValue(PropertyType.LayoutDataFormRow.getCode()) == null ? 0
                 : model.getValue(PropertyType.LayoutDataFormRow.getCode()).getDouble()
@@ -765,7 +773,7 @@ public class MultibaseConnector extends AbstractConnector {
     // }
     // }
 
-    public ClassLoadConfig decode(ClassLoadConfig config, ApplicationUser user) {
+    private ClassLoadConfig decode(ClassLoadConfig config, ApplicationUser user) {
         if (config.getWhereSql() != null) {
             config.setWhereSql(user.getEncryptor().decrypt(config.getWhereSql()));
         }
@@ -773,6 +781,25 @@ public class MultibaseConnector extends AbstractConnector {
             config.setLabelExpression(user.getEncryptor().decrypt(config.getLabelExpression()));
         }
         return config;
+    }
+
+
+
+    private ClassLoadConfig changeParams(ApplicationUser user, DBDatabaseDriver driver, ClassLoadConfig config,
+                                         List<DataValue> params) {
+
+        if (config.getWhereSql() != null) {
+            config.setWhereSql(applyParams(user, driver, config.getWhereSql(), params));
+        }
+        if (config.getLabelExpression() != null) {
+            config.setLabelExpression(applyParams(user, driver, config.getLabelExpression(), params));
+        }
+        return config;
+    }
+
+    private String applyParams(ApplicationUser user, DBDatabaseDriver driver, String sql, List<DataValue> params) {
+        List<DataValue> paramMap = initialParams(user);
+        return new NamedParamResolver(driver, sql, paramMap).getResultSql();
     }
 
     private void throwException(final String message) throws CustomException {

@@ -2,17 +2,23 @@ package org.whirlplatform.server.driver;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
+import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
@@ -175,5 +181,33 @@ public abstract class AbstractConnector implements Connector {
     @Override
     public AbstractTableElement findTableElement(String tableId, ApplicationUser user) {
         return user.getApplication().findTableElementById(tableId);
+    }
+
+    public List<DataValue> initialParams(ApplicationUser user) {
+        List<DataValue> result = new ArrayList<>();
+
+        DataValue data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_USER);
+        data.setValue(user.getId());
+        result.add(data);
+
+        data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_IP);
+        data.setValue(user.getIp());
+        result.add(data);
+
+        data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_APPLICATION);
+        data.setValue(user.getApplication().getCode());
+        result.add(data);
+
+        data = new DataValueImpl(DataType.LIST);
+        data.setCode(AppConstant.WHIRL_USER_GROUPS);
+        RowListValue list = new RowListValueImpl();
+        list.setRowList(user.getGroups().stream().map(RowValueImpl::new).collect(Collectors.toList()));
+        data.setValue(list);
+        result.add(data);
+
+        return result;
     }
 }

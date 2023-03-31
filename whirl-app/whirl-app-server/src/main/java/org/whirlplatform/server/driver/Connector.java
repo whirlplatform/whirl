@@ -12,7 +12,6 @@ import org.whirlplatform.meta.shared.EventResult;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.FileValue;
 import org.whirlplatform.meta.shared.LoadData;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -129,5 +128,10 @@ public interface Connector {
      * Поиск табличного элемента по id текущем приложении пользователя
      */
     AbstractTableElement findTableElement(String tableId, ApplicationUser user);
+
+    /**
+     * Параметры по умолчанию для замены в SQL запросах.
+     */
+    List<DataValue> initialParams(ApplicationUser user);
 
 }

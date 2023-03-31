@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,15 +56,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     private boolean maxRowsReached = false;
 
     protected FormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                         Collection<DataValue> startParams, ApplicationUser user) {
+                         Map<String, DataValue> startParams, ApplicationUser user) {
         this.connectionProvider = connectionProvider;
         this.form = form;
-        this.startParams = new HashMap<>();
-        for (DataValue v : startParams) {
-            if (v.getCode() != null && !v.getCode().trim().isEmpty()) {
-                this.startParams.put(v.getCode(), v);
-            }
-        }
+        this.startParams = startParams;
         this.user = user;
         decimalFmt.setMaximumFractionDigits(17);
     }
@@ -247,49 +241,6 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         } else {
             return TemplateProcessor.get().replace(source, params);
         }
-    }
-
-    /**
-     * Из исходной карты параметров делает новую, где все ключи приведены к верхнему регистру,
-     * добавлен pfuser, pfip, все ключи, состоящие только из цифр, слева дополнены приставкой PF
-     *
-     * @param paramMap исходная карта параметров
-     * @return новая карта параметров
-     */
-    protected Map<String, DataValue> processStartParams(Map<String, DataValue> paramMap) {
-        Map<String, DataValue> result = new HashMap<String, DataValue>();
-
-        DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER);
-        data.setValue(user.getId());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_IP);
-        data.setValue(user.getIp());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_APPLICATION);
-        data.setValue(user.getApplication().getCode());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER_GROUPS);
-        data.setValue(StringUtils.arrayToString(user.getGroups().toArray(), ";"));
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_FORM_RELOAD);
-        data.setValue(String.valueOf(refresh));
-        result.put(data.getCode(), data);
-
-        for (Entry<String, DataValue> entry : paramMap.entrySet()) {
-            entry.getValue().setCode(entry.getValue().getCode());
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
     }
 
     private void writeTopNonSql() throws IOException {
@@ -533,6 +484,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
     public void setRefresh(boolean refresh) {
         this.refresh = refresh;
+        DataValueImpl data = new DataValueImpl(DataType.BOOLEAN);
+        data.setCode(AppConstant.WHIRL_FORM_RELOAD);
+        data.setValue(refresh);
+        startParams.put(data.getCode(), data);
     }
 
     public abstract void write(OutputStream stream)
