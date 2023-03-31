@@ -7,28 +7,20 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.empire.commons.ObjectUtils;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.whirlplatform.meta.shared.AppConstant;
+import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataType;
-import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
-import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.*;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -213,6 +205,22 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             }
         });
 
+        // 1. Пробегаем по всем событиям
+        for(Map.Entry<String, List<EventMetadata>> event: component.getEvents().entrySet()){
+            for (EventMetadata metadata: event.getValue()){
+                //2. В каждом событии пробегаем по всем параметрам
+                for (EventParameter eventParameter: metadata.getParametersList()){
+                   // 3. Для параметров типа DATAVALUE и COMPONENTCODE
+                    if (eventParameter.getType() == ParameterType.DATAVALUE
+                            || eventParameter.getType() == ParameterType.COMPONENTCODE) {
+                        //когда в params есть значение запроса
+                        if (params.containsKey(eventParameter.getCode()))
+                            //меняем значения параметров из запроса
+                        eventParameter.setComponentCode(params.get(eventParameter.getCode()));
+                    }
+                }
+            }
+        }
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем
         if (component.getType() == ComponentType.FormBuilderType

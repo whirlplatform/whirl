@@ -192,4 +192,20 @@ public class ComponentModel implements Cloneable, Serializable, IsSerializable {
         }
         return newComponent;
     }
+
+    public void setChildren(List<ComponentModel> children) {
+        this.children = children;
+    }
+
+    public Map<String, List<EventMetadata>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Map<String, List<EventMetadata>> events) {
+        this.events = events;
+    }
+
+    public void setContextMenuItems(List<ComponentModel> contextMenuItems) {
+        this.contextMenuItems = contextMenuItems;
+    }
 }
