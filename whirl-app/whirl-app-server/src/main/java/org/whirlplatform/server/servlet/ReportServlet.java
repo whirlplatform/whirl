@@ -244,17 +244,7 @@ public class ReportServlet extends HttpServlet {
          */
 
         DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER);
-        data.setValue(user.getId());
-        result.add(data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_IP);
-        data.setValue(user.getIp());
-        result.add(data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode("WHIRL_REPORT_FORMAT");
+        data.setCode(AppConstant.WHIRL_REPORT_FORMAT);
         data.setValue(report.getFormat());
         result.add(data);
         return result;
