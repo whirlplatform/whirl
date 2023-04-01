@@ -36,7 +36,7 @@ public interface Connector {
     /**
      * Формирует метаданные таблицы базы данных
      */
-    ClassMetadata getClassMetadata(String classId, Map<String, DataValue> params,
+    ClassMetadata getClassMetadata(String classId, List<DataValue> params,
                                    ApplicationUser user);
 
     /**
@@ -132,6 +132,6 @@ public interface Connector {
     /**
      * Параметры по умолчанию для замены в SQL запросах.
      */
-    List<DataValue> initialParams(ApplicationUser user);
+    List<DataValue> appendInitialParams(ApplicationUser user, List<DataValue> params);
 
 }

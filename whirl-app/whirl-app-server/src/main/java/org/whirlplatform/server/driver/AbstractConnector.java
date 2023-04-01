@@ -78,7 +78,7 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
-    protected boolean isEventAvailable(EventElement event, Collection<DataValue> params,
+    protected boolean isEventAvailable(EventElement event, List<DataValue> params,
                                        ApplicationUser user) {
         ApplicationElement application = user.getApplication();
         boolean result = false;
@@ -88,7 +88,7 @@ public abstract class AbstractConnector implements Connector {
                     SrvConstant.DEFAULT_CONNECTION,
                 user)) {
                 ConditionSolver solver =
-                    new EventConditionSolver(event, application, params, user, connection);
+                    new EventConditionSolver(event, application, appendInitialParams(user, params), user, connection);
                 if (solver.allowed()) {
                     result = true;
                 }
@@ -183,13 +183,26 @@ public abstract class AbstractConnector implements Connector {
         return user.getApplication().findTableElementById(tableId);
     }
 
-    public List<DataValue> initialParams(ApplicationUser user) {
+    private List<DataValue> initialParams(ApplicationUser user) {
         List<DataValue> result = new ArrayList<>();
 
-        DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER);
-        data.setValue(user.getId());
-        result.add(data);
+        DataValue data;
+        if (!user.isGuest()) {
+            data = new DataValueImpl(DataType.STRING);
+            data.setCode(AppConstant.WHIRL_USER);
+            data.setValue(user.getId());
+            result.add(data);
+
+            data = new DataValueImpl(DataType.BOOLEAN);
+            data.setCode(AppConstant.WHIRL_USER_GUEST);
+            data.setValue(false);
+            result.add(data);
+        } else {
+            data = new DataValueImpl(DataType.BOOLEAN);
+            data.setCode(AppConstant.WHIRL_USER_GUEST);
+            data.setValue(true);
+            result.add(data);
+        }
 
         data = new DataValueImpl(DataType.STRING);
         data.setCode(AppConstant.WHIRL_IP);
@@ -210,4 +223,14 @@ public abstract class AbstractConnector implements Connector {
 
         return result;
     }
+
+    @Override
+    public List<DataValue> appendInitialParams(ApplicationUser user, List<DataValue> params) {
+        List<DataValue> paramMap = initialParams(user);
+        if (params != null) {
+            paramMap.addAll(params);
+        }
+        return paramMap;
+    }
+
 }

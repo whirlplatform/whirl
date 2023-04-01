@@ -3,6 +3,7 @@ package org.whirlplatform.server.form;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -22,7 +23,7 @@ public class ClientFormWriter extends FormWriter {
     private FormModel finalForm;
 
     public ClientFormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                            Map<String, DataValue> startParams, ApplicationUser user) {
+                            List<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         finalForm = new FormModel(form.getId());
     }

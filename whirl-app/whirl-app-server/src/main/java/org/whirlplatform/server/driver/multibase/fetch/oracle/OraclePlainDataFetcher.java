@@ -3,6 +3,7 @@ package org.whirlplatform.server.driver.multibase.fetch.oracle;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.i18n.shared.DefaultDateTimeFormatInfo;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumnExpr;
@@ -157,7 +158,8 @@ public class OraclePlainDataFetcher extends AbstractPlainDataFetcher
         for (TableColumnElement c : table.getColumns()) {
             String function = c.getFunction();
             if (!StringUtils.isEmpty(function)) {
-                String expr = resolveValue(function, loadConfig.getParameters());
+                String expr = resolveValue(function,
+                    loadConfig.getParameters().values().stream().collect(Collectors.toList()));
                 cmd.select(
                     temp.dbDatabase.getValueExpr(expr, DataType.UNKNOWN).as(c.getColumnName()));
             }

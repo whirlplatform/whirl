@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,6 @@ import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.ExpImpType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.server.driver.Connector;
@@ -89,11 +88,12 @@ public class ExportServlet extends HttpServlet {
         String paramId = request.getParameter("parameters_id");
 
         ClassLoadConfig loadConfig = null;
-        Map<String, DataValue> params = null;
         if (paramId != null) {
             HttpSession session = request.getSession();
             loadConfig = (ClassLoadConfig) session.getAttribute(paramId);
             session.removeAttribute(paramId);
+        } else {
+            loadConfig = new ClassLoadConfig();
         }
 
         _log.info("SERVLET EXPORT: [pfuser, pfrole, classList, isAllRecords] = ["
@@ -113,7 +113,8 @@ public class ExportServlet extends HttpServlet {
         }
         ClassMetadata metadata;
         try {
-            metadata = connector().getClassMetadata(classList, params, user);
+            metadata = connector().getClassMetadata(classList, new ArrayList<>(loadConfig.getParameters().values()),
+                user);
             if (loadConfig != null) {
                 loadConfig.setAll(isAllRecords);
             }

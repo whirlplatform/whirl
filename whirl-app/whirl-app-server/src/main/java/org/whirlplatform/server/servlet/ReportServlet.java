@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -127,7 +126,7 @@ public class ReportServlet extends HttpServlet {
 
     private void writeXLSX(Report report, FormElementWrapper form, ApplicationUser user,
                            HttpServletResponse response,
-                           Collection<DataValue> params)
+                           List<DataValue> params)
         throws IOException, SQLException, ConnectException {
         response.setContentType(
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -146,7 +145,7 @@ public class ReportServlet extends HttpServlet {
 
     private void writeXLS(Report report, FormElementWrapper form, ApplicationUser user,
                           HttpServletResponse response,
-                          Collection<DataValue> params)
+                          List<DataValue> params)
         throws IOException, SQLException, ConnectException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition",
@@ -164,7 +163,7 @@ public class ReportServlet extends HttpServlet {
 
     private void writeHTML(Report report, FormElementWrapper form, ApplicationUser user,
                            HttpServletResponse response,
-                           Collection<DataValue> params)
+                           List<DataValue> params)
         throws IOException, SQLException, ConnectException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
@@ -181,7 +180,7 @@ public class ReportServlet extends HttpServlet {
 
     private void writeCSV(Report report, FormElementWrapper form, ApplicationUser user,
                           HttpServletResponse response,
-                          Collection<DataValue> params)
+                          List<DataValue> params)
         throws IOException, SQLException, ConnectException {
         response.setContentType("text/csv");
         response.setCharacterEncoding("UTF-8");
@@ -255,7 +254,7 @@ public class ReportServlet extends HttpServlet {
         result.add(data);
 
         data = new DataValueImpl(DataType.STRING);
-        data.setCode("REPORT_TYPE");
+        data.setCode("WHIRL_REPORT_FORMAT");
         data.setValue(report.getFormat());
         result.add(data);
         return result;

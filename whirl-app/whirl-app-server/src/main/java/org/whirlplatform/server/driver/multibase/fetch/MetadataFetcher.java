@@ -1,6 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch;
 
-import java.util.Map;
+import java.util.List;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -17,5 +17,5 @@ public interface MetadataFetcher<T extends AbstractTableElement> {
      * @param params - входные параметры
      * @return Метаданные таблицы
      */
-    ClassMetadata getClassMetadata(T table, Map<String, DataValue> params);
+    ClassMetadata getClassMetadata(T table, List<DataValue> params);
 }
