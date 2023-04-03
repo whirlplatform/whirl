@@ -307,7 +307,7 @@ public class MultibaseConnector extends AbstractConnector {
         try (ConnectionWrapper conn = aliasConnection(
             ((DatabaseTableElement) table).getSchema().getDataSource().getAlias(), user)) {
             return conn.getDataSourceDriver().createTableFetcher(table)
-                .getTableData(metadata, table, decodeAndAppendInitParams(decodedConfig, user));
+                .getTableData(metadata, table, decodedConfig);
         } catch (SQLException e) {
             _log.error(e);
             throw new CustomException(e.getMessage());

@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.whirlplatform.meta.shared.AppConstant;
@@ -214,12 +216,10 @@ public abstract class AbstractConnector implements Connector {
         data.setValue(user.getApplication().getCode());
         result.add(data);
 
-        data = new DataValueImpl(DataType.LIST);
-        data.setCode(AppConstant.WHIRL_USER_GROUPS);
         RowListValue list = new RowListValueImpl();
+        list.setCode(AppConstant.WHIRL_USER_GROUPS);
         list.setRowList(user.getGroups().stream().map(RowValueImpl::new).collect(Collectors.toList()));
-        data.setValue(list);
-        result.add(data);
+        result.add(list);
 
         return result;
     }
@@ -230,7 +230,8 @@ public abstract class AbstractConnector implements Connector {
         if (params != null) {
             paramMap.addAll(params);
         }
-        return paramMap;
+        return paramMap.stream().collect(Collectors.collectingAndThen(
+            Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(DataValue::getCode))), ArrayList::new));
     }
 
 }
