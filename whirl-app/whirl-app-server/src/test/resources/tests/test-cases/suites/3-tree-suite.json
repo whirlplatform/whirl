@@ -420,49 +420,6 @@
               "comment": false
             },
             {
-              "name": "dragAndDrop",
-              "target": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "tac",
-                    "value": "(<div/>)"
-                  },
-                  {
-                    "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-B220FA89-841F-4FFF-93D7-E5947BAF8976']/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
-                  },
-                  {
-                    "type": "xpath:position",
-                    "value": "//td[2]/div[1]"
-                  },
-                  {
-                    "type": "css:position",
-                    "value": "css=div.EWFIG3-z-l"
-                  }
-                ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgAhAEyqADADEAggA4AnDD0AWAlpgmt1mAYDMAEQDsMAKIBWAyafKdWw04AbMIAuhxc3ARhkLIANgiR0bIY7ACeiSxgSBlg7NyqYZw8URQgGGDMpRgQeKCQogByEAC2CMxFpVCxECgozAjiAGZoonYwAF4wsaWxGFD0mFgA8kgySMxkAL6Uc3S14BCNLW34uTNzC9gra8yqINtlUDTruFjysbE7UDiv75+PUDw3BCXwq+A0GnuQA"
-              },
-              "value": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "other",
-                    "value": "{\"StartPoint\":{\"X\":6,\"Y\":15},\"Movements\":[{\"TD\":63,\"OX\":1,\"OY\":0}]}"
-                  }
-                ],
-                "tac": ""
-              },
-              "description": "",
-              "pwt": {
-                "pbw": 0,
-                "paw": 0,
-                "prw": 0,
-                "pdw": 0
-              },
-              "comment": false
-            },
-            {
               "name": "mouseDownAt",
               "target": {
                 "usedIndex": 0,

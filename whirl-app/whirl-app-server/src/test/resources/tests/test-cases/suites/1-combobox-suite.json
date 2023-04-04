@@ -252,49 +252,6 @@
               "comment": false
             },
             {
-              "name": "dragAndDrop",
-              "target": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "tac",
-                    "value": "(<div/>)"
-                  },
-                  {
-                    "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-32C4FDF9-D834-478F-A059-A5B53E0E80F3']/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
-                  },
-                  {
-                    "type": "xpath:position",
-                    "value": "//td[2]/div[1]"
-                  },
-                  {
-                    "type": "css:position",
-                    "value": "css=div.EWFIG3-z-l"
-                  }
-                ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBmAEwBhACwAxACLaAnDF0AOZZpiaA7Ce0wAggAYArEfvOAQs+UBRRz5NHbWVhAF0OLm4CcMhZABsEKJjZDHYATySWMCRMsHZuVXDOHmiKEAwwZjKMCDxQSFEAOQgAWwRmYrKoOIgUFGYEcQAzNFFlGAAvGDiyuIwoekwsAHkkGSRmMgBfSnm6OvAIJtb2-DzZ+cXsVfXmVRAd8qgaDdwseTi43agcN4+vp5QPDcULfSr4djzeRtLBgIiiBBgBAJGFgWRpAQACmEcwgnCwShaKFEwgAlEQ0FgsMgGGAWnERA8gA"
-              },
-              "value": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "other",
-                    "value": "{\"StartPoint\":{\"X\":5,\"Y\":10},\"Movements\":[{\"TD\":4,\"OX\":1,\"OY\":-1}]}"
-                  }
-                ],
-                "tac": ""
-              },
-              "description": "",
-              "pwt": {
-                "pbw": 0,
-                "paw": 0,
-                "prw": 0,
-                "pdw": 0
-              },
-              "comment": false
-            },
-            {
               "name": "mouseDownAt",
               "target": {
                 "usedIndex": 0,
