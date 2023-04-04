@@ -4,9 +4,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.apache.empire.db.oracle.DBDatabaseDriverOracle;
+import org.apache.empire.db.postgresql.DBDatabaseDriverPostgreSQL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -56,6 +58,35 @@ public class NamedParamResolverTest {
         values.add(rlv);
         resolver = new NamedParamResolver(driver, "('':value_test2'')", values);
         Assert.assertEquals("Null verification", "(null)",
+            resolver.getResultSql());
+    }
+
+    @Test
+    public void typeCastPostgreSqlTest() {
+        DBDatabaseDriver driver = new DBDatabaseDriverPostgreSQL();
+
+        NamedParamResolver resolver = new NamedParamResolver(driver,
+            "(title::varchar)", Collections.emptyList());
+
+        Assert.assertEquals("(title::varchar)",
+            resolver.getResultSql());
+
+        resolver = new NamedParamResolver(driver,
+            "(title ::varchar)", Collections.emptyList());
+
+        Assert.assertEquals("(title ::varchar)",
+            resolver.getResultSql());
+
+        resolver = new NamedParamResolver(driver,
+            "(title:: varchar)", Collections.emptyList());
+
+        Assert.assertEquals("(title:: varchar)",
+            resolver.getResultSql());
+
+        resolver = new NamedParamResolver(driver,
+            "(:varchar)", Collections.emptyList());
+
+        Assert.assertEquals("(?)",
             resolver.getResultSql());
     }
 
