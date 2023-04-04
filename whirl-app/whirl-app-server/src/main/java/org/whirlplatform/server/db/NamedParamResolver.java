@@ -131,7 +131,7 @@ public class NamedParamResolver {
                 }
             } else if (":".equals(c) && i + 1 < sql.length()
                 && Character.isJavaIdentifierPart(sql.charAt(i + 1))
-                && !(sql.charAt(i + 1) == ':' || (i > 0 && sql.charAt(i - 1) == ':')) // not postgres old style cast with ::
+                && !(sql.charAt(i + 1) == ':' || (i > 0 && sql.charAt(i - 1) == ':')) // not postgres cast with ::
             ) {
                 int j = i + 2;
                 while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))) {
