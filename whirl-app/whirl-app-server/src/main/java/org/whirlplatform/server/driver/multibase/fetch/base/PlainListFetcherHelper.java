@@ -15,8 +15,6 @@ import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 
 public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
-    public DBColumnExpr labelExpression;
-
     public PlainListFetcherHelper(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
     }
@@ -32,7 +30,7 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
-            this.where.add(createContainsForCombobox(this.labelExpression, query));
+            this.where.add(createContainsForCombobox(labelExpression, query));
         }
     }
 }
