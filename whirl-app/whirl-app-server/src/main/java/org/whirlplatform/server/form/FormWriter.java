@@ -72,29 +72,29 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     protected void prepareForm() throws ConnectException, SQLException {
         Sql sql = form.getBeforeSql();
         if (sql != null && sql.getDataSourceAlias() != null
-            && !sql.getDataSourceAlias().isEmpty()) {
+                && !sql.getDataSourceAlias().isEmpty()) {
             try (ConnectionWrapper connection = connectionProvider.getConnection(
-                sql.getDataSourceAlias(), user)) {
+                    sql.getDataSourceAlias(), user)) {
 
                 Map<String, DataValue> params = new HashMap<String, DataValue>();
                 addParams(params, startParams);
 
                 String query =
-                    prepareSql(connection.getDatabaseDriver(), sql.getSql(), startParams);
+                        prepareSql(connection.getDatabaseDriver(), sql.getSql(), startParams);
 
                 ResultSet resultSet =
-                    connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+                        connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 if (resultSet.next()) {
                     Map<String, DataValue> resultValues =
-                        collectResultSetValue(connection.getDatabaseDriver(),
-                            resultSet);
+                            collectResultSetValue(connection.getDatabaseDriver(),
+                                    resultSet);
 
                     addResultPramsWhilePrepare(resultValues, startParams);
                     Map<Integer, RowElementWrapper> rows =
-                        form.getSubRowsInclude(0, form.getRows());
+                            form.getSubRowsInclude(0, form.getRows());
                     for (RowElementWrapper row : rows.values()) {
                         changeRowValues(row,
-                            dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                                dataValuesToString(connection.getDatabaseDriver(), resultValues));
                     }
                 }
             }
@@ -161,10 +161,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         }
 
         Set<String> properties = Optional.ofNullable(ComponentProperties.getReplaceableProperties(component.getType()))
-            .orElse(Collections.emptySet());
+                .orElse(Collections.emptySet());
 
         component.setValue("Type",
-            new DataValueImpl(DataType.STRING, component.getType().toString()));
+                new DataValueImpl(DataType.STRING, component.getType().toString()));
 
         properties.forEach(p -> {
             if (!component.containsValue(p) || !component.isReplaceableProperty(p)) {
@@ -175,7 +175,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
             if (PropertyType.parse(p, component.getType()).getType() == DataType.BOOLEAN) {
                 component.setValue(p,
-                    new DataValueImpl(DataType.BOOLEAN, ObjectUtils.getBoolean(result)));
+                        new DataValueImpl(DataType.BOOLEAN, ObjectUtils.getBoolean(result)));
             } else if (PropertyType.parse(p, component.getType()).getType() == DataType.DATE) {
                 Date date = null;
                 if (!StringUtils.isEmpty(result)) {
@@ -204,19 +204,34 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 component.setValue(p, new DataValueImpl(DataType.STRING, result));
             }
         });
-
+        String r = null;
+        String c = null;
         // 1. Пробегаем по всем событиям
-        for(Map.Entry<String, List<EventMetadata>> event: component.getEvents().entrySet()){
-            for (EventMetadata metadata: event.getValue()){
+        for (Map.Entry<String, List<EventMetadata>> event : component.getEvents().entrySet()) {
+            for (EventMetadata metadata : event.getValue()) {
                 //2. В каждом событии пробегаем по всем параметрам
-                for (EventParameter eventParameter: metadata.getParametersList()){
-                   // 3. Для параметров типа DATAVALUE и COMPONENTCODE
-                    if (eventParameter.getType() == ParameterType.DATAVALUE
-                            || eventParameter.getType() == ParameterType.COMPONENTCODE) {
+                for (EventParameter eventParameter : metadata.getParametersList()) {
+                    // 3. Для параметров типа DATAVALUE и COMPONENTCODE
+                    if (eventParameter.getType() == ParameterType.DATAVALUE) {
                         //когда в params есть значение запроса
-                        if (params.containsKey(eventParameter.getCode()))
+                        if (eventParameter.getData() != null) {
                             //меняем значения параметров из запроса
-                        eventParameter.setComponentCode(params.get(eventParameter.getCode()));
+                            r = replace(eventParameter.getData().getString(), params);
+                            // c = replace(eventParameter.getCode(), params);
+                            if (!r.isEmpty()) {
+                                eventParameter.setData(new DataValueImpl(DataType.STRING, r)); // добавить код в DataValue
+                                //   eventParameter.setCode(c);
+                            }
+                        }
+                    } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
+                        if (eventParameter.getData() != null)
+                            //меняем значения параметров из запроса
+                            r = replace(eventParameter.getComponentCode(), params);
+                          //  c = replace(eventParameter.getCode(), params);
+                        if (!r.isEmpty()) {
+                            eventParameter.setComponentCode(r);
+                           // eventParameter.setCode(c);
+                        }
                     }
                 }
             }
@@ -224,7 +239,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем
         if (component.getType() == ComponentType.FormBuilderType
-            || component.getType() == ComponentType.ReportType) {
+                || component.getType() == ComponentType.ReportType) {
             return;
         }
         for (ComponentModel child : component.getChildren()) {
@@ -235,7 +250,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     protected String changeParameter(String property, String value, Map<String, String> params) {
         String result = replace(value, params);
         if (!StringUtils.isEmpty(result)
-            && PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
+                && PropertyType.DataSource.getCode().equalsIgnoreCase(property)) {
             for (AbstractTableElement t : user.getApplication().getAvailableTables()) {
                 if (result.trim().equals(t.getCode())) {
                     result = t.getId();
@@ -336,7 +351,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             return;
         }
         Map<Integer, RowElementWrapper> rows =
-            form.getSubRowsExclude(from.getBottom().getRow(), to.getTop().getRow());
+                form.getSubRowsExclude(from.getBottom().getRow(), to.getTop().getRow());
         writeNonSqlRows(rows);
     }
 
@@ -367,7 +382,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
      */
     private void executeSql(Map<String, ConnectionWrapper> connMap, Sql sql,
                             Map<String, DataValue> params)
-        throws SQLException, ConnectException, IOException {
+            throws SQLException, ConnectException, IOException {
         ConnectionWrapper connection = connMap.get(sql.getDataSourceAlias());
 
         boolean closeConnection = false;
@@ -382,16 +397,16 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             QueryMessage msg = new QueryMessage(user, query);
 
             RunningEvent ev =
-                new RunningEvent(RunningEvent.Type.FORMREQUEST, "", query, user.getLogin()) {
+                    new RunningEvent(RunningEvent.Type.FORMREQUEST, "", query, user.getLogin()) {
 
-                    @Override
-                    public void onStop() {
-                        // Есть возможность остановить только для Oracle
-                    }
-                };
+                        @Override
+                        public void onStop() {
+                            // Есть возможность остановить только для Oracle
+                        }
+                    };
             try (Profile p = new ProfileImpl(msg, ev)) {
                 ResultSet resultSet =
-                    connection.getDatabaseDriver().executeQuery(query, null, false, connection);
+                        connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 boolean hasResult = false;
                 while (resultSet.next()) {
                     if (isMaxRowsReached()) {
@@ -399,8 +414,8 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                     }
                     hasResult = true;
                     Map<String, DataValue> resultValues =
-                        collectResultSetValue(connection.getDatabaseDriver(),
-                            resultSet);
+                            collectResultSetValue(connection.getDatabaseDriver(),
+                                    resultSet);
 
                     addParams(resultValues, params);
 
@@ -417,20 +432,20 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                             // подзапроса
                             if (firstSubSql) {
                                 Map<Integer, RowElementWrapper> rows =
-                                    form.getSubRowsInclude(sql.getTop().getRow(), s
-                                        .getTop().getRow() - 1);
+                                        form.getSubRowsInclude(sql.getTop().getRow(), s
+                                                .getTop().getRow() - 1);
                                 output(rows, dataValuesToString(connection.getDatabaseDriver(),
-                                    resultValues));
+                                        resultValues));
                                 firstSubSql = false;
                             }
 
                             // выводим строки между подзапросами
                             if (lastSubSql != null) {
                                 Map<Integer, RowElementWrapper> rows =
-                                    form.getSubRowsExclude(lastSubSql.getBottom()
-                                        .getRow(), s.getTop().getRow());
+                                        form.getSubRowsExclude(lastSubSql.getBottom()
+                                                .getRow(), s.getTop().getRow());
                                 output(rows, dataValuesToString(connection.getDatabaseDriver(),
-                                    resultValues));
+                                        resultValues));
                             }
 
                             // выполняем подзапрос
@@ -442,17 +457,17 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                         // окончания основного запроса
                         if (lastSubSql != null) {
                             Map<Integer, RowElementWrapper> rows =
-                                form.getSubRowsExclude(lastSubSql.getBottom()
-                                    .getRow(), sql.getBottom().getRow() + 1);
+                                    form.getSubRowsExclude(lastSubSql.getBottom()
+                                            .getRow(), sql.getBottom().getRow() + 1);
                             output(rows, dataValuesToString(connection.getDatabaseDriver(),
-                                resultValues));
+                                    resultValues));
                         }
                     } else {
                         Map<Integer, RowElementWrapper> rows =
-                            form.getSubRowsInclude(sql.getTop().getRow(), sql
-                                .getBottom().getRow());
+                                form.getSubRowsInclude(sql.getTop().getRow(), sql
+                                        .getBottom().getRow());
                         output(rows,
-                            dataValuesToString(connection.getDatabaseDriver(), resultValues));
+                                dataValuesToString(connection.getDatabaseDriver(), resultValues));
                     }
 
                     Thread.yield();
@@ -473,7 +488,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
     protected void output(Map<Integer, RowElementWrapper> rows, Map<String, String> resultValues)
-        throws IOException {
+            throws IOException {
         if (rows == null || rows.isEmpty()) {
             return;
         }
@@ -544,7 +559,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
     public abstract void write(OutputStream stream)
-        throws IOException, SQLException, ConnectException;
+            throws IOException, SQLException, ConnectException;
 
     public abstract void close() throws IOException;
 
