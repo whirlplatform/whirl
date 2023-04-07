@@ -169,8 +169,7 @@ public abstract class AbstractComboBoxBuilder<K extends ListModelData, T extends
             }
             return true;
         } else if (name.equalsIgnoreCase(PropertyType.DisplayValue.getCode())) {
-            if (value != null && !Util.isEmptyString(value.getString())
-                && comboBox.getValue() != null) {
+            if (value != null && !Util.isEmptyString(value.getString())) {
                 K model = comboBox.getValue();
                 if (model == null) {
                     model = createNewModel();
