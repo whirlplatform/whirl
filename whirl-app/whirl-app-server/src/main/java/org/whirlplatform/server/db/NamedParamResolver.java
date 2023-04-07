@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -26,36 +25,36 @@ public class NamedParamResolver {
         this(driver, sql, null);
     }
 
-    public NamedParamResolver(DBDatabaseDriver driver, String sql, Map<String, DataValue> params) {
+    public NamedParamResolver(DBDatabaseDriver driver, String sql, List<DataValue> params) {
         this.driver = driver;
         this.stringParams = convertParameters(params);
         parse(template(sql, params));
     }
 
-    private Map<String, String> convertParameters(Map<String, DataValue> params) {
+    private Map<String, String> convertParameters(List<DataValue> params) {
         Map<String, String> result = new HashMap<String, String>();
         if (params != null) {
-            for (Entry<String, DataValue> e : params.entrySet()) {
-                result.put(e.getKey(), escapeParameter(e.getValue()));
+            for (DataValue d : params) {
+                result.put(d.getCode(), escapeParameter(d));
             }
         }
         return result;
     }
 
-    private String template(String sql, Map<String, DataValue> params) {
+    private String template(String sql, List<DataValue> params) {
         Map<String, Object> model = new HashMap<String, Object>();
-        for (Entry<String, DataValue> e : params.entrySet()) {
-            if (e.getValue().getType() == DataType.LIST) {
-                ListModelData m = e.getValue().getListModelData();
-                model.put(e.getKey(), m != null ? m.getId() : null);
-            } else if (e.getValue() instanceof RowListValue
-                && isRowListEmpty((RowListValue) e.getValue())) {
+        for (DataValue d : params) {
+            if (d.getType() == DataType.LIST) {
+                ListModelData m = d.getListModelData();
+                model.put(d.getCode(), m != null ? m.getId() : null);
+            } else if (d instanceof RowListValue
+                && isRowListEmpty((RowListValue) d)) {
                 // Иначе неправильно работает определение null в wheresql(если
                 // checkable,
                 // но есть только selected запись, то подставлялся текст "null")
-                model.put(e.getKey(), null);
+                model.put(d.getCode(), null);
             } else {
-                model.put(e.getKey(), e.getValue() == null ? null : e.getValue().getObject());
+                model.put(d.getCode(), d == null ? null : d.getObject());
             }
         }
         return TemplateProcessor.get().replace(sql, model);
@@ -131,7 +130,9 @@ public class NamedParamResolver {
                     inInClause = true;
                 }
             } else if (":".equals(c) && i + 1 < sql.length()
-                && Character.isJavaIdentifierPart(sql.charAt(i + 1))) {
+                && Character.isJavaIdentifierPart(sql.charAt(i + 1))
+                && !(sql.charAt(i + 1) == ':' || (i > 0 && sql.charAt(i - 1) == ':')) // not postgres cast with ::
+            ) {
                 int j = i + 2;
                 while (j < sql.length() && Character.isJavaIdentifierPart(sql.charAt(j))) {
                     j++;

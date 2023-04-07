@@ -3,7 +3,7 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Map;
+import java.util.List;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.data.DataType;
@@ -29,7 +29,7 @@ public class PlainMetadataFetcher extends AbstractFetcher
     }
 
     @Override
-    public ClassMetadata getClassMetadata(PlainTableElement table, Map<String, DataValue> params) {
+    public ClassMetadata getClassMetadata(PlainTableElement table, List<DataValue> params) {
         if (table == null) {
             final String message = "The PlainTableElement is null";
             _log.warn(message);

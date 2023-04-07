@@ -1,6 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.whirlplatform.meta.shared.AppConstant;
@@ -110,16 +109,11 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
         String query = eventElement.getSource();
         _log.info("QUERY = " + query + "    params = " + params);
         DBFunctionMessage m = new DBFunctionMessage(getUser(), eventElement, params);
-        Map<String, DataValue> paramMap = new HashMap<>();
-        for (DataValue v : params) {
-            if (v.getCode() != null && !v.getCode().trim().isEmpty()) {
-                paramMap.put(v.getCode(), v);
-            }
-        }
-        Map<String, DataValue> resultMap =
-            queryExecutor.executeQuery(eventElement.getSource(), paramMap);
-        DataValue queryResultColumn = resultMap.getOrDefault(AppConstant.WHIRL_RESULT,
-            resultMap.getOrDefault(AppConstant.WHIRL_RESULT.toLowerCase(), null));
+        List<DataValue> queryResult =
+            queryExecutor.executeQuery(eventElement.getSource(), params);
+        // find AppConstant.WHIRL_RESULT column
+        DataValue queryResultColumn = queryResult.stream().filter(
+            v -> AppConstant.WHIRL_RESULT.equalsIgnoreCase(v.getCode())).findFirst().orElse(null);
 
         EventResult result;
         if (queryResultColumn != null) {
@@ -129,12 +123,11 @@ public abstract class AbstractEventExecutor extends AbstractFetcher implements E
             }
             result = parseEventResult(queryResultColumn.getString());
 
-            if (resultMap.remove(AppConstant.WHIRL_RESULT) == null) {
-                resultMap.remove(AppConstant.WHIRL_RESULT.toLowerCase());
-            }
+            // remove AppConstant.WHIRL_RESULT column
+            queryResult.removeIf(v -> AppConstant.WHIRL_RESULT.equalsIgnoreCase(v.getCode()));
         } else {
             result = new JavaEventResult();
-            for (DataValue value : resultMap.values()) {
+            for (DataValue value : queryResult) {
                 EventParameter parameter = new EventParameterImpl(ParameterType.DATAVALUE);
                 parameter.setDataWithCode(value);
                 result.addParameter(parameter);

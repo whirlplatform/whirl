@@ -2,17 +2,25 @@ package org.whirlplatform.server.driver;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
+import org.whirlplatform.meta.shared.AppConstant;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.RowListValue;
+import org.whirlplatform.meta.shared.data.RowListValueImpl;
+import org.whirlplatform.meta.shared.data.RowValueImpl;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.ComponentElement;
 import org.whirlplatform.meta.shared.editor.ContextMenuItemElement;
@@ -72,7 +80,7 @@ public abstract class AbstractConnector implements Connector {
         }
     }
 
-    protected boolean isEventAvailable(EventElement event, Collection<DataValue> params,
+    protected boolean isEventAvailable(EventElement event, List<DataValue> params,
                                        ApplicationUser user) {
         ApplicationElement application = user.getApplication();
         boolean result = false;
@@ -82,7 +90,7 @@ public abstract class AbstractConnector implements Connector {
                     SrvConstant.DEFAULT_CONNECTION,
                 user)) {
                 ConditionSolver solver =
-                    new EventConditionSolver(event, application, params, user, connection);
+                    new EventConditionSolver(event, application, appendInitialParams(user, params), user, connection);
                 if (solver.allowed()) {
                     result = true;
                 }
@@ -176,4 +184,54 @@ public abstract class AbstractConnector implements Connector {
     public AbstractTableElement findTableElement(String tableId, ApplicationUser user) {
         return user.getApplication().findTableElementById(tableId);
     }
+
+    private List<DataValue> initialParams(ApplicationUser user) {
+        List<DataValue> result = new ArrayList<>();
+
+        DataValue data;
+        if (!user.isGuest()) {
+            data = new DataValueImpl(DataType.STRING);
+            data.setCode(AppConstant.WHIRL_USER);
+            data.setValue(user.getId());
+            result.add(data);
+
+            data = new DataValueImpl(DataType.BOOLEAN);
+            data.setCode(AppConstant.WHIRL_USER_GUEST);
+            data.setValue(false);
+            result.add(data);
+        } else {
+            data = new DataValueImpl(DataType.BOOLEAN);
+            data.setCode(AppConstant.WHIRL_USER_GUEST);
+            data.setValue(true);
+            result.add(data);
+        }
+
+        data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_IP);
+        data.setValue(user.getIp());
+        result.add(data);
+
+        data = new DataValueImpl(DataType.STRING);
+        data.setCode(AppConstant.WHIRL_APPLICATION);
+        data.setValue(user.getApplication().getCode());
+        result.add(data);
+
+        RowListValue list = new RowListValueImpl();
+        list.setCode(AppConstant.WHIRL_USER_GROUPS);
+        list.setRowList(user.getGroups().stream().map(RowValueImpl::new).collect(Collectors.toList()));
+        result.add(list);
+
+        return result;
+    }
+
+    @Override
+    public List<DataValue> appendInitialParams(ApplicationUser user, List<DataValue> params) {
+        List<DataValue> paramMap = initialParams(user);
+        if (params != null) {
+            paramMap.addAll(params);
+        }
+        return paramMap.stream().collect(Collectors.collectingAndThen(
+            Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(DataValue::getCode))), ArrayList::new));
+    }
+
 }

@@ -1,6 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
-import java.util.Map;
+import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -15,7 +15,7 @@ public abstract class AbstractDynamicDataFetcher extends AbstractMultiFetcher {
     }
 
     @Override
-    protected String resolveValue(String value, Map<String, DataValue> parameters) {
+    protected String resolveValue(String value, List<DataValue> parameters) {
         if (StringUtils.isEmpty(value)) {
             return "";
         }

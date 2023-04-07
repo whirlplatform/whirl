@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -71,7 +71,7 @@ public class XLSReportWriter extends FormWriter {
 
     public XLSReportWriter(ConnectionProvider connectionProvider, Report report,
                            FormElementWrapper form,
-                           Collection<DataValue> startParams, ApplicationUser user) {
+                           List<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         this.report = report;
     }

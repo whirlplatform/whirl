@@ -238,7 +238,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
         ApplicationUser user = getApplicationUser(token);
         TableConfig config = new TableConfig();
 
-        ClassMetadata metadata = connector().getClassMetadata(classId, params, user);
+        ClassMetadata metadata = connector().getClassMetadata(classId, new ArrayList<>(params.values()), user);
         config.setMetadata(metadata);
         return config;
     }

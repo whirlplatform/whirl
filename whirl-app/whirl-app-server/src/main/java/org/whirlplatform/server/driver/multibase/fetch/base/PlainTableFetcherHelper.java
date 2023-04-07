@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBCmpType;
@@ -20,9 +20,7 @@ import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.FieldMetadata;
 import org.whirlplatform.meta.shared.FilterValue;
-import org.whirlplatform.meta.shared.TreeClassLoadConfig;
 import org.whirlplatform.meta.shared.data.DataValue;
-import org.whirlplatform.meta.shared.data.DataValueImpl;
 import org.whirlplatform.meta.shared.data.ListModelData;
 import org.whirlplatform.meta.shared.editor.GroupElement;
 import org.whirlplatform.meta.shared.editor.RightCollectionElement;
@@ -34,7 +32,6 @@ import org.whirlplatform.meta.shared.editor.db.TableColumnElement;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.AbstractMultiFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
-import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.utils.TypesUtil;
 
 public class PlainTableFetcherHelper extends AbstractMultiFetcher {
@@ -67,7 +64,9 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                            ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
 
-        this.labelExpression = dbDatabase.getValueExpr(loadConfig.getLabelExpression(), DataType.UNKNOWN)
+        String labelExpression = resolveValue(loadConfig.getLabelExpression(),
+            loadConfig.getParameters().values().stream().collect(Collectors.toList()));
+        this.labelExpression = dbDatabase.getValueExpr(labelExpression, DataType.UNKNOWN)
                         .as(LABEL_EXPRESSION_NAME);
 
         String viewName =
@@ -95,8 +94,10 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
 
         // Добавление стилизованных колонок в дереве по новому алгоритму
         if (tree) {
+            String nameExpression = resolveValue(loadConfig.getLabelExpression(),
+                loadConfig.getParameters().values().stream().collect(Collectors.toList()));
             TableColumnElement nameColumn =
-                table.getColumn(((TreeClassLoadConfig) loadConfig).getLabelExpression());
+                table.getColumn(nameExpression);
             if (nameColumn.getConfigColumn() != null) {
                 addConfigColumn(this.dbTable, nameColumn);
             }
@@ -225,10 +226,12 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
         // result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
         // }
 
+        List<DataValue> params = config.getParameters().values().stream().collect(Collectors.toList());
+
         // Добавление whereSql
         if (config.getWhereSql() != null && !config.getWhereSql().isEmpty()) {
             String whereSql =
-                resolveValue(config.getWhereSql(), processParams(config.getParameters()));
+                resolveValue(config.getWhereSql(), params);
             DBColumnExpr expr = db.getValueExpr(whereSql, DataType.UNKNOWN);
             result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
         }
@@ -241,7 +244,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                 String value = (String) right.getCondition().getValue();
                 if (value != null && !value.isEmpty()) {
                     String resolvedValue =
-                        resolveValue(value, processParams(config.getParameters()));
+                        resolveValue(value, params);
                     DBColumnExpr expr =
                         db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
                     result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
@@ -258,7 +261,7 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                     String value = (String) right.getCondition().getValue();
                     if (value != null && !value.isEmpty()) {
                         String resolvedValue =
-                            resolveValue(value, processParams(config.getParameters()));
+                            resolveValue(value, params);
                         DBColumnExpr expr =
                             db.getValueExpr("(" + resolvedValue + ")", DataType.UNKNOWN);
                         result.add(new DBCompareColExpr(expr, DBCmpType.NONE, " "));
@@ -266,40 +269,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                 }
             }
         }
-        return result;
-    }
-
-    protected Map<String, DataValue> processParams(Map<String, DataValue> paramMap) {
-        ApplicationUser user = getUser();
-        Map<String, DataValue> result = new HashMap<String, DataValue>();
-
-        DataValue data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFUSER");
-        data.setValue(user.getId());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFIP");
-        data.setValue(user.getIp());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFROLE");
-        data.setValue(user.getApplication().getId());
-        result.put(data.getCode(), data);
-
-        // for (Entry<String, DataValue> entry : paramMap.entrySet()) {
-        // data = new DataValue(entry.getValue().getType());
-        // data.setCode(entry.getValue().getCode().toUpperCase());
-        // data.setValue(entry.getValue().getValue());
-        // result.put(entry.getKey().toUpperCase(), data);
-        // }
-
-        for (Entry<String, DataValue> entry : paramMap.entrySet()) {
-            entry.getValue().setCode(entry.getValue().getCode());
-            result.put(entry.getKey(), entry.getValue());
-        }
-
         return result;
     }
 

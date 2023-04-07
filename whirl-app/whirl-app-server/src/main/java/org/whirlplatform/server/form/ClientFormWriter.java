@@ -3,7 +3,7 @@ package org.whirlplatform.server.form;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.PropertyType;
@@ -23,16 +23,13 @@ public class ClientFormWriter extends FormWriter {
     private FormModel finalForm;
 
     public ClientFormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                            Collection<DataValue> startParams, ApplicationUser user) {
+                            List<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         finalForm = new FormModel(form.getId());
     }
 
     public void write(OutputStream stream) throws IOException, SQLException, ConnectException {
-        startParams = processStartParams(startParams);
-
         prepareForm();
-
         build();
         finalForm.setHeight(form.getFinalHeight());
         finalForm.setWidth(form.getWidth());

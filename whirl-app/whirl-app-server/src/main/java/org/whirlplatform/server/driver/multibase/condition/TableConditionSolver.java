@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBDatabaseDriver;
@@ -43,7 +42,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
     private ApplicationElement application;
     private ApplicationUser user;
     private ConnectionWrapper connection;
-    private Map<String, DataValue> params;
+    private List<DataValue> params;
     private boolean view = false;
     private boolean insert = false;
     private boolean update = false;
@@ -78,7 +77,7 @@ public class TableConditionSolver extends AbstractConditionSolver {
     private Multimap<TableColumnElement, String> sqlColumnColumnEdit = HashMultimap.create();
 
     public TableConditionSolver(AbstractTableElement table, ApplicationElement application,
-                                Map<String, DataValue> params, ApplicationUser user,
+                                List<DataValue> params, ApplicationUser user,
                                 ConnectionWrapper connection) {
         this.table = table;
         this.application = application;
@@ -556,51 +555,23 @@ public class TableConditionSolver extends AbstractConditionSolver {
         if (value == null) {
             return null;
         }
+
+        List<DataValue> extraParams = new ArrayList<>(params);
+        if (column) {
+            DataValue data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
+            data.setCode("WHIRL_COLUMN_NAME");
+            data.setValue(objectName);
+            extraParams.add(data);
+        } else {
+            DataValue data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
+            data.setCode("WHIRL_TABLE_NAME");
+            data.setValue(objectName);
+            extraParams.add(data);
+        }
+
         NamedParamResolver resolver =
-            new NamedParamResolver(driver, value, processParams(params, objectName, column));
+            new NamedParamResolver(driver, value, extraParams);
         return resolver.getResultSql();
     }
 
-    protected Map<String, DataValue> processParams(Map<String, DataValue> paramMap,
-                                                   String objectName, boolean column) {
-        ApplicationUser user = connection.getUser();
-        Map<String, DataValue> result = new HashMap<String, DataValue>();
-
-        DataValue data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFUSER");
-        data.setValue(user.getId());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFIP");
-        data.setValue(user.getIp());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFROLE");
-        data.setValue(user.getApplication().getId());
-        result.put(data.getCode(), data);
-
-        if (column) {
-            data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-            data.setCode("COLUMN_NAME");
-            data.setValue(objectName);
-            result.put(data.getCode(), data);
-        } else {
-            data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-            data.setCode("TABLE_NAME");
-            data.setValue(objectName);
-            result.put(data.getCode(), data);
-        }
-
-        if (paramMap == null) {
-            return result;
-        }
-        for (Entry<String, DataValue> entry : paramMap.entrySet()) {
-            entry.getValue().setCode(entry.getValue().getCode());
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
 }
