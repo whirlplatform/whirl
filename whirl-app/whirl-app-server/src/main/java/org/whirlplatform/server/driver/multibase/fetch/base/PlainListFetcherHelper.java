@@ -5,7 +5,6 @@ import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 import java.util.stream.Collectors;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
-import org.apache.empire.db.DBColumnExpr;
 import org.whirlplatform.meta.shared.ClassLoadConfig;
 import org.whirlplatform.meta.shared.ClassMetadata;
 import org.whirlplatform.meta.shared.TreeClassLoadConfig;
@@ -30,7 +29,7 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
 
         String query = config.getQuery();
         if (!StringUtils.isEmpty(query) && !(config instanceof TreeClassLoadConfig)) {
-            this.where.add(createContainsForCombobox(labelExpression, query));
+            this.where.add(createContainsForCombobox(this.labelExpression, query));
         }
     }
 }

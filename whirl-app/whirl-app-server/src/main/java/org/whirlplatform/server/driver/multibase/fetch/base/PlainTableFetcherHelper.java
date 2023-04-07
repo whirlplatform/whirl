@@ -52,8 +52,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
     public DBColumnExpr checkExpression;
     public DBColumnExpr selectExpression;
 
-    public DBColumnExpr labelExpression;
-
     public PlainTableFetcherHelper(ConnectionWrapper connectionWrapper,
                                    DataSourceDriver datasourceDriver) {
         super(connectionWrapper, datasourceDriver);
