@@ -9,10 +9,10 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.whirlplatform.meta.shared.AppConstant;
@@ -50,7 +50,7 @@ public class CSVReportWriter extends FormWriter {
     private Set<Integer> rowSpanBaseToDelete = new HashSet<Integer>();
 
     public CSVReportWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                           Collection<DataValue> startParams, ApplicationUser user) {
+                           List<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
     }
 

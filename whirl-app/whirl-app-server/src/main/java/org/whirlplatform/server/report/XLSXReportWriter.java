@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -62,7 +62,7 @@ public class XLSXReportWriter extends FormWriter {
     private CreationHelper helper;
 
     public XLSXReportWriter(ConnectionProvider connectionProvider, Report report,
-                            FormElementWrapper form, Collection<DataValue> startParams,
+                            FormElementWrapper form, List<DataValue> startParams,
                             ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
         this.report = report;
@@ -82,8 +82,8 @@ public class XLSXReportWriter extends FormWriter {
     }
 
     @Override
-    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest,
-                                              Map<String, DataValue> params) {
+    protected void addResultPramsWhilePrepare(List<DataValue> dest,
+                                              List<DataValue> params) {
         addParams(dest, params);
     }
 

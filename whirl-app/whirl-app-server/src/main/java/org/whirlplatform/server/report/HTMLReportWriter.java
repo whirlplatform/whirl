@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
+import java.util.List;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -36,7 +36,7 @@ public class HTMLReportWriter extends FormWriter {
     private boolean print = false;
 
     public HTMLReportWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                            Collection<DataValue> startParams, ApplicationUser user) {
+                            List<DataValue> startParams, ApplicationUser user) {
         super(connectionProvider, form, startParams, user);
     }
 

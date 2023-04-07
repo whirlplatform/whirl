@@ -16,6 +16,12 @@ public class AppConstant {
      * Текущий пользователь.
      */
     public static final String WHIRL_USER = "WHIRL_USER";
+
+    /**
+     * Аттрибут указывающй на то, что пользователь является гостем(не авторизован).
+     */
+    public static final String WHIRL_USER_GUEST = "WHIRL_USER_GUEST";
+
     /**
      * Текущее приложение.
      */
@@ -34,12 +40,17 @@ public class AppConstant {
     /**
      * Признак перезагрузки формы.
      */
-    public static final String WHIRL_FORM_RELOAD = "WHIRL_FORM_RELOAD";
+    public static final String WHIRL_FORM_REFRESH = "WHIRL_FORM_REFRESH";
 
     /**
      * Результат выполнения для события.
      */
     public static final String WHIRL_RESULT = "WHIRL_RESULT";
+
+    /**
+     * Формат отчета.
+     */
+    public static final String WHIRL_REPORT_FORMAT = "WHIRL_REPORT_FORMAT";
 
     /**
      * формат даты

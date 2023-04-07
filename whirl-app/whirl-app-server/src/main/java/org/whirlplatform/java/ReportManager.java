@@ -2,7 +2,6 @@ package org.whirlplatform.java;
 
 import com.google.gwt.core.shared.GwtIncompatible;
 import java.io.OutputStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.whirlplatform.meta.shared.AppConstant;
@@ -115,7 +114,7 @@ public class ReportManager {
     }
 
     private FormWriter createWriter(String format, Report report, FormElementWrapper form,
-                                    Collection<DataValue> params) {
+                                    List<DataValue> params) {
         if (AppConstant.REPORT_FORMAT_XLSX.equalsIgnoreCase(format)) {
             return new XLSXReportWriter(connectionProvider, report, form, params, user);
         } else if (AppConstant.REPORT_FORMAT_XLS.equalsIgnoreCase(format)) {

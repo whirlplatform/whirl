@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang.NotImplementedException;
@@ -48,7 +48,7 @@ import org.whirlplatform.server.monitor.RunningEvent;
 public abstract class FormWriter extends AbstractQueryExecutor {
     protected ConnectionProvider connectionProvider;
     protected FormElementWrapper form;
-    protected Map<String, DataValue> startParams;
+    protected List<DataValue> startParams;
     protected ApplicationUser user;
     protected boolean refresh;
     Logger _log = LoggerFactory.getLogger(FormWriter.class);
@@ -57,15 +57,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     private boolean maxRowsReached = false;
 
     protected FormWriter(ConnectionProvider connectionProvider, FormElementWrapper form,
-                         Collection<DataValue> startParams, ApplicationUser user) {
+                         List<DataValue> startParams, ApplicationUser user) {
         this.connectionProvider = connectionProvider;
         this.form = form;
-        this.startParams = new HashMap<>();
-        for (DataValue v : startParams) {
-            if (v.getCode() != null && !v.getCode().trim().isEmpty()) {
-                this.startParams.put(v.getCode(), v);
-            }
-        }
+        this.startParams = startParams;
         this.user = user;
         decimalFmt.setMaximumFractionDigits(17);
     }
@@ -84,7 +79,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             try (ConnectionWrapper connection = connectionProvider.getConnection(
                 sql.getDataSourceAlias(), user)) {
 
-                Map<String, DataValue> params = new HashMap<String, DataValue>();
+                List<DataValue> params = new ArrayList<>();
                 addParams(params, startParams);
 
                 String query =
@@ -93,7 +88,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 ResultSet resultSet =
                     connection.getDatabaseDriver().executeQuery(query, null, false, connection);
                 if (resultSet.next()) {
-                    Map<String, DataValue> resultValues =
+                    List<DataValue> resultValues =
                         collectResultSetValue(connection.getDatabaseDriver(),
                             resultSet);
 
@@ -110,41 +105,41 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
     private Map<String, String> dataValuesToString(DBDatabaseDriver driver,
-                                                   Map<String, DataValue> data) {
+                                                   List<DataValue> data) {
         Map<String, String> result = new HashMap<String, String>();
         if (data != null) {
-            for (Entry<String, DataValue> e : data.entrySet()) {
-                if (DataType.DATE == e.getValue().getType()) {
-                    if (e.getValue().getDate() == null) {
-                        result.put(e.getKey(), null);
+            for (DataValue d : data) {
+                if (DataType.DATE == d.getType()) {
+                    if (d.getDate() == null) {
+                        result.put(d.getCode(), null);
                     } else {
-                        result.put(e.getKey(), sdf.format(e.getValue().getDate()));
+                        result.put(d.getCode(), sdf.format(d.getDate()));
                     }
-                } else if (DataType.NUMBER == e.getValue().getType()) {
+                } else if (DataType.NUMBER == d.getType()) {
                     // Чтобы числа записывались в нормальном формате, а не в
                     // 0.#E
                     //DecimalFormat formatter = new DecimalFormat("#");
                     //formatter.setMaximumFractionDigits(17);
                     try {
-                        result.put(e.getKey(), decimalFmt.format(e.getValue().getDouble()));
+                        result.put(d.getCode(), decimalFmt.format(d.getDouble()));
                     } catch (IllegalArgumentException | NullPointerException ex) {
-                        result.put(e.getKey(), StringUtils.toString(e.getValue().getDouble(), ""));
+                        result.put(d.getCode(), StringUtils.toString(d.getDouble(), ""));
                     }
                 } else {
-                    result.put(e.getKey(), StringUtils.toString(e.getValue().getObject(), ""));
+                    result.put(d.getCode(), StringUtils.toString(d.getObject(), ""));
                 }
             }
         }
         return result;
     }
 
-    protected void addResultPramsWhilePrepare(Map<String, DataValue> dest,
-                                              Map<String, DataValue> params) {
+    protected void addResultPramsWhilePrepare(List<DataValue> dest,
+                                              List<DataValue> params) {
 
     }
 
-    protected void addParams(Map<String, DataValue> dest, Map<String, DataValue> params) {
-        dest.putAll(params);
+    protected void addParams(List<DataValue> dest, List<DataValue> params) {
+        dest.addAll(params);
     }
 
     protected abstract int nextRow();
@@ -249,49 +244,6 @@ public abstract class FormWriter extends AbstractQueryExecutor {
         }
     }
 
-    /**
-     * Из исходной карты параметров делает новую, где все ключи приведены к верхнему регистру,
-     * добавлен pfuser, pfip, все ключи, состоящие только из цифр, слева дополнены приставкой PF
-     *
-     * @param paramMap исходная карта параметров
-     * @return новая карта параметров
-     */
-    protected Map<String, DataValue> processStartParams(Map<String, DataValue> paramMap) {
-        Map<String, DataValue> result = new HashMap<String, DataValue>();
-
-        DataValue data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER);
-        data.setValue(user.getId());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_IP);
-        data.setValue(user.getIp());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_APPLICATION);
-        data.setValue(user.getApplication().getCode());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_USER_GROUPS);
-        data.setValue(StringUtils.arrayToString(user.getGroups().toArray(), ";"));
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(DataType.STRING);
-        data.setCode(AppConstant.WHIRL_FORM_RELOAD);
-        data.setValue(String.valueOf(refresh));
-        result.put(data.getCode(), data);
-
-        for (Entry<String, DataValue> entry : paramMap.entrySet()) {
-            entry.getValue().setCode(entry.getValue().getCode());
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
-
     private void writeTopNonSql() throws IOException {
         Map<Integer, RowElementWrapper> rows = form.getTopNonSql();
         writeNonSqlRows(rows);
@@ -358,7 +310,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
      * @throws IOException
      */
     private void executeSql(Map<String, ConnectionWrapper> connMap, Sql sql,
-                            Map<String, DataValue> params)
+                            List<DataValue> params)
         throws SQLException, ConnectException, IOException {
         ConnectionWrapper connection = connMap.get(sql.getDataSourceAlias());
 
@@ -390,7 +342,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                         break;
                     }
                     hasResult = true;
-                    Map<String, DataValue> resultValues =
+                    List<DataValue> resultValues =
                         collectResultSetValue(connection.getDatabaseDriver(),
                             resultSet);
 
@@ -519,7 +471,7 @@ public abstract class FormWriter extends AbstractQueryExecutor {
     }
 
     @Override
-    public Map<String, DataValue> executeQuery(String sql, Map<String, DataValue> params) {
+    public List<DataValue> executeQuery(String sql, List<DataValue> params) {
         throw new NotImplementedException("executeQuery not implemented for " + getClass());
     }
 
@@ -533,6 +485,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
 
     public void setRefresh(boolean refresh) {
         this.refresh = refresh;
+        DataValueImpl data = new DataValueImpl(DataType.BOOLEAN);
+        data.setCode(AppConstant.WHIRL_FORM_REFRESH);
+        data.setValue(refresh);
+        startParams.add(data);
     }
 
     public abstract void write(OutputStream stream)

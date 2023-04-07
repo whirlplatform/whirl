@@ -1,7 +1,7 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import java.sql.ResultSet;
-import java.util.Map;
+import java.util.List;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -25,7 +25,7 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
     }
 
     @Override
-    public Map<String, DataValue> executeQuery(String sql, Map<String, DataValue> params) {
+    public List<DataValue> executeQuery(String sql, List<DataValue> params) {
         String query = prepareSql(connection.getDatabaseDriver(), sql, params);
 
         QueryMessage msg = new QueryMessage(connection.getUser(), query);
@@ -42,7 +42,7 @@ public class BaseQueryExecutor extends AbstractQueryExecutor {
             ResultSet resultSet =
                 connection.getDatabaseDriver().executeQuery(query, null, false, connection);
             if (resultSet.next()) {
-                Map<String, DataValue> resultValues =
+                List<DataValue> resultValues =
                     collectResultSetValue(connection.getDatabaseDriver(),
                         resultSet);
                 if (resultSet.next()) {

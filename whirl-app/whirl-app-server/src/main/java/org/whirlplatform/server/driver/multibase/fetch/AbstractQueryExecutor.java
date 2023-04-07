@@ -3,8 +3,8 @@ package org.whirlplatform.server.driver.multibase.fetch;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
@@ -15,20 +15,21 @@ import org.whirlplatform.server.utils.TypesUtil;
 public abstract class AbstractQueryExecutor implements QueryExecutor {
 
     protected String prepareSql(DBDatabaseDriver driver, String sql,
-                                Map<String, DataValue> params) {
+                                List<DataValue> params) {
         NamedParamResolver changer = new NamedParamResolver(driver, sql, params);
         return changer.getResultSql();
     }
 
-    protected Map<String, DataValue> collectResultSetValue(DBDatabaseDriver driver,
-                                                           ResultSet resultSet)
+    protected List<DataValue> collectResultSetValue(DBDatabaseDriver driver,
+                                                    ResultSet resultSet)
         throws SQLException {
-        Map<String, DataValue> resultValues = new LinkedHashMap<>();
+        List<DataValue> resultValues = new ArrayList<>();
         ResultSetMetaData metaData = resultSet.getMetaData();
         for (int i = 1; i <= metaData.getColumnCount(); i++) {
             String column = metaData.getColumnLabel(i);
             DataValue value = getResultSetValue(driver, resultSet, i);
-            resultValues.put(column, value);
+            value.setCode(column);
+            resultValues.add(value);
         }
         return resultValues;
     }

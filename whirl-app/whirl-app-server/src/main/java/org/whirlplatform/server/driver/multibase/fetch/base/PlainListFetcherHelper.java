@@ -2,6 +2,7 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 
 import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 
+import java.util.stream.Collectors;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumnExpr;
@@ -24,7 +25,9 @@ public class PlainListFetcherHelper extends PlainTableFetcherHelper {
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
 
-        this.labelExpression = dbDatabase.getValueExpr(config.getLabelExpression(), DataType.UNKNOWN)
+        String labelExpression = resolveValue(config.getLabelExpression(),
+            config.getParameters().values().stream().collect(Collectors.toList()));
+        this.labelExpression = dbDatabase.getValueExpr(labelExpression, DataType.UNKNOWN)
                 .as(LABEL_EXPRESSION_NAME);
 
         String query = config.getQuery();

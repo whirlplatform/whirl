@@ -4,10 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBDatabaseDriver;
@@ -36,7 +34,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
     private EventElement event;
     private ApplicationElement application;
     private ApplicationUser user;
-    private Collection<DataValue> params;
+    private List<DataValue> params;
     private ConnectionWrapper connection;
     private boolean allowed = false;
 
@@ -44,7 +42,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
     private List<String> sqlColumnEventAccess = new ArrayList<>();
 
     public EventConditionSolver(EventElement event, ApplicationElement application,
-                                Collection<DataValue> params,
+                                List<DataValue> params,
                                 ApplicationUser user, ConnectionWrapper connection) {
         this.connection = connection;
         this.event = event;
@@ -174,44 +172,16 @@ public class EventConditionSolver extends AbstractConditionSolver {
         if (value == null) {
             return null;
         }
-        NamedParamResolver resolver =
-            new NamedParamResolver(driver, value, processParams(params, objectName));
-        return resolver.getResultSql();
-    }
 
-    protected Map<String, DataValue> processParams(Collection<DataValue> paramMap,
-                                                   String eventCode) {
-        ApplicationUser user = connection.getUser();
-        Map<String, DataValue> result = new HashMap<String, DataValue>();
-
+        List<DataValue> extraParams = new ArrayList<>(params);
         DataValue data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFUSER");
-        data.setValue(user.getId());
-        result.put(data.getCode(), data);
+        data.setCode("WHIRL_EVENT_CODE");
+        data.setValue(objectName);
+        extraParams.add(data);
 
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFIP");
-        data.setValue(user.getIp());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("PFROLE");
-        data.setValue(user.getApplication().getId());
-        result.put(data.getCode(), data);
-
-        data = new DataValueImpl(org.whirlplatform.meta.shared.data.DataType.STRING);
-        data.setCode("EVENT_CODE");
-        data.setValue(eventCode);
-        result.put(data.getCode(), data);
-
-        if (paramMap == null) {
-            return result;
-        }
-        for (DataValue entry : paramMap) {
-            result.put(entry.getCode(), entry);
-        }
-
-        return result;
+        NamedParamResolver resolver =
+            new NamedParamResolver(driver, value, extraParams);
+        return resolver.getResultSql();
     }
 
 }

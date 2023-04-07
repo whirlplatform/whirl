@@ -3,6 +3,7 @@ package org.whirlplatform.server.driver.multibase.fetch;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.empire.db.DBCommand;
 import org.apache.empire.db.DBDatabase;
@@ -61,7 +62,7 @@ public class AbstractFetcher {
         return result;
     }
 
-    protected String resolveValue(String value, Map<String, DataValue> parameters) {
+    protected String resolveValue(String value, List<DataValue> parameters) {
         if (value == null) {
             return null;
         }
