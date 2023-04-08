@@ -221,6 +221,12 @@ Deploy:
   image:
     name: docker:20.10.21
     pull_policy: if-not-present
+  parallel:
+    matrix:
+      - ENV: dev
+  environment:
+    name: ${ENV}
+    url: http://${ENV}.whirl-platform.ru:8090/
   before_script:
     - command -v ssh-agent >/dev/null || apk add openssh-client
     - eval $(ssh-agent -s)
