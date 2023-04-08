@@ -11,6 +11,7 @@ import org.whirlplatform.server.driver.multibase.fetch.FileFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.ListFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.TableFetcher;
 import org.whirlplatform.server.driver.multibase.fetch.TreeFetcher;
+import org.whirlplatform.server.driver.multibase.fetch.oracle.BasePlainFileFetcher;
 
 public class BaseDataSourceDriver extends AbstractDataSourceDriver {
 
@@ -41,6 +42,9 @@ public class BaseDataSourceDriver extends AbstractDataSourceDriver {
 
     @Override
     public <T extends AbstractTableElement> FileFetcher<T> createFileFetcher(T table) {
+        if (table instanceof PlainTableElement) {
+            return (FileFetcher<T>) new BasePlainFileFetcher(connection);
+        }
         throw createException("FileFetcher", table, connection);
     }
 

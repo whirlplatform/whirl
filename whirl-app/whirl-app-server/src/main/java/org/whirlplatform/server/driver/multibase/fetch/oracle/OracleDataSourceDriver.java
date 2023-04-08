@@ -43,7 +43,7 @@ public class OracleDataSourceDriver extends AbstractDataSourceDriver {
     @Override
     public <T extends AbstractTableElement> FileFetcher<T> createFileFetcher(T table) {
         if (table instanceof PlainTableElement) {
-            return (FileFetcher<T>) new OraclePlainFileFetcher(connection);
+            return (FileFetcher<T>) new BasePlainFileFetcher(connection);
         }
         throw createException("FileFetcher", table, connection);
     }

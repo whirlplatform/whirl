@@ -84,23 +84,17 @@ public abstract class AbstractConnector implements Connector {
                                        ApplicationUser user) {
         ApplicationElement application = user.getApplication();
         boolean result = false;
-        if (application.hasGroups()) {
             try (ConnectionWrapper connection = aliasConnection(
                 event.getDataSource() != null ? event.getDataSource().getAlias() :
                     SrvConstant.DEFAULT_CONNECTION,
                 user)) {
                 ConditionSolver solver =
                     new EventConditionSolver(event, application, appendInitialParams(user, params), user, connection);
-                if (solver.allowed()) {
-                    result = true;
-                }
+                return solver.allowed();
             } catch (SQLException e) {
                 _log.error(e);
             }
-        } else {
-            result = true;
-        }
-        return result;
+        return false;
     }
 
     protected ComponentModel componentElementsToModels(ComponentElement comp,

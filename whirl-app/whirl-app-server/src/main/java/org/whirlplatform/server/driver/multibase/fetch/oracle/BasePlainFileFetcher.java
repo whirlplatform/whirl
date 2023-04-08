@@ -1,6 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
-import java.sql.Blob;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.empire.db.DBDatabase;
@@ -14,11 +14,11 @@ import org.whirlplatform.server.driver.multibase.fetch.FileFetcher;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 
-public class OraclePlainFileFetcher extends AbstractFetcher
+public class BasePlainFileFetcher extends AbstractFetcher
     implements FileFetcher<PlainTableElement> {
-    private static Logger _log = LoggerFactory.getLogger(OraclePlainFileFetcher.class);
+    private static Logger _log = LoggerFactory.getLogger(BasePlainFileFetcher.class);
 
-    public OraclePlainFileFetcher(final ConnectionWrapper connection) {
+    public BasePlainFileFetcher(final ConnectionWrapper connection) {
         super(connection);
     }
 
@@ -34,13 +34,11 @@ public class OraclePlainFileFetcher extends AbstractFetcher
             final String query = createSelectQuery(table, column, rowId);
             ResultSet rs = dbDatabase.executeQuery(query, null, false, getConnection());
             if (rs.next()) {
-                Blob blob = rs.getBlob(1);
+                InputStream inputStream = rs.getBinaryStream(1);
                 String fname = rs.getString(2);
-                if (blob != null) {
-                    result = new FileValue();
-                    result.setName(fname);
-                    result.setInputStream(blob.getBinaryStream());
-                }
+                result = new FileValue();
+                result.setName(fname);
+                result.setInputStream(inputStream);
             }
             return result;
         } catch (SQLException e) {
@@ -54,12 +52,13 @@ public class OraclePlainFileFetcher extends AbstractFetcher
     }
 
     private String createSelectQuery(PlainTableElement table, String column, String rowId) {
-        final String SELECT = "select %s, %s_FILE from %s where %s=%s";
+        final String SELECT = "select %s, %s from %s where %s=%s";
         final String columnName = table.getColumn(column).getColumnName();
+        final String labelName = table.getColumn(column).getLabelExpression();
         final String fullName = createTableFullName(table);
         final String idColumnName = table.getIdColumn().getColumnName();
         String result =
-            String.format(SELECT, columnName, columnName, fullName, idColumnName, rowId);
+            String.format(SELECT, columnName, labelName, fullName, idColumnName, rowId);
         return result;
     }
 }
