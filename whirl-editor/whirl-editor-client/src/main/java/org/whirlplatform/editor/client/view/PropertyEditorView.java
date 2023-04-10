@@ -281,6 +281,12 @@ public class PropertyEditorView extends AccordionLayoutContainer implements IPro
         public CompositeCell(PropertyType type) {
             propertyType = type;
             toggle = new ToggleWidget(this);
+            toggle.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent event) {
+                    toggle.setReplaceable(changeReplaceable());
+                }
+            });
             createFields();
 
             HelpDecorator.pinTips(this, "propertytype/" + type.getCode().toLowerCase());
