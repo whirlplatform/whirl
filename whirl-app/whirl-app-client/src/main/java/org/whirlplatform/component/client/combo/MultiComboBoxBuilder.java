@@ -54,6 +54,8 @@ public class MultiComboBoxBuilder extends AbstractMultiComboBoxBuilder<ListModel
         Component c = super.create();
         comboBox.getListView().setLoader(store.getLoader());
         return c;
+  
+  
     }
 
     @Override

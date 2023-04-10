@@ -24,14 +24,18 @@ public class DialogManager {
     private static final Map<Dialog, String> dialogs = new HashMap<>();
 
     public static Dialog createDialog(String dialogId, String headingText, String text,
-                                      Pair<Dialog.PredefinedButton, SelectEvent.SelectHandler>... buttons) {
+                                      Pair<PredefinedButton, SelectEvent.SelectHandler>... buttons) {
         Dialog dialog = new Dialog();
         dialog.setModal(true);
         dialog.setHeading(headingText);
         dialog.setWidget(new HTML(text));
         dialog.setHideOnButtonClick(true);
         if (buttons != null) {
-            dialog.setPredefinedButtons(Pair.asArrayOfFirst(buttons, new PredefinedButton[0]));
+            PredefinedButton[] list = new PredefinedButton[buttons.length];
+            for (int i = 0; i < buttons.length; i++) {
+                list[i] = buttons[i].getFirst();
+            }
+            dialog.setPredefinedButtons(list);
             for (Pair<Dialog.PredefinedButton, SelectEvent.SelectHandler> p : buttons) {
                 if (p.getFirst() != null && p.getSecond() != null) {
                     dialog.getButton(p.getFirst()).addSelectHandler(p.getSecond());

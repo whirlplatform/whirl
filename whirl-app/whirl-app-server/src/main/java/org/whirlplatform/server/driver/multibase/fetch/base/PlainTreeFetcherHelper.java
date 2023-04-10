@@ -3,8 +3,10 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import static org.whirlplatform.server.global.SrvConstant.CHECK_EXPRESSION_NAME;
 import static org.whirlplatform.server.global.SrvConstant.EXPAND_EXPRESSION_NAME;
 import static org.whirlplatform.server.global.SrvConstant.IMAGE_EXPRESSION_NAME;
+import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
 import static org.whirlplatform.server.global.SrvConstant.SELECT_EXPRESSION_NAME;
 
+import java.util.stream.Collectors;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.data.DataType;
 import org.apache.empire.db.DBColumn;
@@ -25,6 +27,11 @@ public class PlainTreeFetcherHelper extends PlainTableFetcherHelper {
     @Override
     public void prepare(ClassMetadata metadata, PlainTableElement table, ClassLoadConfig config) {
         super.prepare(metadata, table, config);
+
+        String labelExpression = resolveValue(config.getLabelExpression(),
+            config.getParameters().values().stream().collect(Collectors.toList()));
+        this.labelExpression = dbDatabase.getValueExpr(labelExpression, DataType.UNKNOWN)
+            .as(LABEL_EXPRESSION_NAME);
 
         this.expandExpression = dbDatabase.getValueExpr(config.getExpandExpression(), DataType.UNKNOWN)
                 .as(EXPAND_EXPRESSION_NAME);
