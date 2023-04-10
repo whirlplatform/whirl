@@ -74,36 +74,13 @@ Check Tests:
     - apt-get install -y libfreetype6 libfontconfig1 nodejs
     - mvn ${MAVEN_OPTS} -Drevision=${REVISION} -Dchangelist=${CHANGELIST} -Dsha1=${SHA} ${MAVEN_GOALS} -Dmaven.javadoc.skip=true --batch-mode --show-version
 
-Check Build+Verify:
-  extends: .build
-  rules:
-    # Run on source event = merge request
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-      when: always
-  variables:
-    REVISION: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}
-    CHANGELIST: "-SNAPSHOT"
-    SHA: ${CI_COMMIT_SHORT_SHA}
-    MAVEN_GOALS: "verify -Dsurefire.skip=true -Dmaven.javadoc.skip=true --batch-mode --show-version"
-  allow_failure: false
-  needs:
-    - job: Check Checkstyle
-      artifacts: false
-    - job: Check Tests
-      artifacts: false
-  artifacts:
-    paths:
-      - "**/target/failsafe-reports/**/*"
-    reports:
-      junit:
-        - "**/target/failsafe-reports/*.xml"
-    when: always
-    expire_in: 36 hours
-
 Package:
   extends:
     - .build
   rules:
+    # Run on source event = merge request
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
     # Build on all branches
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
@@ -126,6 +103,9 @@ Package:
 Verify:
   stage: verify
   rules:
+    # Run on source event = merge request
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
     # On all branches
     - if: $CI_COMMIT_BRANCH == 'develop'
       when: always
