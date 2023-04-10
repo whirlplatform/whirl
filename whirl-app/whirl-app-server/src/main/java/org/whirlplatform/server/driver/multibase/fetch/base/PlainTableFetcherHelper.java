@@ -1,7 +1,5 @@
 package org.whirlplatform.server.driver.multibase.fetch.base;
 
-import static org.whirlplatform.server.global.SrvConstant.LABEL_EXPRESSION_NAME;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,11 +62,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                            ClassLoadConfig loadConfig, boolean tree) {
         this.dbDatabase = createAndOpenDatabase(table.getSchema().getSchemaName());
 
-        String labelExpression = resolveValue(loadConfig.getLabelExpression(),
-            loadConfig.getParameters().values().stream().collect(Collectors.toList()));
-        this.labelExpression = dbDatabase.getValueExpr(labelExpression, DataType.UNKNOWN)
-                        .as(LABEL_EXPRESSION_NAME);
-
         String viewName =
             table.getView() != null && !StringUtils.isEmpty(table.getView().getViewName())
                 ? table.getView().getViewName() :
@@ -88,8 +81,6 @@ public class PlainTableFetcherHelper extends AbstractMultiFetcher {
                             .getIdColumnType(table)),
                     c.getSize() == null ? 0 : c.getSize(), c.isNotNull());
             }
-        } else {
-            System.out.println("");
         }
 
         // Добавление стилизованных колонок в дереве по новому алгоритму

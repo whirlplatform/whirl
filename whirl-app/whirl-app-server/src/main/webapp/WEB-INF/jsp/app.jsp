@@ -6,7 +6,6 @@
 <%@page
     import="org.whirlplatform.server.login.impl.GuestAccountAuthenticator"%>
 <%@page import="org.whirlplatform.meta.shared.AppConstant"%>
-<%@page import="org.whirlplatform.server.global.SrvConstant"%>
 <%@page import="org.whirlplatform.rpc.shared.SessionToken"%>
 <%@page import="org.whirlplatform.meta.shared.ApplicationData"%>
 <%@page import="org.whirlplatform.server.login.ApplicationUser"%>
