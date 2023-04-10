@@ -73,6 +73,18 @@ public class EventParameterImpl implements EventParameter {
     }
 
     @Override
+    public EventParameter clone() {
+        EventParameter clone = new EventParameterImpl(type);
+        clone.setCode(code);
+        clone.setData(data);
+        clone.setComponentId(componentId);
+        clone.setStorageCode(storageCode);
+        clone.setComponentCode(componentCode);
+        return clone;
+
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

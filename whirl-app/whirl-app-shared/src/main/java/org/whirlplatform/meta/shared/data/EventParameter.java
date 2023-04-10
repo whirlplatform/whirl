@@ -42,4 +42,6 @@ public interface EventParameter extends Serializable {
     String getCode();
 
     void setCode(String code);
+
+    EventParameter clone();
 }
