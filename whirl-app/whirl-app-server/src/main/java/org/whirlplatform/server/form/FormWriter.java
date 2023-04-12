@@ -230,12 +230,12 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                             }
                         }
                     } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
-                        if (eventParameter.getData() != null) {
+                        if (eventParameter.getComponentCode() != null) {
                             //меняем значения параметров из запроса
                             r = replace(eventParameter.getComponentCode(), params);
-                        }
-                        if (!r.isEmpty()) {
-                            eventParameter.setComponentCode(r);
+                            if (!r.isEmpty()) {
+                                eventParameter.setComponentCode(r);
+                            }
                         }
                     }
                 }
