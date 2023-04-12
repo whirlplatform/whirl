@@ -25,7 +25,13 @@ import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
 import org.whirlplatform.meta.shared.component.PropertyType;
-import org.whirlplatform.meta.shared.data.*;
+import org.whirlplatform.meta.shared.data.DataType;
+import org.whirlplatform.meta.shared.data.DataValue;
+import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.EventParameter;
+import org.whirlplatform.meta.shared.data.ListModelData;
+import org.whirlplatform.meta.shared.data. ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -217,15 +223,16 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                             //меняем значения параметров из запроса
                             r = replace(eventParameter.getData().getString(), params);
                             if (!r.isEmpty()) {
-                                DataValueImpl rv = new DataValueImpl(DataType.STRING,r);
+                                DataValueImpl rv = new DataValueImpl(DataType.STRING, r);
                                 rv.setCode(eventParameter.getCode());
                                 eventParameter.setData(rv);
                             }
                         }
                     } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
-                        if (eventParameter.getData() != null)
+                        if (eventParameter.getData() != null) {
                             //меняем значения параметров из запроса
                             r = replace(eventParameter.getComponentCode(), params);
+                        }
                         if (!r.isEmpty()) {
                             eventParameter.setComponentCode(r);
                         }
