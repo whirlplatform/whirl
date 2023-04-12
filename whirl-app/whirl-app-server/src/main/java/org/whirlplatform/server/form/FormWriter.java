@@ -210,12 +210,13 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 component.setValue(p, new DataValueImpl(DataType.STRING, result));
             }
         });
-        String r = null;
+
         // 1. Пробегаем по всем событиям
         for (Map.Entry<String, List<EventMetadata>> event : component.getEvents().entrySet()) {
             for (EventMetadata eventMetadata : event.getValue()) {
                 //2. В каждом событии пробегаем по всем параметрам
                 for (EventParameter eventParameter : eventMetadata.getParametersList()) {
+                    String r = null;
                     // 3. Для параметров типа DATAVALUE и COMPONENTCODE
                     if (eventParameter.getType() == ParameterType.DATAVALUE) {
                         //когда в params есть значение запроса

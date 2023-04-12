@@ -76,7 +76,7 @@ public class EventParameterImpl implements EventParameter {
     public EventParameter clone() {
         EventParameter clone = new EventParameterImpl(type);
         clone.setCode(code);
-        clone.setData(data);
+        clone.setData(data != null ? data.clone() : null);
         clone.setComponentId(componentId);
         clone.setStorageCode(storageCode);
         clone.setComponentCode(componentCode);
