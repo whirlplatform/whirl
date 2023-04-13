@@ -402,9 +402,9 @@ public class EventHelperImpl implements EventHelper {
                                                     List<DataValue> parameters) {
         try {
             JavaScriptContext context = new JavaScriptContext(source, parameters);
-             javaScriptExecute(function,context);
+            javaScriptExecute(function, context);
             JavaScriptEventResult result = new JavaScriptEventResult();
-                result.setNextEventCode(context.getNextEvent());
+            result.setNextEventCode(context.getNextEvent());
             return result;
         } catch (Exception e) {
             InfoHelper.throwInfo(metadata.getId(), e);

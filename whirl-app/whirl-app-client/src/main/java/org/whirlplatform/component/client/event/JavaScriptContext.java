@@ -14,6 +14,7 @@ public class JavaScriptContext {
     private ComponentBuilder source;
     private List<DataValue> parameters;
     private String nextEventCode;
+
     @JsIgnore
     public JavaScriptContext() {
     }
@@ -55,6 +56,7 @@ public class JavaScriptContext {
     public String getNextEvent() {
         return nextEventCode;
     }
+
     public void setNextEvent(String eventCode) {
         this.nextEventCode = eventCode;
     }

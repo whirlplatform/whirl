@@ -23,16 +23,6 @@ public abstract class JavaScriptContextOverlay {
 
 
     /**
-     * Создать структуру для формирования результата, возвращаемого из  JavaScript-событий формы.
-     *
-     * @return JavaScriptEventResult
-     */
-//    public static JavaScriptEventResult newResult(JavaScriptContext instance) {
-//        return instance.newResult();
-//    }
-
-
-    /**
      * Вернуть параметр контекста с заданным номером
      *
      * @param index
