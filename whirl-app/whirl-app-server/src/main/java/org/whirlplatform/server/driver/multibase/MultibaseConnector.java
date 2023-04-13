@@ -650,8 +650,7 @@ public class MultibaseConnector extends AbstractConnector {
     @Override
     public EventResult executeDBFunction(EventMetadata event, List<DataValue> params,
                                          ApplicationUser user) {
-        List<DataValue> extraParams = appendInitialParams(user, params);
-        return executeDB(event, extraParams, user,
+        return executeDB(event, params, user,
             (eventConnection, holder) ->
                 eventConnection.getDataSourceDriver().createEventExecutor()
                     .executeFunction(holder.getKey(), holder.getValue()));
