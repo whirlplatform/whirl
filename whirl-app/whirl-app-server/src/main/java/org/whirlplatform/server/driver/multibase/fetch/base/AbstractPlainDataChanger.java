@@ -87,6 +87,12 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
             if (c.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 FileValue fileValue = model.get(f);
 
+                // Get rid of the 'fakepath'
+                String fname = fileValue.getName();
+                Integer index = fname.indexOf("fakepath");
+                fname = fname.substring(index+9, fname.length());
+                fileValue.setName(fname);
+
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(),
                     (int) fileValue.getSize());
                 record.setValue(dbTable.getColumn(f), blob);

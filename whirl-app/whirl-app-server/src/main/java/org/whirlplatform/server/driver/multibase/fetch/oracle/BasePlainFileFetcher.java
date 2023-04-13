@@ -35,10 +35,14 @@ public class BasePlainFileFetcher extends AbstractFetcher
             ResultSet rs = dbDatabase.executeQuery(query, null, false, getConnection());
             if (rs.next()) {
                 InputStream inputStream = rs.getBinaryStream(1);
+
                 String fname = rs.getString(2);
+//                Integer index = fname.indexOf("fakepath");
+//                fname = fname.substring(index+9, fname.length());
+
                 result = new FileValue();
-                result.setName(fname);
                 result.setInputStream(inputStream);
+                result.setName(fname);
             }
             return result;
         } catch (SQLException e) {
