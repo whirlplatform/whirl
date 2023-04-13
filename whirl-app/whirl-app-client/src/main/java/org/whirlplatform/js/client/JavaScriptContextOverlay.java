@@ -27,9 +27,9 @@ public abstract class JavaScriptContextOverlay {
      *
      * @return JavaScriptEventResult
      */
-    public static JavaScriptEventResult newResult(JavaScriptContext instance) {
-        return instance.newResult();
-    }
+//    public static JavaScriptEventResult newResult(JavaScriptContext instance) {
+//        return instance.newResult();
+//    }
 
 
     /**

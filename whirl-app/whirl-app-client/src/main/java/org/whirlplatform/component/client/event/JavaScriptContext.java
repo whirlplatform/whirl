@@ -4,6 +4,7 @@ import java.util.List;
 import jsinterop.annotations.JsIgnore;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.component.client.ComponentBuilder;
+import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.DataValue;
 
@@ -12,7 +13,7 @@ public class JavaScriptContext {
 
     private ComponentBuilder source;
     private List<DataValue> parameters;
-
+    private String nextEventCode;
     @JsIgnore
     public JavaScriptContext() {
     }
@@ -51,9 +52,10 @@ public class JavaScriptContext {
         return null;
     }
 
-    @JsIgnore
-    public JavaScriptEventResult newResult() {
-        return new JavaScriptEventResult();
+    public String getNextEvent() {
+        return nextEventCode;
     }
-
+    public void setNextEvent(String eventCode) {
+        this.nextEventCode = eventCode;
+    }
 }
