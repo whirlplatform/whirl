@@ -223,7 +223,7 @@ public abstract class AbstractConnector implements Connector {
             paramMap.addAll(params);
         }
         return paramMap.stream().collect(Collectors.collectingAndThen(
-            Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(DataValue::getCode))), ArrayList::new));
+                Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(DataValue::getCode))), ArrayList::new));
     }
 
 }
