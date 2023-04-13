@@ -20,6 +20,7 @@ import org.apache.empire.commons.ObjectUtils;
 import org.apache.empire.commons.StringUtils;
 import org.apache.empire.db.DBDatabaseDriver;
 import org.whirlplatform.meta.shared.AppConstant;
+import org.whirlplatform.meta.shared.EventMetadata;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 import org.whirlplatform.meta.shared.component.ComponentProperties;
 import org.whirlplatform.meta.shared.component.ComponentType;
@@ -27,8 +28,10 @@ import org.whirlplatform.meta.shared.component.PropertyType;
 import org.whirlplatform.meta.shared.data.DataType;
 import org.whirlplatform.meta.shared.data.DataValue;
 import org.whirlplatform.meta.shared.data.DataValueImpl;
+import org.whirlplatform.meta.shared.data.EventParameter;
 import org.whirlplatform.meta.shared.data.ListModelData;
-import org.whirlplatform.meta.shared.data.ListModelDataImpl;
+import org.whirlplatform.meta.shared.data. ListModelDataImpl;
+import org.whirlplatform.meta.shared.data.ParameterType;
 import org.whirlplatform.meta.shared.editor.CellElement;
 import org.whirlplatform.meta.shared.editor.RowElement;
 import org.whirlplatform.meta.shared.editor.db.AbstractTableElement;
@@ -207,6 +210,34 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 component.setValue(p, new DataValueImpl(DataType.STRING, result));
             }
         });
+
+        // 1. Пробегаем по всем событиям
+        for (Map.Entry<String, List<EventMetadata>> event : component.getEvents().entrySet()) {
+            for (EventMetadata eventMetadata : event.getValue()) {
+                //2. В каждом событии пробегаем по всем параметрам
+                for (EventParameter eventParameter : eventMetadata.getParametersList()) {
+                    String r = null;
+                    // 3. Для параметров типа DATAVALUE и COMPONENTCODE
+                    if (eventParameter.getType() == ParameterType.DATAVALUE) {
+                        //когда в params есть значение запроса
+                        if (eventParameter.getData() != null) {
+                            //меняем значения параметров из запроса
+                            r = replace(eventParameter.getData().getString(), params);
+                            if (!r.isEmpty()) {
+                                DataValueImpl rv = new DataValueImpl(DataType.STRING, r);
+                                rv.setCode(eventParameter.getCode());
+                                eventParameter.setData(rv);
+                            }
+                        }
+                    } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
+                        if (eventParameter.getComponentCode() != null) {
+                            //меняем значения параметров из запроса
+                            eventParameter.setComponentCode(replace(eventParameter.getComponentCode(), params));
+                        }
+                    }
+                }
+            }
+        }
 
         // во всех внутренних компонентах кроме подчиненных компонентов форм
         // тоже меняем

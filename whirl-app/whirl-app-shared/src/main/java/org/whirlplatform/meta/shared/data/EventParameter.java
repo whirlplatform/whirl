@@ -17,7 +17,7 @@ import java.io.Serializable;
     getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE)
-public interface EventParameter extends Serializable {
+public interface EventParameter extends Serializable, Cloneable {
 
     ParameterType getType();
 
@@ -42,4 +42,6 @@ public interface EventParameter extends Serializable {
     String getCode();
 
     void setCode(String code);
+
+    EventParameter clone();
 }

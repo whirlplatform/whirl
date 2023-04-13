@@ -157,7 +157,7 @@ public class EventMetadata implements Serializable, Cloneable {
         newEvent.setCreateNew(createNew);
 
         for (Entry<Integer, EventParameter> v : parameters.entrySet()) {
-            newEvent.parameters.put(v.getKey(), v.getValue());
+            newEvent.parameters.put(v.getKey(), v.getValue().clone());
         }
         return newEvent;
     }
