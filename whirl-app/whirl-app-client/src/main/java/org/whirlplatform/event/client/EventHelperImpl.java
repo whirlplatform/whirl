@@ -413,7 +413,7 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
-    private native JavaScriptEventResult javaScriptExecute(String func, JavaScriptContext context) /*-{
+    private native void javaScriptExecute(String func, JavaScriptContext context) /*-{
         return $wnd[func](context);
     }-*/;
 

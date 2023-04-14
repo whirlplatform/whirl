@@ -2,7 +2,6 @@ package org.whirlplatform.js.client;
 
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.JavaScriptContext;
-import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 public abstract class JavaScriptContextOverlay {
