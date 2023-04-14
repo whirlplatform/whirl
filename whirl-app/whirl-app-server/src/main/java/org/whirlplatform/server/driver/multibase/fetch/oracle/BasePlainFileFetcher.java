@@ -37,9 +37,6 @@ public class BasePlainFileFetcher extends AbstractFetcher
                 InputStream inputStream = rs.getBinaryStream(1);
 
                 String fname = rs.getString(2);
-//                Integer index = fname.indexOf("fakepath");
-//                fname = fname.substring(index+9, fname.length());
-
                 result = new FileValue();
                 result.setInputStream(inputStream);
                 result.setName(fname);

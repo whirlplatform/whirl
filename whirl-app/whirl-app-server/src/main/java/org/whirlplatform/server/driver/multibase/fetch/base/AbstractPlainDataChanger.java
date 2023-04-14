@@ -90,7 +90,7 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
                 // Get rid of the 'fakepath'
                 String fname = fileValue.getName();
                 Integer index = fname.indexOf("fakepath");
-                fname = fname.substring(index+9, fname.length());
+                fname = fname.substring(index + 9, fname.length());
                 fileValue.setName(fname);
 
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(),
