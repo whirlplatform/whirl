@@ -191,6 +191,10 @@ public class MultibaseConnector extends AbstractConnector {
             }
         }
 
+        if (application.isGuest())  {
+            return;
+        }
+
         for (String code : metadataProvider.getUserApplications(user)) {
             if (application.getCode().equals(code)) {
                 return;
