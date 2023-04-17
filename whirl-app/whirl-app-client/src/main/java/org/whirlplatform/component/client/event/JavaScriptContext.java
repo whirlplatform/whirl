@@ -112,10 +112,10 @@ public class JavaScriptContext {
      * @param message текст сообщения
      * @param messageType тип сообщения
      */
-    public void setMessage(String title, String message, String messageType) {
+    public void setMessage(String messageType, String title, String message) {
         this.title = title;
-        this.message = message;
         this.messageType = messageType;
+        this.message = message;
     }
 
     /**
