@@ -9,12 +9,18 @@ import org.whirlplatform.meta.shared.data.DataValue;
 /**
  * Контекст выполняемого события
  */
-@JsType(name = "ContextEvent", namespace = "Whirl")
+@JsType(name = "EventContext", namespace = "Whirl")
 public class JavaScriptContext {
 
     private ComponentBuilder source;
     private List<DataValue> parameters;
     private String nextEventCode;
+
+    private String message;
+
+    private String messageType;
+
+    private String title;
 
     @JsIgnore
     public JavaScriptContext() {
@@ -87,5 +93,46 @@ public class JavaScriptContext {
      */
     public void setNextEvent(String eventCode) {
         this.nextEventCode = eventCode;
+    }
+
+    /**
+     * Возвращает текст сообщения
+     *
+     * @return  massage заголовок сообщения
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Устанавливает заголовок, текст и тип отображаемого пользователю сообщения.
+     * Типы сообщений: 'INFO', 'WARN', 'ERROR'
+     *
+     * @param title заголовок сообщения
+     * @param message текст сообщения
+     * @param messageType тип сообщения
+     */
+    public void setMessage(String title,String message, String messageType) {
+        this.title = title;
+        this.message = message;
+        this.messageType = messageType;
+    }
+
+    /**
+     * Возвращает тип сообщения
+     *
+     * @return  messageType тип сообщения
+     */
+    public String getMessageType() {
+        return messageType;
+    }
+
+    /**
+     * Возвращает заголовок сообщения
+     *
+     * @return  title заголовок сообщения
+     */
+    public String getTitle() {
+        return title;
     }
 }

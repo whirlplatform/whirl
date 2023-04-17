@@ -405,6 +405,9 @@ public class EventHelperImpl implements EventHelper {
             javaScriptExecute(function, context);
             JavaScriptEventResult result = new JavaScriptEventResult();
             result.setNextEventCode(context.getNextEvent());
+            result.setTitle(context.getTitle());
+            result.setMessageType(context.getMessageType());
+            result.setMessage(context.getMessage());
             return result;
         } catch (Exception e) {
             InfoHelper.throwInfo(metadata.getId(), e);
