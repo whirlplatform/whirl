@@ -109,7 +109,10 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
             @Override
             public String getValue() {
                 if (upload.getValue() != null) {
-                    return upload.getValue();
+                    String cutFakepath = upload.getValue();
+                    Integer index = cutFakepath.indexOf("fakepath");
+                    cutFakepath = cutFakepath.substring(index + 9, cutFakepath.length());
+                    return cutFakepath;
                 }
                 return fileTmpValue;
             }
@@ -121,6 +124,7 @@ public class UploadFieldBuilder extends AbstractFieldBuilder implements
                     .setPropertyString("value", value);
             }
         };
+
         return adapter;
     }
 
