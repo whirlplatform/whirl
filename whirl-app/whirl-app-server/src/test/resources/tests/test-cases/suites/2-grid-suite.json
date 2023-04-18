@@ -1,5 +1,5 @@
 {
-  "time": 1681819885528,
+  "time": 1681823815840,
   "version": {
     "sideex": [
       3,
@@ -31,7 +31,7 @@
                 "options": [
                   {
                     "type": "other",
-                    "value": "http://localhost:8090/app?application=grid-test&token=1071904637"
+                    "value": "${HOSTNAME}/app?application=grid-test"
                   }
                 ],
                 "tac": ""
