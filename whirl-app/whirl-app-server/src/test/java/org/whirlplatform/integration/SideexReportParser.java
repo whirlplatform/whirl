@@ -50,6 +50,7 @@ public class SideexReportParser implements AutoCloseable {
         formStringFromFile();
         this.jsonObject = new JSONObject(stringJson);
         formInfoFromJsonArray();
+        getImage();
     }
 
     private File createTempDirectory() throws IOException {
