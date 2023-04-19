@@ -168,6 +168,8 @@ public interface EditorMessage extends Messages {
 
     String application_title();
 
+    String application_guest();
+
     String application_css();
 
     String application_javascript();
