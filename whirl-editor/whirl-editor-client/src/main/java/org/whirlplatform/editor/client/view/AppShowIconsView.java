@@ -57,15 +57,15 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
             }
         });
 
-        view.setCell(new SimpleSafeHtmlCell<String>(new AbstractSafeHtmlRenderer<String>() {
+        view.setCell(new SimpleSafeHtmlCell<>(new AbstractSafeHtmlRenderer<String>() {
             @Override
             public SafeHtml render(String object) {
                 int sep = object.lastIndexOf("/");
                 String html = "<div style='width: 50%; overflow: hidden; white-space: nowrap;'>"
-                    + "<img src=" + object
-                    + " style='width: 5%; display: inline-block; overflow: hidden; "
-                    + "vertical-align: middle;'> " + object.substring(sep + 1) + "</div>"
-                    + "</div>";
+                        + "<img src=" + object
+                        + " style='width: 5%; display: inline-block; overflow: hidden; "
+                        + "vertical-align: middle;'> " + object.substring(sep + 1) + "</div>"
+                        + "</div>";
                 return SafeHtmlUtils.fromSafeConstant(html);
             }
         }));
@@ -77,12 +77,26 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
     }
 
     private static native void copyToClipboard(String text)/*-{
+        if (window.isSecureContext && navigator.clipboard) {
             window.focus();
             navigator.clipboard.writeText(text).then(function () {
                 console.log('Async: Copying to clipboard was successful!');
             }, function (err) {
                 console.error('Async: Could not copy text: ', err);
             });
+        } else {
+            var tA = document.createElement("textarea");
+            tA.value = text;
+            document.body.appendChild(tA);
+            tA.focus();
+            tA.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Unable to copy to clipboard', err);
+            }
+            document.body.removeChild(tA);
+        }
     }-*/;
 
     public void buildUI() {
@@ -104,18 +118,15 @@ public class AppShowIconsView extends Dialog implements AppShowIconsPresenter.IA
         getButton(Dialog.PredefinedButton.OK).setText("Копировать");
         setHideOnButtonClick(true);
         setClosable(false);
-        addDialogHideHandler(new DialogHideEvent.DialogHideHandler() {
-            @Override
-            public void onDialogHide(DialogHideEvent event) {
-                String item = view.getSelectionModel().getSelectedItem();
-                if (item != null) {
-                    if (event.getHideButton() == Dialog.PredefinedButton.OK) {
+        addDialogHideHandler(event -> {
+            String item = view.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                if (event.getHideButton() == PredefinedButton.OK) {
 
-                        AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).enable();
-                        AppShowIconsView.this.getButton(Dialog.PredefinedButton.OK).focus();
-                        copyToClipboard(item);
+                    AppShowIconsView.this.getButton(PredefinedButton.OK).enable();
+                    AppShowIconsView.this.getButton(PredefinedButton.OK).focus();
+                    copyToClipboard(item);
 
-                    }
                 }
             }
         });

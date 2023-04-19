@@ -2,7 +2,6 @@ package org.whirlplatform.js.client;
 
 import org.whirlplatform.component.client.ComponentBuilder;
 import org.whirlplatform.component.client.event.JavaScriptContext;
-import org.whirlplatform.meta.shared.JavaScriptEventResult;
 import org.whirlplatform.meta.shared.data.DataValue;
 
 public abstract class JavaScriptContextOverlay {
@@ -19,16 +18,6 @@ public abstract class JavaScriptContextOverlay {
      */
     public static DataValue[] getParameters(JavaScriptContext instance) {
         return instance.getParameters();
-    }
-
-
-    /**
-     * Создать структуру для формирования результата, возвращаемого из  JavaScript-событий формы.
-     *
-     * @return JavaScriptEventResult
-     */
-    public static JavaScriptEventResult newResult(JavaScriptContext instance) {
-        return instance.newResult();
     }
 
 
