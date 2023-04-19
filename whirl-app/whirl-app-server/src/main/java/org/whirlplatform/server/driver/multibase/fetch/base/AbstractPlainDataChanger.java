@@ -86,7 +86,6 @@ public abstract class AbstractPlainDataChanger extends AbstractMultiFetcher
 
             if (c.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                 FileValue fileValue = model.get(f);
-
                 DBBlobData blob = new DBBlobData((InputStream) fileValue.getInputStream(),
                     (int) fileValue.getSize());
                 record.setValue(dbTable.getColumn(f), blob);
