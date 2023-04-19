@@ -58,7 +58,7 @@ public class FileServlet extends HttpServlet {
 
     public static String encodeFileName(String fileName) throws Exception {
         fileName = fileName.replaceAll(" ", "_");
-        fileName = "UTF-8''" + URLEncoder.encode(fileName, "UTF8");
+        fileName = URLEncoder.encode(fileName, "UTF8");
         return fileName;
     }
 

@@ -52,7 +52,7 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
                 all = true;
             }
         }
-        // ограничеия
+        // ограничения
         DBCommand command = temp.dbDatabase.createCommand();
 
         DBColumnExpr idColumn = temp.dbPrimaryKey;
@@ -63,7 +63,8 @@ public class BasePlainDataFetcher extends AbstractPlainDataFetcher
 
         for (FieldMetadata f : temp.tableColumns.keySet()) {
             if (f.isView()) { // title не visible = права
-                if (f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST) {
+                if (f.getType() == org.whirlplatform.meta.shared.data.DataType.LIST
+                    || f.getType() == org.whirlplatform.meta.shared.data.DataType.FILE) {
                     DBColumnExpr expression =
                         temp.dbDatabase.getValueExpr(f.getLabelExpression(), DataType.UNKNOWN)
                             .as(f.getName() + LABEL_EXPRESSION_NAME);
