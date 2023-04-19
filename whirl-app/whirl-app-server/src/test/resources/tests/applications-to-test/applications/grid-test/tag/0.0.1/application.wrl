@@ -19,10 +19,10 @@
   <components>
     <component id="65F38036-A863-4956-AD12-E653E92131E5" name="BorderContainer" type="BorderContainerBuilder">
       <properties>
-        <property name="Enabled" type="BOOLEAN" replace="false">
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
           <defaultLocale locale="en"/>
           <locales>
-            <value locale="en" type="BOOLEAN">true</value>
+            <value locale="en" type="NUMBER">3.0</value>
           </locales>
         </property>
         <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
@@ -31,13 +31,7 @@
             <value locale="en" type="NUMBER">3.0</value>
           </locales>
         </property>
-        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
-          <defaultLocale locale="en"/>
-          <locales>
-            <value locale="en" type="NUMBER">3.0</value>
-          </locales>
-        </property>
-        <property name="LayoutData:Width" type="NUMBER" replace="false">
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
           <defaultLocale locale="en"/>
           <locales>
             <value locale="en" type="NUMBER">1.0</value>
@@ -49,10 +43,10 @@
             <value locale="en" type="NUMBER">3.0</value>
           </locales>
         </property>
-        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
           <defaultLocale locale="en"/>
           <locales>
-            <value locale="en" type="NUMBER">3.0</value>
+            <value locale="en" type="NUMBER">1.0</value>
           </locales>
         </property>
         <property name="Height" type="NUMBER" replace="false">
@@ -61,13 +55,19 @@
             <value locale="en" type="NUMBER">1.0</value>
           </locales>
         </property>
-        <property name="Width" type="NUMBER" replace="false">
+        <property name="Enabled" type="BOOLEAN" replace="false">
           <defaultLocale locale="en"/>
           <locales>
-            <value locale="en" type="NUMBER">1.0</value>
+            <value locale="en" type="BOOLEAN">true</value>
           </locales>
         </property>
-        <property name="LayoutData:Height" type="NUMBER" replace="false">
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="en"/>
+          <locales>
+            <value locale="en" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
           <defaultLocale locale="en"/>
           <locales>
             <value locale="en" type="NUMBER">1.0</value>
@@ -77,19 +77,13 @@
       <children>
         <component id="2145B90C-C1E5-46C1-8B8F-6D488C6E2F06" name="VerticalContainer 1" type="VerticalContainerBuilder">
           <properties>
-            <property name="Enabled" type="BOOLEAN" replace="false">
-              <defaultLocale locale="en"/>
-              <locales>
-                <value locale="en" type="BOOLEAN">true</value>
-              </locales>
-            </property>
-            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="NUMBER">3.0</value>
               </locales>
             </property>
-            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="NUMBER">3.0</value>
@@ -101,7 +95,7 @@
                 <value locale="en" type="STRING"><![CDATA[Middle]]></value>
               </locales>
             </property>
-            <property name="LayoutData:Width" type="NUMBER" replace="false">
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="NUMBER">1.0</value>
@@ -113,7 +107,25 @@
                 <value locale="en" type="NUMBER">3.0</value>
               </locales>
             </property>
-            <property name="LayoutData:Location" type="STRING" replace="false">
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="en"/>
+              <locales>
+                <value locale="en" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="en"/>
+              <locales>
+                <value locale="en" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="en"/>
+              <locales>
+                <value locale="en" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="STRING"><![CDATA[Center]]></value>
@@ -125,25 +137,13 @@
                 <value locale="en" type="NUMBER">3.0</value>
               </locales>
             </property>
-            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+            <property name="LayoutData:Location" type="STRING" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="STRING"><![CDATA[Center]]></value>
               </locales>
             </property>
-            <property name="Height" type="NUMBER" replace="false">
-              <defaultLocale locale="en"/>
-              <locales>
-                <value locale="en" type="NUMBER">1.0</value>
-              </locales>
-            </property>
             <property name="Width" type="NUMBER" replace="false">
-              <defaultLocale locale="en"/>
-              <locales>
-                <value locale="en" type="NUMBER">1.0</value>
-              </locales>
-            </property>
-            <property name="LayoutData:Height" type="NUMBER" replace="false">
               <defaultLocale locale="en"/>
               <locales>
                 <value locale="en" type="NUMBER">1.0</value>
@@ -153,58 +153,16 @@
           <children>
             <component id="EC523C74-DC72-4669-8844-43D3E7384FC9" name="Test table" type="LabelBuilder">
               <properties>
-                <property name="LayoutData:Index" type="NUMBER" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="NUMBER">0.0</value>
-                  </locales>
-                </property>
-                <property name="Enabled" type="BOOLEAN" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="BOOLEAN">true</value>
-                  </locales>
-                </property>
-                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="NUMBER">3.0</value>
-                  </locales>
-                </property>
                 <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">3.0</value>
                   </locales>
                 </property>
-                <property name="Html" type="STRING" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="STRING"><![CDATA[Test table]]></value>
-                  </locales>
-                </property>
-                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="STRING"><![CDATA[Middle]]></value>
-                  </locales>
-                </property>
-                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">3.0</value>
-                  </locales>
-                </property>
-                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="NUMBER">3.0</value>
-                  </locales>
-                </property>
-                <property name="Code" type="STRING" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="STRING"><![CDATA[Test table]]></value>
                   </locales>
                 </property>
                 <property name="FontSize" type="STRING" replace="false">
@@ -213,20 +171,16 @@
                     <value locale="en" type="STRING"><![CDATA[20px]]></value>
                   </locales>
                 </property>
-                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
-                    <value locale="en" type="STRING"><![CDATA[Center]]></value>
+                    <value locale="en" type="STRING"><![CDATA[Middle]]></value>
                   </locales>
                 </property>
-              </properties>
-            </component>
-            <component id="D4DC145A-D37B-4118-A580-70AF716081E5" name="HorizontalContainer 1" type="HorizontalContainerBuilder">
-              <properties>
-                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
-                    <value locale="en" type="NUMBER">1.0</value>
+                    <value locale="en" type="NUMBER">3.0</value>
                   </locales>
                 </property>
                 <property name="Enabled" type="BOOLEAN" replace="false">
@@ -235,13 +189,47 @@
                     <value locale="en" type="BOOLEAN">true</value>
                   </locales>
                 </property>
-                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="Code" type="STRING" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="STRING"><![CDATA[Test table]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">3.0</value>
                   </locales>
                 </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="STRING"><![CDATA[Test table]]></value>
+                  </locales>
+                </property>
+              </properties>
+            </component>
+            <component id="D4DC145A-D37B-4118-A580-70AF716081E5" name="HorizontalContainer 1" type="HorizontalContainerBuilder">
+              <properties>
                 <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">3.0</value>
@@ -253,7 +241,7 @@
                     <value locale="en" type="STRING"><![CDATA[Middle]]></value>
                   </locales>
                 </property>
-                <property name="LayoutData:Width" type="NUMBER" replace="false">
+                <property name="LayoutData:Height" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">1.0</value>
@@ -265,10 +253,22 @@
                     <value locale="en" type="NUMBER">3.0</value>
                   </locales>
                 </property>
-                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                <property name="LayoutData:Width" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
-                    <value locale="en" type="NUMBER">3.0</value>
+                    <value locale="en" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="Height" type="NUMBER" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="BOOLEAN">true</value>
                   </locales>
                 </property>
                 <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
@@ -277,7 +277,13 @@
                     <value locale="en" type="STRING"><![CDATA[Center]]></value>
                   </locales>
                 </property>
-                <property name="Height" type="NUMBER" replace="false">
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="en"/>
+                  <locales>
+                    <value locale="en" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
                   <defaultLocale locale="en"/>
                   <locales>
                     <value locale="en" type="NUMBER">1.0</value>
@@ -289,41 +295,17 @@
                     <value locale="en" type="NUMBER">1.0</value>
                   </locales>
                 </property>
-                <property name="LayoutData:Height" type="NUMBER" replace="false">
-                  <defaultLocale locale="en"/>
-                  <locales>
-                    <value locale="en" type="NUMBER">1.0</value>
-                  </locales>
-                </property>
               </properties>
               <children>
                 <component id="ED5C957E-4A56-40C2-844A-7102F7F3D23C" name="EditGrid 1" type="EditGridBuilder">
                   <properties>
+                    <property name="ShowFindButtons" type="BOOLEAN" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="BOOLEAN">true</value>
+                      </locales>
+                    </property>
                     <property name="ShowPagingToolbar" type="BOOLEAN" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="BOOLEAN">true</value>
-                      </locales>
-                    </property>
-                    <property name="ShowRefreshButtons" type="BOOLEAN" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="BOOLEAN">true</value>
-                      </locales>
-                    </property>
-                    <property name="ShowExportButtons" type="BOOLEAN" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="BOOLEAN">false</value>
-                      </locales>
-                    </property>
-                    <property name="LayoutData:Index" type="NUMBER" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="NUMBER">0.0</value>
-                      </locales>
-                    </property>
-                    <property name="Enabled" type="BOOLEAN" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
                         <value locale="en" type="BOOLEAN">true</value>
@@ -335,40 +317,28 @@
                         <value locale="en" type="NUMBER">1.0</value>
                       </locales>
                     </property>
+                    <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="STRING"><![CDATA[Center]]></value>
+                      </locales>
+                    </property>
                     <property name="ShowDataButtons" type="BOOLEAN" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
                         <value locale="en" type="BOOLEAN">true</value>
                       </locales>
                     </property>
-                    <property name="ShowFindButtons" type="BOOLEAN" replace="false">
+                    <property name="LayoutData:Index" type="NUMBER" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
-                        <value locale="en" type="BOOLEAN">true</value>
+                        <value locale="en" type="NUMBER">0.0</value>
                       </locales>
                     </property>
-                    <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                    <property name="ShowExportButtons" type="BOOLEAN" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
-                        <value locale="en" type="NUMBER">3.0</value>
-                      </locales>
-                    </property>
-                    <property name="DefaultRowsPerPage" type="NUMBER" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="NUMBER">20.0</value>
-                      </locales>
-                    </property>
-                    <property name="LayoutData:Height" type="NUMBER" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="NUMBER">1.0</value>
-                      </locales>
-                    </property>
-                    <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
-                      <defaultLocale locale="en"/>
-                      <locales>
-                        <value locale="en" type="NUMBER">3.0</value>
+                        <value locale="en" type="BOOLEAN">false</value>
                       </locales>
                     </property>
                     <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
@@ -377,28 +347,46 @@
                         <value locale="en" type="NUMBER">3.0</value>
                       </locales>
                     </property>
+                    <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="NUMBER">3.0</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:Height" type="NUMBER" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="NUMBER">1.0</value>
+                      </locales>
+                    </property>
                     <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
                         <value locale="en" type="STRING"><![CDATA[Middle]]></value>
                       </locales>
                     </property>
-                    <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                    <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
                         <value locale="en" type="NUMBER">3.0</value>
                       </locales>
                     </property>
-                    <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                    <property name="Enabled" type="BOOLEAN" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
-                        <value locale="en" type="STRING"><![CDATA[Center]]></value>
+                        <value locale="en" type="BOOLEAN">true</value>
                       </locales>
                     </property>
-                    <property name="ShowMethodButtons" type="BOOLEAN" replace="false">
+                    <property name="ShowRefreshButtons" type="BOOLEAN" replace="false">
                       <defaultLocale locale="en"/>
                       <locales>
-                        <value locale="en" type="BOOLEAN">false</value>
+                        <value locale="en" type="BOOLEAN">true</value>
+                      </locales>
+                    </property>
+                    <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="NUMBER">3.0</value>
                       </locales>
                     </property>
                     <property name="DataSource" type="LIST" replace="false">
@@ -408,6 +396,18 @@
                           <id>D7856743-0828-45CA-BF5E-41A012F91E35</id>
                           <label><![CDATA[grid_table]]></label>
                         </value>
+                      </locales>
+                    </property>
+                    <property name="DefaultRowsPerPage" type="NUMBER" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="NUMBER">20.0</value>
+                      </locales>
+                    </property>
+                    <property name="ShowMethodButtons" type="BOOLEAN" replace="false">
+                      <defaultLocale locale="en"/>
+                      <locales>
+                        <value locale="en" type="BOOLEAN">false</value>
                       </locales>
                     </property>
                   </properties>
@@ -438,6 +438,35 @@
               <tableName>grid_table</tableName>
               <idColumnId>7F7B73FC-4E87-43DD-8B0A-1526FB4A7084</idColumnId>
               <columns>
+                <column id="7F7B73FC-4E87-43DD-8B0A-1526FB4A7084" name="Id - id">
+                  <index>0</index>
+                  <title replace="false">
+                    <defaultLocale locale="en"/>
+                    <locales>
+                      <value locale="en" type="STRING"><![CDATA[Id]]></value>
+                    </locales>
+                  </title>
+                  <columnName>id</columnName>
+                  <type><![CDATA[NUMBER]]></type>
+                  <width>25</width>
+                  <height>null</height>
+                  <size>null</size>
+                  <scale>null</scale>
+                  <defaultValue><![CDATA[]]></defaultValue>
+                  <notNull>false</notNull>
+                  <listTitle>false</listTitle>
+                  <hidden>false</hidden>
+                  <dataFormat></dataFormat>
+                  <color></color>
+                  <regex><![CDATA[]]></regex>
+                  <regexMessage replace="false">
+                    <defaultLocale locale="en"/>
+                    <locales/>
+                  </regexMessage>
+                  <function><![CDATA[]]></function>
+                  <filter>true</filter>
+                  <defaultOrder>false</defaultOrder>
+                </column>
                 <column id="9836EEE2-2669-4C48-AF45-DCF2247BE0DD" name="String - string">
                   <index>1</index>
                   <title replace="false">
@@ -478,35 +507,6 @@
                   <columnName>number</columnName>
                   <type><![CDATA[NUMBER]]></type>
                   <width>70</width>
-                  <height>null</height>
-                  <size>null</size>
-                  <scale>null</scale>
-                  <defaultValue><![CDATA[]]></defaultValue>
-                  <notNull>false</notNull>
-                  <listTitle>false</listTitle>
-                  <hidden>false</hidden>
-                  <dataFormat></dataFormat>
-                  <color></color>
-                  <regex><![CDATA[]]></regex>
-                  <regexMessage replace="false">
-                    <defaultLocale locale="en"/>
-                    <locales/>
-                  </regexMessage>
-                  <function><![CDATA[]]></function>
-                  <filter>true</filter>
-                  <defaultOrder>false</defaultOrder>
-                </column>
-                <column id="7F7B73FC-4E87-43DD-8B0A-1526FB4A7084" name="Id - id">
-                  <index>0</index>
-                  <title replace="false">
-                    <defaultLocale locale="en"/>
-                    <locales>
-                      <value locale="en" type="STRING"><![CDATA[Id]]></value>
-                    </locales>
-                  </title>
-                  <columnName>id</columnName>
-                  <type><![CDATA[NUMBER]]></type>
-                  <width>25</width>
                   <height>null</height>
                   <size>null</size>
                   <scale>null</scale>
@@ -595,13 +595,8 @@
   </groups>
   <rights>
     <tableRights>
-      <collection id="D58DD9C2-12FB-4864-BCFC-0408CA3A5D72" tableId="D7856743-0828-45CA-BF5E-41A012F91E35">
+      <collection id="45E9F3F0-86E1-48B1-BF3A-2922ABB47577" tableId="D7856743-0828-45CA-BF5E-41A012F91E35">
         <application>
-          <right type="ADD">
-            <condition type="boolean">
-              <value>false</value>
-            </condition>
-          </right>
           <right type="DELETE">
             <condition type="boolean">
               <value>false</value>
@@ -622,14 +617,45 @@
               <value>true</value>
             </condition>
           </right>
+          <right type="ADD">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="ADD">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="RESTRICT">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+            <right type="DELETE">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
     </tableRights>
     <tableColumnRights>
-      <collection id="188B83E8-38B5-4A4E-9E97-90EFE8EFF332" tableColumnId="7F7B73FC-4E87-43DD-8B0A-1526FB4A7084">
+      <collection id="0275E29C-0D00-490E-9AD5-B5D163445405" tableColumnId="E271FE50-59F3-4B96-A14B-B7CA80F05C14">
         <application>
           <right type="EDIT">
             <condition type="boolean">
@@ -643,10 +669,21 @@
           </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
-      <collection id="06CA93E4-5BF0-4C60-A054-8A8C0AF5A863" tableColumnId="E271FE50-59F3-4B96-A14B-B7CA80F05C14">
+      <collection id="C0E2C82F-9C6F-491B-A4D9-D5C67FD4565B" tableColumnId="9836EEE2-2669-4C48-AF45-DCF2247BE0DD">
         <application>
           <right type="EDIT">
             <condition type="boolean">
@@ -660,10 +697,21 @@
           </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
-      <collection id="F4A84EE7-1CBC-474E-AC0D-D85F15AAAD5D" tableColumnId="9836EEE2-2669-4C48-AF45-DCF2247BE0DD">
+      <collection id="25ABC5A5-18F1-4C98-80E8-311E4582162A" tableColumnId="7F7B73FC-4E87-43DD-8B0A-1526FB4A7084">
         <application>
           <right type="EDIT">
             <condition type="boolean">
@@ -677,10 +725,21 @@
           </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
-      <collection id="3078BF48-544B-43C5-ACA8-1016A6A630A3" tableColumnId="CFA80155-7CE5-48B6-BEDB-8278A956151B">
+      <collection id="C306619B-DBA3-4DDF-B04D-E98EE45953D3" tableColumnId="59E74604-A75D-4891-9FB7-E708969C846F">
         <application>
           <right type="EDIT">
             <condition type="boolean">
@@ -694,10 +753,21 @@
           </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
-      <collection id="8E61E98A-12AD-4B89-8B0A-7D73384BFD44" tableColumnId="59E74604-A75D-4891-9FB7-E708969C846F">
+      <collection id="B87DCB0E-DBB0-40F8-8090-B82A7113DFA6" tableColumnId="CFA80155-7CE5-48B6-BEDB-8278A956151B">
         <application>
           <right type="EDIT">
             <condition type="boolean">
@@ -711,7 +781,18 @@
           </right>
         </application>
         <groups>
-          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A"/>
+          <group id="4A3AE8E6-B970-40EF-9858-4EB424B7211A">
+            <right type="VIEW">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+            <right type="EDIT">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
         </groups>
       </collection>
     </tableColumnRights>
