@@ -397,11 +397,17 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
+    // Реализация вызова событий
     private JavaScriptEventResult javaScriptExecute(String function, ComponentBuilder source,
                                                     List<DataValue> parameters) {
         try {
             JavaScriptContext context = new JavaScriptContext(source, parameters);
-            JavaScriptEventResult result = javaScriptExecute(function, context);
+            javaScriptExecute(function, context);
+            JavaScriptEventResult result = new JavaScriptEventResult();
+            result.setNextEventCode(context.getNextEvent());
+            result.setTitle(context.getTitle());
+            result.setMessageType(context.getMessageType());
+            result.setMessage(context.getMessage());
             return result;
         } catch (Exception e) {
             InfoHelper.throwInfo(metadata.getId(), e);
@@ -410,7 +416,7 @@ public class EventHelperImpl implements EventHelper {
         }
     }
 
-    private native JavaScriptEventResult javaScriptExecute(String func, JavaScriptContext context) /*-{
+    private native void javaScriptExecute(String func, JavaScriptContext context) /*-{
         return $wnd[func](context);
     }-*/;
 
