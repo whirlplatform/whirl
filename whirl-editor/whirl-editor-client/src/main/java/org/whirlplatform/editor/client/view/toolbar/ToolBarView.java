@@ -96,8 +96,10 @@ public class ToolBarView extends ToolBar implements IToolBarView {
         js.setIcon(ComponentBundle.INSTANCE.helpJS());
         MenuItem db = new MenuItem("Database API");
         db.setIcon(ComponentBundle.INSTANCE.helpDB());
-        js.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/js/jsdoc/index.html", "_blank", ""));
-        db.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/db/dbdoc/index.html", "_blank", ""));
+        js.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/js/jsdoc/index.html",
+            "_blank", ""));
+        db.addSelectionHandler(event -> com.google.gwt.user.client.Window.open("api/db/dbdoc/index.html",
+            "_blank", ""));
         Menu m = new Menu();
         m.add(js);
         m.add(new SeparatorMenuItem());

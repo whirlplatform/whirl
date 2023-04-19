@@ -86,7 +86,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
         guest = new CheckBox();
         labelGuest = new FieldLabel(guest, EditorMessage.Util.MESSAGE.application_guest());
         container.add(labelGuest,
-        new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
+            new VerticalLayoutData(1, -1, new Margins(10, 10, 0, 10)));
 
         fieldTitle = new PropertyValueField();
         labelTitle = new FieldLabel(fieldTitle, EditorMessage.Util.MESSAGE.application_title());
