@@ -1,5 +1,5 @@
 {
-  "time": 1673509688095,
+  "time": 1681823815840,
   "version": {
     "sideex": [
       3,
@@ -15,14 +15,14 @@
   "suites": [
     {
       "title": "2-grid-suite",
-      "description": "grid-suite",
+      "description": "grid",
       "enableOnPlaying": true,
       "cases": [
         {
           "title": "grid-case",
           "description": "grid-case",
           "enableOnPlaying": true,
-          "networkSpeed": 5.37,
+          "networkSpeed": 5.97,
           "records": [
             {
               "name": "open",
@@ -56,59 +56,28 @@
               "comment": false
             },
             {
-              "name": "waitForElementPresent",
-              "target": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "other",
-                    "value": "css=div.gwt-Label"
-                  }
-                ],
-                "tac": ""
-              },
-              "value": {
-                "usedIndex": 0,
-                "options": [
-                  {
-                    "type": "other",
-                    "value": "10000"
-                  }
-                ],
-                "tac": ""
-              },
-              "description": "",
-              "pwt": {
-                "pbw": 0,
-                "paw": 0,
-                "prw": 0,
-                "pdw": 0
-              },
-              "comment": false
-            },
-            {
-              "name": "assertElement",
+              "name": "clickAt",
               "target": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "tac",
-                    "value": "(//*[@type=\"checkbox\" and @checked=\"\"])"
+                    "value": "(test string 1)"
                   },
                   {
                     "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[5]/div[1]/div[1]"
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
                   },
                   {
                     "type": "xpath:position",
-                    "value": "//td[5]/div[1]/div[1]"
+                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
                   },
                   {
                     "type": "css:position",
-                    "value": "css=div.com-sencha-gxt-theme-base-client-field-CheckBoxDefaultAppearance-CheckBoxStyle-wrap"
+                    "value": "css=td.EWFIG3-B-b.EWFIG3-m-a:nth-child(3) > div.EWFIG3-B-d.EWFIG3-m-b"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3L4JKcnlFCAYYMwNGBB4oJCiAHIQALYIzLENUOkQKCjMUBh9MCgIWFAMEDCiVFKMCAMwsuMIMKNoC1IAZkfp7AcMCFAA1vlUMicQ8umQNDQIEEgQi-tLN3uGCoKDAhUyMHEPxoDXSGCg9EwWAA8kgZEhmGQAL6UeF0DrgCA9fqDfDDSijcaTfDTWbzRbLVbrGCbbYZeT-dJHLBSURIAQ7dIcvkCCAfL4-P6C4X89ig8H-BDpLlYLDIAAEtLmCyWKzWUnEAlECCk0yQnO5vNlq1lcCO4htAlB9AQ8syKAOSpVaoxlDdpJAsPhiOwqPRmJAOMaUBoGNwWFe6VxUBw8cTyageG4nSJvQGzDQWBo8malDBnym1zuDwanBQEAyCHYzDASA5DQEzCoMBeYAwMFMvhGVduTZalDhCLASLDyAjOJzxPz+DGsiVDROGDj1B7Jf7g5GYwmUxm2oZeuZrP2u3mBy5xxgZyVlwB1eBTxebzFn2+vyg-xHB5-SuQEHlXdcJ2DadQzROd8GxUJk2aeCCHVAhiCMYhTCMHCcNwPCcMjIA"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ublswzh4CaIio8NiwyFkAGwRuOJYwWQx2AE9IlKQslPZuX3jkihAMMGYwBBQwFqQ0LFEySgwIPFBIUQA5CABbBGYY2qg0iBQUZgRxADM0UV8YWWkAAiXV9ZhRzdqWgozmWrSMKHpMLAB5JBkkZjIAXx6oOn7wCGGxib4MDsaYINJpDoyKjMWzTWbzRYrNYbLayXZIg5HPqUU7nfC1VKQhDQ-AwbogK43MB3R7PZi+EAfOpfF64LDycGfHBsjlpT5QPDcEKfBr4Ajbcx6ByMoA"
               },
               "value": {
                 "usedIndex": 0,
@@ -130,35 +99,513 @@
               "comment": false
             },
             {
-              "name": "assertText",
+              "name": "clickAt",
               "target": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "tac",
-                    "value": "(test string 1)"
+                    "value": "(Create)"
                   },
                   {
                     "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
                   },
                   {
                     "type": "xpath:position",
-                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[3]/div[1]"
+                    "value": "//tr[1]/td[2]/div[1]"
                   },
                   {
                     "type": "css:position",
-                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell:nth-child(3) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                    "value": "css=div.EWFIG3-s-r"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3KoJKRQgGGDMYAgoYK1IaFiiZJQYEHigkKIAchAAtgjMsXVQ6RAoKMxQGGMwKAhYUAwQMKJUUowIEzAZ8ggws2gbUqId7CfpZ7cCEDQ0CBBIEJvnpwjP7FahUyFwQ6XSnSwyAABMtVutNttdvsYOIBKIEFJlkhzpdrrs7gSBHAruIiYDIM0gZkUKDwZDkHVqZN8HV0hgoPRMFgAPJIGRIZhkAC+vSgdAG4AgI3GLPA7BmYIhWBkVGYphmcwWSxWaw2Wx2ewODCOv0euIh+IBDyed1e70+3ygZttAmZdPSsN1CINyKkaPYGKxGBxF0tWBuhIBJIQZIBrXoLTAwJaHqZycyzFk0AA1rcMPIVRcMOykLgAMQAMyM1erAG46mlOqrmDAeiB2ZywNy+QLmKoQKL6uLBbgsPJwWKcGOJ+kxVA8NxQmLGvgCNCCCKgA"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ubgIwzh4o8NiwyFkAGwRIxNkMdgBPdJYwJG5bRPYi6Ii4mLyquKTUvLBMnIbC2tLKivKE-IgUtNqm3NrC4vzS0Zquht76gayhxNaSsvj0ihAMMGYoJAR6BHWMCDxQSFEAOQgAWwP8GPWoZIgUFGYEcQAzNFFfGBQYJDrZIYKD0TBYADySBkgPwZAAvpQQXQTuAIBdrrdwOx1nAIMlvjh8FcBOxUusUGBsuT8ECQWDsFCYcxbCBERsoDRYVh5MlkkioESeXyBVA8NwQgKtvgwAhKXUEAACBCcLbwoA"
               },
               "value": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "test string 1"
+                    "value": "27,15"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 41
+              },
+              "comment": false
+            },
+            {
+              "name": "dragAndDrop",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-20-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-20-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-20']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-20-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-20-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEwAGYQF0OXbgRVosNKeqUUQGMMwMYIeUJADmAOQgBbBMy07jlFGACeAGyf4A7gKMuAAEAKwAnBE0VADcBl40fuAIVG4gcBDeEskGUN4QKCjMCP4AZmhWAMzwMOwhpRXVtQDWBgLMYpLScvIwLlIJEABGWuypzPIG3hhQ9JhYAPJI40jMZAC+lLN0FuAQtg7JnHAGHj7JgezBIQBs8gDsMfGU+YXF+I2VNXAwa5QzOZgBbLVbrEBbQxQGhrXBYCTebzbKA4OEIpFQqB4bhKZHGfACUIeJBaKz4DZAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"StartPoint\":{\"X\":44,\"Y\":5},\"Movements\":[{\"TD\":8,\"OX\":1,\"OY\":0}]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-20-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-20-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-20']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-20-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-20-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEwAGYQF0OXbgRVosNKeqUUQGMMwMYIeUJADmAOQgBbBMy07jlFGACeAGyf4A7gKMuAAEAKwAnBE0VADcBl40fuAIVG4gcBDeEskGUN4QKCjMCP4AZmhWAMzwMOwhpRXVtQDWBgLMYpLScvIwLlIJEABGWuypzPIG3hhQ9JhYAPJI40jMZAC+lLN0FuAQtg7JnHAGHj7JgezBIQBs8gDsMfGU+YXF+I2VNXAwa5QzOZgBbLVbrEBbQxQGhrXBYCTebzbKA4OEIpFQqB4bhKZHGfACUIeJBaKz4DZAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "2"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-21-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-21-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-21']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-21-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-21-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEwFhAXQ5duBZWiw0paxRRAYwzfRgh5QkAOYA5CAFsEzTdqOU4EADYTH+fSjAAnh4+IADuAoy4AAQArACccTRUANz6gTQhYAhUriBQHhAoKMwIoQBmaJYAzDBgMAxRpRXVtTBQ+gLMYpLScgQwzlJpEABGmuzZzAAM+h4YUPSYWADySBNIzGQAvpTzdObgEDb2IZxwfoHBzOHskVEAbFMA7EmplPmFxfhNlTV1aLN5otsKt1psQDsDFAaBtcFgJB4PLsoDg4QikVD2rhuIpkUZ8P4kJpLNF4XYRsh8FsgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "45,-1"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-21-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-21-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-21']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-21-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-21-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEwFhAXQ5duBZWiw0paxRRAYwzfRgh5QkAOYA5CAFsEzTdqOU4EADYTH+fSjAAnh4+IADuAoy4AAQArACccTRUANz6gTQhYAhUriBQHhAoKMwIoQBmaJYAzDBgMAxRpRXVtTBQ+gLMYpLScgQwzlJpEABGmuzZzAAM+h4YUPSYWADySBNIzGQAvpTzdObgEDb2IZxwfoHBzOHskVEAbFMA7EmplPmFxfhNlTV1aLN5otsKt1psQDsDFAaBtcFgJB4PLsoDg4QikVD2rhuIpkUZ8P4kJpLNF4XYRsh8FsgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "asd"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-22-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-22-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-22']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[3]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-22-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-22-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEyzhAXQ5duBZWiw0paxRRAYwzfRgh5QkAOYA5CAFsEzTdqOUUYAJ4AbR-gDuAoy4AAQArACc4TRUANz6njS+4AhUriBwEF4SSfpQXhAoKMwIfgBmaJYAzPAw7MEl5VU1ANb6AsxiktJysjDOUvEQAEaa7CnMAAz6XhhQ9JhYAPJIY0jMZAC+lLN05uAQNvZJnHD67t5JAexBwQBsEwDs0XGUeQVF+A0V1XAwa5QzOZgBbLVbrEBbAxQGhrXBYCReLzbKA4OEIpFQqB4biKZFGfDwuxDZAhIYYDA+CBYfAbIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "51,4"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-22-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-22-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-22']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[3]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-22-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-22-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEyzhAXQ5duBZWiw0paxRRAYwzfRgh5QkAOYA5CAFsEzTdqOUUYAJ4AbR-gDuAoy4AAQArACc4TRUANz6njS+4AhUriBwEF4SSfpQXhAoKMwIfgBmaJYAzPAw7MEl5VU1ANb6AsxiktJysjDOUvEQAEaa7CnMAAz6XhhQ9JhYAPJIY0jMZAC+lLN05uAQNvZJnHD67t5JAexBwQBsEwDs0XGUeQVF+A0V1XAwa5QzOZgBbLVbrEBbAxQGhrXBYCReLzbKA4OEIpFQqB4biKZFGfDwuxDZAhIYYDA+CBYfAbIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "123"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-23)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-23"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-24']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[4]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-23']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-23"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAEwAWYQF0OXbgRVosNKeqUUQGMMwMYIeUJADmAOQgBbBMy07jlMAE8aT-FAYIoAGsAIwwqAwFmMUlpOQBmA0hgrXYEcPwABgMAGwwoekwsAHkkVKRmMgBfSjy6C3AIWwcfEE44AyhsiBQUZgQAdwAzNCs4mDErHLyC7BKyipBqwygactwsCWzsmqgcXEtGu0dmLuCEbINBjDXqcSkZWQTKTu7e-AHh0fHxKfywQrmyAWSzyUDw3CUO2M+FCGGyCAgWFwAAJ2PQEPhKkA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "4,4"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Save)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAgXQ5deAyACMANgmEswojOwCe0sEm4AmEe3UDOPfoL0iIEqftnylZ1Wa37dwiiAxhmKCIkcYIeUJADmAHIQALYIzLqOUOIQKCjMCADuAGZofgDMMCgwSI7iGFD0mFgA8kjsyMxkAL6U+XQ+4BCBIWH4YOyOcBDiqTj4wWjs7JKOKGAKI-gJg4y4AOwArDRUANy5+YXYpeU5+NW1UDS7WACu4uIHfafnB1B43HwHLviDuGNIaFh+uKfBosi4OQYSQQLC4dj0BC4AAEUQwKDCVSAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "36,0"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 20
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Yes)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[10]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-f.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAgBgC6HLtwBMQzjwISR04VJk9x83otUq5k9ZABGAGwTadGdgE9tSMULDsrGtXN0GjJ848uPbm2QIogMYMymCCh+GBB4oJAA5gByEAC2CMySflB6ECih+AgA7gBmaNEAzDAoMEh+ehhQ9JhYAPJI7MjMZAC+lDV0keAQcYnJ+DZ+cBB6RTj4CWjs7AZ+KGCmC-i5s4y4AOwArDRUANxVNXXYTS2V+B1dUDSXWACueno3U4-PN1B43AI3gfjsDCmDAPJAIcZ6Uy5CBYMBgDAoCCIKAMGHREIAfgABFgMCB2kA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "34,6"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 33,
+                "prw": 0,
+                "pdw": 45
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(asd)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[2]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tbody[2]/tr[2]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=tr.EWFIG3-B-l.EWFIG3-m-d.EWFIG3-T-r:nth-child(2) > td.EWFIG3-B-b.EWFIG3-m-a:nth-child(3) > div.EWFIG3-B-d.EWFIG3-m-b"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ublswzh4CaIio8NiwyFkAGwRuOJYwWQx2AE9IlKRinPZuX3jkihAMMGYIFHZajAg8UEhRADkIAFsEZhjaqDSmlGYEcQAzNFFfGFlpAAIp2fmYPsXalDACjOZatIwoekwsAHkkGSRmMgBfShO6DvAIHv7B-DAWyigENJpNBYGRUZi2EZjFATfBrOYLJayVYzeGbGDtSi7fZfEC1VLA0HMGBkSjHU5gc5XG7MXwgR51KA0W64LDyQFPKA4FlstIcqB4bghDkNfC2ZYEQJ0oA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "14,13"
                   }
                 ],
                 "tac": ""
@@ -179,29 +626,463 @@
                 "options": [
                   {
                     "type": "tac",
-                    "value": "(11.01.2000 0...)"
+                    "value": "(asd)"
                   },
                   {
                     "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[6]/div[1]"
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[2]/td[3]/div[1]"
                   },
                   {
                     "type": "xpath:position",
-                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[6]/div[1]"
+                    "value": "//tbody[2]/tr[2]/td[3]/div[1]"
                   },
                   {
                     "type": "css:position",
-                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell.x-grid-cell-last:nth-child(6) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                    "value": "css=tr.EWFIG3-B-l.EWFIG3-m-d.EWFIG3-T-r:nth-child(2) > td.EWFIG3-B-b.EWFIG3-m-a:nth-child(3) > div.EWFIG3-B-d.EWFIG3-m-b"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3LoJKRQgGGDMBMRGxKZGHR24XR11GBB4oJCiAHIQALYIzLF1UOkQKCjMUBjjMCgIWFAMEDCiVFKMCJMwGfIIMHNom1KiSAKn6ed3AhA0NAgQSBBbF2cIL3YKDAhUylwQ6XSaCwWGQAAIVmsNlsdnsDjBxAJRAgpCskBcrjc9vd2MSBHBruIyUDIGAEMDQfTwZDobCkHUGZlmHV0hgoPRMFgAPJIGTs-BkAC+lD5dEG4AgowmU3wYHYswhUKwMiozF8s3mi2Wq3Wm22u32hwYxz+TwJUKJgMezxJbw+Xx+UFtLoEnIJmoRJuR5rRUkx7GxuIw+MuDqwtxJ1IpCCpgOB9HpIMyKGZ6ThVGpuZghsalD9zFk0AA1ncMPJtZcMLykLgAMQAMyMnc7AG46mloTrmDAyJRefywIKRWLmLoQNL6lAaOKsPJITKoDhcKv14uoHhuKEN40JQQ4aY6cDgfcsKJTARTI+iK0iO1OkZuh-epKgA"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ublswzh4CaIio8NiwyFkAGwRuOJYwWQx2AE9IlKRinPZuX3jkihAMMGYIFHZajAg8UEhRADkIAFsEZhjaqDSmlGYEcQAzNFFfGFlpAAIp2fmYPsXalDACjOZatIwoekwsAHkkGSRmMgBfShO6DvAIHv7B-DAWyigENJpNBYGRUZi2EZjFATfBrOYLJayVYzeGbGDtSi7fZfEC1VLA0HMGBkSjHU5gc5XG7MXwgR51KA0W64LDyQFPKA4FlstIcqB4bghDkNfC2ZYEQJ0oA"
               },
               "value": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "11.01.2000 00:00:00"
+                    "value": "asd"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Edit)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-q.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-f > table.EWFIG3-s-k > tbody > tr > td:nth-child(2) > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ubgIwzh4o8NiwyFkAGwRIxNkMdgBPdJYwJG5bRPYi6Ii4mLyquKTUvLBMnIbC2tLi+OqKxIgUtNqm3NrCjrB28oTO2t76gayhxNaSsqmQihAMMGYETi3KDAg8UEhRADkIAFsEZhj1qGSIFBRt8QAzNFFfGBQYJHXkjBQeiYLAAeSQMj++DIAF99lA6EdwBAzpdrvgxus4BBkh8cPgLgJ2Kl1igwNkSfh-oDgdhwZDmLYQHCNgioVh5MlkvD8RyufCoHhuCF4Vt8FAkAh6AgAARQDA0bIyVJga4woA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "2,7"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 44
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseDownAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-34-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-34-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-34']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-34-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-34-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAMwAWYQF0OXbgRVosNKeqUUQGMMwgp2BjBDyhIAcwByEALYJmWnccpwIAGwmv8U3NKFDAATx8AkAB3AUZcAAIAVgBOFJoqAG4DcJoosAQqTxAoH1MUZgRogDM0W1kYMBgGBKra+saYKAMBZjFJaTl5GHcpHIgAIy12QuYABgMfDCh6TCwAeSQZpGYyAF9KZbprcAgHZyjOOANQiKjY9niEgDY5gHYM7MpS8sqauoaTTQi2Wq2wm22uxAB0MUBoO1wWAkPh8hygOERyNRsO6uG4SjRxnwoSQWlsiSRTgmyFwBAATLJoUA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "43,5"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-34-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-34-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-34']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-34-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-34-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAMwAWYQF0OXbgRVosNKeqUUQGMMwgp2BjBDyhIAcwByEALYJmWnccpwIAGwmv8U3NKFDAATx8AkAB3AUZcAAIAVgBOFJoqAG4DcJoosAQqTxAoH1MUZgRogDM0W1kYMBgGBKra+saYKAMBZjFJaTl5GHcpHIgAIy12QuYABgMfDCh6TCwAeSQZpGYyAF9KZbprcAgHZyjOOANQiKjY9niEgDY5gHYM7MpS8sqauoaTTQi2Wq2wm22uxAB0MUBoO1wWAkPh8hygOERyNRsO6uG4SjRxnwoSQWlsiSRTgmyFwBAATLJoUA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "44,5"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "sendKeys",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(#x-auto-34-input)"
+                  },
+                  {
+                    "type": "id",
+                    "value": "id=x-auto-34-input"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='x-auto-34']/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/input[1]"
+                  },
+                  {
+                    "type": "xpath:attributes",
+                    "value": "//input[@id='x-auto-34-input']"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=#x-auto-34-input"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAORUYEAK5gMMAMwAWYQF0OXbgRVosNKeqUUQGMMwgp2BjBDyhIAcwByEALYJmWnccpwIAGwmv8U3NKFDAATx8AkAB3AUZcAAIAVgBOFJoqAG4DcJoosAQqTxAoH1MUZgRogDM0W1kYMBgGBKra+saYKAMBZjFJaTl5GHcpHIgAIy12QuYABgMfDCh6TCwAeSQZpGYyAF9KZbprcAgHZyjOOANQiKjY9niEgDY5gHYM7MpS8sqauoaTTQi2Wq2wm22uxAB0MUBoO1wWAkPh8hygOERyNRsO6uG4SjRxnwoSQWlsiSRTgmyFwBAATLJoUA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "yui"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseDownAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<td/>)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr > td.EWFIG3-H-l:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAJgF0OXbgUGceooRLHDJkAEYAbBCMFh5GdgE9VLMEl1h2ffhRAYwzMxgh5QkAOYA5CAFsEzI2aiKIKFMwIAO4AZmgOAMwwDDCKZooYUPSYWADySOzIzLwgAL6UiXR24BDObh74+vGJydjpmUjMZPnmUDSNuPalLu6e7N6+-oGh4VExrtVJYCn1WfjNBVA4nSVlvZX9lD5+AfjBYZHRMDiUCVMzGXMgEXmLUHjc-IuW+GjsuLwo+mhYDrh+7CwAFdXPJkLgCLwIgACFAQRB5IA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "43,2"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseMoveAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(<td/>)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr > td.EWFIG3-H-l:nth-child(2)"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAJgF0OXbgUGceooRLHDJkAEYAbBCMFh5GdgE9VLMEl1h2ffhRAYwzMxgh5QkAOYA5CAFsEzI2aiKIKFMwIAO4AZmgOAMwwDDCKZooYUPSYWADySOzIzLwgAL6UiXR24BDObh74+vGJydjpmUjMZPnmUDSNuPalLu6e7N6+-oGh4VExrtVJYCn1WfjNBVA4nSVlvZX9lD5+AfjBYZHRMDiUCVMzGXMgEXmLUHjc-IuW+GjsuLwo+mhYDrh+7CwAFdXPJkLgCLwIgACFAQRB5IA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "{\"Movements\":[{\"TD\":17,\"OX\":2,\"OY\":0}]}"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "mouseUpAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Save)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-f > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAgXQ5deAyACMANgmEswojOwCe0sEm4AmEe3UDOPfoL0iIEqftnylZ1Wa37dwiiAxhmKCIkcYIeUJADmAHIQALYIzLqOUOIQKCjMCADuAGZofgDMMCgwSI7iGFD0mFgA8kjsyMxkAL6U+XQ+4BCBIWH4YOyOcBDiqTj4wWjs7JKOKGAKI-gJg4y4AOwArDRUANy5+YXYpeU5+NW1UDS7WACu4uIHfafnB1B43HwHLviDuGpjSGhYfrgx7KfBUTIXAENRpAAEUQwKDCVSAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "46,0"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Save)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[2]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-f > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAJgF0OXbgUGceooRLHDJkAEYAbBCMFh5GdgE9VFEBjDMUERHowQ8oSAHMAchAC2CZus1a9ijFHqYsAeSR2ZGYyAF9KLzpLcAg7R2d8BWU9BjQggDMvAFcUZhgySihFCBRc-AQAd3S0awBmGAYYawACSuq6mDAYAGs9FDAtZPwKtMZcAHYAVhoqAG49BTQsIKpmAAY9KARFRTp2Tixrdc3txRQ6KCWj-A3KT28wXwCgpBCQcP0oGlfcLCydiJQHC-f6KQFQPDcKyxexOFyvO5eHzYZ7BfBhcjQuJwxIIkD3ZH+QJokC8d6YmLYhLgPEEx4o4k-EC1d78QGGfBpXC8fpIK64ErsP4OeTIXAEXi1ZpFDAoZyhIA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "49,3"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 24
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Yes)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[10]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-f.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAgBgC6HLtwBMQzjwISR04VJk9x83otUq5k9ZABGAGwTadGdgE9tSMULDsrGtXN0GjJ848uPbm2QIogMYMymCCh+GBB4oJAA5gByEAC2CMySflB6ECih+AgA7gBmaNEAzDAoMEh+ehhQ9JhYAPJI7MjMZAC+lDV0keAQcYnJ+DZ+cBB6RTj4CWjs7AZ+KGCmC-i5s4y4AOwArDRUANxVNXXYTS2V+B1dUDSXWACueno3U4-PN1B43AI3gfjsDCmDAPJAIcZ6Uy5CBYMBgDAoCCIKAMGHREIAfgABFgMCB2kA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "50,12"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 22,
+                "prw": 0,
+                "pdw": 60
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(yui)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[2]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tbody[2]/tr[2]/td[3]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=tr.EWFIG3-B-l.EWFIG3-m-d.EWFIG3-T-r.EWFIG3-m-g.EWFIG3-B-p > td.EWFIG3-B-b.EWFIG3-m-a:nth-child(3) > div.EWFIG3-B-d.EWFIG3-m-b"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ublswzh4CaIio8NiwyFkAGwRuOJYwWQx2AE9IlKRinPZuX3jkihAMMGYC+TRajAg8UEhRADkIAFsEZhjaqDSIFBRmBHEAMzRRXxhZaQACabmFmD6l2pQwAozmWrSMKHpMLAB5JBkkZjIAX0pTug7wCB7+wfwwdhGENJpNBYGRUZi2EZjCZTWbzRbLWRrWGbbbtSh7A7fEC1VLA0HMGBkSgnM5gC7XW7MXwgJ51KA0O64LDyQHPKA4JkstJsqB4bghNkNfC2FYEQI0oA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "12,11"
                   }
                 ],
                 "tac": ""
@@ -222,29 +1103,111 @@
                 "options": [
                   {
                     "type": "tac",
-                    "value": "(1)"
+                    "value": "(yui)"
                   },
                   {
                     "type": "xpath:idRelative",
-                    "value": "//div[@id='gwt-debug-D39F1366-F062-40EC-AA1E-32A2D75AB360']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[4]/div[1]"
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[2]/div[1]/div[2]/div[1]/table[1]/tbody[2]/tr[2]/td[3]/div[1]"
                   },
                   {
                     "type": "xpath:position",
-                    "value": "//div[2]/div[1]/table[1]/tbody[2]/tr[1]/td[4]/div[1]"
+                    "value": "//tbody[2]/tr[2]/td[3]/div[1]"
                   },
                   {
                     "type": "css:position",
-                    "value": "css=td.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cell.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cell:nth-child(4) > div.com-sencha-gxt-theme-blue-client-grid-BlueGridAppearance-BlueGridStyle-cellInner.com-sencha-gxt-widget-core-client-grid-GridView-GridStateStyles-cellInner"
+                    "value": "css=tr.EWFIG3-B-l.EWFIG3-m-d.EWFIG3-T-r.EWFIG3-m-g.EWFIG3-B-p > td.EWFIG3-B-b.EWFIG3-m-a:nth-child(3) > div.EWFIG3-B-d.EWFIG3-m-b"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAMwBOAGIFVANl0xNABl0AmGABYjAUQDCMAIIOC1mKtMPTygOwBWBwBCekbCALocXNym4Zw8BDGR0RFx4ZCyADYI3PEsYLIY7ACeUalI2ans3BYJKRQgGGDMBGSUGBB4oJCiAHIQALYIzLF1UOkQKCjMUBh9MCgIWFAMEDCiVFKMCAMwGfIIMKNoC1KiSAI76XunAhA0NAgQSBCL+7sI1+woYIWZBwjp6TQWCwyAABNNZvNFstVusYOIBKIEFJpkh9odjqszuwsQI4EdxLjPpAwAgvj8yX8AUCQUg6uTMsw6ukMFB6JgsAB5JAyOn4MgAX1aUDoHXAEB6-UG+DA7BG-0BWBkVGYqhGYwmUxmcwWSxWaw2DC2r0u6MBmI+Fyu2Nu90ezygJutAgZ6IV4O1UL1sKkCPYSJRGDRB3NWBO2KJ+IQhI+X3oZO+mRQVPS9MT0pAsmgAGtThh5EqDhgWUhcABiABmRirVYA3HU0kDlcwYC0QCy2WAOdzecwLCAhfURXysPIAcKcLhR+Oh1A8NxQsLGjKE18zlhRARQc0iEZiKYjIfD7hj4eB0A"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ublswzh4CaIio8NiwyFkAGwRuOJYwWQx2AE9IlKRinPZuX3jkihAMMGYC+TRajAg8UEhRADkIAFsEZhjaqDSIFBRmBHEAMzRRXxhZaQACabmFmD6l2pQwAozmWrSMKHpMLAB5JBkkZjIAX0pTug7wCB7+wfwwdhGENJpNBYGRUZi2EZjCZTWbzRbLWRrWGbbbtSh7A7fEC1VLA0HMGBkSgnM5gC7XW7MXwgJ51KA0O64LDyQHPKA4JkstJsqB4bghNkNfC2FYEQI0oA"
               },
               "value": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "1"
+                    "value": "yui"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 0
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Delete)"
+                  },
+                  {
+                    "type": "xpath:idRelative",
+                    "value": "//div[@id='gwt-debug-ED5C957E-4A56-40C2-844A-7102F7F3D23C']/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-q.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-f > table.EWFIG3-s-k > tbody > tr > td:nth-child(2) > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBRACIBWAMIBOdQHZlMACwBBdQDZjABk0AmGAA4jpmHoJXbAMT2eAzKttfTWEAXQ4ubgIwzh4o8NiwyFkAGwRIxNkMdgBPdJYwJG5bRPYi6Ii4mLyquKTUvLBMnIbC4vzStpryhPyIFLTaptza1pKy+OqKxL76wazhxMLaju70ihAMMGYZVLAEdYwIPFBIUQA5CABbffwY9ahkiBQUZgRxADM0UV8YFBgkdbJDBQeiYLAAeSQMgB+DIAF9KMC6MdwBBzlcbuB2Os4BBkl8cPhLgJ2Kl1igwNkyfhAcDQdhIdDmLYQAiNlAaDCsPJkslEVBCdzefyoHhuCF+Vt8FAMDRsgACFAICBIKAMJAId4alAMFAYJBbOFAA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "11,9"
+                  }
+                ],
+                "tac": ""
+              },
+              "description": "",
+              "pwt": {
+                "pbw": 0,
+                "paw": 0,
+                "prw": 0,
+                "pdw": 16
+              },
+              "comment": false
+            },
+            {
+              "name": "clickAt",
+              "target": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "tac",
+                    "value": "(Yes)"
+                  },
+                  {
+                    "type": "xpath:position",
+                    "value": "//div[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]"
+                  },
+                  {
+                    "type": "css:position",
+                    "value": "css=div.EWFIG3-T-j.EWFIG3-T-d.EWFIG3-T-q.EWFIG3-T-n.EWFIG3-H-f.EWFIG3-H-i.EWFIG3-s-n > div.EWFIG3-s-c.EWFIG3-s-o.EWFIG3-s-d.x-has-width > table.EWFIG3-H-g.EWFIG3-T-k > tbody > tr:nth-child(2) > td.EWFIG3-H-e:nth-child(2) > div.EWFIG3-H-d > div.EWFIG3-s-m > table.EWFIG3-s-k > tbody > tr > td > div.EWFIG3-s-r"
+                  }
+                ],
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAgXQ5deAyACMANgmEswojOwCe0sEm4AmEe3UDOPfoL0iIEqftnylZ1Wa37dwiiAxhmChCkcYIeUJADmAHIQALYIzLqOUOIQKB74CADuAGZofgDMMCgwSI7iGFD0mFgA8kjsyMxkAL6U+XQ+4BCBIWH4YOyOcBDiqTj4wWjs7JKOKGAKI-gJg4y4AOwArDRUANy5+YXYpeU5+NW1UDS7WACu4uIHfafnB1B43HwHLvjsGAoYJ0gI3eIKCRBYMBgeQISRgBBQBgAvzuAD8AAIsBgQFUgA"
+              },
+              "value": {
+                "usedIndex": 0,
+                "options": [
+                  {
+                    "type": "other",
+                    "value": "48,10"
                   }
                 ],
                 "tac": ""

@@ -1,5 +1,5 @@
 {
-  "time": 1673509680741,
+  "time": 1681732675181,
   "version": {
     "sideex": [
       3,
@@ -22,7 +22,7 @@
           "title": "combobox-case",
           "description": "combobox-case",
           "enableOnPlaying": true,
-          "networkSpeed": 4.45,
+          "networkSpeed": 5.59,
           "records": [
             {
               "name": "open",
@@ -56,13 +56,13 @@
               "comment": false
             },
             {
-              "name": "waitForElementPresent",
+              "name": "setViewportSize",
               "target": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "id=whirl-login-id"
+                    "value": ""
                   }
                 ],
                 "tac": ""
@@ -72,7 +72,7 @@
                 "options": [
                   {
                     "type": "other",
-                    "value": "300000"
+                    "value": "836,920"
                   }
                 ],
                 "tac": ""
@@ -244,15 +244,15 @@
               },
               "description": "",
               "pwt": {
-                "pbw": -2050,
-                "paw": 106,
+                "pbw": 0,
+                "paw": 0,
                 "prw": 0,
-                "pdw": 49
+                "pdw": 0
               },
               "comment": false
             },
             {
-              "name": "dragAndDrop",
+              "name": "clickAt",
               "target": {
                 "usedIndex": 0,
                 "options": [
@@ -280,17 +280,17 @@
                 "options": [
                   {
                     "type": "other",
-                    "value": "{\"StartPoint\":{\"X\":5,\"Y\":10},\"Movements\":[{\"TD\":4,\"OX\":1,\"OY\":-1}]}"
+                    "value": "10,13"
                   }
                 ],
                 "tac": ""
               },
               "description": "",
               "pwt": {
-                "pbw": 0,
-                "paw": 0,
+                "pbw": -2547,
+                "paw": 41,
                 "prw": 0,
-                "pdw": 0
+                "pdw": 17
               },
               "comment": false
             },
@@ -304,14 +304,14 @@
                     "value": "(678)"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBmAEwBhACwAxACLaAnDF0AOZZpiaA7Ce0wAggAYArEfvOAQs+UBRRz5NHbWVhAF0OLm4CcMhZABsEKJjZDHYATySWMCRMsHZMtCwaeTAkihAMMGYANhtyjAg8UEhRADkIAFsEZk44criMKHpMLAB5JBkkZjIAX0pBuibwCDbO7vxe8oFmCSkZBSV2CBNZAxdVGFUAMwJZSxtnGGhnEyeTTQMrVQJnKFVqzTlKBxCAoFDMBDiK5oUTKJ5PAAEkOhsJgUiwSKhMLhsEalBQYDSCWYNAw6DAI1wCKQCBBFMQAG4EeIBIwqZ9VDQqEyGAgYQwwFSCI5HFymQkroKEcoxQiwBgaFSZdz+oNhthxpNpiA5hUoDQprgsPI4nF5lAcEaTWa9VA8Nxmit2l0elwtuwdpJpHJFDBZACINUDJoLi4TARLNZHmcZJcro5ZJoCMoIAYEAhlOUCUT1iBSeTKdTacNGczWQx2dVqrLefypcHZRKpcqmfLFdKxaqhhSNRNkNqZqFzVUNoN5F0sGAiKIEGBaQgJ2BZGkBAAKYQDCCcLBKDooUTCACUREKWGQAo6cREOqAA"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgBmAEwBhACwAxACLaAnDF0AOZZpiaA7Ce0wAggAYArEfvOAQs+UBRRz5NHbWVhAF0OLm4CcMhZABsEKJjZDHYATySWMCRMsHZMtCwaeTAkihAMMGYANhtyjAg8UEhRADkIAFsEZk44criMKHpMLAB5JBkkZjIAX0pBuibwCDbO7vxe8oFmCSkZBSV2CBNZAxdVGFUAMwJZSxtnGGhnEyeTTQMrVQJnKFVqzTlKBxCAoFDMBDiK5oUTKJ5PAAEkOhsJgUiwSKhMLhsEalBQYDSCWYNAw6DAI1wCKQCBBFMQAG4EeIBIwqVZnJoaFQmQwEDCGGAqQRHI5uUyElchQjlOKEWAMDQqbKef1BsNsONJtMQHMKlAaFNcFh5HE4vMoDhjabzfqoHhuM0Vu0uj0uFt2DtJNI5IoYLIARBqgZNBcXCYCJZrI8zjJLldHLJNARlBADAgEMpygSiesQKTyZTqbThozmayGOzNCY5XyBdKQ3LJdKVUyFUqZeK1UMKZqJsgdTNQhaqhtBvIulgwERRAgwLSEJOwLI0gIABTCAYQThYJQdFCiYQASiIhSwyEFHTiIl1QA"
               },
               "value": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "21,38"
+                    "value": "84,45"
                   }
                 ],
                 "tac": ""
@@ -319,9 +319,9 @@
               "description": "",
               "pwt": {
                 "pbw": 0,
-                "paw": 31,
+                "paw": 0,
                 "prw": 0,
-                "pdw": 61
+                "pdw": 0
               },
               "comment": false
             },
@@ -355,14 +355,14 @@
                     "value": "css=#gwt-debug-B64A6942-0581-4475-90DE-2F0B413A9EE3"
                   }
                 ],
-                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAIIAOAEIBOAAwBWAEwxDAMQKaYAFgDs6-TFUBhfesfqr2m4YL6nhgDYrYQBdDi5uAjDOHiiKEAwwZgC7eIwIPFBIUQA5CABbBGYY+IFmCSkZBSVZIIgA7StjA3UCa1sHPRkTADNdWSsCAGYIbQQEIfiUMABPABsi-BoMdDBMLFwAAiQEOfouBABuTfEBRi3tAICaKmOGBDRRBjALqxvjhZ6XzaH3zbAMDQtr9bvE5hgoPtsAB5JAyJDMMgAX0oELomXAEFyBUWIBKlHBkLWMLhyERIBRCSgNARuCw8jmc1RUBwdIZTKpUDw3CyWLyhWKXHiAH1hRUoLs5rIICgEOxTuxRAg1vkaHNOCg6GAoAw0FhRD0IfIUMwwEh5EVKKLxZLpbL5QIlSq1RqtTq9aJZHN5LTwObLSAyvgKtI5IoYENDFArD12D1tNJ1EMrNY7D0YBADAmIPpZPohghdAh1LoepNKNN5riFedNr5dH9lqt1lsILIUBhvWAjpt8hAkKI9VsG7dNp9viDjgCgT93vEoHsUCb8AhxD1HkMYAAvGA9MEQqFYWHw8lIkLMpL4dhGwpYMBEJ27BC3sCyGYCAAUwnBEE4+pg+QoKIwgAJREHqWDIM8+RzCIFJAA"
+                "tac": "TAC_LOCATOR:N4IgLghgxgtAbgUwE4GcCWB7AdiAXCARgDpiCQAaEADwAcIwALPEAehYBM04BtAATXYBeAOQBzAO5gY7BACMArqJgARAIIAOAEIBOAAwBWAEwxDAMQKaYAFgDs6-TFUBhfesfqr2m4YL6nhgDYrYQBdDi5uAjDOHiiKEAwwZgC7eIwIPFBIUQA5CABbBGYY+IFmCSkZBSVZIIgA7StjA3UCa1sHPRkTADNdWSsCAGYIbQQEIfiUMABPABsi-BoMdDBMLFwAAiQEOfouBABuTfEBRi2bK3UaKmOGBDRRBjAtxpvjhZ6XzaH3zbAMDQtr9bvE5hgoPtsAB5JAyJDMMgAX0oELomXAEFyBUWIBKlHBkLWMLhyERIBRCSgNARuCw8jmc1RUBwdIZTKpUDw3CyWLyhWKXHiAH1hRUoLs5rIICgEOxTuxRAg1vkaHNOCg6GAoAw0FhRD0IfIUMwwEh5EVKKLxZLpbL5QIlSq1RqtTq9aJZHN5LTwObLSAyvgKtI5IoYENDFArD12D1tNJ1EMrNY7D0YBADAmIPpZPohghdAh1LoepNKNN5riFedNr5dH9lqt1lsILIUBhvWAjpt8hAkKI9VsG7dNp9viDjgCgT93vEoHsUCb8AhxD1HkMYAAvGA9MEQqFYWHw8lIkLMpL4dhGwpYMBEJ27BC3sCyGYCAAUwnBEE4+pg+QoKIwgAJREHqWDIM8+RzCIFJAA"
               },
               "value": {
                 "usedIndex": 0,
                 "options": [
                   {
                     "type": "other",
-                    "value": "15,32"
+                    "value": "78,39"
                   }
                 ],
                 "tac": ""
