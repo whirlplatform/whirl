@@ -467,16 +467,25 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
 
     class FileFormPanel extends FormPanel {
 
-        boolean multiply = true;
-        VerticalLayoutContainer mainContainer;
-        TextButton add;
-        VerticalLayoutContainer formContainer;
-        String type;
+        private boolean multiply = true;
+        private VerticalLayoutContainer mainContainer;
+        private TextButton add;
+        private VerticalLayoutContainer formContainer;
+        private String type;
 
-        Set<FileRow> rows = new HashSet<FileRow>();
+        private Set<FileRow> rows = new HashSet<FileRow>();
 
-        boolean complete = false;
-        Command completeCommand;
+        private boolean complete = false;
+        private SubmitCompleteHandler submitHandler = new SubmitCompleteHandler() {
+            @Override
+            public void onSubmitComplete(SubmitCompleteEvent event) {
+                complete = true;
+                if (completeCommand != null) {
+                    completeCommand.execute();
+                }
+            }
+        };
+        private Command completeCommand;
 
         FileFormPanel(String type) {
             this(type, true);
@@ -488,15 +497,7 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
             setEncoding(Encoding.MULTIPART);
             setMethod(Method.POST);
             setAction(GWT.getHostPageBaseURL() + "resource?action=upload&type=" + type);
-            addSubmitCompleteHandler(new SubmitCompleteHandler() {
-                @Override
-                public void onSubmitComplete(SubmitCompleteEvent event) {
-                    complete = true;
-                    if (completeCommand != null) {
-                        completeCommand.execute();
-                    }
-                }
-            });
+            addSubmitCompleteHandler(submitHandler);
             initUI();
         }
 
@@ -571,7 +572,11 @@ public class ApplicationView extends ContentPanel implements IApplicationView {
         }
 
         void save() {
-            submit();
+            if (isAttached()) {
+                submit();
+            } else {
+                submitHandler.onSubmitComplete(new SubmitCompleteEvent(""));
+            }
         }
 
         boolean isComplete() {
