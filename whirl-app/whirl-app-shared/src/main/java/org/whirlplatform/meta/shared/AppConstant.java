@@ -53,6 +53,11 @@ public class AppConstant {
     public static final String WHIRL_REPORT_FORMAT = "WHIRL_REPORT_FORMAT";
 
     /**
+     * Идентификатор сессии.
+     */
+    public static final String WHIRL_TOKEN_ID = "WHIRL_TOKEN_ID";
+
+    /**
      * формат даты
      */
     public static final String DATE_FORMAT_LONG = "dd.MM.yyyy HH:mm:ss";

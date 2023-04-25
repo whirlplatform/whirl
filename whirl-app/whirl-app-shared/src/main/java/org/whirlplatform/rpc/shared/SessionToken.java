@@ -10,7 +10,7 @@ public class SessionToken implements Serializable {
 
     private static final long serialVersionUID = 291910565207331L;
 
-    private static transient SessionToken _instance;
+    private static SessionToken _instance;
 
     private String sessionId;
 
