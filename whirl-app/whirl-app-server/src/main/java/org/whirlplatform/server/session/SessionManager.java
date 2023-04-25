@@ -262,6 +262,7 @@ public class SessionManager implements Serializable {
                     I18NMessage.getMessage(I18NMessage.getRequestLocale())
                         .alert_sessionExpired(), true);
             }
+            user.setSessionToken(token);
             return user;
         }
     }

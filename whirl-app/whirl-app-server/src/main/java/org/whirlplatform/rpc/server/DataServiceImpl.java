@@ -110,7 +110,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
         if (user.getEncryptor() == null) {
             user.setEncryptor(Encryptor.get(servletContext));
         }
-        return SessionManager.get(request.getSession()).getUser(token);
+        return user;
     }
 
     private Locale getLocaleByString(String string) {
@@ -214,9 +214,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
     @Override
     public ApplicationData getApplication(SessionToken token, String applicationCode,
                                           Version version, String locale) {
-        // ApplicationUser user =
-        // SessionManager.get(getServletContext()).getUser(token);
-        ApplicationUser user = SessionManager.get(request.getSession()).getUser(token);
+        ApplicationUser user = getApplicationUser(token);
 
         // SessionManager.get(getServletContext()).touch(token);
         SessionManager.get(request.getSession()).touch(token);
@@ -512,8 +510,6 @@ public class DataServiceImpl implements DataService, DirectRestService {
 
     @Override
     public Boolean touch(SessionToken token) {
-        // SessionManager sessionManager =
-        // SessionManager.get(getServletContext());
         SessionManager sessionManager = SessionManager.get(request.getSession());
         sessionManager.touch(token);
 
@@ -526,9 +522,7 @@ public class DataServiceImpl implements DataService, DirectRestService {
 
     @Override
     public void removeToken(SessionToken token) {
-        SessionManager.get(
-            // getThreadLocalRequest().getSession().getServletContext())
-            request.getSession()).markForUnregister(token);
+        SessionManager.get(request.getSession()).markForUnregister(token);
     }
 
     public Boolean checkCaptchaCode(SessionToken token, String captchaCode,

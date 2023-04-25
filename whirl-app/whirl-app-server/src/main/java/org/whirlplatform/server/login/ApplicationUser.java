@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.whirlplatform.meta.shared.ClientUser;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
 import org.whirlplatform.meta.shared.editor.LocaleElement;
+import org.whirlplatform.rpc.shared.SessionToken;
 import org.whirlplatform.server.compiler.CompilationData;
 import org.whirlplatform.server.driver.multibase.Encryptor;
 import org.whirlplatform.server.utils.ApplicationReference;
@@ -56,8 +57,9 @@ public class ApplicationUser implements Serializable {
 
     private Map<String, Object> javaObjects = new HashMap<String, Object>();
 
-
     private Encryptor encryptor;
+
+    private transient SessionToken sessionToken;
 
     public ApplicationUser() {
         super();
@@ -268,6 +270,14 @@ public class ApplicationUser implements Serializable {
 
     public void setEncryptor(Encryptor encryptor) {
         this.encryptor = encryptor;
+    }
+
+    public SessionToken getSessionToken() {
+        return sessionToken;
+    }
+
+    public void setSessionToken(SessionToken sessionToken) {
+        this.sessionToken = sessionToken;
     }
 
     public ApplicationUser copy() {

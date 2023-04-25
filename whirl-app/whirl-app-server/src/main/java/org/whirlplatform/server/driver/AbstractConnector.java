@@ -213,6 +213,13 @@ public abstract class AbstractConnector implements Connector {
         list.setRowList(user.getGroups().stream().map(RowValueImpl::new).collect(Collectors.toList()));
         result.add(list);
 
+        if (user.getSessionToken() != null) {
+            data = new DataValueImpl(DataType.STRING);
+            data.setCode(AppConstant.WHIRL_TOKEN_ID);
+            data.setValue(user.getSessionToken().getTokenId());
+            result.add(data);
+        }
+
         return result;
     }
 
