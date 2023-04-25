@@ -73,9 +73,7 @@ public class EventConditionSolver extends AbstractConditionSolver {
         for (String g : user.getGroups()) {
             rights.addAll(right.getGroupRights(application.getGroup(g)));
         }
-        if (rights.isEmpty()) {
-            rights.addAll(right.getApplicationRights());
-        }
+        rights.addAll(right.getApplicationRights());
         checkAllowed(rights, RightType.EXECUTE);
 
         // если права еще нет, то будем проверять вычисляемые
