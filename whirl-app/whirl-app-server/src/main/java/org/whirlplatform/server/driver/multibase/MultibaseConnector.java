@@ -74,6 +74,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.metadata.MetadataProvider;
 import org.whirlplatform.server.metadata.container.ContainerException;
 import org.whirlplatform.server.metadata.container.MetadataContainer;
+import org.whirlplatform.server.metadata.store.file.FileSystemMetadataStore;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.utils.ApplicationReference;
 
@@ -135,8 +136,10 @@ public class MultibaseConnector extends AbstractConnector {
         try {
             if (applicationCode == null) { // && !user.isGuest()
                 // TODO message about empty application code
-                throw new CustomException(ExceptionType.WRONGAPP,
-                    I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                CustomException e = new CustomException(ExceptionType.WRONGAPP,
+                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                e.setAllowedApps(FileSystemMetadataStore.getAllowedApplications());
+                throw e;
             }
 
             ApplicationData data = getApplication(applicationCode, version);
@@ -165,6 +168,8 @@ public class MultibaseConnector extends AbstractConnector {
             String message = "Application load problem: " + applicationCode;
             _log.error(message, e);
             throw new CustomException(message);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -7,15 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileVisitOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -69,6 +61,8 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
+
+    static Map<String, String> allowedApps = new HashMap<>();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -519,7 +513,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         try {
             applicationPath = resolveApplicationPath(appCode, null);
             if (applicationPath == null || Files.notExists(applicationPath)
-                || !Files.isDirectory(applicationPath)) {
+                    || !Files.isDirectory(applicationPath)) {
                 return null;
             }
             Version result = Version.parseVersion(applicationPath.getFileName().toString());
@@ -527,6 +521,22 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         } catch (IOException | MetadataStoreException e) {
             return null;
         }
+    }
+
+    public static Map<String, String> getAllowedApplications() throws IOException {
+        if (!allowedApps.isEmpty()) {
+            return allowedApps;
+        }
+
+        File folder = Paths.get("../../.whirl-work/applications").toFile();
+        File[] files = folder.listFiles();
+
+        for(int i = 0; i < files.length; i++) {
+            String name = files[i].getName();
+            allowedApps.put(name, name);
+        }
+
+        return allowedApps;
     }
 
 }
