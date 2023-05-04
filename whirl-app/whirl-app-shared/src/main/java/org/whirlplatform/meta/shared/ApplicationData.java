@@ -171,7 +171,7 @@ public class ApplicationData implements Serializable {
     }
 
     public List<EventMetadata> getCreateEvents() {
-        List<EventMetadata> result = events.get("CreateEvent");
+        List<EventMetadata> result = events.get("CreateHandler");
         if (result == null) {
             result = new ArrayList<EventMetadata>();
         }
@@ -181,7 +181,7 @@ public class ApplicationData implements Serializable {
     public List<EventMetadata> getNonCreateEvents() {
         List<EventMetadata> result = new ArrayList<EventMetadata>();
         for (Entry<String, List<EventMetadata>> e : events.entrySet()) {
-            if (!"CreateEvent".equals(e.getKey())) {
+            if (!"CreateHandler".equals(e.getKey())) {
                 result.addAll(e.getValue());
             }
         }

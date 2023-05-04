@@ -8,7 +8,7 @@ import org.whirlplatform.meta.shared.ApplicationData;
 import org.whirlplatform.meta.shared.component.ComponentModel;
 
 /**
- * Постоитель приложения
+ * Построитель приложения
  */
 public class AppBuilder {
 
