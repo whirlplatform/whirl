@@ -20,7 +20,7 @@ public class BasePlainDataChanger extends AbstractPlainDataChanger {
     }
 
     @Override
-    protected String getNextId() {
+    protected String getNextId() { // таблица, схема, connection
         java.util.Random rnd = new java.util.Random();
         return String.valueOf(rnd.nextLong());
     }

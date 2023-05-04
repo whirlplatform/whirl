@@ -8,15 +8,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import javax.inject.Inject;
@@ -61,8 +57,6 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
-
-    static Map<String, String> allowedApps = new HashMap<>();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -523,20 +517,52 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         }
     }
 
-    public static Map<String, String> getAllowedApplications() throws IOException {
-        if (!allowedApps.isEmpty()) {
-            return allowedApps;
+    static Map<String, String> cachedAllowedApps = new HashMap<>();
+    Map<String, String> allowedApps = new ConcurrentHashMap<>();
+    static LocalDateTime timer = java.time.LocalDateTime.now();
+
+    public Map<String, String> refreshAllowedApplications() {
+
+//        File folder = Paths.get("../../.whirl-work/applications").toFile();
+//        File[] files = folder.listFiles();
+//        for(int i = 0; i < files.length; i++) {
+//            String name = files[i].getName();
+////            allowedApps.put(name, name);
+////            allowedApps.computeIfAbsent(name, name -> new Value(f(name)));
+//            allowedApps.putIfAbsent(name, name);
+//        }
+
+
+        List<ApplicationStoreData> applications = all();
+        for(ApplicationStoreData app: applications) {
+            allowedApps.putIfAbsent(app.getName(), app.getName());
         }
 
-        File folder = Paths.get("../../.whirl-work/applications").toFile();
-        File[] files = folder.listFiles();
-
-        for(int i = 0; i < files.length; i++) {
-            String name = files[i].getName();
-            allowedApps.put(name, name);
-        }
-
+        timer = java.time.LocalDateTime.now(); // refresh timer
         return allowedApps;
     }
 
+    public Map<String, String> getAllowedApplications() throws IOException {
+
+        // First client call
+        if (cachedAllowedApps.isEmpty()) {
+            this.allowedApps = refreshAllowedApplications();
+            cachedAllowedApps = this.allowedApps;
+            timer = java.time.LocalDateTime.now();
+            return this.allowedApps;
+        }
+
+        LocalDateTime currentTime = java.time.LocalDateTime.now();
+        long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
+
+        // Checks if time is up for refreshing the list of applications
+        if(duration < 10) {
+            return cachedAllowedApps;
+        } else {
+            this.allowedApps = refreshAllowedApplications();
+            cachedAllowedApps = this.allowedApps;
+            timer = java.time.LocalDateTime.now(); // refresh timer
+            return this.allowedApps;
+        }
+    }
 }

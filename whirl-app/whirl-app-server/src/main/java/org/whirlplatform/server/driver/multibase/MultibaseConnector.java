@@ -3,6 +3,8 @@ package org.whirlplatform.server.driver.multibase;
 import com.google.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -55,6 +57,8 @@ import org.whirlplatform.meta.shared.form.FormModel;
 import org.whirlplatform.meta.shared.form.FormRowModel;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.rpc.shared.ExceptionData.ExceptionType;
+import org.whirlplatform.server.config.Configuration;
+import org.whirlplatform.server.config.JndiConfiguration;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -134,11 +138,16 @@ public class MultibaseConnector extends AbstractConnector {
     public ApplicationData getApplication(String applicationCode, Version version,
                                           ApplicationUser user) {
         try {
-            if (applicationCode == null) { // && !user.isGuest()
+            if (applicationCode == null) {
                 // TODO message about empty application code
                 CustomException e = new CustomException(ExceptionType.WRONGAPP,
                         I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
-                e.setAllowedApps(FileSystemMetadataStore.getAllowedApplications());
+
+                FileSystem fs = FileSystems.getDefault();
+
+                FileSystemMetadataStore store = new FileSystemMetadataStore(new JndiConfiguration(), fs);
+
+                e.setAllowedApps(store.getAllowedApplications());
                 throw e;
             }
 
