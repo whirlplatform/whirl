@@ -1,17 +1,18 @@
 package org.whirlplatform.app.client.js;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.*;
 import com.google.gwt.http.client.UrlBuilder;
+import com.google.gwt.json.client.JSONBoolean;
+import com.google.gwt.json.client.JSONNull;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.app.client.ClientLoginUtils;
 import org.whirlplatform.app.client.LocationManager;
 import org.whirlplatform.meta.shared.AppConstant;
-
-import java.util.*;
-
 
 /**
  * Application level helper methods.
@@ -35,7 +36,7 @@ public class Application {
      * @param appCode application code
      */
     public static void openApplication(String appCode) {
-        Window.open(createUrlBuilder(appCode,null), "_blank", "");
+        Window.open(createUrlBuilder(appCode, null), "_blank", "");
     }
 
     private static String createUrlBuilder(String appCode, JSONObject queryParams) {
