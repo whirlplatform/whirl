@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
+
 import org.whirlplatform.meta.shared.ApplicationStoreData;
 import org.whirlplatform.meta.shared.Version;
 import org.whirlplatform.meta.shared.editor.ApplicationElement;
@@ -51,4 +53,6 @@ public interface MetadataStore {
      * @return Самая старшая версия приложения или null.
      */
     Version getLastVersion(final String appCode);
+
+    Map<String, String> getAllowedApplications();
 }

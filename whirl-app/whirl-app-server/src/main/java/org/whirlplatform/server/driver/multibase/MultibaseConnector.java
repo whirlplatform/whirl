@@ -78,6 +78,7 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.metadata.MetadataProvider;
 import org.whirlplatform.server.metadata.container.ContainerException;
 import org.whirlplatform.server.metadata.container.MetadataContainer;
+import org.whirlplatform.server.metadata.store.MetadataStore;
 import org.whirlplatform.server.metadata.store.file.FileSystemMetadataStore;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.utils.ApplicationReference;
@@ -88,16 +89,18 @@ public class MultibaseConnector extends AbstractConnector {
     private static Logger _log = LoggerFactory.getLogger(MultibaseConnector.class);
 
     private MetadataContainer metadataContainer;
-
     private MetadataProvider metadataProvider;
+    private MetadataStore metadataStore;
 
     @Inject
     public MultibaseConnector(MetadataContainer metadataContainer,
                               MetadataProvider metadataProvider,
-                              ConnectionProvider connectionProvider) {
+                              ConnectionProvider connectionProvider,
+                              MetadataStore metadataStore) {
         super(connectionProvider);
         this.metadataContainer = metadataContainer;
         this.metadataProvider = metadataProvider;
+        this.metadataStore = metadataStore;
     }
 
     private ConnectionWrapper aliasConnection(DatabaseTableElement table, ApplicationUser user) {
@@ -143,11 +146,7 @@ public class MultibaseConnector extends AbstractConnector {
                 CustomException e = new CustomException(ExceptionType.WRONGAPP,
                         I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
 
-                FileSystem fs = FileSystems.getDefault();
-
-                FileSystemMetadataStore store = new FileSystemMetadataStore(new JndiConfiguration(), fs);
-
-                e.setAllowedApps(store.getAllowedApplications());
+                e.setAllowedApps(metadataStore.getAllowedApplications());
                 throw e;
             }
 
@@ -177,8 +176,6 @@ public class MultibaseConnector extends AbstractConnector {
             String message = "Application load problem: " + applicationCode;
             _log.error(message, e);
             throw new CustomException(message);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -517,24 +517,17 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         }
     }
 
-    static Map<String, String> cachedAllowedApps = new HashMap<>();
     Map<String, String> allowedApps = new ConcurrentHashMap<>();
     static LocalDateTime timer = java.time.LocalDateTime.now();
 
-    public Map<String, String> refreshAllowedApplications() {
-
-//        File folder = Paths.get("../../.whirl-work/applications").toFile();
-//        File[] files = folder.listFiles();
-//        for(int i = 0; i < files.length; i++) {
-//            String name = files[i].getName();
-////            allowedApps.put(name, name);
-////            allowedApps.computeIfAbsent(name, name -> new Value(f(name)));
-//            allowedApps.putIfAbsent(name, name);
-//        }
-
+    public synchronized Map<String, String> refreshAllowedApplications() {
+        allowedApps.clear();
 
         List<ApplicationStoreData> applications = all();
         for(ApplicationStoreData app: applications) {
+//            synchronized (allowedApps) {
+//                allowedApps.putIfAbsent(app.getName(), app.getName());
+//            }
             allowedApps.putIfAbsent(app.getName(), app.getName());
         }
 
@@ -542,27 +535,25 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         return allowedApps;
     }
 
-    public Map<String, String> getAllowedApplications() throws IOException {
+    @Override
+    public Map<String, String> getAllowedApplications() {
 
-        // First client call
-        if (cachedAllowedApps.isEmpty()) {
-            this.allowedApps = refreshAllowedApplications();
-            cachedAllowedApps = this.allowedApps;
-            timer = java.time.LocalDateTime.now();
-            return this.allowedApps;
-        }
+        synchronized (allowedApps) {
+            LocalDateTime currentTime = java.time.LocalDateTime.now();
+            long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
 
-        LocalDateTime currentTime = java.time.LocalDateTime.now();
-        long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
-
-        // Checks if time is up for refreshing the list of applications
-        if(duration < 10) {
-            return cachedAllowedApps;
-        } else {
-            this.allowedApps = refreshAllowedApplications();
-            cachedAllowedApps = this.allowedApps;
-            timer = java.time.LocalDateTime.now(); // refresh timer
-            return this.allowedApps;
+            // First client call
+            if (allowedApps.isEmpty()) {
+                allowedApps = refreshAllowedApplications();
+                timer = java.time.LocalDateTime.now();
+                return allowedApps;
+            } else if(duration < 10) {
+                return allowedApps;
+            } else {
+                allowedApps = refreshAllowedApplications();
+                timer = java.time.LocalDateTime.now(); // refresh timer
+                return allowedApps;
+            }
         }
     }
 }
