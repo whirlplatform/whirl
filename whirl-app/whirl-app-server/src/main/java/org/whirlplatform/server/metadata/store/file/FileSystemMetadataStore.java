@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import javax.inject.Inject;
@@ -57,6 +58,9 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
+
+    private Map<String, String> allowedApps = new ConcurrentHashMap<>();
+    private LocalDateTime timer = java.time.LocalDateTime.now();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -517,43 +521,26 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         }
     }
 
-    Map<String, String> allowedApps = new ConcurrentHashMap<>();
-    static LocalDateTime timer = java.time.LocalDateTime.now();
-
-    public synchronized Map<String, String> refreshAllowedApplications() {
-        allowedApps.clear();
-
-        List<ApplicationStoreData> applications = all();
-        for(ApplicationStoreData app: applications) {
-//            synchronized (allowedApps) {
-//                allowedApps.putIfAbsent(app.getName(), app.getName());
-//            }
-            allowedApps.putIfAbsent(app.getName(), app.getName());
-        }
-
-        timer = java.time.LocalDateTime.now(); // refresh timer
-        return allowedApps;
-    }
-
     @Override
     public Map<String, String> getAllowedApplications() {
+        LocalDateTime currentTime = java.time.LocalDateTime.now();
+        long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
 
-        synchronized (allowedApps) {
-            LocalDateTime currentTime = java.time.LocalDateTime.now();
-            long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
+        if(allowedApps.isEmpty() || duration >= 10) {
+            AtomicReference<Map<String, String>> cache = new AtomicReference<>();
+            cache.set(allowedApps);
+            Map<String, String> allowedAppsToUpdate = cache.get();
 
-            // First client call
-            if (allowedApps.isEmpty()) {
-                allowedApps = refreshAllowedApplications();
-                timer = java.time.LocalDateTime.now();
-                return allowedApps;
-            } else if(duration < 10) {
-                return allowedApps;
-            } else {
-                allowedApps = refreshAllowedApplications();
-                timer = java.time.LocalDateTime.now(); // refresh timer
-                return allowedApps;
+            allowedAppsToUpdate.clear();
+
+            List<ApplicationStoreData> applications = all();
+            for (ApplicationStoreData app : applications) {
+                allowedAppsToUpdate.putIfAbsent(app.getCode(), app.getCode());
             }
+            timer = java.time.LocalDateTime.now(); // refresh timer
+
+            cache.compareAndSet(allowedApps, allowedAppsToUpdate);
         }
+        return allowedApps;
     }
 }
