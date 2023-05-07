@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import org.apache.commons.io.IOUtils;
@@ -122,5 +123,10 @@ public class SimpleMetadataStore extends AbstractMetadataStore {
     @Override
     public Version getLastVersion(String appCode) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, String> getAllowedApplications() {
+        return null;
     }
 }

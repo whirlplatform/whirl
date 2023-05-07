@@ -7,13 +7,28 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileVisitOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import javax.inject.Inject;
@@ -58,9 +73,10 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
-
-    private Map<String, String> allowedApps = new ConcurrentHashMap<>();
-    private LocalDateTime timer = java.time.LocalDateTime.now();
+    private static final long ALL_CACHE_UPDATE_PERIOD = 10;
+    private Map<String, String> allCache = new HashMap<>();
+    private Lock allCacheLock = new ReentrantLock();
+    private Instant lastAllCacheUpdate = Instant.MIN;
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -523,24 +539,29 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
 
     @Override
     public Map<String, String> getAllowedApplications() {
-        LocalDateTime currentTime = java.time.LocalDateTime.now();
-        long duration = Duration.between(timer, currentTime).toMillis() / 1000; // amount of seconds
+        long duration = ChronoUnit.SECONDS.between(lastAllCacheUpdate, Instant.now());
 
-        if(allowedApps.isEmpty() || duration >= 10) {
-            AtomicReference<Map<String, String>> cache = new AtomicReference<>();
-            cache.set(allowedApps);
-            Map<String, String> allowedAppsToUpdate = cache.get();
+        // только одним потоком захватываем блокировку и обновляем кеш
+        if (duration >= ALL_CACHE_UPDATE_PERIOD && allCacheLock.tryLock()) {
 
-            allowedAppsToUpdate.clear();
-
-            List<ApplicationStoreData> applications = all();
-            for (ApplicationStoreData app : applications) {
-                allowedAppsToUpdate.putIfAbsent(app.getCode(), app.getCode());
+            try {
+                Map<String, String> allApplications = new HashMap<>();
+                all().forEach(app -> allApplications.put(app.getCode(), app.getName()));
+                allCache = allApplications;
+            } finally {
+                allCacheLock.unlock();
             }
-            timer = java.time.LocalDateTime.now(); // refresh timer
-
-            cache.compareAndSet(allowedApps, allowedAppsToUpdate);
         }
-        return allowedApps;
+
+        // для первых параллельных запросов кеш может быть еще пустым, поэтому ждем пока он заполнится
+        while (allCache.isEmpty()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                _log.error("Error while waiting for all applications cache update", e);
+            }
+        }
+        return allCache;
     }
+
 }
