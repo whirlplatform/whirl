@@ -152,12 +152,12 @@ public class MultibaseConnector extends AbstractConnector {
             // Check application for existing
             Map<String, String> applications = metadataStore.getAllowedApplications();
             boolean appExist = false;
-            for (String appCode: applications.keySet()) {
-                if(applicationCode.equals(appCode)) {
+            for (String appCode : applications.keySet()) {
+                if (applicationCode.equals(appCode)) {
                     appExist = true;
                 }
             }
-            if(!appExist) {
+            if (!appExist) {
                 CustomException e = new CustomException(ExceptionType.WRONGAPP,
                         I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
                 e.setAllowedApps(metadataStore.getAllowedApplications());
