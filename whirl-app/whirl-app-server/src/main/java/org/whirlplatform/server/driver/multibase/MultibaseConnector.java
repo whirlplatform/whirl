@@ -145,7 +145,21 @@ public class MultibaseConnector extends AbstractConnector {
                 // TODO message about empty application code
                 CustomException e = new CustomException(ExceptionType.WRONGAPP,
                         I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                e.setAllowedApps(metadataStore.getAllowedApplications());
+                throw e;
+            }
 
+            // Check application for existing
+            Map<String, String> applications = metadataStore.getAllowedApplications();
+            boolean appExist = false;
+            for (String appCode: applications.keySet()) {
+                if(applicationCode.equals(appCode)) {
+                    appExist = true;
+                }
+            }
+            if(!appExist) {
+                CustomException e = new CustomException(ExceptionType.WRONGAPP,
+                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
                 e.setAllowedApps(metadataStore.getAllowedApplications());
                 throw e;
             }
