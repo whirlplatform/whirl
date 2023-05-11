@@ -76,7 +76,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private static final long ALL_CACHE_UPDATE_PERIOD = 10;
     private Map<String, String> allCache = new HashMap<>();
     private Lock allCacheLock = new ReentrantLock();
-    private Instant lastAllCacheUpdate = Instant.MIN;
+    private Instant lastAllCacheUpdate = Instant.now();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -542,12 +542,18 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         long duration = ChronoUnit.SECONDS.between(lastAllCacheUpdate, Instant.now());
 
         // только одним потоком захватываем блокировку и обновляем кеш
-        if (duration >= ALL_CACHE_UPDATE_PERIOD && allCacheLock.tryLock()) {
+        // в первый запуск - захват происходит в любом случае
+        if ((duration >= ALL_CACHE_UPDATE_PERIOD || allCache.isEmpty()) && allCacheLock.tryLock()) {
 
             try {
                 Map<String, String> allApplications = new HashMap<>();
-                all().forEach(app -> allApplications.put(app.getCode(), app.getName()));
+
+                List<ApplicationStoreData> updatedApplications = all();
+                if (!updatedApplications.isEmpty()) {
+                    updatedApplications.forEach(app -> allApplications.put(app.getCode(), app.getName()));
+                }
                 allCache = allApplications;
+                lastAllCacheUpdate = Instant.now();
             } finally {
                 allCacheLock.unlock();
             }
