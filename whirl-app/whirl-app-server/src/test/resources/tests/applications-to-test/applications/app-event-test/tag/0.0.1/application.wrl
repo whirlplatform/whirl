@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="9CEE1673-FAAD-4461-8E65-368327776D11" name="app-event-test" metaversion="1">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[app-event-test]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[app-event-test]]></code>
+    <enabled>true</enabled>
+    <guest>true</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="6F7A1728-6820-4E4C-84C7-60A1A4DB97D8" name="BorderContainer" type="BorderContainerBuilder">
+      <properties>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="A616899F-976F-4E7E-91E8-5918288FCEFC" name="HorizontalContainer 1" type="HorizontalContainerBuilder">
+          <properties>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[North]]></value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+          <children>
+            <component id="B70038E3-BFA1-4C92-A556-D7F6F448F2A2" name="Button open app " type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button open application]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="3213681D-31FD-4A51-B394-65CCF5D1132C" name="event open app" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[Whirl.Application.openApplication('app-event-second-app-test');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+            <component id="59A19BA7-9D2B-4855-9FC3-5290C135949B" name="Button open app with params" type="ButtonBuilder">
+              <properties>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button open application with params]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="B896D6CB-38D9-4CE6-BFCF-82DF33C97094" name="event open app with param" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[Whirl.Application.openApplicationWithParams('app-event-second-app-test',{strings:"Software engineer", marker:'app-marker', numbers: 40, double: 2.4, boolean: false, isnull: null, array:[{first : 4.5}, {"2021" : 4.8}]});]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </components>
+  <events>
+    <event id="18112DFA-9BD8-47C5-85EE-97E432AF8CA0" name="app-event" type="JavaScript">
+      <properties>
+        <schema></schema>
+        <function></function>
+        <source><![CDATA[wctx.setMessage('INFO','Message','Application event!');]]></source>
+        <isNamed>false</isNamed>
+        <isConfirm>false</isConfirm>
+        <confirmText replace="false">
+          <defaultLocale locale="ru"/>
+          <locales/>
+        </confirmText>
+        <isWait>false</isWait>
+        <waitText replace="false">
+          <defaultLocale locale="ru"/>
+          <locales/>
+        </waitText>
+        <handlerType>CreateHandler</handlerType>
+        <createNew>false</createNew>
+      </properties>
+    </event>
+  </events>
+  <datasources/>
+  <groups/>
+  <rights>
+    <tableRights/>
+    <tableColumnRights/>
+    <eventRights>
+      <collection id="5BAD09E0-893C-4808-8B5C-A82F2C3E22F8" eventId="3213681D-31FD-4A51-B394-65CCF5D1132C">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups/>
+      </collection>
+      <collection id="6A27C493-BCB7-4742-A664-30EE93482857" eventId="18112DFA-9BD8-47C5-85EE-97E432AF8CA0">
+        <application>
+          <right type="EXECUTE">
+            <condition type="plain">
+              <value><![CDATA[select true]]></value>
+            </condition>
+          </right>
+        </application>
+        <groups/>
+      </collection>
+      <collection id="93EDB739-3211-4100-95EB-4AF69EB9309F" eventId="B896D6CB-38D9-4CE6-BFCF-82DF33C97094">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups/>
+      </collection>
+    </eventRights>
+  </rights>
+</application>
