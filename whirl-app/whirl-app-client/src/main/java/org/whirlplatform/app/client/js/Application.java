@@ -9,37 +9,36 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
+import jsinterop.annotations.JsOptional;
 import jsinterop.annotations.JsType;
 import org.whirlplatform.app.client.ClientLoginUtils;
 import org.whirlplatform.app.client.LocationManager;
 import org.whirlplatform.meta.shared.AppConstant;
 
 /**
- * Application level helper methods.
+ * Вспомогательные методы на уровне приложения.
  */
 @JsType(namespace = "Whirl")
 public class Application {
 
     /**
-     * Changes opened application in the current window.
+     * Изменяет открытое приложение в текущем окне.
      *
-     * @param appCode application code
+     * @param appCode код приложения
      */
-    public static void setCurrentApplication(String appCode) {
+    public static void changeApplication(String appCode) {
         LocationManager.get().setRole(appCode);
         LocationManager.get().reload();
     }
 
     /**
-     * Opens application in new browser window with the new session of current user.
+     * Открывает приложение в новом окне браузера с новой сессией текущего пользователя.
      *
-     * @param appCode application code
+     * @param appCode код приложения
+     * @param urlParams дополнительные параметры
      */
-    public static void openApplication(String appCode) {
-        Window.open(createUrlBuilder(appCode, null), "_blank", "");
-    }
-
-    private static String createUrlBuilder(String appCode, JSONObject queryParams) {
+    public static void openApplication(String appCode, @JsOptional JavaScriptObject urlParams) {
+        JSONObject queryParams = new JSONObject(urlParams);
         UrlBuilder url = Location.createUrlBuilder();
         url.setParameter(AppConstant.NEW_SESSION, String.valueOf(true));
         url.setParameter(AppConstant.APPLICATION_URL, appCode);
@@ -58,22 +57,11 @@ public class Application {
                 }
             }
         }
-        return url.buildString();
+        Window.open(url.buildString(), "_blank", "");
     }
 
     /**
-     * Opens application in new browser window with the new session of current user.
-     *
-     * @param appCode application code
-     * @param jsValue additional parameters
-     */
-    public static void openApplicationWithParams(String appCode, JavaScriptObject jsValue) {
-        JSONObject queryParams = new JSONObject(jsValue);
-        Window.open(createUrlBuilder(appCode, queryParams), "_blank", "");
-    }
-
-    /**
-     * Logout.
+     * Выход из системы.
      */
     public static void logout() {
         ClientLoginUtils.logout();
