@@ -14,12 +14,12 @@
   },
   "suites": [
     {
-      "title": "6-rights-for-guest",
+      "title": "0-rights-for-guest",
       "description": "",
       "enableOnPlaying": true,
       "cases": [
         {
-          "title": "6-rights-for-guest",
+          "title": "0-rights-for-guest",
           "description": "",
           "enableOnPlaying": true,
           "networkSpeed": 3.02,
