@@ -3,12 +3,10 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.apache.empire.db.DBDatabase;
 import org.apache.empire.db.DBTable;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
-import org.whirlplatform.server.driver.multibase.MultibaseConnector;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
@@ -57,7 +55,7 @@ public class BasePlainDataChanger extends AbstractPlainDataChanger {
                 throw new CustomException(e.toString());
             }
         }
-        if (nextSequenceValue==null){
+        if (nextSequenceValue == null) {
             logger.error("Sequence name not found");
             throw new CustomException("Sequence name not found");
         } else {
