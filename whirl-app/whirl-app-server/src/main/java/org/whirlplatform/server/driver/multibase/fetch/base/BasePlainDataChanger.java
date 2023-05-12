@@ -3,14 +3,19 @@ package org.whirlplatform.server.driver.multibase.fetch.base;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import org.apache.empire.db.DBDatabase;
 import org.apache.empire.db.DBTable;
+import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.server.db.ConnectionWrapper;
+import org.whirlplatform.server.driver.multibase.MultibaseConnector;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
+import org.whirlplatform.server.log.Logger;
+import org.whirlplatform.server.log.LoggerFactory;
 
 
 public class BasePlainDataChanger extends AbstractPlainDataChanger {
-
+    private static Logger logger = LoggerFactory.getLogger(BasePlainDataChanger.class);
 
     public BasePlainDataChanger(ConnectionWrapper connectionWrapper, DataSourceDriver factory) {
         super(connectionWrapper, factory);
@@ -36,21 +41,29 @@ public class BasePlainDataChanger extends AbstractPlainDataChanger {
                 + "AND t.column_default is not null) as st  "
                 + "on st.column_default = 'nextval('''||?||'.'||sl.sequence_name||'''::regclass)'";
 
-        String schema = db.getSchema();
+        String nextSequenceValue = null;
         for (DBTable tab : db.getTables()) {
+            String schema = db.getSchema();
             String tableName = tab.getName();
             String[] params = {schema, schema, tableName, schema};
             try {
                 ResultSet resultSet = db.executeQuery(query, params, false, connection);
                 while (resultSet.next()) {
                     String seqName = resultSet.getString(1);
-                    return db.getNextSequenceValue(seqName, connection).toString();
+                    nextSequenceValue = db.getNextSequenceValue(seqName, connection).toString();
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                logger.error(e.toString());
+                throw new CustomException(e.toString());
             }
         }
-        return getNextId();
+        if (nextSequenceValue==null){
+            logger.error("Sequence name not found");
+            throw new CustomException("Sequence name not found");
+        } else {
+            return nextSequenceValue;
+        }
+
     }
 
 }
