@@ -38,12 +38,12 @@ public class Application {
      * @param urlParams дополнительные параметры
      */
     public static void openApplication(String appCode, @JsOptional JavaScriptObject urlParams) {
-        JSONObject queryParams = new JSONObject(urlParams);
         UrlBuilder url = Location.createUrlBuilder();
         url.setParameter(AppConstant.NEW_SESSION, String.valueOf(true));
         url.setParameter(AppConstant.APPLICATION_URL, appCode);
 
-        if (queryParams != null) {
+        if (urlParams != null) {
+            JSONObject queryParams = new JSONObject(urlParams);
             for (String key : queryParams.keySet()) {
                 Object value = queryParams.get(key);
                 if (value instanceof JSONString) {
