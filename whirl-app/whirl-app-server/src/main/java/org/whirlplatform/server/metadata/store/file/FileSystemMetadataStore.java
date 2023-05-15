@@ -16,6 +16,8 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +27,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import javax.inject.Inject;
@@ -69,6 +73,10 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private WatchService watchService;
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
+    private static final long ALL_CACHE_UPDATE_PERIOD = 10;
+    private Map<String, String> allCache = null;
+    private Lock allCacheLock = new ReentrantLock();
+    private Instant lastAllCacheUpdate = Instant.now();
 
     @Inject
     public FileSystemMetadataStore(Configuration configuration, FileSystem fileSystem) {
@@ -519,7 +527,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         try {
             applicationPath = resolveApplicationPath(appCode, null);
             if (applicationPath == null || Files.notExists(applicationPath)
-                || !Files.isDirectory(applicationPath)) {
+                    || !Files.isDirectory(applicationPath)) {
                 return null;
             }
             Version result = Version.parseVersion(applicationPath.getFileName().toString());
@@ -527,6 +535,39 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         } catch (IOException | MetadataStoreException e) {
             return null;
         }
+    }
+
+    @Override
+    public Map<String, String> getAllowedApplications() {
+        long duration = ChronoUnit.SECONDS.between(lastAllCacheUpdate, Instant.now());
+
+        // только одним потоком захватываем блокировку и обновляем кеш
+        // в первый запуск - захват происходит в любом случае
+        if ((duration >= ALL_CACHE_UPDATE_PERIOD || allCache.isEmpty()) && allCacheLock.tryLock()) {
+
+            try {
+                Map<String, String> allApplications = new HashMap<>();
+
+                List<ApplicationStoreData> updatedApplications = all();
+                if (!updatedApplications.isEmpty()) {
+                    updatedApplications.forEach(app -> allApplications.put(app.getCode(), app.getName()));
+                }
+                allCache = allApplications;
+                lastAllCacheUpdate = Instant.now();
+            } finally {
+                allCacheLock.unlock();
+            }
+        }
+
+        // для первых параллельных запросов кеш может быть еще пустым, поэтому ждем пока он заполнится
+        while (allCache == null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                _log.error("Error while waiting for all applications cache update", e);
+            }
+        }
+        return allCache;
     }
 
 }

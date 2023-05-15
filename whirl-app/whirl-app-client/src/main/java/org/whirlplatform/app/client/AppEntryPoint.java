@@ -355,6 +355,9 @@ public class AppEntryPoint implements EntryPoint {
             panel.add(message);
         }
 
+        HTML listApplicationsMessage = new HTML("<br/>List of allowed applications:");
+        panel.add(listApplicationsMessage);
+
         VerticalLayoutData linksData = new VerticalLayoutData();
         linksData.setMargins(new Margins(5));
         int i = 0;
