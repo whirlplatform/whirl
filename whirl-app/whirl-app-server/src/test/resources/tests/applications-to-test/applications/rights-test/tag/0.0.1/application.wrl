@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application id="37F73372-A247-4C66-AB94-0FBE352F798F" name="rights-test" metaversion="1">
+  <properties>
+    <title replace="false">
+      <defaultLocale locale="ru"/>
+      <locales>
+        <value locale="ru" type="STRING"><![CDATA[rights-test]]></value>
+      </locales>
+    </title>
+    <code><![CDATA[rights-test]]></code>
+    <enabled>true</enabled>
+    <guest>false</guest>
+    <htmlHeader><![CDATA[]]></htmlHeader>
+  </properties>
+  <defaultLocale language="ru"/>
+  <locales/>
+  <references/>
+  <components>
+    <component id="974E40B1-E932-4BA2-AAEB-164E8CD56882" name="BorderContainer" type="BorderContainerBuilder">
+      <properties>
+        <property name="Enabled" type="BOOLEAN" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="BOOLEAN">true</value>
+          </locales>
+        </property>
+        <property name="Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Width" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:Height" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">1.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+        <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+          <defaultLocale locale="ru"/>
+          <locales>
+            <value locale="ru" type="NUMBER">3.0</value>
+          </locales>
+        </property>
+      </properties>
+      <children>
+        <component id="2D712B58-C38A-4DE5-A081-6E6C9F16EDF4" name="HorizontalContainer 1" type="HorizontalContainerBuilder">
+          <properties>
+            <property name="Enabled" type="BOOLEAN" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="BOOLEAN">true</value>
+              </locales>
+            </property>
+            <property name="Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Width" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:Height" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">1.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:Location" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[North]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+            <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+              </locales>
+            </property>
+            <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+              <defaultLocale locale="ru"/>
+              <locales>
+                <value locale="ru" type="NUMBER">3.0</value>
+              </locales>
+            </property>
+          </properties>
+          <children>
+            <component id="29F08BA3-216B-4128-8D7F-F5FFED92BE92" name="Button sql condition for application" type="ButtonBuilder">
+              <properties>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">0.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button sql condition for application]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="2C27E446-8282-4E41-88AF-816CA1020F85" name="event sql condition for application" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[wctx.setMessage('INFO','Message','SQL condition for application!');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+            <component id="3130C9F4-4667-4349-B933-B573370F0BDC" name="Button for application" type="ButtonBuilder">
+              <properties>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="Hidden" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">false</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">1.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button for application]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="8908DEE3-9612-41E1-911A-5DFB5A6669F9" name="event for application" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[wctx.setMessage('INFO','Message','Condition for application!');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+            <component id="C60BDAE3-08F7-428F-A8CA-781E6C6E8E32" name="Button sql condition for group" type="ButtonBuilder">
+              <properties>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="Hidden" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales/>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">2.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button with sql condition for group]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="571FAB5C-BAB3-47FE-8D39-99AFD14BA67D" name="event sql condition group" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[wctx.setMessage('INFO','Message','SQL condition for group!');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+            <component id="0E93C2DF-3546-40FE-AF68-985AB46E2B78" name="Button for group" type="ButtonBuilder">
+              <properties>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button for group]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="EEFFEBA1-22C6-4D49-9675-9D28ED9DF1EB" name="Button for group" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[wctx.setMessage('INFO','Message','Condition for group!');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+            <component id="93BAA488-9462-41EB-ADFE-6C2309D82E40" name="Button without rights" type="ButtonBuilder">
+              <properties>
+                <property name="Enabled" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">true</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginLeft" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:HorizontalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Center]]></value>
+                  </locales>
+                </property>
+                <property name="Hidden" type="BOOLEAN" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="BOOLEAN">false</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:Index" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">4.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginTop" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginBottom" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="LayoutData:VerticalAlign" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Middle]]></value>
+                  </locales>
+                </property>
+                <property name="LayoutData:MarginRight" type="NUMBER" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="NUMBER">3.0</value>
+                  </locales>
+                </property>
+                <property name="Html" type="STRING" replace="false">
+                  <defaultLocale locale="ru"/>
+                  <locales>
+                    <value locale="ru" type="STRING"><![CDATA[Button without rights]]></value>
+                  </locales>
+                </property>
+              </properties>
+              <events>
+                <event id="D6420F8F-1A25-4B54-B216-68B1FEA60AE0" name="event without rights" type="JavaScript">
+                  <properties>
+                    <schema></schema>
+                    <function></function>
+                    <source><![CDATA[wctx.setMessage('INFO','Message','Without rights!');]]></source>
+                    <isNamed>false</isNamed>
+                    <isConfirm>false</isConfirm>
+                    <confirmText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </confirmText>
+                    <isWait>false</isWait>
+                    <waitText replace="false">
+                      <defaultLocale locale="ru"/>
+                      <locales/>
+                    </waitText>
+                    <handlerType>ClickHandler</handlerType>
+                    <createNew>false</createNew>
+                  </properties>
+                </event>
+              </events>
+            </component>
+          </children>
+        </component>
+      </children>
+    </component>
+  </components>
+  <datasources/>
+  <groups>
+    <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D" name="test-group" groupName="test-group"/>
+  </groups>
+  <rights>
+    <tableRights/>
+    <tableColumnRights/>
+    <eventRights>
+      <collection id="5C4EFD4A-FE07-435A-9E6B-F556E9D78848" eventId="571FAB5C-BAB3-47FE-8D39-99AFD14BA67D">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D">
+            <right type="EXECUTE">
+              <condition type="plain">
+                <value><![CDATA[select true]]></value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="5A1B0CC9-6D02-4C4E-A0AB-390AD315B273" eventId="8908DEE3-9612-41E1-911A-5DFB5A6669F9">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>true</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D"/>
+        </groups>
+      </collection>
+      <collection id="7F245F89-6EED-48C5-A198-5B87F8674A8D" eventId="2C27E446-8282-4E41-88AF-816CA1020F85">
+        <application>
+          <right type="EXECUTE">
+            <condition type="plain">
+              <value><![CDATA[select true]]></value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D"/>
+        </groups>
+      </collection>
+      <collection id="0ACEDCEB-F03B-4F0F-A49E-7E1715E94717" eventId="D6420F8F-1A25-4B54-B216-68B1FEA60AE0">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D">
+            <right type="EXECUTE">
+              <condition type="boolean">
+                <value>false</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+      <collection id="F1348B96-4381-4324-940B-F4BA50787AEA" eventId="EEFFEBA1-22C6-4D49-9675-9D28ED9DF1EB">
+        <application>
+          <right type="EXECUTE">
+            <condition type="boolean">
+              <value>false</value>
+            </condition>
+          </right>
+        </application>
+        <groups>
+          <group id="ECFDC22D-0CAC-4DA5-98A3-F8DD96E9438D">
+            <right type="EXECUTE">
+              <condition type="boolean">
+                <value>true</value>
+              </condition>
+            </right>
+          </group>
+        </groups>
+      </collection>
+    </eventRights>
+  </rights>
+</application>
