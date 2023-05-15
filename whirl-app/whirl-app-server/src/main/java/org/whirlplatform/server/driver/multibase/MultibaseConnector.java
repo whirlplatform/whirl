@@ -3,6 +3,8 @@ package org.whirlplatform.server.driver.multibase;
 import com.google.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -55,6 +57,8 @@ import org.whirlplatform.meta.shared.form.FormModel;
 import org.whirlplatform.meta.shared.form.FormRowModel;
 import org.whirlplatform.rpc.shared.CustomException;
 import org.whirlplatform.rpc.shared.ExceptionData.ExceptionType;
+import org.whirlplatform.server.config.Configuration;
+import org.whirlplatform.server.config.JndiConfiguration;
 import org.whirlplatform.server.db.ConnectException;
 import org.whirlplatform.server.db.ConnectionProvider;
 import org.whirlplatform.server.db.ConnectionWrapper;
@@ -74,6 +78,8 @@ import org.whirlplatform.server.login.ApplicationUser;
 import org.whirlplatform.server.metadata.MetadataProvider;
 import org.whirlplatform.server.metadata.container.ContainerException;
 import org.whirlplatform.server.metadata.container.MetadataContainer;
+import org.whirlplatform.server.metadata.store.MetadataStore;
+import org.whirlplatform.server.metadata.store.file.FileSystemMetadataStore;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.utils.ApplicationReference;
 
@@ -83,16 +89,18 @@ public class MultibaseConnector extends AbstractConnector {
     private static Logger _log = LoggerFactory.getLogger(MultibaseConnector.class);
 
     private MetadataContainer metadataContainer;
-
     private MetadataProvider metadataProvider;
+    private MetadataStore metadataStore;
 
     @Inject
     public MultibaseConnector(MetadataContainer metadataContainer,
                               MetadataProvider metadataProvider,
-                              ConnectionProvider connectionProvider) {
+                              ConnectionProvider connectionProvider,
+                              MetadataStore metadataStore) {
         super(connectionProvider);
         this.metadataContainer = metadataContainer;
         this.metadataProvider = metadataProvider;
+        this.metadataStore = metadataStore;
     }
 
     private ConnectionWrapper aliasConnection(DatabaseTableElement table, ApplicationUser user) {
@@ -133,10 +141,27 @@ public class MultibaseConnector extends AbstractConnector {
     public ApplicationData getApplication(String applicationCode, Version version,
                                           ApplicationUser user) {
         try {
-            if (applicationCode == null) { // && !user.isGuest()
+            if (applicationCode == null) {
                 // TODO message about empty application code
-                throw new CustomException(ExceptionType.WRONGAPP,
-                    I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                CustomException e = new CustomException(ExceptionType.WRONGAPP,
+                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                e.setAllowedApps(metadataStore.getAllowedApplications());
+                throw e;
+            }
+
+            // Check application for existing
+            Map<String, String> applications = metadataStore.getAllowedApplications();
+            boolean appExist = false;
+            for (String appCode : applications.keySet()) {
+                if (applicationCode.equals(appCode)) {
+                    appExist = true;
+                }
+            }
+            if (!appExist) {
+                CustomException e = new CustomException(ExceptionType.WRONGAPP,
+                        I18NMessage.getSpecifiedMessage("forbiddenApp", user.getLocale()));
+                e.setAllowedApps(metadataStore.getAllowedApplications());
+                throw e;
             }
 
             ApplicationData data = getApplication(applicationCode, version);

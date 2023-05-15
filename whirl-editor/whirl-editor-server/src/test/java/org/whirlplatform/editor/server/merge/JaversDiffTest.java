@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -57,6 +59,11 @@ public class JaversDiffTest {
 
         @Override
         public Version getLastVersion(String appCode) {
+            return null;
+        }
+
+        @Override
+        public Map<String, String> getAllowedApplications() {
             return null;
         }
     };
