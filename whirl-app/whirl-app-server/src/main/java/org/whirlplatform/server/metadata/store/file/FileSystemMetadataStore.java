@@ -74,7 +74,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
     private Map<WatchKey, String> watchedCodes = new HashMap<>();
     private Map<WatchKey, Version> watchedVersions = new HashMap<>();
     private static final long ALL_CACHE_UPDATE_PERIOD = 10;
-    private Map<String, String> allCache = new HashMap<>();
+    private Map<String, String> allCache = null;
     private Lock allCacheLock = new ReentrantLock();
     private Instant lastAllCacheUpdate = Instant.now();
 
@@ -560,7 +560,7 @@ public class FileSystemMetadataStore extends AbstractMetadataStore
         }
 
         // для первых параллельных запросов кеш может быть еще пустым, поэтому ждем пока он заполнится
-        while (allCache.isEmpty()) {
+        while (allCache == null) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
