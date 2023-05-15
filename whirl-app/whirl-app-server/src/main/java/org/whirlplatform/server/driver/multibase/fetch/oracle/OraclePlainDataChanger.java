@@ -1,5 +1,6 @@
 package org.whirlplatform.server.driver.multibase.fetch.oracle;
 
+import java.sql.Connection;
 import org.apache.empire.db.DBDatabase;
 import org.whirlplatform.server.db.ConnectionWrapper;
 import org.whirlplatform.server.driver.multibase.fetch.DataSourceDriver;
@@ -23,5 +24,10 @@ public class OraclePlainDataChanger extends AbstractPlainDataChanger {
             result = String.valueOf(rnd.nextLong());
         }
         return String.valueOf(result);
+    }
+
+    @Override
+    protected String getNextIdInSequence(DBDatabase db, Connection connection) {
+        return null;
     }
 }
