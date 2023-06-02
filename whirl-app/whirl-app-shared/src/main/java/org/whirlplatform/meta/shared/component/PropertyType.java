@@ -73,7 +73,9 @@ public enum PropertyType implements Serializable {
         ComponentType.TextAreaType,
         ComponentType.MultiComboBoxType,
         ComponentType.TreeComboBoxType,
-        ComponentType.ComboBoxType)),
+        ComponentType.ComboBoxType,
+        ComponentType.SimpleHtmlEditorType,
+        ComponentType.HtmlEditorType)),
     NumberValue("Value", DataType.NUMBER, false, false, Arrays.asList(
         ComponentType.NumberFieldType)),
     DateValue("Value", DataType.DATE, false, false, Arrays.asList(
