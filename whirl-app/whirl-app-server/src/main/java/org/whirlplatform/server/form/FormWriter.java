@@ -227,6 +227,10 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                                 DataValueImpl rv = new DataValueImpl(DataType.STRING, r);
                                 rv.setCode(eventParameter.getCode());
                                 eventParameter.setData(rv);
+                            } else {
+                                DataValueImpl rv = new DataValueImpl(DataType.STRING, null);
+                                rv.setCode(eventParameter.getCode());
+                                eventParameter.setData(rv);
                             }
                         }
                     } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
