@@ -204,6 +204,7 @@ Deploy:
   parallel:
     matrix:
       - ENV: dev
+      - ENV: demo
   environment:
     name: ${ENV}
     url: http://${ENV}.whirl-platform.ru:8090/
