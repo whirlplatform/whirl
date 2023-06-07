@@ -211,7 +211,7 @@ Deploy:
   before_script:
     - command -v ssh-agent >/dev/null || apk add openssh-client
     - eval $(ssh-agent -s)
-    - cat "${ENV_AUTHORIZED_KEY}" | ssh-add -
+    - cat "${AUTHORIZED_KEY}" | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
