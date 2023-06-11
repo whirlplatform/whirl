@@ -216,22 +216,13 @@ public abstract class FormWriter extends AbstractQueryExecutor {
             for (EventMetadata eventMetadata : event.getValue()) {
                 //2. В каждом событии пробегаем по всем параметрам
                 for (EventParameter eventParameter : eventMetadata.getParametersList()) {
-                    String r = null;
                     // 3. Для параметров типа DATAVALUE и COMPONENTCODE
                     if (eventParameter.getType() == ParameterType.DATAVALUE) {
                         //когда в params есть значение запроса
                         if (eventParameter.getData() != null) {
                             //меняем значения параметров из запроса
-                            r = replace(eventParameter.getData().getString(), params);
-                            if (!r.isEmpty()) {
-                                DataValueImpl rv = new DataValueImpl(DataType.STRING, r);
-                                rv.setCode(eventParameter.getCode());
-                                eventParameter.setData(rv);
-                            } else {
-                                DataValueImpl rv = new DataValueImpl(DataType.STRING, null);
-                                rv.setCode(eventParameter.getCode());
-                                eventParameter.setData(rv);
-                            }
+                            eventParameter.setData(new DataValueImpl(DataType.STRING,
+                                    replace(eventParameter.getData().getString(), params)));
                         }
                     } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
                         if (eventParameter.getComponentCode() != null) {
