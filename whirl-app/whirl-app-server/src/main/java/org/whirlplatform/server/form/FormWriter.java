@@ -220,9 +220,13 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                     if (eventParameter.getType() == ParameterType.DATAVALUE) {
                         //когда в params есть значение запроса
                         if (eventParameter.getData() != null) {
-                            //меняем значения параметров из запроса
-                            eventParameter.setData(new DataValueImpl(DataType.STRING,
-                                    replace(eventParameter.getData().getString(), params)));
+                            // меняем значения параметров из запроса
+                            // Boolean values (create_user) will not be rewritten
+                            if (eventParameter.getData().getType() == DataType.STRING) {
+                                DataValueImpl dataValue = new DataValueImpl(DataType.STRING,
+                                        replace(eventParameter.getData().getString(), params));
+                                eventParameter.setData(dataValue);
+                            }
                         }
                     } else if (eventParameter.getType() == ParameterType.COMPONENTCODE) {
                         if (eventParameter.getComponentCode() != null) {
