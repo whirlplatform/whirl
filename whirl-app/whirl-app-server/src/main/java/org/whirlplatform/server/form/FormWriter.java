@@ -217,7 +217,6 @@ public abstract class FormWriter extends AbstractQueryExecutor {
                 //2. В каждом событии пробегаем по всем параметрам
                 for (EventParameter eventParameter : eventMetadata.getParametersList()) {
                     // 3. Для параметров типа DATAVALUE и COMPONENTCODE
-
                     // когда в params есть значение запроса и тип параметра - String
                     // меняем значения параметров из запроса
                     if (eventParameter.getType() == ParameterType.DATAVALUE
