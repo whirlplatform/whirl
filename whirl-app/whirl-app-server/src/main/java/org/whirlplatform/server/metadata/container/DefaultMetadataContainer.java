@@ -77,38 +77,41 @@ public class DefaultMetadataContainer implements MetadataContainer {
         }
     }
 
+    private void reloadAllApplications() {
+        // загрузка приложений будет идти параллельно
+        ExecutorService executor = getExecutorService();
+        List<ApplicationLoadCallable> calls = new ArrayList<>();
+
+        for (Cell<String, Version, AtomicReference<ApplicationReference>> c : cache.cellSet()) {
+            Version version = c.getColumnKey() == NULL_VERSION ? null : c.getColumnKey();
+
+            // если никто не запускал послденее время приложение, то не
+            // вытаскиваем
+            if (new Date(System.currentTimeMillis() - lastAccessTimeoutMillis())
+                .after(lastAccessTime.get(c.getRowKey(), c.getColumnKey()))) {
+                continue;
+            }
+
+            ApplicationLoadCallable callable =
+                new ApplicationLoadCallable(c.getRowKey(), version);
+            calls.add(callable);
+        }
+
+        try {
+            List<Future<Void>> result = executor.invokeAll(calls);
+            for (Future<Void> f : result) {
+                f.get();
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            _log.warn("Application reload interrupted", e);
+        }
+    }
+
     private TimerTask reloadTask() {
         return new TimerTask() {
             @Override
             public void run() {
-                // загрузка приложений будет идти параллельно
-                ExecutorService executor = getExecutorService();
-                List<ApplicationLoadCallable> calls = new ArrayList<>();
-
-                for (Cell<String, Version, AtomicReference<ApplicationReference>> c : cache.cellSet()) {
-                    Version version = c.getColumnKey() == NULL_VERSION ? null : c.getColumnKey();
-
-                    // если никто не запускал послденее время приложение, то не
-                    // вытаскиваем
-                    if (new Date(System.currentTimeMillis() - lastAccessTimeoutMillis())
-                        .after(lastAccessTime.get(c.getRowKey(), c.getColumnKey()))) {
-                        continue;
-                    }
-
-                    ApplicationLoadCallable callable =
-                        new ApplicationLoadCallable(c.getRowKey(), version);
-                    calls.add(callable);
-                }
-
-                try {
-                    List<Future<Void>> result = executor.invokeAll(calls);
-                    for (Future<Void> f : result) {
-                        f.get();
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    _log.warn("Application reload interrupted", e);
-                }
-
+                reloadAllApplications();
                 reloadTimer.schedule(reloadTask(), cacheTimeoutMillis());
             }
 
@@ -295,6 +298,11 @@ public class DefaultMetadataContainer implements MetadataContainer {
         return data;
     }
 
+    @Override
+    public void clearCache() {
+        reloadAllApplications();
+    }
+
     class ApplicationLoadCallable implements Callable<Void> {
         private String code;
         private Version version;
@@ -312,6 +320,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
                 ApplicationReference appRef =
                     new ApplicationReference(app, initCompilationData(app));
                 cache.get(code, assureNotNull(version)).set(appRef);
+                _log.info(String.format("Application '%s [%s]' reloaded", code, version));
             } catch (Exception e) {
                 _log.warn(String.format("Application '%s [%s]' reload problem: ", code, version),
                     e);

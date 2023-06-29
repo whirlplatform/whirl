@@ -22,6 +22,7 @@ import org.whirlplatform.server.config.ServerModule;
 import org.whirlplatform.server.log.Logger;
 import org.whirlplatform.server.log.LoggerFactory;
 import org.whirlplatform.server.metadata.MetadataProvider;
+import org.whirlplatform.server.metadata.container.MetadataContainer;
 import org.whirlplatform.server.monitor.mbeans.Applications;
 import org.whirlplatform.server.monitor.mbeans.Events;
 import org.whirlplatform.server.monitor.mbeans.Main;
@@ -40,22 +41,18 @@ public class InjectServletConfig extends GuiceServletContextListener {
         return Guice.createInjector(new CoreModule(configuration), new ServerModule());
     }
 
-    // @Override
-    // protected List<? extends Module> getModules(ServletContext arg0) {
-    // return Arrays.asList(new CoreModule(configuration), new ServerModule());
-    // }
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         super.contextInitialized(servletContextEvent);
-        initMBeans(servletContextEvent.getServletContext());
-        initDatabase((Injector) servletContextEvent.getServletContext()
-            .getAttribute(Injector.class.getName()));
+        Injector injector = (Injector) servletContextEvent.getServletContext()
+            .getAttribute(Injector.class.getName());
+        initMBeans(servletContextEvent.getServletContext(), injector);
+        initDatabase(injector);
 
     }
 
     // Создание бинов для управления приложением
-    private void initMBeans(ServletContext ctx) {
+    private void initMBeans(ServletContext ctx, Injector injector) {
         try {
             MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 
@@ -67,19 +64,22 @@ public class InjectServletConfig extends GuiceServletContextListener {
             }
             beanPath = "Whirl:type=" + beanPath;
 
-            ObjectName mainName = new ObjectName(beanPath + ",bean=Main");
-            mbeanServer.registerMBean(new Main(), mainName);
+            ObjectName mainName = new ObjectName(beanPath + ",bean=" + Main.OBJECT_NAME);
+            mbeanServer.registerMBean(
+                new Main(injector.getInstance(MetadataContainer.class)),
+                mainName
+            );
             mBeans.add(mainName);
 
-            ObjectName appName = new ObjectName(beanPath + ",bean=Applications");
+            ObjectName appName = new ObjectName(beanPath + ",bean=" + Applications.OBJECT_NAME);
             mbeanServer.registerMBean(new Applications(), appName);
             mBeans.add(appName);
 
-            ObjectName eventsName = new ObjectName(beanPath + ",bean=Events");
+            ObjectName eventsName = new ObjectName(beanPath + ",bean=" + Events.OBJECT_NAME);
             mbeanServer.registerMBean(new Events(), eventsName);
             mBeans.add(eventsName);
 
-            ObjectName usersName = new ObjectName(beanPath + ",bean=Users");
+            ObjectName usersName = new ObjectName(beanPath + ",bean=" + Users.OBJECT_NAME);
             mbeanServer.registerMBean(new Users(), usersName);
             mBeans.add(usersName);
 

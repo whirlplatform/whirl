@@ -9,4 +9,6 @@ public interface MetadataContainer {
     AtomicReference<ApplicationReference> getApplication(String code,
                                                          Version version) throws ContainerException;
 
+    void clearCache();
+
 }
