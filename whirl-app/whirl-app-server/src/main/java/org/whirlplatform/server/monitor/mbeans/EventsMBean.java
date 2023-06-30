@@ -2,6 +2,8 @@ package org.whirlplatform.server.monitor.mbeans;
 
 public interface EventsMBean {
 
+    public static final String OBJECT_NAME = "Events";
+
     String[] getActiveDBMethods();
 
     void stopActiveDBMethod(String methodId);

@@ -1,5 +1,6 @@
 package org.whirlplatform.editor.server;
 
+import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.inject.Inject;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import org.apache.empire.commons.ObjectUtils;
 import org.apache.empire.db.DBCmpType;
 import org.apache.empire.db.DBColumn;
@@ -426,6 +430,24 @@ public class MultibaseEditorConnector implements EditorConnector {
         }
     }
 
+    private void clearApplicationsCache() {
+        try {
+            MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+            mBeanServer.queryNames(new ObjectName("Whirl:type=*,bean=Main"), null).forEach(
+                objectName -> {
+                    try {
+                        _log.info("Clear metadata store cache: " + objectName);
+                        mBeanServer.invoke(objectName, "clearMetadataStoreCache", null, null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            );
+        } catch (MalformedObjectNameException e) {
+            _log.warn("Clear metadata store cache error", e);
+        }
+    }
+
     @Override
     @SuppressWarnings("deprecation")
     public void saveApplication(ApplicationElement application, Version version,
@@ -434,6 +456,7 @@ public class MultibaseEditorConnector implements EditorConnector {
         try {
             ApplicationIdHelper.initIdsOf(application);
             metadataStore.saveApplication(application, version, user);
+            clearApplicationsCache();
         } catch (MetadataStoreException e) {
             String message = "Application save error: "
                 + (application != null ? application.getCode() : "null");

@@ -23,7 +23,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <listener>
-        <listener-class>org.whirlplatform.server.servlet.InjectServletConfig</listener-class>
+        <listener-class>org.whirlplatform.server.servlet.ApplicationInjectServletConfig</listener-class>
     </listener>
 
     <session-config>
