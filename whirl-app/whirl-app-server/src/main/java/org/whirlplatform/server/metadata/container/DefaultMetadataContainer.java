@@ -72,7 +72,7 @@ public class DefaultMetadataContainer implements MetadataContainer {
      * Инициализация процесса обновления метаданных загружаемых приложений.
      */
     private void initTimerReload() {
-        if (!(metadataStore instanceof WatchableStore)) {
+        if (cacheTimeoutMillis() > 0) {
             reloadTimer.schedule(reloadTask(), cacheTimeoutMillis());
         }
     }
