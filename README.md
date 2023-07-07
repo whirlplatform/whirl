@@ -1,16 +1,16 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
-<p style="text-align:center;">
-  <img src="logo.png" />
+<p style="text-align:center;">Stay tuned!
+  <img src="logo.png" /> <br
 </p>
 
 # Whirl Platform
 
-The Whirl Platform is application builder software for database developers that simplifying of creating web
-applications. It provides WYSIWYG tools for building UI that tightly binds to database data and business logic. Building
-application didn't require to write application server or client side logic, all logic can be done database side.
+The Whirl Platform is an application builder software for database developers that simplifies the creation of web applications.
+It provides WYSIWYG tools for building user interfaces that are tightly coupled to database data and business logic. Building
+application doesn't require writing application server or client side logic, all logic can be done database side.
 
-Platform is on production-ready state and used in more than twenty closed source commercial applications.
+Platform is in production state and used in more than twenty closed source commercial applications.
 
 ## Demo
 
@@ -18,78 +18,63 @@ You can try Whirl Platform on our demo server.
 
 #### Application
 
-Server: [Showcase application](http://whirl-demo.jelastic.regruhosting.ru/app?application=whirl-showcase)
-
-Username: whirl-showcase-user
-
-Password: password
-
-#### Editor
-
-Server: [Editor](http://whirl-demo.jelastic.regruhosting.ru/editor/)
+Server: [Admin Application](http://demo.whirl-platform.ru/app?application=whirl-admin)
 
 Username: whirl-admin
 
 Password: password
 
-## Developing
+#### Editor
 
-### Database preparation
+Server: [Editor](http://demo.whirl-platform.ru/editor/)
 
-First the database to store platform data should be created.
+Username: whirl-admin
 
-- **PostgreSQL**
-
-  For PostgreSQL you should have configured local RDBMS on 5432 port.
-  SQL scripts for creating metadata database are:
-
-    ```sql
-    CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
-    CREATE DATABASE whirl OWNER whirl;
-    GRANT ALL PRIVILEGES ON DATABASE whirl TO whirl;
-    \c whirl -- connect to whirl database as superuser and run next commands
-    CREATE SCHEMA whirl AUTHORIZATION whirl;
-    CREATE EXTENSION IF NOT EXISTS hstore;
-    ```
-
-- The Whirl Platform require PostgreSQL 13 or higher. But if you are using PostgreSQL 12 or lower, you can install 'hstore' extension by yourself.
+Password: password
 
 
-- NOTE: 'hstore' should be installed by 'whirl' user. You need to grant superuser to 'whirl' by 'postgres' user.
-The following code can help:
+## Installation
+
+### Docker Compose
+
+Fastest way to run platform is to use docker compose located in `docker` folder.
+
+```bash
+cd docker
+docker compose --profile image --project-name whirl up
+```
+
+This will run platform with default configuration and default database.
+
+You can open application in browser by url [http://localhost:8090/app](http://localhost:8080/app) 
+and [http://localhost:8090/editor](http://localhost:8080/editor) for editor.
 
 
-- In the sql shell by 'postgres' user:
-    ```sql
-      ALTER ROLE whirl superuser;
-    ```
-      
-      
-- Then by 'whirl' user:
-    ```sql
-    CREATE EXTENSION IF NOT EXISTS hstore;
-    ```  
+## Contributing
 
-- And again by 'postgres':
-    ```sql
-      ALTER ROLE whirl nosuperuser;
-    ```  
+### Database Preparation
+
+First, the database to store the platform data should be created.
+
+PostgreSQL should be configured as the local RDBMS on port 5432. SQL scripts for creating the metadata database are
+
+```sql
+CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
+CREATE DATABASE whirl OWNER whirl;
+GRANT whirl ALL PRIVILEGES ON DATABASE whirl;
+\c whirl -- connect to the whirl database as superuser and run the following commands
+CREATE SCHEMA whirl AUTHORIZE whirl;
+```
 
 
+**NOTE: If you are using PostgreSQL 12 or lower, you can manually install the ['hstore'](https://www.postgresql.org/docs/current/hstore.html) extension first.**.
 
-- MySQL:
-  For MySQL configure it on port 3306.
-    ```sql
-    CREATE USER whirl IDENTIFIED BY 'password';
-    CREATE DATABASE whirl;
-    GRANT ALL ON whirl.* TO whirl;
-    ```
 
-### Building and running
+### Building and Running
 
-**Project requires Java 8, upper versions are not supported yet.**
+**Project requires Java 8, higher versions are not yet supported.** ### ###
 
-To prepare dependencies for running platform in development mode you should build prerequisites:
+To prepare dependencies for running the platform in development mode, you should build prerequisites:
 
 ```bash
 mvn clean install "-Dgwt.skipCompilation=true"
@@ -97,98 +82,98 @@ mvn clean install "-Dgwt.skipCompilation=true"
 
 #### Main platform - whirl-app
 
-Command to start backend on Tomcat server is:
+Command to start the backend on the Tomcat server is:
 
 ```bash
 cd whirl-app
 mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
 
-We are using GWT for developing frontend side
+We use GWT for frontend development
 with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index.html) to manage GWT modules.
 
-Command to start frontend in dev mode is:
+The command to start the frontend in dev mode is
 
 ```bash
 cd whirl-app
 mvn gwt:codeserver -pl whirl-app-client -am
 ```
 
-After command execution application will be accessible at http://localhost:8090/app. Frontend part will be compiled on
-demand.
+After running the command, the application will be available at http://localhost:8090/app. The frontend part is compiled
+on demand.
 
 ### Application editor - whirl-editor
 
-Commands to start backend:
+Commands to start the backend:
 
 ```bash
 cd whirl-editor
 mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
 
-Commands to start frontend:
+Commands to start the frontend:
 
 ```bash
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
 ```
 
-Editor will be accessible at http://localhost:8091/editor/.
+The editor will be available at http://localhost:8091/editor/.
 
-### Release preparation
+### Prepare release
 
-Command to set new version in all pom.xml files is:
+The command to set the new version in all pom.xml files is
 
 ```bash
 mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
 ```
 
-## Database Naming Conventions
+### Database naming conventions
 
-Example: function which takes two parameters (message and type of the window) and show a window depends on that
+Example: Function that takes two parameters (message and window type) and displays a window depending on those
 parameters.
 
-```bash 
+```sql 
 CREATE OR REPLACE FUNCTION whirl_admin.show_message(p_message_text text, p_message_type text)
- RETURNS text
+ RETURN text
  LANGUAGE plpgsql
-AS $function$
+AS $function$.
 declare 
 		v_version varchar(2048);
 		v_result whirl.function_result;
 	BEGIN
 		select version()
-		into v_version;
-		v_result.title := 'Message';
+		in v_version;
+		v_result.title := 'Message
 		v_result.message := p_message_text;
 		v_result.message_type := p_message_type;
 		return whirl.as_result(v_result);
 	END;
-$function$
+function
 ;
 ```
 
-Incoming parameters of the function
+Incoming function parameters
 
-```bash
+```sql
 p_message_text text
 ```
 
-Variables in the body of the function
+Variables in the function body
 
-```bash
-v_parameter_type  varchar(4000);
+```sql
+v_parameter_type varchar(4000);
 ```
 
-Links to the other tables (name of the column in the other table)
+References to the other tables (name of the column in the other table)
 
-```bash
+```sql
 r_whirl_users
 ```
 
 ## License
 
-Since the Whirl Platform client side code mostly based on the Sencha GXT library, it's deriving [GPL v3](LICENSE)
+Since the client-side code of the Whirl platform is mostly based on the Sencha GXT library, it's licensed under the [GPL v3](LICENSE)
 license.
 
 [GPL v3 license text](LICENSE)
