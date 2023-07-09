@@ -84,6 +84,8 @@ Package:
     # Build on all branches
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
     - if: $CI_COMMIT_TAG
       when: always
       variables:
@@ -110,6 +112,8 @@ Verify:
       when: always
     # On all branches
     - if: $CI_COMMIT_BRANCH == 'develop'
+      when: always
+    - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always
     - if: $CI_COMMIT_BRANCH
       when: manual
@@ -194,6 +198,8 @@ Publish Docker Release LATEST:
 Deploy:
   stage: deploy
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $ENV == "demo"
+      when: always
     # build on all branches
     - if: $CI_COMMIT_BRANCH
       when: manual
@@ -205,8 +211,7 @@ Deploy:
     pull_policy: if-not-present
   parallel:
     matrix:
-      - ENV: dev
-      - ENV: demo
+      - ENV: [dev, demo]
   environment:
     name: ${ENV}
     url: http://${ENV}.whirl-platform.ru:8090/
@@ -217,6 +222,14 @@ Deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
+    - echo "$CLEAN_DATABASE"
+    - echo "$ENV"
+    # Remove docker volume on demo server
+    - |
+      if [ $CLEAN_DATABASE == "true" ]; then 
+        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker rm --force postgres ' ;
+        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker volume rm --force whirl-develop_db-data ' ;
+      fi
     # Create config folder on remote server.
     - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'mkdir -p ~/conf/whirl'
     # Copy confinguration files to remote server to folder ~/conf/whirl
