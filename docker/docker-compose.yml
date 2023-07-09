@@ -63,3 +63,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     volumes:
       - ${WHIRL_CONF:-./}db/postgresql/:/docker-entrypoint-initdb.d/ # Database initialisation scripts.
+      - db-data:/var/lib/postgresql/data # Database data location.
+
+volumes:
+  db-data:
+    driver: local
