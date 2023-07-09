@@ -42,13 +42,13 @@ Fastest way to run platform is to use docker compose located in `docker` folder.
 **Linux:**
 ```shell
 cd docker
-TAG=v0.3.0 docker compose --profile image --project-name whirl up
+TAG=v0.4.0 docker compose --profile image --project-name whirl up
 ```
 
 **Windows:**
 ```shell
 cd docker
-set TAG=v0.3.0
+set TAG=v0.4.0
 docker compose --profile image --project-name whirl up
 ```
 
