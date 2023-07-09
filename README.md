@@ -1,7 +1,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
-<p style="text-align:center;">Stay tuned!
-  <img src="logo.png" /> <br
+<p style="text-align:center;">
+  <img src="logo.png" /><br>
 </p>
 
 # Whirl Platform
@@ -39,8 +39,16 @@ Password: password
 
 Fastest way to run platform is to use docker compose located in `docker` folder.
 
-```bash
+**Linux:**
+```shell
 cd docker
+TAG=v0.4.0 docker compose --profile image --project-name whirl up
+```
+
+**Windows:**
+```shell
+cd docker
+set TAG=v0.4.0
 docker compose --profile image --project-name whirl up
 ```
 
@@ -76,7 +84,7 @@ CREATE SCHEMA whirl AUTHORIZE whirl;
 
 To prepare dependencies for running the platform in development mode, you should build prerequisites:
 
-```bash
+```shell
 mvn clean install "-Dgwt.skipCompilation=true"
 ```
 
@@ -84,7 +92,7 @@ mvn clean install "-Dgwt.skipCompilation=true"
 
 Command to start the backend on the Tomcat server is:
 
-```bash
+```shell
 cd whirl-app
 mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
@@ -94,7 +102,7 @@ with [tbroyer Maven GWT plugin](https://tbroyer.github.io/gwt-maven-plugin/index
 
 The command to start the frontend in dev mode is
 
-```bash
+```shell
 cd whirl-app
 mvn gwt:codeserver -pl whirl-app-client -am
 ```
@@ -106,27 +114,19 @@ on demand.
 
 Commands to start the backend:
 
-```bash
+```shell
 cd whirl-editor
 mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
 
 Commands to start the frontend:
 
-```bash
+```shell
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
 ```
 
 The editor will be available at http://localhost:8091/editor/.
-
-### Prepare release
-
-The command to set the new version in all pom.xml files is
-
-```bash
-mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
-```
 
 ### Database naming conventions
 

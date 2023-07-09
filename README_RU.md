@@ -1,7 +1,7 @@
 [![Статус строительства](https://scrutinizer-ci.com/g/whirlplatform/whirl/badges/build.png?b=master)](https://scrutinizer-ci.com/g/whirlplatform/whirl/build-status/master)
 
-<p style="text-align:center;"> Оставайтесь на связи!
-  <img src="logo.png" /> <br
+<p style="text-align:center;">
+  <img src="logo.png" /> <br>
 </p>
 
 # Платформа Whirl
@@ -39,8 +39,16 @@ Whirl Platform - это программа для создания прилож�
 
 Самый быстрый способ запустить платформу - использовать docker compose, расположенный в папке `docker`.
 
-```bash
+**Linux:**
+```shell
 cd docker
+TAG=v0.4.0 docker compose --profile image --project-name whirl up
+```
+
+**Windows:**
+```shell
+cd docker
+set TAG=v0.4.0
 docker compose --profile image --project-name whirl up
 ```
 
@@ -50,7 +58,7 @@ docker compose --profile image --project-name whirl up
 и [http://localhost:8090/editor](http://localhost:8080/editor) для редактора.
 
 
-## Вклад
+## Контрибьюторам
 
 ### Подготовка базы данных
 
@@ -75,7 +83,7 @@ CREATE SCHEMA whirl AUTHORIZE whirl;
 
 Чтобы подготовить зависимости для запуска платформы в режиме разработки, необходимо собрать предварительные условия:
 
-```bash
+```shell
 mvn clean install "-Dgwt.skipCompilation=true"
 ```
 
@@ -83,7 +91,7 @@ mvn clean install "-Dgwt.skipCompilation=true"
 
 Команда для запуска бэкенда на сервере Tomcat следующая:
 
-```bash
+```shell
 cd whirl-app
 mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
@@ -93,7 +101,7 @@ mvn compile war:exploded cargo:run -pl whirl-app-server -am -P jdbc-postgresql,c
 
 Команда для запуска фронтенда в режиме dev следующая
 
-```bash
+```shell
 cd whirl-app
 mvn gwt:codeserver -pl whirl-app-client -am
 ```
@@ -105,27 +113,19 @@ mvn gwt:codeserver -pl whirl-app-client -am
 
 Команды для запуска бэкенда:
 
-```bash
+```shell
 cd whirl-editor
 mvn compile war:exploded cargo:run -pl whirl-editor-server -am -P jdbc-postgresql,config-postgresql,local-store
 ```
 
 Команды для запуска фронтенда:
 
-```bash
+```shell
 cd whirl-editor
 mvn gwt:codeserver -pl whirl-editor-client -am
 ```
 
 Редактор будет доступен по адресу http://localhost:8091/editor/.
-
-### Подготовить релиз
-
-Команда для установки новой версии во всех файлах pom.xml следующая
-
-```bash
-mvn versions:set -DnewVersion=X.X.X-SNAPSHOT -DprocessAllModules
-```
 
 ### Соглашения об именовании баз данных
 
