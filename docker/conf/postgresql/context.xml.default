@@ -69,7 +69,7 @@
             type="java.lang.String"
             override="false"/>
 
-    <!-- ENGLISH loacle messages -->
+    <!-- ENGLISH locale messages -->
     <!-- Заголовок окна браузера для локали "EN" (Английской) -->
     <Environment
             name="Whirl/message/EN/index_title"
@@ -90,6 +90,3 @@
             override="false"/>
 
 </Context>
-
-
-

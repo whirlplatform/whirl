@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "whirl.fullname" . }}
+data:
+  context.xml.default: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Context reloadable="true">
+
+        <!-- Start Metadata datasource configuration	-->
+        {{- range $datasourceName, $datasourceConfig := .Values.whirl.datasource }}
+        <Resource
+                name="Whirl/ds/{{ $datasourceName }}/datasource"
+                auth="Container"
+                type="javax.sql.DataSource"
+                factory="{{ $datasourceConfig.factory }}"
+                driverClassName="{{ $datasourceConfig.driverClassName }}"
+                minimumIdle="{{ $datasourceConfig.minimumIdle }}"
+                maximumPoolSize="{{ $datasourceConfig.maximumPoolSize }}"
+                connectionTimeout="{{ $datasourceConfig.connectionTimeout }}"
+                initializationFailTimeout="{{ $datasourceConfig.initializationFailTimeout }}"
+                jdbcUrl="{{ $datasourceConfig.jdbcUrl }}"
+                schema="{{ $datasourceConfig.schema }}"
+                username="{{ $datasourceConfig.username }}"
+                password="{{ $datasourceConfig.password }}"
+        />
+        <Environment
+                name="Whirl/ds/{{ $datasourceName }}/driver"
+                value="{{ $datasourceConfig.driver }}"
+                type="java.lang.String"
+                override="false"/>
+        <Environment
+                name="Whirl/ds/{{ $datasourceName }}/evolutions/enabled"
+                value="{{ $datasourceConfig.evolutionsEnabled }}"
+                type="java.lang.Boolean"
+                override="false"/>
+        {{- end }}
+        <!-- End Metadata datasource configuration-->
+
+        <!-- Каталог ресурсов необходимых для работы приложений -->
+        <Environment
+                name="Whirl/work-path"
+                value="{{ .Values.whirl.workPath }}"
+                type="java.lang.String"
+                override="false"/>
+
+        <!--
+         Время жизни метаданных приложения. С этим промежутком метаданные будут обновляться в кеше.
+         Для отключения кеширования установите значение в 0.
+         -->
+        <Environment
+                name="Whirl/cachetimeout"
+                value="{{ .Values.whirl.cacheTimeout }}"
+                type="java.lang.Integer"
+                override="false"/>
+
+        <!-- DEFAULT locale messages -->
+        <!-- Заголовок окна браузера для локали по-умолчанию -->
+        <Environment
+                name="Whirl/message/default/index_title"
+                value="{{ .Values.whirl.defaultLocale.indexTitle }}"
+                type="java.lang.String"
+                override="false"/>
+        <!-- Заголовок шапки страницы логина для локали по-умолчанию -->
+        <Environment
+                name="Whirl/message/default/index_header"
+                value="{{ .Values.whirl.defaultLocale.indexHeader }}"
+                type="java.lang.String"
+                override="false"/>
+        <!-- Подпись нижней части страницы логина для локали по-умолчанию -->
+        <Environment
+                name="Whirl/message/default/index_footer"
+                value="{{ .Values.whirl.defaultLocale.indexFooter }}"
+                type="java.lang.String"
+                override="false"/>
+
+        <!-- ENGLISH locale messages -->
+        <!-- Заголовок окна браузера для локали "EN" (Английской) -->
+        <Environment
+                name="Whirl/message/EN/index_title"
+                value="{{ .Values.whirl.englishLocale.indexTitle }}"
+                type="java.lang.String"
+                override="false"/>
+        <!-- Заголовок шапки страницы логина для локали "EN" (Английской) -->
+        <Environment
+                name="Whirl/message/EN/index_header"
+                value="{{ .Values.whirl.englishLocale.indexHeader }}"
+                type="java.lang.String"
+                override="false"/>
+        <!-- Подпись нижней части страницы логина для локали "EN" (Английской) -->
+        <Environment
+                name="Whirl/message/EN/index_footer"
+                value="{{ .Values.whirl.englishLocale.indexFooter }}"
+                type="java.lang.String"
+                override="false"/>
+
+    </Context>
