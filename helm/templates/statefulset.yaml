@@ -37,10 +37,12 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 60
             httpGet:
               path: /
               port: http
           readinessProbe:
+            initialDelaySeconds: 60
             httpGet:
               path: /
               port: http
@@ -49,6 +51,9 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /usr/local/tomcat/conf/Catalina/localhost/
+            - name: work-volume
+              mountPath: {{ .Values.whirl.workPath }}
+            - name: tmp
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -68,3 +73,6 @@ spec:
             items:
               - key: context.xml.default
                 path: context.xml.default
+        - name: work-volume
+          emptyDir:
+            sizeLimit: 200Mi
