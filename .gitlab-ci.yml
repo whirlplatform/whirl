@@ -28,9 +28,7 @@ variables:
 
 Check Checkstyle:
   stage: check
-  rules:
-    # Run on source event = merge requests
-    - when: never
+  when: never
   allow_failure: false
   script:
     - mvn ${MAVEN_OPTS} checkstyle:checkstyle-aggregate
