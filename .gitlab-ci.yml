@@ -28,6 +28,10 @@ variables:
 
 Check Checkstyle:
   stage: check
+  rules:
+    # Run on source event = merge requests
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
   when: never
   allow_failure: false
   script:
