@@ -194,62 +194,88 @@ Publish Docker Release LATEST:
     CHANGELIST: ""
     SHA: ""
 
-# Deploy to dev server with docker compose.
-Deploy:
+deploy-demo:
   stage: deploy
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $ENV == "demo"
-      when: always
-    # build on all branches
-    - if: $CI_COMMIT_BRANCH
-      when: manual
   needs:
     - job: Package
       artifacts: true
-  image:
-    name: docker:20.10.21
-    pull_policy: if-not-present
-  parallel:
-    matrix:
-      - ENV: [dev, demo]
-  environment:
-    name: ${ENV}
-    url: http://${ENV}.whirl-platform.ru:8090/
-  before_script:
-    - command -v ssh-agent >/dev/null || apk add openssh-client
-    - eval $(ssh-agent -s)
-    - cat "${AUTHORIZED_KEY}" | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-  script:
-    - echo "$CLEAN_DATABASE"
-    - echo "$ENV"
-    # Remove docker volume on demo server
-    - |
-      if [ $CLEAN_DATABASE == "true" ]; then 
-        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker rm --force postgres ' ;
-        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker volume rm --force whirl-develop_db-data ' ;
-      fi
-    # Create config folder on remote server.
-    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'mkdir -p ~/conf/whirl'
-    # Copy confinguration files to remote server to folder ~/conf/whirl
-    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
-    # Copy database initialization files to remote server to folder ~/conf/whirl
-    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
-    # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
-    - >-
-      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
-      "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
-    # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
-    - >-
-      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
-      "sed -i \"s/'password'/'${ENV_POSTGRES_PASSWORD}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
-    - >-
-      docker --host "ssh://${ENV_USER}@${ENV_HOST}"
-      compose
-      --file ./docker/docker-compose.yml
-      --env-file ${ENV_ENV_FILE}
-      --profile packaged
-      --project-name whirl-develop
-      up --force-recreate --build --detach
-    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} "sudo docker system prune --all --force"
+  trigger:
+    include: deploy-demo.yml
+
+
+
+#generate-config:
+#  stage: build
+#  script:
+#    - generate-ci-config > generated-config.yml
+#    - cat generated-config.yml
+#  artifacts:
+#    paths:
+#      - generated-config.yml
+#
+#child-pipeline:
+#  stage: deploy
+#  trigger:
+#    include:
+#      - artifact: generated-config.yml
+#        job: generate-config
+
+## Deploy to dev server with docker compose.
+#Deploy:
+#  stage: deploy
+#  rules:
+#    - if: $CI_PIPELINE_SOURCE == "schedule" && $ENV == "demo"
+#      when: always
+#    # build on all branches
+#    - if: $CI_COMMIT_BRANCH
+#      when: manual
+#  needs:
+#    - job: Package
+#      artifacts: true
+#  image:
+#    name: docker:20.10.21
+#    pull_policy: if-not-present
+##  parallel:
+##    matrix:
+##      - ENV: [dev, demo]
+#  environment:
+#    name: ${ENV}
+#    url: http://${ENV}.whirl-platform.ru:8090/
+#  before_script:
+#    - command -v ssh-agent >/dev/null || apk add openssh-client
+#    - eval $(ssh-agent -s)
+#    - cat "${AUTHORIZED_KEY}" | ssh-add -
+#    - mkdir -p ~/.ssh
+#    - chmod 700 ~/.ssh
+#  script:
+#    - echo "$CLEAN_DATABASE"
+#    - echo "$ENV"
+#    # Remove docker volume on demo server
+#    - |
+#      if [ $CLEAN_DATABASE == "true" ]; then
+#        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker rm --force postgres ' ;
+#        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker volume rm --force whirl-develop_db-data ' ;
+#      fi
+#    # Create config folder on remote server.
+#    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'mkdir -p ~/conf/whirl'
+#    # Copy confinguration files to remote server to folder ~/conf/whirl
+#    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
+#    # Copy database initialization files to remote server to folder ~/conf/whirl
+#    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
+#    # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
+#    - >-
+#      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
+#      "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+#    # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
+#    - >-
+#      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
+#      "sed -i \"s/'password'/'${ENV_POSTGRES_PASSWORD}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
+#    - >-
+#      docker --host "ssh://${ENV_USER}@${ENV_HOST}"
+#      compose
+#      --file ./docker/docker-compose.yml
+#      --env-file ${ENV_ENV_FILE}
+#      --profile packaged
+#      --project-name whirl-develop
+#      up --force-recreate --build --detach
+#    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} "sudo docker system prune --all --force"
