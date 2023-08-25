@@ -1,6 +1,5 @@
-
 child-deploy-demo:
-#  stage: deploy
+  stage: deploy
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $ENV == "demo"
       when: always
@@ -13,9 +12,9 @@ child-deploy-demo:
   image:
     name: docker:20.10.21
     pull_policy: if-not-present
-    parallel:
-      matrix:
-        - ENV: demo
+  parallel:
+    matrix:
+      - ENV: demo
   environment:
     name: ${ENV}
     url: http://${ENV}.whirl-platform.ru:8090/
