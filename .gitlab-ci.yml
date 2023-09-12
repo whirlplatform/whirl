@@ -3,6 +3,7 @@ stages:
   - build
   - verify
   - docker
+  - stage
   - deploy
 
 default:
