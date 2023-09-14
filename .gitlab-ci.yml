@@ -273,6 +273,9 @@ generate-deploy:
       if __name__ == "__main__":
           names = sys.argv[1].split(",")
           main(names)
+  needs:
+    - job: Package
+      artifacts: true
   image:
     python
   before_script:
