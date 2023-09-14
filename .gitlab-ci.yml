@@ -216,6 +216,9 @@ generate-deploy:
           # build on all branches
           - if: $$CI_COMMIT_BRANCH
             when: manual
+        needs:
+          - job: Package
+            artifacts: true
         image:
           name: docker:20.10.21
           pull_policy: if-not-present
