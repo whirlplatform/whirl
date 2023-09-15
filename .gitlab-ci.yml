@@ -216,6 +216,9 @@ generate-deploy:
           # build on all branches
           - if: $$CI_COMMIT_BRANCH
             when: manual
+        needs:
+          - pipeline: $$PARENT_PIPELINE_ID
+            job: Package
         image:
           name: docker:20.10.21
           pull_policy: if-not-present
@@ -273,9 +276,6 @@ generate-deploy:
       if __name__ == "__main__":
           names = sys.argv[1].split(",")
           main(names)
-  needs:
-    - job: Package
-      artifacts: true
   image:
     python
   before_script:
@@ -322,10 +322,9 @@ generate-deploy:
 
 child-deploy:
   stage: deploy
-  needs:
-    - job: Package
-      artifacts: true
   trigger:
     include:
       - artifact: generated-deploy.yml
         job: generate-deploy
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
