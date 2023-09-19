@@ -246,10 +246,22 @@ generate-deploy:
           - scp -o StrictHostKeyChecking=no -pr docker/conf/ $${{ENV_USER}}@$${{ENV_HOST}}:~/conf/whirl
           # Copy database initialization files to remote server to folder ~/conf/whirl
           - scp -o StrictHostKeyChecking=no -pr docker/db/ $${{ENV_USER}}@$${{ENV_HOST}}:~/conf/whirl
+      
+          # See what is inside before
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            'cat ~/conf/whirl/conf/postgresql/context.xml.default'
+      
           # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
             "sed -i 's/password=\"password\"/password=\"$${{ENV_POSTGRES_PASSWORD}}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+      
+          # See what is inside after
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            'cat ~/conf/whirl/conf/postgresql/context.xml.default'
+      
           # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
