@@ -138,7 +138,7 @@ Verify:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always
     - if: $CI_COMMIT_BRANCH
-      when: always  # manual
+      when: manual
   allow_failure: false
   needs:
     - job: Package
@@ -310,7 +310,7 @@ generate-deploy:
           names = sys.argv[1].split(",")
           main(names)
   image:
-    python
+    python:3.10
   before_script:
     - apt update
     - apt install -y jq
@@ -320,7 +320,7 @@ generate-deploy:
 
     # Request environmental variables
     - |
-      DEPLOY_ARGS=$(curl --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://gitlab.com/api/v4/projects/41380977/environments")
+      DEPLOY_ARGS=$(curl --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/environments")
     - echo $DEPLOY_ARGS > env.json
     - jq '.' env.json
 
