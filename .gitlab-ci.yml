@@ -268,6 +268,8 @@ generate-deploy:
           # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            # Add for debug
+            echo $ENV_POSTGRES_PASSWORD
             "sed -i 's/password=\"password\"/password=\"$${{ENV_POSTGRES_PASSWORD}}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
       
           # See what is inside after
