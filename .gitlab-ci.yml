@@ -268,8 +268,8 @@ generate-deploy:
           # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
-            echo "$$ENV_POSTGRES_PASSWORD"
-            "sed -i 's/password=\"password\"/password=\"$${{ENV_POSTGRES_PASSWORD}}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+            echo "$$ENV_POSTGRES_PASSWORD_DEBUG"
+            "sed -i 's/password=\"password\"/password=\"$${{ENV_POSTGRES_PASSWORD_DEBUG}}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
       
           # See what is inside after
           - >-
@@ -279,7 +279,7 @@ generate-deploy:
           # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
-            "sed -i \"s/'password'/'$${{ENV_POSTGRES_PASSWORD}}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
+            "sed -i \"s/'password'/'$${{ENV_POSTGRES_PASSWORD_DEBUG}}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
           - >-
             docker --host "ssh://$${{ENV_USER}}@$${{ENV_HOST}}"
             compose
