@@ -269,7 +269,7 @@ generate-deploy:
           - >-
             ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
             echo "$$ENV_POSTGRES_PASSWORD_DEBUG"
-            "sed -i 's/password=\"password\"/password=\"$${{ENV_POSTGRES_PASSWORD_DEBUG}}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+            "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD_DEBUG}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
       
           # See what is inside after
           - >-
