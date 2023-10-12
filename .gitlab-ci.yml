@@ -16,7 +16,7 @@ stages:
   - build
   - verify
   - docker
-  - stage
+  - deploy-prepare
   - deploy
 
 default:
@@ -209,11 +209,9 @@ Publish Docker Release LATEST:
     SHA: ""
 
 
-
-
 generate-deploy:
   stage:
-    stage
+    deploy-prepare
   variables:
     DEPLOY_ARGS: ""
     TEMPLATE: |
