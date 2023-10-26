@@ -1,8 +1,22 @@
+#
+# Описание переменных, которые используются внутри этого файла
+#
+## ENV_USER - имя пользователя, под которым выполняются bash команды на удалённый сервер. Эта переменная автоматически определяет на DEV или на DEMO сервер нужно делать деплой.
+## ENV_HOST - хост удалённого сервера. Эта переменная автоматически определяет на DEV или на DEMO сервер нужно делать деплой.
+## WHIRL_WORK - дирректория на удалённом сервере, в которой лежат приложения Whirl.
+## AUTHORIZED_KEY - ключ для доступа к удалённому серверу.
+## DOCKER_PASSWORD - пароль к докер-образу.
+## DOCKER_USERNAME - имя пользователя к докер-образу.
+## ENV_POSTGRES_PASSWORD - пароль к удалённой базе. Переменная сама определяет нужен ли DEV или DEMO сервер.
+## CLEAN_DATABASE - бинарная переменная, определяющая, нужно очищать базу при деплое. Очищает, если деплоим на DEMO сервер, и не очищаем, если деплоим на DEV сервер.
+## ENV_ENV_FILE - файл с переменными окружения DEV удалённого сервера. Эта переменная автоматически определяет DEV это или DEMO.
+
 stages:
   - check
   - build
   - verify
   - docker
+  - deploy-prepare
   - deploy
 
 default:
@@ -91,7 +105,7 @@ Package:
       variables:
         MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dgwt.optimize=9 -Dgwt.style=OBFUSCATED"
     - if: $CI_COMMIT_BRANCH
-      when: manual
+      when: always  # manual
   allow_failure: false
   variables:
     REVISION: ${CI_COMMIT_BRANCH}
@@ -194,62 +208,147 @@ Publish Docker Release LATEST:
     CHANGELIST: ""
     SHA: ""
 
-# Deploy to dev server with docker compose.
-Deploy:
-  stage: deploy
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $ENV == "demo"
-      when: always
-    # build on all branches
-    - if: $CI_COMMIT_BRANCH
-      when: manual
-  needs:
-    - job: Package
-      artifacts: true
+
+generate-deploy:
+  stage:
+    deploy-prepare
+  variables:
+    DEPLOY_ARGS: ""
+    TEMPLATE: |
+      import sys
+
+      def generate_job(name):
+          str = """
+      deploy-{name}:
+        stage: deploy
+        rules:
+          - if: $$CI_PIPELINE_SOURCE == "schedule" && $$ENV == "demo"
+            when: always
+          # build on all branches
+          - if: $$CI_COMMIT_BRANCH
+            when: manual
+        needs:
+          - pipeline: $$PARENT_PIPELINE_ID
+            job: Package
+        image:
+          name: docker:20.10.21
+          pull_policy: if-not-present
+        environment:
+          name: {name}
+          url: http://{name}.whirl-platform.ru:8090/
+        before_script:
+          - command -v ssh-agent >/dev/null || apk add openssh-client
+          - eval $$(ssh-agent -s)
+          - cat "$${{AUTHORIZED_KEY}}" | ssh-add -
+          - mkdir -p ~/.ssh
+          - chmod 700 ~/.ssh
+        script:
+          - echo "$$CLEAN_DATABASE"
+          - echo "$$ENV"
+          # Remove docker volume on demo server
+          - |
+            if [ $$CLEAN_DATABASE == "true" ]; then 
+              ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}} 'sudo docker rm --force postgres ' ;
+              ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}} 'sudo docker volume rm --force whirl-develop_db-data ' ;
+            fi
+          # Create config folder on remote server.
+          - ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}} 'mkdir -p ~/conf/whirl'
+          # Copy configuration files to remote server to folder ~/conf/whirl
+          - scp -o StrictHostKeyChecking=no -pr docker/conf/ $${{ENV_USER}}@$${{ENV_HOST}}:~/conf/whirl
+          # Copy database initialization files to remote server to folder ~/conf/whirl
+          - scp -o StrictHostKeyChecking=no -pr docker/db/ $${{ENV_USER}}@$${{ENV_HOST}}:~/conf/whirl
+      
+          # See what is inside before
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            'cat ~/conf/whirl/conf/postgresql/context.xml.default'
+      
+          # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            echo "$$ENV_POSTGRES_PASSWORD_DEBUG"
+            "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD_DEBUG}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
+      
+          # See what is inside after
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            'cat ~/conf/whirl/conf/postgresql/context.xml.default'
+      
+          # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
+          - >-
+            ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}}
+            "sed -i \"s/'password'/'$${{ENV_POSTGRES_PASSWORD_DEBUG}}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
+          - >-
+            docker --host "ssh://$${{ENV_USER}}@$${{ENV_HOST}}"
+            compose
+            --file ./docker/docker-compose.yml
+            --env-file $${{ENV_ENV_FILE}}
+            --profile packaged
+            --project-name whirl-develop
+            up --force-recreate --build --detach
+          - ssh -o StrictHostKeyChecking=no $${{ENV_USER}}@$${{ENV_HOST}} "sudo docker system prune --all --force"
+      """
+          return str.format(name=name)
+
+
+      def main(names):
+          with open("generated-deploy.yml", "w") as f_out:
+              for name in names:
+                  f_out.write(generate_job(name))
+
+
+      if __name__ == "__main__":
+          names = sys.argv[1].split(",")
+          main(names)
   image:
-    name: docker:20.10.21
-    pull_policy: if-not-present
-  parallel:
-    matrix:
-      - ENV: [dev, demo]
-  environment:
-    name: ${ENV}
-    url: http://${ENV}.whirl-platform.ru:8090/
+    python:3.10
   before_script:
-    - command -v ssh-agent >/dev/null || apk add openssh-client
-    - eval $(ssh-agent -s)
-    - cat "${AUTHORIZED_KEY}" | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+    - apt update
+    - apt install -y jq
+    - apt-get install -y curl
+    - jq --version
   script:
-    - echo "$CLEAN_DATABASE"
-    - echo "$ENV"
-    # Remove docker volume on demo server
+
+    # Request environmental variables
     - |
-      if [ $CLEAN_DATABASE == "true" ]; then 
-        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker rm --force postgres ' ;
-        ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'sudo docker volume rm --force whirl-develop_db-data ' ;
-      fi
-    # Create config folder on remote server.
-    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} 'mkdir -p ~/conf/whirl'
-    # Copy confinguration files to remote server to folder ~/conf/whirl
-    - scp -o StrictHostKeyChecking=no -pr docker/conf/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
-    # Copy database initialization files to remote server to folder ~/conf/whirl
-    - scp -o StrictHostKeyChecking=no -pr docker/db/ ${ENV_USER}@${ENV_HOST}:~/conf/whirl
-    # replace password="password" in ~/conf/whirl/conf/postgresql/context.xml.default on remote server
-    - >-
-      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
-      "sed -i 's/password=\"password\"/password=\"${ENV_POSTGRES_PASSWORD}\"/g' ~/conf/whirl/conf/postgresql/context.xml.default"
-    # replace PASSWORD 'password' in ~/conf/whirl/db/postgresql/01-create-db.sh on remote server
-    - >-
-      ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST}
-      "sed -i \"s/'password'/'${ENV_POSTGRES_PASSWORD}'/g\" ~/conf/whirl/db/postgresql/01-create-db.sh"
-    - >-
-      docker --host "ssh://${ENV_USER}@${ENV_HOST}"
-      compose
-      --file ./docker/docker-compose.yml
-      --env-file ${ENV_ENV_FILE}
-      --profile packaged
-      --project-name whirl-develop
-      up --force-recreate --build --detach
-    - ssh -o StrictHostKeyChecking=no ${ENV_USER}@${ENV_HOST} "sudo docker system prune --all --force"
+      DEPLOY_ARGS=$(curl --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/environments")
+    - echo $DEPLOY_ARGS > env.json
+    - jq '.' env.json
+
+    # Form argument array from json file
+    - declare -a arr=( $(jq '.[].name' env.json) )
+    - echo $arr
+
+    # Form correct arguments from array
+    - DEPLOY_ARGS=""
+    - |+
+      for i in "${arr[@]}"; do
+        i=$(echo $i | tr -d '"')
+        echo "found env $i"
+        DEPLOY_ARGS+=$i,
+      done
+
+    # Delete last comma
+    - DEPLOY_ARGS=${DEPLOY_ARGS::-1}
+    - echo $DEPLOY_ARGS
+
+    - echo "$TEMPLATE" > child_generator.py
+
+    # Print what is inside the .py file
+    - echo "$(<child_generator.py )"
+
+    # Form jobs file
+    - python3 child_generator.py $DEPLOY_ARGS
+
+  artifacts:
+    paths:
+      - generated-deploy.yml
+
+child-deploy:
+  stage: deploy
+  trigger:
+    include:
+      - artifact: generated-deploy.yml
+        job: generate-deploy
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID
