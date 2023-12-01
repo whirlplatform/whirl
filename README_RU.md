@@ -69,9 +69,9 @@ PostgreSQL должен быть настроен как локальная СУ
 ```sql
 CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
 CREATE DATABASE whirl OWNER whirl;
-GRANT whirl ALL PRIVILEGES ON DATABASE whirl;
+GRANT ALL PRIVILEGES ON DATABASE whirl to whirl;
 \c whirl -- подключитесь к базе данных whirl как суперпользователь и выполните следующие команды
-CREATE SCHEMA whirl AUTHORIZE whirl;
+CREATE SCHEMA whirl AUTHORIZATION whirl;
 ```
 
 
@@ -79,7 +79,8 @@ CREATE SCHEMA whirl AUTHORIZE whirl;
 
 ### Сборка и запуск
 
-**Проект требует Java 8, более высокие версии пока не поддерживаются.** ### ### ###
+**Проект требует Java 8, более высокие версии пока не поддерживаются.
+Также, для корректной работы необходима установка Node.js версии 21.2.0 или выше** ### ### ###
 
 Чтобы подготовить зависимости для запуска платформы в режиме разработки, необходимо собрать предварительные условия:
 
@@ -168,6 +169,16 @@ v_parameter_type varchar(4000);
 ```sql
 r_whirl_users
 ```
+
+### Возможные проблемы
+**Windows**
+
+`Проблема:`
+После запуска остаются 2 процесса, занимающие порты `9876` и `9877`.
+
+`Решение проблемы:`
+Необходимо завершить процессы под названием `OpenJDK Platform binary`. Так же вы можете запустить `stop_listening.bat`.
+
 
 ## Лицензия
 
