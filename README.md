@@ -179,7 +179,7 @@ r_whirl_users
 After startup, 2 processes remain, occupying ports `9876` and `9877`.
 
 `Solution:`
-Processes called `OpenJDK Platform binary` need to be terminated. Also you can run `stop_listening.bat`.
+Processes called `OpenJDK Platform binary` need to be terminated. Also you can run [`stop_listening.bat`](stop_listening.bat), which looks for processes with these ports and kills them.
 
 ## License
 
