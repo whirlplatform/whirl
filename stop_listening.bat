@@ -1,4 +1,8 @@
 @echo off
+
+:: Файл убивает процессы с портами 9876 и 9877
+::  https://gitlab.com/whirlplatform/whirl/-/issues/49
+
 setlocal enabledelayedexpansion
 
 set "ports=9876 9877"
