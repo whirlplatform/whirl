@@ -85,7 +85,7 @@ CREATE SCHEMA whirl AUTHORIZATION whirl;
 Чтобы подготовить зависимости для запуска платформы в режиме разработки, необходимо собрать предварительные условия:
 
 ```shell
-mvn clean install "-Dgwt.skipCompilation=true"
+mvn clean install -Dgwt.skipCompilation=true -DskipTests
 ```
 
 #### Основная платформа - whirl-app

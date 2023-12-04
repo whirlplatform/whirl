@@ -86,7 +86,7 @@ Also, for correct operation, you must install Node.js version 21.2.0 or higher.*
 To prepare dependencies for running the platform in development mode, you should build prerequisites:
 
 ```shell
-mvn clean install "-Dgwt.skipCompilation=true"
+mvn clean install -Dgwt.skipCompilation=true -DskipTests
 ```
 
 #### Main platform - whirl-app
