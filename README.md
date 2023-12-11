@@ -69,23 +69,24 @@ PostgreSQL should be configured as the local RDBMS on port 5432. SQL scripts for
 ```sql
 CREATE ROLE whirl WITH LOGIN PASSWORD 'password';
 CREATE DATABASE whirl OWNER whirl;
-GRANT whirl ALL PRIVILEGES ON DATABASE whirl;
+GRANT ALL PRIVILEGES ON DATABASE whirl to whirl;
 \c whirl -- connect to the whirl database as superuser and run the following commands
-CREATE SCHEMA whirl AUTHORIZE whirl;
+CREATE SCHEMA whirl AUTHORIZATION whirl;
 ```
 
 
-**NOTE: If you are using PostgreSQL 12 or lower, you can manually install the ['hstore'](https://www.postgresql.org/docs/current/hstore.html) extension first.**.
+**NOTE: If you are using PostgreSQL 12 or lower, you can manually install the ['hstore'](https://www.postgresql.org/docs/current/hstore.html) extension first.**
 
 
 ### Building and Running
 
-**Project requires Java 8, higher versions are not yet supported.** ### ###
+**Project requires Java 8, higher versions are not yet supported.
+Also, for correct operation, you must install Node.js version 21.2.0 or higher.** ### ###
 
 To prepare dependencies for running the platform in development mode, you should build prerequisites:
 
 ```shell
-mvn clean install "-Dgwt.skipCompilation=true"
+mvn clean install -Dgwt.skipCompilation=true -DskipTests
 ```
 
 #### Main platform - whirl-app
@@ -170,6 +171,15 @@ References to the other tables (name of the column in the other table)
 ```sql
 r_whirl_users
 ```
+
+### Possible problems
+**Windows**
+
+`Problem:`
+After startup, 2 processes remain, occupying ports `9876` and `9877`.
+
+`Solution:`
+Processes called `OpenJDK Platform binary` need to be terminated. Also you can run [`stop_listening.bat`](stop_listening.bat), which looks for processes with these ports and kills them.
 
 ## License
 
