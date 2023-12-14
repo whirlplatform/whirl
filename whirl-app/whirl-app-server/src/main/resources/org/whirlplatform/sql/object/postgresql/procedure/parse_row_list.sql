@@ -3,10 +3,10 @@
  *
  * @param p_value           Переменная типа текст без ограничений
  *
- * @return Текст с заполненной переменной типа "row_value"
+ * @return                Переменная типа "row_list"
  */
 CREATE OR REPLACE FUNCTION parse_row_list(p_value text)
-    RETURNS text
+    RETURNS row_list
     LANGUAGE plpgsql
 AS $function$
 declare
@@ -36,7 +36,7 @@ BEGIN
             v_result.list_name[i] := v_row;
         end loop;
 
-    return v_result.list_name;
+    return v_result;
 END;
 $function$
 ;
