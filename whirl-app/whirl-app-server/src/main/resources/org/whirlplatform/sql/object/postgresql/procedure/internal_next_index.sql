@@ -8,14 +8,13 @@
 CREATE OR REPLACE FUNCTION internal_next_index (
     p_result function_result)
 RETURNS integer
-AS
-$$
+AS $function$
 DECLARE
     v_result integer;
 BEGIN
-    SELECT count (*) INTO v_result FROM skeys (p_result.parameter_index);
+    SELECT count (*) INTO v_result FROM jsonb_object_keys(p_result.parameter_index);
 
     RETURN v_result;
 END;
-$$
+$function$
 LANGUAGE plpgsql
