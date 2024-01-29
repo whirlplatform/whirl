@@ -11,39 +11,17 @@ CREATE OR REPLACE FUNCTION add_parameter_varchar (
     p_result function_result,
     p_code varchar,
     p_value varchar)
-RETURNS function_result
-AS
-$$
-DECLARE
-    v_index integer;
+    RETURNS function_result
+    LANGUAGE plpgsql
+AS $function$
 BEGIN
-    v_index := internal_next_index (p_result);
+    p_result.parameter_index := jsonb_set(p_result.parameter_index, to_jsonb(jsonb_array_length(p_result.parameter_index)), to_jsonb(p_code));
 
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_index)) > 0
-    THEN
-        p_result.parameter_index := p_result.parameter_index::hstore || hstore (v_index::varchar, p_code);
-    ELSE
-        p_result.parameter_index := hstore (v_index::varchar, p_code);
-    END IF;
+    p_result.parameter_value := jsonb_set(p_result.parameter_value, to_jsonb(p_code), to_jsonb(p_value));
 
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_value)) > 0
-    THEN
-        p_result.parameter_value := p_result.parameter_value::hstore || hstore (p_code, p_value);
-    ELSE
-        p_result.parameter_value := hstore (p_code, p_value);
-    END IF;
-
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_type)) > 0
-    THEN
-        p_result.parameter_type := p_result.parameter_type::hstore || hstore (p_code, 'STRING');
-    ELSE
-        p_result.parameter_type := hstore (p_code, 'STRING');
-    END IF;
+    p_result.parameter_type := jsonb_set(p_result.parameter_type, to_jsonb(p_code), to_jsonb('STRING'::varchar));
 
     RETURN p_result;
 END;
-$$
-LANGUAGE plpgsql
+$function$
+;

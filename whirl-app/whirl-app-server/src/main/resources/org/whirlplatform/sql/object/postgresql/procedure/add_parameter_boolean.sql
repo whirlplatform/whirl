@@ -11,46 +11,26 @@ CREATE OR REPLACE FUNCTION add_parameter_boolean (
     p_result function_result,
     p_code varchar,
     p_value boolean)
-RETURNS function_result
-AS
-$$
+    RETURNS function_result
+    LANGUAGE plpgsql
+AS $function$
 DECLARE
     v_index integer;
-    v_value varchar;
+    v_value jsonb;
 BEGIN
-    v_index := internal_next_index (p_result);
+    v_index := jsonb_array_length(p_result.parameter_index) + 1;
 
-    IF p_value IS NOT NULL
-    THEN
-        v_value := p_value::varchar;
-    END IF;
-
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_index)) > 0
-    THEN
-        p_result.parameter_index := p_result.parameter_index::hstore || hstore (v_index::varchar, p_code);
+    IF p_value IS NOT NULL THEN
+        v_value := to_jsonb(p_value);
     ELSE
-        p_result.parameter_index := hstore (v_index::varchar, p_code);
+        v_value := NULL;
     END IF;
 
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_value)) > 0
-    THEN
-        p_result.parameter_value :=
-        p_result.parameter_value::hstore || hstore (p_code, v_value);
-    ELSE
-        p_result.parameter_value := hstore (p_code, v_value);
-    END IF;
-
-    IF (SELECT count (*)
-          FROM skeys (p_result.parameter_type)) > 0
-    THEN
-        p_result.parameter_type := p_result.parameter_type::hstore || hstore (p_code, 'BOOLEAN');
-    ELSE
-        p_result.parameter_type := hstore (p_code, 'BOOLEAN');
-    END IF;
+    p_result.parameter_index := jsonb_set(p_result.parameter_index, v_index::text, to_jsonb(p_code));
+    p_result.parameter_value := jsonb_set(p_result.parameter_value, p_code, v_value);
+    p_result.parameter_type := jsonb_set(p_result.parameter_type, p_code, 'BOOLEAN'::varchar);
 
     RETURN p_result;
 END;
-$$
-LANGUAGE plpgsql
+$function$
+;

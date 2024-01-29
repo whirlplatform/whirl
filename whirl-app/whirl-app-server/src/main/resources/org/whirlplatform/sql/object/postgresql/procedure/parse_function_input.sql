@@ -6,8 +6,8 @@
  * @return Переменную типа "function_input" с заполненными полями
  */
 CREATE OR REPLACE FUNCTION parse_function_input(p_input character varying)
- RETURNS function_input
- LANGUAGE plpgsql
+    RETURNS function_input
+    LANGUAGE plpgsql
 AS $function$
 declare
     v_result function_input;
