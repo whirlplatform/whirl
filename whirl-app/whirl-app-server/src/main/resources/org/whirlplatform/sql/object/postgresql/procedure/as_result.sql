@@ -38,35 +38,35 @@ BEGIN
     v_parameter_index := 0;
 
     FOR v_parameter_rec IN (SELECT *
-                            FROM jsonb_each(p_result.parameter_index))
-    LOOP
-        v_parameter_index := v_parameter_index + 1;
+                            FROM jsonb_each_text(p_result.parameter_index))
+        LOOP
+            v_parameter_index := v_parameter_index + 1;
 
-        v_parameter := '{}'::jsonb;
+            v_parameter := '{}'::jsonb;
 
-        v_parameter :=
-            v_parameter || jsonb_build_object('index', v_parameter_index::varchar);
+            v_parameter :=
+                        v_parameter || jsonb_build_object('index', v_parameter_index::varchar);
 
-        v_parameter_code := v_parameter_rec.key;
-        v_parameter := v_parameter || jsonb_build_object('code', v_parameter_code);
+            v_parameter_code := v_parameter_rec.value;
+            v_parameter := v_parameter || jsonb_build_object('code', v_parameter_code);
 
-        IF p_result.parameter_component ? v_parameter_code
-        THEN
-            v_parameter := v_parameter || jsonb_build_object('component', p_result.parameter_component -> v_parameter_code);
-        ELSE
-            v_parameter_type := p_result.parameter_type -> v_parameter_code;
-            v_parameter := v_parameter || jsonb_build_object('type', v_parameter_type);
-
-            IF v_parameter_type = 'LIST'
+            IF p_result.parameter_component ? v_parameter_code
             THEN
-                v_parameter := v_parameter || jsonb_build_object('title', p_result.parameter_list_title -> v_parameter_code);
+                v_parameter := v_parameter || jsonb_build_object('component', p_result.parameter_component -> v_parameter_code);
+            ELSE
+                v_parameter_type := p_result.parameter_type ->> v_parameter_code;
+                v_parameter := v_parameter || jsonb_build_object('type', v_parameter_type);
+
+                IF v_parameter_type = 'LIST'
+                THEN
+                    v_parameter := v_parameter || jsonb_build_object('title', p_result.parameter_list_title ->> v_parameter_code);
+                END IF;
+
+                v_parameter := v_parameter || jsonb_build_object('value', p_result.parameter_value -> v_parameter_code);
             END IF;
 
-            v_parameter := v_parameter || jsonb_build_object('value', p_result.parameter_value -> v_parameter_code);
-        END IF;
-
-        v_parameter_array[v_parameter_index] := v_parameter;
-    END LOOP;
+            v_parameter_array[v_parameter_index] := v_parameter;
+        END LOOP;
 
     v_out := jsonb_pretty(jsonb_build_object('result', v_result, 'parameters', v_parameter_array));
     RETURN v_out;
