@@ -196,8 +196,6 @@
                     value="Whirl Editor access group"/>
         </insert>
 
-        <sqlFile path="hstore_extension.sql"
-                 relativeToChangelogFile="true"/>
         <sqlFile path="types/row_value.sql"
                      relativeToChangelogFile="true"/>
         <sqlFile path="types/function_result.sql"
@@ -222,9 +220,6 @@
             <sqlFile path="types/function_result_rollback.sql"
                      relativeToChangelogFile="true"/>
             <sqlFile path="types/function_input_rollback.sql"
-                     relativeToChangelogFile="true"/>
-
-            <sqlFile path="hstore_extension_rollback.sql"
                      relativeToChangelogFile="true"/>
         </rollback>
     </changeSet>
