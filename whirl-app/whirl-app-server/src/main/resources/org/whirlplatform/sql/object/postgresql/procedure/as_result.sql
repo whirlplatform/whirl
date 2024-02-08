@@ -68,7 +68,8 @@ BEGIN
             v_parameter_array[v_parameter_index] := v_parameter;
         END LOOP;
 
-    v_out := jsonb_pretty(jsonb_build_object('result', v_result, 'parameters', v_parameter_array));
+    v_result := v_result || jsonb_build_object('parameters', v_parameter_array);
+    v_out := jsonb_build_object('result', v_result);
     RETURN v_out;
 END;
 $function$
