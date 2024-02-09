@@ -10,10 +10,12 @@
 | *return* | Значения в виде массива текста               |
 
 ### Syntax
-    REATE OR REPLACE FUNCTION get_parameter_codes(p_input function_input)
-    RETURNS text[]
-    LANGUAGE plpgsql
-    AS $function$
+    CREATE OR REPLACE FUNCTION get_parameter_codes(
+        p_input function_input)
+        RETURNS text[]
+        LANGUAGE plpgsql
+    AS $$
     BEGIN
-    return akeys (p_input.parameter_index);
+        RETURN array(SELECT jsonb_object_keys(p_input.parameter_index));
     END;
+    $$;

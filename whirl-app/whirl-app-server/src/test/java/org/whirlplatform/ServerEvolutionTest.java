@@ -51,21 +51,27 @@ public class ServerEvolutionTest {
     EvolutionManager evolutionManager;
     Configuration configuration;
 
+    public Connection getConnection() throws SQLException {
+        return postgres.getJdbcDriverInstance()
+            .connect("jdbc:postgresql://" + postgres.getHost()
+                + ":" + postgres.getMappedPort(5432)
+                + "/whirl", getProperties());
+    }
+
+    public Properties getProperties() {
+        props = new Properties();
+        props.setProperty("user", "whirl");
+        props.setProperty("password", "password");
+        return props;
+    }
+
     @Test
     public void migrationTest()
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
 
-        props = new Properties();
-        props.setProperty("user", "whirl");
-        props.setProperty("password", "password");
-
-        connection = postgres.getJdbcDriverInstance()
-            .connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
+        connection = getConnection();
         _log.info("Connection: " + connection.toString());
-
-
-
         connectionProvider = Mockito.mock(ConnectionProvider.class);
         Mockito.when(connectionProvider.getConnection(Mockito.any()))
             .thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
@@ -76,13 +82,11 @@ public class ServerEvolutionTest {
         evolutionManager = new LiquibaseEvolutionManager(connectionProvider, configuration);
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
-        // запустить скрипт напрямую через connection
-        connection = postgres.getJdbcDriverInstance()
-            .connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
-        _log.info("Connection: " + connection.toString());
+        // запуск тестов функций БД
+        connection = getConnection();
         dbFunctionsTest(connection, FUNCTION_INPUT_TEST_SCRIPT);
         dbFunctionsTest(connection, FUNCTION_RESULT_TEST_SCRIPT);
-
+        connection.close();
 
         // Check amount of tables
         String str = postgres.execInContainer("psql", "-U", "whirl", "-c",
@@ -104,12 +108,7 @@ public class ServerEvolutionTest {
         throws InterruptedException, EvolutionException, ConnectException, SQLException, IOException {
         _log.info("Rollback test started!");
 
-        props = new Properties();
-        props.setProperty("user", "whirl");
-        props.setProperty("password", "password");
-
-        connection = postgres.getJdbcDriverInstance()
-            .connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
+        connection = getConnection();
         Mockito.when(connectionProvider.getConnection(Mockito.any()))
             .thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
         evolutionManager.rollbackMetadataEvolution(alias, scriptPath);
@@ -130,21 +129,20 @@ public class ServerEvolutionTest {
     public void dbFunctionsTest(Connection connection, String fileName) {
         StringBuilder strbulder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-            getClass().getClassLoader().getResourceAsStream("tests/db/" + fileName)));
-        ) {
+            getClass().getClassLoader().getResourceAsStream("tests/db/" + fileName)))) {
+
             while (reader.ready()) {
                 strbulder.append(reader.readLine()).append("\n");
             }
+
             CallableStatement cs = connection.prepareCall(strbulder.toString());
-            _log.info("Function test started!");
+            _log.info("DB functions test started!");
             cs.execute();
-            _log.info("Function test finish!");
+            _log.info("DB functions test finish!");
             cs.close();
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
-
-
 
     }
 }
