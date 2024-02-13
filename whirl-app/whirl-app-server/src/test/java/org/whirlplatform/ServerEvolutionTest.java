@@ -2,7 +2,10 @@ package org.whirlplatform;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -28,15 +31,17 @@ public class ServerEvolutionTest {
 
     private static String DATABASE_VERSION = "14";
 
+    private final String FUNCTION_INPUT_TEST_SCRIPT = "test_functions_with_type_function_input.sql";
+    private final String FUNCTION_RESULT_TEST_SCRIPT = "test_functions_with_type_function_result.sql";
+
     @ClassRule
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
         DockerImageName.parse("postgres:" + DATABASE_VERSION))
         .withUsername("postgres")
         .withNetworkAliases("postgresql")
         .withExposedPorts(5432)
-            .withCopyToContainer(MountableFile.forHostPath("../../docker/db/postgresql/"),
-                    "/docker-entrypoint-initdb.d/")
-        ;
+        .withCopyToContainer(MountableFile.forHostPath("../../docker/db/postgresql/"),
+            "/docker-entrypoint-initdb.d/");
 
     String alias = "metadata";
     String scriptPath = "org/whirlplatform/sql/changelog.xml";
@@ -46,20 +51,30 @@ public class ServerEvolutionTest {
     EvolutionManager evolutionManager;
     Configuration configuration;
 
+    public Connection getConnection() throws SQLException {
+        return postgres.getJdbcDriverInstance()
+            .connect("jdbc:postgresql://" + postgres.getHost()
+                + ":" + postgres.getMappedPort(5432)
+                + "/whirl", getProperties());
+    }
+
+    public Properties getProperties() {
+        props = new Properties();
+        props.setProperty("user", "whirl");
+        props.setProperty("password", "password");
+        return props;
+    }
+
     @Test
     public void migrationTest()
         throws EvolutionException, ConnectException, SQLException, InterruptedException, IOException {
         _log.info("Migration test started!");
 
-        props = new Properties();
-        props.setProperty("user", "whirl");
-        props.setProperty("password", "password");
-
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
-         _log.info(connection.toString());
-
+        connection = getConnection();
+        _log.info("Connection: " + connection.toString());
         connectionProvider = Mockito.mock(ConnectionProvider.class);
-        Mockito.when(connectionProvider.getConnection(Mockito.any())).thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
+        Mockito.when(connectionProvider.getConnection(Mockito.any()))
+            .thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
 
         configuration = Mockito.mock(Configuration.class);
         Mockito.when(configuration.lookup(Mockito.any(String.class))).thenReturn(true);
@@ -67,8 +82,16 @@ public class ServerEvolutionTest {
         evolutionManager = new LiquibaseEvolutionManager(connectionProvider, configuration);
         evolutionManager.applyMetadataEvolution(alias, scriptPath);
 
+        // запуск тестов функций БД
+        connection = getConnection();
+        dbFunctionsTest(connection, FUNCTION_INPUT_TEST_SCRIPT);
+        dbFunctionsTest(connection, FUNCTION_RESULT_TEST_SCRIPT);
+        connection.close();
+
         // Check amount of tables
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c",
+                "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')")
+            .toString();
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
@@ -77,6 +100,7 @@ public class ServerEvolutionTest {
         assertTrue("Amount of tables should be greater than 0 !", amountOfTables > 0);
 
         _log.info("Migration test finished!");
+
         rollbackTest();
     }
 
@@ -84,16 +108,15 @@ public class ServerEvolutionTest {
         throws InterruptedException, EvolutionException, ConnectException, SQLException, IOException {
         _log.info("Rollback test started!");
 
-        props = new Properties();
-        props.setProperty("user", "whirl");
-        props.setProperty("password", "password");
-
-        connection = postgres.getJdbcDriverInstance().connect("jdbc:postgresql://" + postgres.getHost() + ":" + postgres.getMappedPort(5432) + "/whirl", props);
-        Mockito.when(connectionProvider.getConnection(Mockito.any())).thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
+        connection = getConnection();
+        Mockito.when(connectionProvider.getConnection(Mockito.any()))
+            .thenReturn(new PostgreSQLConnectionWrapper(alias, connection, null));
         evolutionManager.rollbackMetadataEvolution(alias, scriptPath);
 
         // Check amount of tables
-        String str = postgres.execInContainer("psql", "-U", "whirl", "-c", "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')").toString();
+        String str = postgres.execInContainer("psql", "-U", "whirl", "-c",
+                "select count(*) from information_schema.tables where table_schema not in ('information_schema','pg_catalog')")
+            .toString();
         String substr = str.substring(str.indexOf("-------") + 7, str.indexOf("(1 row)"));
         String result = substr.replaceAll("\\s", "");
         int amountOfTables = Integer.valueOf(result);
@@ -101,5 +124,25 @@ public class ServerEvolutionTest {
         assertTrue("Amount of tables should be equals to 2 !", amountOfTables == 2);
 
         _log.info("Rollback test finished!");
+    }
+
+    public void dbFunctionsTest(Connection connection, String fileName) {
+        StringBuilder strbulder = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+            getClass().getClassLoader().getResourceAsStream("tests/db/" + fileName)))) {
+
+            while (reader.ready()) {
+                strbulder.append(reader.readLine()).append("\n");
+            }
+
+            CallableStatement cs = connection.prepareCall(strbulder.toString());
+            _log.info("DB functions test started!");
+            cs.execute();
+            _log.info("DB functions test finish!");
+            cs.close();
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

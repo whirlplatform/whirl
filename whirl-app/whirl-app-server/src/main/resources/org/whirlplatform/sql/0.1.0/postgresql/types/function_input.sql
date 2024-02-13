@@ -2,11 +2,11 @@
  * @type function_input   Входные данные вызванного события
  */
 CREATE TYPE function_input AS (
-        parameter_value hstore,
-        parameter_list_title hstore,
-        parameter_row_list hstore,
-        parameter_type hstore,
-        parameter_component hstore,
-        parameter_index hstore,
-        parameter_name hstore)
+    parameter_value jsonb,
+    parameter_list_title jsonb,
+    parameter_row_list jsonb,
+    parameter_type jsonb,
+    parameter_component jsonb,
+    parameter_index jsonb,
+    parameter_name jsonb)
 ;

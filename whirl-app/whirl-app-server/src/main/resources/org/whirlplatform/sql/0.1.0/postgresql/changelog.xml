@@ -196,11 +196,7 @@
                     value="Whirl Editor access group"/>
         </insert>
 
-        <sqlFile path="hstore_extension.sql"
-                 relativeToChangelogFile="true"/>
         <sqlFile path="types/row_value.sql"
-                     relativeToChangelogFile="true"/>
-        <sqlFile path="types/row_list.sql"
                      relativeToChangelogFile="true"/>
         <sqlFile path="types/function_result.sql"
                      relativeToChangelogFile="true"/>
@@ -219,16 +215,11 @@
             <dropIndex tableName="WHIRL_USERS" indexName="IDX_WHIRL_USERS_L"/>
             <dropTable tableName="WHIRL_USERS"/>
 
-            <sqlFile path="types/row_list_rollback.sql"
-                     relativeToChangelogFile="true"/>
             <sqlFile path="types/row_value_rollback.sql"
                      relativeToChangelogFile="true"/>
             <sqlFile path="types/function_result_rollback.sql"
                      relativeToChangelogFile="true"/>
             <sqlFile path="types/function_input_rollback.sql"
-                     relativeToChangelogFile="true"/>
-
-            <sqlFile path="hstore_extension_rollback.sql"
                      relativeToChangelogFile="true"/>
         </rollback>
     </changeSet>

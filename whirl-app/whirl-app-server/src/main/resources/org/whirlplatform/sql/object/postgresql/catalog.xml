@@ -93,13 +93,13 @@
         </rollback>
     </changeSet>
 
-    <changeSet id="parse_row_list" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
-        <createProcedure procedureName="parse_row_list"
-                         path="procedure/parse_row_list.sql"
+    <changeSet id="parse_row_value" author="whirl" runOnChange="true" failOnError="true" dbms="postgresql">
+        <createProcedure procedureName="parse_row_value"
+                         path="procedure/parse_row_value.sql"
                          relativeToChangelogFile="true"/>
         <rollback>
             <sql>
-                DROP FUNCTION parse_row_list;
+                DROP FUNCTION parse_row_value;
             </sql>
         </rollback>
     </changeSet>
